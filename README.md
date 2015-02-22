@@ -21,7 +21,7 @@ Usage
 -------
 Just configure the index.html to change the dashboard for your needs.
 
-Change the host name  of the FHEM server
+Change the host name according your FHEM server
 ```html
 <meta name="fhem-host" content="localhost">
 ```
