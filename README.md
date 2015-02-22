@@ -9,7 +9,7 @@ Requires
 -------
 * jQuery v1.7+
 * font-awesome
-* jquery.gridster
+* jquery.gridster  http://gridster.net
 * jquery.toast
 
 Install
@@ -25,7 +25,23 @@ Change the host name according your FHEM server
 ```html
 <meta name="fhem-host" content="localhost">
 ```
-
+Change the wiget container according your rooms
+```html
+<li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
+	<header>KUECHE</header>
+	<div class="container">
+	  <div class="left">
+		<div type="thermostat" device='KuecheHeizung_Clima' class="cell"></div>
+		<div type="thermostat" device='KuecheHeizung2_Clima' class="cell"></div>
+	  </div>
+	  <div class="right">
+		<div type="switch" device="HerdLicht_Sw" class="cell"></div>
+		<div type="label" class="cell">HerdLicht</div>
+		<div type="contact" device="KuechenFenster" class="cell"></div>
+	  </div>
+	</div>
+</li>
+```
 Change the widgets you have and want to see on the dashboard
 ```html
 <div type="thermostat" device='WohnzimmerHeizung_Clima' class="cell"></div>
