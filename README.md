@@ -1,7 +1,7 @@
 fhem-tablet-ui
 ========
 
-Just another dashboard for ![FHEM](http://fhem.de/fhem.html)
+Just another dashboard for FHEM  http://fhem.de/fhem.html
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/fhem-tablet-ui-example.png)
 
