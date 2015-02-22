@@ -1,0 +1,128 @@
+<html>
+<title>FHEM</title>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="fhem-host" content="localhost">
+<meta name="widget_base_width" content="116">
+<meta name="widget_base_height" content="131">
+
+</head>
+<body></body>
+
+<link rel="stylesheet" href="lib/jquery.gridster.min.css" />
+<link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+<link rel="stylesheet" href="lib/font-awesome.min.css" />
+<link rel="stylesheet" href="lib/jquery.toast.min.css" />
+
+<script type="text/javascript" src="lib/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="lib/jquery.gridster.min.js"></script>
+<script type="text/javascript" src="lib/jquery.knob.min.js"></script>
+<script type="text/javascript" src="lib/jquery.toast.min.js"></script>
+
+<script type="text/javascript" src="js/fa-multi-button.min.js"></script>
+<script type="text/javascript" src="js/fhem-tablet-ui.js"></script>
+
+
+<div class="gridster">
+<ul>
+<li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+	<header></header>
+</li>
+<li data-row="2" data-col="1" data-sizex="1" data-sizey="4">
+	<header>GARTEN</header>
+	<div type="switch" device="GartenLicht" class="cell" ></div>
+	<div type="label" class="cell">Licht</div>
+	<div type="label" device="OutTemp" data-part="2" data-unit="%B0C%0A" class="cell big"></div>
+	<div type="label" class="cell">Temperatur</div>
+</li>
+<li data-row="1" data-col="2" data-sizex="2" data-sizey="1">
+	<header>BAD</header>
+	<div type="thermostat" device='BadHeizung_Clima' class="cell left"></div>
+	<div class="right">
+		<div type="switch" device="BadRadio" data-icon="fa-music" class="cell" ></div>
+		<div type="label" class="cell" >Badradio</div>
+	</div>
+</li>
+<li data-row="1" data-col="3" data-sizex="2" data-sizey="1">
+	<header>SCHLAFZIMMER</header>
+	<div type="thermostat" device="SchlafzimmerHeizung_Clima" class="cell left"></div>
+	<div type="contact" device="SchlafzimmerFenster" class="cell right"></div>
+</li>
+<li data-row="1" data-col="4" data-sizex="2" data-sizey="1">
+	<header>KINDERZIMMER</header>
+	<div type="thermostat" device="KinderzimmerHeizung_Clima" class="cell left"></div>
+	<div type="contact" device="KinderzimmerFenster" class="cell right"></div>
+</li>
+<li data-row="1" data-col="8" data-sizex="1" data-sizey="1">
+	<header>GALERIE</header>
+	<div type="switch" device="GalerieLicht" class="cell"></div>
+	<div type="label" class="cell">Licht</div>
+</li>
+<li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
+	<header>KUECHE</header>
+	<div class="container">
+	  <div class="left">
+		<div type="thermostat" device='KuecheHeizung_Clima' class="cell"></div>
+		<div type="thermostat" device='KuecheHeizung2_Clima' class="cell"></div>
+	  </div>
+	  <div class="right">
+		<div type="switch" device="HerdLicht_Sw" class="cell"></div>
+		<div type="label" class="cell">HerdLicht</div>
+		<div type="contact" device="KuechenFenster" class="cell"></div>
+	  </div>
+	</div>
+</li>
+<li data-row="4" data-col="2" data-sizex="2" data-sizey="2">
+	<header>HOMESTATUS</header>
+	<div type="homestatus" device='homestatus' class="" ></div>
+</li>
+<li data-row="2" data-col="4" data-sizex="4" data-sizey="2">
+	<header>WOHNZIMMER</header>
+	<div class="container">
+	  <div class="left">
+		<div type="thermostat" device='WohnzimmerHeizung_Clima' class="cell"></div>
+		<div type="thermostat" device='WohnzimmerHeizung2_Clima' class="cell"></div>
+	  </div>
+	  <div class="right">
+		<div type="switch" device="PowerAV_Sw" class="cell"></div>
+		<div type="label" class="cell">SchrankLicht</div>
+	  </div>
+	  <div class="right">
+		<div type="contact" device="TerrassenTuer" class="cell"></div>
+		<div type="label" device="THSensorWZ" data-part="2" data-unit="%B0C%0A" class="cell big"></div>
+		<div type="label" class="cell">Temperatur</div>
+		<div type="label" device="THSensorWZ" data-part="4" data-unit="%" class="cell big"></div>
+		<div type="label" class="cell">Luftfeuchte</div>
+	  </div>
+	</div>
+</li>
+<li data-row="2" data-col="8" data-sizex="1" data-sizey="4">
+</li>
+ <li data-row="4" data-col="4" data-sizex="4" data-sizey="2">
+	<header>MULTIMEDIA</header>
+	<div class="container">
+	  <div class="left">
+		<div type="switch" device="Fernsehen" data-icon="fa-film" class="cell" ></div>
+		<div type="label" class="cell">TV</div>
+	  </div>
+	  <div class="left">
+		<div type="switch" device="RadioAtTablet" data-icon="fa-music" class="cell" ></div>
+		<div type="label" class="cell">Radio</div>
+	  </div>
+	  <div class="left">
+		<div type="push" device="WebRadio" data-icon="fa-step-backward" data-cmd="Prev" class="cell" ></div>
+		<div type="push" device="WebRadio" data-icon="fa-step-forward" data-cmd="Next" class="cell" ></div>
+		<div type="label" device="WebRadio" class="cell">radio</div>
+	  </div>
+	  <div class="right">
+	    <div type="volume" device='RadioVolumeOnTablet' class="cell left" ></div>
+	    <div type="label" class="cell">Volume</div>
+	  </div>
+	</div>
+</li>
+ 
+
+</ul>
+</div> 
+
+</html>
