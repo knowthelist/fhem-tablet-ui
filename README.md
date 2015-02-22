@@ -19,7 +19,7 @@ Copy all to your local webserver which supports php scripts.
 
 Usage
 -------
-Just configure the index.html to change the dashboard for your needs.
+Just configure the **index.html** to change the dashboard for your needs.
 
 Change the host name according your FHEM server
 ```html
