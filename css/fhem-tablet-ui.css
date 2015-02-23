@@ -59,6 +59,11 @@ ul, ol {
     list-style: none;
 }
 
+.gridster ul{
+    width: 100% !important;
+    height: 100% !important;
+}
+
 .gridster {
     width: auto;
 }
