@@ -12,10 +12,12 @@
 var deviceStates={};
 var ready = true;
 var host = "localhost";
+var port = 7072;
 
 $( document ).ready(function() {
 	
 	host = $("meta[name='fhem-host']").attr("content");
+	port = $("meta[name='fhem-port']").attr("content");
 	wx = $("meta[name='widget_base_width']").attr("content");
 	wy = $("meta[name='widget_base_height']").attr("content");
 	
@@ -303,6 +305,7 @@ function setFhemStatus(device,status) {
 		data: {
 			cmd: "set "+device+" "+status,
 			host: host,
+			port: port,
 		}
 	});
 	
@@ -322,6 +325,7 @@ function requestFhemStatus() {
 		data: {
 			cmd: "list",
 			host: host,
+			port: port,
 		}
 	});
 	

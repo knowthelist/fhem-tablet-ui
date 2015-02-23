@@ -15,6 +15,7 @@ Requires
 Install
 -------
 Copy all to your local webserver which supports php scripts.
+FHEM must provide Telnet service (default port is 7072).
 
 
 Usage

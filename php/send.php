@@ -3,8 +3,10 @@
 
 	//Host name und Telnet port of the FHEM server
 	$fhemhost = $_GET["host"];
+	$fhemport = $_GET["port"];
 	if(empty($fhemhost)) $fhemhost = "localhost";
-	$fhemport = 7072;
+	if(empty($fhemport)) $fhemport = 7072;
+
 	$cmd = $_GET["cmd"];
 	
 	//Open socket
