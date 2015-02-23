@@ -72,8 +72,8 @@ $( document ).ready(function() {
 		  .appendTo($(this));
 		  
 		knob_elem.knob({
-			'min':0,
-			'max':70,
+			'min': $(this).data('min') || 0,
+			'max': $(this).data('max') || 70,
 			'height':150,
 			'width':150,
 			//'step':.5,
@@ -223,8 +223,8 @@ function update() {
 					"isValue": clima.temp,
 					'release' : function (v) { 
 					  if (ready){
-						setFhemStatus(device, $(this).o.cmd + ' ' + v);
-						$.toast('Set '+ device + $(this).o.cmd + ' ' + v );
+						setFhemStatus(device, this.o.cmd + ' ' + v);
+						$.toast('Set '+ device + this.o.cmd + ' ' + v );
 					  }
 					}
 				});		
@@ -275,8 +275,8 @@ function update() {
 			{
 				'release' : function (v) { 
 				  if (ready){
-				  	console.log('Set Homestatus to' + $(this).o.status);
-				  	setFhemStatus(device, $(this).o.cmd + ' ' + $(this).o.status);
+				  	console.log('Set Homestatus to' + this.o.status);
+				  	setFhemStatus(device, this.o.cmd + ' ' + this.o.status);
 				  }
 				}
 			});			
@@ -422,6 +422,10 @@ var drawDial = function () {
 	a = this.arc(this.cv), // Arc
 	pa, // Previous arc
 	r = 1;
+	
+	  
+    //force canvas to redraw
+    c.clearRect(0,0, this.$c.width, this.$c.height);
 	c.lineWidth = this.lineWidth;
 	c.lineCap = this.lineCap;
 	if (this.o.bgColor !== "none") {
@@ -502,9 +506,6 @@ var drawDial = function () {
 			'font-size': '75%'
 		});
   }
-  
-  //force canvas to redraw
-  this.$c.width+=0;
   
   return false;
 };
