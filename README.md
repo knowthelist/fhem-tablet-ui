@@ -22,9 +22,10 @@ Usage
 -------
 Just configure the **index.html** to change the dashboard for your needs.
 
-Change the host name according your FHEM server
+Change the host name and port according to your FHEM server
 ```html
 <meta name="fhem-host" content="localhost">
+<meta name="fhem-port" content="7072">
 ```
 Change the wiget container according your rooms
 ```html
@@ -63,7 +64,11 @@ Currently there are 7 types of widgets.
 - **contact** : show state as icon (e.g. window open) 
 - **push** : e.g. up / down
 - **volume** : dial to set a single value (e.g. 0-60)
-- **homestatus** : selector for 4 states (1=home,2=night,3=away,4=holiday)
+- **homestatus** : selector for 4 states (1=home,2=night,3=away,4=holiday) 
+
+######Thermostat 
+Configure as device='...' that item which delivers temp, desired-temp and valve as one line STATE
+like this: `T: 17.5 desired: 16.0 valve: 0`
 
 
 License
