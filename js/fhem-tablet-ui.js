@@ -313,7 +313,7 @@ function setFhemStatus(device,status) {
 		if (data.substr(0, 6) == "Error:"){
 			$.toast(data);
 		}
-	setInterval(function(){
+	setTimeout(function(){
    		requestFhemStatus();
 	}, 4000);
 	});
