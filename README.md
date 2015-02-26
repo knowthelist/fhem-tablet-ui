@@ -67,7 +67,7 @@ Currently there are 7 types of widgets.
 - **homestatus** : selector for 4 states (1=home,2=night,3=away,4=holiday) 
 
 ######Thermostat 
-Configure as device='...' that item which delivers temp, desired-temp and valve as one line STATE
+Configure as device='...' that item which delivers temp, desired-temp and valve as one line on reading 'state'
 like this: `T: 17.5 desired: 16.0 valve: 0`
 
 
