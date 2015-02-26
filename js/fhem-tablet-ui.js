@@ -2,7 +2,7 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.0.0
+* Version: 1.0.1
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
 * Copyright (c) 2015 Mario Stephan
@@ -11,6 +11,7 @@
 */
 var deviceStates={};
 var ready = true;
+var timer;
 var host = "localhost";
 var port = 7072;
 
@@ -184,9 +185,7 @@ $( document ).ready(function() {
 	requestFhemStatus();
 	
 	// refresh every 30 sec
-	setInterval(function(){
-   		requestFhemStatus();
-	}, 30000);
+	startInterval();
 	
 	// !!!! remove this test !!!!
 	$(".label").on('click',function(){
@@ -194,6 +193,13 @@ $( document ).ready(function() {
   	}); 
 
 });
+
+function startInterval() {
+     clearInterval(timer);
+     timer = setInterval(function () {
+     	requestFhemStatus();
+     }, 30000); 
+ }
 
 function update() {
 
@@ -223,6 +229,9 @@ function update() {
 				'configure',
 				{
 					"isValue": clima.temp,
+					'change' : function (v) { 
+				  		startInterval();
+					},
 					'release' : function (v) { 
 					  if (ready){
 						setFhemStatus(device, this.o.cmd + ' ' + v);
@@ -243,6 +252,9 @@ function update() {
 			knob_elem.trigger(
 			'configure',
 			{
+				'change' : function (v) { 
+				  startInterval();
+				},
 				'release' : function (v) { 
 				  if (ready)
 				  		setFhemStatus(device,v);
@@ -275,6 +287,9 @@ function update() {
 			knob_elem.trigger(
 			'configure',
 			{
+				 'change' : function (v) { 
+			  		startInterval();
+				 },			
 				'release' : function (v) { 
 				  if (ready){
 				  	console.log('Set Homestatus to' + this.o.status);
@@ -300,6 +315,7 @@ function update() {
 }
 
 function setFhemStatus(device,status) {
+	startInterval();
 	$.ajaxSetup({
 		async: true,
 		data: {
@@ -323,7 +339,7 @@ function requestFhemStatus() {
 	$.ajaxSetup({
 		async: true,
 		data: {
-			cmd: "list",
+			cmd: "list .* state",
 			host: host,
 			port: port,
 		}
@@ -335,11 +351,12 @@ function requestFhemStatus() {
 			$.toast(data);
 		} else {
 			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
+			var regState = /\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\s(.*)/;
 			deviceStates={};
 			for (var i=0; i < lines.length; i++) {
-				if (/\((.*)\)/.test(lines[i])) {
-					var key = $.trim(lines[i]).match( /^(\S*).*\(/ )[1];
-					var value = $.trim(lines[i]).match( /\((.*)\)/ )[1];
+				if (regState.test(lines[i])) {
+					var key = $.trim(lines[i]).match( /^(\S*)\s.*/ )[1];
+					var value = $.trim(lines[i]).match( regState )[1];
 					deviceStates[key]=value;
 				}
 			}
@@ -362,10 +379,13 @@ this.getDeviceStatus = function (dev) {
 this.getClimaValues = function (s) {
 	var c = (s !== undefined) ? s.split(" ") : '';
 	var r = [0,0,0];
-	if (c.length > 5) {
-		r[0]=c[1];r[1]=c[3];r[2]=c[5];
+	if (c.length > 3) {
+		r[0]=c[1];r[1]=c[3];
 	}
-	if ( s.indexOf('set_desired-temp') > -1 )
+	if (c.length > 5) {
+		r[2]=c[5];
+	}
+	if ( s !== undefined && s.indexOf('set_desired-temp') > -1 )
 	{
 		r[1]=c[1];
 	}
@@ -426,10 +446,7 @@ var drawDial = function () {
 	a = this.arc(this.cv), // Arc
 	pa, // Previous arc
 	r = 1;
-	
-	  
-    //force canvas to redraw
-    c.clearRect(0,0, this.$c.width, this.$c.height);
+
 	c.lineWidth = this.lineWidth;
 	c.lineCap = this.lineCap;
 	if (this.o.bgColor !== "none") {
@@ -492,24 +509,6 @@ var drawDial = function () {
     c.fillStyle = this.o.tkColor;
     c.font="10px Sans Serif";
     c.fillText(this.o.isValue ,this.xy+x-5,this.xy+y+5);
-
-	// extra text 
-	this.i.parent().find("#current").remove();
-	if (this.o.text){
-		var $target = this.i,
-        	targetPosition = $target.position(),
-        	$current = $('<div id="current">'+ this.o.text +'</div>').insertAfter($target);
-
-		$current.css({
-			position : 'absolute',
-			top : targetPosition.top + 25,
-			left : targetPosition.left,
-			'margin-left' : '-' + ((this.w * 3 / 4 + 2) >> 0) + 'px',
-			'text-align': 'center',
-			width : $target.width(),
-			'font-size': '75%'
-		});
-  }
   
   return false;
 };
