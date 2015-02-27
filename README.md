@@ -8,7 +8,7 @@ Just another dashboard for FHEM  http://fhem.de/fhem.html
 Requires
 -------
 * jQuery v1.7+
-* font-awesome
+* font-awesome http://fortawesome.github.io/Font-Awesome
 * jquery.gridster  http://gridster.net
 * jquery.toast
 
@@ -53,7 +53,9 @@ Change the widgets you have and want to see on the dashboard
 - **class** : css classes for look and formatting of the widget
 - **data-cmd** : command to send to FHEM (set <device> <cmd> <value>)
 - **data-icon** : name of the font-awesome icon for the switch
-- **data-part** : position of the value to show
+- **data-part** : position of the value to show 
+
+Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
 
 Widgets
 -------
