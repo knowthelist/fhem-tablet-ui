@@ -14,10 +14,10 @@ Requires
 
 Install
 -------
- * create a new folder named 'tablet' in /<fhem-path>/www
- * copy all files incl. sub folders into /<fhem-path>/www/tablet
+ * create a new folder named 'tablet' in /\<fhem-path\>/www
+ * copy all files incl. sub folders into /\<fhem-path\>/www/tablet
  * add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
- * Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet
+ * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/tablet
 
 Configure
 -------
