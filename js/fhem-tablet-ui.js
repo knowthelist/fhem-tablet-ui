@@ -2,23 +2,19 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.0.1
+* Version: 1.1.0
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
-* Copyright (c) 2015 Mario Stephan
+* Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 *
 */
 var deviceStates={};
 var ready = true;
 var timer;
-var host = "localhost";
-var port = 7072;
 
 $( document ).ready(function() {
 	
-	host = $("meta[name='fhem-host']").attr("content");
-	port = $("meta[name='fhem-port']").attr("content");
 	wx = $("meta[name='widget_base_width']").attr("content");
 	wy = $("meta[name='widget_base_height']").attr("content");
 	
@@ -40,7 +36,8 @@ $( document ).ready(function() {
 		  .appendTo($(this));
 		  
 		var clickEventType=((document.ontouchstart!==null)?'mousedown':'touchstart');
-
+		var device = $(this).attr('device');
+		
 		$(this).bind('mousemove', function(e) {
 	
 			knob_elem.data('pageX',e.pageX);
@@ -64,6 +61,15 @@ $( document ).ready(function() {
 			'angleOffset' : 0,
 			'cmd': $(this).data('cmd') || 'state',
 			'draw' : drawHomeSelector,
+			'change' : function (v) { 
+				  startInterval();
+			},
+			'release' : function (v) { 
+			  if (ready){
+			  		setFhemStatus(device,v);
+			  		this.$.data('curval', v);
+			  }
+			}	
 		});	
 	});	
 	
@@ -73,7 +79,9 @@ $( document ).ready(function() {
 			value: '10',
 		}).data($(this).data())
 		  .appendTo($(this));
-		  
+		
+		var device = $(this).attr('device');
+		
 		knob_elem.knob({
 			'min': $(this).data('min') || 0,
 			'max': $(this).data('max') || 70,
@@ -91,7 +99,15 @@ $( document ).ready(function() {
 			'tickdistance': 20,
 			'cursor': 6,
 			'draw' : drawDial,
-			
+			'change' : function (v) { 
+				  startInterval();
+			},
+			'release' : function (v) { 
+				  if (ready){
+				  		setFhemStatus(device,v);
+				  		this.$.data('curval', v);
+				  }
+			}	
 		});
 		
 	});
@@ -103,6 +119,8 @@ $( document ).ready(function() {
 		}).data($(this).data())
 		  .appendTo($(this));
 		  
+		var device = $(this).attr('device');  
+		
 		knob_elem.knob({
 			'min':10,
 			'max':30,
@@ -120,7 +138,19 @@ $( document ).ready(function() {
 			'cursor': 6,
 			'cmd': $(this).data('cmd') || 'desired-temp',
 			'draw' : drawDial,
+			'change' : function (v) { 
+				//reset poll timer to avoid jump back
+				startInterval();
+			},
+			'release' : function (v) { 
+			  if (ready){
+				setFhemStatus(device, this.o.cmd + ' ' + v);
+				$.toast('Set '+ device + this.o.cmd + ' ' + v );
+				this.$.data('curval', v);
+			  }
+			}	
 		});
+		
 		
 	});
 
@@ -183,14 +213,10 @@ $( document ).ready(function() {
 	$('input').css({visibility:'visible'});
 	
 	requestFhemStatus();
+	//longPoll();
 	
 	// refresh every 30 sec
 	startInterval();
-	
-	// !!!! remove this test !!!!
-	$(".label").on('click',function(){
-    	update();
-  	}); 
 
 });
 
@@ -223,22 +249,17 @@ function update() {
 		if (device && device.length>0){
 			var clima = getClimaValues( deviceStates[device] );
 			knob_elem = $(this).find('input');
-			knob_elem.val( clima.desired ).trigger('change');
-			if ( clima.temp > 0 ){
-				knob_elem.trigger(
-				'configure',
-				{
-					"isValue": clima.temp,
-					'change' : function (v) { 
-				  		startInterval();
-					},
-					'release' : function (v) { 
-					  if (ready){
-						setFhemStatus(device, this.o.cmd + ' ' + v);
-						$.toast('Set '+ device + this.o.cmd + ' ' + v );
-					  }
-					}
-				});		
+			
+			if ( knob_elem.data('curval') != clima.temp && 
+							knob_elem.val() != clima.desired ){
+				knob_elem.val( clima.desired ).trigger('change');
+				console.log('do update');
+				if ( clima.temp > 0 ){
+					knob_elem.trigger( 
+						'configure', { "isValue": clima.temp }
+					);		
+					knob_elem.data('curval', clima.temp);
+				}
 			}
 		}
 	});
@@ -248,18 +269,9 @@ function update() {
 		var device = $(this).attr('device');
 		if (device && device.length>0){
 			knob_elem = $(this).find('input');
-			knob_elem.val( deviceStates[device] ).trigger('change');
-			knob_elem.trigger(
-			'configure',
-			{
-				'change' : function (v) { 
-				  startInterval();
-				},
-				'release' : function (v) { 
-				  if (ready)
-				  		setFhemStatus(device,v);
-				}
-			});			
+			val = deviceStates[device];
+			if ( knob_elem.val() != val )
+				knob_elem.val( val ).trigger('change');
 		}
 	});
 	
@@ -282,21 +294,8 @@ function update() {
 				default:
 					val=0;
 			}
-			console.log("val="+val);
-			knob_elem.val( val ).trigger('change');
-			knob_elem.trigger(
-			'configure',
-			{
-				 'change' : function (v) { 
-			  		startInterval();
-				 },			
-				'release' : function (v) { 
-				  if (ready){
-				  	console.log('Set Homestatus to' + this.o.status);
-				  	setFhemStatus(device, this.o.cmd + ' ' + this.o.status);
-				  }
-				}
-			});			
+			if ( knob_elem.val() != deviceStates[device] )
+				knob_elem.val( val ).trigger('change');		
 		}
 	});
 	 
@@ -320,12 +319,11 @@ function setFhemStatus(device,status) {
 		async: true,
 		data: {
 			cmd: "set "+device+" "+status,
-			host: host,
-			port: port,
+			XHR: "1"
 		}
 	});
 	
-	$.get( "php/send.php", function( data ) {
+	$.get( "../fhem", function( data ) {
 		if (data.substr(0, 6) == "Error:"){
 			$.toast(data);
 		}
@@ -335,17 +333,50 @@ function setFhemStatus(device,status) {
 	});
 }
 
+function longPoll(roomName) {
+	$.ajax({
+		url: "../fhem",
+		cache: false,
+				//complete: longPoll,
+		async: true,
+		data: {
+			XHR:1,
+			inform: "type=raw;filter=.*"
+		},
+		xhr: function() {
+			var xhr = new window.XMLHttpRequest();
+			xhr.addEventListener("readystatechange", function(e){
+				var resp = e.target.responseText;
+		  		if ( e.target.readyState == 4) {
+    				$.toast("Connection lost, trying to reconnect in 5 seconds.");
+    				setTimeout(longPoll, 5000);
+    				return;
+  				}
+				if ( e.target.readyState == 3 )
+				{
+				var lines = resp.replace(/<br>/g,"").split(/\n/);
+				for (var i=0; i < lines.length; i++) {
+					console.log(lines[i]);
+				}
+				}
+ 
+    		}, false);
+			return xhr;
+			}
+	});
+}
+            
 function requestFhemStatus() {
 	$.ajaxSetup({
 		async: true,
+		cache: false,
 		data: {
 			cmd: "list .* state",
-			host: host,
-			port: port,
+			XHR: "1"
 		}
 	});
 	
-	$.get( "php/send.php", function( data ) {
+	$.get( "../fhem", function( data ) {
 		//console.log(data);
 		if (data.substr(0, 6) == "Error:"){
 			$.toast(data);
@@ -584,10 +615,10 @@ var drawHomeSelector = function (event) {
 		c.stroke(); 
 		
 		c.fillStyle = (sector==1)?this.o.minColor:this.o.maxColor;
-		c.font = "22px FontAwesome";
-		c.fillText("\uf015", this.xy-12, this.xy+2);
 		c.font = "100 11px sans-serif";
 		c.fillText("Home", this.xy-14, this.xy+15);
+		c.font = "22px FontAwesome";
+		c.fillText("\uf015", this.xy-12, this.xy+2);
 		
 		c.fillStyle = (sector==2)?this.o.minColor:this.o.maxColor;
 		c.font = "22px FontAwesome";

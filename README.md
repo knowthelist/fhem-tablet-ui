@@ -14,19 +14,15 @@ Requires
 
 Install
 -------
-Copy all to your local webserver which supports php scripts.
-FHEM must provide Telnet service (default port is 7072).
+ * create a new folder named 'tablet' in /<fhem-path>/www
+ * copy all files incl. sub folders into /<fhem-path>/www/tablet
+ * add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
+ * Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet
 
-
-Usage
+Configure
 -------
 Just configure the **index.html** to change the dashboard for your needs.
 
-Change the host name and port according to your FHEM server
-```html
-<meta name="fhem-host" content="localhost">
-<meta name="fhem-port" content="7072">
-```
 Change the wiget container according your rooms
 ```html
 <li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
@@ -68,10 +64,23 @@ Currently there are 7 types of widgets.
 - **volume** : dial to set a single value (e.g. 0-60)
 - **homestatus** : selector for 4 states (1=home,2=night,3=away,4=holiday) 
 
+The ui gets/sets the fhem parameter 'state' (not 'STATE').
+
 ######Thermostat 
 Configure as device='...' that item which delivers temp, desired-temp and valve as one line on reading 'state'
 like this: `T: 17.5 desired: 16.0 valve: 0`
 
+######Label
+Example for HM-WDS40-TH-I Funk-Temperatur-/Feuchtesensor innen 
+```
+state	T: 20.0 H: 61
+```
+```html
+<div type="label" device="THSensorWZ" data-part="2" data-unit="%B0C%0A" class="cell big"></div>
+<div type="label" class="cell">Temperatur</div>
+<div type="label" device="THSensorWZ" data-part="4" data-unit="%" class="cell big"></div>
+<div type="label" class="cell">Luftfeuchte</div>
+```
 
 License
 -------
