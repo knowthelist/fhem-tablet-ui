@@ -2,7 +2,7 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.1.0
+* Version: 1.2.0
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
@@ -10,7 +10,10 @@
 *
 */
 var deviceStates={};
+var readings = {"STATE":true};
+var devices = {};
 var ready = true;
+var reading_cntr;
 var timer;
 
 $( document ).ready(function() {
@@ -26,17 +29,19 @@ $( document ).ready(function() {
           }
         }).data('gridster');
 
+   	$('div[type=label]').each(function(index) {
+   		$(this).data('get', $(this).data('get') || 'STATE');
+	});
+   	
+   	//init widgets
 	$('div[type="homestatus"]').each(function( index ) {
 		var clientX=0;
 		var clientY=0;
 		var knob_elem =  jQuery('<input/>', {
 			type: 'text',
-			value: '10',
 		}).data($(this).data())
+		  .data('curval', 10)
 		  .appendTo($(this));
-		  
-		var clickEventType=((document.ontouchstart!==null)?'mousedown':'touchstart');
-		var device = $(this).attr('device');
 		
 		$(this).bind('mousemove', function(e) {
 	
@@ -44,6 +49,9 @@ $( document ).ready(function() {
 			knob_elem.data('pageY',e.pageY);
 			e.preventDefault();
 		});
+
+		var device = $(this).attr('device');
+		$(this).data('get', $(this).data('get') || 'STATE');
 		
 		knob_elem.knob({
 			'min': 0,
@@ -59,15 +67,14 @@ $( document ).ready(function() {
 			'thickness': 0.4,
 			'displayInput': false,
 			'angleOffset' : 0,
-			'cmd': $(this).data('cmd') || 'state',
+			'reading': $(this).data('set') || '',
 			'draw' : drawHomeSelector,
 			'change' : function (v) { 
 				  startInterval();
 			},
 			'release' : function (v) { 
 			  if (ready){
-			  		setFhemStatus(device,v);
-			  		this.$.data('curval', v);
+				  	setFhemStatus(device, this.o.reading + ' ' + this.o.status);
 			  }
 			}	
 		});	
@@ -77,10 +84,10 @@ $( document ).ready(function() {
 		var knob_elem =  jQuery('<input/>', {
 			type: 'text',
 			value: '10',
-		}).data($(this).data())
-		  .appendTo($(this));
+		}).appendTo($(this));
 		
 		var device = $(this).attr('device');
+		$(this).data('get', $(this).data('get') || 'STATE');
 		
 		knob_elem.knob({
 			'min': $(this).data('min') || 0,
@@ -116,10 +123,12 @@ $( document ).ready(function() {
 		var knob_elem =  jQuery('<input/>', {
 			type: 'text',
 			value: '10',
-		}).data($(this).data())
-		  .appendTo($(this));
+		}).appendTo($(this));
 		  
 		var device = $(this).attr('device');  
+		//default reading parameter name
+		$(this).data('get', $(this).data('get') || 'desired-temp');
+		$(this).data('temp', $(this).data('temp') || 'measured-temp');
 		
 		knob_elem.knob({
 			'min':10,
@@ -136,7 +145,7 @@ $( document ).ready(function() {
 			'maxColor': '#ff0000',
 			'thickness': .25,
 			'cursor': 6,
-			'cmd': $(this).data('cmd') || 'desired-temp',
+			'reading': $(this).data('set') || 'desired-temp',
 			'draw' : drawDial,
 			'change' : function (v) { 
 				//reset poll timer to avoid jump back
@@ -144,8 +153,8 @@ $( document ).ready(function() {
 			},
 			'release' : function (v) { 
 			  if (ready){
-				setFhemStatus(device, this.o.cmd + ' ' + v);
-				$.toast('Set '+ device + this.o.cmd + ' ' + v );
+				setFhemStatus(device, this.o.reading + ' ' + v);
+				$.toast('Set '+ device + this.o.reading + ' ' + v );
 				this.$.data('curval', v);
 			  }
 			}	
@@ -156,66 +165,98 @@ $( document ).ready(function() {
 
  	$('div[type="switch"]').each(function(index) {
  	
- 	var device = $(this).attr('device');
- 	var elem = $(this).famultibutton({
-		icon: 'fa-lightbulb-o',
-		backgroundIcon: 'fa-circle',
-		offColor: '#2A2A2A',
-		onColor: '#2A2A2A',
+		var device = $(this).attr('device');
+		$(this).data('get', $(this).data('get') || 'STATE');
+		var elem = $(this).famultibutton({
+			icon: 'fa-lightbulb-o',
+			backgroundIcon: 'fa-circle',
+			offColor: '#2A2A2A',
+			onColor: '#2A2A2A',
+			
+			// Called in toggle on state.
+			toggleOn: function( ) {
+				 setFhemStatus(device,"on");
+			},
+			toggleOff: function( ) {
+				 setFhemStatus(device,"off");
+			},
+		});
+		elem.data('famultibutton',elem);
 		
-		// Called in toggle on state.
-		toggleOn: function( ) {
-			 setFhemStatus(device,"on");
-	    },
-	   	toggleOff: function( ) {
-			 setFhemStatus(device,"off");
-	    },
-	});
-	elem.data('famultibutton',elem);
-	
- });
+	 });
 	
  	$('div[type="push"]').each(function(index) {
  	
- 	var device = $(this).attr('device');
- 	var elem = $(this).famultibutton({
-		backgroundIcon: 'fa-circle-thin',
-		offColor: '#505050',
-		onColor: '#aa6900',
-		mode: 'push', 
-		
-		// Called in toggle on state.
-		toggleOn: function( ) {
-			 setFhemStatus(device,$(this).data('cmd'));
-	    },
-	});
-	elem.data('famultibutton',elem);
- });
+		var device = $(this).attr('device');
+		var elem = $(this).famultibutton({
+			backgroundIcon: 'fa-circle-thin',
+			offColor: '#505050',
+			onColor: '#aa6900',
+			mode: 'push', 
+			
+			// Called in toggle on state.
+			toggleOn: function( ) {
+				 setFhemStatus(device,$(this).data('set'));
+			},
+		});
+		elem.data('famultibutton',elem);
+	 });
 
  	$('div[type="contact"]').each(function(index) {
  	
- 	var elem = $(this).famultibutton({
-		icon: 'fa-windows',
-		backgroundIcon: null,
-		onColor: '#aa6900',
-		onBackgroundColor: '#aa6900',
-		offColor: '#505050',
-		offBackgroundColor: '#505050',
-		mode: 'signal',  //toggle, push, ,
+		var elem = $(this).famultibutton({
+			icon: 'fa-windows',
+			backgroundIcon: null,
+			onColor: '#aa6900',
+			onBackgroundColor: '#aa6900',
+			offColor: '#505050',
+			offBackgroundColor: '#505050',
+			mode: 'signal',  //toggle, push, ,
+		});
+		elem.data('famultibutton',elem);
+		//default reading parameter name
+		$(this).data('get', $(this).data('get') || 'STATE');
 	});
-	elem.data('famultibutton',elem);
- });
  
 	$("*").focus(function(){
     	$(this).blur();
   	}); 
   	
 	$('input').css({visibility:'visible'});
+
+	//collect required devices
+	$('div[device]').each(function(index){
+		var device = $(this).attr("device");
+		if(!devices[device])
+			devices[device] = true;
+	});
 	
-	requestFhemStatus();
-	//longPoll();
+	//collect required readings
+	$('[data-get]').each(function(index){
+		var reading = $(this).data("get");
+		if(!readings[reading])
+			readings[reading] = true;
+	});
+	$('[data-temp]').each(function(index){
+		var reading = $(this).data("temp");
+		if(!readings[reading])
+			readings[reading] = true;
+	});
+
+	//get current values of readings
+	for (var reading in readings) {
+		requestFhem(reading);
+	}
+	reading_cntr = Object.keys(readings).length;
+
+	if ( $("meta[name='longpoll']").attr("content") =='1' ){
+		setTimeout(function() {
+				longPoll();
+		}, 1000);
+	}
 	
-	// refresh every 30 sec
+	
+	// refresh every 300 sec
 	startInterval();
 
 });
@@ -223,38 +264,47 @@ $( document ).ready(function() {
 function startInterval() {
      clearInterval(timer);
      timer = setInterval(function () {
-     	requestFhemStatus();
-     }, 30000); 
+		//get current values of readings every x seconds
+		for (var reading in readings) {
+			requestFhem(reading);
+		}
+     }, 300000); 
  }
 
-function update() {
-
-   ready = false;	
-   
-   $('div[type=label]').each(function(index) {
+function update(filter) {
+	ready = false;	
+	var deviceElements;
+	var deviceType;
+	
+	if ( filter == '*' )
+		deviceElements= $('div[device]');
+	else
+   		deviceElements= $('div[device="'+filter+'"]');
+   		
+   	deviceElements.each(function(index) {
+   	
+   		deviceType = $(this).attr('type');
+   		
+   		if (deviceType == 'label'){
  	
- 	 var device = $(this).attr('device');
- 	 if ( device && device != '' ){
- 	 	value = getDeviceStatus(device);
- 	 	part =  $(this).data('part') || -1;
- 	 	unit = ($(this).data('unit')) ? unescape($(this).data('unit')) : '';
-	 	$(this).html( getPart(value,part) + "<span style='font-size: 50%;'>"
-	 										+unit+"</span>" );
-	 }
-    });
- 
-	$('div[type="thermostat"]').each(function( index ) {
+			var val = getDeviceValue( $(this), 'get' );
+			if (val){
+				part =  $(this).data('part') || -1;
+				unit = ($(this).data('unit')) ? unescape($(this).data('unit')) : '';
+				$(this).html( getPart(val,part) + "<span style='font-size: 50%;'>"
+													+unit+"</span>" );
+			 }
+		} 
+    	else if (deviceType == 'thermostat'){
 		
-		var device = $(this).attr('device');
-		if (device && device.length>0){
-			var clima = getClimaValues( deviceStates[device] );
-			knob_elem = $(this).find('input');
-			
-			if ( knob_elem.data('curval') != clima.temp && 
-							knob_elem.val() != clima.desired ){
-				knob_elem.val( clima.desired ).trigger('change');
-				console.log('do update');
-				if ( clima.temp > 0 ){
+			var clima = getClimaValues( $(this) );
+			if ( clima.desired && clima.temp ){
+				var knob_elem = $(this).find('input');
+				
+				if ( clima.desired > 0 && knob_elem.val() != clima.desired ){	
+					knob_elem.val( clima.desired ).trigger('change');
+				}
+				if ( clima.temp > 0 && knob_elem.data('curval') != clima.temp ){
 					knob_elem.trigger( 
 						'configure', { "isValue": clima.temp }
 					);		
@@ -262,102 +312,145 @@ function update() {
 				}
 			}
 		}
-	});
-	
-	$('div[type="volume"]').each(function( index ) {
+	    else if (deviceType == 'volume'){
 		
-		var device = $(this).attr('device');
-		if (device && device.length>0){
-			knob_elem = $(this).find('input');
-			val = deviceStates[device];
-			if ( knob_elem.val() != val )
-				knob_elem.val( val ).trigger('change');
-		}
-	});
-	
-	$('div[type="homestatus"]').each(function( index ) {
-		
-		var device = $(this).attr('device');
-		if (device && device.length>0){
-			knob_elem = $(this).find('input');
-			var val=0;
-			switch( deviceStates[device] ) {
-				case 4:
-					val=Math.PI;
-					break;
-				case 3:
-					val=Math.PI*0.25;
-					break;
-				case 2:
-					val=Math.PI*1.75;
-					break;
-				default:
-					val=0;
+			var val = getDeviceValue( $(this), 'get' );
+			if (val){
+				var knob_elem = $(this).find('input');
+				if ( knob_elem.val() != val )
+					knob_elem.val( val ).trigger('change');
 			}
-			if ( knob_elem.val() != deviceStates[device] )
-				knob_elem.val( val ).trigger('change');		
 		}
-	});
-	 
-	$('div[type="switch"],div[type="contact"]').each(function(index) {
- 	
- 	var state = getDeviceStatus( $(this).attr('device') );
-	
-	if ( state == 'on' || state == 'open' )
-		$(this).data('famultibutton').setOn();
-	else
-		$(this).data('famultibutton').setOff();
- });
- 
+		else if (deviceType == 'homestatus'){
+		
+			var value = getDeviceValue( $(this), 'get' );
+			if (value){
+				var knob_elem = $(this).find('input');
+				var val=0;
+				switch( value ) {
+					case 4:
+						val=Math.PI;
+						break;
+					case 3:
+						val=Math.PI*0.25;
+						break;
+					case 2:
+						val=Math.PI*1.75;
+						break;
+					default:
+						val=0;
+				}
+				if ( knob_elem.data('curval') != val )
+					knob_elem.val( val ).trigger('change');		
+			}
+		}
+	 	else if (deviceType == 'switch' || deviceType == 'contact'){
+			
+			var state = getDeviceValue( $(this), 'get' );
+			if ( state == 'on' || state == 'open' )
+				$(this).data('famultibutton').setOn();
+			else
+				$(this).data('famultibutton').setOff();
+		}
+ 	});
  	ready = true;
-	console.log('update');
+	console.log('update done (filter:'+filter+')');
 }
 
 function setFhemStatus(device,status) {
 	startInterval();
-	$.ajaxSetup({
+	$.ajax({
 		async: true,
+		url: "../fhem",
 		data: {
 			cmd: "set "+device+" "+status,
 			XHR: "1"
 		}
-	});
-	
-	$.get( "../fhem", function( data ) {
-		if (data.substr(0, 6) == "Error:"){
-			$.toast(data);
-		}
-	setTimeout(function(){
-   		requestFhemStatus();
-	}, 4000);
+	})
+	.fail (function(jqXHR, textStatus, errorThrown) {
+    		$.toast("Error: " + textStatus + ": " + errorThrown);
+	})
+  	.done ( function( data ) {
+		setTimeout(function(){
+			for (var reading in readings) {
+				requestFhem(reading);
+			}
+		}, 4000);
 	});
 }
 
+var xhr;
 function longPoll(roomName) {
+/* try to avoid this terrible fmt=JSON output format 
+	- no separat node for parameter name
+	- multiple nodes with the same data (2xdate)
+*/
+	console.log('start longpoll');
+	if (xhr)
+	xhr.abort();
 	$.ajax({
 		url: "../fhem",
 		cache: false,
-				//complete: longPoll,
+		complete: function() {
+			setTimeout(function() {
+				longPoll();
+			}, 100);
+		},
+		timeout: 60000,
 		async: true,
 		data: {
 			XHR:1,
 			inform: "type=raw;filter=.*"
 		},
 		xhr: function() {
-			var xhr = new window.XMLHttpRequest();
+			xhr = new window.XMLHttpRequest();
 			xhr.addEventListener("readystatechange", function(e){
-				var resp = e.target.responseText;
+				var data = e.target.responseText;
 		  		if ( e.target.readyState == 4) {
-    				$.toast("Connection lost, trying to reconnect in 5 seconds.");
-    				setTimeout(longPoll, 5000);
+    				//$.toast("Connection lost, trying to reconnect in 5 seconds.");
     				return;
   				}
 				if ( e.target.readyState == 3 )
 				{
-				var lines = resp.replace(/<br>/g,"").split(/\n/);
-				for (var i=0; i < lines.length; i++) {
-					console.log(lines[i]);
-				}
+					var lines = data.replace(/<br>/g,"").split(/\n/);
+					var regDevice = /\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\s(\S*)\s(\S*)\s(.*)/;
+					var regDate = /^([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])\s/;
+					var regParaname = /(\S*):\s(.*)$/;
+					
+					for (var i=0; i < lines.length; i++) {
+						var date;
+						var line = $.trim( lines[i] );
+						//console.log(lines.length +':'+lines[i]);
+						if ( regDate.test( line ))
+							date = $.trim(line).match( regDate )[1];
+						if ( regDevice.test( line )) {
+							//Bad parse hack, but the JSON is not well formed
+							var room = $.trim( line.match( regDevice )[1] );
+							var key = $.trim( line.match( regDevice )[2] );
+							var parname_val = $.trim(line.match( regDevice )[3]);
+							var params = deviceStates[key] || {};
+							var paraname;
+							var val;
+							if ( regParaname.test(parname_val) ){
+								var paraname = $.trim(parname_val.match( regParaname )[1]);
+								var val = $.trim(parname_val.match( regParaname )[2]);
+							}
+							else {
+								var paraname = 'STATE';
+								var val = parname_val;
+							}
+							if ( (paraname in readings) && (key in devices) ){
+								var value = {"date": date,
+											  "room": room,
+												"val": val
+											};
+								params[paraname]=value;
+								deviceStates[key]=params;
+								update(key);
+							}
+							//console.log(key+' / '+paraname+' / '+val);
+						}
+					}
 				}
  
     		}, false);
@@ -366,33 +459,51 @@ function longPoll(roomName) {
 	});
 }
             
-function requestFhemStatus() {
-	$.ajaxSetup({
+function requestFhem(paraname) {
+/* 'list' is still the fastest cmd to get all important data
+*/
+	$.ajax({
 		async: true,
 		cache: false,
+		context:{paraname: paraname},
+		url: "../fhem",
 		data: {
-			cmd: "list .* state",
+			cmd: "list .* " + paraname,
 			XHR: "1"
 		}
-	});
-	
-	$.get( "../fhem", function( data ) {
-		//console.log(data);
-		if (data.substr(0, 6) == "Error:"){
-			$.toast(data);
-		} else {
+	})
+	.fail (function(jqXHR, textStatus, errorThrown) {
+    		$.toast("Error: " + textStatus + ": " + errorThrown);
+  	})
+  	.done (function( data ) {
 			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
-			var regState = /\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\s(.*)/;
-			deviceStates={};
+			var regDevice = /^(\S*)\s.*/;
+			var regState = (this.paraname!='STATE')
+						? /\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\s(.*)/
+						: /^\S*\s*(.*)/;
+			var regDate = /\s([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])\s/;
+			
 			for (var i=0; i < lines.length; i++) {
-				if (regState.test(lines[i])) {
-					var key = $.trim(lines[i]).match( /^(\S*)\s.*/ )[1];
-					var value = $.trim(lines[i]).match( regState )[1];
-					deviceStates[key]=value;
+				var date;
+				var line = $.trim( lines[i] );
+				if ( regDate.test( line ))
+					date = $.trim( line.match( regDate )[1] );
+				if (regState.test(line) && regDevice.test(line) ) {
+					var key = $.trim( line.match( regDevice )[1] );
+					var val = $.trim( line.match( regState )[1] );
+					var params = deviceStates[key] || {};
+					var paraname = this.paraname;
+					var value = {"date": date, "val": val};
+					params[paraname]=value;
+					if (key in devices)
+						deviceStates[key]=params;
 				}
 			}
-			update();
-		}
+		reading_cntr--;
+		if ( reading_cntr < 1 ) {
+			update('*'); 
+			reading_cntr = Object.keys(readings).length;
+ 		}
 	});
 
 }
@@ -402,32 +513,28 @@ this.getPart = function (s,p) {
 	return (c.length >= p && p>0 ) ? c[p-1] : s;
 };
 
-this.getDeviceStatus = function (dev) {
-	var state = deviceStates[dev];
-	return (state) ? state : '';
+this.getDeviceValue = function (device, src) {
+	var devname	= device.attr('device');
+	var paraname =	(src && src != '') ? device.data(src) : Object.keys(readings)[0];
+	if (devname && devname.length>0){
+		var params = deviceStates[devname];
+		return ( params && params[paraname] ) ? params[paraname].val : null;
+	}
+	return null;
 }
 
-this.getClimaValues = function (s) {
-	var c = (s !== undefined) ? s.split(" ") : '';
-	var r = [0,0,0];
-	if (c.length > 3) {
-		r[0]=c[1];r[1]=c[3];
-	}
-	if (c.length > 5) {
-		r[2]=c[5];
-	}
-	if ( s !== undefined && s.indexOf('set_desired-temp') > -1 )
-	{
-		r[1]=c[1];
-	}
+this.getClimaValues = function (device) {
+
+	var state = getDeviceValue( device, '');
+	var desi = getDeviceValue( device, 'get');
 	return {
-		temp: r[0],
-		desired: r[1],
-		valve: r[2]
+		temp: getDeviceValue( device, 'temp'),
+		desired: ( state && state.indexOf('set_') < 0 ) ? desi : getPart(state,2),
+		valve: getDeviceValue( device, 'valve')
 	};
 };
 
-getGradientColor = function(start_color, end_color, percent) {
+this.getGradientColor = function(start_color, end_color, percent) {
    // strip the leading # if it's there
    start_color = start_color.replace(/^\s*#|\s*$/g, '');
    end_color = end_color.replace(/^\s*#|\s*$/g, '');
@@ -552,8 +659,8 @@ var drawHomeSelector = function (event) {
 	var mx=this.x+this.w2;
 	var my=this.y+this.w2;
 	var r=this.radius*0.4;
-		
-	//console.log("mX: "+mx," mY: "+my," X: "+x," Y: "+y," r: "+r," cv:"+this.cv);
+
+	//Assign sector 1 for center pressed or set value 0
 	if ( Math.pow((mx-x),2) + Math.pow((my-y),2) < Math.pow(r,2)
 		|| this.cv == 0 ) 
 		sector=1;

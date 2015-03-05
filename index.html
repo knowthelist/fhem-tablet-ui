@@ -22,6 +22,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta name="widget_base_width" content="116">
 	<meta name="widget_base_height" content="131">
+	<meta name="longpoll" content="1">
 	
 	<link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
 	<link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
@@ -94,14 +95,14 @@
 </li>
 <li data-row="4" data-col="2" data-sizex="2" data-sizey="2">
 	<header>HOMESTATUS</header>
-	<div type="homestatus" device='homestatus' class="" ></div>
+	<div type="homestatus" device='HomeStatus' class="" ></div>
 </li>
 <li data-row="2" data-col="4" data-sizex="4" data-sizey="2">
 	<header>WOHNZIMMER</header>
 	<div class="container">
 	  <div class="left">
-		<div type="thermostat" device='WohnzimmerHeizung_Clima' class="cell"></div>
-		<div type="thermostat" device='WohnzimmerHeizung2_Clima' class="cell"></div>
+		<div type="thermostat" device="WohnzimmerHeizung_Clima" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
+		<div type="thermostat" device="WohnzimmerHeizung2_Clima" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
 	  </div>
 	  <div class="right">
 		<div type="switch" device="PowerAV_Sw" class="cell"></div>
@@ -109,9 +110,9 @@
 	  </div>
 	  <div class="right">
 		<div type="contact" device="TerrassenTuer" class="cell"></div>
-		<div type="label" device="THSensorWZ" data-part="2" data-unit="%B0C%0A" class="cell big"></div>
+		<div type="label" device="THSensorWZ" data-get="temperature" data-unit="%B0C%0A" class="cell big"></div>
 		<div type="label" class="cell">Temperatur</div>
-		<div type="label" device="THSensorWZ" data-part="4" data-unit="%" class="cell big"></div>
+		<div type="label" device="THSensorWZ" data-get="humidity" data-unit="%" class="cell big"></div>
 		<div type="label" class="cell">Luftfeuchte</div>
 	  </div>
 	</div>
@@ -130,8 +131,8 @@
 		<div type="label" class="cell">Radio</div>
 	  </div>
 	  <div class="left">
-		<div type="push" device="WebRadio" data-icon="fa-step-backward" data-cmd="Prev" class="cell" ></div>
-		<div type="push" device="WebRadio" data-icon="fa-step-forward" data-cmd="Next" class="cell" ></div>
+		<div type="push" device="WebRadio" data-icon="fa-step-backward" data-set="Prev" class="cell" ></div>
+		<div type="push" device="WebRadio" data-icon="fa-step-forward" data-set="Next" class="cell" ></div>
 		<div type="label" device="WebRadio" class="cell">radio</div>
 	  </div>
 	  <div class="right">
