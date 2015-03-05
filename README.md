@@ -47,11 +47,18 @@ Change the widgets you have and want to see on the dashboard
 - **type** : widget type
 - **device** : FHEM device name (call FHEM's 'list' command to get names)
 - **class** : css classes for look and formatting of the widget
-- **data-cmd** : command to send to FHEM (set <device> <cmd> <value>)
+- **data-get** : reading to get from FHEM (default 'STATE')
+- **data-set** : command to send to FHEM (set <device> <command> <value>)
 - **data-icon** : name of the font-awesome icon for the switch
 - **data-part** : position of the value to show 
+- **data-temp** : reading for measured temperature of thermostates
 
 Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
+
+To disable longpoll, set an other value then 1
+```html
+<meta name="longpoll" content="1">
+```
 
 Widgets
 -------
@@ -64,21 +71,43 @@ Currently there are 7 types of widgets.
 - **volume** : dial to set a single value (e.g. 0-60)
 - **homestatus** : selector for 4 states (1=home,2=night,3=away,4=holiday) 
 
-The ui gets/sets the fhem parameter 'state' (not 'STATE').
+By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
 
 ######Thermostat 
-Configure as device='...' that item which delivers temp, desired-temp and valve as one line on reading 'state'
-like this: `T: 17.5 desired: 16.0 valve: 0`
+Configure as device='...' that item which delivers temp and desired-temp as reading
+Default parameter are
+```
+data-get="desired-temp" data-temp="measured-temp"
+```
+Therefor for HomaMatic HM-CC-RT-DN this is sufficient.
+```html
+<div type="thermostat" device='KH_Clima' class="cell"></div>
+```
+The long format looks like this:
+```html
+<div type="thermostat" device="KH_Clima" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
+```
 
 ######Label
 Example for HM-WDS40-TH-I Funk-Temperatur-/Feuchtesensor innen 
 ```
-state	T: 20.0 H: 61
+STATE	T: 20.0 H: 61
 ```
 ```html
 <div type="label" device="THSensorWZ" data-part="2" data-unit="%B0C%0A" class="cell big"></div>
 <div type="label" class="cell">Temperatur</div>
 <div type="label" device="THSensorWZ" data-part="4" data-unit="%" class="cell big"></div>
+<div type="label" class="cell">Luftfeuchte</div>
+```
+But the same result can reached by get single reading:
+```
+humidity	58
+temperature	20.1
+```
+```html
+<div type="label" device="THSensorWZ" data-get="temperature" data-unit="%B0C%0A" class="cell big"></div>
+<div type="label" class="cell">Temperatur</div>
+<div type="label" device="THSensorWZ" data-get="humidity" data-unit="%" class="cell big"></div>
 <div type="label" class="cell">Luftfeuchte</div>
 ```
 
