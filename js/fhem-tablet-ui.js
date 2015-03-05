@@ -2,7 +2,7 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.2.0
+* Version: 1.2.1
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
@@ -14,12 +14,15 @@ var readings = {"STATE":true};
 var devices = {};
 var ready = true;
 var reading_cntr;
+var doLongPoll = false;
 var timer;
+var shortpollInterval = 30 * 1000; // 30 seconds
 
 $( document ).ready(function() {
 	
 	wx = $("meta[name='widget_base_width']").attr("content");
 	wy = $("meta[name='widget_base_height']").attr("content");
+	doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
 	
 	gridster = $(".gridster > ul").gridster({
           widget_base_dimensions: [wx, wy],
@@ -75,6 +78,7 @@ $( document ).ready(function() {
 			'release' : function (v) { 
 			  if (ready){
 				  	setFhemStatus(device, this.o.reading + ' ' + this.o.status);
+				  	this.$.data('curval', v);
 			  }
 			}	
 		});	
@@ -167,6 +171,8 @@ $( document ).ready(function() {
  	
 		var device = $(this).attr('device');
 		$(this).data('get', $(this).data('get') || 'STATE');
+		$(this).data('on', $(this).data('on') || 'on');
+		$(this).data('off', $(this).data('off') || 'off');
 		var elem = $(this).famultibutton({
 			icon: 'fa-lightbulb-o',
 			backgroundIcon: 'fa-circle',
@@ -175,10 +181,11 @@ $( document ).ready(function() {
 			
 			// Called in toggle on state.
 			toggleOn: function( ) {
-				 setFhemStatus(device,"on");
+				 setFhemStatus(device,$(this).data('on'));
 			},
 			toggleOff: function( ) {
-				 setFhemStatus(device,"off");
+			console.log($(this).data());
+				 setFhemStatus(device,$(this).data('off'));
 			},
 		});
 		elem.data('famultibutton',elem);
@@ -216,6 +223,8 @@ $( document ).ready(function() {
 		elem.data('famultibutton',elem);
 		//default reading parameter name
 		$(this).data('get', $(this).data('get') || 'STATE');
+		$(this).data('on', $(this).data('on') || 'open');
+		$(this).data('off', $(this).data('off') || 'closed');
 	});
  
 	$("*").focus(function(){
@@ -249,14 +258,14 @@ $( document ).ready(function() {
 	}
 	reading_cntr = Object.keys(readings).length;
 
-	if ( $("meta[name='longpoll']").attr("content") =='1' ){
+	if ( doLongPoll ){
 		setTimeout(function() {
 				longPoll();
 		}, 1000);
+		shortpollInterval = 15 * 60 * 1000; // 15 minutes
 	}
 	
-	
-	// refresh every 300 sec
+	// refresh every x secs
 	startInterval();
 
 });
@@ -268,7 +277,7 @@ function startInterval() {
 		for (var reading in readings) {
 			requestFhem(reading);
 		}
-     }, 300000); 
+     }, shortpollInterval); 
  }
 
 function update(filter) {
@@ -287,11 +296,15 @@ function update(filter) {
    		
    		if (deviceType == 'label'){
  	
-			var val = getDeviceValue( $(this), 'get' );
-			if (val){
-				part =  $(this).data('part') || -1;
-				unit = ($(this).data('unit')) ? unescape($(this).data('unit')) : '';
-				$(this).html( getPart(val,part) + "<span style='font-size: 50%;'>"
+			var value = getDeviceValue( $(this), 'get' );
+			if (value){
+				var part =  $(this).data('part') || -1;
+				var unit = ($(this).data('unit')) ? unescape($(this).data('unit')) : '';
+				var fix =  $(this).data('fix');
+				fix = ( $.isNumeric(fix) ) ? fix : 1;
+				var val = getPart(value,part);
+				val = ( $.isNumeric(val) ) ? Number(val).toFixed(fix) : val;
+				$(this).html( val + "<span style='font-size: 50%;'>"
 													+unit+"</span>" );
 			 }
 		} 
@@ -324,17 +337,17 @@ function update(filter) {
 		else if (deviceType == 'homestatus'){
 		
 			var value = getDeviceValue( $(this), 'get' );
-			if (value){
+			if (value && value > -1){
 				var knob_elem = $(this).find('input');
 				var val=0;
 				switch( value ) {
-					case 4:
+					case '3':
 						val=Math.PI;
 						break;
-					case 3:
+					case '4':
 						val=Math.PI*0.25;
 						break;
-					case 2:
+					case '2':
 						val=Math.PI*1.75;
 						break;
 					default:
@@ -347,9 +360,10 @@ function update(filter) {
 	 	else if (deviceType == 'switch' || deviceType == 'contact'){
 			
 			var state = getDeviceValue( $(this), 'get' );
-			if ( state == 'on' || state == 'open' )
+			
+			if ( state == $(this).data('on') )
 				$(this).data('famultibutton').setOn();
-			else
+			else if ( state == $(this).data('off') )
 				$(this).data('famultibutton').setOff();
 		}
  	});
@@ -371,23 +385,29 @@ function setFhemStatus(device,status) {
     		$.toast("Error: " + textStatus + ": " + errorThrown);
 	})
   	.done ( function( data ) {
-		setTimeout(function(){
-			for (var reading in readings) {
-				requestFhem(reading);
-			}
-		}, 4000);
+  		if ( !doLongPoll ){
+			setTimeout(function(){
+				for (var reading in readings) {
+					requestFhem(reading);
+				}
+			}, 4000);
+		}
 	});
 }
 
 var xhr;
+var currLine=0;
 function longPoll(roomName) {
 /* try to avoid this terrible fmt=JSON output format 
 	- no separat node for parameter name
 	- multiple nodes with the same data (2xdate)
 */
 	console.log('start longpoll');
+	
 	if (xhr)
-	xhr.abort();
+		xhr.abort();
+	currLine=0;
+	
 	$.ajax({
 		url: "../fhem",
 		cache: false,
@@ -417,7 +437,7 @@ function longPoll(roomName) {
 					var regDate = /^([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])\s/;
 					var regParaname = /(\S*):\s(.*)$/;
 					
-					for (var i=0; i < lines.length; i++) {
+					for (var i=currLine; i < lines.length; i++) {
 						var date;
 						var line = $.trim( lines[i] );
 						//console.log(lines.length +':'+lines[i]);
@@ -447,10 +467,13 @@ function longPoll(roomName) {
 								params[paraname]=value;
 								deviceStates[key]=params;
 								update(key);
+								
+								//console.log(date + ' / ' + key+' / '+paraname+' / '+val);
 							}
-							//console.log(key+' / '+paraname+' / '+val);
+							//console.log(date + ' / ' + key+' / '+paraname+' / '+val);
 						}
 					}
+					currLine = lines.length;
 				}
  
     		}, false);
