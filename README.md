@@ -78,7 +78,7 @@ Configure as device='...' that item which delivers temp and desired-temp as read
 
 Default parameters are:
 ```
-data-get="desired-temp" data-temp="measured-temp"
+data-get="desired-temp" data-temp="measured-temp" data-set="desired-temp"
 ```
 Therefor for HomaMatic HM-CC-RT-DN this is sufficient.
 ```html
@@ -101,7 +101,7 @@ STATE	T: 20.0 H: 61
 <div type="label" device="THSensorWZ" data-part="4" data-unit="%" class="cell big"></div>
 <div type="label" class="cell">Luftfeuchte</div>
 ```
-But the same result can reached by get single reading:
+But the same result can reached by getting single readings:
 ```
 humidity	58
 temperature	20.1
