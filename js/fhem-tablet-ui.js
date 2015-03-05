@@ -436,13 +436,15 @@ function longPoll(roomName) {
 					var regDevice = /\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\s(\S*)\s(\S*)\s(.*)/;
 					var regDate = /^([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])\s/;
 					var regParaname = /(\S*):\s(.*)$/;
+					lines.pop(); //remove last empty line
 					
 					for (var i=currLine; i < lines.length; i++) {
 						var date;
 						var line = $.trim( lines[i] );
-						//console.log(lines.length +':'+lines[i]);
+						//console.log('#'+line+'#');
+						
 						if ( regDate.test( line ))
-							date = $.trim(line).match( regDate )[1];
+							date = $.trim(line.match( regDate )[1]);
 						if ( regDevice.test( line )) {
 							//Bad parse hack, but the JSON is not well formed
 							var room = $.trim( line.match( regDevice )[1] );
