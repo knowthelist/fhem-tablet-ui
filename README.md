@@ -48,7 +48,7 @@ Change the widgets you have and want to see on the dashboard
 - **device** : FHEM device name (call FHEM's 'list' command to get names)
 - **class** : css classes for look and formatting of the widget
 - **data-get** : reading to get from FHEM (default 'STATE')
-- **data-set** : command to send to FHEM (set <device> <command> <value>)
+- **data-set** : command to send to FHEM (set \<device\> \<command\> \<value\>)
 - **data-icon** : name of the font-awesome icon for the switch
 - **data-part** : position of the value to show 
 - **data-temp** : reading for measured temperature of thermostates
@@ -74,8 +74,9 @@ Currently there are 7 types of widgets.
 By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
 
 ######Thermostat 
-Configure as device='...' that item which delivers temp and desired-temp as reading
-Default parameter are
+Configure as device='...' that item which delivers temp and desired-temp as reading.
+
+Default parameters are:
 ```
 data-get="desired-temp" data-temp="measured-temp"
 ```
@@ -87,6 +88,7 @@ The long format looks like this:
 ```html
 <div type="thermostat" device="KH_Clima" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
 ```
+
 
 ######Label
 Example for HM-WDS40-TH-I Funk-Temperatur-/Feuchtesensor innen 
