@@ -6,7 +6,7 @@
 	 /*
 	 * Just another dashboard for FHEM
 	 *
-	 * Version: 1.1.0
+	 * Version: 1.2.1
 	 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 	 * URL: https://github.com/knowthelist/fhem-tablet-ui
 	 *
@@ -53,6 +53,8 @@
 	<header>GARTEN</header>
 	<div type="switch" device="GartenLicht" class="cell" ></div>
 	<div type="label" class="cell">Licht</div>
+	<div type="switch" device="dummyRollo" data-on="up" data-off="down" data-icon="fa-bars" class="cell" ></div>
+	<div type="label" class="cell">Rollo</div>
 	<div type="label" device="OutTemp" data-part="2" data-unit="%B0C%0A" class="cell big"></div>
 	<div type="label" class="cell">Temperatur</div>
 </li>
@@ -112,7 +114,7 @@
 		<div type="contact" device="TerrassenTuer" class="cell"></div>
 		<div type="label" device="THSensorWZ" data-get="temperature" data-unit="%B0C%0A" class="cell big"></div>
 		<div type="label" class="cell">Temperatur</div>
-		<div type="label" device="THSensorWZ" data-get="humidity" data-unit="%" class="cell big"></div>
+		<div type="label" device="THSensorWZ" data-get="humidity" data-fix="0" data-unit="%" class="cell big"></div>
 		<div type="label" class="cell">Luftfeuchte</div>
 	  </div>
 	</div>

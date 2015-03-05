@@ -44,14 +44,20 @@ Change the widgets you have and want to see on the dashboard
 ```html
 <div type="thermostat" device='WohnzimmerHeizung_Clima' class="cell"></div>
 ```
-- **type** : widget type
-- **device** : FHEM device name (call FHEM's 'list' command to get names)
-- **class** : css classes for look and formatting of the widget
-- **data-get** : reading to get from FHEM (default 'STATE')
-- **data-set** : command to send to FHEM (set <device> <command> <value>)
-- **data-icon** : name of the font-awesome icon for the switch
-- **data-part** : position of the value to show 
-- **data-temp** : reading for measured temperature of thermostates
+
+All widgets have individual parameter settings. Set following attributes according your needs.
+
+- **type**      : widget type
+- **device**    : FHEM device name (call FHEM's 'list' command to get names)
+- **class**     : css classes for look and formatting of the widget
+- **data-get**  : name of the reading to get from FHEM (default 'STATE') | all widgets
+- **data-set**  : command to send to FHEM (set <device> <command> <value>) | all widgets
+- **data-on**   : value for ON status to get and to set. (default 'on') | switch,contact widgets
+- **data-off**  : value for OFF status to get and to set. (default 'off') | switch,contact widgets
+- **data-fix**  : keeping a specified number of decimals. (default '1')  | label widgets
+- **data-icon** : name of the font-awesome icon. 						 | switch,contact,push widgets
+- **data-part** : split position of the space separated value to show. 	 | label widgets
+- **data-temp** : reading for measured temperature of thermostates		 | thermostat widgets
 
 Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
 
@@ -110,6 +116,13 @@ temperature	20.1
 <div type="label" device="THSensorWZ" data-get="humidity" data-unit="%" class="cell big"></div>
 <div type="label" class="cell">Luftfeuchte</div>
 ```
+
+Example for how to create a widget for shutter via push: show state and set up/down
+```html
+<div type="switch" device="wzRollo" data-on="up" data-off="down" data-icon="fa-bars" class="cell" ></div>
+<div type="label" class="cell">Rollo</div>
+```
+
 
 License
 -------
