@@ -51,13 +51,14 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **device**    : FHEM device name (call FHEM's 'list' command to get names)
 - **class**     : css classes for look and formatting of the widget
 - **data-get**  : name of the reading to get from FHEM (default 'STATE') | all widgets
-- **data-set**  : command to send to FHEM (set <device> <command> <value>) | all widgets
+- **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) | all widgets
 - **data-on**   : value for ON status to get and to set. (default 'on') | switch,contact widgets
 - **data-off**  : value for OFF status to get and to set. (default 'off') | switch,contact widgets
 - **data-fix**  : keeping a specified number of decimals. (default '1')  | label widgets
 - **data-icon** : name of the font-awesome icon. 						 | switch,contact,push widgets
 - **data-part** : split position of the space separated value to show. 	 | label widgets
 - **data-temp** : reading for measured temperature of thermostates		 | thermostat widgets
+
 
 Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
 
@@ -80,10 +81,11 @@ Currently there are 7 types of widgets.
 By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
 
 ######Thermostat 
-Configure as device='...' that item which delivers temp and desired-temp as reading
-Default parameter are
+Configure as device='...' that item which delivers temp and desired-temp as reading.
+
+Default parameters are:
 ```
-data-get="desired-temp" data-temp="measured-temp"
+data-get="desired-temp" data-temp="measured-temp" data-set="desired-temp"
 ```
 Therefor for HomaMatic HM-CC-RT-DN this is sufficient.
 ```html
@@ -93,6 +95,7 @@ The long format looks like this:
 ```html
 <div type="thermostat" device="KH_Clima" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
 ```
+
 
 ######Label
 Example for HM-WDS40-TH-I Funk-Temperatur-/Feuchtesensor innen 
@@ -105,7 +108,7 @@ STATE	T: 20.0 H: 61
 <div type="label" device="THSensorWZ" data-part="4" data-unit="%" class="cell big"></div>
 <div type="label" class="cell">Luftfeuchte</div>
 ```
-But the same result can reached by get single reading:
+But the same result can reached by getting single readings:
 ```
 humidity	58
 temperature	20.1
