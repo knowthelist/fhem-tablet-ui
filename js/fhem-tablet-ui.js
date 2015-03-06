@@ -2,7 +2,7 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.2.1
+* Version: 1.2.2
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
@@ -171,8 +171,8 @@ $( document ).ready(function() {
  	
 		var device = $(this).attr('device');
 		$(this).data('get', $(this).data('get') || 'STATE');
-		$(this).data('on', $(this).data('on') || 'on');
-		$(this).data('off', $(this).data('off') || 'off');
+		$(this).data('on', $(this).attr('data-on') || 'on');
+		$(this).data('off', $(this).attr('data-off') || 'off');
 		var elem = $(this).famultibutton({
 			icon: 'fa-lightbulb-o',
 			backgroundIcon: 'fa-circle',
@@ -184,7 +184,6 @@ $( document ).ready(function() {
 				 setFhemStatus(device,$(this).data('on'));
 			},
 			toggleOff: function( ) {
-			console.log($(this).data());
 				 setFhemStatus(device,$(this).data('off'));
 			},
 		});
@@ -223,8 +222,8 @@ $( document ).ready(function() {
 		elem.data('famultibutton',elem);
 		//default reading parameter name
 		$(this).data('get', $(this).data('get') || 'STATE');
-		$(this).data('on', $(this).data('on') || 'open');
-		$(this).data('off', $(this).data('off') || 'closed');
+		$(this).data('on', $(this).attr('data-on') || 'open');
+		$(this).data('off', $(this).attr('data-off') || 'closed');
 	});
  
 	$("*").focus(function(){
