@@ -1,152 +1,152 @@
 <html>
-<title>FHEM</title>
-<head>
-	<!-- 
-	 /* FHEM tablet ui */
-	 /*
-	 * Just another dashboard for FHEM
-	 *
-	 * Version: 1.2.1
-	 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
-	 * URL: https://github.com/knowthelist/fhem-tablet-ui
-	 *
-	 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
-	 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
-	 *
-	 * - create a new folder named 'tablet' in /<fhem-path>/www
-	 * - copy all files incl. sub folders into /<fhem-path>/www/tablet
-	 * - add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
-	 * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
-	 */
-	-->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<meta name="widget_base_width" content="116">
-	<meta name="widget_base_height" content="131">
-	<meta name="longpoll" content="1">
-	
-	<link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
-	<link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
-	<link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
-	<link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
-	
-	<script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
-	<script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
-	<script type="text/javascript" src="/fhem/pgm2/jquery.knob.min.js"></script>
-	<script type="text/javascript" src="/fhem/tablet/lib/jquery.toast.min.js"></script>
-	<script type="text/javascript" src="/fhem/tablet/lib/fa-multi-button.min.js"></script>
-	<script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.js"></script>
-	
-	<!-- Enable this lines for usage with WebViewControl --><!--
-	<script type="text/javascript" src="/fhem/pgm2/cordova-2.3.0.js"></script>
-	<script type="text/javascript" src="/fhem/js/webviewcontrol.js"></script>
-	<script type="text/javascript">var wvcDevices = {'12345': 'Tablet'}; var wvcUserCssFile="webviewcontrol.css"</script>
-	--><!-- End for WebViewControl -->
-</head>
-<body>
+  <title>FHEM</title>
+  <head>
+    <!-- 
+    /* FHEM tablet ui */
+    /*
+    * Just another dashboard for FHEM
+    *
+    * Version: 1.2.1
+    * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
+    * URL: https://github.com/knowthelist/fhem-tablet-ui
+    *
+    * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
+    * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+    *
+    * - create a new folder named 'tablet' in /<fhem-path>/www
+    * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+    * - add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
+    * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+    */
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="widget_base_width" content="116">
+    <meta name="widget_base_height" content="131">
+    <meta name="longpoll" content="1">
 
-<div class="gridster">
-<ul>
-<li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-	<header></header>
-</li>
-<li data-row="2" data-col="1" data-sizex="1" data-sizey="4">
-	<header>GARTEN</header>
-	<div type="switch" device="GartenLicht" class="cell" ></div>
-	<div type="label" class="cell">Licht</div>
-	<div type="switch" device="dummyRollo" data-on="up" data-off="down" data-icon="fa-bars" class="cell" ></div>
-	<div type="label" class="cell">Rollo</div>
-	<div type="switch" device="dummySwitch" data-on="1" data-off="0" data-icon="fa-bars" class="cell" ></div>
-	<div type="label" class="cell">Switch</div>
-	<div type="label" device="OutTemp" data-part="2" data-unit="%B0C%0A" class="cell big"></div>
-	<div type="label" class="cell">Temperatur</div>
-</li>
-<li data-row="1" data-col="2" data-sizex="2" data-sizey="1">
-	<header>BAD</header>
-	<div type="thermostat" device='BadHeizung_Clima' class="cell left"></div>
-	<div class="right">
-		<div type="switch" device="BadRadio" data-icon="fa-music" class="cell" ></div>
-		<div type="label" class="cell" >Badradio</div>
-	</div>
-</li>
-<li data-row="1" data-col="3" data-sizex="2" data-sizey="1">
-	<header>SCHLAFZIMMER</header>
-	<div type="thermostat" device="SchlafzimmerHeizung_Clima" class="cell left"></div>
-	<div type="contact" device="SchlafzimmerFenster" class="cell right"></div>
-</li>
-<li data-row="1" data-col="4" data-sizex="2" data-sizey="1">
-	<header>KINDERZIMMER</header>
-	<div type="thermostat" device="KinderzimmerHeizung_Clima" class="cell left"></div>
-	<div type="contact" device="KinderzimmerFenster" class="cell right"></div>
-</li>
-<li data-row="1" data-col="8" data-sizex="1" data-sizey="1">
-	<header>GALERIE</header>
-	<div type="switch" device="GalerieLicht" class="cell"></div>
-	<div type="label" class="cell">Licht</div>
-</li>
-<li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
-	<header>KUECHE</header>
-	<div class="container">
-	  <div class="left">
-		<div type="thermostat" device='KuecheHeizung_Clima' class="cell"></div>
-		<div type="thermostat" device='KuecheHeizung2_Clima' class="cell"></div>
-	  </div>
-	  <div class="right">
-		<div type="switch" device="HerdLicht_Sw" class="cell"></div>
-		<div type="label" class="cell">HerdLicht</div>
-		<div type="contact" device="KuechenFenster" class="cell"></div>
-	  </div>
-	</div>
-</li>
-<li data-row="4" data-col="2" data-sizex="2" data-sizey="2">
-	<header>HOMESTATUS</header>
-	<div type="homestatus" device='HomeStatus' class="" ></div>
-</li>
-<li data-row="2" data-col="4" data-sizex="4" data-sizey="2">
-	<header>WOHNZIMMER</header>
-	<div class="container">
-	  <div class="left">
-		<div type="thermostat" device="WohnzimmerHeizung_Clima" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
-		<div type="thermostat" device="WohnzimmerHeizung2_Clima" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
-	  </div>
-	  <div class="right">
-		<div type="switch" device="PowerAV_Sw" class="cell"></div>
-		<div type="label" class="cell">SchrankLicht</div>
-	  </div>
-	  <div class="right">
-		<div type="contact" device="TerrassenTuer" class="cell"></div>
-		<div type="label" device="THSensorWZ" data-get="temperature" data-unit="%B0C%0A" class="cell big"></div>
-		<div type="label" class="cell">Temperatur</div>
-		<div type="label" device="THSensorWZ" data-get="humidity" data-fix="0" data-unit="%" class="cell big"></div>
-		<div type="label" class="cell">Luftfeuchte</div>
-	  </div>
-	</div>
-</li>
-<li data-row="2" data-col="8" data-sizex="1" data-sizey="4">
-</li>
- <li data-row="4" data-col="4" data-sizex="4" data-sizey="2">
-	<header>MULTIMEDIA</header>
-	<div class="container">
-	  <div class="left">
-		<div type="switch" device="Fernsehen" data-icon="fa-film" class="cell" ></div>
-		<div type="label" class="cell">TV</div>
-	  </div>
-	  <div class="left">
-		<div type="switch" device="RadioAtTablet" data-icon="fa-music" class="cell" ></div>
-		<div type="label" class="cell">Radio</div>
-	  </div>
-	  <div class="left">
-		<div type="push" device="WebRadio" data-icon="fa-step-backward" data-set="Prev" class="cell" ></div>
-		<div type="push" device="WebRadio" data-icon="fa-step-forward" data-set="Next" class="cell" ></div>
-		<div type="label" device="WebRadio" class="cell">radio</div>
-	  </div>
-	  <div class="right">
-	    <div type="volume" device='RadioVolumeOnTablet' class="cell left" ></div>
-	    <div type="label" class="cell">Volume</div>
-	  </div>
-	</div>
-</li>
- 
-</ul>
-</div> 
-</body>
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
+
+    <script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
+    <script type="text/javascript" src="/fhem/pgm2/jquery.knob.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/jquery.toast.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/fa-multi-button.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.js"></script>
+
+    <!-- Enable this lines for usage with WebViewControl --><!--
+    <script type="text/javascript" src="/fhem/pgm2/cordova-2.3.0.js"></script>
+    <script type="text/javascript" src="/fhem/js/webviewcontrol.js"></script>
+    <script type="text/javascript">var wvcDevices = {'12345': 'Tablet'}; var wvcUserCssFile="webviewcontrol.css"</script>
+    --><!-- End for WebViewControl -->
+  </head>
+  <body>
+
+    <div class="gridster">
+      <ul>
+        <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+        <header></header>
+        </li>
+        <li data-row="2" data-col="1" data-sizex="1" data-sizey="4">
+        <header>GARTEN</header>
+        <div type="switch" device="GartenLicht" class="cell" ></div>
+        <div type="label" class="cell">Licht</div>
+        <div type="switch" device="dummyRollo" data-on="up" data-off="down" data-icon="fa-bars" class="cell" ></div>
+        <div type="label" class="cell">Rollo</div>
+        <div type="switch" device="dummySwitch" data-on="1" data-off="0" data-icon="fa-bars" class="cell" ></div>
+        <div type="label" class="cell">Switch</div>
+        <div type="label" device="OutTemp" data-part="2" data-unit="%B0C%0A" class="cell big"></div>
+        <div type="label" class="cell">Temperatur</div>
+        </li>
+        <li data-row="1" data-col="2" data-sizex="2" data-sizey="1">
+        <header>BAD</header>
+        <div type="thermostat" device='BadHeizung_Clima' class="cell left"></div>
+        <div class="right">
+          <div type="switch" device="BadRadio" data-icon="fa-music" class="cell" ></div>
+          <div type="label" class="cell" >Badradio</div>
+        </div>
+        </li>
+        <li data-row="1" data-col="3" data-sizex="2" data-sizey="1">
+        <header>SCHLAFZIMMER</header>
+        <div type="thermostat" device="SchlafzimmerHeizung_Clima" class="cell left"></div>
+        <div type="contact" device="SchlafzimmerFenster" class="cell right"></div>
+        </li>
+        <li data-row="1" data-col="4" data-sizex="2" data-sizey="1">
+        <header>KINDERZIMMER</header>
+        <div type="thermostat" device="KinderzimmerHeizung_Clima" class="cell left"></div>
+        <div type="contact" device="KinderzimmerFenster" class="cell right"></div>
+        </li>
+        <li data-row="1" data-col="8" data-sizex="1" data-sizey="1">
+        <header>GALERIE</header>
+        <div type="switch" device="GalerieLicht" class="cell"></div>
+        <div type="label" class="cell">Licht</div>
+        </li>
+        <li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
+        <header>KUECHE</header>
+        <div class="container">
+          <div class="left">
+            <div type="thermostat" device='KuecheHeizung_Clima' class="cell"></div>
+            <div type="thermostat" device='KuecheHeizung2_Clima' class="cell"></div>
+          </div>
+          <div class="right">
+            <div type="switch" device="HerdLicht_Sw" class="cell"></div>
+            <div type="label" class="cell">HerdLicht</div>
+            <div type="contact" device="KuechenFenster" class="cell"></div>
+          </div>
+        </div>
+        </li>
+        <li data-row="4" data-col="2" data-sizex="2" data-sizey="2">
+        <header>HOMESTATUS</header>
+        <div type="homestatus" device='HomeStatus' class="" ></div>
+        </li>
+        <li data-row="2" data-col="4" data-sizex="4" data-sizey="2">
+        <header>WOHNZIMMER</header>
+        <div class="container">
+          <div class="left">
+            <div type="thermostat" device="WohnzimmerHeizung_Clima" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
+            <div type="thermostat" device="WohnzimmerHeizung2_Clima" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
+          </div>
+          <div class="right">
+            <div type="switch" device="PowerAV_Sw" class="cell"></div>
+            <div type="label" class="cell">SchrankLicht</div>
+          </div>
+          <div class="right">
+            <div type="contact" device="TerrassenTuer" class="cell"></div>
+            <div type="label" device="THSensorWZ" data-get="temperature" data-unit="%B0C%0A" class="cell big"></div>
+            <div type="label" class="cell">Temperatur</div>
+            <div type="label" device="THSensorWZ" data-get="humidity" data-fix="0" data-unit="%" class="cell big"></div>
+            <div type="label" class="cell">Luftfeuchte</div>
+          </div>
+        </div>
+        </li>
+        <li data-row="2" data-col="8" data-sizex="1" data-sizey="4">
+        </li>
+        <li data-row="4" data-col="4" data-sizex="4" data-sizey="2">
+        <header>MULTIMEDIA</header>
+        <div class="container">
+          <div class="left">
+            <div type="switch" device="Fernsehen" data-icon="fa-film" class="cell" ></div>
+            <div type="label" class="cell">TV</div>
+          </div>
+          <div class="left">
+            <div type="switch" device="RadioAtTablet" data-icon="fa-music" class="cell" ></div>
+            <div type="label" class="cell">Radio</div>
+          </div>
+          <div class="left">
+            <div type="push" device="WebRadio" data-icon="fa-step-backward" data-set="Prev" class="cell" ></div>
+            <div type="push" device="WebRadio" data-icon="fa-step-forward" data-set="Next" class="cell" ></div>
+            <div type="label" device="WebRadio" class="cell">radio</div>
+          </div>
+          <div class="right">
+            <div type="volume" device='RadioVolumeOnTablet' class="cell left" ></div>
+            <div type="label" class="cell">Volume</div>
+          </div>
+        </div>
+        </li>
+
+      </ul>
+    </div> 
+  </body>
 </html>
