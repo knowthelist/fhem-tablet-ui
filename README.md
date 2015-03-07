@@ -71,6 +71,7 @@ Widgets
 -------
 Currently there are 7 types of widgets.
 - **thermostat** : dial for heater thermostates to set desired value and show current value
+- **shutter** : dial for shutter device. set desired state (0-100, closed/off=0, opened/on=100).
 - **switch** : on / off
 - **label** : show state as text
 - **contact** : show state as icon (e.g. window open) 

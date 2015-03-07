@@ -167,6 +167,45 @@ $( document ).ready(function() {
 		
 	});
 
+  $('div[type="shutter"]').each(function( index ) {
+    var knob_elem =  jQuery('<input/>', {
+      type: 'text',
+        value: '0',
+    }).data($(this).data())
+    .appendTo($(this));
+
+    var device = $(this).attr('device');  
+
+    knob_elem.knob({
+      'min':0,
+      'max':100,
+      'height':80,
+      'width':80,
+      'angleOffset': $(this).data('angleoffset') || -120,
+      'angleArc': $(this).data('anglearc') || 240,
+      'bgColor': $(this).data('bgcolor') || 'transparent',
+      'fgColor': $(this).data('fgcolor') || '#cccccc',
+      'tkColor': $(this).data('tkcolor') || '#696969',
+      'minColor': '#4477ff',
+      'maxColor': '#ff0000',
+      'thickness': .25,
+      'cursor': 6,
+      'cmd': $(this).data('cmd') || '',
+      'draw' : drawDial,
+      'change' : function (v) { 
+        //reset poll timer to avoid jump back
+        startInterval();
+      },
+      'release' : function (v) { 
+        if (ready){
+          setFhemStatus(device, this.o.cmd + ' ' + v);
+          $.toast('set '+ device + this.o.cmd + ' ' + v );
+          this.$.data('curval', v);
+        }
+      }	
+    });
+  });
+
  	$('div[type="switch"]').each(function(index) {
  	
 		var device = $(this).attr('device');
@@ -324,6 +363,20 @@ function update(filter) {
 				}
 			}
 		}
+    else if (deviceType == 'shutter'){
+
+      var val = getDeviceValue( $(this), 'get' );
+      if (val){
+        var knob_elem = $(this).find('input');
+        if (val == 'off') {
+          val = 0;
+        } else if(val == 'on') {
+          val = 100;
+        }
+        if ( knob_elem.val() != val )
+          knob_elem.val( val ).trigger('change');
+      }
+    }
 	    else if (deviceType == 'volume'){
 		
 			var val = getDeviceValue( $(this), 'get' );
