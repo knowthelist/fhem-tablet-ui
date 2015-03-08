@@ -2,7 +2,7 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.2.2
+* Version: 1.2.3
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
@@ -20,8 +20,8 @@ var shortpollInterval = 30 * 1000; // 30 seconds
 
 $( document ).ready(function() {
 	
-	wx = $("meta[name='widget_base_width']").attr("content");
-	wy = $("meta[name='widget_base_height']").attr("content");
+	wx = 1 * $("meta[name='widget_base_width']").attr("content");
+	wy = 1 * $("meta[name='widget_base_height']").attr("content");
 	doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
 	
 	gridster = $(".gridster > ul").gridster({
@@ -372,6 +372,7 @@ function update(filter) {
 
 function setFhemStatus(device,status) {
 	startInterval();
+    console.log("set "+device+" "+status);
 	$.ajax({
 		async: true,
 		url: "../fhem",
