@@ -55,8 +55,8 @@
 	<div type="label" class="cell">Licht</div>
 	<div type="switch" device="dummyRollo" data-on="up" data-off="down" data-icon="fa-bars" class="cell" ></div>
 	<div type="label" class="cell">Rollo</div>
-	<div type="switch" device="dummySwitch" data-on="1" data-off="0" data-icon="fa-bars" class="cell" ></div>
-	<div type="label" class="cell">Switch</div>
+	<div type="switch" device="dummySwitch" data-on="1" data-off="0" data-icon="fa-lock" class="cell" ></div>
+	<div type="label" class="cell">T&#252;r</div>
 	<div type="label" device="OutTemp" data-part="2" data-unit="%B0C%0A" class="cell big"></div>
 	<div type="label" class="cell">Temperatur</div>
 </li>
@@ -71,12 +71,18 @@
 <li data-row="1" data-col="3" data-sizex="2" data-sizey="1">
 	<header>SCHLAFZIMMER</header>
 	<div type="thermostat" device="SchlafzimmerHeizung_Clima" class="cell left"></div>
-	<div type="contact" device="SchlafzimmerFenster" class="cell right"></div>
+	<div class="cell right">
+		<div type="contact" device="SchlafzimmerFenster" class="narrow"></div>
+		<div type="label" class="narrow darker small">Fenster</div>
+	</div>
 </li>
 <li data-row="1" data-col="4" data-sizex="2" data-sizey="1">
 	<header>KINDERZIMMER</header>
 	<div type="thermostat" device="KinderzimmerHeizung_Clima" class="cell left"></div>
-	<div type="contact" device="KinderzimmerFenster" class="cell right"></div>
+	<div class="cell right">
+		<div type="contact" device="KinderzimmerFenster" class="narrow"></div>
+		<div type="label" class="narrow darker small">Fenster</div>
+	</div>
 </li>
 <li data-row="1" data-col="8" data-sizex="1" data-sizey="1">
 	<header>GALERIE</header>
@@ -113,11 +119,16 @@
 		<div type="label" class="cell">SchrankLicht</div>
 	  </div>
 	  <div class="right">
-		<div type="contact" device="TerrassenTuer" class="cell"></div>
-		<div type="label" device="THSensorWZ" data-get="temperature" data-unit="%B0C%0A" class="cell big"></div>
-		<div type="label" class="cell">Temperatur</div>
-		<div type="label" device="THSensorWZ" data-get="humidity" data-fix="0" data-unit="%" class="cell big"></div>
-		<div type="label" class="cell">Luftfeuchte</div>
+	  	<div class="cell">
+			<div type="contact" device="TerrassenTuer" class="narrow"></div>
+			<div type="label" class="narrow darker small">Terassent&#252;r</div>
+		</div>
+		<div class="cell right">
+			<div type="label" device="THSensorWZ" data-get="temperature" data-unit="%B0C%0A" class="cell big"></div>
+			<div type="label" class="cell">Temperatur</div>
+			<div type="label" device="THSensorWZ" data-get="humidity" data-fix="0" data-unit="%" class="cell big"></div>
+			<div type="label" class="cell">Luftfeuchte</div>
+		</div>
 	  </div>
 	</div>
 </li>
