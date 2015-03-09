@@ -149,7 +149,6 @@ $( document ).ready(function() {
 			'maxColor': '#ff0000',
 			'thickness': .25,
 			'cursor': 6,
-			'reading': $(this).data('set') || 'desired-temp',
 			'draw' : drawDial,
 			'change' : function (v) { 
 				//reset poll timer to avoid jump back
@@ -250,7 +249,12 @@ $( document ).ready(function() {
 		if(!readings[reading])
 			readings[reading] = true;
 	});
-
+	$('[data-valve]').each(function(index){
+		var reading = $(this).data("valve");
+		if(!readings[reading])
+			readings[reading] = true;
+	});
+	
 	//get current values of readings
 	for (var reading in readings) {
 		requestFhem(reading);
@@ -318,7 +322,7 @@ function update(filter) {
 				}
 				if ( clima.temp > 0 && knob_elem.data('curval') != clima.temp ){
 					knob_elem.trigger( 
-						'configure', { "isValue": clima.temp }
+						'configure', { "isValue": clima.temp, "valveValue": clima.valve }
 					);		
 					knob_elem.data('curval', clima.temp);
 				}
@@ -661,7 +665,7 @@ var drawDial = function () {
 	// draw target temp cursor
 	c.beginPath();
 	this.o.fgColor= getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
-	c.strokeStyle = r ? this.o.fgColor : this.fgColor ;
+	c.strokeStyle = r ? this.o.fgColor : this.fgColor;
 	c.lineWidth = this.lineWidth * 2;
 	c.arc(this.xy, this.xy, this.radius-this.lineWidth/2, a.s, a.e, a.d);
 	c.stroke();
@@ -670,9 +674,17 @@ var drawDial = function () {
     var x = this.radius*0.7*Math.cos(acAngle);
     var y = this.radius*0.7*Math.sin(acAngle);
     c.fillStyle = this.o.tkColor;
-    c.font="10px Sans Serif";
+    c.font="10px sans-serif";
     c.fillText(this.o.isValue ,this.xy+x-5,this.xy+y+5);
   
+	//draw valve value as text
+	if ( this.o.valveValue ) {
+		var x = -5;
+		var y = this.radius*0.55;
+		c.fillStyle = this.o.tkColor;
+		c.font="10px sans-serif";
+		c.fillText(this.o.valveValue+'%',this.xy+x,this.xy+y+5);
+    }
   return false;
 };
 

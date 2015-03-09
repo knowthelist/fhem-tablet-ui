@@ -58,6 +58,7 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-icon** : name of the font-awesome icon. 						 | switch,contact,push widgets
 - **data-part** : split position of the space separated value to show. 	 | label widgets
 - **data-temp** : reading for measured temperature of thermostates		 | thermostat widgets
+- **data-valve**: reading for valve position of thermostates			 | thermostat widgets
 
 
 Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
@@ -95,7 +96,8 @@ The long format looks like this:
 ```html
 <div type="thermostat" device="KH_Clima" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
 ```
-
+The wigets will show the valve value only in case of a valid data-valve attribute.
+The default for data-valve ist null. That means, a empty data-valve attribute hides the valve label for the widget.
 
 ######Label
 Example for HM-WDS40-TH-I Funk-Temperatur-/Feuchtesensor innen 
