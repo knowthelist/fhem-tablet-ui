@@ -132,9 +132,11 @@ $( document ).ready(function() {
 		var device = $(this).attr('device');  
 		//default reading parameter name
 		$(this).data('get', $(this).data('get') || 'desired-temp');
+		$(this).data('set', $(this).data('set') || 'desired-temp');
 		$(this).data('temp', $(this).data('temp') || 'measured-temp');
 		
 		knob_elem.knob({
+			'reading': $(this).data('set'),
 			'min':10,
 			'max':30,
 			'height':100,
@@ -157,7 +159,7 @@ $( document ).ready(function() {
 			'release' : function (v) { 
 			  if (ready){
 				setFhemStatus(device, this.o.reading + ' ' + v);
-				$.toast('Set '+ device + this.o.reading + ' ' + v );
+				$.toast('Set '+ device + ' ' + this.o.reading + ' ' + v );
 				this.$.data('curval', v);
 			  }
 			}	
