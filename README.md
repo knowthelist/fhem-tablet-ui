@@ -52,8 +52,10 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **class**     : css classes for look and formatting of the widget
 - **data-get**  : name of the reading to get from FHEM (default 'STATE') | all widgets
 - **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) | all widgets
-- **data-on**   : value for ON status to get and to set. (default 'on') | switch,contact widgets
-- **data-off**  : value for OFF status to get and to set. (default 'off') | switch,contact widgets
+- **data-get-on**   : value for ON status to get. (default 'on') | switch,contact widgets
+- **data-get-off**  : value for OFF status to get. (default 'off') | switch,contact widgets
+- **data-set-on**   : value for ON status to set. (default: value of data-get-on) | switch,contact widgets
+- **data-set-off**  : value for OFF status to set. (default: value of data-get-off) | switch,contact widgets
 - **data-fix**  : keeping a specified number of decimals. (default '1')  | label widgets
 - **data-icon** : name of the font-awesome icon. 						 | switch,contact,push widgets
 - **data-part** : split position of the space separated value to show. 	 | label widgets

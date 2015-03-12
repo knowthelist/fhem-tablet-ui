@@ -17,6 +17,7 @@ var reading_cntr;
 var doLongPoll = false;
 var timer;
 var shortpollInterval = 30 * 1000; // 30 seconds
+var devs=Array();
 
 $( document ).ready(function() {
 	
@@ -109,13 +110,14 @@ $( document ).ready(function() {
 			'thickness': .25,
 			'tickdistance': 20,
 			'cursor': 6,
+			'reading': $(this).data('set') || '',
 			'draw' : drawDial,
 			'change' : function (v) { 
 				  startInterval();
 			},
 			'release' : function (v) { 
 				  if (ready){
-				  		setFhemStatus(device,v);
+				  		setFhemStatus(device, this.o.reading + ' ' + v);
 				  		this.$.data('curval', v);
 				  }
 			}	
@@ -149,6 +151,7 @@ $( document ).ready(function() {
 			'maxColor': '#ff0000',
 			'thickness': .25,
 			'cursor': 6,
+			'reading': $(this).data('cmd') || 'desired-temp',
 			'draw' : drawDial,
 			'change' : function (v) { 
 				//reset poll timer to avoid jump back
@@ -157,7 +160,7 @@ $( document ).ready(function() {
 			'release' : function (v) { 
 			  if (ready){
 				setFhemStatus(device, this.o.reading + ' ' + v);
-				$.toast('Set '+ device + this.o.reading + ' ' + v );
+				$.toast('Set '+ device + ' ' + this.o.reading + ' ' + v );
 				this.$.data('curval', v);
 			  }
 			}	
@@ -167,11 +170,13 @@ $( document ).ready(function() {
 	});
 
  	$('div[type="switch"]').each(function(index) {
- 	
+
 		var device = $(this).attr('device');
 		$(this).data('get', $(this).data('get') || 'STATE');
-		$(this).data('on', $(this).attr('data-on') || 'on');
-		$(this).data('off', $(this).attr('data-off') || 'off');
+		$(this).data('get-on', $(this).attr('data-get-on') || $(this).attr('data-on') || 'on');
+		$(this).data('get-off', $(this).attr('data-get-off') || $(this).attr('data-off') || 'off');
+		$(this).data('set-on', $(this).attr('data-set-on') || $(this).data('get-on'));
+		$(this).data('set-off', $(this).attr('data-set-off') || $(this).data('get-off'));
 		var elem = $(this).famultibutton({
 			icon: 'fa-lightbulb-o',
 			backgroundIcon: 'fa-circle',
@@ -180,10 +185,10 @@ $( document ).ready(function() {
 			
 			// Called in toggle on state.
 			toggleOn: function( ) {
-				 setFhemStatus(device,$(this).data('on'));
+				 setFhemStatus(device,$(this).data('set-on'));
 			},
 			toggleOff: function( ) {
-				 setFhemStatus(device,$(this).data('off'));
+				 setFhemStatus(device,$(this).data('set-off'));
 			},
 		});
 		elem.data('famultibutton',elem);
@@ -221,8 +226,9 @@ $( document ).ready(function() {
 		elem.data('famultibutton',elem);
 		//default reading parameter name
 		$(this).data('get', $(this).data('get') || 'STATE');
-		$(this).data('on', $(this).attr('data-on') || 'open');
-		$(this).data('off', $(this).attr('data-off') || 'closed');
+		$(this).data('get-on', $(this).attr('data-get-on') || $(this).attr('data-on') || 'open');
+		$(this).data('get-off', $(this).attr('data-get-off') || $(this).attr('data-off') || 'closed');
+
 	});
  
 	$("*").focus(function(){
@@ -235,7 +241,7 @@ $( document ).ready(function() {
 	$('div[device]').each(function(index){
 		var device = $(this).attr("device");
 		if(!devices[device])
-			devices[device] = true;
+			devices[device] = true; devs.push(device);
 	});
 	
 	//collect required readings
@@ -364,9 +370,9 @@ function update(filter) {
 			
 			var state = getDeviceValue( $(this), 'get' );
 			
-			if ( state == $(this).data('on') )
+			if ( state == $(this).data('get-on') )
 				$(this).data('famultibutton').setOn();
-			else if ( state == $(this).data('off') )
+			else if ( state == $(this).data('get-off') )
 				$(this).data('famultibutton').setOff();
 		}
  	});
@@ -379,7 +385,7 @@ function setFhemStatus(device,status) {
     console.log("set "+device+" "+status);
 	$.ajax({
 		async: true,
-		url: "../fhem",
+		url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
 		data: {
 			cmd: "set "+device+" "+status,
 			XHR: "1"
@@ -413,7 +419,7 @@ function longPoll(roomName) {
 	currLine=0;
 	
 	$.ajax({
-		url: "../fhem",
+		url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
 		cache: false,
 		complete: function() {
 			setTimeout(function() {
@@ -495,9 +501,9 @@ function requestFhem(paraname) {
 		async: true,
 		cache: false,
 		context:{paraname: paraname},
-		url: "../fhem",
+		url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
 		data: {
-			cmd: "list .* " + paraname,
+			cmd: "list " + devs.join() + " " + paraname,
 			XHR: "1"
 		}
 	})
