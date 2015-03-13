@@ -134,9 +134,11 @@ $( document ).ready(function() {
 		var device = $(this).attr('device');  
 		//default reading parameter name
 		$(this).data('get', $(this).data('get') || 'desired-temp');
+		$(this).data('set', $(this).data('set') || 'desired-temp');
 		$(this).data('temp', $(this).data('temp') || 'measured-temp');
 		
 		knob_elem.knob({
+			'reading': $(this).data('set'),
 			'min':10,
 			'max':30,
 			'height':100,
