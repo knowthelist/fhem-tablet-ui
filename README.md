@@ -76,19 +76,22 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-set**  : command to send to FHEM (set \<device\> \<command\>)
 - **data-icon** : name of the font-awesome icon. 
 
+####Thermostat widgets
+- **data-get**   : name of the reading to get from FHEM (default 'desired-temp')
+- **data-temp**  : reading for measured temperature of thermostates (default 'measured-temp')
+- **data-set**   : command to send to FHEM (set \<device\> \<command\> \<value\>) (default 'desired-temp')
+- **data-valve** : reading for valve position of thermostates
 
-Thermostat widgets
-=============
-- **data-get**  : name of the reading to get from FHEM (default 'desired-temp')
-- **data-temp** : reading for measured temperature of thermostates (default 'measured-temp')
-- **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) (default 'desired-temp')
-- **data-valve**: reading for valve position of thermostates
-
-Volume widgets
-=============
+####Volume widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) (default '')
+- **data-min**  : minimal value to set (default 0)
+- **data-max**  : maximal value to set (default 70)
 
+####Homestatus Widget
+- **data-get**  : name of the reading to get from FHEM (default 'STATE')
+- **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) (default '')
+4 states are valid: 1,2,3 or 4 (1=home,2=night,3=away,4=holiday) 
  
 Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
 
@@ -110,7 +113,7 @@ Currently there are 7 types of widgets.
 
 By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
 
-######Thermostat 
+####Thermostat 
 Configure as device='...' that item which delivers temp and desired-temp as reading.
 
 Default parameters are:
@@ -128,7 +131,7 @@ The long format looks like this:
 The wigets will show the valve value only in case of a valid data-valve attribute.
 The default for data-valve ist null. That means, a empty data-valve attribute hides the valve label for the widget.
 
-######Label
+####Label
 Example for HM-WDS40-TH-I Funk-Temperatur-/Feuchtesensor innen 
 ```
 STATE	T: 20.0 H: 61
@@ -153,10 +156,18 @@ temperature	20.1
 
 Example for how to create a widget for shutter via push: show state and set up/down
 ```html
-<div type="switch" device="wzRollo" data-on="up" data-off="down" data-icon="fa-bars" class="cell" ></div>
+<div type="switch" device="wzRollo" data-get-on="up" data-get-off="down" data-icon="fa-bars" class="cell" ></div>
 <div type="label" class="cell">Rollo</div>
 ```
 
+####Switch
+Example for how to create a widget for MILIGHT via toggle button. Usage of RegEx pattern for state request:
+```html
+<div type="switch" class="cell" 
+            device="MILIGHT_Zone1_Wohnzimmer" 
+            data-get-on="on.*"
+            data-get-off="off"></div>
+```
 
 License
 -------
