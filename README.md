@@ -51,10 +51,9 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **type**      : widget type
 - **device**    : FHEM device name (call FHEM's 'list' command to get names)
 - **class**     : css classes for look and formatting of the widget
-- **data-get**  : name of the reading to get from FHEM (default 'STATE')
-- **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>)
 
 ####Switch widgets
+- **data-get**      : name of the reading to get from FHEM (default 'STATE')
 - **data-get-on**   : value for ON status to get. (default 'on')
 - **data-get-off**  : value for OFF status to get. (default 'off')
 - **data-set-on**   : value for ON status to set. (default: value of data-get-on)
@@ -62,24 +61,35 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-icon**     : name of the font-awesome icon.
 
 ####Contact widgets
+- **data-get**      : name of the reading to get from FHEM (default 'STATE')
 - **data-get-on**   : value for ON status to get. (default 'on')
 - **data-get-off**  : value for OFF status to get. (default 'off')
 - **data-icon**     : name of the font-awesome icon.
 
 ####Label widgets
+- **data-get**  : name of the reading to get from FHEM
 - **data-fix**  : keeping a specified number of decimals. (default '1')
 - **data-icon** : name of the font-awesome icon. 						 
 - **data-part** : split position of the space separated value to show.
 
 ####Push widgets
+- **data-set**  : command to send to FHEM (set \<device\> \<command\>)
 - **data-icon** : name of the font-awesome icon. 
+
 
 Thermostat widgets
 =============
-- **data-temp** : reading for measured temperature of thermostates
+- **data-get**  : name of the reading to get from FHEM (default 'desired-temp')
+- **data-temp** : reading for measured temperature of thermostates (default 'measured-temp')
+- **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) (default 'desired-temp')
 - **data-valve**: reading for valve position of thermostates
 
+Volume widgets
+=============
+- **data-get**  : name of the reading to get from FHEM (default 'STATE')
+- **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) (default '')
 
+ 
 Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
 
 To disable longpoll, set an other value then 1
