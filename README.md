@@ -47,20 +47,37 @@ Change the widgets you have and want to see on the dashboard
 
 All widgets have individual parameter settings. Set following attributes according your needs.
 
+####All widgets
 - **type**      : widget type
 - **device**    : FHEM device name (call FHEM's 'list' command to get names)
 - **class**     : css classes for look and formatting of the widget
-- **data-get**  : name of the reading to get from FHEM (default 'STATE') | all widgets
-- **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) | all widgets
-- **data-get-on**   : value for ON status to get. (default 'on') | switch,contact widgets
-- **data-get-off**  : value for OFF status to get. (default 'off') | switch,contact widgets
-- **data-set-on**   : value for ON status to set. (default: value of data-get-on) | switch,contact widgets
-- **data-set-off**  : value for OFF status to set. (default: value of data-get-off) | switch,contact widgets
-- **data-fix**  : keeping a specified number of decimals. (default '1')  | label widgets
-- **data-icon** : name of the font-awesome icon. 						 | switch,contact,push widgets
-- **data-part** : split position of the space separated value to show. 	 | label widgets
-- **data-temp** : reading for measured temperature of thermostates		 | thermostat widgets
-- **data-valve**: reading for valve position of thermostates			 | thermostat widgets
+- **data-get**  : name of the reading to get from FHEM (default 'STATE')
+- **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>)
+
+####Switch widgets
+- **data-get-on**   : value for ON status to get. (default 'on')
+- **data-get-off**  : value for OFF status to get. (default 'off')
+- **data-set-on**   : value for ON status to set. (default: value of data-get-on)
+- **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
+- **data-icon**     : name of the font-awesome icon.
+
+####Contact widgets
+- **data-get-on**   : value for ON status to get. (default 'on')
+- **data-get-off**  : value for OFF status to get. (default 'off')
+- **data-icon**     : name of the font-awesome icon.
+
+####Label widgets
+- **data-fix**  : keeping a specified number of decimals. (default '1')
+- **data-icon** : name of the font-awesome icon. 						 
+- **data-part** : split position of the space separated value to show.
+
+####Push widgets
+- **data-icon** : name of the font-awesome icon. 
+
+Thermostat widgets
+=============
+- **data-temp** : reading for measured temperature of thermostates
+- **data-valve**: reading for valve position of thermostates
 
 
 Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
