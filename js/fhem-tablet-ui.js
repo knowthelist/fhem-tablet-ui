@@ -374,6 +374,10 @@ function update(filter) {
 				$(this).data('famultibutton').setOn();
 			else if ( state == $(this).data('get-off') )
 				$(this).data('famultibutton').setOff();
+	 		else if ( state.match(RegExp('^' + $(this).data('get-on') + '$')) )
+			    	$(this).data('famultibutton').setOn();
+			else if ( state.match(RegExp('^' + $(this).data('get-off') + '$')) )
+			    	$(this).data('famultibutton').setOff();
 		}
  	});
  	ready = true;
