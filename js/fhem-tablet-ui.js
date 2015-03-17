@@ -548,7 +548,7 @@ function requestFhem(paraname) {
 }
 
 this.getPart = function (s,p) {
-	var c = (s !== undefined) ? s.split(" ") : '';
+	var c = (typeof s != "undefined") ? s.split(" ") : '';
 	return (c.length >= p && p>0 ) ? c[p-1] : s;
 };
 
