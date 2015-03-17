@@ -369,15 +369,16 @@ function update(filter) {
 	 	else if (deviceType == 'switch' || deviceType == 'contact'){
 			
 			var state = getDeviceValue( $(this), 'get' );
-			
-			if ( state == $(this).data('get-on') )
-				$(this).data('famultibutton').setOn();
-			else if ( state == $(this).data('get-off') )
-				$(this).data('famultibutton').setOff();
-	 		else if ( state.match(RegExp('^' + $(this).data('get-on') + '$')) )
-			    	$(this).data('famultibutton').setOn();
-			else if ( state.match(RegExp('^' + $(this).data('get-off') + '$')) )
-			    	$(this).data('famultibutton').setOff();
+			if (state) {
+				if ( state == $(this).data('get-on') )
+					$(this).data('famultibutton').setOn();
+				else if ( state == $(this).data('get-off') )
+					$(this).data('famultibutton').setOff();
+				else if ( state.match(RegExp('^' + $(this).data('get-on') + '$')) )
+						$(this).data('famultibutton').setOn();
+				else if ( state.match(RegExp('^' + $(this).data('get-off') + '$')) )
+						$(this).data('famultibutton').setOff();
+			}
 		}
  	});
  	ready = true;
