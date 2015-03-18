@@ -310,9 +310,9 @@ function update(filter) {
 				var part =  $(this).data('part') || -1;
 				var unit = ($(this).data('unit')) ? unescape($(this).data('unit')) : '';
 				var fix =  $(this).data('fix');
-				fix = ( $.isNumeric(fix) ) ? fix : 1;
+				fix = ( $.isNumeric(fix) ) ? fix : -1;
 				var val = getPart(value,part);
-				val = ( $.isNumeric(val) ) ? Number(val).toFixed(fix) : val;
+				val = ( $.isNumeric(val) && fix>=0 ) ? Number(val).toFixed(fix) : val;
 				$(this).html( val + "<span style='font-size: 50%;'>"
 													+unit+"</span>" );
 			 }
