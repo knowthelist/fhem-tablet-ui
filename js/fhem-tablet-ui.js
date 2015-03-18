@@ -151,7 +151,7 @@ $( document ).ready(function() {
 			'maxColor': '#ff0000',
 			'thickness': .25,
 			'cursor': 6,
-			'reading': $(this).data('cmd') || 'desired-temp',
+			'reading': $(this).data('set') || 'desired-temp',
 			'draw' : drawDial,
 			'change' : function (v) { 
 				//reset poll timer to avoid jump back
