@@ -152,10 +152,11 @@ The long format looks like this:
 <div data-type="thermostat" data-device="KH_Clima" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
 ```
 The wigets will show the valve value only in case of a valid data-valve attribute.
-The default for data-valve ist null. That means, a empty data-valve attribute hides the valve label for the widget.
+The default for data-valve ist null. That means, a empty data-valve attribute hides the valve label for the widget.   
+![](http://knowthelist.github.io/fhem-tablet-ui/thermo.png)
 
 ####Label
-Example for HM-WDS40-TH-I Funk-Temperatur-/Feuchtesensor innen 
+**Example** for HM-WDS40-TH-I Funk-Temperatur-/Feuchtesensor innen 
 ```
 STATE	T: 20.0 H: 61
 ```
@@ -177,47 +178,51 @@ temperature	20.1
 <div data-type="label" class="cell">Luftfeuchte</div>
 ```
 
-Example for how to influence the color of the label according to value limits
+**Example** for how to influence the color of the label according to value limits
 ```html
 <div data-type="label" data-device="OutTemp" data-limits='[-73,10,23]' data-colors='["#6699FF","#AA6900","#FF0000"]' data-unit="%B0C%0A" class="cell big"></div>
 ```
 
-Example for how to create a widget for shutter via push: show state and set up/down
+**Example** for how to create a widget for shutter via push: show state and set up/down
 ```html
 <div data-type="switch" data-device="wzRollo" data-get-on="up" data-get-off="down" data-icon="fa-bars" class="cell" ></div>
 <div data-type="label" class="cell">Rollo</div>
 ```
 
 ####Switch
-Example for how to create a widget for MILIGHT via toggle button. Usage of RegEx pattern for state request:
+**Example** for how to create a widget for MILIGHT via toggle button. Usage of RegEx pattern for state request:
 ```html
 <div data-type="switch" class="cell" 
             data-device="MILIGHT_Zone1_Wohnzimmer" 
             data-get-on="on.*"
             data-get-off="off"></div>
 ```
+![](http://knowthelist.github.io/fhem-tablet-ui/button.png)
 
-Example for a button group to toggle between 4 different values for one device
+**Example** for a button group to toggle between 4 different values for one device
 ```html
 <div class="cell left">
-<div data-type="switch" data-device="dummy1" data-get-off="((?!Wert1).)*" data-get-on="Wert1" class="cell" ></div> <div data-type="label" class="cell">Wert1</div>
-<div data-type="switch" data-device="dummy1" data-get-off="((?!Wert2).)*" data-get-on="Wert2" class="cell" ></div>
-<div data-type="label" class="cell">Wert2</div>
-<div data-type="switch" data-device="dummy1" data-get-off="((?!Wert3).)*" data-get-on="Wert3" class="cell" ></div>
-<div data-type="label" class="cell">Wert3</div>
-<div data-type="switch" data-device="dummy1" data-get-off="((?!Wert4).)*" data-get-on="Wert4" class="cell" ></div>
-<div data-type="label" class="cell">Wert4</div>
+ <div data-type="switch" data-device="dummy1" data-get-off="((?!Wert1).)*" data-get-on="Wert1" class="cell" ></div>
+ <div data-type="label" class="cell">Wert1</div>
+ <div data-type="switch" data-device="dummy1" data-get-off="((?!Wert2).)*" data-get-on="Wert2" class="cell" ></div>
+ <div data-type="label" class="cell">Wert2</div>
+ <div data-type="switch" data-device="dummy1" data-get-off="((?!Wert3).)*" data-get-on="Wert3" class="cell" ></div>
+ <div data-type="label" class="cell">Wert3</div>
+ <div data-type="switch" data-device="dummy1" data-get-off="((?!Wert4).)*" data-get-on="Wert4" class="cell" ></div>
+ <div data-type="label" class="cell">Wert4</div>
 </div>
 ```
+![](http://knowthelist.github.io/fhem-tablet-ui/group.png)
 
 ####Dimmer
-Example for how to create a widget for a dimmer via toggle button incl. dimmer. Usage of RegEx pattern get all values for state on:
+**Example** for how to create a widget for a dimmer via toggle button incl. dimmer. Usage of RegEx pattern get all values for state on:
 ```html
 	<div data-type="dimmer" data-device="MyDimmer1" 
 				data-get-on="[0-9]{1,3}|on" 
 				data-get-off="off" 
 				class="cell"></div>
 ```
+![](http://knowthelist.github.io/fhem-tablet-ui/dimmer.png)
 
 Format
 -------
@@ -226,12 +231,13 @@ The available classes are: container,left,right,cell,narrow,darker,big,small
 
 Specials
 -------
-Example to call a command directly to FHEM. This calls "set dummy1 off"
+**Example** to call a command directly to FHEM. This calls "set dummy1 off"
 ```html
 <div onclick="setFhemStatus('dummy1','off')">All off!</div>
 ```
 
-```
+
 License
 -------
 This project is licensed under [MIT](http://www.opensource.org/licenses/mit-license.php).
+  
