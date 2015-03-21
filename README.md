@@ -214,6 +214,14 @@ temperature	20.1
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/group.png)
 
+###Slider
+**Example** for how to create a widget for a slider to set values from 10 to 90:
+```html
+<div data-type="slider" data-device='Dummy1' data-min="10" data-max="90" class="cell" ></div>
+<div data-type="label" class="cell">Light1</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/slider.png)
+
 ####Dimmer
 **Example** for how to create a widget for a dimmer via toggle button incl. dimmer. Usage of RegEx pattern get all values for state on:
 ```html
