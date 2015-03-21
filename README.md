@@ -1,7 +1,7 @@
 fhem-tablet-ui
 ========
 
-Just another dashboard for FHEM  http://fhem.de/fhem.html
+Just another dashboard for FHEM  http://fhem.de/fhem.html  
 But with a clear intention: Keep it short and simple!
 
 
@@ -123,7 +123,7 @@ To disable longpoll, set an other value then 1
 
 Widgets
 -------
-Currently there are 7 types of widgets.
+Currently there are 9 types of widgets.
 - **thermostat** : dial for heater thermostates to set desired value and show current value
 - **switch** : on / off
 - **label** : show state as text
@@ -224,7 +224,14 @@ Format
 The layout and look can be influinced be the class attribute.
 The available classes are: container,left,right,cell,narrow,darker,big,small
 
+Specials
+-------
+Example to call a command directly to FHEM. This calls "set dummy1 off"
+```html
+<div onclick="setFhemStatus('dummy1','off')">All off!</div>
+```
 
+```
 License
 -------
 This project is licensed under [MIT](http://www.opensource.org/licenses/mit-license.php).
