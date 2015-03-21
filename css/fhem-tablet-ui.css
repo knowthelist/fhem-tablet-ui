@@ -44,7 +44,7 @@ text-align: center;
 	margin-bottom: -5px  !important;
 }
  
- .small {
+.small {
     font-size: 80%;
 }
 
@@ -55,6 +55,12 @@ text-align: center;
 
 input {
 	visibility:hidden;
+}
+
+.slider_vertical{
+height: 100px  !important;
+max-height: 100px  !important;
+margin:10px 0px 0px 27% !important;
 }
 
 .jq-toast-wrap{
