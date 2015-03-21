@@ -93,7 +93,7 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
 
-####Homestatus Widget
+####Homestatus widget
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) (default '')
 4 states are valid: 1,2,3 or 4 (1=home,2=night,3=away,4=holiday) 
@@ -197,6 +197,19 @@ Example for how to create a widget for MILIGHT via toggle button. Usage of RegEx
             data-get-off="off"></div>
 ```
 
+Example for a button group to toggle between 4 different values for one device
+```html
+<div class="cell left">
+<div data-type="switch" data-device="dummy1" data-get-off="((?!Wert1).)*" data-get-on="Wert1" class="cell" ></div> <div data-type="label" class="cell">Wert1</div>
+<div data-type="switch" data-device="dummy1" data-get-off="((?!Wert2).)*" data-get-on="Wert2" class="cell" ></div>
+<div data-type="label" class="cell">Wert2</div>
+<div data-type="switch" data-device="dummy1" data-get-off="((?!Wert3).)*" data-get-on="Wert3" class="cell" ></div>
+<div data-type="label" class="cell">Wert3</div>
+<div data-type="switch" data-device="dummy1" data-get-off="((?!Wert4).)*" data-get-on="Wert4" class="cell" ></div>
+<div data-type="label" class="cell">Wert4</div>
+</div>
+```
+
 ####Dimmer
 Example for how to create a widget for a dimmer via toggle button incl. dimmer. Usage of RegEx pattern get all values for state on:
 ```html
@@ -205,6 +218,12 @@ Example for how to create a widget for a dimmer via toggle button incl. dimmer. 
 				data-get-off="off" 
 				class="cell"></div>
 ```
+
+Format
+-------
+The layout and look can be influinced be the class attribute.
+The available classes are: container,left,right,cell,narrow,darker,big,small
+
 
 License
 -------
