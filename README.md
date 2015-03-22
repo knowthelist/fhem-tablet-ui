@@ -112,6 +112,10 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-set**      : command to send to FHEM (set \<device\> \<command\> \<value\>) (default '')
 - **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
 
+####Image widgets
+- **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')
+- **data-size**     : width of the image in px or %, the height scales proportionally. (default: 50%)
+
 data-get-on and data-get-off accept RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
 
 Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
@@ -123,7 +127,7 @@ To disable longpoll, set an other value then 1
 
 Widgets
 -------
-Currently there are 9 types of widgets.
+Currently there are 10 types of widgets.
 - **thermostat** : dial for heater thermostates to set desired value and show current value
 - **switch** : on / off
 - **label** : show state as text
@@ -133,6 +137,7 @@ Currently there are 9 types of widgets.
 - **homestatus** : selector for 4 states (1=home,2=night,3=away,4=holiday) 
 - **dimmer** : toogle button with a setter for on value
 - **slider** : vertical slider to select between min/max value
+- **image** : insert an image, the URL is given by a reading
 
 By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
 
@@ -231,6 +236,12 @@ temperature	20.1
 				class="cell"></div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/dimmer.png)
+
+####Image
+**Example** for how to add an image to the dashboard which its URL is delivered by a FHEM module like PROPLANTA:
+```html
+<div data-type="image" data-device="Wetter1" data-get="fc0_weatherDayIcon" data-size="40px" class="cell"></div>
+```
 
 Format
 -------
