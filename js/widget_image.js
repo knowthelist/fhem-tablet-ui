@@ -5,6 +5,8 @@ var widget_image = {
   	_image=this;
   	_image.elements = $('div[data-type="image"]');
  	_image.elements.each(function(index) {
+ 	
+	 	$(this).data('get', $(this).data('get') || 'STATE');
 		var elem =  jQuery('<img/>', {
 				alt: 'img',
 			}).appendTo($(this));
