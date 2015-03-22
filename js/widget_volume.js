@@ -139,8 +139,8 @@ var widget_volume = {
 		knob_elem.knob({
 			'min': $(this).data('min') || 0,
 			'max': $(this).data('max') || 70,
-			'height':150,
-			'width':150,
+			'height':$(this).hasClass('small')?100:150,
+			'width':$(this).hasClass('small')?100:150,
 			'angleOffset': $(this).data('angleoffset') || -120,
 			'angleArc': $(this).data('anglearc') || 240,
 			'bgColor': $(this).data('bgcolor') || 'transparent',
