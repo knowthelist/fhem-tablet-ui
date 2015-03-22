@@ -151,8 +151,8 @@ var widget_thermostat = {
 		knob_elem.knob({
 			'min':10,
 			'max':30,
-			'height':100,
-			'width':100,
+			'height':$(this).hasClass('big')?150:100,
+			'width':$(this).hasClass('big')?150:100,
 			'step': 1*$(this).data('step') || 1,
 			'angleOffset': $(this).data('angleoffset') || -120,
 			'angleArc': $(this).data('anglearc') || 240,
