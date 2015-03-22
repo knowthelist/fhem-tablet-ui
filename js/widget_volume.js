@@ -173,7 +173,7 @@ var widget_volume = {
 	else
    		deviceElements= _volume.elements.filter('div[data-device="'+dev+'"]');
 
-	deviceElements.each(function(index,elem) {
+	deviceElements.each(function(index) {
 			
 			var val = getDeviceValue( $(this), 'get' );
 			if (val){

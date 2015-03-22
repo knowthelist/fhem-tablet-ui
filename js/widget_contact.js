@@ -31,7 +31,7 @@ var widget_contact = {
 	else
    		deviceElements= _contact.elements.filter('div[data-device="'+dev+'"]');
 
-	deviceElements.each(function(index,elem) {
+	deviceElements.each(function(index) {
 		if ( $(this).data('get')==par || par =='*'){	
 			var state = getDeviceValue( $(this), 'get' );
 			if (state) {

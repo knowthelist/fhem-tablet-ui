@@ -36,7 +36,7 @@ var widget_switch = {
 	else
    		deviceElements= _switch.elements.filter('div[data-device="'+dev+'"]');
 
-	deviceElements.each(function(index,elem) {
+	deviceElements.each(function(index) {
 		if ( $(this).data('get')==par || par =='*'){	
 			var state = getDeviceValue( $(this), 'get' );
 			if (state) {

@@ -157,7 +157,7 @@ var widget_homestatus = {
 	else
    		deviceElements= _homestatus.elements.filter('div[data-device="'+dev+'"]');
 
-	deviceElements.each(function(index,elem) {
+	deviceElements.each(function(index) {
 		
 			var value = getDeviceValue( $(this), 'get' );
 			if (value && value > -1){
