@@ -17,7 +17,7 @@ var widget_template = {
 	else
    		deviceElements= _template.elements.filter('div[data-device="'+dev+'"]');
 
-	deviceElements.each(function(index,elem) {
+	deviceElements.each(function(index) {
 	 	if ( $(this).data('get')==par || par =='*'){
 			
 			var value = getDeviceValue( $(this), 'get' );

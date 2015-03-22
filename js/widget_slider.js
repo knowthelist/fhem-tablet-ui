@@ -61,9 +61,9 @@ var widget_slider = {
 					pwrng.setStart(parseInt(state));
 					DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+state );
 				}
+				elem.css({visibility:'visible'});
 			}
 		}
-		elem.css({visibility:'visible'});
 	});
    }
 			 
