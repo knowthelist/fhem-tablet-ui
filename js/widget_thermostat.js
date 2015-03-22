@@ -1,7 +1,6 @@
 var widget_thermostat = {
   elements: null,
   _thermostat:null,
-  getnix: function() { return 'nix';},
   getClimaValues: function (device) {
 
 	var state = getDeviceValue( device, '');
@@ -86,7 +85,7 @@ var widget_thermostat = {
 		
 		if ((tick > acAngle && tick < a.s) || (tick-tick_w*4 <= acAngle && tick+tick_w*4 >= a.s)){
 			// draw diff range in gradient color
-			c.strokeStyle = getGradientColor(maxcolor, mincolor, (this.endAngle-tick)/this.angleArc);   
+			c.strokeStyle = _thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-tick)/this.angleArc);   
 		}
 		else {
 			// draw normal ticks
@@ -112,7 +111,7 @@ var widget_thermostat = {
 
 	// draw target temp cursor
 	c.beginPath();
-	this.o.fgColor= getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
+	this.o.fgColor= _thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
 	c.strokeStyle = r ? this.o.fgColor : this.fgColor;
 	c.lineWidth = this.lineWidth * 2;
 	c.arc(this.xy, this.xy, this.radius-this.lineWidth/2, a.s, a.e, a.d);
