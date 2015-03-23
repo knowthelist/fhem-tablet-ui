@@ -6,6 +6,17 @@ body {
     color: #eeeeee;
 }
 
+@font-face {
+    font-family: 'MeteoconsRegular';
+    src: url('../fonts/meteocons-webfont.eot');
+    src: url('../fonts/meteocons-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/meteocons-webfont.woff') format('woff'),
+         url('../fonts/meteocons-webfont.ttf') format('truetype'),
+         url('../fonts/meteocons-webfont.svg#MeteoconsRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .container:after {
   content:"";
   display:table;
@@ -37,13 +48,19 @@ text-align: center;
 	color: #8C8C8C;
 }
 
-.big {
-    font-size: xx-large;
+[data-type="label"].big {
+    font-size: 250%;
 	color: #aa6900;
 	margin-top: 20px  !important;
 	margin-bottom: -5px  !important;
 }
- 
+
+.bigger {
+    font-size: 300%;
+} 
+.big {
+    font-size: 200%;
+}
 .small {
     font-size: 80%;
 }
@@ -107,4 +124,11 @@ ul, ol {
 	line-height: normal;
 	padding: 4px 10px ;
 	cursor: move;
+}
+
+.weather:before {
+	font-family: 'MeteoconsRegular';
+	content: attr(data-icon);
+	font-size: 200%;
+	color: #dcdcdc;
 }
