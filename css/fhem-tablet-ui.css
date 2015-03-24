@@ -38,6 +38,10 @@ width: auto;
 text-align: center;
 }
 
+.cell > *:not([data-type="label"]){ 
+cursor: pointer;
+}
+
 .narrow {
 margin:-5px 5px -6px 5px !important;
 width: auto;

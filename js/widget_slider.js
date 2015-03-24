@@ -9,6 +9,7 @@ var widget_slider = {
 		var device = $(this).data('device');
 		$(this).data('get', $(this).data('get') || 'STATE');
 		$(this).data('set', $(this).data('set') || '');
+		readings[$(this).data('get')] = true;
 		//ToDo: more data parameter: color etc. 
 		
 		var storeval = localStorage.getItem("slider_"+device);

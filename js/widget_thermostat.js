@@ -141,12 +141,16 @@ var widget_thermostat = {
 		var knob_elem =  jQuery('<input/>', {
 			type: 'text',
 			value: '10',
+			disabled : true,
 		}).appendTo($(this));
 		  
 		var device = $(this).data('device');  
 		//default reading parameter name
 		$(this).data('get', $(this).data('get') || 'desired-temp');
 		$(this).data('temp', $(this).data('temp') || 'measured-temp');
+		readings[$(this).data('get')] = true;
+		readings[$(this).data('temp')] = true;
+		readings[$(this).data('valve')] = true;
 		
 		knob_elem.knob({
 			'min':10,
@@ -176,16 +180,6 @@ var widget_thermostat = {
 			  }
 			}	
 		});
-	});
-	$('[data-temp]').each(function(index){
-		var reading = $(this).data("temp");
-		if(!readings[reading])
-			readings[reading] = true;
-	});
-	$('[data-valve]').each(function(index){
-		var reading = $(this).data("valve");
-		if(!readings[reading])
-			readings[reading] = true;
 	});
   },
   update: function (dev,par) {

@@ -7,6 +7,7 @@ var widget_label = {
   	_label.elements = $('div[data-type="label"]');
  	_label.elements.each(function(index) {
    		$(this).data('get', $(this).data('get') || 'STATE');
+   		readings[$(this).data('get')] = true;
 	 });
   },
   update: function (dev,par) {
