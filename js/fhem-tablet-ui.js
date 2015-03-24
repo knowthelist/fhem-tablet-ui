@@ -2,7 +2,7 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.3.0
+* Version: 1.3.1
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
@@ -153,14 +153,14 @@ function update(dev,par) {
 	DEBUG && console.log('update done for device:'+dev+' parameter:'+par);
 }
 
-function setFhemStatus(device,status) {
+function setFhemStatus(cmdline) {
 	startInterval();
-    DEBUG && console.log("set "+device+" "+status);
+    DEBUG && console.log('send to FHEM: '+cmdline);
 	$.ajax({
 		async: true,
 		url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
 		data: {
-			cmd: "set "+device+" "+status,
+			cmd: cmdline,
 			XHR: "1"
 		}
 	})

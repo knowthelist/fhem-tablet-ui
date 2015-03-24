@@ -9,6 +9,7 @@ var widget_slider = {
 		var device = $(this).data('device');
 		$(this).data('get', $(this).data('get') || 'STATE');
 		$(this).data('set', $(this).data('set') || '');
+		$(this).data('cmd', $(this).data('cmd') || 'set');
 		readings[$(this).data('get')] = true;
 		//ToDo: more data parameter: color etc. 
 		
@@ -30,10 +31,10 @@ var widget_slider = {
 		var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
 
 		$(this).bind(releaseEventType, function(e) {
-			var val = $(this).find('input').val();
-			localStorage.setItem("slider_"+device, val);
-   			setFhemStatus(device,$(this).data('set')+' '+val);
-   			$.toast('Set '+ device + ' ' + $(this).data('set')+' '+val);
+			var v = $(this).find('input').val();
+			var cmdl = $(this).data('cmd')+' '+device+' '+$(this).data('set')+' '+v;
+			setFhemStatus(cmdl);
+			$.toast(cmdl);
 			e.preventDefault();
 		});
 		
