@@ -32,7 +32,7 @@ var plugins = {
 		url: dir+'/'+name+'.js',
 		dataType: "script",
 		cache: true,
-		async: false,
+		//async: false,
 		context:{name: name},
 		success: function () { 
 				DEBUG && console.log('Loaded plugin: '+this.name);
