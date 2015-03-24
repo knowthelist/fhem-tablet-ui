@@ -16,7 +16,7 @@ var types = {};
 var ready = true;
 var reading_cntr;
 var DEBUG = false;
-var doLongPoll = false;
+var doLongPoll = false
 var timer;
 var dir;
 var shortpollInterval = 30 * 1000; // 30 seconds
@@ -32,7 +32,7 @@ var plugins = {
 		url: dir+'/'+name+'.js',
 		dataType: "script",
 		cache: true,
-		//async: false,
+		async: false,
 		context:{name: name},
 		success: function () { 
 				DEBUG && console.log('Loaded plugin: '+this.name);
@@ -100,7 +100,7 @@ $( document ).ready(function() {
 	for (var widget_type in types) {
 		plugins.load('widget_'+widget_type);
 	}
-	
+	DEBUG && console.log('Collecting required readings');
 	//collect required readings
 	$('[data-get]').each(function(index){
 		var reading = $(this).data("get");
@@ -134,7 +134,6 @@ $( document ).ready(function() {
 	
 	// refresh every x secs
 	startInterval();
-
 });
 
 function startInterval() {

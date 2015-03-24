@@ -20,7 +20,7 @@ var widget_contact = {
 		$(this).data('get', $(this).data('get') || 'STATE');
 		$(this).data('get-on', $(this).attr('data-get-on') || $(this).attr('data-on') || 'open');
 		$(this).data('get-off', $(this).attr('data-get-off') || $(this).attr('data-off') || 'closed');
-
+		readings[$(this).data('get')] = true;
 	 });
   },
   update: function (dev,par) {

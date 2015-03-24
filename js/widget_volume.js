@@ -73,10 +73,12 @@ var widget_volume = {
 		var knob_elem =  jQuery('<input/>', {
 			type: 'text',
 			value: '10',
+			disabled : true,
 		}).appendTo($(this));
 		
 		var device = $(this).data('device');
 		$(this).data('get', $(this).data('get') || 'STATE');
+		readings[$(this).data('get')] = true;
 		
 		var mode=0; //no hue colors
 		var hdDefaultColor='#aa6900';

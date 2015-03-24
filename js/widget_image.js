@@ -7,6 +7,7 @@ var widget_image = {
  	_image.elements.each(function(index) {
  	
 	 	$(this).data('get', $(this).data('get') || 'STATE');
+	 	readings[$(this).data('get')] = true;
 		var elem =  jQuery('<img/>', {
 				alt: 'img',
 			}).appendTo($(this));

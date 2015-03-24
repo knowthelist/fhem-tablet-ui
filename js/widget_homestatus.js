@@ -120,6 +120,7 @@ var widget_homestatus = {
 
 		var device = $(this).data('device');
 		$(this).data('get', $(this).data('get') || 'STATE');
+		readings[$(this).data('get')] = true;
 		
 		knob_elem.knob({
 			'min': 0,

@@ -12,6 +12,7 @@ var widget_dimmer = {
 		$(this).data('get-on', $(this).attr('data-get-on') || $(this).attr('data-on') || 'on');
 		$(this).data('get-off', $(this).attr('data-get-off') || $(this).attr('data-off') || 'off');
 		$(this).data('set-off', $(this).attr('data-set-off') || $(this).data('get-off'));
+		readings[$(this).data('get')] = true;
 		var elem = $(this).famultibutton({
 			icon: 'fa-lightbulb-o',
 			backgroundIcon: 'fa-circle',
