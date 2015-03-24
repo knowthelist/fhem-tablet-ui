@@ -120,6 +120,7 @@ var widget_homestatus = {
 
 		var device = $(this).data('device');
 		$(this).data('get', $(this).data('get') || 'STATE');
+		$(this).data('cmd', $(this).data('cmd') || 'set');
 		readings[$(this).data('get')] = true;
 		
 		knob_elem.knob({
@@ -143,7 +144,9 @@ var widget_homestatus = {
 			},
 			'release' : function (v) { 
 			  if (ready){
-				  	setFhemStatus(device, this.o.reading + ' ' + this.o.status);
+			  		var cmdl = $(this).data('cmd')+' '+device+' '+$(this).data('set')+' '+this.o.status;
+				  	setFhemStatus(cmdl);
+				  	$.toast(cmdl);
 				  	this.$.data('curval', v);
 			  }
 			}	

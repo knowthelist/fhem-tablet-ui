@@ -93,10 +93,15 @@ var widget_volume = {
 		if ( $(this).hasClass('hue-front')){
 			mode = mode | 1<<2; 
 		}
-
+		
+		var maxval = $(this).data('max') || 70;
+		$(this).data('max', maxval);
+		$(this).data('max360', (maxval>360)?360:maxval);
+		
 		knob_elem.knob({
 			'min': $(this).data('min') || 0,
-			'max': $(this).data('max') || 70,
+			'max': $(this).data('max360'),
+			'origmax': $(this).data('max'),
 			'height':$(this).hasClass('small')?100:150,
 			'width':$(this).hasClass('small')?100:150,
 			'angleOffset': $(this).data('angleoffset') || -120,
@@ -109,15 +114,18 @@ var widget_volume = {
 			'tickdistance': ((mode>>1) % 2 != 0)?4:20,
 			'mode': mode,
 			'cursor': 6,
-			'reading': $(this).data('set') || '',
+			'cmd': $(this).data('cmd') || 'set',
+			'set': $(this).data('set') || '',
 			'draw' : _volume.drawDial,
 			'change' : function (v) { 
 				  startInterval();
 			},
 			'release' : function (v) { 
 				  if (ready){
-				  		setFhemStatus(device, this.o.reading + ' ' + v);
-				  		$.toast('Set '+ device + ' ' + this.o.reading + ' ' + v );
+				  		v=v*(this.o.origmax/this.o.max);
+				  		var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v.toFixed(0);
+				  		setFhemStatus(cmdl);
+				  		$.toast(cmdl);
 				  		this.$.data('curval', v);
 				  }
 			}	
@@ -138,6 +146,7 @@ var widget_volume = {
 			if (val){
 				var knob_elem = $(this).find('input');
 				if ( knob_elem.val() != val ){
+					val = (val * ($(this).data('max360')/$(this).data('max'))).toFixed(0);
 					knob_elem.val( val ).trigger('change');
 					DEBUG && console.log( 'volume dev:'+dev+' par:'+par+' change:valve to ' +val );
 				}

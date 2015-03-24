@@ -167,7 +167,8 @@ var widget_thermostat = {
 			'maxColor': '#ff0000',
 			'thickness': .25,
 			'cursor': 6,
-			'reading': $(this).data('set') || 'desired-temp',
+			'cmd': $(this).data('cmd') || 'set',
+			'set': $(this).data('set') || 'desired-temp',
 			'draw' : _thermostat.drawDial,
 			'change' : function (v) { 
 				//reset poll timer to avoid jump back
@@ -175,8 +176,10 @@ var widget_thermostat = {
 			},
 			'release' : function (v) { 
 			  if (ready){
-				setFhemStatus(device, this.o.reading + ' ' + v);
-				$.toast('Set '+ device + ' ' + this.o.reading + ' ' + v );
+		 		    var elem = $(this).find('input');
+					var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v;
+				  	setFhemStatus(cmdl);
+				  	$.toast(cmdl);
 			  }
 			}	
 		});

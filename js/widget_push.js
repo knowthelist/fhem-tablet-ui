@@ -7,6 +7,7 @@ var widget_push = {
  	_push.elements.each(function(index) {
 
 		var device = $(this).data('device');
+		$(this).data('cmd', $(this).data('cmd') || 'set');
 		var elem = $(this).famultibutton({
 			backgroundIcon: 'fa-circle-thin',
 			offColor: '#505050',
@@ -15,7 +16,7 @@ var widget_push = {
 			
 			// Called in toggle on state.
 			toggleOn: function( ) {
-				 setFhemStatus(device,$(this).data('set'));
+				 setFhemStatus($(this).data('cmd')+' '+device+' '+$(this).data('set'));
 			},
 
 	 	 });

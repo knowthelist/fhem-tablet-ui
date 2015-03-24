@@ -8,6 +8,7 @@ var widget_switch = {
 
 		var device = $(this).data('device');
 		$(this).data('get', $(this).data('get') || 'STATE');
+		$(this).data('cmd', $(this).data('cmd') || 'set');
 		$(this).data('get-on', $(this).attr('data-get-on') || $(this).attr('data-on') || 'on');
 		$(this).data('get-off', $(this).attr('data-get-off') || $(this).attr('data-off') || 'off');
 		$(this).data('set-on', $(this).attr('data-set-on') || $(this).data('get-on'));
@@ -21,10 +22,10 @@ var widget_switch = {
 			
 			// Called in toggle on state.
 			toggleOn: function( ) {
-				 setFhemStatus(device,$(this).data('set-on'));
+				 setFhemStatus($(this).data('cmd')+' '+device+' '+$(this).data('set-on'));
 			},
 			toggleOff: function( ) {
-				 setFhemStatus(device,$(this).data('set-off'));
+				 setFhemStatus($(this).data('cmd')+' '+device+' '+$(this).data('set-off'));
 			},
 		});
 	 });
