@@ -218,7 +218,7 @@ function longPoll(roomName) {
 					var lines = data.replace(/<br>/g,"").split(/\n/);
 					var regDevice = /\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\s(\S*)\s(\S*)\s(.*)/;
 					var regDate = /^([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])\s/;
-					var regParaname = /^(\S{3,}):\s(.*)$/;
+					var regParaname = /^(\S{3,}):\s?(.*)$/;
 					lines.pop(); //remove last empty line
 					
 					for (var i=currLine; i < lines.length; i++) {
@@ -316,8 +316,21 @@ function requestFhem(paraname) {
 }
 
 this.getPart = function (s,p) {
-	var c = (s && typeof s != "undefined") ? s.split(" ") : '';
-	return (c.length >= p && p>0 ) ? c[p-1] : s;
+	if ($.isNumeric(p)){
+		var c = (s && typeof s != "undefined") ? s.split(" ") : '';
+		return (c.length >= p && p>0 ) ? c[p-1] : s;
+	}
+	else {
+		var matches = s.match( RegExp('^' + p + '$') );
+		var ret='';
+		if (matches) {
+			for (var i=1;i<matches.length;i++) {
+				ret+=matches[i];
+			}
+		}
+		return ret;
+	}
+	
 };
 
 this.getDeviceValue = function (device, src) {
