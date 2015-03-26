@@ -111,7 +111,7 @@ var widget_volume = {
 			'tkColor': $(this).data('tkcolor') || '#696969',
 			'hdColor': $(this).data('hdcolor') || hdDefaultColor,
 			'thickness': .25,
-			'tickdistance': ((mode>>1) % 2 != 0)?4:20,
+			'tickdistance': $(this).data('tickstep') || ((mode>>1) % 2 != 0)?4:20,
 			'mode': mode,
 			'cursor': 6,
 			'cmd': $(this).data('cmd') || 'set',
