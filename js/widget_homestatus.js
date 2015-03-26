@@ -137,14 +137,15 @@ var widget_homestatus = {
 			'thickness': 0.4,
 			'displayInput': false,
 			'angleOffset' : 0,
-			'reading': $(this).data('set') || '',
+			'cmd': $(this).data('cmd') || 'set',
+			'set': $(this).data('set') || '',
 			'draw' : _homestatus.drawSelector,
 			'change' : function (v) { 
 				  startInterval();
 			},
 			'release' : function (v) { 
 			  if (ready){
-			  		var cmdl = $(this).data('cmd')+' '+device+' '+$(this).data('set')+' '+this.o.status;
+			  		var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+this.o.status;
 				  	setFhemStatus(cmdl);
 				  	$.toast(cmdl);
 				  	this.$.data('curval', v);

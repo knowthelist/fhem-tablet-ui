@@ -6,7 +6,7 @@
 	 /*
 	 * Just another dashboard for FHEM
 	 *
-	 * Version: 1.3.1
+	 * Version: 1.3.2
 	 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 	 * URL: https://github.com/knowthelist/fhem-tablet-ui
 	 *
@@ -58,7 +58,9 @@
 <div class="gridster">
 <ul>
 <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-	<header></header>
+	<header>TREND</header>
+	<div data-type="symbol" data-device="dummy1" data-icons='["fa-arrow-up","fa-arrow-right","fa-arrow-down"]' data-on-colors='["#32a054","#6666cc","#ad3333"]' data-get-on='["Wert1","Wert2","Wert3"]' class=""></div>
+	<div data-type="label" class="small narrow darker">Status</div>
 </li>
 <li data-row="2" data-col="1" data-sizex="1" data-sizey="4">
 	<header>GARTEN</header>
@@ -137,7 +139,7 @@
 			<div data-type="label" class="narrow darker small">Terassent&#252;r</div>
 		</div>
 		<div class="cell right">
-			<div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,15,21,23]' data-colors='["#6699FF","#AD3333","#aa6900","#FF0000"]' data-unit="%B0C%0A" class="cell big"></div>
+			<div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6666cc","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="cell big"></div>
 			<div data-type="label" class="cell">Temperatur</div>
 			<div data-type="label" data-device="THSensorWZ" data-get="humidity" data-fix="0" data-unit="%" class="cell big"></div>
 			<div data-type="label" class="cell">Luftfeuchte</div>
