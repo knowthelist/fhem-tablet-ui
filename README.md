@@ -62,17 +62,19 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
 - **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
 
-####Contact widgets
+####Symbol widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
-- **data-get-on**   : value for ON status to get. (default 'on')
+- **data-get-on**   : value for ON status to get or an array of states (default 'on')
 - **data-get-off**  : value for OFF status to get. (default 'off')
 - **data-icon**     : name of the font-awesome icon.
+- **data-icons**    : array of icons related to the data-get-on array
+- **data-on-colors**: array of colors related to the data-get-on array
 
 ####Label widgets
 - **data-get**  : name of the reading to get from FHEM
 - **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)
 - **data-icon** : name of the font-awesome icon. 						 
-- **data-part** : split position of the space separated value to show.
+- **data-part** : split position of the space separated value to show or an RegEx
 - **data-colors** : a array of color values to affect the colour of the label according to the limit value 
 - **data-limits** : a array of numeric values to affect the colour of the label
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
@@ -86,6 +88,9 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-temp**  : reading for measured temperature of thermostates (default 'measured-temp')
 - **data-set**   : command to send to FHEM (set \<device\> \<command\> \<value\>) (default 'desired-temp')
 - **data-valve** : reading for valve position of thermostates
+- **data-min**   : minimal value to set (default 10)
+- **data-max**   : maximal value to set (default 30)
+- **data-step**  : step size for value adjustment e.g. 0.5 (default 1)
 
 ####Volume widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
@@ -131,7 +136,7 @@ Currently there are 10 types of widgets.
 - **thermostat** : dial for heater thermostates to set desired value and show current value
 - **switch** : on / off
 - **label** : show state as text
-- **contact** : show state as icon (e.g. window open) 
+- **symbol** : show state as an icon (e.g. window open) 
 - **push** : e.g. up / down
 - **volume** : dial to set a single value (e.g. 0-60)
 - **homestatus** : selector for 4 states (1=home,2=night,3=away,4=holiday) 
@@ -246,13 +251,13 @@ temperature	20.1
 Format
 -------
 The layout and look can be influinced be the class attribute.
-The available classes are: container,left,right,cell,narrow,darker,big,small
+The available classes are: container,left,right,cell,narrow,darker,big,bigger,small
 
 Specials
 -------
 **Example** to call a command directly to FHEM. This calls "set dummy1 off"
 ```html
-<div onclick="setFhemStatus('dummy1','off')">All off!</div>
+<div onclick="setFhemStatus('set dummy1 off')">All off!</div>
 ```
 
 
