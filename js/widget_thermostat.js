@@ -153,8 +153,10 @@ var widget_thermostat = {
 		readings[$(this).data('valve')] = true;
 		
 		knob_elem.knob({
-			'min':1*$(this).data('min') || 10,
+			'min':$(this).attr('data-min')?1*$(this).data('min'):10,
 			'max':1*$(this).data('max') || 30,
+			'off':$(this).attr('data-off')?$(this).data('off'):-1,
+			'boost':$(this).attr('data-boost')?$(this).data('boost'):-1,
 			'height':$(this).hasClass('big')?150:100,
 			'width':$(this).hasClass('big')?150:100,
 			'step': 1*$(this).data('step') || 1,
@@ -177,7 +179,12 @@ var widget_thermostat = {
 			'release' : function (v) { 
 			  if (ready){
 		 		    var elem = $(this).find('input');
-					var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v;
+		 		    if(v == this.o.min && this.o.off != -1) {
+		 		        v=this.o.off;
+		 		    } else if(v == this.o.max && this.o.boost != -1) {
+		 		        v=this.o.boost;
+		 		    }
+				  	var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v;
 				  	setFhemStatus(cmdl);
 				  	$.toast(cmdl);
 			  }
@@ -196,6 +203,11 @@ var widget_thermostat = {
 	deviceElements.each(function(index) {
 
 		var clima = _thermostat.getClimaValues( $(this) );
+		switch(clima.desired) {
+		    case $(this).data('off'):   clima.desired=$(this).data('min'); break;
+		    case $(this).data('boost'): clima.desired=$(this).data('max'); break;
+		}
+
 		var knob_elem = $(this).find('input');
 				
 		if ( ($(this).data('get')==par || par =='*') && 
@@ -222,4 +234,3 @@ var widget_thermostat = {
 	});
 },		 
 };
-
