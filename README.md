@@ -37,7 +37,7 @@ Change the wiget container according your rooms
 	  <div class="right">
 		<div data-type="switch" data-device="HerdLicht_Sw" class="cell"></div>
 		<div data-type="label" class="cell">HerdLicht</div>
-		<div data-type="contact" data-device="KuechenFenster" class="cell"></div>
+		<div data-type="symbol" data-device="KuechenFenster" class="cell"></div>
 	  </div>
 	</div>
 </li>
@@ -61,12 +61,16 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-set-on**   : value for ON status to set. (default: value of data-get-on)
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
 - **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
+- **data-on-color** : color of ON state (default '#aa6900')
+- **data-off-color**: color of Off state (default '#505050')
 
 ####Symbol widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
 - **data-get-on**   : value for ON status to get or an array of states (default 'on')
 - **data-get-off**  : value for OFF status to get. (default 'off')
 - **data-icon**     : name of the font-awesome icon.
+- **data-on-color** : color of ON state (default '#aa6900')
+- **data-off-color**: color of Off state (default '#505050')
 - **data-icons**    : array of icons related to the data-get-on array
 - **data-on-colors**: array of colors related to the data-get-on array
 
@@ -197,6 +201,11 @@ temperature	20.1
 ```html
 <div data-type="switch" data-device="wzRollo" data-get-on="up" data-get-off="down" data-icon="fa-bars" class="cell" ></div>
 <div data-type="label" class="cell">Rollo</div>
+```
+
+**Example** for how to create a label for a time value in short format with usage of RegEx
+```html
+<div data-type="label" data-device="dummy1" data-part="(\d\d\.\d\d\.).*" class="cell"></div>
 ```
 
 ####Switch
