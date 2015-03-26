@@ -8,8 +8,12 @@ var widget_volume = {
 
 	c.lineWidth = this.lineWidth;
 	c.lineCap = this.lineCap;
-	if ((this.o.mode>>0) % 2 != 0)
+	if ((this.o.mode>>0) % 2 != 0) {
 		this.o.bgColor='hsl('+ this.cv +',50%,50% )';
+    } else if ((this.o.mode>>3) % 2 != 0) {
+	    var cl=Math.floor(this.cv*(255/this.o.max));
+	    this.o.bgColor = 'rgb('+cl+','+cl+','+cl+')';
+	}
 	if (this.o.bgColor !== "none") {
 		c.beginPath();
 		c.strokeStyle = this.o.bgColor;
@@ -31,8 +35,10 @@ var widget_volume = {
 		if ((this.o.mode>>1) % 2 != 0){
 			// draw ticks in hue color
 			c.strokeStyle = 'hsl('+ i +',50%,50% )';  
-		}
-		else {
+		} else if ((this.o.mode>>4) % 2 != 0){
+		    var cl=Math.floor(i*(255/this.o.max));
+		    c.strokeStyle = 'rgb('+cl+','+cl+','+cl+')';  
+	    } else {
 			// draw normal ticks
 			c.strokeStyle = this.o.tkColor;//'#4477ff';
 		}
@@ -56,8 +62,12 @@ var widget_volume = {
 
 	// draw selection cursor
 	c.beginPath();
-	if ((this.o.mode>>2) % 2 != 0)
+	if ((this.o.mode>>2) % 2 != 0) {
 		this.o.hdColor='hsl('+ this.cv +',50%,50% )';
+	} else if ((this.o.mode>>5) % 2 != 0) {
+	    var cl=Math.floor(this.cv*(255/this.o.max));
+        this.o.hdColor = 'rgb('+cl+','+cl+','+cl+')';  
+	}
 		
 	c.strokeStyle = this.o.hdColor;
 	c.lineWidth = this.lineWidth * 2;
@@ -92,6 +102,16 @@ var widget_volume = {
 		}
 		if ( $(this).hasClass('hue-front')){
 			mode = mode | 1<<2; 
+		}
+		
+		if ($(this).hasClass('dim-back')){
+			mode = mode | 1<<3;
+		}
+		if ($(this).hasClass('dim-tick')){
+			mode = mode | 1<<4; 
+		}
+		if ( $(this).hasClass('dim-front')){
+			mode = mode | 1<<5; 
 		}
 		
 		var maxval = $(this).data('max') || 70;
