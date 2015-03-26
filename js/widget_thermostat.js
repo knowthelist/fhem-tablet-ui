@@ -153,8 +153,8 @@ var widget_thermostat = {
 		readings[$(this).data('valve')] = true;
 		
 		knob_elem.knob({
-			'min':10,
-			'max':30,
+			'min':1*$(this).data('min') || 10,
+			'max':1*$(this).data('max') || 30,
 			'height':$(this).hasClass('big')?150:100,
 			'width':$(this).hasClass('big')?150:100,
 			'step': 1*$(this).data('step') || 1,
