@@ -73,6 +73,9 @@ $( document ).ready(function() {
             handle: 'header'
           }
         }).data('gridster');
+        if($("meta[name='gridster_disable']").attr("content") == '1') {
+        	gridster.disable();
+    	}
 
 	//make it HTML conform (remove this after migration)
 	$('div[type]').each(function() {
