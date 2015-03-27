@@ -80,18 +80,21 @@ $( document ).ready(function() {
             'data-type' : $(this).attr('type'),
         })
         .removeAttr('type');
-        console.log('Please rename widget attribute "type" into "data-type" in index.html');
+        console.log('Please rename widget attribute "type" into "data-type" in ' + document.location + ($(this).attr('data-device')?' device: '+$(this).attr('data-device'):'') + ' - Details below:');
+        console.log($(this));
 	});
 	$('div[device]').each(function() {
     	$(this).attr({
             'data-device' : $(this).attr('device'),
         })
         .removeAttr('device');
-        console.log('Please rename widget attribute "device" into "data-device" in index.html');
+        console.log('Please rename widget attribute "device" into "data-device" in ' + document.location + ($(this).attr('data-device')?' device: '+$(this).attr('data-device'):'') + ' - Details below:');
+        console.log($(this));
 	});
 	$('div[data-type="contact"]').each(function() {
     	$(this).attr({'data-type' : 'symbol',})
-    	console.log('Please rename widget "contact" into "symbol" in index.html');
+    	console.log('Please rename widget "contact" into "symbol" in ' + document.location + ($(this).attr('data-device')?' device: '+$(this).attr('data-device'):'') + ' - Details below:');
+    	console.log($(this));
 	});
 	//end **** (remove this after migration)
 	
