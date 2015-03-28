@@ -17,13 +17,63 @@ var widget_simplechart = {
   	_simplechart=this;
   	_simplechart.elements = $('div[data-type="simplechart"]');
  	_simplechart.elements.each(function(index) {
+        var min = $(this).data('minvalue')||0;
+        var max = $(this).data('maxvalue')||100;
+        
+        // maybe generally better include https://github.com/phstc/jquery-dateFormat 
+        var now = new Date();
+        var Y = now.getFullYear();
+        var m = now.getMonth()+1;
+        var d = now.getDate();
+        var H = now.getHours();
+        var i = now.getMinutes();
+        var s = now.getSeconds();
+        d = d<10?'0'+d:d;
+        m = m<10?'0'+m:m;
+        H = H<10?'0'+H:H;
+        i = i<10?'0'+i:i;
+        s = s<10?'0'+s:s;
+        var today = Y+'-'+m+'-'+d;
+        var time =  H+':'+i+':'+s;
+        
+        var mindate= $(this).data('mindate')||today;
+        var maxdate= $(this).data('maxdate')||today + '_' + time;
+        
+        if(mindate.match(/^\d\d\d\d.\d\d.\d\d$/)) {
+            mindate += '_00:00:00';
+        }
+        mindate = mindate.replace(/^(\d\d\d\d).(\d\d).(\d\d).(\d\d).(\d\d).(\d\d)$/, '$1-$2-$3_$4:$5:$6');
+        // rudimentary plausibility check
+        if(! mindate.match(/^\d\d\d\d-[0-1]\d-[0-3]\d_[0-2]\d:[0-5]\d:[0-5]\d$/)) {
+            console.log('mindate '+$(this).attr('data-mindate')+' is not ok in simplechart' + ($(this).attr('data-device')?' for device '+$(this).attr('data-device'):''));
+        }
+        
+        if(maxdate.match(/^\d\d\d\d.\d\d.\d\d$/)) {
+            maxdate += '_23:59:59';
+        }
+        maxdate = maxdate.replace(/^(\d\d\d\d).(\d\d).(\d\d).(\d\d).(\d\d).(\d\d)$/, '$1-$2-$3_$4:$5:$6');
+        // rudimentary plausibility check
+        if(! maxdate.match(/^\d\d\d\d-[0-1]\d-[0-3]\d_[0-2]\d:[0-5]\d:[0-5]\d$/)) {
+            console.log('maxdate '+$(this).attr('data-maxdate')+' is not ok in simplechart' + ($(this).attr('data-device')?' for device '+$(this).attr('data-device'):''));
+        }
 
-        var min = 17;
-        var max = 26;
-        var mindate='2015-03-22';
-        var maxdate='2015-03-27';
-
-		var device = $(this).data('device');
+        var column_spec;
+        if($(this).attr("data-columnspec")) {
+            column_spec = $(this).attr("data-columnspec");
+        } else {
+		    var device = $(this).attr('data-device')||'';
+		    var reading = $(this).attr('data-get')||'';
+		    column_spec = device + ':' + reading;
+		}
+		if(! column_spec.match(/.+:.+/)) {
+		    console.log('columnspec '+column_spec+' is not ok in simplechart' + ($(this).attr('data-device')?' for device '+$(this).attr('data-device'):''));
+		}
+		
+		var logdevice = $(this).attr("data-logdevice");
+		var logfile = $(this).attr("data-logfile")||"-";
+		
+		$(this).css("width", "100%");
+		$(this).css("height", "100%");
         var svgElement = $('<svg id="mi"" width="100%" height="100%" '+
                 'preserveAspectRatio="none" >'+
                 '<g transform="scale(1, -1)">'+
@@ -35,23 +85,21 @@ var widget_simplechart = {
 
         var cmd =[
              'get',
-             'FileLog_WohnzimmerHeizung2',
-             'WohnzimmerHeizung2-2015.log',
+             logdevice,
+             logfile,
              '-',
              mindate,
              maxdate,
-             '4:meas.*:1:int'
-                ];
+             column_spec
+        ];
 		$.ajax({
-	
-	  url: "../fhem/",
+	  url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
                    async: true,
                    cache: false,
 			data: {
             cmd: cmd.join(' '),
 			XHR: "1"
         },
-	
 	}).done(function(data ) {
         var points=[];
         var lines = data.split('\n');
@@ -60,7 +108,7 @@ var widget_simplechart = {
         $.each( lines, function( index, value ) {
             if (value){
                 var val = value.replace('\r\n','').split(' ')[1];//use getPart!!
-                var start = _simplechart.dateFromString(mindate+"_00:00:00"),
+                var start = _simplechart.dateFromString(mindate),
                     end   = _simplechart.dateFromString(value),
                     diff  = new Date(end - start),
                     minutes  = diff/1000/60;
@@ -69,7 +117,7 @@ var widget_simplechart = {
                             i++;
                             points[i]=[minutes.toFixed(0),(val)];
                         lastVal=val;
-                        console.log( "added: " + minutes.toFixed(0)+ ": " + val );
+                        //console.log( "added: " + minutes.toFixed(0)+ ": " + val );
                     }
             }
 
