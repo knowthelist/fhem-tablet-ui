@@ -168,7 +168,7 @@ var widget_volume = {
 				if ( knob_elem.val() != val ){
 					val = (val * ($(this).data('max360')/$(this).data('max'))).toFixed(0);
 					knob_elem.val( val ).trigger('change');
-					DEBUG && console.log( 'volume dev:'+dev+' par:'+par+' change:knob to ' +val );
+					DEBUG && console.log( 'volume dev:'+dev+' par:'+par+' change '+$(this).data('device')+':knob to ' +val );
 				}
 				knob_elem.css({visibility:'visible'});	
 			}

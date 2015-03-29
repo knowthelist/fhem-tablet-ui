@@ -128,6 +128,7 @@ $( document ).ready(function() {
 	});
 	
 	//get current values of readings
+	DEBUG && console.log('Get current values of readings');
 	for (var reading in readings) {
 		requestFhem(reading);
 	}
@@ -355,3 +356,22 @@ this.getDeviceValue = function (device, src) {
 	return null;
 }
 
+// global data format functions
+this.dateFromString = function (str) {
+ var m = str.match(/(\d+)-(\d+)-(\d+)_(\d+):(\d+):(\d+).*/);
+ return (m)?new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]):new Date();
+}
+
+this.diffMinutes = function(date1,date2){
+       var end   = dateFromString(date2),
+       start   = dateFromString(date1),
+       diff  = new Date(end - start);
+       return (diff/1000/60).toFixed(0);
+}
+   
+Date.prototype.yyyymmdd = function() {
+  var yyyy = this.getFullYear().toString();
+  var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
+  var dd  = this.getDate().toString();
+  return yyyy+'-'+ (mm[1]?mm:"0"+mm[0])+'-'+(dd[1]?dd:"0"+dd[0]); // padding
+ };
