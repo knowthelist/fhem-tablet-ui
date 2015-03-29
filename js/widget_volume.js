@@ -82,7 +82,7 @@ var widget_volume = {
  	_volume.elements.each(function(index) {
 		var knob_elem =  jQuery('<input/>', {
 			type: 'text',
-			value: '10',
+			value: $(this).attr('data-initvalue')||'10',
 			disabled : true,
 		}).appendTo($(this));
 		
@@ -131,7 +131,7 @@ var widget_volume = {
 			'tkColor': $(this).data('tkcolor') || '#696969',
 			'hdColor': $(this).data('hdcolor') || hdDefaultColor,
 			'thickness': .25,
-			'tickdistance': $(this).data('tickstep') || ((mode>>1) % 2 != 0)?4:20,
+			'tickdistance': $(this).data('tickstep') || (((mode>>1) % 2 != 0)?4:20),
 			'mode': mode,
 			'cursor': 6,
 			'cmd': $(this).data('cmd') || 'set',
@@ -143,9 +143,11 @@ var widget_volume = {
 			'release' : function (v) { 
 				  if (ready){
 				  		v=v*(this.o.origmax/this.o.max);
-				  		var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v.toFixed(0);
-				  		setFhemStatus(cmdl);
-				  		$.toast(cmdl);
+				  		if(typeof device!='undefined') {
+			  				var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v.toFixed(0);
+			  				setFhemStatus(cmdl);
+			  				$.toast(cmdl);
+				  		}
 				  		this.$.data('curval', v);
 				  }
 			}	
