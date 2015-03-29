@@ -60,6 +60,7 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-get-off**  : value for OFF status to get. (default 'off')
 - **data-set-on**   : value for ON status to set. (default: value of data-get-on)
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
+- **data-cmd**      : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
@@ -84,8 +85,9 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
 
 ####Push widgets
-- **data-set**  : command to send to FHEM (set \<device\> \<command\>)
+- **data-set**  : value to send to FHEM (\<commnd\> \<device\> \<value\>)
 - **data-icon** : name of the font-awesome icon. 
+- **data-cmd**  : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 
 ####Thermostat widgets
 - **data-get**   : name of the reading to get from FHEM (default 'desired-temp')
@@ -99,6 +101,7 @@ All widgets have individual parameter settings. Set following attributes accordi
 ####Volume widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) (default '')
+- **data-cmd**  : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
 
@@ -110,6 +113,7 @@ All widgets have individual parameter settings. Set following attributes accordi
 ####Slider widgets (currently vertical only)
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) (default '')
+- **data-cmd**  : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 100)
 
@@ -118,6 +122,7 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-get-on**   : value for ON status to get. (default 'on')
 - **data-get-off**  : value for OFF status to get. (default 'off')
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
+- **data-cmd**      : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-set**      : command to send to FHEM (set \<device\> \<command\> \<value\>) (default '')
 - **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
 
@@ -206,6 +211,12 @@ temperature	20.1
 **Example** for how to create a label for a time value in short format with usage of RegEx
 ```html
 <div data-type="label" data-device="dummy1" data-part="(\d\d\.\d\d\.).*" class="cell"></div>
+```
+
+####Push
+**Example** for how to create a push button widget to trigger all devices on:
+```html
+<div data-type="push" data-device="LightAll" data-cmd="trigger" data-set="on" class="cell"></div>
 ```
 
 ####Switch
