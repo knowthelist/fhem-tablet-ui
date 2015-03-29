@@ -1,6 +1,9 @@
 var widget_simplechart = {
   _simplechart: null,
   elements: null,
+  createElem: function(elem) {
+      return $(document.createElementNS('http://www.w3.org/2000/svg', elem));
+    },
   getSvgPoints: function (arg) {
        var res = [];
        for (var i=0,l=arg.length;i<l;i++) {
@@ -22,6 +25,8 @@ var widget_simplechart = {
                 '<g transform="scale(1, -1)">'+
                 '<polyline points=""'+
                 'style="fill:none;stroke:orange;stroke-width:2px" '+
+                'vector-effect="non-scaling-stroke"/>'+
+                '<line x1="1%" y1="100%" x2="95%" y2="100%" style="stroke:#555;stroke-width:1px" '+
                 'vector-effect="non-scaling-stroke"/>'+
 			' </g></svg>');
 		svgElement.appendTo($(this));
@@ -116,12 +121,37 @@ var widget_simplechart = {
 
       var svg = this.elem.find('svg');
       if (svg){
-          console.log( "svg: " + svg);
+          svg.find('line#tick1').remove();
+          svg.find('line#tick2').remove();
           var polyline = svg.find('polyline');
-          if (polyline)
+          if (polyline){
             polyline.attr('points',_simplechart.getSvgPoints(points));
+              var tick1 = _simplechart.createElem('line');
+              tick1.attr({
+                             'id':'tick1',
+                              'x1':'93%',
+                              'y1':'95%',
+                              'x2':'93%',
+                              'style':'stroke:#555;stroke-width:1px',
+                              'vector-effect':'non-scaling-stroke',
+                              'y2':'100%'});
+              polyline.parent().append(tick1);
+              var tick2 = _simplechart.createElem('line');
+              tick2.attr({
+                             'id':'tick1',
+                              'x1':'5%',
+                              'y1':'95%',
+                              'x2':'5%',
+                              'style':'stroke:#555;stroke-width:1px',
+                              'vector-effect':'non-scaling-stroke',
+                              'y2':'100%'});
+              polyline.parent().append(tick2);
+          }
           // jQuery's attr() fails here
-          svg[0].setAttribute('viewBox', [10, -max, xrange+10, max-min].join(' '));
+          svg[0].setAttribute('viewBox', [10, (-max)*0.9, xrange+10, (max-min)*0.9].join(' '));
+
+
+
       }
   });
     },
