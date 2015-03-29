@@ -82,7 +82,7 @@ var widget_volume = {
  	_volume.elements.each(function(index) {
 		var knob_elem =  jQuery('<input/>', {
 			type: 'text',
-			value: '10',
+			value: $(this).attr('data-initvalue')||'10',
 			disabled : true,
 		}).appendTo($(this));
 		
@@ -143,9 +143,11 @@ var widget_volume = {
 			'release' : function (v) { 
 				  if (ready){
 				  		v=v*(this.o.origmax/this.o.max);
-				  		var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v.toFixed(0);
-				  		setFhemStatus(cmdl);
-				  		$.toast(cmdl);
+				  		if(typeof device!='undefined') {
+			  				var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v.toFixed(0);
+			  				setFhemStatus(cmdl);
+			  				$.toast(cmdl);
+				  		}
 				  		this.$.data('curval', v);
 				  }
 			}	
