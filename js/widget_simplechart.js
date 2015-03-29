@@ -1,10 +1,6 @@
 var widget_simplechart = {
   _simplechart: null,
   elements: null,
-  dateFromString: function (str) {
- var m = str.match(/(\d+)-(\d+)-(\d+)_(\d+):(\d+):(\d+).*/);
- return (m)?new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]):new Date();
-},
   getSvgPoints: function (arg) {
        var res = [];
        for (var i=0,l=arg.length;i<l;i++) {
@@ -20,42 +16,17 @@ var widget_simplechart = {
         var min = $(this).data('minvalue')||0;
         var max = $(this).data('maxvalue')||100;
         
-        // maybe generally better include https://github.com/phstc/jquery-dateFormat 
+        var days = $(this).attr('data-days')||0;
         var now = new Date();
-        var Y = now.getFullYear();
-        var m = now.getMonth()+1;
-        var d = now.getDate();
-        var H = now.getHours();
-        var i = now.getMinutes();
-        var s = now.getSeconds();
-        d = d<10?'0'+d:d;
-        m = m<10?'0'+m:m;
-        H = H<10?'0'+H:H;
-        i = i<10?'0'+i:i;
-        s = s<10?'0'+s:s;
-        var today = Y+'-'+m+'-'+d;
-        var time =  H+':'+i+':'+s;
+        var ago = new Date();
+        if (days>0)
+            ago.setDate(now.getDate() - days);
         
-        var mindate= $(this).data('mindate')||today;
-        var maxdate= $(this).data('maxdate')||today + '_' + time;
-        
-        if(mindate.match(/^\d\d\d\d.\d\d.\d\d$/)) {
-            mindate += '_00:00:00';
-        }
-        mindate = mindate.replace(/^(\d\d\d\d).(\d\d).(\d\d).(\d\d).(\d\d).(\d\d)$/, '$1-$2-$3_$4:$5:$6');
-        // rudimentary plausibility check
-        if(! mindate.match(/^\d\d\d\d-[0-1]\d-[0-3]\d_[0-2]\d:[0-5]\d:[0-5]\d$/)) {
-            console.log('mindate '+$(this).attr('data-mindate')+' is not ok in simplechart' + ($(this).attr('data-device')?' for device '+$(this).attr('data-device'):''));
-        }
-        
-        if(maxdate.match(/^\d\d\d\d.\d\d.\d\d$/)) {
-            maxdate += '_23:59:59';
-        }
-        maxdate = maxdate.replace(/^(\d\d\d\d).(\d\d).(\d\d).(\d\d).(\d\d).(\d\d)$/, '$1-$2-$3_$4:$5:$6');
-        // rudimentary plausibility check
-        if(! maxdate.match(/^\d\d\d\d-[0-1]\d-[0-3]\d_[0-2]\d:[0-5]\d:[0-5]\d$/)) {
-            console.log('maxdate '+$(this).attr('data-maxdate')+' is not ok in simplechart' + ($(this).attr('data-device')?' for device '+$(this).attr('data-device'):''));
-        }
+        var mindate= ago.yyyymmdd() + '_00:00:00';
+        var maxdate= now.yyyymmdd() + '_23:59:59';
+
+        //console.log( "mindate: " + mindate);
+        //console.log( "maxdate: " + maxdate);
 
         var column_spec;
         if($(this).attr("data-columnspec")) {
@@ -74,7 +45,7 @@ var widget_simplechart = {
 		
 		$(this).css("width", "100%");
 		$(this).css("height", "100%");
-        var svgElement = $('<svg id="mi"" width="100%" height="100%" '+
+        var svgElement = $('<svg width="100%" height="100%" '+
                 'preserveAspectRatio="none" >'+
                 '<g transform="scale(1, -1)">'+
                 '<polyline points=""'+
@@ -93,41 +64,46 @@ var widget_simplechart = {
              column_spec
         ];
 		$.ajax({
-	  url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
-                   async: true,
-                   cache: false,
+            url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
+            async: true,
+            cache: false,
 			data: {
-            cmd: cmd.join(' '),
-			XHR: "1"
-        },
-	}).done(function(data ) {
-        var points=[];
-        var lines = data.split('\n');
-        var lastVal = 0;
-        var i=0;
-        $.each( lines, function( index, value ) {
-            if (value){
-                var val = value.replace('\r\n','').split(' ')[1];//use getPart!!
-                var start = _simplechart.dateFromString(mindate),
-                    end   = _simplechart.dateFromString(value),
-                    diff  = new Date(end - start),
-                    minutes  = diff/1000/60;
-                    //console.log( index + ": " + minutes.toFixed(0)+ ": " + val );
-                    if (val && minutes && lastVal != val ){
-                            i++;
-                            points[i]=[minutes.toFixed(0),(val)];
-                        lastVal=val;
-                        //console.log( "added: " + minutes.toFixed(0)+ ": " + val );
+                cmd: cmd.join(' '),
+                XHR: "1"
+            },
+        }).done(function(data ) {
+            var points=[];
+            var lines = data.split('\n');
+            var point=[];
+            var lastVal = 0;
+            var i=0;
+            var start = dateFromString(mindate);
+            $.each( lines, function( index, value ) {
+                if (value){
+                    var val = getPart(value.replace('\r\n',''),2);
+                    var minutes = diffMinutes(mindate,value);
+                    if (val && minutes && $.isNumeric(val) ){
+                        point=[minutes,val];
+                        i++;
+                        if (lastVal != val ){
+                            points[index]=point;
+                            lastVal=val;
+                            //console.log( "added: " + minutes+ ": " + val );
+                        }
                     }
-            }
+                 }
+             });
 
+            //add last know point
+            points[i]=point;
 
-        });
+        var xrange  = parseInt(diffMinutes(mindate,maxdate));
+        //console.log( "xrange: " + xrange );
 
 
         $('polyline').attr('points',_simplechart.getSvgPoints(points));
         // jQuery's attr() fails here
-        $('svg')[0].setAttribute('viewBox', [100, -max, 1500, max-min].join(' '));
+        $('svg')[0].setAttribute('viewBox', [10, -max, xrange+10, max-min].join(' '));
 
 
 	});

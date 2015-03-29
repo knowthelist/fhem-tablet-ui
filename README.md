@@ -66,8 +66,8 @@ All widgets have individual parameter settings. Set following attributes accordi
 
 ####Symbol widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
-- **data-get-on**   : value for ON status to get or an array of states (default 'on')
-- **data-get-off**  : value for OFF status to get. (default 'off')
+- **data-get-on**   : value for ON status to get or an array of states (default 'open')
+- **data-get-off**  : value for OFF status to get. (default 'closed')
 - **data-icon**     : name of the font-awesome icon.
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
