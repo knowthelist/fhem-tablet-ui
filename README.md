@@ -179,7 +179,12 @@ Therefor for HomaMatic HM-CC-RT-DN this is sufficient.
 ```
 The long format looks like this:
 ```html
-<div data-type="thermostat" data-device="KH_Clima" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
+<div data-type="thermostat" 
+     data-device="KH_Clima" 
+     data-get="desired-temp" 
+     data-temp="measured-temp" 
+     class="cell">
+</div>
 ```
 The wigets will show the valve value only in case of a valid data-valve attribute.
 The default for data-valve ist null. That means, a empty data-valve attribute hides the valve label for the widget.   
@@ -191,9 +196,11 @@ The default for data-valve ist null. That means, a empty data-valve attribute hi
 STATE	T: 20.0 H: 61
 ```
 ```html
-<div data-type="label" data-device="THSensorWZ" data-part="2" data-unit="%B0C%0A" class="cell big"></div>
+<div data-type="label" data-device="THSensorWZ" 
+     data-part="2" data-unit="%B0C%0A" class="cell big"></div>
 <div data-type="label" class="cell">Temperatur</div>
-<div data-type="label" data-device="THSensorWZ" data-part="4" data-unit="%" class="cell big"></div>
+<div data-type="label" data-device="THSensorWZ" data-part="4" 
+     data-unit="%" class="cell big"></div>
 <div data-type="label" class="cell">Luftfeuchte</div>
 ```
 But the same result can reached by getting single readings:
@@ -202,34 +209,53 @@ humidity	58
 temperature	20.1
 ```
 ```html
-<div data-type="label" data-device="THSensorWZ" data-get="temperature" data-unit="%B0C%0A" class="cell big"></div>
+<div data-type="label" data-device="THSensorWZ" 
+     data-get="temperature" data-unit="%B0C%0A" class="cell big"></div>
 <div data-type="label" class="cell">Temperatur</div>
-<div data-type="label" data-device="THSensorWZ" data-get="humidity" data-unit="%" class="cell big"></div>
+<div data-type="label" data-device="THSensorWZ" 
+     data-get="humidity" data-unit="%" class="cell big"></div>
 <div data-type="label" class="cell">Luftfeuchte</div>
 ```
 
 **Example** for how to influence the color of the label according to value limits
 ```html
-<div data-type="label" data-device="OutTemp" data-limits='[-73,10,23]' data-colors='["#6699FF","#AA6900","#FF0000"]' data-unit="%B0C%0A" class="cell big"></div>
+<div data-type="label" 
+     data-device="OutTemp" 
+     data-limits='[-73,10,23]' 
+     data-colors='["#6699FF","#AA6900","#FF0000"]' 
+     data-unit="%B0C%0A" 
+     class="cell big">
+</div>
 ```
 
 **Example** for how to create a widget for shutter via push: show state and set up/down
 ```html
-<div data-type="switch" data-device="wzRollo" data-get-on="up" data-get-off="down" data-icon="fa-bars" class="cell" ></div>
-<div data-type="label" class="cell">Rollo</div>
+<div data-type="switch" 
+     data-device="wzRollo" 
+     data-get-on="up" 
+     data-get-off="down" 
+     data-icon="fa-bars" 
+     class="cell" >
+</div>
+<div data-type="label" 
+     class="cell">Rollo</div>
 ```
 
 **Example** for how to create a label for a time value in short format with usage of RegEx
 ```html
-<div data-type="label" data-device="dummy1" data-part="(\d\d\.\d\d\.).*" class="cell"></div>
+<div data-type="label" 
+     data-device="dummy1" 
+     data-part="(\d\d\.\d\d\.).*" 
+     class="cell">
+</div>
 ```
 
 **Example** for how to use a label to show a weather icon according reading literal
 ```html
 <div data-type="label" 
-          data-device="dummy1" 
-          data-get="fc0_weatherDay" 
-          class="cell weather">
+     data-device="dummy1" 
+     data-get="fc0_weatherDay" 
+     class="cell weather">
 </div>
 ```
 
@@ -237,6 +263,7 @@ temperature	20.1
 
 Currently this literals are mapped to a appropriate METEOCONS icon:
 heiter":"H","wolkig":"N","Regenschauer":"Q","stark bewoelkt":"Y","Regen":"R","bedeckt":"N","sonnig":"B","Schnee":"U"
+
 Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 
 ####Push
@@ -258,13 +285,21 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 **Example** for a button group to toggle between 4 different values for one device
 ```html
 <div class="cell left">
- <div data-type="switch" data-device="dummy1" data-get-off="((?!Wert1).)*" data-get-on="Wert1" class="cell" ></div>
+ <div data-type="switch" data-device="dummy1" 
+      data-get-off="((?!Wert1).)*" 
+      data-get-on="Wert1" class="cell" ></div>
  <div data-type="label" class="cell">Wert1</div>
- <div data-type="switch" data-device="dummy1" data-get-off="((?!Wert2).)*" data-get-on="Wert2" class="cell" ></div>
+ <div data-type="switch" data-device="dummy1" 
+      data-get-off="((?!Wert2).)*" 
+      data-get-on="Wert2" class="cell" ></div>
  <div data-type="label" class="cell">Wert2</div>
- <div data-type="switch" data-device="dummy1" data-get-off="((?!Wert3).)*" data-get-on="Wert3" class="cell" ></div>
+ <div data-type="switch" data-device="dummy1" 
+      data-get-off="((?!Wert3).)*" 
+      data-get-on="Wert3" class="cell" ></div>
  <div data-type="label" class="cell">Wert3</div>
- <div data-type="switch" data-device="dummy1" data-get-off="((?!Wert4).)*" data-get-on="Wert4" class="cell" ></div>
+ <div data-type="switch" data-device="dummy1" 
+      data-get-off="((?!Wert4).)*" 
+      data-get-on="Wert4" class="cell" ></div>
  <div data-type="label" class="cell">Wert4</div>
 </div>
 ```
@@ -291,7 +326,11 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 ####Image
 **Example** for how to add an image to the dashboard which its URL is delivered by a FHEM module like PROPLANTA:
 ```html
-<div data-type="image" data-device="Wetter1" data-get="fc0_weatherDayIcon" data-size="40px" class="cell"></div>
+<div data-type="image" data-device="Wetter1" 
+	 data-get="fc0_weatherDayIcon" 
+	 data-size="40px" 
+	 class="cell">
+</div>
 ```
 
 Format
