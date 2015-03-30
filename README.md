@@ -259,6 +259,7 @@ temperature	20.1
 </div>
 ```
 
+Important is to add the CSS class 'weather' to get this behavior.  
 ![](http://knowthelist.github.io/fhem-tablet-ui/weather.png)
 
 Currently this literals are mapped to a appropriate METEOCONS icon:
@@ -269,7 +270,12 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 ####Push
 **Example** for how to create a push button widget to trigger all devices on:
 ```html
-<div data-type="push" data-device="LightAll" data-cmd="trigger" data-set="on" class="cell"></div>
+<div data-type="push" 
+     data-device="LightAll" 
+     data-cmd="trigger" 
+     data-set="on" 
+     class="cell">
+</div>
 ```
 
 ####Switch
@@ -308,7 +314,12 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 ###Slider
 **Example** for how to create a widget for a slider to set values from 10 to 90:
 ```html
-<div data-type="slider" data-device='Dummy1' data-min="10" data-max="90" class="cell" ></div>
+<div data-type="slider" 
+     data-device='Dummy1' 
+     data-min="10" 
+     data-max="90" 
+     class="cell" >
+</div>
 <div data-type="label" class="cell">Light1</div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/slider.png)
@@ -321,6 +332,7 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 				data-get-off="off" 
 				class="cell"></div>
 ```
+To change the dim value: push the button and slide up or down   
 ![](http://knowthelist.github.io/fhem-tablet-ui/dimmer.png)
 
 ####Image
