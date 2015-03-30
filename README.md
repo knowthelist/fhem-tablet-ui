@@ -137,10 +137,18 @@ data-get-on and data-get-off accept RegEx values. e.g. data-get-on="[0-9]{1,3}|o
 
 Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
 
+Meta tags configuration
+-------
+
 To disable longpoll, set an other value then 1
 ```html
 <meta name="longpoll" content="1">
 ```
+To disable drag&drop for gridster set this value to 1
+```html
+<meta name='gridster_disable' content='1'>
+```
+
 
 Widgets
 -------
@@ -215,6 +223,21 @@ temperature	20.1
 ```html
 <div data-type="label" data-device="dummy1" data-part="(\d\d\.\d\d\.).*" class="cell"></div>
 ```
+
+**Example** for how to use a label to show a weather icon according reading literal
+```html
+<div data-type="label" 
+          data-device="dummy1" 
+          data-get="fc0_weatherDay" 
+          class="cell weather">
+</div>
+```
+
+![](http://knowthelist.github.io/fhem-tablet-ui/weather.png)
+
+Currently this literals are mapped to a appropriate METEOCONS icon:
+heiter":"H","wolkig":"N","Regenschauer":"Q","stark bewoelkt":"Y","Regen":"R","bedeckt":"N","sonnig":"B","Schnee":"U"
+Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 
 ####Push
 **Example** for how to create a push button widget to trigger all devices on:
