@@ -21,6 +21,9 @@ Install
  * add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
  * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/tablet
 
+A lot more plugins are available on addiational sources [Widgets-for-fhem-tablet-ui](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
+* copy additional widgets **widget_xxx.js** to js folder
+
 Configure
 -------
 Just configure the **index.html** to change the dashboard for your needs.
