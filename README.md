@@ -366,7 +366,7 @@ Cover a lot of other button behind one single button
 
 ```html
 <div class="left">
-<div class="cell">
+<div class="cell circlemenu">
 	<ul class="menu">
 	  <li><div data-type="push" data-icon="fa-wrench"></div></li>
 	  <li><div data-type="push" data-device="AvReceiver" 
