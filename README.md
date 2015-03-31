@@ -327,10 +327,11 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 ####Dimmer
 **Example** for how to create a widget for a dimmer via toggle button incl. dimmer. Usage of RegEx pattern get all values for state on:
 ```html
-	<div data-type="dimmer" data-device="MyDimmer1" 
-				data-get-on="[0-9]{1,3}|on" 
-				data-get-off="off" 
-				class="cell"></div>
+<div data-type="dimmer" data-device="MyDimmer1" 
+			data-get-on="[0-9]{1,3}|on" 
+			data-get-off="off" 
+			class="cell">
+</div>
 ```
 To change the dim value: push the button and slide up or down   
 ![](http://knowthelist.github.io/fhem-tablet-ui/dimmer.png)

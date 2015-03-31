@@ -18,6 +18,7 @@ var reading_cntr;
 var DEBUG = false;
 var doLongPoll = false
 var timer;
+var timeoutMenu;
 var dir;
 var shortpollInterval = 30 * 1000; // 30 seconds
 var devs=Array();
@@ -77,6 +78,27 @@ $( document ).ready(function() {
         	gridster.disable();
     	}
 
+	if ($.fn.circleMenu){
+			$('.menu').each(function() {
+					$(this).circleMenu({item_diameter:50,
+						trigger:'click',
+						circle_radius:60,
+                        direction:'full',
+                        open:function(){
+							var elem=this;
+							timeoutMenu=setTimeout(function(){
+								elem.close();
+							},4000);
+						},
+					})
+                    .closest('.gridster>ul>li').css({overflow: 'visible'});
+					
+			});
+		$('.menu li:not(:first-child)').on('click', function(){
+				clearTimeout(timeoutMenu);
+		});
+	}
+	
 	//make it HTML conform (remove this after migration)
 	$('div[type]').each(function() {
     	$(this).attr({
