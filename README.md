@@ -132,6 +132,7 @@ All widgets have individual parameter settings. Set following attributes accordi
 ####Image widgets
 - **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')
 - **data-size**     : width of the image in px or %, the height scales proportionally. (default: 50%)
+- **data-url**      : URL of the image to show (use data-url or data-device + data-get, not both)
 
 data-get-on and data-get-off accept RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
 

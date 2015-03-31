@@ -29,11 +29,14 @@ var widget_image = {
 	deviceElements.each(function(index) {
 		if ( $(this).data('get')==par || par =='*'){	
 			var value = getDeviceValue( $(this), 'get' );
-			if (value){
-				var img = $(this).find('img');
-				if (img)
+			var img = $(this).find('img');
+			if (img){
+				if (!value)
+					value = $(this).data('url');
+				if (value)
 					img.attr('src',value );
-			 }
+			}
+
 		}
 	});
    }
