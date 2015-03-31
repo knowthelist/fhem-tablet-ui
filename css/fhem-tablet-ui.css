@@ -38,7 +38,12 @@ width: auto;
 text-align: center;
 }
 
-.cell > *:not([data-type="label"]){ 
+.cell:not([data-type="label"]) {
+min-height: 52px;
+min-width: 52px;
+}
+
+[data-type]:not([data-type="label"]){ 
 cursor: pointer;
 }
 
@@ -46,6 +51,10 @@ cursor: pointer;
 margin:-5px 5px -6px 5px !important;
 width: auto;
 text-align: center;
+}
+
+.liftup {
+    margin-top:-15px !important;
 }
 
 .darker {
@@ -60,7 +69,7 @@ text-align: center;
 }
 
 .bigger {
-    font-size: 300%;
+    font-size: 300% !important;
 } 
 .big {
     font-size: 200%;
@@ -69,6 +78,9 @@ text-align: center;
     font-size: 80%;
 }
 
+.green{
+color:#FF5252;
+}
 * {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
 } 
@@ -136,3 +148,19 @@ ul, ol {
 	font-size: 200%;
 	color: #dcdcdc;
 }
+
+.menu li:first-child {
+
+}
+.menu li {
+
+}
+.menu li div{
+    color: #555;
+}
+
+.menu{
+        position:absolute;
+}
+
+

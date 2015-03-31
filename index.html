@@ -6,7 +6,7 @@
 	 /*
 	 * Just another dashboard for FHEM
 	 *
-	 * Version: 1.3.2
+	 * Version: 1.3.3
 	 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 	 * URL: https://github.com/knowthelist/fhem-tablet-ui
 	 *
@@ -36,11 +36,12 @@
 	
 	
 	<script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
-	<script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
 	<script type="text/javascript" src="/fhem/pgm2/jquery.knob.min.js"></script>
 	<script type="text/javascript" src="/fhem/tablet/lib/jquery.toast.min.js"></script>
+	<script type="text/javascript" src="/fhem/tablet/lib/jquery.circlemenu.js"></script>
+	<script type="text/javascript" src="/fhem/tablet/lib/powerange.min.js"></script>
+	<script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
     <script type="text/javascript" src="/fhem/tablet/lib/fa-multi-button.min.js"></script>
-    <script type="text/javascript" src="/fhem/tablet/lib/powerange.min.js"></script>
 	<script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.js"></script>
 	
 	<!-- Enable this lines for usage with WebViewControl --><!--
@@ -66,14 +67,11 @@
 	<header>GARTEN</header>
 	<div data-type="switch" data-device="GartenLicht" class="cell" ></div>
 	<div data-type="label" class="cell">Licht</div>
-	<div data-type="switch" data-device="dummyRollo" data-on="up" data-off="down" data-icon="fa-bars" class="cell" ></div>
-	<div data-type="label" class="cell">Rollo</div>
 	<div data-type="switch" data-device="dummySwitch" data-on="1" data-off="0" data-set-on="11" data-set-off="10" data-icon="fa-lock" class="cell" ></div>
 	<div data-type="label" class="cell">T&#252;r</div>
-	<div data-type="dimmer" data-device="Testschalter" data-get-on="[0-9]{1,3}|on" data-get-off="off" class="cell" ></div>
-	<div data-type="label" class="cell">Au&#223;en</div>
 	<div data-type="label" data-device="OutTemp" data-part="2" data-limits='[-73,10,23]' data-colors='["#6699FF","#AA6900","#FF0000"]' data-unit="%B0C%0A" class="cell big"></div>
 	<div data-type="label" class="cell">Temperatur</div>
+	<div data-type="label" data-device="AgroWeather" data-get="fc0_weatherDay" class="cell weather big"></div>
 </li>
 <li data-row="1" data-col="2" data-sizex="2" data-sizey="1">
 	<header>BAD</header>
@@ -163,18 +161,36 @@
 		<div data-type="push" data-device="WebRadio" data-icon="fa-step-forward" data-set="Next" class="cell" ></div>
 		<div data-type="label" data-device="WebRadio" class="cell">radio</div>
 	  </div>
-	  <div class="right">
-	    <div data-type="volume" data-device='RadioVolumeOnTablet' class="cell left" ></div>
-	    <div data-type="label" class="cell">Volume</div>
+      <div class="right">
+        <div data-type="volume" data-device='RadioVolumeOnTablet' class="cell left" ></div>
+        <div data-type="label" class="cell">Volume</div>
+      </div>
+      <div class="left">
+        <div class="cell">
+            <ul class="menu">
+              <li><div data-type="push" data-icon="fa-wrench"></div></li>
+              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level -6" data-icon="">-6</div></li>
+              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level -2" data-icon="">-2</div></li>
+              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level 0" data-icon="">0</div></li>
+              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level +3" data-icon="">2</div></li>
+              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level +9" data-icon="">9</div></li>
+              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level +C" data-icon="">12</div></li>
+            </ul>
+        </div>
+        <div data-type="label" class="cell">Woofer</div>
 	  </div>
 	</div>
 </li>
 <li data-row="2" data-col="8" data-sizex="1" data-sizey="4">
 	<header>LIGHTS</header>
-	<div data-type="slider" data-device='Testschalter' class="cell" ></div>
+	<div data-type="slider" data-device='Testschalter' data-min="10" data-max="90" class="cell small" ></div>
 	<div data-type="label" class="cell">Light1</div>
 	<div data-type="slider" data-device='dummy1' class="cell" ></div>
 	<div data-type="label" class="cell">Light2</div>
+	<div data-type="switch" data-device="dummyRollo" data-on="up" data-off="down" data-icon="fa-bars" class="cell" ></div>
+	<div data-type="label" class="cell">Rollo</div>
+	<div data-type="dimmer" data-device="Testschalter" data-get-on="[0-9]{1,3}|on" data-get-off="off" class="cell" ></div>
+	<div data-type="label" class="cell">Au&#223;en</div>
 </li>
 </ul>
 </div> 
