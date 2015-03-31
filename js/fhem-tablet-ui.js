@@ -82,7 +82,7 @@ $( document ).ready(function() {
 			$('.menu').each(function() {
 					$(this).circleMenu({item_diameter:50,
 						trigger:'click',
-						circle_radius:60,
+						circle_radius:70,
                         direction:'full',
                         open:function(){
 							var elem=this;
