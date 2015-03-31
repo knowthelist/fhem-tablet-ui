@@ -38,7 +38,7 @@ width: auto;
 text-align: center;
 }
 
-.cell:not([data-type="label"]) {
+.cellforce {
 min-height: 52px;
 min-width: 52px;
 }
