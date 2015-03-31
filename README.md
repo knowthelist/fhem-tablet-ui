@@ -265,6 +265,8 @@ Important is to add the CSS class 'weather' to get this behavior.
 Currently this literals are mapped to a appropriate METEOCONS icon:
 heiter":"H","wolkig":"N","Regenschauer":"Q","stark bewoelkt":"Y","Regen":"R","bedeckt":"N","sonnig":"B","Schnee":"U"
 
+The weather literal could be delivered by a FHEM module like PROPLANTA:
+
 Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 
 ####Push
@@ -358,6 +360,40 @@ Specials
 <div onclick="setFhemStatus('set dummy1 off')">All off!</div>
 ```
 
+Circle Menu
+-------
+Cover a lot of other button behind one single button 
+
+```html
+<div class="left">
+<div class="cell">
+	<ul class="menu">
+	  <li><div data-type="push" data-icon="fa-wrench"></div></li>
+	  <li><div data-type="push" data-device="AvReceiver" 
+	  		   data-set="remoteControl subwoofer-temporary-level -6" 
+	  		   data-icon="">-6</div></li>
+	  <li><div data-type="push" data-device="AvReceiver" 
+	  		   data-set="remoteControl subwoofer-temporary-level -2" 
+	  		   data-icon="">-2</div></li>
+	  <li><div data-type="push" data-device="AvReceiver" 
+	  		   data-set="remoteControl subwoofer-temporary-level 0" 
+	  		   data-icon="">0</div></li>
+	  <li><div data-type="push" data-device="AvReceiver" 
+	  		   data-set="remoteControl subwoofer-temporary-level +3" 
+	  		   data-icon="">2</div></li>
+	  <li><div data-type="push" data-device="AvReceiver" 
+	  		   data-set="remoteControl subwoofer-temporary-level +9" 
+	  		   data-icon="">9</div></li>
+	  <li><div data-type="push" data-device="AvReceiver" 
+	  		   data-set="remoteControl subwoofer-temporary-level +C" 
+	  		   data-icon="">12</div></li>
+	</ul>
+</div>
+<div data-type="label" class="cell">Woofer</div>
+</div>
+```
+
+![](http://knowthelist.github.io/fhem-tablet-ui/circle_menu_open.png)
 
 License
 -------
