@@ -53,26 +53,28 @@ width: auto;
 text-align: center;
 }
 
-.liftup {
-    margin-top:-15px !important;
+.wider {
+    margin-top: 25px !important;
+    width: auto;
+    text-align: center;
 }
 
 .darker {
 	color: #8C8C8C;
 }
 
-[data-type="label"].big {
-    font-size: 250%;
-	color: #aa6900;
-	margin-top: 20px  !important;
-	margin-bottom: -5px  !important;
+.thin {
+   font-weight: lighter;
 }
 
 .bigger {
-    font-size: 300% !important;
+    font-size: 320% !important;
 } 
 .big {
     font-size: 200%;
+}
+.large {
+    font-size: 150%;
 }
 .small {
     font-size: 80%;
@@ -160,12 +162,13 @@ ul, ol {
 }
 
 .menu{
-        position:absolute;
+    position:absolute;
 }
 .circleMenu-closed {
-    z-index:1000 !important;
+ z-index:1000 !important;
 }
 .circleMenu-open {
-    z-index:1001 !important;
+ z-index:1001 !important;
 }
+
 
