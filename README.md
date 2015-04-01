@@ -117,7 +117,12 @@ data-get-off="!on" means accept all but the data-get-on value (negation)
 ####Homestatus widget
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) (default '')
-4 states are valid: 1,2,3 or 4 (1=home,2=night,3=away,4=holiday) 
+- **data-version**  : name of the special dummy device to represent
+
+data-version='' (default)
+  4 states are valid: 1,2,3 or 4 (1=home,2=night,3=away,4=holiday) 
+data-version='residents' or 'roomate' or 'guest'
+  residents states are valid (absent,gone,asleep,home)
 
 ####Slider widgets (currently vertical only)
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
