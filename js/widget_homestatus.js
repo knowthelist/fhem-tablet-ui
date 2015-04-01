@@ -139,15 +139,39 @@ var widget_homestatus = {
 			'angleOffset' : 0,
 			'cmd': $(this).data('cmd') || 'set',
 			'set': $(this).data('set') || '',
+			'version': $(this).data('version') || '',
 			'draw' : _homestatus.drawSelector,
 			'change' : function (v) { 
 				  startInterval();
 			},
 			'release' : function (v) { 
 			  if (ready){
-			  		var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+this.o.status;
+			  		var st=this.o.status;
+			  		switch( this.o.version+this.o.status ) {
+					case 'residents3':
+					case 'roommate3':
+					case 'guest3':
+						st='absent';
+						break;
+					case 'residents4':
+					case 'roommate4':
+					case 'guest4':
+						st='gone';
+						break;
+					case 'residents2':
+					case 'roommate2':
+					case 'guest2':
+						st='asleep';
+						break;
+					case 'residents1':
+					case 'roommate1':
+					case 'guest1':
+						st='home';
+						break;
+					}
+			  		var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+st;
 				  	setFhemStatus(cmdl);
-				  	$.toast(cmdl);
+				  	TOAST && $.toast(cmdl);
 				  	this.$.data('curval', v);
 			  }
 			}	
@@ -170,12 +194,16 @@ var widget_homestatus = {
 				var val=0;
 				switch( value ) {
 					case '3':
+					case 'absent':
 						val=Math.PI;
 						break;
 					case '4':
+					case 'gone':
+					case 'none':
 						val=Math.PI*0.25;
 						break;
 					case '2':
+					case 'asleep':
 						val=Math.PI*1.75;
 						break;
 					default:
