@@ -16,7 +16,11 @@ var widget_push = {
 			
 			// Called in toggle on state.
 			toggleOn: function( ) {
-				 setFhemStatus($(this).data('cmd')+' '+device+' '+$(this).data('set'));
+				var cmd = [$(this).data('cmd'), device, $(this).data('set')].join(' ');
+				if(! cmd.match(/^set\s*$/)) {
+					setFhemStatus(cmd);
+					$.toast(cmd);
+				}
 			},
 
 	 	 });
