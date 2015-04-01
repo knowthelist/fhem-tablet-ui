@@ -5,7 +5,7 @@ Just another dashboard for FHEM  http://fhem.de/fhem.html
 But with a clear intention: Keep it short and simple!
 
 
-![](http://knowthelist.github.io/fhem-tablet-ui/fhem-tablet-ui-example.png)
+![](http://knowthelist.github.io/fhem-tablet-ui/fhem-tablet-ui-example_new.png)
 
 Requires
 -------
@@ -68,6 +68,9 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
+
+data-get-on and data-get-off accept also RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
+data-get-off="!on" means accept all but the data-get-on value (negation)
 
 ####Symbol widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
@@ -138,11 +141,11 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-url**      : URL of the image to show (use data-url or data-device + data-get, not both)
 
 ####Weather widgets
-- **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')
-- **data-size**     : width of the image in px or %, the height scales proportionally. (default: 50%)
-- **data-url**      : URL of the image to show (use data-url or data-device + data-get, not both)
+- **data-get**      : name of the reading to get the weather literal from FHEM (default 'STATE')
 
-data-get-on and data-get-off accept RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
+
+Icon configuration
+-------
 
 Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
 
