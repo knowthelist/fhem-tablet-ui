@@ -162,5 +162,10 @@ ul, ol {
 .menu{
         position:absolute;
 }
-
+.circleMenu-closed {
+    z-index:1000 !important;
+}
+.circleMenu-open {
+    z-index:1001 !important;
+}
 
