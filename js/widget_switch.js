@@ -50,6 +50,10 @@ var widget_switch = {
 					$(this).data('famultibutton').setOn();
 				else if ( state.match(RegExp('^' + $(this).data('get-off') + '$')) )
 					$(this).data('famultibutton').setOff();
+				else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') ){
+					console.log('state'+state);
+					$(this).data('famultibutton').setOff();
+					}
 			}
 		}
 	});
