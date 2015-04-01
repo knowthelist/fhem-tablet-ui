@@ -65,6 +65,7 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
 - **data-cmd**      : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
+- **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
 
@@ -73,6 +74,7 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-get-on**   : value for ON status to get or an array of states (default 'open')
 - **data-get-off**  : value for OFF status to get. (default 'closed')
 - **data-icon**     : name of the font-awesome icon.
+- **data-background-icon** : name of the font-awesome icon for background (default '')
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
 - **data-icons**    : array of icons related to the data-get-on array
@@ -90,6 +92,7 @@ All widgets have individual parameter settings. Set following attributes accordi
 ####Push widgets
 - **data-set**  : value to send to FHEM (\<commnd\> \<device\> \<value\>)
 - **data-icon** : name of the font-awesome icon. 
+- **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
 - **data-cmd**  : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 
 ####Thermostat widgets
@@ -134,6 +137,11 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-size**     : width of the image in px or %, the height scales proportionally. (default: 50%)
 - **data-url**      : URL of the image to show (use data-url or data-device + data-get, not both)
 
+####Weather widgets
+- **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')
+- **data-size**     : width of the image in px or %, the height scales proportionally. (default: 50%)
+- **data-url**      : URL of the image to show (use data-url or data-device + data-get, not both)
+
 data-get-on and data-get-off accept RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
 
 Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
@@ -149,21 +157,30 @@ To disable drag&drop for gridster set this value to 1
 ```html
 <meta name='gridster_disable' content='1'>
 ```
-
+To disable Toast messages set this value to 0
+```html
+<meta name='toast' content='1'>
+```
+Change this to adjust the size of a Gridster base (data-sizey=1/data-sizex=1)
+```html
+<meta name="widget_base_width" content="116">
+<meta name="widget_base_height" content="131">
+```
 
 Widgets
 -------
 Currently there are 10 types of widgets.
 - **thermostat** : dial for heater thermostates to set desired value and show current value
-- **switch** : on / off
-- **label** : show state as text
+- **switch** : Toggle any command to FHEM (e.g. on / off)
+- **label** : show state as text (colourable)
 - **symbol** : show state as an icon (e.g. window open) 
-- **push** : e.g. up / down
+- **push** : send any command to FHEM e.g. up / down
 - **volume** : dial to set a single value (e.g. 0-60)
 - **homestatus** : selector for 4 states (1=home,2=night,3=away,4=holiday) 
 - **dimmer** : toogle button with a setter for on value
 - **slider** : vertical slider to select between min/max value
 - **image** : insert an image, the URL is given by a reading
+- **weather** : insert an icon or image, represending a weather literal
 
 By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
 
@@ -191,7 +208,7 @@ The wigets will show the valve value only in case of a valid data-valve attribut
 The default for data-valve ist null. That means, a empty data-valve attribute hides the valve label for the widget.   
 ![](http://knowthelist.github.io/fhem-tablet-ui/thermo.png)
 
-####Label
+###Label
 **Example** for HM-WDS40-TH-I Funk-Temperatur-/Feuchtesensor innen 
 ```
 STATE	T: 20.0 H: 61
@@ -251,26 +268,7 @@ temperature	20.1
 </div>
 ```
 
-**Example** for how to use a label to show a weather icon according reading literal
-```html
-<div data-type="label" 
-     data-device="dummy1" 
-     data-get="fc0_weatherDay" 
-     class="cell weather">
-</div>
-```
-
-Important is to add the CSS class 'weather' to get this behavior.  
-![](http://knowthelist.github.io/fhem-tablet-ui/weather.png)
-
-Currently this literals are mapped to a appropriate METEOCONS icon:
-heiter":"H","wolkig":"N","Regenschauer":"Q","stark bewoelkt":"Y","Regen":"R","bedeckt":"N","sonnig":"B","Schnee":"U"
-
-The weather literal could be delivered by a FHEM module like PROPLANTA:
-
-Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
-
-####Push
+###Push
 **Example** for how to create a push button widget to trigger all devices on:
 ```html
 <div data-type="push" 
@@ -281,7 +279,7 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 </div>
 ```
 
-####Switch
+###Switch
 **Example** for how to create a widget for MILIGHT via toggle button. Usage of RegEx pattern for state request:
 ```html
 <div data-type="switch" class="cell" 
@@ -314,6 +312,22 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/group.png)
 
+###Weather
+
+**Example** for how to use a label to show a weather icon according reading literal
+```html
+<div data-type="weather" 
+     data-device="Weather" 
+     data-get="fc0_weatherDay" 
+     class="cell big">
+</div>
+```
+The weather literal could be delivered by a FHEM module like PROPLANTA, OPENWEATHER, Weather.
+
+Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
+
+![](http://knowthelist.github.io/fhem-tablet-ui/weather.png)
+
 ###Slider
 **Example** for how to create a widget for a slider to set values from 10 to 90:
 ```html
@@ -327,7 +341,25 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/slider.png)
 
-####Dimmer
+###Volume
+**Example** for how to create a widget for a HueDevice to set hue values:
+```html
+<div data-type="volume" data-device='dummy1' 
+	data-min='0' 
+	data-max='65535' 
+	data-tickstep='4' 
+	data-get='hue' 
+	data-set='hue' 
+	class="cell small hue-tick" ></div>
+<div data-type="label" class="cell">Light2</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/volume_hue.png)
+
+Following CSS classes are available to influence the look:
+hue-tick|hue-front|hue-back or dim-tick|dim-front|dim-back
+This classes can combined (e.g. class="cell small hue-tick hue-front")
+
+###Dimmer
 **Example** for how to create a widget for a dimmer via toggle button incl. dimmer. Usage of RegEx pattern get all values for state on:
 ```html
 <div data-type="dimmer" data-device="MyDimmer1" 
@@ -339,7 +371,7 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 To change the dim value: push the button and slide up or down   
 ![](http://knowthelist.github.io/fhem-tablet-ui/dimmer.png)
 
-####Image
+###Image
 **Example** for how to add an image to the dashboard which its URL is delivered by a FHEM module like PROPLANTA:
 ```html
 <div data-type="image" data-device="Wetter1" 
