@@ -17,6 +17,8 @@ var widget_switch = {
 		var elem = $(this).famultibutton({
 			icon: 'fa-lightbulb-o',
 			backgroundIcon: 'fa-circle',
+			onBackgroundColor:$(this).data('color')||'#aa6900',
+            		offBackgroundColor:$(this).data('offcolor')||'#505050',
 			offColor: '#2A2A2A',
 			onColor: '#2A2A2A',
 			
@@ -49,6 +51,8 @@ var widget_switch = {
 				else if ( state.match(RegExp('^' + $(this).data('get-on') + '$')) )
 					$(this).data('famultibutton').setOn();
 				else if ( state.match(RegExp('^' + $(this).data('get-off') + '$')) )
+					$(this).data('famultibutton').setOff();
+				else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
 					$(this).data('famultibutton').setOff();
 			}
 		}
