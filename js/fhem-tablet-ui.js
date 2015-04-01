@@ -16,6 +16,7 @@ var types = {};
 var ready = true;
 var reading_cntr;
 var DEBUG = false;
+var TOAST = true;
 var doLongPoll = false
 var timer;
 var timeoutMenu;
@@ -59,6 +60,7 @@ $( document ).ready(function() {
 	wy = parseInt( $("meta[name='widget_base_height']").attr("content") );
 	doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
 	DEBUG  = ($("meta[name='debug']").attr("content") == '1');
+    TOAST  = ($("meta[name='toast']").attr("content") != '0');
 	
 	//self path
 	dir = $('script[src$="fhem-tablet-ui.js"]').attr('src');
