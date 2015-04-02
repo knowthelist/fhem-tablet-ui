@@ -92,6 +92,8 @@ data-get-off="!on" means accept all but the data-get-on value (negation)
 - **data-limits** : a array of numeric values to affect the colour of the label
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
 
+- class: small, large, big, bigger, thin, red, green, blue, darker
+
 ####Push widgets
 - **data-set**  : value to send to FHEM (\<commnd\> \<device\> \<value\>)
 - **data-icon** : name of the font-awesome icon. 
@@ -106,6 +108,8 @@ data-get-off="!on" means accept all but the data-get-on value (negation)
 - **data-min**   : minimal value to set (default 10)
 - **data-max**   : maximal value to set (default 30)
 - **data-step**  : step size for value adjustment e.g. 0.5 (default 1)
+
+- class: big, readonly
 
 ####Volume widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')

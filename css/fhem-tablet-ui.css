@@ -86,8 +86,14 @@ text-align: center;
     font-size: 80%;
 }
 
+.red{
+color:#ad3333;
+}
 .green{
-color:#FF5252;
+color:#32a054;
+}
+.blue{
+color:#6699FF;
 }
 
 * {
