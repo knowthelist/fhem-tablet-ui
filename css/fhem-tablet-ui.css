@@ -36,11 +36,13 @@ float:right;
 margin:5px 10px !important;
 width: auto;
 text-align: center;
+vertical-align: middle;
 }
 
 .circlemenu {
 min-height: 52px;
 min-width: 52px;
+display: inline-block;
 }
 
 [data-type]:not([data-type="label"]){ 
@@ -83,6 +85,7 @@ text-align: center;
 .green{
 color:#FF5252;
 }
+
 * {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
 } 
