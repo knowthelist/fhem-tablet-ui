@@ -169,6 +169,7 @@ var widget_thermostat = {
 			'maxColor': '#ff0000',
 			'thickness': .25,
 			'cursor': 6,
+			'readOnly' : $(this).hasClass('readonly')?true:false,
 			'cmd': $(this).data('cmd') || 'set',
 			'set': $(this).data('set') || 'desired-temp',
 			'draw' : _thermostat.drawDial,
