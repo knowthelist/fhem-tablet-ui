@@ -17,6 +17,10 @@ body {
     font-style: normal;
 }
 
+[data-type="dimmer"]{
+    z-index:2;
+}
+
 .container:after {
   content:"";
   display:table;
