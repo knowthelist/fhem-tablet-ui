@@ -189,7 +189,7 @@ var widget_homestatus = {
 	deviceElements.each(function(index) {
 		
 			var value = getDeviceValue( $(this), 'get' );
-			if (value && value > -1){
+			if (value){
 				var knob_elem = $(this).find('input');
 				var val=0;
 				switch( value ) {
