@@ -86,11 +86,14 @@ $( document ).ready(function() {
 						trigger:'click',
 						circle_radius:70,
                         direction:'full',
+                        close_event:$(this).hasClass("keepopen")?'':'click',
                         open:function(){
-							var elem=this;
-							timeoutMenu=setTimeout(function(){
-								elem.close();
-							},4000);
+                            var elem=this;
+                            if (elem.options.close_event!=''){
+                                timeoutMenu=setTimeout(function(){
+                                    elem.close();
+                                },4000);
+                            }
 						},
 					})
                     .closest('.gridster>ul>li').css({overflow: 'visible'});
