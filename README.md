@@ -290,6 +290,39 @@ temperature	20.1
      class="cell">
 </div>
 ```
+**Example** two square buttons horizontal
+```html
+<div class="cell">
+    <div class="doublebox-h">
+        <div data-type="push" data-device="Rollo" 
+        	 data-icon="fa-angle-up" data-background-icon="fa-square-o" 
+        	 data-set="up">
+        </div>
+        <div data-type="push" data-device="Rollo" 
+        	 data-icon="fa-angle-down" data-background-icon="fa-square-o" 
+        	 data-set="down">
+        </div>
+    </div>
+</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/square-push-h.png)
+
+**Example** two square buttons vertical
+```html
+<div class="cell">
+    <div class="doublebox-v">
+        <div data-type="push" data-device="Rollo" 
+             data-icon="fa-chevron-up" data-background-icon="fa-square-o" 
+             data-set="up">
+    	</div>
+        <div data-type="push" data-device="Rollo" 
+        	data-icon="fa-chevron-down" data-background-icon="fa-square-o" 
+        	data-set="down">
+        </div>
+    </div>
+</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/square-push-v.png)
 
 ###Switch
 **Example** for how to create a widget for MILIGHT via toggle button. Usage of RegEx pattern for state request:
