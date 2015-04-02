@@ -195,15 +195,20 @@ var widget_homestatus = {
 				switch( value ) {
 					case '3':
 					case 'absent':
+					case 'abwesend':
 						val=Math.PI;
 						break;
 					case '4':
 					case 'gone':
 					case 'none':
+					case 'verreist':
 						val=Math.PI*0.25;
 						break;
 					case '2':
 					case 'asleep':
+					case 'gotosleep':
+					case 'bettfein':
+					case 'schläft':					
 						val=Math.PI*1.75;
 						break;
 					default:
