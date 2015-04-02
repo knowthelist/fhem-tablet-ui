@@ -108,8 +108,7 @@ data-get-off="!on" means accept all but the data-get-on value (negation)
 - **data-min**   : minimal value to set (default 10)
 - **data-max**   : maximal value to set (default 30)
 - **data-step**  : step size for value adjustment e.g. 0.5 (default 1)
-
-- class: big, readonly
+- **class**		 : big, readonly
 
 ####Volume widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
@@ -117,6 +116,7 @@ data-get-off="!on" means accept all but the data-get-on value (negation)
 - **data-cmd**  : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
+- **class**		: small, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back
 
 ####Homestatus widget
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
