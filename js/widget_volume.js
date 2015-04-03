@@ -118,12 +118,23 @@ var widget_volume = {
 		$(this).data('max', maxval);
 		$(this).data('max360', (maxval>360)?360:maxval);
 		
+		$(this).data('height', 1*$(this).attr('data-height')||150);
+		$(this).data('height', 1*$(this).attr('data-width')||150);
+		if($(this).hasClass('small')) {
+		    $(this).data('height', 100);
+		    $(this).data('width', 100);
+		}
+		if($(this).hasClass('mini')) {
+		    $(this).data('height', 52);
+		    $(this).data('width', 52);
+		}
+		
 		knob_elem.knob({
 			'min': $(this).data('min') || 0,
 			'max': $(this).data('max360'),
 			'origmax': $(this).data('max'),
-			'height':$(this).hasClass('small')?100:150,
-			'width':$(this).hasClass('small')?100:150,
+			'height':$(this).data('height'),
+			'width':$(this).data('width'),
 			'angleOffset': $(this).attr('data-angleoffset')?$(this).attr('data-angleoffset')*1:-120,
 			'angleArc': $(this).attr('data-anglearc')?$(this).attr('data-anglearc')*1:240,
 			'bgColor': $(this).data('bgcolor') || 'transparent',
@@ -137,6 +148,7 @@ var widget_volume = {
 			'cmd': $(this).data('cmd') || 'set',
 			'set': $(this).data('set') || '',
 			'draw' : _volume.drawDial,
+			'readOnly' : $(this).hasClass('readonly'),
 			'change' : function (v) { 
 				  startInterval();
 			},
@@ -155,7 +167,6 @@ var widget_volume = {
 	 });
   },
   update: function (dev,par) {
-
 	var deviceElements;
 	if ( dev == '*' )
 		deviceElements= _volume.elements;
@@ -163,6 +174,7 @@ var widget_volume = {
    		deviceElements= _volume.elements.filter('div[data-device="'+dev+'"]');
 
 	deviceElements.each(function(index) {
+		
 		if ( $(this).data('get')==par || par =='*'){	
 			var val = getDeviceValue( $(this), 'get' );
             var knob_elem = $(this).find('input');
