@@ -119,7 +119,7 @@ var widget_volume = {
 		$(this).data('max360', (maxval>360)?360:maxval);
 		
 		$(this).data('height', 1*$(this).attr('data-height')||150);
-		$(this).data('height', 1*$(this).attr('data-width')||150);
+        $(this).data('width', 1*$(this).attr('data-width')||150);
 		if($(this).hasClass('small')) {
 		    $(this).data('height', 100);
 		    $(this).data('width', 100);
@@ -128,13 +128,13 @@ var widget_volume = {
 		    $(this).data('height', 52);
 		    $(this).data('width', 52);
 		}
-		
+
 		knob_elem.knob({
 			'min': $(this).data('min') || 0,
 			'max': $(this).data('max360'),
 			'origmax': $(this).data('max'),
-			'height':$(this).data('height'),
-			'width':$(this).data('width'),
+            'height':$(this).data('height'),
+            'width':$(this).data('width'),
 			'angleOffset': $(this).attr('data-angleoffset')?$(this).attr('data-angleoffset')*1:-120,
 			'angleArc': $(this).attr('data-anglearc')?$(this).attr('data-anglearc')*1:240,
 			'bgColor': $(this).data('bgcolor') || 'transparent',
