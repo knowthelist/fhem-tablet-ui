@@ -80,30 +80,9 @@ $( document ).ready(function() {
         	gridster.disable();
     	}
 
-	if ($.fn.circleMenu){
-			$('.menu').each(function() {
-					$(this).circleMenu({item_diameter:50,
-						trigger:'click',
-						circle_radius:70,
-                        direction:'full',
-                        close_event:$(this).hasClass("keepopen")?'':'click',
-                        open:function(){
-                            var elem=this;
-                            if (elem.options.close_event!=''){
-                                timeoutMenu=setTimeout(function(){
-                                    elem.close();
-                                },4000);
-                            }
-						},
-					})
-                    .closest('.gridster>ul>li').css({overflow: 'visible'});
-					
-			});
-		$('.menu li:not(:first-child)').on('click', function(){
-				clearTimeout(timeoutMenu);
-		});
-	}
-	
+    //background for modal dialogs
+    $("<div id='shade' />").prependTo('body').hide();
+
 	//make it HTML conform (remove this after migration)
 	$('div[type]').each(function() {
     	$(this).attr({
@@ -384,7 +363,15 @@ this.getDeviceValue = function (device, src) {
 	return null;
 }
 
-// global data format functions
+// global helper functions
+this.showModal = function (modal) {
+    if(modal)
+        $("#shade").fadeIn();
+    else
+       $("#shade").fadeOut();
+}
+
+// global date format functions
 this.dateFromString = function (str) {
  var m = str.match(/(\d+)-(\d+)-(\d+)_(\d+):(\d+):(\d+).*/);
  return (m)?new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]):new Date();
