@@ -86,6 +86,30 @@ text-align: center;
     font-size: 80%;
 }
 
+.doublebox-v {
+min-height: 104px;
+max-height: 104px;
+min-width: 52px;
+max-width: 52px;
+}
+
+.doublebox-h {
+min-width: 104px;
+max-width: 104px;
+min-height: 52px;
+max-height: 52px;
+}
+
+.doublebox-v [data-type]{
+margin-top:-4px;
+margin-bottom:-4px;
+}
+
+.doublebox-h [data-type]{
+margin-left:-6px;
+margin-right:-6px;
+}
+
 .red{
 color:#ad3333;
 }
@@ -173,7 +197,6 @@ ul, ol {
 .menu li div{
     color: #555;
 }
-
 .menu{
     position:absolute;
 }
@@ -184,4 +207,13 @@ ul, ol {
  z-index:1001 !important;
 }
 
-
+#shade {
+    position:absolute;
+    z-index:1001;
+    background-color:#000000;
+    opacity:0.5;
+    height:100%;
+    width:100%;
+    top:0px;
+    left:0px;
+}
