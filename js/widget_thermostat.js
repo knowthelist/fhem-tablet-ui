@@ -4,11 +4,14 @@ var widget_thermostat = {
   getClimaValues: function (device) {
 
 	var state = getDeviceValue( device, '');
-	var desi = getDeviceValue( device, 'get');
+    var val_desired = getDeviceValue( device, 'get');
+    var val_desired = ( state && state.indexOf('set_') < 0 ) ? val_desired : getPart(state,2);
+    var val_temp = getDeviceValue( device, 'temp');
+
 	return {
-		temp: getDeviceValue( device, 'temp'),
-		desired: ( state && state.indexOf('set_') < 0 ) ? desi : getPart(state,2),
-		valve: getDeviceValue( device, 'valve')
+        temp: getPart(val_temp,'(\\d+[.,]?\\d+).*'),
+        desired: getPart(val_desired,'(\\d+[.,]?\\d+).*'),
+        valve: getDeviceValue( device, 'valve')
 	};
 },
   getGradientColor: function(start_color, end_color, percent) {
