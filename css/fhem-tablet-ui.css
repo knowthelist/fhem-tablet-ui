@@ -207,6 +207,13 @@ ul, ol {
  z-index:1001 !important;
 }
 
+.ontop{
+position:absolute;
+z-index:1000;
+top:10px;
+left:10px;
+}
+
 #shade {
     position:absolute;
     z-index:1001;
