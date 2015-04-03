@@ -361,7 +361,8 @@ this.getPart = function (s,p) {
 		return (c.length >= p && p>0 ) ? c[p-1] : s;
 	}
 	else {
-		var matches = s.match( RegExp('^' + p + '$') );
+		if ((s && typeof s != "undefined") )
+			var matches = s.match( RegExp('^' + p + '$') );
 		var ret='';
 		if (matches) {
 			for (var i=1;i<matches.length;i++) {
