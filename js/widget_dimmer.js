@@ -68,6 +68,8 @@ var widget_dimmer = {
 						$(this).data('famultibutton').setOn();
 				else if ( state.match(RegExp('^' + $(this).data('get-off') + '$')) )
 						$(this).data('famultibutton').setOff();
+				else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
+					$(this).data('famultibutton').setOff();
 			}
 		}
 	});
