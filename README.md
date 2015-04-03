@@ -151,6 +151,12 @@ data-version='residents' or 'roomate' or 'guest'
 ####Weather widgets
 - **data-get**      : name of the reading to get the weather literal from FHEM (default 'STATE')
 
+####CircleMenu widgets
+- **class**		    : 
+
+####Playstream widgets
+- **data-url**      : URL of the Radio stream
+
 
 Icon configuration
 -------
@@ -192,6 +198,7 @@ Currently there are 10 types of widgets.
 - **slider** : vertical slider to select between min/max value
 - **image** : insert an image, the URL is given by a reading
 - **weather** : insert an icon or image, represending a weather literal
+- **circlemenu** : Cover multiple widgets behind a single widget
 
 By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
 
@@ -443,7 +450,7 @@ Cover a lot of other button behind one single button
 
 ```html
 <div class="left">
-<div class="cell circlemenu">
+<div data-type="circlemenu" class="cell circlemenu">
 	<ul class="menu">
 	  <li><div data-type="push" data-icon="fa-wrench"></div></li>
 	  <li><div data-type="push" data-device="AvReceiver" 
@@ -468,6 +475,15 @@ Cover a lot of other button behind one single button
 </div>
 <div data-type="label" class="cell">Woofer</div>
 </div>
+```
+
+Playstream
+-------
+Create a simple button to play a webradio stream directly on the tablet
+
+```html
+<div data-type="playstream" data-url="http://radioeins.de/stream"></div>
+<div data-type="label" class="darker">Radio eins</div>
 ```
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/circle_menu_open.png)
