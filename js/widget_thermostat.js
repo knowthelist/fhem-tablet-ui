@@ -118,7 +118,7 @@ var widget_thermostat = {
 	c.strokeStyle = r ? this.o.fgColor : this.fgColor;
 	c.lineWidth = this.lineWidth * 2;
 	c.arc(this.xy, this.xy, this.radius-this.lineWidth/2, a.s, a.e, a.d);
-	c.stroke();
+    c.stroke();
 
 	//draw current value as text
     var x = this.radius*0.7*Math.cos(acAngle);
@@ -171,14 +171,14 @@ var widget_thermostat = {
 			'minColor': '#4477ff',
 			'maxColor': '#ff0000',
 			'thickness': .25,
-			'cursor': 6,
+            'cursor': 6,
 			'readOnly' : $(this).hasClass('readonly')?true:false,
 			'cmd': $(this).data('cmd') || 'set',
 			'set': $(this).data('set') || 'desired-temp',
 			'draw' : _thermostat.drawDial,
 			'change' : function (v) { 
 				//reset poll timer to avoid jump back
-				startInterval();
+                startInterval();
 			},
 			'release' : function (v) { 
 			  if (ready){
@@ -187,7 +187,7 @@ var widget_thermostat = {
 		 		        v=this.o.off;
 		 		    } else if(v == this.o.max && this.o.boost != -1) {
 		 		        v=this.o.boost;
-		 		    }
+                    }
 				  	var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v;
 				  	setFhemStatus(cmdl);
 				  	$.toast(cmdl);

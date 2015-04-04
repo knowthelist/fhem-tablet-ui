@@ -111,10 +111,15 @@ var widget_homestatus = {
 		  .data('curval', 10)
 		  .appendTo($(this));
 		
-		$(this).bind('mousemove', function(e) {
-	
-			knob_elem.data('pageX',e.pageX);
-			knob_elem.data('pageY',e.pageY);
+		var clickEventType=((document.ontouchstart!==null)?'mousedown':'touchstart');
+		$(this).bind(clickEventType, function(e) {
+
+			var event = e.originalEvent;
+		  	var posx =  event.touches ? event.touches[0].clientX :e.pageX;
+		  	var posy =  event.touches ? event.touches[0].clientY :e.pageY;
+
+			knob_elem.data('pageX',posx);
+			knob_elem.data('pageY',posy);
 			e.preventDefault();
 		});
 
