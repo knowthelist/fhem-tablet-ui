@@ -362,6 +362,17 @@ temperature	20.1
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/group.png)
 
+###Symbol
+**Example** for a tristate icon
+```html
+<div data-type="symbol" data-device="dummy1" 
+ data-get-on='["wert1","wert2","wert3"]' 
+ data-icons='["fa-arrow-up","fa-user","fa-arrow-down"]' 
+ data-on-colors='["SeaGreen","SlateBlue","IndianRed"]' 
+ class="cell big">
+</div>
+```
+
 ###Weather
 
 **Example** for how to use a label to show a weather icon according reading literal
