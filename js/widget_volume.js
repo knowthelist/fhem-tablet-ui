@@ -132,6 +132,8 @@ var widget_volume = {
 		knob_elem.knob({
 			'min': $(this).data('min') || 0,
 			'max': $(this).data('max360'),
+            'lastValue': 0,
+            'variance': Math.floor($(this).data('max360') / 5),
 			'origmax': $(this).data('max'),
             'height':$(this).data('height'),
             'width':$(this).data('width'),
@@ -151,6 +153,14 @@ var widget_volume = {
 			'readOnly' : $(this).hasClass('readonly'),
 			'change' : function (v) { 
 				  startInterval();
+                    if (v > this.o.max - this.o.variance && this.o.lastValue < this.o.min + this.o.variance) {
+                        knob_elem.val(this.o.min).change();
+                        return false;
+                    } else if (v < this.o.min + this.o.variance && this.o.lastValue > this.o.max - this.o.variance) {
+                        knob_elem.val(this.o.max).change();
+                        return false;
+                    }
+                    this.o.lastValue = v;
 			},
 			'release' : function (v) { 
 				  if (ready){
