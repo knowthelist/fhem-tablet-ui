@@ -49,6 +49,23 @@ Change the widgets you have and want to see on the dashboard
 ```html
 <div data-type="thermostat" data-device='WohnzimmerHeizung_Clima' class="cell"></div>
 ```
+Widgets
+-------
+Currently there are 10 types of widgets.
+- **thermostat** : dial for heater thermostates to set desired value and show current value
+- **switch** : Toggle any command to FHEM (e.g. on / off)
+- **label** : show state as text (colourable)
+- **symbol** : show state as an icon (e.g. window open) 
+- **push** : send any command to FHEM e.g. up / down
+- **volume** : dial to set a single value (e.g. 0-60)
+- **homestatus** : selector for 4 states (1=home,2=night,3=away,4=holiday) 
+- **dimmer** : toogle button with a setter for on value
+- **slider** : vertical slider to select between min/max value
+- **image** : insert an image, the URL is given by a reading
+- **weather** : insert an icon or image, represending a weather literal
+- **circlemenu** : Cover multiple widgets behind a single widget
+
+By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
 
 All widgets have individual parameter settings. Set following attributes according your needs.
 
@@ -183,24 +200,6 @@ Change this to adjust the size of a Gridster base (data-sizey=1/data-sizex=1)
 <meta name="widget_base_width" content="116">
 <meta name="widget_base_height" content="131">
 ```
-
-Widgets
--------
-Currently there are 10 types of widgets.
-- **thermostat** : dial for heater thermostates to set desired value and show current value
-- **switch** : Toggle any command to FHEM (e.g. on / off)
-- **label** : show state as text (colourable)
-- **symbol** : show state as an icon (e.g. window open) 
-- **push** : send any command to FHEM e.g. up / down
-- **volume** : dial to set a single value (e.g. 0-60)
-- **homestatus** : selector for 4 states (1=home,2=night,3=away,4=holiday) 
-- **dimmer** : toogle button with a setter for on value
-- **slider** : vertical slider to select between min/max value
-- **image** : insert an image, the URL is given by a reading
-- **weather** : insert an icon or image, represending a weather literal
-- **circlemenu** : Cover multiple widgets behind a single widget
-
-By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
 
 ####Thermostat 
 Configure as data-device='...' that item which delivers temp and desired-temp as reading.
@@ -408,7 +407,7 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 
 Following CSS classes are available to influence the look:
 hue-tick|hue-front|hue-back or dim-tick|dim-front|dim-back
-This classes can combined (e.g. class="cell small hue-tick hue-front")
+This classes can be combined (e.g. class="cell small hue-tick hue-front")
 
 ###Dimmer
 **Example** for how to create a widget for a dimmer via toggle button incl. dimmer. Usage of RegEx pattern get all values for state on:
@@ -477,6 +476,9 @@ Cover a lot of other button behind one single button
 </div>
 ```
 
+![](http://knowthelist.github.io/fhem-tablet-ui/circle_menu_open.png)
+
+
 Playstream
 -------
 Create a simple button to play a webradio stream directly on the tablet
@@ -485,8 +487,6 @@ Create a simple button to play a webradio stream directly on the tablet
 <div data-type="playstream" data-url="http://radioeins.de/stream"></div>
 <div data-type="label" class="darker">Radio eins</div>
 ```
-
-![](http://knowthelist.github.io/fhem-tablet-ui/circle_menu_open.png)
 
 License
 -------
