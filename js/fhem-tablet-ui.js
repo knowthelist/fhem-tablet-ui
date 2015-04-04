@@ -67,7 +67,7 @@ $( document ).ready(function() {
 	var name = dir.split('/').pop(); 
 	dir = dir.replace('/'+name,"");
 	DEBUG && console.log('Plugin dir: '+dir);
-	
+
 	//init gridster
 	gridster = $(".gridster > ul").gridster({
           widget_base_dimensions: [wx, wy],
@@ -235,15 +235,15 @@ function longPoll(roomName) {
 				if ( e.target.readyState == 3 )
 				{
 					var lines = data.replace(/<br>/g,"").split(/\n/);
-					var regDevice = /\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\s(\S*)\s(\S*)\s(.*)/;
-					var regDate = /^([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])\s/;
+                    var regDevice = /\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\.?[0-9]{0,3}\s(\S*)\s(\S*)\s(.*)/;
+                    var regDate = /^([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])\.?[0-9]{0,3}\s/;
 					var regParaname = /^(\S{3,}):(?:\s(.*))?$/;
 					lines.pop(); //remove last empty line
 					
 					for (var i=currLine; i < lines.length; i++) {
 						var date;
 						var line = $.trim( lines[i] );
-						//console.log('#'+line+'#');
+                        //console.log('#'+line+'#');
 						
 						if ( regDate.test( line ))
 							date = $.trim(line.match( regDate )[1]);
