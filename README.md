@@ -417,7 +417,7 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 ![](http://knowthelist.github.io/fhem-tablet-ui/volume_hue.png)
 
 Following CSS classes are available to influence the look:
-hue-tick|hue-front|hue-back or dim-tick|dim-front|dim-back
+hue-tick|hue-front|hue-back or dim-tick|dim-front|dim-back|rgb
 This classes can be combined (e.g. class="cell small hue-tick hue-front")
 
 ###Dimmer
