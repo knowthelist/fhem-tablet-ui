@@ -100,10 +100,11 @@ data-get-off="!on" means accept all but the data-get-on value (negation)
 - **data-icons**    : array of icons related to the data-get-on array
 - **data-on-colors**: array of colors related to the data-get-on array
 
+To use multiple icons, data-get-on,data-icons and data-on-colors have to be an array with the same size.
+
 ####Label widgets
 - **data-get**  : name of the reading to get from FHEM
-- **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)
-- **data-icon** : name of the font-awesome icon. 						 
+- **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)						 
 - **data-part** : split position of the space separated value to show or an RegEx
 - **data-colors** : a array of color values to affect the colour of the label according to the limit value 
 - **data-limits** : a array of numeric values to affect the colour of the label
