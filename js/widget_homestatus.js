@@ -4,17 +4,17 @@ var widget_homestatus = {
   drawSelector: function () {
 	var sector=0;
 	var c = this.g; // context
-	var x=this.$.data('pageX');
-	var y=this.$.data('pageY');
+    var x=this.tx; // touch x position
+    var y=this.ty; // touch y position
 	var mx=this.x+this.w2;
 	var my=this.y+this.w2;
 	var r=this.radius*0.4;
 
-	//Assign sector 1 for center pressed or set value 0
-	if ( Math.pow((mx-x),2) + Math.pow((my-y),2) < Math.pow(r,2)
-		|| this.cv == 0 ) 
-		sector=1;
-	
+      //Assign sector 1 for center pressed or value is 0
+      if ( Math.pow((mx-x),2) + Math.pow((my-y),2) < Math.pow(r,2)
+          || this.cv == 0 )
+          sector=1;
+
 	if (sector==1){
 			// inner circle
 			c.lineWidth = this.radius*0.4;
@@ -103,32 +103,18 @@ var widget_homestatus = {
   	_homestatus.elements = $('div[data-type="homestatus"]');
  	_homestatus.elements.each(function(index) {
 
-		var clientX=0;
-		var clientY=0;
 		var knob_elem =  jQuery('<input/>', {
 			type: 'text',
 		}).data($(this).data())
 		  .data('curval', 10)
 		  .appendTo($(this));
-		
-		var clickEventType=((document.ontouchstart!==null)?'mousedown':'touchstart');
-		$(this).bind(clickEventType, function(e) {
-
-			var event = e.originalEvent;
-		  	var posx =  event.touches ? event.touches[0].clientX :e.pageX;
-		  	var posy =  event.touches ? event.touches[0].clientY :e.pageY;
-
-			knob_elem.data('pageX',posx);
-			knob_elem.data('pageY',posy);
-			e.preventDefault();
-		});
 
 		var device = $(this).data('device');
 		$(this).data('get', $(this).data('get') || 'STATE');
 		$(this).data('cmd', $(this).data('cmd') || 'set');
 		readings[$(this).data('get')] = true;
 		
-		knob_elem.knob({
+        knob_elem.knob({
 			'min': 0,
 			'max': 2 * Math.PI,
 			'step': 0.01,
@@ -140,12 +126,13 @@ var widget_homestatus = {
 			'minColor': '#2A2A2A',
 			'maxColor': '#696969',
 			'thickness': 0.4,
+                           'lastvalue':0,
 			'displayInput': false,
 			'angleOffset' : 0,
 			'cmd': $(this).data('cmd') || 'set',
 			'set': $(this).data('set') || '',
 			'version': $(this).data('version') || '',
-			'draw' : _homestatus.drawSelector,
+            'draw' : _homestatus.drawSelector,
 			'change' : function (v) { 
 				  startInterval();
 			},
@@ -180,7 +167,8 @@ var widget_homestatus = {
 				  	this.$.data('curval', v);
 			  }
 			}	
-		});	
+        });
+
 	 });
   },
   update: function (dev,par) {
