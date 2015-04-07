@@ -6,11 +6,11 @@ var widget_circlemenu= {
               if ($.fn.circleMenu){
     _circlemenu.elements = $('div[data-type="circlemenu"]>ul');
     _circlemenu.elements.each(function(index) {
-
+			parent = $(this).parent('div[data-type="circlemenu"]');
                         $(this).circleMenu({item_diameter:50,
                             trigger:'click',
                             circle_radius:70,
-                            direction:'full',
+                            direction: parent.data('direction') || 'full',
                             close_event:$(this).hasClass("keepopen")?'':'click',
                             close:function() {
                                 setTimeout(function(){showModal(false);},50);
