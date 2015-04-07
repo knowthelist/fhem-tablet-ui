@@ -60,7 +60,7 @@ var widget_weather = {
         // OPENWEATHER (Wetter.com) (incomplete)
         'leichter Schnee - Schauer' :   'U',
         'leichter Schnee-Regen' :       'V',
-        'mäßiger Schneefall' :          'U',
+        'm\u00e4\u00dfiger Schneefall' :'U',
         'leichter Regen' :              'R',
         
         // others
@@ -127,7 +127,7 @@ var widget_weather = {
         // OPENWEATHER (wetter.com) (incomplete)
         'leichter Schnee - Schauer' :   '/images/default/weather/chance_of_snow.png',
         'leichter Schnee-Regen' :       '/images/default/weather/rainsnow.png',
-        'mäßiger Schneefall' :          '/images/default/weather/chance_of_snow.png',
+        'm\u00e4\u00dfiger Schneefall' :'/images/default/weather/chance_of_snow.png',
         'leichter Regen' :              '/images/default/weather/drizzle.png',
         
         // others
@@ -163,13 +163,13 @@ var widget_weather = {
         'windig' :                      ':windy',
         'kalt' :                        ':cold',
         'wolkig' :                      ':cloudy',
-        'Ã¼berwiegend wolkig' :         ':mostly cloudy',
+        '\u00fcberwiegend wolkig' :         ':mostly cloudy',
         'teilweise wolkig' :            ':partly cloudy',
         'klar' :                        ':clear',
         'sonnig' :                      ':sunny',
         'heiter' :                      ':fair',
         'Regen und Hagel' :             ':mixed rain and hail',
-        'heiÃŸ' :                       ':hot',
+        'hei\u00df' :                       ':hot',
         'einzelne Gewitter' :           ':isolated thunderstorms',
         'vereinzelt Gewitter' :         ':scattered thunderstorms',
         'vereinzelt Schauer' :          ':scattered showers',
