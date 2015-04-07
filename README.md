@@ -22,7 +22,7 @@ Install
  * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/tablet
 
 A lot more plugins are available on addiational sources [Widgets-for-fhem-tablet-ui](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
-* copy additional widgets **widget_xxx.js** to js folder
+* copy additional widgets **widget_xxx.js** into js folder
 
 Configure
 -------
@@ -283,6 +283,14 @@ temperature	20.1
      data-device="dummy1" 
      data-part="(\d\d\.\d\d\.).*" 
      class="cell">
+</div>
+```
+
+**Example** for how to show two labels in one line.
+```html
+<div class="">
+   <div type="label" device="OnSunrise" class="inline"></div>bis
+   <div type="label" device="OnSunset" class="inline"></div>
 </div>
 ```
 
