@@ -202,6 +202,8 @@ Change this to adjust the size of a Gridster base (data-sizey=1/data-sizex=1)
 <meta name="widget_base_height" content="131">
 ```
 
+Examples
+-------
 ####Thermostat 
 Configure as data-device='...' that item which delivers temp and desired-temp as reading.
 
