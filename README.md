@@ -101,6 +101,7 @@ data-get-off="!on" means accept all but the data-get-on value (negation)
 - **data-on-colors**: array of colors related to the data-get-on array
 
 To use multiple icons, data-get-on,data-icons and data-on-colors have to be an array with the same size.
+The value for one icon can also contain an additional animatation CSS name, e.g. "fa-exclamation-triangle fa-blink" for a blinking symbol
 
 ####Label widgets
 - **data-get**  : name of the reading to get from FHEM
@@ -381,6 +382,15 @@ temperature	20.1
  data-icons='["fa-arrow-up","fa-user","fa-arrow-down"]' 
  data-on-colors='["SeaGreen","SlateBlue","IndianRed"]' 
  class="cell big">
+</div>
+```
+
+**Example** for a tristate icon with blink and spin animation
+```html
+<div data-type="symbol" data-device="dummy1" 
+  data-icons='["fa-exclamation-triangle fa-blink","fa-exclamation-circle","fa-cog fa-spin"]' 
+  data-on-colors='["Crimson","GoldenRod","SeaGreen"]' 
+  data-get-on='["Wert1","Wert2","Wert3"]' >
 </div>
 ```
 
