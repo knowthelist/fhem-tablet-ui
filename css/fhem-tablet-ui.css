@@ -43,6 +43,12 @@ text-align: center;
 vertical-align: middle;
 }
 
+.inline {
+  display: inline-block;
+  margin:0px 5px 0px 0px !important;
+}
+
+
 .circlemenu {
 min-height: 52px;
 min-width: 52px;
@@ -126,7 +132,7 @@ color:#6699FF;
 
 
 input {
-	visibility:hidden;
+        visibility:hidden;
 }
 
 .slider_vertical{
