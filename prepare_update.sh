@@ -9,7 +9,7 @@ find ./www/tablet -type d \( ! -iname ".*" \) -print0 | while IFS= read -r -d ''
 done
 find ./www -type f \( ! -iname ".*" \) -print0 | while IFS= read -r -d '' f; 
   do
-   out="UPD "$(stat -f "%Sm" -t "%Y-%m-%d_%T" $f)" "$(du $f)
+   out="UPD "$(stat -f "%Sm" -t "%Y-%m-%d_%T" $f)" "$(stat -f%z $f)" ${f}"
    echo ${out//.\//} >> controls_fhemtabletui.txt
 done
 
