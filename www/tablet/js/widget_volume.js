@@ -202,6 +202,7 @@ var widget_volume = {
 			'tickdistance': $(this).data('tickstep') || (((mode>>1) % 2 != 0)?4:20),
 			'mode': mode,
 			'cursor': 6,
+            'touchPosition': 'left',
 			'cmd': $(this).data('cmd') || 'set',
 			'set': $(this).data('set') || '',
 			'draw' : _volume.drawDial,

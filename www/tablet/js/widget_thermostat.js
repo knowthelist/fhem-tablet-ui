@@ -78,7 +78,8 @@ var widget_thermostat = {
 	var acAngle = ((this.o.isValue - this.o.min) / step) + this.startAngle;
 	var dist = this.o.tickdistance || 4;
 	var mincolor = this.o.minColor || '#ff0000';
-	var maxcolor = this.o.maxColor || '#4477ff';
+    var maxcolor = this.o.maxColor || '#4477ff';
+    var destcolor = this.o.tkColor;
 	
 	// draw ticks
 	for (tick = this.startAngle; tick < this.endAngle + 0.00001; tick+=tick_w*dist) {
@@ -86,10 +87,12 @@ var widget_thermostat = {
 		
 		c.beginPath();
 		
-		if ((tick > acAngle && tick < a.s) || (tick-tick_w*4 <= acAngle && tick+tick_w*4 >= a.s)){
+        if ((tick > acAngle && tick < a.s) || (tick-tick_w*dist <= acAngle && tick+tick_w*dist >= a.s)){
 			// draw diff range in gradient color
-			c.strokeStyle = _thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-tick)/this.angleArc);   
-		}
+            c.strokeStyle = _thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-tick)/this.angleArc);
+            //if (tick-tick_w*dist <= acAngle )
+            //    destcolor=c.strokeStyle;
+        }
 		else {
 			// draw normal ticks
 			c.strokeStyle = this.o.tkColor;//'#4477ff';
@@ -108,24 +111,23 @@ var widget_thermostat = {
 		if (acAngle > tick-tick_w && acAngle < tick+tick_w)
 			w *= 1.9;	
 			
-		c.arc( this.xy, this.xy, this.radius, tick, tick+w , false);
+        c.arc( this.xy, this.xy, this.radius, tick, tick+w , false);
 		c.stroke();
 	}
 
-	// draw target temp cursor
-	c.beginPath();
-	this.o.fgColor= _thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
-	c.strokeStyle = r ? this.o.fgColor : this.fgColor;
-	c.lineWidth = this.lineWidth * 2;
-	c.arc(this.xy, this.xy, this.radius-this.lineWidth/2, a.s, a.e, a.d);
-    c.stroke();
-
-	//draw current value as text
+    //draw current value as text
     var x = this.radius*0.7*Math.cos(acAngle);
     var y = this.radius*0.7*Math.sin(acAngle);
-    c.fillStyle = this.o.tkColor;
+    c.fillStyle = destcolor;
     c.font="10px sans-serif";
     c.fillText(this.o.isValue ,this.xy+x-5,this.xy+y+5);
+
+	// draw target temp cursor
+	c.beginPath();
+    c.strokeStyle = _thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
+	c.lineWidth = this.lineWidth * 2;
+    c.arc(this.xy, this.xy, this.radius-this.lineWidth/2, a.s, a.e, a.d);
+    c.stroke();
   
 	//draw valve value as text
 	if ( this.o.valveValue ) {
@@ -146,7 +148,7 @@ var widget_thermostat = {
 			value: '10',
 			disabled : true,
 		}).appendTo($(this));
-		  
+
 		var device = $(this).data('device');  
 		//default reading parameter name
 		$(this).data('get', $(this).data('get') || 'desired-temp');
@@ -160,18 +162,19 @@ var widget_thermostat = {
 			'max':1*$(this).data('max') || 30,
 			'off':$(this).attr('data-off')?$(this).data('off'):-1,
 			'boost':$(this).attr('data-boost')?$(this).data('boost'):-1,
-			'height':$(this).hasClass('big')?150:100,
-			'width':$(this).hasClass('big')?150:100,
+            'height':$(this).hasClass('big')?150:100,
+            'width':$(this).hasClass('big')?150:100,
 			'step': 1*$(this).data('step') || 1,
 			'angleOffset': $(this).data('angleoffset') || -120,
 			'angleArc': $(this).data('anglearc') || 240,
 			'bgColor': $(this).data('bgcolor') || 'transparent',
-			'fgColor': $(this).data('fgcolor') || '#cccccc',
+            'fgColor': $(this).data('fgcolor') || '#bbbbbb',
 			'tkColor': $(this).data('tkcolor') || '#696969',
 			'minColor': '#4477ff',
 			'maxColor': '#ff0000',
-			'thickness': .25,
+            'thickness': .25,
             'cursor': 6,
+            'touchPosition': 'left',
 			'readOnly' : $(this).hasClass('readonly')?true:false,
 			'cmd': $(this).data('cmd') || 'set',
 			'set': $(this).data('set') || 'desired-temp',

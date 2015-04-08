@@ -2,7 +2,7 @@
 /**
  * Downward compatible, touchable dial
  *
- * Version: 1.3.0
+ * Version: 1.3.1
  * Requires: jQuery v1.7+
  *
  * Copyright (c) 2012 Anthony Terrien
@@ -116,6 +116,7 @@
                     height: this.$.data('height') || 200,
                     displayInput: this.$.data('displayinput') == null || this.$.data('displayinput'),
                     displayPrevious: this.$.data('displayprevious'),
+                    touchPosition: this.$.data('touchPosition') || '',
                     fgColor: this.$.data('fgcolor') || '#87CEEB',
                     inputColor: this.$.data('inputcolor'),
                     font: this.$.data('font') || 'Arial',
@@ -345,6 +346,7 @@
                     function () {
                         k.c.d.unbind('touchmove.k touchend.k');
                         s.val(s.cv);
+                        s._moveInput(false);
                     }
                 );
 
@@ -402,6 +404,29 @@
             return this;
         };
 
+        this._moveInput = function (isTouched){
+            if (this.o.touchPosition){
+                if (this.o.touchPosition=='left' && isTouched){
+                       this.i.animate({
+                                  'margin-top' : '-'+((this.w / 6) >> 0) + 'px',
+                                  'margin-left' : '-' + ((this.w * 1.3 + 2) >> 0) + 'px',
+                              });
+                }
+                else if (this.o.touchPosition=='right' && isTouched){
+                        this.i.animate({
+                                  'margin-top' : '-'+((this.w / 6) >> 0) + 'px',
+                                  'margin-left' : '-' + ((this.w * 1/3 + 2) >> 0) + 'px',
+                              });
+                }
+                else {
+                        this.i.animate({
+                                  'margin-top' : ((this.w / 3) >> 0) + 'px',
+                                  'margin-left' : '-' + ((this.w * 3 / 4 + 2) >> 0) + 'px',
+                              });
+                }
+            }
+        }
+
         this._listen = function () {
             if (!this.o.readOnly) {
                 if(document.ontouchstart!==null){
@@ -418,6 +443,7 @@
                         function (e) {
                             e.preventDefault();
                             s._xy()._touch(e);
+                            s._moveInput(true);
                         }
                     );
                 }
