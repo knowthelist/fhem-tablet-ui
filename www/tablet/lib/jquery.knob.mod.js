@@ -409,7 +409,7 @@
                 if (this.o.touchPosition=='left' && isTouched){
                        this.i.animate({
                                   'margin-top' : '-'+((this.w / 6) >> 0) + 'px',
-                                  'margin-left' : '-' + ((this.w * 1.3 + 2) >> 0) + 'px',
+                                  'margin-left' : '-' + ((this.w * 1.2 + 2) >> 0) + 'px',
                               });
                 }
                 else if (this.o.touchPosition=='right' && isTouched){
