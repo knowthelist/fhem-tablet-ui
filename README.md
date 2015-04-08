@@ -20,7 +20,7 @@ Install
  * add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
  * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/tablet
  
- or just use 'update https://github.com/knowthelist/fhem-tablet-ui/blob/master/controls_fhemtabletui.txt'
+ or just use 'update thirdparty https://raw.githubusercontent.com/knowthelist/fhem-tablet-ui/master/controls_fhemtabletui.txt'
  on the FHEM commandline (or input field of FHEMWEB)
 
 A lot more plugins are available on addiational sources [Widgets-for-fhem-tablet-ui](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
