@@ -16,10 +16,12 @@ Requires
 
 Install
 -------
- * create a new folder named 'tablet' in /\<fhem-path\>/www
- * copy all files incl. sub folders into /\<fhem-path\>/www/tablet
+ * copy the whole tree into the corresponding folder of your FHEM server /\<fhem-path\>/www/tablet
  * add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
  * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/tablet
+ 
+ or just use 'update https://github.com/knowthelist/fhem-tablet-ui/blob/master/controls_fhemtabletui.txt'
+ on the FHEM commandline (or input field of FHEMWEB)
 
 A lot more plugins are available on addiational sources [Widgets-for-fhem-tablet-ui](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 * copy additional widgets **widget_xxx.js** into js folder
@@ -51,7 +53,7 @@ Change the widgets you have and want to see on the dashboard
 ```
 Widgets
 -------
-Currently there are 10 types of widgets.
+Currently there are 12 types of widgets.
 - **thermostat** : dial for heater thermostates to set desired value and show current value
 - **switch** : Toggle any command to FHEM (e.g. on / off)
 - **label** : show state as text (colourable)
