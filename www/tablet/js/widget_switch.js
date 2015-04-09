@@ -19,6 +19,7 @@ var widget_switch = {
 			backgroundIcon: 'fa-circle',
 			offColor: '#2A2A2A',
 			onColor: '#2A2A2A',
+			mode:$(this).hasClass('readonly')?'signal':'toggle',
 			
 			// Called in toggle on state.
 			toggleOn: function( ) {
