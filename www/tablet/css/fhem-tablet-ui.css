@@ -55,7 +55,7 @@ min-width: 52px;
 display: inline-block;
 }
 
-[data-type]:not([data-type="label"]){ 
+[data-type]:not([data-type="label"]):not(.readonly):not([data-type="symbol"]){
 cursor: pointer;
 }
 
