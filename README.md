@@ -136,7 +136,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-cmd**  : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
-- **class**		: small, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back
+- **class**		: small, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
 
 ####Homestatus widget
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
