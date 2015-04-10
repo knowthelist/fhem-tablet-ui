@@ -13,6 +13,12 @@ find ./www -type f \( ! -iname ".*" \) -print0 | while IFS= read -r -d '' f;
    echo ${out//.\//} >> controls_fhemtabletui.txt
 done
 
+# CHANGED file
+echo "FHEM tablet UI last change:" > CHANGED
+echo $(date +"%Y-%m-%d") >> CHANGED
+echo " -"$(git log -1 --pretty=%B) >> CHANGED
+
+
 
 
 
