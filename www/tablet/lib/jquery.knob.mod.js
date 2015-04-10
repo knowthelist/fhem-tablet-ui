@@ -2,14 +2,14 @@
 /**
  * Downward compatible, touchable dial
  *
- * Version: 1.3.1
+ * Version: 1.3.2
  * Requires: jQuery v1.7+
  *
  * Copyright (c) 2012 Anthony Terrien
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  *
  * Thanks to vor, eskimoblood, spiffistan, FabrizioC
- * Mod by Mario Stephan for https://github.com/knowthelist/fhem-tablet-ui
+ * Modded 2015 by Mario Stephan for https://github.com/knowthelist/fhem-tablet-ui
  */
 (function (factory) {
     if (typeof exports === 'object') {
@@ -407,16 +407,18 @@
         this._moveInput = function (isTouched){
             if (this.o.touchPosition){
                 if (this.o.touchPosition=='left' && isTouched){
-                       this.i.animate({
-                                  'margin-top' : '-'+((this.w / 6) >> 0) + 'px',
-                                  'margin-left' : '-' + ((this.w * 1.2 + 2) >> 0) + 'px',
-                              });
+                   var s = (this.i.val().length==4)?0.1:0.0;
+                   this.i.animate({
+                              'margin-top' : '-'+((this.w / 6) >> 0) + 'px',
+                              'margin-left' : '-' + ((this.w * (1.2-s)) >> 0) + 'px',
+                          });
                 }
                 else if (this.o.touchPosition=='right' && isTouched){
-                        this.i.animate({
-                                  'margin-top' : '-'+((this.w / 6) >> 0) + 'px',
-                                  'margin-left' : '-' + ((this.w * 1/3 + 2) >> 0) + 'px',
-                              });
+                    var s = (this.i.val().length==4)?0.0:0.1;
+                    this.i.animate({
+                              'margin-top' : '-'+((this.w / 6) >> 0) + 'px',
+                              'margin-left' : '-' + ((this.w * (3/6-s) ) >> 0) + 'px',
+                          });
                 }
                 else {
                         this.i.animate({

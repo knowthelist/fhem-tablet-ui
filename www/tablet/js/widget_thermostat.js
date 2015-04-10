@@ -143,7 +143,7 @@ var widget_thermostat = {
   	_thermostat=this;
 	_thermostat.elements=$('div[data-type="thermostat"]');
 	_thermostat.elements.each(function( index ) {
-		var knob_elem =  jQuery('<input/>', {
+        var knob_elem =  jQuery('<input/>', {
 			type: 'text',
 			value: '10',
 			disabled : true,
@@ -183,9 +183,13 @@ var widget_thermostat = {
 				//reset poll timer to avoid jump back
                 startInterval();
 			},
+            'format' : function (v) {
+                //fix digits count
+                return (this.step<1)?Number(v).toFixed(1):v;
+            },
 			'release' : function (v) { 
 			  if (ready){
-		 		    var elem = $(this).find('input');
+                    var elem = $(this).find('input');
 		 		    if(v == this.o.min && this.o.off != -1) {
 		 		        v=this.o.off;
 		 		    } else if(v == this.o.max && this.o.boost != -1) {
@@ -215,7 +219,7 @@ var widget_thermostat = {
 		    case $(this).data('boost'): clima.desired=$(this).data('max'); break;
 		}
 
-		var knob_elem = $(this).find('input');
+        var knob_elem = $(this).find('input');
 				
 		if ( ($(this).data('get')==par || par =='*') && 
 			clima.desired && clima.desired > 0 && knob_elem.data('desvalue') != clima.desired ){	
