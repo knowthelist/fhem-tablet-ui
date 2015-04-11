@@ -3,7 +3,7 @@ DIR www/tablet/css
 DIR www/tablet/fonts
 DIR www/tablet/js
 DIR www/tablet/lib
-UPD 2015-04-09_23:33:17 3825 www/tablet/css/fhem-tablet-ui.css
+UPD 2015-04-11_12:53:58 4669 www/tablet/css/fhem-tablet-ui.css
 UPD 2015-04-04_21:30:43 60767 www/tablet/fonts/fontawesome-webfont.eot
 UPD 2015-04-04_21:30:43 313398 www/tablet/fonts/fontawesome-webfont.svg
 UPD 2015-04-04_21:30:43 122092 www/tablet/fonts/fontawesome-webfont.ttf
@@ -15,7 +15,7 @@ UPD 2015-04-04_21:30:43 33061 www/tablet/fonts/meteocons-webfont.svg
 UPD 2015-04-04_21:30:43 22724 www/tablet/fonts/meteocons-webfont.ttf
 UPD 2015-04-04_21:30:43 11788 www/tablet/fonts/meteocons-webfont.woff
 UPD 2015-02-22_23:37:00 12170 www/tablet/index.html
-UPD 2015-04-04_21:30:43 11479 www/tablet/js/fhem-tablet-ui.js
+UPD 2015-04-11_11:50:39 11658 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-04-08_00:35:26 1840 www/tablet/js/widget_circlemenu.js
 UPD 2015-04-04_21:30:43 2606 www/tablet/js/widget_dimmer.js
 UPD 2015-04-06_12:00:00 5695 www/tablet/js/widget_homestatus.js
@@ -23,6 +23,7 @@ UPD 2015-04-04_21:30:43 985 www/tablet/js/widget_image.js
 UPD 2015-04-04_21:30:43 1404 www/tablet/js/widget_label.js
 UPD 2015-04-04_21:30:43 1239 www/tablet/js/widget_playstream.js
 UPD 2015-04-08_00:35:26 1437 www/tablet/js/widget_push.js
+UPD 2015-04-11_12:43:31 1968 www/tablet/js/widget_select.js
 UPD 2015-04-04_21:30:43 6206 www/tablet/js/widget_simplechart.js
 UPD 2015-04-04_21:30:43 1920 www/tablet/js/widget_slider.js
 UPD 2015-04-09_23:36:16 2159 www/tablet/js/widget_switch.js
