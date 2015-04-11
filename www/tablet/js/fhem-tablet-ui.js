@@ -308,18 +308,15 @@ function requestFhem(paraname) {
 			for (var i=0; i < lines.length; i++) {
                 var date,key,val;
 				var line = $.trim( lines[i] );
-                        console.log(line);
                 if (regCapture.test(line) ) {
                     var groups = line.match( regCapture );
                     key = $.trim( line.match( regCapture )[1]);
-
                     if (groups.length>2){
                         date = $.trim( line.match( regCapture )[2]);
                         val = $.trim( line.match( regCapture )[3]);
                     }
                     else
                         val = $.trim( line.match( regCapture )[2]);
-
 					var params = deviceStates[key] || {};
 					var paraname = this.paraname;
 					var value = {"date": date, "val": val};
