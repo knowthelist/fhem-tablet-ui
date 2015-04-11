@@ -82,7 +82,7 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-get-off**  : value for OFF status to get. (default 'off')
 - **data-set-on**   : value for ON status to set. (default: value of data-get-on)
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
-- **data-cmd**      : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-cmd**      : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
 - **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
 - **data-on-color** : color of ON state (default '#aa6900')
@@ -114,16 +114,24 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
 - **class**     : small, large, big, bigger, thin, red, green, blue, darker
 
+####Select widgets
+- **data-get**  : name of the reading that get the selected item of the list
+- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
+- **data-list** : name of the reading to get a :-separated list from FHEM
+- **data-items**: a array of fix items to show in the selection box (alternative if data-list is empty)
+- **data-cmd**  : name of the command to send to FHEM (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **class**     : wider
+
 ####Push widgets
-- **data-set**  : value to send to FHEM (\<commnd\> \<device\> \<value\>)
+- **data-set**  : value to send to FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
 - **data-icon** : name of the font-awesome icon. 
 - **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
-- **data-cmd**  : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-cmd**  : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 
 ####Thermostat widgets
 - **data-get**   : name of the reading to get from FHEM (default 'desired-temp')
-- **data-temp**  : reading for measured temperature of thermostates (default 'measured-temp')
-- **data-set**   : command to send to FHEM (set \<device\> \<command\> \<value\>) (default 'desired-temp')
+- **data-temp**  : name of the reading for measured temperature of thermostates (default 'measured-temp')
+- **data-set**   : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default 'desired-temp')
 - **data-valve** : reading for valve position of thermostates
 - **data-min**   : minimal value to set (default 10)
 - **data-max**   : maximal value to set (default 30)
@@ -132,15 +140,15 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 
 ####Volume widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
-- **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) (default '')
-- **data-cmd**  : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
+- **data-cmd**  : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
 - **class**		: small, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
 
 ####Homestatus widget
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
-- **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) (default '')
+- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
 - **data-version**  : name of the special dummy device to represent
 
 data-version='' (default)
@@ -150,7 +158,7 @@ data-version='residents' or 'roomate' or 'guest'
 
 ####Slider widgets (currently vertical only)
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
-- **data-set**  : command to send to FHEM (set \<device\> \<command\> \<value\>) (default '')
+- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
 - **data-cmd**  : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 100)
@@ -161,7 +169,7 @@ data-version='residents' or 'roomate' or 'guest'
 - **data-get-off**  : value for OFF status to get. (default 'off')
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
 - **data-cmd**      : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
-- **data-set**      : command to send to FHEM (set \<device\> \<command\> \<value\>) (default '')
+- **data-set**      : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
 - **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
 
 ####Image widgets
@@ -178,6 +186,9 @@ data-version='residents' or 'roomate' or 'guest'
 ####Playstream widgets
 - **data-url**      : URL of the Radio stream
 
+CSS Class description
+-------
+- wider		: 25px extra space for the widget to the top 
 
 Icon configuration
 -------

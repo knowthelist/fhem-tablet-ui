@@ -1,6 +1,6 @@
 body {
     background-color: #000000;
-    font-family: "Helvetica Neue", "Helvetica", "Open Sans", "Arial", "Helvetica", sans-serif; 
+    font-family: "Helvetica Neue", "Helvetica", "Open Sans", "Arial", "Helvetica", sans-serif;
     -webkit-font-smoothing: antialiased;
     font-size: small;
     color: #eeeeee;
@@ -22,25 +22,25 @@ body {
 }
 
 .container:after {
-  content:"";
-  display:table;
-  clear:both;
+    content:"";
+    display:table;
+    clear:both;
 }
 
 .left {
-float: left;
-width: auto;
+    float: left;
+    width: auto;
 }
 
 .right {
-float:right;
+    float:right;
 }
- 
+
 .cell {
-margin:5px 10px !important;
-width: auto;
-text-align: center;
-vertical-align: middle;
+    margin:5px 10px !important;
+    width: auto;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .inline {
@@ -50,19 +50,19 @@ vertical-align: middle;
 
 
 .circlemenu {
-min-height: 52px;
-min-width: 52px;
-display: inline-block;
+    min-height: 52px;
+    min-width: 52px;
+    display: inline-block;
 }
 
 [data-type]:not([data-type="label"]):not(.readonly):not([data-type="symbol"]){
-cursor: pointer;
+    cursor: pointer;
 }
 
 .narrow {
-margin:-5px 5px -6px 5px !important;
-width: auto;
-text-align: center;
+    margin:-5px 5px -6px 5px !important;
+    width: auto;
+    text-align: center;
 }
 
 .wider {
@@ -72,7 +72,7 @@ text-align: center;
 }
 
 .darker {
-	color: #8C8C8C;
+    color: #8C8C8C;
 }
 
 .thin {
@@ -81,7 +81,7 @@ text-align: center;
 
 .bigger {
     font-size: 320% !important;
-} 
+}
 .big {
     font-size: 200%;
 }
@@ -93,42 +93,42 @@ text-align: center;
 }
 
 .doublebox-v {
-min-height: 104px;
-max-height: 104px;
-min-width: 52px;
-max-width: 52px;
+    min-height: 104px;
+    max-height: 104px;
+    min-width: 52px;
+    max-width: 52px;
 }
 
 .doublebox-h {
-min-width: 104px;
-max-width: 104px;
-min-height: 52px;
-max-height: 52px;
+    min-width: 104px;
+    max-width: 104px;
+    min-height: 52px;
+    max-height: 52px;
 }
 
 .doublebox-v [data-type]{
-margin-top:-4px;
-margin-bottom:-4px;
+    margin-top:-4px;
+    margin-bottom:-4px;
 }
 
 .doublebox-h [data-type]{
-margin-left:-6px;
-margin-right:-6px;
+    margin-left:-6px;
+    margin-right:-6px;
 }
 
 .red{
-color:#ad3333;
+    color:#ad3333;
 }
 .green{
-color:#32a054;
+    color:#32a054;
 }
 .blue{
-color:#6699FF;
+    color:#6699FF;
 }
 
 * {
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
-} 
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
 
 
 input {
@@ -142,7 +142,7 @@ margin:10px 0px 0px 27% !important;
 }
 
 .jq-toast-wrap{
-	z-index:100;
+        z-index:100;
 }
 
 ul, ol {
@@ -177,21 +177,21 @@ ul, ol {
 }
 
 .gridster li header {
-	background: #262626;
-	color: #8c8c8c;
-	display: block;
-	font-size: 11px;
-	font-weight: bold;
-	line-height: normal;
-	padding: 4px 10px ;
-	cursor: move;
+    background: #262626;
+    color: #8c8c8c;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: normal;
+    padding: 4px 10px ;
+    cursor: move;
 }
 
 .weather:before {
-	font-family: 'MeteoconsRegular';
-	content: attr(data-icon);
-	font-size: 200%;
-	color: #dcdcdc;
+    font-family: 'MeteoconsRegular';
+    content: attr(data-icon);
+    font-size: 200%;
+    color: #dcdcdc;
 }
 
 .menu li:first-child {
@@ -207,17 +207,17 @@ ul, ol {
     position:absolute;
 }
 .circleMenu-closed {
- z-index:1000 !important;
+    z-index:1000 !important;
 }
 .circleMenu-open {
- z-index:1001 !important;
+    z-index:1001 !important;
 }
 
 .ontop{
-position:absolute;
-z-index:1000;
-top:10px;
-left:10px;
+    position:absolute;
+    z-index:1000;
+    top:10px;
+    left:10px;
 }
 
 #shade {
@@ -249,3 +249,37 @@ left:10px;
       animation: blink 1s step-start 0s infinite;
       -webkit-animation: blink 1s step-start 0s infinite;
     }
+
+select {
+    border-radius: 10px;
+    border: 2px solid #8C8C8C;
+    background: transparent;
+    width: auto;
+    padding: 5px !important;
+    padding-right: 30px !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-size: small;
+    color: #eeeeee;
+}
+
+.select{
+    display:inline-block;
+    vertical-align:middle;
+    position:relative;
+}
+.select:after{
+  position:absolute;
+  bottom:.15em;top:.15em;right:.5rem;
+  content: "\f107";
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  font-size: 15px;
+  padding: 5px !important;
+  pointer-events: none;
+}
+
+

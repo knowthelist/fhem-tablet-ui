@@ -147,12 +147,13 @@ $( document ).ready(function() {
 		shortpollInterval = 15 * 60 * 1000; // 15 minutes
 	}
 	 
-	$("*").focus(function(){
-    	$(this).blur();
-  	}); 
+    $("*:not(select)").focus(function(){
+        $(this).blur();
+    });
 	
 	// refresh every x secs
 	startInterval();
+
 });
 
 function startInterval() {
@@ -303,20 +304,22 @@ function requestFhem(paraname) {
   	})
   	.done (function( data ) {
 			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
-			var regDevice = /^(\S*)\s.*/;
-			var regState = (this.paraname!='STATE')
-						? /\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\s(.*)/
-						: /^\S*\s*(.*)/;
-			var regDate = /\s([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])\s/;
-			
+            var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\s*(.*)$/;
 			for (var i=0; i < lines.length; i++) {
-				var date;
+                var date,key,val;
 				var line = $.trim( lines[i] );
-				if ( regDate.test( line ))
-					date = $.trim( line.match( regDate )[1] );
-				if (regState.test(line) && regDevice.test(line) ) {
-					var key = $.trim( line.match( regDevice )[1] );
-					var val = $.trim( line.match( regState )[1] );
+                        console.log(line);
+                if (regCapture.test(line) ) {
+                    var groups = line.match( regCapture );
+                    key = $.trim( line.match( regCapture )[1]);
+
+                    if (groups.length>2){
+                        date = $.trim( line.match( regCapture )[2]);
+                        val = $.trim( line.match( regCapture )[3]);
+                    }
+                    else
+                        val = $.trim( line.match( regCapture )[2]);
+
 					var params = deviceStates[key] || {};
 					var paraname = this.paraname;
 					var value = {"date": date, "val": val};
