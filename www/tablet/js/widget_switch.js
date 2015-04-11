@@ -19,8 +19,7 @@ var widget_switch = {
 			backgroundIcon: 'fa-circle',
 			offColor: '#2A2A2A',
 			onColor: '#2A2A2A',
-			mode:$(this).hasClass('readonly')?'signal':'toggle',
-			
+            mode:$(this).hasClass('readonly')?'signal':'toggle',
 			// Called in toggle on state.
 			toggleOn: function( ) {
 				 setFhemStatus($(this).data('cmd')+' '+device+' '+$(this).data('set-on'));
@@ -51,10 +50,10 @@ var widget_switch = {
 					$(this).data('famultibutton').setOn();
 				else if ( state.match(RegExp('^' + $(this).data('get-off') + '$')) )
 					$(this).data('famultibutton').setOff();
-				else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') ){
-					console.log('state'+state);
+                else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
 					$(this).data('famultibutton').setOff();
-					}
+                else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
+                    $(this).data('famultibutton').setOn();
 			}
 		}
 	});

@@ -45,14 +45,15 @@ var widget_select = {
                 if (items)
                     items = items.split(':');
             }
-            if (state && items) {
+            if (items) {
                 var select_elem = $(this).find('select')
                 select_elem.empty();
                 for (var i=0;i<items.length;i++) {
                     select_elem.append('<option value='+items[i]+'>'+items[i]+'</option>');
                 }
+            }
+            if (state)
                 select_elem.val(state);
-			}
 		}
 	});
    }

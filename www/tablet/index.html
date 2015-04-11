@@ -170,12 +170,12 @@
                 <div data-type="push" data-device="WebRadio" data-icon="fa-step-forward" data-set="Next" class="cell" ></div>
                 <div data-type="label" data-device="WebRadio" class="cell">radio</div>
           </div>
-      <div class="right">
-        <div data-type="volume" data-device='RadioVolumeOnTablet' class="cell left" ></div>
-        <div data-type="label" class="cell">Volume</div>
-      </div>
+          <div class="right">
+            <div data-type="volume" data-device='RadioVolumeOnTablet' class="cell left" ></div>
+            <div data-type="label" class="cell">Volume</div>
+          </div>
       <div class="left">
-        <div data-type="circlemenu" class="cell circlemenu">
+        <div data-type="circlemenu" class="cell circlemenu wider">
             <ul>
               <li><div data-type="push" data-icon="fa-wrench"></div></li>
               <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level -6" data-icon="">-6</div></li>
@@ -187,19 +187,24 @@
             </ul>
         </div>
         <div data-type="label" class="cell">Woofer</div>
-          </div>
-        </div>
+       </div>
+       <div class="cell wider">
+          <div data-type="label" class="inline wider">Zone2</div>
+          <div data-type="select" data-device="AvReceiverZ2" data-items='["Airplay","Webradio","BD/DVD","PHONO"]' data-get="input" data-set="input" class="cell w2x" ></div>
+          <div></div>
+          <div data-type="label" class="inline">Zone1</div>
+          <div data-type="select" data-device="AvReceiver" data-list="inputs" data-get="input" data-set="input" class="cell w2x" ></div>
+       </div>
+     </div>
 </li>
 <li data-row="2" data-col="8" data-sizex="1" data-sizey="4">
         <header>LIGHTS</header>
         <div data-type="slider" data-device='Testschalter' data-min="10" data-max="90" class="cell small" ></div>
-        <div data-type="label" class="cell">Light1</div>
-        <div data-type="slider" data-device='dummy1' class="cell" ></div>
-        <div data-type="label" class="cell">Light2</div>
-        <div data-type="switch" data-device="dummyRollo" data-on="up" data-off="down" data-icon="fa-bars" class="cell" ></div>
-        <div data-type="label" class="cell">Rollo</div>
-        <div data-type="dimmer" data-device="Testschalter" data-get-on="[0-9]{1,3}|on" data-get-off="off" class="cell" ></div>
-        <div data-type="label" class="cell">Au&#223;en</div>
+        <div data-type="label" class="cell">Au&#223;en<</div>
+        <div data-type="volume" data-device="HUEDevice1" data-min="0" data-max="65353" data-get="hue" data-set="hue" class="hue-tick mini wider" ></div>
+        <div data-type="label" class="cell">Color</div>
+        <div data-type="dimmer" data-device="HUEDevice1" data-get-on="!off" data-get-off="off" data-set="pct" class="cell" ></div>
+        <div data-type="label" class="cell">Hell</div>
 </li>
 </ul>
 </div>

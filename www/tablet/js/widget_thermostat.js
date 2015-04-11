@@ -180,7 +180,7 @@ var widget_thermostat = {
 			'set': $(this).data('set') || 'desired-temp',
 			'draw' : _thermostat.drawDial,
 			'change' : function (v) { 
-				//reset poll timer to avoid jump back
+                //reset shortpoll timer to avoid jump back
                 startInterval();
 			},
             'format' : function (v) {

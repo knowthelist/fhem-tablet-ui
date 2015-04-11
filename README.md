@@ -53,7 +53,7 @@ Change the widgets you have and want to see on the dashboard
 ```
 Widgets
 -------
-Currently there are 12 types of widgets.
+Currently there are 13 types of widgets in the base installation.
 - **thermostat** : dial for heater thermostates to set desired value and show current value
 - **switch** : Toggle any command to FHEM (e.g. on / off)
 - **label** : show state as text (colourable)
@@ -66,6 +66,9 @@ Currently there are 12 types of widgets.
 - **image** : insert an image, the URL is given by a reading
 - **weather** : insert an icon or image, represending a weather literal
 - **circlemenu** : Cover multiple widgets behind a single widget
+- **Select**	: Combobox to provide a list for selection
+
+More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
 By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
 
@@ -120,7 +123,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-list** : name of the reading to get a :-separated list from FHEM
 - **data-items**: a array of fix items to show in the selection box (alternative if data-list is empty)
 - **data-cmd**  : name of the command to send to FHEM (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
-- **class**     : wider
+- **class**     : wider, w1x, w2x, w3x
 
 ####Push widgets
 - **data-set**  : value to send to FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
@@ -144,7 +147,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-cmd**  : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
-- **class**		: small, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
+- **class**		: small, mini, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
 
 ####Homestatus widget
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
@@ -188,7 +191,29 @@ data-version='residents' or 'roomate' or 'guest'
 
 CSS Class description
 -------
-- wider		: 25px extra space for the widget to the top 
+not all widgets support all classes
+- readonly		: changing of state is not allowed 
+- wider			: 25px extra space for the widget to the top 
+- narrow		: shorter distant to the widget above 
+- w1x, w2x, w3x	: set the widget to a fix width: 1x, 2x, 3x width
+- small			: font 80% size (label), small diameter for volume widget
+- mini			: lowest diameter for volume widget
+- large			: font 150% size
+- big			: font 200% size
+- bigger		: font 320% size
+- thin			: font thin
+- darker		: forecolor in gray
+- hue-tick		: draw ticks in color range
+- hue-front		: draw handle in color range
+- hue-back		: draw background in color range
+- dim-tick 		: draw ticks in brightness range
+- dim-front		: draw handle in brightness range
+- dim-back		: draw background in brightness range
+- red			: foreground color red
+- green			: foreground color green
+- blue			: foreground color blue
+- doublebox-v	: container to place 2 small widgets (e.g. switch) one above the other 
+- doublebox-h	: container to place 2 small widgets (e.g. switch) side by side
 
 Icon configuration
 -------
@@ -466,6 +491,17 @@ This classes can be combined (e.g. class="cell small hue-tick hue-front")
 To change the dim value: push the button and slide up or down   
 ![](http://knowthelist.github.io/fhem-tablet-ui/dimmer.png)
 
+
+**Example** for how to create a widget for a HUEDevice for on/off, percent and hue adjustment:
+```html
+<div data-type="volume" data-device="HUEDevice1" data-min="0" data-max="65353" data-get="hue" data-set="hue" class="hue-tick mini wider" ></div>
+<div data-type="label" class="cell">Color</div>
+<div data-type="dimmer" data-device="HUEDevice1" data-get-on="!off" data-get-off="off" data-set="pct" class="cell" ></div>
+<div data-type="label" class="cell">Hell</div>
+```
+
+![](http://knowthelist.github.io/fhem-tablet-ui/hue_pct.png)
+
 ###Image
 **Example** for how to add an image to the dashboard which its URL is delivered by a FHEM module like PROPLANTA:
 ```html
@@ -532,6 +568,23 @@ Create a simple button to play a webradio stream directly on the tablet
 <div data-type="playstream" data-url="http://radioeins.de/stream"></div>
 <div data-type="label" class="darker">Radio eins</div>
 ```
+
+Select
+-------
+Create two comboboxes to select the inputs of a two zone AV receiver. List for Zone2 is fix, list for Zone1 will be received from FHEM.
+
+```html
+<div class="cell wider">
+          <div data-type="label" class="inline wider">Zone2</div>
+          <div data-type="select" data-device="AvReceiverZ2" data-items='["Airplay","Webradio","BD/DVD","PHONO"]' data-get="input" data-set="input" class="cell w2x" ></div>
+          <div></div>
+          <div data-type="label" class="inline">Zone1</div>
+          <div data-type="select" data-device="AvReceiver" data-list="inputs" data-get="input" data-set="input" class="cell w2x" ></div>
+</div>
+```
+
+![](http://knowthelist.github.io/fhem-tablet-ui/select_2x.png)       
+       
 
 License
 -------

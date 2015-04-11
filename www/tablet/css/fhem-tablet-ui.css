@@ -149,7 +149,7 @@ ul, ol {
     list-style: none;
 }
 
-.gridster ul{
+.gridster > ul{
     width: 100% !important;
     height: 100% !important;
 }
@@ -208,6 +208,7 @@ ul, ol {
 }
 .circleMenu-closed {
     z-index:1000 !important;
+    width:0px !important;
 }
 .circleMenu-open {
     z-index:1001 !important;
@@ -250,18 +251,37 @@ ul, ol {
       -webkit-animation: blink 1s step-start 0s infinite;
     }
 
+
 select {
     border-radius: 10px;
     border: 2px solid #8C8C8C;
     background: transparent;
-    width: auto;
-    padding: 5px !important;
+    width: 100%;
+    padding: 6px !important;
     padding-right: 30px !important;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     font-size: small;
     color: #eeeeee;
+}
+
+.w3x > select {
+    min-width: 160px;
+    max-width: 160px;
+    width: 160px;
+}
+
+.w2x > select {
+    min-width: 110px;
+    max-width: 110px;
+    width: 110px;
+}
+
+.w1x > select {
+    min-width: 70px;
+    max-width: 70px;
+    width: 70px;
 }
 
 .select{

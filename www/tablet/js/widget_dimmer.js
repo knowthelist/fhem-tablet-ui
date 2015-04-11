@@ -31,7 +31,7 @@ var widget_dimmer = {
 			toggleOff: function( ) {
 				 setFhemStatus($(this).data('cmd')+' '+device+' '+$(this).data('set-off'));
 			},
-			valueChanged: function(v) {
+            valueChanged: function(v) {
 				localStorage.setItem("dimmer_"+device, v);
 				if ($(this).data('famultibutton').getState()){
 				 	var cmdl = $(this).data('cmd')+' '+device+' '+$(this).data('set')+' '+v;
@@ -60,7 +60,7 @@ var widget_dimmer = {
 			var state = getDeviceValue( $(this), 'get' );
 			if (state) {
 				if ($.isNumeric(state)) $(this).data('famultibutton').setValue( parseInt(state));
-				if ( state == $(this).data('get-on') )
+                if ( state == $(this).data('get-on') )
 					$(this).data('famultibutton').setOn();
 				else if ( state == $(this).data('get-off') )
 					$(this).data('famultibutton').setOff();
@@ -68,8 +68,10 @@ var widget_dimmer = {
 						$(this).data('famultibutton').setOn();
 				else if ( state.match(RegExp('^' + $(this).data('get-off') + '$')) )
 						$(this).data('famultibutton').setOff();
-				else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
-					$(this).data('famultibutton').setOff();
+                else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
+                    $(this).data('famultibutton').setOff();
+                else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
+                    $(this).data('famultibutton').setOn();
 			}
 		}
 	});

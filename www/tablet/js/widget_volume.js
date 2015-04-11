@@ -198,7 +198,7 @@ var widget_volume = {
 			'fgColor': $(this).data('fgcolor') || '#cccccc',
 			'tkColor': $(this).data('tkcolor') || '#696969',
 			'hdColor': $(this).data('hdcolor') || hdDefaultColor,
-			'thickness': .25,
+            'thickness': ($(this).hasClass('mini'))?.45:.25,
 			'tickdistance': $(this).data('tickstep') || (((mode>>1) % 2 != 0)?4:20),
 			'mode': mode,
 			'cursor': 6,
@@ -253,16 +253,16 @@ var widget_volume = {
 			var val = getDeviceValue( $(this), 'get' );
             var knob_elem = $(this).find('input');
 			if (val){
-				if ( knob_elem.val() != val ){
-                    if ((parseInt($(this).data('mode'))>>6) % 2 != 0){
-                        //is hex rgb
-                        val=_volume.rgbToHsl(val)[0];
-                        val=val*$(this).data('max360');
-                    }
-                    else{
-                        //is deciaml value
-                        val = (val * ($(this).data('max360')/$(this).data('max'))).toFixed(0);
-                    }
+                if ((parseInt($(this).data('mode'))>>6) % 2 != 0){
+                    //is hex rgb
+                    val=_volume.rgbToHsl(val)[0];
+                    val=val*$(this).data('max360');
+                }
+                else{
+                    //is deciaml value
+                    val = (val * ($(this).data('max360')/$(this).data('max'))).toFixed(0);
+                }
+                if ( knob_elem.val() != val ){
 					knob_elem.val( val ).trigger('change');
 					DEBUG && console.log( 'volume dev:'+dev+' par:'+par+' change '+$(this).data('device')+':knob to ' +val );
 				}	
