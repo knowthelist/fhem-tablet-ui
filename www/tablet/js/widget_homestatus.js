@@ -70,29 +70,42 @@ var widget_homestatus = {
 		c.beginPath(); 
 		c.arc( this.xy, this.xy, this.radius, 0, 2 * Math.PI, false); 
 		c.stroke(); 
+
+        //cavans font
+        var cfont=null,cfafont=null,coffset=0;
+        if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)){
+            cfont="100 18px sans-serif";
+            cfafont="42px FontAwesome";
+            coffset=10;
+        }
+         else{
+            cfont="100 11px sans-serif";
+            cfafont="22px FontAwesome";
+        }
+
 		
 		c.fillStyle = (sector==1)?this.o.minColor:this.o.maxColor;
-		c.font = "100 11px sans-serif";
-		c.fillText("Home", this.xy-14, this.xy+15);
-		c.font = "22px FontAwesome";
-		c.fillText("\uf015", this.xy-12, this.xy+2);
+        c.font = cfont;
+        c.fillText("Home", this.xy-14, this.xy+15+coffset);
+        c.font = cfafont;
+        c.fillText("\uf015", this.xy-12, this.xy+2);
 		
 		c.fillStyle = (sector==2)?this.o.minColor:this.o.maxColor;
-		c.font = "22px FontAwesome";
+        c.font = cfafont;
 		c.fillText("\uf236", this.xy-this.radius*0.7, this.xy-this.radius*0.4);
-		c.font = "100 11px sans-serif";
+        c.font = cfont;
 		c.fillText("Night", this.xy-this.radius*0.9, this.xy-10);
 		
 		c.fillStyle = (sector==3)?this.o.minColor:this.o.maxColor;
-		c.font = "22px FontAwesome";
-		c.fillText("\uf1b9", this.xy-12, this.xy+this.radius*0.67);
-		c.font = "100 11px sans-serif";
-		c.fillText("Away", this.xy-12, this.xy+this.radius*0.65+15);
+        c.font = cfafont;
+        c.fillText("\uf1b9", this.xy-12, this.xy+this.radius*0.67-coffset);
+        c.font = cfont;
+        c.fillText("Away", this.xy-12, this.xy+this.radius*0.65+15);
 
 		c.fillStyle = (sector==4)?this.o.minColor:this.o.maxColor;
-		c.font = "22px FontAwesome";
+        c.font = cfafont;
 		c.fillText("\uf0f2", this.xy+this.radius*0.4, this.xy-this.radius*0.4);
-		c.font = "100 11px sans-serif";
+        c.font = cfont;
 		c.fillText("Holiday", this.xy+this.radius*0.42, this.xy-10);
 		
 		this.o.status = sector;

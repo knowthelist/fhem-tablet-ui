@@ -115,11 +115,18 @@ var widget_thermostat = {
 		c.stroke();
 	}
 
+    //cavans font
+    var cfont = null;
+    if (navigator.userAgent.match(/(iPod|iPhone|iPad)/))
+        cfont="18px sans-serif";
+     else
+        cfont="10px sans-serif";
+
     //draw current value as text
     var x = this.radius*0.7*Math.cos(acAngle);
     var y = this.radius*0.7*Math.sin(acAngle);
     c.fillStyle = destcolor;
-    c.font="10px sans-serif";
+    c.font=cfont;
     c.fillText(this.o.isValue ,this.xy+x-5,this.xy+y+5);
 
 	// draw target temp cursor
@@ -134,7 +141,7 @@ var widget_thermostat = {
 		var x = -5;
 		var y = this.radius*0.55;
 		c.fillStyle = this.o.tkColor;
-		c.font="10px sans-serif";
+        c.font=cfont;
 		c.fillText(this.o.valveValue+'%',this.xy+x,this.xy+y+5);
     }
   return false;

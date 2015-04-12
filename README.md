@@ -115,7 +115,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-colors** : a array of color values to affect the colour of the label according to the limit value 
 - **data-limits** : a array of numeric values to affect the colour of the label
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
-- **class**     : small, large, big, bigger, thin, red, green, blue, darker
+- **class**     : small, large, big, bigger, thin, red, green, blue, darker, timestamp
 
 ####Select widgets
 - **data-get**  : name of the reading that get the selected item of the list
@@ -214,6 +214,7 @@ not all widgets support all classes
 - blue			: foreground color blue
 - doublebox-v	: container to place 2 small widgets (e.g. switch) one above the other 
 - doublebox-h	: container to place 2 small widgets (e.g. switch) side by side
+- timestamp		: deliver the date time for the reading instead the value
 
 Icon configuration
 -------
