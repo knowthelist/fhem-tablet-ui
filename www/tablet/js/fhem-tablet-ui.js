@@ -243,6 +243,7 @@ function longPoll(roomName) {
 					
 					for (var i=currLine; i < lines.length; i++) {
 						var date;
+                        //date = ..... new Date(); //do we need this?
 						var line = $.trim( lines[i] );
                         //console.log('#'+line+'#');
 						
@@ -304,10 +305,11 @@ function requestFhem(paraname) {
   	})
   	.done (function( data ) {
 			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
-            var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\s*(.*)$/;
+            var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\.?[0-9]{0,3}\s+(.*)$/;
 			for (var i=0; i < lines.length; i++) {
                 var date,key,val;
 				var line = $.trim( lines[i] );
+                //console.log(line);
                 if (regCapture.test(line) ) {
                     var groups = line.match( regCapture );
                     key = $.trim( line.match( regCapture )[1]);
@@ -315,8 +317,10 @@ function requestFhem(paraname) {
                         date = $.trim( line.match( regCapture )[2]);
                         val = $.trim( line.match( regCapture )[3]);
                     }
-                    else
+                    else{
+                        //date = ..... new Date(); //do we need this?
                         val = $.trim( line.match( regCapture )[2]);
+                    }
 					var params = deviceStates[key] || {};
 					var paraname = this.paraname;
 					var value = {"date": date, "val": val};
@@ -354,13 +358,23 @@ this.getPart = function (s,p) {
 };
 
 this.getDeviceValue = function (device, src) {
-	var devname	= device.data('device');
-	var paraname =	(src && src != '') ? device.data(src) : Object.keys(readings)[0];
-	if (devname && devname.length>0){
-		var params = deviceStates[devname];
-		return ( params && params[paraname] ) ? params[paraname].val : null;
-	}
-	return null;
+    var param = getParameter(device, src);
+    return ( param ) ? param.val : null;
+}
+
+this.getReadingDate = function (device, src) {
+    var param = getParameter(device, src);
+    return ( param ) ? param.date : null;
+}
+
+this.getParameter = function (device, src) {
+    var devname	= device.data('device');
+    var paraname =	(src && src != '') ? device.data(src) : Object.keys(readings)[0];
+    if (devname && devname.length>0){
+        var params = deviceStates[devname];
+        return ( params && params[paraname] ) ? params[paraname] : null;
+    }
+    return null;
 }
 
 // global helper functions

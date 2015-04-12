@@ -19,7 +19,9 @@ var widget_label = {
 
 	deviceElements.each(function(index) {
 	 	if ( $(this).data('get')==par || par =='*'){
-			var value = getDeviceValue( $(this), 'get' );
+            var value = ($(this).hasClass('timestamp'))
+                        ?getReadingDate( $(this), 'get' )
+                        :getDeviceValue( $(this), 'get' );
 			if (value){
 				var part =  $(this).data('part') || -1;
 				var unit = ($(this).data('unit')) ? unescape($(this).data('unit')) : '';
