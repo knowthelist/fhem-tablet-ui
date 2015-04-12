@@ -1,6 +1,5 @@
 var widget_volume = {
-  _volume: null,
-  elements: null,
+  widgetname : 'volume',
   rgbToHsl: function(rgb){
       var r=parseInt(rgb.substring(0,2),16);
       var g=parseInt(rgb.substring(2,4),16);
@@ -127,9 +126,9 @@ var widget_volume = {
   return false;
   },
   init: function () {
-  	_volume=this;
-  	_volume.elements = $('div[data-type="volume"]');
- 	_volume.elements.each(function(index) {
+  	base=this;
+  	this.elements = $('div[data-type="'+this.widgetname+'"]');
+ 	this.elements.each(function(index) {
 		var knob_elem =  jQuery('<input/>', {
 			type: 'text',
 			value: $(this).attr('data-initvalue')||'10',
@@ -205,7 +204,7 @@ var widget_volume = {
             'touchPosition': 'left',
 			'cmd': $(this).data('cmd') || 'set',
 			'set': $(this).data('set') || '',
-			'draw' : _volume.drawDial,
+			'draw' : base.drawDial,
 			'readOnly' : $(this).hasClass('readonly'),
 			'change' : function (v) { 
 				  startInterval();
@@ -222,7 +221,7 @@ var widget_volume = {
 				  if (ready){
                         if ((this.o.mode>>6) % 2 != 0){
                             //send hex rbg value
-                            v=_volume.hslToRgb(v/this.o.max,1.0,0.5);
+                            v=base.hslToRgb(v/this.o.max,1.0,0.5);
                         }
                         else{
                            //send decimal value
@@ -243,9 +242,9 @@ var widget_volume = {
   update: function (dev,par) {
 	var deviceElements;
 	if ( dev == '*' )
-		deviceElements= _volume.elements;
+		deviceElements= this.elements;
 	else
-   		deviceElements= _volume.elements.filter('div[data-device="'+dev+'"]');
+   		deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
 
 	deviceElements.each(function(index) {
 		
@@ -255,7 +254,7 @@ var widget_volume = {
 			if (val){
                 if ((parseInt($(this).data('mode'))>>6) % 2 != 0){
                     //is hex rgb
-                    val=_volume.rgbToHsl(val)[0];
+                    val=base.rgbToHsl(val)[0];
                     val=val*$(this).data('max360');
                 }
                 else{
@@ -264,7 +263,7 @@ var widget_volume = {
                 }
                 if ( knob_elem.val() != val ){
 					knob_elem.val( val ).trigger('change');
-					DEBUG && console.log( 'volume dev:'+dev+' par:'+par+' change '+$(this).data('device')+':knob to ' +val );
+					DEBUG && console.log( base.widgetname + ' dev:'+dev+' par:'+par+' change '+$(this).data('device')+':knob to ' +val );
 				}	
 			}
             knob_elem.css({visibility:'visible'});
