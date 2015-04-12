@@ -266,19 +266,19 @@ select {
     color: #eeeeee;
 }
 
-.w3x > select {
+.w3x > select, [data-type="label"].w3x {
     min-width: 160px;
     max-width: 160px;
     width: 160px;
 }
 
-.w2x > select {
+.w2x > select, [data-type="label"].w2x {
     min-width: 110px;
     max-width: 110px;
     width: 110px;
 }
 
-.w1x > select {
+.w1x > select, [data-type="label"].w1x {
     min-width: 70px;
     max-width: 70px;
     width: 70px;

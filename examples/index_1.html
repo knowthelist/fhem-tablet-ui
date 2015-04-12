@@ -1,57 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- 
-	 /* FHEM tablet ui */
-	 /*
-	 * Just another dashboard for FHEM
-	 *
-         * Version: 1.3.5
-	 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
-	 * URL: https://github.com/knowthelist/fhem-tablet-ui
-	 *
-	 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
-	 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
-	 *
-	 * - create a new folder named 'tablet' in /<fhem-path>/www
-	 * - copy all files incl. sub folders into /<fhem-path>/www/tablet
-	 * - add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
-	 * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
-         * #####
-         * Example from Mario Stephan
-	 */
-	-->
-	<title>FHEM-Tablet-UI</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<meta name="widget_base_width" content="116">
-	<meta name="widget_base_height" content="131">
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-capable" content="yes">
+        <!--
+         /* FHEM tablet ui */
+         /*
+         * Just another dashboard for FHEM
+         *
+         * Version: 1.3.6
+         * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
+         * URL: https://github.com/knowthelist/fhem-tablet-ui
+         *
+         * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
+         * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+         *
+         * - create a new folder named 'tablet' in /<fhem-path>/www
+         * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+         * - add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
+         * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+         */
+        -->
+        <title>FHEM-Tablet-UI</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="widget_base_width" content="116">
+        <meta name="widget_base_height" content="131">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
-	<meta name="debug" content="0"> <!-- 1=output to console;0=not output -->
-	
-	<link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
-	<link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
-	<link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
-	<link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
-	<link rel="stylesheet" href="/fhem/tablet/lib/powerange.min.css" />
-	
-	
-	<script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
+        <meta name="longpoll" content="0"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+        <meta name="debug" content="1"> <!-- 1=output to console;0=not output -->
+
+        <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
+        <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
+        <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
+        <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
+        <link rel="stylesheet" href="/fhem/tablet/lib/powerange.min.css" />
+
+
+        <script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
         <script type="text/javascript" src="/fhem/tablet/lib/jquery.knob.mod.min.js"></script>
-	<script type="text/javascript" src="/fhem/tablet/lib/jquery.toast.min.js"></script>
-	<script type="text/javascript" src="/fhem/tablet/lib/jquery.circlemenu.js"></script>
-	<script type="text/javascript" src="/fhem/tablet/lib/powerange.min.js"></script>
-	<script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
+        <script type="text/javascript" src="/fhem/tablet/lib/jquery.toast.min.js"></script>
+        <script type="text/javascript" src="/fhem/tablet/lib/jquery.circlemenu.js"></script>
+        <script type="text/javascript" src="/fhem/tablet/lib/powerange.min.js"></script>
+        <script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
         <script type="text/javascript" src="/fhem/tablet/lib/fa-multi-button.min.js"></script>
-	<script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.js"></script>
-	
-	<!-- Enable this lines for usage with WebViewControl --><!--
-	<script type="text/javascript" src="/fhem/pgm2/cordova-2.3.0.js"></script>
-	<script type="text/javascript" src="/fhem/js/webviewcontrol.js"></script>
-	<script type="text/javascript">var wvcDevices = {'12345': 'Tablet'}; var wvcUserCssFile="webviewcontrol.css"</script>
-	--><!-- End for WebViewControl -->
+        <script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.js"></script>
+
+        <!-- Enable this lines for usage with WebViewControl -->
+        <script type="text/javascript" src="/fhem/pgm2/cordova-2.3.0.js"></script>
+        <script type="text/javascript" src="/fhem/js/webviewcontrol.js"></script>
+        <script type="text/javascript">var wvcDevices = {'12345': 'Tablet'}; var wvcUserCssFile="webviewcontrol.css"</script>
+        <!-- End for WebViewControl -->
 
 </head>
 <body>
@@ -62,16 +60,16 @@
 <div class="gridster">
 <ul>
 <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-    <header>TREND</header>
-    <div data-type="symbol" data-device="dummy1" data-icons='["fa-arrow-up","fa-arrow-right","fa-arrow-down"]' data-on-colors='["#32a054","#6666cc","#ad3333"]' data-get-on='["Wert1","Wert2","Wert3"]' class=""></div>
-    <div data-type="label" class="small narrow darker">Status</div>
-
+        <header>New</header>
+        <!-- div data-type="image" data-device="dummy1" data-get="fc0_weatherDayIcon" data-size="40px" class="cell wheater"></div -->
+                <!-- div data-type="label" data-device="dummy1" data-get="fc0_weatherDay" class="cell weather"></div -->
+                <!-- div data-type="label" data-icon="N" class="cell weather big"></div -->
 </li>
 <li data-row="2" data-col="1" data-sizex="1" data-sizey="4">
         <header>GARTEN</header>
         <div data-type="switch" data-device="GartenLicht" class="cell" ></div>
         <div data-type="label" class="cell">Licht</div>
-        <div data-type="switch" data-device="dummySwitch" data-on="1" data-off="0" data-set-on="11" data-set-off="10" data-icon="fa-lock" class="cell" ></div>
+        <div data-type="symbol" data-device="Eingangstuer" class="cell"></div>
         <div data-type="label" class="cell">T&#252;r</div>
         <div data-type="label" data-device="OutTemp" data-part="2" data-limits='[-73,10,23]' data-colors='["#6699FF","#AA6900","#FF0000"]' data-unit="%B0C%0A" class="cell bigger thin"></div>
         <div data-type="label" class="cell">Temperatur</div>
@@ -87,16 +85,16 @@
 <li data-row="1" data-col="2" data-sizex="2" data-sizey="1">
         <header>BAD</header>
         <div data-type="thermostat" data-device="BadHeizung_Clima" data-valve="ValvePosition" class="cell left"></div>
-        <div class="right">
-                <div data-type="switch" data-device="BadRadio" data-icon="fa-music" class="cell" ></div>
-                <div data-type="label" class="cell" >Badradio</div>
+        <div class="cell right">
+                <div data-type="symbol" data-device="BadFenster" class="narrow"></div>
+                <div data-type="label" class="narrow darker small">Fenster</div>
         </div>
 </li>
 <li data-row="1" data-col="3" data-sizex="2" data-sizey="1">
         <header>SCHLAFZIMMER</header>
         <div data-type="thermostat" data-device="SchlafzimmerHeizung_Clima" data-valve="ValvePosition" class="cell left"></div>
         <div class="cell right">
-                <div data-type="contact" data-device="SchlafzimmerFenster" class="narrow"></div>
+                <div data-type="symbol" data-device="SchlafzimmerFenster" class="narrow"></div>
                 <div data-type="label" class="narrow darker small">Fenster</div>
         </div>
 </li>
@@ -104,7 +102,7 @@
         <header>KINDERZIMMER</header>
         <div data-type="thermostat" data-device="KinderzimmerHeizung_Clima" data-valve="ValvePosition" class="cell left"></div>
         <div class="cell right">
-                <div data-type="contact" data-device="KinderzimmerFenster" class="narrow"></div>
+                <div data-type="symbol" data-device="KinderzimmerFenster" class="narrow"></div>
                 <div data-type="label" class="narrow darker small">Fenster</div>
         </div>
 </li>
@@ -123,13 +121,13 @@
           <div class="right">
                 <div data-type="switch" data-device="HerdLicht_Sw" class="cell"></div>
                 <div data-type="label" class="cell">HerdLicht</div>
-                <div data-type="contact" data-device="KuechenFenster" class="cell"></div>
+                <div data-type="symbol" data-device="KuechenFenster" class="cell"></div>
           </div>
         </div>
 </li>
 <li data-row="4" data-col="2" data-sizex="2" data-sizey="2">
         <header>HOMESTATUS</header>
-        <div data-type="homestatus" data-device='HomeStatus' class="" ></div>
+        <div data-type="homestatus" data-device='HomeStatus' data-version='' class="" ></div>
 </li>
 <li data-row="2" data-col="4" data-sizex="4" data-sizey="2">
         <header>WOHNZIMMER</header>
@@ -144,7 +142,7 @@
           </div>
           <div class="right">
                 <div class="cell">
-                        <div data-type="contact" data-device="TerrassenTuer" class="narrow"></div>
+                        <div data-type="symbol" data-device="TerrassenTuer" class="narrow"></div>
                         <div data-type="label" class="narrow darker small">Terassent&#252;r</div>
                 </div>
                 <div class="cell right">
@@ -165,8 +163,18 @@
                 <div data-type="label" class="cell">TV</div>
           </div>
           <div class="left">
-                <div data-type="switch" data-device="RadioAtTablet" data-icon="fa-music" class="cell" ></div>
-                <div data-type="label" class="cell">Radio</div>
+          <div data-type="circlemenu" class="cell circlemenu">
+              <ul>
+                <li><div data-type="push" data-icon="fa-wrench"></div></li>
+                <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level -6" data-icon="">-6</div></li>
+                <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level -2" data-icon="">-2</div></li>
+                <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level 0" data-icon="">0</div></li>
+                <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level +3" data-icon="">2</div></li>
+                <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level +9" data-icon="">9</div></li>
+                <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level +C" data-icon="">12</div></li>
+              </ul>
+          </div>
+          <div data-type="label" class="cell">Woofer</div>
           </div>
           <div class="left">
                 <div data-type="push" data-device="WebRadio" data-icon="fa-step-backward" data-set="Prev" class="cell" ></div>
@@ -177,25 +185,13 @@
             <div data-type="volume" data-device='RadioVolumeOnTablet' class="cell left" ></div>
             <div data-type="label" class="cell">Volume</div>
           </div>
-      <div class="left">
-        <div data-type="circlemenu" class="cell circlemenu wider">
-            <ul>
-              <li><div data-type="push" data-icon="fa-wrench"></div></li>
-              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level -6" data-icon="">-6</div></li>
-              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level -2" data-icon="">-2</div></li>
-              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level 0" data-icon="">0</div></li>
-              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level +3" data-icon="">2</div></li>
-              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level +9" data-icon="">9</div></li>
-              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl subwoofer-temporary-level +C" data-icon="">12</div></li>
-            </ul>
-        </div>
-        <div data-type="label" class="cell">Woofer</div>
-       </div>
-       <div class="cell wider">
-          <div data-type="label" class="inline wider">Zone2</div>
+       <div class="left wider">
+          <div data-type="label" class="inline w2x">Badradio</div>
+          <div data-type="switch" data-device="BadRadio" data-icon="fa-music"></div>
           <div data-type="select" data-device="AvReceiverZ2" data-items='["Airplay","Webradio","BD/DVD","PHONO"]' data-get="input" data-set="input" class="cell w2x" ></div>
           <div></div>
-          <div data-type="label" class="inline">Zone1</div>
+          <div data-type="label" class="inline w2x">Radio</div>
+          <div data-type="switch" data-device="RadioAtTablet" data-icon="fa-music"></div>
           <div data-type="select" data-device="AvReceiver" data-list="inputs" data-get="input" data-set="input" class="cell w2x" ></div>
        </div>
      </div>
@@ -203,7 +199,7 @@
 <li data-row="2" data-col="8" data-sizex="1" data-sizey="4">
         <header>LIGHTS</header>
         <div data-type="slider" data-device='Testschalter' data-min="10" data-max="90" class="cell small" ></div>
-        <div data-type="label" class="cell">Au&#223;en<</div>
+        <div data-type="label" class="cell">Light1</div>
         <div data-type="volume" data-device="HUEDevice1" data-min="0" data-max="65353" data-get="hue" data-set="hue" class="hue-tick mini wider" ></div>
         <div data-type="label" class="cell">Color</div>
         <div data-type="dimmer" data-device="HUEDevice1" data-get-on="!off" data-get-off="off" data-set="pct" class="cell" ></div>
