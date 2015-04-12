@@ -30,18 +30,11 @@ var plugins = {
     this.modules.push(module);
   },
   load: function (name) {
-  	$.ajax({
-		url: dir+'/'+name+'.js',
-		dataType: "script",
-		cache: true,
-		async: false,
-		context:{name: name},
-		success: function () { 
-				DEBUG && console.log('Loaded plugin: '+this.name);
-				var module = eval(this.name);
-				plugins.addModule(module);
-				module.init();
-		},
+  	loadplugin(name, function () { 
+		DEBUG && console.log('Loaded plugin: '+ name);
+		var module = eval(name);
+		plugins.addModule(module);
+		module.init();
 	});
   },
   update: function (dev,par) {
@@ -332,6 +325,21 @@ function requestFhem(paraname) {
  		}
 	});
 
+}
+
+function loadplugin(plugin, success, error) {
+    dir = $('script[src$="fhem-tablet-ui.js"]').attr('src');
+    var name = dir.split('/').pop(); 
+    dir = dir.replace('/'+name,"");
+    $.ajax({
+        url: dir + '/'+plugin+'.js',
+        dataType: "script",
+        cache: true,
+        async: false,
+        context:{name: name},
+        success: success||function(){ return true },
+        error: error||function(){ return false },
+    });
 }
 
 this.getPart = function (s,p) {
