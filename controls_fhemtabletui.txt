@@ -16,14 +16,14 @@ UPD 2015-04-12_22:23:45 22724 www/tablet/fonts/meteocons-webfont.ttf
 UPD 2015-04-12_22:23:45 11788 www/tablet/fonts/meteocons-webfont.woff
 UPD 2015-02-22_23:37:00 12588 www/tablet/index.html
 UPD 2015-04-12_22:57:31 12433 www/tablet/js/fhem-tablet-ui.js
-UPD 2015-04-12_22:23:45 1554 www/tablet/js/widget_circlemenu.js
+UPD 2015-04-12_23:50:18 1554 www/tablet/js/widget_circlemenu.js
 UPD 2015-04-12_22:23:45 2808 www/tablet/js/widget_dimmer.js
 UPD 2015-04-12_22:23:45 6029 www/tablet/js/widget_homestatus.js
 UPD 2015-04-12_22:23:45 985 www/tablet/js/widget_image.js
 UPD 2015-04-12_22:23:45 1529 www/tablet/js/widget_label.js
 UPD 2015-04-12_22:23:45 1239 www/tablet/js/widget_playstream.js
 UPD 2015-04-12_22:23:45 1437 www/tablet/js/widget_push.js
-UPD 2015-04-12_22:23:45 1991 www/tablet/js/widget_select.js
+UPD 2015-04-13_21:13:59 2851 www/tablet/js/widget_select.js
 UPD 2015-04-12_22:23:45 6206 www/tablet/js/widget_simplechart.js
 UPD 2015-04-12_22:23:45 1920 www/tablet/js/widget_slider.js
 UPD 2015-04-12_22:23:45 2289 www/tablet/js/widget_switch.js
