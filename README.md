@@ -214,7 +214,7 @@ not all widgets support all classes
 - blue			: foreground color blue
 - doublebox-v	: container to place 2 small widgets (e.g. switch) one above the other 
 - doublebox-h	: container to place 2 small widgets (e.g. switch) side by side
-- timestamp		: deliver the date time for the reading instead the value
+- timestamp		: deliver the date time for the reading instead of the value
 
 Icon configuration
 -------
