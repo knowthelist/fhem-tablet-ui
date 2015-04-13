@@ -8,8 +8,10 @@ var widget_select = {
 
         var device = $(this).data('device');
         $(this).data('get', $(this).data('get') || 'STATE');
-        $(this).data('set', $(this).data('set') || '');
+        $(this).data('set', $(this).data('set') || ($(this).data('get')!='STATE')?$(this).attr('data-get'): '');
         $(this).data('cmd', $(this).data('cmd') || 'set');
+        $(this).data('list', $(this).data('list') || 'setList');
+
         readings[$(this).data('get')] = true;
         readings[$(this).data('list')] = true;
 
@@ -42,8 +44,23 @@ var widget_select = {
             var items = $(this).data('items')
             if (!jQuery.isArray(items)){
                 items = getDeviceValue( $(this), 'list' );
-                if (items)
-                    items = items.split(':');
+                if (items){
+                    if ($(this).data('list')=='setList'){
+                        var setreading = ($(this).data('set')=='')?'state':$(this).data('set');
+                        items = items.split(' ');
+                        var founditems = items;
+                        $.each( items, function( key, value ) {
+                            var tokens = value.split(':');
+                            if (tokens && tokens.length>1){
+                                if (tokens[0]==setreading)
+                                    founditems=tokens[1].split(',');
+                            }
+                          });
+                        items = founditems;
+                    }
+                    else
+                        items = items.split(':');
+                }
             }
             if (items) {
                 var select_elem = $(this).find('select')

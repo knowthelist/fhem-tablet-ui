@@ -7,7 +7,7 @@ var widget_circlemenu= {
     _circlemenu.elements = $('div[data-type="circlemenu"]>ul');
     _circlemenu.elements.each(function(index) {
             var parent = $(this).parent('div[data-type="circlemenu"]');
-            $(this).circleMenu({item_diameter:50,
+            $(this).circleMenu({item_diameter:52,
                 trigger:'click',
                 circle_radius:70,
                 direction: parent.data('direction') || 'full',

@@ -219,6 +219,18 @@ not all widgets support all classes
 Icon configuration
 -------
 
+Color configuration
+-------
+It is possible to specify color value in Hex or RBG style.
+Hex: #A3CFA3
+RBG: rgb(163, 207, 163) 
+
+Try to avoid flashy color like #ff0000 for red or #00ff00 for green. It is always better to stay below 
+#d0 (208) values for each primary color.
+
+You could use this color picker: http://www.w3schools.com/tags/ref_colorpicker.asp
+
+
 Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
 
 Meta tags configuration
