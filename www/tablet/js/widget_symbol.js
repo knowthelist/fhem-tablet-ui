@@ -7,16 +7,16 @@ var widget_symbol = {
  	_symbol.elements.each(function(index) {
 
 		var elem = $(this).famultibutton({
-			icon: ( jQuery.isArray($(this).data('icons')) )?$(this).data('icons')[0]:'fa-windows',
+            icon: ( jQuery.isArray($(this).data('icons')) )?$(this).data('icons')[0]:'fa-windows',
 			backgroundIcon: null,
 			onColor: '#aa6900',
 			onBackgroundColor: '#aa6900',
 			offColor: '#505050',
 			offBackgroundColor: '#505050',
-			mode: 'signal',  //toggle, push, ,
+            mode: 'signal',  //toggle, push, ,
 		});
 
-		elem.data('famultibutton',elem);
+        elem.data('famultibutton',elem);
 		//default reading parameter name
 		$(this).data('get', $(this).data('get') || 'STATE');
 		$(this).data('get-on', $(this).data('get-on') || $(this).data('on') || 'open');
@@ -26,14 +26,9 @@ var widget_symbol = {
   },
   update: function (dev,par) {
 
-	var deviceElements;
-	if ( dev == '*' )
-		deviceElements= _symbol.elements;
-	else
-   		deviceElements= _symbol.elements.filter('div[data-device="'+dev+'"]');
-
+    var deviceElements= _symbol.elements.filter('div[data-device="'+dev+'"]');
 	deviceElements.each(function(index) {
-		if ( $(this).data('get')==par || par =='*'){	
+        if ( $(this).data('get')==par){
 			var state = getDeviceValue( $(this), 'get' );
 			if (state) {
 				var states=$(this).data('get-on');

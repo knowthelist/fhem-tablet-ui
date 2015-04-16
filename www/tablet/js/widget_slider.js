@@ -23,10 +23,15 @@ var widget_slider = {
 			hideRange: true,
 			'min': $(this).data('min') || 0,
 			'max': $(this).data('max') || 100,
-			klass: 'slider_vertical',
+            klass: 'slider_vertical',
 			start: (storeval)?storeval:'5',
 		});
 		$(this).data('Powerange',pwrng);
+
+        if ($(this).hasClass('mini'))
+            $(this).css({'height': '60px','max-height': '60px'})
+        else
+            $(this).css({'height': '100px','max-height': '100px'});
 
 		var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
 
@@ -45,15 +50,10 @@ var widget_slider = {
   },
   update: function (dev,par) {
 
-	var deviceElements;
-	if ( dev == '*' )
-		deviceElements= _slider.elements;
-	else
-   		deviceElements= _slider.elements.filter('div[data-device="'+dev+'"]');
-
+    var deviceElements= _slider.elements.filter('div[data-device="'+dev+'"]');
 	deviceElements.each(function(index) {
 
-	 	if ( $(this).data('get')==par || par =='*'){
+        if ( $(this).data('get')==par){
 
 			var state = getDeviceValue( $(this), 'get' );
 			if (state) {

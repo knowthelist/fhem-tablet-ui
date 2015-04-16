@@ -188,7 +188,7 @@ var widget_thermostat = {
 			'draw' : _thermostat.drawDial,
 			'change' : function (v) { 
                 //reset shortpoll timer to avoid jump back
-                startInterval();
+                startPollInterval();
 			},
             'format' : function (v) {
                 //fix digits count
@@ -212,12 +212,7 @@ var widget_thermostat = {
   },
   update: function (dev,par) {
   
-  	var deviceElements;
-	if ( dev == '*' )
-		deviceElements= _thermostat.elements;
-	else
-   		deviceElements= _thermostat.elements.filter('div[data-device="'+dev+'"]');
-
+    var deviceElements= _thermostat.elements.filter('div[data-device="'+dev+'"]');
 	deviceElements.each(function(index) {
 
 		var clima = _thermostat.getClimaValues( $(this) );
@@ -228,7 +223,7 @@ var widget_thermostat = {
 
         var knob_elem = $(this).find('input');
 				
-		if ( ($(this).data('get')==par || par =='*') && 
+        if ( ($(this).data('get')==par) &&
 			clima.desired && clima.desired > 0 && knob_elem.data('desvalue') != clima.desired ){	
 			knob_elem.val( clima.desired ).trigger('change');
 			knob_elem.data('desvalue', clima.desired);

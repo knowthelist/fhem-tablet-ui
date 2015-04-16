@@ -283,14 +283,9 @@ var widget_weather = {
     },
     
     update: function (dev,par) {
-        var deviceElements;
-        if ( dev == '*' )
-            deviceElements= _weather.elements;
-        else
-            deviceElements= _weather.elements.filter('div[data-device="'+dev+'"]');
-        
+        var deviceElements= _weather.elements.filter('div[data-device="'+dev+'"]');
         deviceElements.each(function(index) {
-            if ( $(this).data('get')==par || par =='*'){
+            if ( $(this).data('get')==par){
                 var value = getDeviceValue( $(this), 'get' );
                 if (value){
                     var part =  $(this).data('part') || -1;

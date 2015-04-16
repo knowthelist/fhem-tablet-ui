@@ -39,7 +39,7 @@ var widget_select = {
         deviceElements= _select.elements.filter('div[data-device="'+dev+'"]');
 
 	deviceElements.each(function(index) {  
-		if ( $(this).data('get')==par || par =='*'){	
+        if ( $(this).data('get')==par || $(this).data('list')==par){
 			var state = getDeviceValue( $(this), 'get' );
             var items = $(this).data('items')
             if (!jQuery.isArray(items)){
@@ -62,14 +62,16 @@ var widget_select = {
                         items = items.split(':');
                 }
             }
+            var select_elem = $(this).find('select')
             if (items) {
-                var select_elem = $(this).find('select')
-                select_elem.empty();
-                for (var i=0;i<items.length;i++) {
-                    select_elem.append('<option value='+items[i]+'>'+items[i]+'</option>');
+                if (select_elem){
+                    select_elem.empty();
+                    for (var i=0;i<items.length;i++) {
+                        select_elem.append('<option value='+items[i]+'>'+items[i]+'</option>');
+                    }
                 }
             }
-            if (state)
+            if (state && select_elem)
                 select_elem.val(state);
 		}
 	});

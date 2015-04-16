@@ -11,14 +11,9 @@ var widget_label = {
   },
   update: function (dev,par) {
 
-	var deviceElements;
-	if ( dev == '*' )
-		deviceElements= _label.elements;
-	else
-   		deviceElements= _label.elements.filter('div[data-device="'+dev+'"]');
-
+    var deviceElements= _label.elements.filter('div[data-device="'+dev+'"]');
 	deviceElements.each(function(index) {
-	 	if ( $(this).data('get')==par || par =='*'){
+        if ( $(this).data('get')==par){
             var value = ($(this).hasClass('timestamp'))
                         ?getReadingDate( $(this), 'get' )
                         :getDeviceValue( $(this), 'get' );

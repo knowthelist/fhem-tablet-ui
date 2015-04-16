@@ -2,7 +2,7 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.3.1
+* Version: 1.4.0
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
@@ -14,15 +14,16 @@ var readings = {"STATE":true};
 var devices = {};
 var types = {};
 var ready = true;
-var reading_cntr;
 var DEBUG = false;
 var TOAST = true;
 var doLongPoll = false
 var timer;
 var timeoutMenu;
-var dir;
+var dir = '';
+var filename = '';
 var shortpollInterval = 30 * 1000; // 30 seconds
 var devs=Array();
+var pars=Array();
 
 var plugins = {
   modules: [],
@@ -34,19 +35,30 @@ var plugins = {
 		DEBUG && console.log('Loaded plugin: '+ name);
 		var module = eval(name);
 		plugins.addModule(module);
-		module.init();
+        module.init();
+        //request missing readings
+        for (var reading in readings) {
+            if (pars.indexOf(reading)<0){
+                pars.push(reading);
+                requestFhem(reading);
+            }
+        }
+
 	});
   },
-  update: function (dev,par) {
+  update: function (dev,par) {  
+    ready = false;
     $.each(this.modules, function (index, module) {
       //Iterate each module and run update function
       module.update(dev,par);
     });
+    ready = true;
+    DEBUG && console.log('update done for device:'+dev+' parameter:'+par);
   }
 }
 
 
-
+// event page is loaded
 $( document ).ready(function() {
 	
 	wx = parseInt( $("meta[name='widget_base_width']").attr("content") );
@@ -61,6 +73,10 @@ $( document ).ready(function() {
 	dir = dir.replace('/'+name,"");
 	DEBUG && console.log('Plugin dir: '+dir);
 
+    var url = window.location.pathname;
+    filename = url.substring(url.lastIndexOf('/')+1);
+    DEBUG && console.log('Filename: '+filename);
+
 	//init gridster
 	gridster = $(".gridster > ul").gridster({
           widget_base_dimensions: [wx, wy],
@@ -73,101 +89,121 @@ $( document ).ready(function() {
         	gridster.disable();
     	}
 
-    //background for modal dialogs
+    //add background for modal dialogs
     $("<div id='shade' />").prependTo('body').hide();
+	
+    //include extern html code
+    if ($('div[data-include]').length>0){
+        $('div[data-include]').each(function(index) {
+            $(this).load($(this).data('include') +' div', function() {
+                //continue after loading the includes
+                initWidgets();
+            });
+        });
+    }
+    else{
+       //continue immediately with initWidgets
+       initWidgets();
+    }
 
-	//make it HTML conform (remove this after migration)
-	$('div[type]').each(function() {
-    	$(this).attr({
+    if ( doLongPoll ){
+        setTimeout(function() {
+                longPoll();
+        }, 1000);
+        shortpollInterval = 15 * 60 * 1000; // 15 minutes
+    }
+
+    $("*:not(select)").focus(function(){
+        $(this).blur();
+    });
+
+    // refresh every x secs
+    startPollInterval();
+
+});
+
+function initWidgets() {
+
+    showDeprecationMsg();
+
+    //collect required widgets types
+    $('div[data-type]').each(function(index){
+        var t = $(this).data("type");
+        if(!types[t])
+            types[t] = true;
+    });
+
+    //collect required devices
+    $('div[data-device]').each(function(index){
+        var device = $(this).data("device");
+        if(!devices[device]){
+            devices[device] = true;
+            devs.push(device);
+        }
+    });
+
+    //collect required readings
+    DEBUG && console.log('Collecting required readings');
+    $('[data-get]').each(function(index){
+        var reading = $(this).data("get");
+        if(!readings[reading]){
+            readings[reading] = true;
+            pars.push(reading);
+        }
+    });
+
+    //init widgets
+    for (var widget_type in types) {
+        plugins.load('widget_'+widget_type);
+    }
+
+    //get current values of readings
+    DEBUG && console.log('Request readings from FHEM');
+    for (var reading in readings) {
+        requestFhem(reading);
+    }
+
+}
+
+function showDeprecationMsg() {
+
+    //make it HTML conform (remove this after migration)
+    $('div[type]').each(function() {
+        $(this).attr({
             'data-type' : $(this).attr('type'),
         })
         .removeAttr('type');
         console.log('Please rename widget attribute "type" into "data-type" in ' + document.location + ($(this).attr('data-device')?' device: '+$(this).attr('data-device'):'') + ' - Details below:');
         console.log($(this));
-	});
-	$('div[device]').each(function() {
-    	$(this).attr({
+    });
+    $('div[device]').each(function() {
+        $(this).attr({
             'data-device' : $(this).attr('device'),
         })
         .removeAttr('device');
         console.log('Please rename widget attribute "device" into "data-device" in ' + document.location + ($(this).attr('data-device')?' device: '+$(this).attr('data-device'):'') + ' - Details below:');
         console.log($(this));
-	});
-	$('div[data-type="contact"]').each(function() {
-    	$(this).attr({'data-type' : 'symbol',})
-    	console.log('Please rename widget "contact" into "symbol" in ' + document.location + ($(this).attr('data-device')?' device: '+$(this).attr('data-device'):'') + ' - Details below:');
-    	console.log($(this));
-	});
-	//end **** (remove this after migration)
-	
-	//collect required widgets types
-	$('div[data-type]').each(function(index){
-		var t = $(this).data("type");
-		if(!types[t])
-			types[t] = true;
-	});
-	
-	//init widgets
-	for (var widget_type in types) {
-		plugins.load('widget_'+widget_type);
-	}
-	DEBUG && console.log('Collecting required readings');
-	//collect required readings
-	$('[data-get]').each(function(index){
-		var reading = $(this).data("get");
-		if(!readings[reading])
-			readings[reading] = true;
-	});
-	
-	//collect required devices
-	$('div[data-device]').each(function(index){
-		var device = $(this).data("device");
-		if(!devices[device])
-			devices[device] = true; devs.push(device);
-	});
-	
-	//get current values of readings
-	DEBUG && console.log('Get current values of readings');
-	for (var reading in readings) {
-		requestFhem(reading);
-	}
-	reading_cntr = Object.keys(readings).length;
-
-	if ( doLongPoll ){
-		setTimeout(function() {
-				longPoll();
-		}, 1000);
-		shortpollInterval = 15 * 60 * 1000; // 15 minutes
-	}
-	 
-    $("*:not(select)").focus(function(){
-        $(this).blur();
     });
-	
-	// refresh every x secs
-	startInterval();
+    $('div[data-type="contact"]').each(function() {
+        $(this).attr({'data-type' : 'symbol',})
+        console.log('Please rename widget "contact" into "symbol" in ' + document.location + ($(this).attr('data-device')?' device: '+$(this).attr('data-device'):'') + ' - Details below:');
+        console.log($(this));
+    });
+    //end **** (remove this after migration)
+}
 
-});
-
-function startInterval() {
+function startPollInterval() {
      clearInterval(timer);
      timer = setInterval(function () {
 		//get current values of readings every x seconds
 		for (var reading in readings) {
 			requestFhem(reading);
-		}
+        }
      }, shortpollInterval); 
  }
 
-function update(dev,par) {
-	ready = false;	 	
- 	plugins.update(dev,par);
- 	ready = true;
-	DEBUG && console.log('update done for device:'+dev+' parameter:'+par);
-}
-
 function setFhemStatus(cmdline) {
-	startInterval();
+    startPollInterval();
     DEBUG && console.log('send to FHEM: '+cmdline);
 	$.ajax({
 		async: true,
@@ -266,7 +302,7 @@ function longPoll(roomName) {
 								params[paraname]=value;
 								deviceStates[key]=params;
 								DEBUG && console.log(date + ' / ' + key+' / '+paraname+' / '+val);
-								update(key,paraname);
+                                plugins.update(key,paraname);
 							}
 							//console.log(date + ' / ' + key+' / '+paraname+' / '+val);
 						}
@@ -318,15 +354,12 @@ function requestFhem(paraname) {
 					var paraname = this.paraname;
 					var value = {"date": date, "val": val};
 					params[paraname]=value;
-					if (key in devices)
+                    if (key in devices){
 						deviceStates[key]=params;
+                        plugins.update(key,paraname);
+                    }
 				}
 			}
-		reading_cntr--;
-		if ( reading_cntr < 1 ) {
-			update('*','*'); 
-			reading_cntr = Object.keys(readings).length;
- 		}
 	});
 
 }
@@ -339,7 +372,7 @@ function loadplugin(plugin, success, error) {
         url: dir + '/'+plugin+'.js',
         dataType: "script",
         cache: true,
-        async: false,
+        //async: false,
         context:{name: name},
         success: success||function(){ return true },
         error: error||function(){ return false },
@@ -362,7 +395,6 @@ this.getPart = function (s,p) {
 		}
 		return ret;
 	}
-	
 };
 
 this.getDeviceValue = function (device, src) {

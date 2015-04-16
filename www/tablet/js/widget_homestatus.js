@@ -147,7 +147,7 @@ var widget_homestatus = {
 			'version': $(this).data('version') || '',
             'draw' : _homestatus.drawSelector,
 			'change' : function (v) { 
-				  startInterval();
+                  startPollInterval();
 			},
 			'release' : function (v) { 
 			  if (ready){
@@ -186,12 +186,7 @@ var widget_homestatus = {
   },
   update: function (dev,par) {
 
-	var deviceElements;
-	if ( dev == '*' )
-		deviceElements= _homestatus.elements;
-	else
-   		deviceElements= _homestatus.elements.filter('div[data-device="'+dev+'"]');
-
+    var deviceElements= _homestatus.elements.filter('div[data-device="'+dev+'"]');
 	deviceElements.each(function(index) {
 		
 			var value = getDeviceValue( $(this), 'get' );

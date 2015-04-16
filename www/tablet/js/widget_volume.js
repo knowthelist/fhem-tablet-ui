@@ -207,7 +207,7 @@ var widget_volume = {
 			'draw' : base.drawDial,
 			'readOnly' : $(this).hasClass('readonly'),
 			'change' : function (v) { 
-				  startInterval();
+                  startPollInterval();
                     if (v > this.o.max - this.o.variance && this.o.lastValue < this.o.min + this.o.variance) {
                         knob_elem.val(this.o.min).change();
                         return false;
@@ -240,15 +240,11 @@ var widget_volume = {
 	 });
   },
   update: function (dev,par) {
-	var deviceElements;
-	if ( dev == '*' )
-		deviceElements= this.elements;
-	else
-   		deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
 
+    var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
 	deviceElements.each(function(index) {
 		
-		if ( $(this).data('get')==par || par =='*'){	
+        if ( $(this).data('get')==par){
 			var val = getDeviceValue( $(this), 'get' );
             var knob_elem = $(this).find('input');
 			if (val){

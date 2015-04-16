@@ -47,15 +47,10 @@ var widget_dimmer = {
   },
   update: function (dev,par) {
 
-	var deviceElements;
-	if ( dev == '*' )
-		deviceElements= _dimmer.elements;
-	else
-   		deviceElements= _dimmer.elements.filter('div[data-device="'+dev+'"]');
-
+    var deviceElements= _dimmer.elements.filter('div[data-device="'+dev+'"]');
 	deviceElements.each(function(index) {
 
-	 	if ( $(this).data('get')==par || par =='*'){
+        if ( $(this).data('get')==par){
 
 			var state = getDeviceValue( $(this), 'get' );
 			if (state) {

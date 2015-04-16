@@ -11,14 +11,9 @@ var widget_template = {
   },
   update: function (dev,par) {
 
-	var deviceElements;
-	if ( dev == '*' )
-		deviceElements= _template.elements;
-	else
-   		deviceElements= _template.elements.filter('div[data-device="'+dev+'"]');
-
+    var deviceElements= _template.elements.filter('div[data-device="'+dev+'"]');
 	deviceElements.each(function(index) {
-	 	if ( $(this).data('get')==par || par =='*'){
+        if ( $(this).data('get')==par){
 			
 			var value = getDeviceValue( $(this), 'get' );
 			if (value){

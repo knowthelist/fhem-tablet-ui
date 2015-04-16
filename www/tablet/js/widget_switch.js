@@ -32,14 +32,9 @@ var widget_switch = {
   },
   update: function (dev,par) {
 
-	var deviceElements;
-	if ( dev == '*' )
-		deviceElements= _switch.elements;
-	else
-   		deviceElements= _switch.elements.filter('div[data-device="'+dev+'"]');
-
+    var deviceElements= _switch.elements.filter('div[data-device="'+dev+'"]');
 	deviceElements.each(function(index) {
-		if ( $(this).data('get')==par || par =='*'){	
+        if ( $(this).data('get')==par){
 			var state = getDeviceValue( $(this), 'get' );
 			if (state) {
 				if ( state == $(this).data('get-on') )
