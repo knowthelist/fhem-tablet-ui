@@ -225,6 +225,13 @@ not all widgets support all classes
 Icon configuration
 -------
 
+Enable respectively add following lines to index.html to active FHEMWEB icons for FHEM Tablet ui
+```html
+<link rel="stylesheet" href="/fhem/tablet/lib/openautomation.css" />
+<link rel="stylesheet" href="/fhem/tablet/lib/fhemSVG.css" />
+```
+This font icons has the prefix 'fs-' and 'oa-'
+
 Color configuration
 -------
 It is possible to specify color value in Hex or RBG style.
