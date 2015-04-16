@@ -4,10 +4,10 @@ DIR www/tablet/fonts
 DIR www/tablet/js
 DIR www/tablet/lib
 UPD 2015-04-16_21:18:29 5497 www/tablet/css/fhem-tablet-ui.css
-UPD 2015-04-15_19:17:28 91804 www/tablet/fonts/fhemSVG.eot
-UPD 2015-04-15_19:17:28 378860 www/tablet/fonts/fhemSVG.svg
-UPD 2015-04-15_19:17:28 91640 www/tablet/fonts/fhemSVG.ttf
-UPD 2015-04-15_19:17:28 91716 www/tablet/fonts/fhemSVG.woff
+UPD 2015-04-16_09:00:38 127396 www/tablet/fonts/fhemSVG.eot
+UPD 2015-04-16_09:00:38 528460 www/tablet/fonts/fhemSVG.svg
+UPD 2015-04-16_09:00:38 127232 www/tablet/fonts/fhemSVG.ttf
+UPD 2015-04-16_09:00:38 127308 www/tablet/fonts/fhemSVG.woff
 UPD 2015-04-12_22:23:45 60767 www/tablet/fonts/fontawesome-webfont.eot
 UPD 2015-04-12_22:23:45 313398 www/tablet/fonts/fontawesome-webfont.svg
 UPD 2015-04-12_22:23:45 122092 www/tablet/fonts/fontawesome-webfont.ttf
@@ -18,10 +18,10 @@ UPD 2015-04-12_22:23:45 10454 www/tablet/fonts/meteocons-webfont.eot
 UPD 2015-04-12_22:23:45 33061 www/tablet/fonts/meteocons-webfont.svg
 UPD 2015-04-12_22:23:45 22724 www/tablet/fonts/meteocons-webfont.ttf
 UPD 2015-04-12_22:23:45 11788 www/tablet/fonts/meteocons-webfont.woff
-UPD 2015-04-15_19:12:50 228832 www/tablet/fonts/openautomation.eot
-UPD 2015-04-15_19:12:50 969846 www/tablet/fonts/openautomation.svg
-UPD 2015-04-15_19:12:50 228640 www/tablet/fonts/openautomation.ttf
-UPD 2015-04-15_19:12:50 228716 www/tablet/fonts/openautomation.woff
+UPD 2015-04-16_08:57:34 359744 www/tablet/fonts/openautomation.eot
+UPD 2015-04-16_08:57:34 1517848 www/tablet/fonts/openautomation.svg
+UPD 2015-04-16_08:57:34 359552 www/tablet/fonts/openautomation.ttf
+UPD 2015-04-16_08:57:34 359628 www/tablet/fonts/openautomation.woff
 UPD 2015-02-22_23:37:00 12538 www/tablet/index.html
 UPD 2015-04-15_23:01:16 13537 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-04-14_00:10:58 1554 www/tablet/js/widget_circlemenu.js
@@ -41,7 +41,7 @@ UPD 2015-04-14_22:09:38 8390 www/tablet/js/widget_thermostat.js
 UPD 2015-04-14_22:09:22 8739 www/tablet/js/widget_volume.js
 UPD 2015-04-14_20:50:03 16862 www/tablet/js/widget_weather.js
 UPD 2015-04-12_22:23:45 4719 www/tablet/lib/fa-multi-button.min.js
-UPD 2015-04-15_21:31:58 16708 www/tablet/lib/fhemSVG.css
+UPD 2015-04-16_22:15:59 26628 www/tablet/lib/fhemSVG.css
 UPD 2015-04-12_22:23:45 23665 www/tablet/lib/font-awesome.min.css
 UPD 2015-04-12_22:23:45 10011 www/tablet/lib/jquery.circlemenu.js
 UPD 2015-04-12_22:23:45 3021 www/tablet/lib/jquery.gridster.min.css
@@ -50,6 +50,6 @@ UPD 2015-04-12_22:23:45 27838 www/tablet/lib/jquery.knob.mod.js
 UPD 2015-04-12_22:23:45 10878 www/tablet/lib/jquery.knob.mod.min.js
 UPD 2015-04-12_22:23:45 1107 www/tablet/lib/jquery.toast.min.css
 UPD 2015-04-12_22:23:45 5303 www/tablet/lib/jquery.toast.min.js
-UPD 2015-04-15_20:45:29 13696 www/tablet/lib/openautomation.css
+UPD 2015-04-16_22:19:43 23861 www/tablet/lib/openautomation.css
 UPD 2015-04-12_22:23:45 1069 www/tablet/lib/powerange.min.css
 UPD 2015-04-12_22:23:45 17646 www/tablet/lib/powerange.min.js
