@@ -193,7 +193,7 @@ CSS Class description
 -------
 not all widgets support all classes
 - readonly		: changing of state is not allowed 
-- wider			: 25px extra space for the widget to the top 
+- wider			: 15px extra space for the widget all around 
 - narrow		: shorter distant to the widget above 
 - w1x, w2x, w3x	: set the widget to a fix width: 1x, 2x, 3x width
 - small			: font 80% size (label), small diameter for volume widget
@@ -216,6 +216,11 @@ not all widgets support all classes
 - doublebox-h	: container to place 2 small widgets (e.g. switch) side by side
 - timestamp		: deliver the date time for the reading instead of the value
 - inline		: positioning elements in a row, no line break
+- top-space     : 15px extra on top (top-space-2x -> 30px; top-space-3x -> 45px)
+- left-space	: 15px extra on left (left-space-2x -> 30px; left-space-3x -> 45px)
+- right-space  	: 15px extra on right (right-space-2x -> 30px; right-space-3x -> 45px)
+- blink         : blink animatation for label or symbol widget
+
 
 Icon configuration
 -------
