@@ -156,7 +156,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 
 data-version='' (default)
   4 states are valid: 1,2,3 or 4 (1=home,2=night,3=away,4=holiday) 
-data-version='residents' or 'roomate' or 'guest'
+data-version='residents' or 'roommate' or 'guest'
   residents states are valid (absent,gone,asleep,home)
 
 ####Slider widgets (currently vertical only)
