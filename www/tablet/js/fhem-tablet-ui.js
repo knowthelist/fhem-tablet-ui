@@ -364,7 +364,7 @@ function requestFhem(paraname) {
 
 }
 
-function loadplugin(plugin, success, error) {
+function loadplugin(plugin, success, error, async) {
     dir = $('script[src$="fhem-tablet-ui.js"]').attr('src');
     var name = dir.split('/').pop(); 
     dir = dir.replace('/'+name,"");
@@ -372,11 +372,15 @@ function loadplugin(plugin, success, error) {
         url: dir + '/'+plugin+'.js',
         dataType: "script",
         cache: true,
-        //async: false,
+        async: async || false,
         context:{name: name},
         success: success||function(){ return true },
         error: error||function(){ return false },
     });
+}
+
+function loadplugin_async(plugin, success, error) {
+    return loadplugin(plugin, success, error, true);
 }
 
 this.getPart = function (s,p) {
