@@ -18,6 +18,7 @@ Install
 -------
  * copy the whole tree into the corresponding folder of your FHEM server /\<fhem-path\>/www/tablet
  * add 'define tablet_ui HTTPSRV tablet/ ./www/tablet Tablet Frontend' in fhem.cfg
+ * rename the index-example.html to index.html or create your own index.html
  * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/tablet
  
  or just use 'update all https://raw.githubusercontent.com/knowthelist/fhem-tablet-ui/master/controls_fhemtabletui.txt'
@@ -178,7 +179,8 @@ data-version='residents' or 'roommate' or 'guest'
 ####Image widgets
 - **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')
 - **data-size**     : width of the image in px or %, the height scales proportionally. (default: 50%)
-- **data-url**      : URL of the image to show (use data-url or data-device + data-get, not both)
+- **data-url**      : URL of the image to show (use data-url + data-refresh or data-device + data-get, not both)
+- **data-refresh**  : Interval in seconds for image refresh for usage together with data-url (default: 900)
 
 ####Weather widgets
 - **data-get**      : name of the reading to get the weather literal from FHEM (default 'STATE')

@@ -16,28 +16,34 @@ var widget_image = {
 				'width': '100%',
 				'max-width': $(this).data('size') || '50%',
 		});
+
+        //3rd party source refresh
+        if ($(this).data('url')){
+            var counter=0;
+            var url=$(this).data('url');
+            var refresh=$(this).data('refresh') || 15 * 60;
+            elem.attr('src', url );
+            setInterval(function() {
+               counter++;
+               if(counter == refresh) {
+                 counter = 0;
+                 elem.attr('src',url);
+               }
+             }, 1000);
+         }
 	});
   },
   update: function (dev,par) {
 
-	var deviceElements;
-	if ( dev == '*' )
-		deviceElements= _image.elements;
-	else
-   		deviceElements= _image.elements.filter('div[data-device="'+dev+'"]');
-
-	deviceElements.each(function(index) {
-		if ( $(this).data('get')==par || par =='*'){	
+    var deviceElements = _image.elements.filter('div[data-device="'+dev+'"]');
+    deviceElements.each(function(index) {
+        var img = $(this).find('img');
+        if ( $(this).data('get')==par){
 			var value = getDeviceValue( $(this), 'get' );
-			var img = $(this).find('img');
-			if (img){
-				if (!value)
-					value = $(this).data('url');
-				if (value)
-					img.attr('src',value );
-			}
-
-		}
+            if (img && value){
+                    img.attr('src',value );
+            }
+        }
 	});
    }
 			 
