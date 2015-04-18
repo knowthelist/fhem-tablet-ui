@@ -341,7 +341,7 @@ function requestFhem(paraname) {
   	})
   	.done (function( data ) {
 			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
-            var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\.?[0-9]{0,3}\s+(.*)$/;
+             var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])\.?[0-9]{0,3}\s+(.*)$/;
 			for (var i=0; i < lines.length; i++) {
                 var date,key,val;
 				var line = $.trim( lines[i] );
