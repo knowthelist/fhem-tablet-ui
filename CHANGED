@@ -1,3 +1,5 @@
 FHEM tablet UI last change:
 2015-04-18
- - Updated image widget to fit to the new version
+ - Merge branch 'master' of https://github.com/knowthelist/fhem-tablet-ui
+
+Merged locally with pull request
