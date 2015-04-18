@@ -36,6 +36,12 @@ var plugins = {
 		var module = eval(name);
 		plugins.addModule(module);
         module.init();
+        //update all what we have until now
+        for (var reading in readings) {
+            for (var device in devices) {
+                module.update(device,reading);
+            }
+        }
         //request missing readings
         for (var reading in readings) {
             if (pars.indexOf(reading)<0){
@@ -321,6 +327,7 @@ function requestFhem(paraname) {
 */
 	$.ajax({
 		async: true,
+        timeout: 15000,
 		cache: false,
 		context:{paraname: paraname},
 		url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
