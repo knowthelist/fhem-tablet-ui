@@ -50,7 +50,7 @@ var plugins = {
             }
         }
 
-	});
+    },null,true);
   },
   update: function (dev,par) {  
     ready = false;
@@ -65,7 +65,7 @@ var plugins = {
 
 
 // event page is loaded
-$( document ).ready(function() {
+$(document).on('ready readyAgain', function() {
 	
 	wx = parseInt( $("meta[name='widget_base_width']").attr("content") );
 	wy = parseInt( $("meta[name='widget_base_height']").attr("content") );
@@ -342,23 +342,19 @@ function requestFhem(paraname) {
   	.done (function( data ) {
 			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
             var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\.?[0-9]{0,3}\s+(.*)$/;
-			for (var i=0; i < lines.length; i++) {
+            for (var i=0; i < lines.length; i++) {
                 var date,key,val;
 				var line = $.trim( lines[i] );
-                //console.log(line);
+                //console.log('line: '+line);
                 if (regCapture.test(line) ) {
                     var groups = line.match( regCapture );
+                    var paraname = this.paraname;
                     key = $.trim( line.match( regCapture )[1]);
                     if (groups.length>2){
-                        date = $.trim( line.match( regCapture )[2]);
-                        val = $.trim( line.match( regCapture )[3]);
-                    }
-                    else{
-                        //date = ..... new Date(); //do we need this?
-                        val = $.trim( line.match( regCapture )[2]);
+                        date = $.trim( groups[2]);
+                        val = $.trim( groups[3]);
                     }
 					var params = deviceStates[key] || {};
-					var paraname = this.paraname;
 					var value = {"date": date, "val": val};
 					params[paraname]=value;
                     if (key in devices){
