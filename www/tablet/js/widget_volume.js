@@ -1,56 +1,10 @@
-var widget_volume = {
+if(typeof widget_knob == 'undefined') {
+    loadplugin('widget_knob');
+}
+
+var widget_volume = $.extend({}, widget_knob, {
   widgetname : 'volume',
-  rgbToHsl: function(rgb){
-      var r=parseInt(rgb.substring(0,2),16);
-      var g=parseInt(rgb.substring(2,4),16);
-      var b=parseInt(rgb.substring(4,6),16);
-        r /= 255, g /= 255, b /= 255;
-        var max = Math.max(r, g, b), min = Math.min(r, g, b);
-        var h, s, l = (max + min) / 2;
-
-        if(max == min){
-            h = s = 0; // achromatic
-        }else{
-            var d = max - min;
-            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-            switch(max){
-                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-                case g: h = (b - r) / d + 2; break;
-                case b: h = (r - g) / d + 4; break;
-            }
-            h /= 6;
-        }
-
-        return [h, s, l];
-  },
-  hslToRgb: function(h, s, l){
-      var r, g, b;
-      var hex = function(x) {
-        return ("0" + parseInt(x).toString(16)).slice(-2);
-      }
-
-      if(s == 0){
-                 r = g = b = l; // achromatic
-             }else{
-                 function hue2rgb(p, q, t){
-                     if(t < 0) t += 1;
-                     if(t > 1) t -= 1;
-                     if(t < 1/6) return p + (q - p) * 6 * t;
-                     if(t < 1/2) return q;
-                     if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-                     return p;
-                 }
-
-                 var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-                 var p = 2 * l - q;
-                 r = hue2rgb(p, q, h + 1/3);
-                 g = hue2rgb(p, q, h);
-                 b = hue2rgb(p, q, h - 1/3);
-             }
-        return [hex(Math.round(r * 255)), hex(Math.round(g * 255)), hex(Math.round(b * 255))].join('');
-  },
-
-  drawDial: function () {
+    drawDial: function () {
   	var c = this.g, // context
 	a = this.arc(this.cv), // Arc
 	r = 1;
@@ -129,6 +83,11 @@ var widget_volume = {
   	base=this;
   	this.elements = $('div[data-type="'+this.widgetname+'"]');
  	this.elements.each(function(index) {
+		var maxval = $(this).data('max') || 70;
+	    $(this).data('max', maxval);
+	    $(this).data('max360', (maxval>360)?360:maxval);
+	
+		base.init_attr($(this));
 		var knob_elem =  jQuery('<input/>', {
 			type: 'text',
 			value: $(this).attr('data-initvalue')||'10',
@@ -136,8 +95,6 @@ var widget_volume = {
 		}).appendTo($(this));
 		
 		var device = $(this).data('device');
-		$(this).data('get', $(this).data('get') || 'STATE');
-		readings[$(this).data('get')] = true;
 		
 		var mode=0; //no hue colors
 		var hdDefaultColor='#aa6900';
@@ -165,45 +122,29 @@ var widget_volume = {
         if ( $(this).hasClass('rgb')){
             mode = mode | 1<<6;
         }
-
         $(this).data('mode',mode);
 
-		var maxval = $(this).data('max') || 70;
-		$(this).data('max', maxval);
-		$(this).data('max360', (maxval>360)?360:maxval);
-		
-		$(this).data('height', 1*$(this).attr('data-height')||150);
-        $(this).data('width', 1*$(this).attr('data-width')||150);
-		if($(this).hasClass('small')) {
-		    $(this).data('height', 100);
-		    $(this).data('width', 100);
-		}
-		if($(this).hasClass('mini')) {
-		    $(this).data('height', 52);
-		    $(this).data('width', 52);
-		}
-
 		knob_elem.knob({
-			'min': $(this).data('min') || 0,
+			'min': $(this).data('min'),
 			'max': $(this).data('max360'),
             'lastValue': 0,
             'variance': Math.floor($(this).data('max360') / 5),
 			'origmax': $(this).data('max'),
             'height':$(this).data('height'),
             'width':$(this).data('width'),
-			'angleOffset': $(this).attr('data-angleoffset')?$(this).attr('data-angleoffset')*1:-120,
-			'angleArc': $(this).attr('data-anglearc')?$(this).attr('data-anglearc')*1:240,
-			'bgColor': $(this).data('bgcolor') || 'transparent',
-			'fgColor': $(this).data('fgcolor') || '#cccccc',
-			'tkColor': $(this).data('tkcolor') || '#696969',
+			'angleOffset': $(this).data('angleoffset'),
+			'angleArc': $(this).data('anglearc'),
+			'bgColor': $(this).data('bgcolor'),
+			'fgColor': $(this).data('fgcolor'),
+			'tkColor': $(this).data('tkcolor'),
 			'hdColor': $(this).data('hdcolor') || hdDefaultColor,
             'thickness': ($(this).hasClass('mini'))?.45:.25,
 			'tickdistance': $(this).data('tickstep') || (((mode>>1) % 2 != 0)?4:20),
 			'mode': mode,
 			'cursor': 6,
             'touchPosition': 'left',
-			'cmd': $(this).data('cmd') || 'set',
-			'set': $(this).data('set') || '',
+			'cmd': $(this).data('cmd'),
+			'set': $(this).data('set'),
 			'draw' : base.drawDial,
 			'readOnly' : $(this).hasClass('readonly'),
 			'change' : function (v) { 
@@ -254,7 +195,7 @@ var widget_volume = {
                     val=val*$(this).data('max360');
                 }
                 else{
-                    //is deciaml value
+                    //is decimal value
                     val = (val * ($(this).data('max360')/$(this).data('max'))).toFixed(0);
                 }
                 if ( knob_elem.val() != val ){
@@ -266,5 +207,4 @@ var widget_volume = {
 		}
 	});
    }
-			 
-};
+});
