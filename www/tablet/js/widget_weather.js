@@ -302,7 +302,7 @@ var widget_weather = {
                     var mapped = typeof translation == "undefined"?val:translation;
                     if($(this).data('imageset')=="kleinklima") {
                         mapped = _weather.kleinklimamap[mapped.replace(/^:/, '')];
-                        var fhem = $("meta[name='fhemweb_url']").attr("content") || "../fhem/";
+                        var fhem = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
                         fhem = fhem.replace(/\/$/, '');
                         $(this).prepend('<img style="width:100%" src="' + fhem + mapped + '" title="' + val + '">');
                     } else {
