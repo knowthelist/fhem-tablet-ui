@@ -26,8 +26,10 @@ UPD 2015-02-22_23:37:00 12538 www/tablet/index-example.html
 UPD 2015-04-19_09:25:36 13719 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-04-14_00:10:58 1554 www/tablet/js/widget_circlemenu.js
 UPD 2015-04-14_20:46:52 2720 www/tablet/js/widget_dimmer.js
+UPD 2015-04-19_21:37:15 3991 www/tablet/js/widget_famultibutton.js
 UPD 2015-04-14_22:09:54 5961 www/tablet/js/widget_homestatus.js
 UPD 2015-04-17_22:59:58 1347 www/tablet/js/widget_image.js
+UPD 2015-04-19_21:37:15 5081 www/tablet/js/widget_knob.js
 UPD 2015-04-14_20:45:49 1442 www/tablet/js/widget_label.js
 UPD 2015-04-14_00:11:04 1239 www/tablet/js/widget_playstream.js
 UPD 2015-04-14_20:54:23 1354 www/tablet/js/widget_push.js
@@ -38,7 +40,7 @@ UPD 2015-04-14_20:43:41 2201 www/tablet/js/widget_switch.js
 UPD 2015-04-14_20:44:49 2245 www/tablet/js/widget_symbol.js
 UPD 2015-04-14_20:51:15 600 www/tablet/js/widget_template.js
 UPD 2015-04-14_22:09:38 8390 www/tablet/js/widget_thermostat.js
-UPD 2015-04-14_22:09:22 8739 www/tablet/js/widget_volume.js
+UPD 2015-04-19_21:47:17 6607 www/tablet/js/widget_volume.js
 UPD 2015-04-14_20:50:03 16862 www/tablet/js/widget_weather.js
 UPD 2015-04-18_10:24:38 1691 www/tablet/js/widget_widget.js
 UPD 2015-04-12_22:23:45 4719 www/tablet/lib/fa-multi-button.min.js

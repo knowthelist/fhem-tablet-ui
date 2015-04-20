@@ -67,7 +67,7 @@ Currently there are 13 types of widgets in the base installation.
 - **image** : insert an image, the URL is given by a reading
 - **weather** : insert an icon or image, represending a weather literal
 - **circlemenu** : Cover multiple widgets behind a single widget
-- **Select**	: Combobox to provide a list for selection
+- **select**	: Combobox to provide a list for selection
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 

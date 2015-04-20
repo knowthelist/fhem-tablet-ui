@@ -1,3 +1,5 @@
 FHEM tablet UI last change:
-2015-04-19
- - Optimization to cope with Race Conditions
+2015-04-20
+ - Merge branch 'nesges-patch-33'
+
+Merged nesges patches
