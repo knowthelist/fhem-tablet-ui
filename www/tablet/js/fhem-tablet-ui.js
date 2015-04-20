@@ -213,7 +213,7 @@ function setFhemStatus(cmdline) {
     DEBUG && console.log('send to FHEM: '+cmdline);
 	$.ajax({
 		async: true,
-		url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
+		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
 		data: {
 			cmd: cmdline,
 			XHR: "1"
@@ -247,7 +247,7 @@ function longPoll(roomName) {
 	currLine=0;
 	
 	$.ajax({
-		url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
+		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
 		cache: false,
 		complete: function() {
 			setTimeout(function() {
@@ -330,7 +330,7 @@ function requestFhem(paraname) {
         timeout: 15000,
 		cache: false,
 		context:{paraname: paraname},
-		url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
+		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
 		data: {
 			cmd: "list " + devs.join() + " " + paraname,
 			XHR: "1"
