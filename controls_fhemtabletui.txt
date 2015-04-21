@@ -23,7 +23,8 @@ UPD 2015-04-16_08:57:34 1517848 www/tablet/fonts/openautomation.svg
 UPD 2015-04-16_08:57:34 359552 www/tablet/fonts/openautomation.ttf
 UPD 2015-04-16_08:57:34 359628 www/tablet/fonts/openautomation.woff
 UPD 2015-02-22_23:37:00 12538 www/tablet/index-example.html
-UPD 2015-04-19_09:25:36 13719 www/tablet/js/fhem-tablet-ui.js
+UPD 2015-04-21_23:30:31 2246 www/tablet/index_2.html
+UPD 2015-04-21_20:46:11 14330 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-04-14_00:10:58 1554 www/tablet/js/widget_circlemenu.js
 UPD 2015-04-14_20:46:52 2720 www/tablet/js/widget_dimmer.js
 UPD 2015-04-19_21:37:15 3991 www/tablet/js/widget_famultibutton.js
@@ -31,6 +32,7 @@ UPD 2015-04-14_22:09:54 5961 www/tablet/js/widget_homestatus.js
 UPD 2015-04-17_22:59:58 1347 www/tablet/js/widget_image.js
 UPD 2015-04-19_21:37:15 5081 www/tablet/js/widget_knob.js
 UPD 2015-04-14_20:45:49 1442 www/tablet/js/widget_label.js
+UPD 2015-04-21_23:25:30 1870 www/tablet/js/widget_pagetab.js
 UPD 2015-04-14_00:11:04 1239 www/tablet/js/widget_playstream.js
 UPD 2015-04-14_20:54:23 1354 www/tablet/js/widget_push.js
 UPD 2015-04-14_20:21:27 2951 www/tablet/js/widget_select.js
@@ -44,7 +46,7 @@ UPD 2015-04-19_21:47:17 6607 www/tablet/js/widget_volume.js
 UPD 2015-04-14_20:50:03 16862 www/tablet/js/widget_weather.js
 UPD 2015-04-18_10:24:38 1691 www/tablet/js/widget_widget.js
 UPD 2015-04-12_22:23:45 4719 www/tablet/lib/fa-multi-button.min.js
-UPD 2015-04-16_22:15:59 26628 www/tablet/lib/fhemSVG.css
+UPD 2015-04-20_19:46:29 26586 www/tablet/lib/fhemSVG.css
 UPD 2015-04-12_22:23:45 23665 www/tablet/lib/font-awesome.min.css
 UPD 2015-04-12_22:23:45 10011 www/tablet/lib/jquery.circlemenu.js
 UPD 2015-04-12_22:23:45 3021 www/tablet/lib/jquery.gridster.min.css
@@ -53,6 +55,7 @@ UPD 2015-04-12_22:23:45 27838 www/tablet/lib/jquery.knob.mod.js
 UPD 2015-04-12_22:23:45 10878 www/tablet/lib/jquery.knob.mod.min.js
 UPD 2015-04-12_22:23:45 1107 www/tablet/lib/jquery.toast.min.css
 UPD 2015-04-12_22:23:45 5303 www/tablet/lib/jquery.toast.min.js
-UPD 2015-04-16_22:19:43 23861 www/tablet/lib/openautomation.css
+UPD 2015-04-20_19:42:38 23826 www/tablet/lib/openautomation.css
 UPD 2015-04-12_22:23:45 1069 www/tablet/lib/powerange.min.css
 UPD 2015-04-12_22:23:45 17646 www/tablet/lib/powerange.min.js
+UPD 2015-04-21_23:27:29 1005 www/tablet/menu.html
