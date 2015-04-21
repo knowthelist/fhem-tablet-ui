@@ -13,7 +13,7 @@ var deviceStates={};
 var readings = {"STATE":true};
 var devices = {};
 var types = {};
-var ready = true;
+var ready = false;
 var DEBUG = false;
 var TOAST = true;
 var doLongPoll = false
@@ -24,6 +24,7 @@ var filename = '';
 var shortpollInterval = 30 * 1000; // 30 seconds
 var devs=Array();
 var pars=Array();
+var gridster;
 
 var plugins = {
   modules: [],
@@ -65,52 +66,12 @@ var plugins = {
 
 
 // event page is loaded
-$(document).on('ready readyAgain', function() {
-	
-	wx = parseInt( $("meta[name='widget_base_width']").attr("content") );
-	wy = parseInt( $("meta[name='widget_base_height']").attr("content") );
-	doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
-	DEBUG  = ($("meta[name='debug']").attr("content") == '1');
-    TOAST  = ($("meta[name='toast']").attr("content") != '0');
-	
-	//self path
-	dir = $('script[src$="fhem-tablet-ui.js"]').attr('src');
-	var name = dir.split('/').pop(); 
-	dir = dir.replace('/'+name,"");
-	DEBUG && console.log('Plugin dir: '+dir);
-
-    var url = window.location.pathname;
-    filename = url.substring(url.lastIndexOf('/')+1);
-    DEBUG && console.log('Filename: '+filename);
-
-	//init gridster
-	gridster = $(".gridster > ul").gridster({
-          widget_base_dimensions: [wx, wy],
-          widget_margins: [5, 5],
-          draggable: {
-            handle: 'header'
-          }
-        }).data('gridster');
-        if($("meta[name='gridster_disable']").attr("content") == '1') {
-        	gridster.disable();
-    	}
+$(document).on('ready', function() {
 
     //add background for modal dialogs
     $("<div id='shade' />").prependTo('body').hide();
 	
-    //include extern html code
-    if ($('div[data-include]').length>0){
-        $('div[data-include]').each(function(index) {
-            $(this).load($(this).data('include') +' div', function() {
-                //continue after loading the includes
-                initWidgets();
-            });
-        });
-    }
-    else{
-       //continue immediately with initWidgets
-       initWidgets();
-    }
+    initPage();
 
     if ( doLongPoll ){
         setTimeout(function() {
@@ -125,8 +86,58 @@ $(document).on('ready readyAgain', function() {
 
     // refresh every x secs
     startPollInterval();
-
 });
+
+function initPage() {
+
+    wx = parseInt( $("meta[name='widget_base_width']").attr("content") );
+    wy = parseInt( $("meta[name='widget_base_height']").attr("content") );
+	doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
+	DEBUG  = ($("meta[name='debug']").attr("content") == '1');
+    TOAST  = ($("meta[name='toast']").attr("content") != '0');
+	
+	//self path
+	dir = $('script[src$="fhem-tablet-ui.js"]').attr('src');
+	var name = dir.split('/').pop(); 
+	dir = dir.replace('/'+name,"");
+	DEBUG && console.log('Plugin dir: '+dir);
+
+    var url = window.location.pathname;
+    filename = url.substring(url.lastIndexOf('/')+1);
+    DEBUG && console.log('Filename: '+filename);
+
+    //init gridster
+    if (gridster)
+        gridster.destroy();
+        gridster = $(".gridster > ul").gridster({
+          widget_base_dimensions: [wx, wy],
+          widget_margins: [5, 5],
+          draggable: {
+            handle: 'header'
+          }
+        }).data('gridster');
+        if($("meta[name='gridster_disable']").attr("content") == '1') {
+            gridster.disable();
+        }
+	
+    //include extern html code
+    var total = $('[data-template]').length;
+    if (total>0){
+        $('[data-template]').each(function(index) {
+            $(this).load($(this).data('template'), function() {
+                if (index === total - 1) {
+                    //continue after loading the includes
+                    initWidgets();
+                }
+            });
+        });
+    }
+    else{
+       //continue immediately with initWidgets
+       initWidgets();
+    }
+
+}
 
 function initWidgets() {
 
@@ -168,6 +179,8 @@ function initWidgets() {
     for (var reading in readings) {
         requestFhem(reading);
     }
+
+    ready = true;
 
 }
 
@@ -213,7 +226,7 @@ function setFhemStatus(cmdline) {
     DEBUG && console.log('send to FHEM: '+cmdline);
 	$.ajax({
 		async: true,
-		url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
+        url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
 		data: {
 			cmd: cmdline,
 			XHR: "1"
@@ -247,11 +260,11 @@ function longPoll(roomName) {
 	currLine=0;
 	
 	$.ajax({
-		url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
+        url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
 		cache: false,
 		complete: function() {
 			setTimeout(function() {
-				longPoll();
+                longPoll();
 			}, 100);
 		},
 		timeout: 60000,
@@ -265,7 +278,6 @@ function longPoll(roomName) {
 			xhr.addEventListener("readystatechange", function(e){
 				var data = e.target.responseText;
 		  		if ( e.target.readyState == 4) {
-    				//$.toast("Connection lost, trying to reconnect in 5 seconds.");
     				return;
   				}
 				if ( e.target.readyState == 3 )
@@ -325,26 +337,26 @@ function longPoll(roomName) {
 function requestFhem(paraname) {
 /* 'list' is still the fastest cmd to get all important data
 */
-	$.ajax({
-		async: true,
+    $.ajax({
+        async: true,
         timeout: 15000,
-		cache: false,
-		context:{paraname: paraname},
-		url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
-		data: {
-			cmd: "list " + devs.join() + " " + paraname,
-			XHR: "1"
-		}
-	})
-	.fail (function(jqXHR, textStatus, errorThrown) {
-    		$.toast("Error: " + textStatus + ": " + errorThrown);
-  	})
-  	.done (function( data ) {
-			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
+        cache: false,
+        context:{paraname: paraname},
+        url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
+        data: {
+            cmd: "list " + devs.join() + " " + paraname,
+            XHR: "1"
+        }
+    })
+    .fail (function(jqXHR, textStatus, errorThrown) {
+            $.toast("Error: " + textStatus + ": " + errorThrown);
+    })
+    .done (function( data ) {
+            var lines = data.replace(/\n\)/g,")\n").split(/\n/);
             var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\.?[0-9]{0,3}\s+(.*)$/;
             for (var i=0; i < lines.length; i++) {
                 var date,key,val;
-				var line = $.trim( lines[i] );
+                var line = $.trim( lines[i] );
                 //console.log('line: '+line);
                 if (regCapture.test(line) ) {
                     var groups = line.match( regCapture );
@@ -353,17 +365,22 @@ function requestFhem(paraname) {
                     if (groups.length>2){
                         date = $.trim( groups[2]);
                         val = $.trim( groups[3]);
+                        /*if(!date && paraname!="STATE") {
+                                val=date;
+                                date=  $.trim(groups[3]);
+                         }*/
                     }
-					var params = deviceStates[key] || {};
-					var value = {"date": date, "val": val};
-					params[paraname]=value;
+                    //console.log('paraname',paraname,'date:',date,'val',val);
+                    var params = deviceStates[key] || {};
+                    var value = {"date": date, "val": val};
+                    params[paraname]=value;
                     if (key in devices){
-						deviceStates[key]=params;
+                        deviceStates[key]=params;
                         plugins.update(key,paraname);
                     }
-				}
-			}
-	});
+                }
+            }
+    });
 
 }
 

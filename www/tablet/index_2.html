@@ -1,0 +1,49 @@
+<html>
+<title>FHEM</title>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * second page
+     *
+     load this page via widget pagetab
+
+     <div data-type="pagetab" data-url="index_2.html" data-icon="fa-music" class="cell"></div>
+    -->
+</head>
+<body>
+    <div class="gridster">
+        <ul>
+        <li data-row="1" data-col="1" data-sizex="1" data-sizey="4" data-template="menu.html"></li>
+        <li data-row="1" data-col="2" data-sizex="3" data-sizey="1">
+             <header>ROOM1</header>
+             <div class="cell">
+                <div data-type="label" class="inline">Temp: </div>
+                <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin inline"></div>
+             </div>
+        </li>
+        <li data-row="2" data-col="2" data-sizex="3" data-sizey="1">
+             <header>ROOM2</header>
+             <div class="cell">
+                <div data-type="label" class="inline">Temp: </div>
+                <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin inline"></div>
+             </div>
+        </li>
+        <li data-row="3" data-col="2" data-sizex="3" data-sizey="1">
+             <header>ROOM3</header>
+             <div class="cell">
+                <div data-type="label" class="inline">Temp: </div>
+                <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin inline"></div>
+             </div>
+        </li>
+        <li data-row="4" data-col="2" data-sizex="3" data-sizey="1">
+             <header>ROOM4</header>
+             <div class="cell">
+                <div data-type="label" class="inline">Temp: </div>
+                <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin inline"></div>
+             </div>
+        </li>
+        </ul>
+    </div>
+</body>
+</html>
