@@ -54,7 +54,7 @@ Change the widgets you have and want to see on the dashboard
 ```
 Widgets
 -------
-Currently there are 13 types of widgets in the base installation.
+Currently there are 14 types of widgets in the base installation.
 - **thermostat** : dial for heater thermostates to set desired value and show current value
 - **switch** : Toggle any command to FHEM (e.g. on / off)
 - **label** : show state as text (colourable)
@@ -68,6 +68,7 @@ Currently there are 13 types of widgets in the base installation.
 - **weather** : insert an icon or image, represending a weather literal
 - **circlemenu** : Cover multiple widgets behind a single widget
 - **select**	: Combobox to provide a list for selection
+- **pagetab**	: Element to smoothly exchange the whole page with another page
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -89,6 +90,8 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-cmd**      : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
 - **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
+- **data-on-background-color : color of ON state (default '#aa6900')
+- **data-off-background-color : color of OFF state (default '#505050')
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
 
@@ -99,8 +102,10 @@ data-get-off="!on" means accept all but the data-get-on value (negation)
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
 - **data-get-on**   : value for ON status to get or an array of states (default 'open')
 - **data-get-off**  : value for OFF status to get. (default 'closed')
-- **data-icon**     : name of the font-awesome icon.
+- **data-icon**     : name of the font-awesome icon.  (default 'fa-power-off')
 - **data-background-icon** : name of the font-awesome icon for background (default '')
+- **data-on-background-color : color of ON state (default '#aa6900')
+- **data-off-background-color : color of OFF state (default '#505050')
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
 - **data-icons**    : array of icons related to the data-get-on array
@@ -190,6 +195,16 @@ data-version='residents' or 'roommate' or 'guest'
 
 ####Playstream widgets
 - **data-url**      : URL of the Radio stream
+
+####Pagetab widgets
+- **data-url**		: URL of the new page to show
+- **data-icon**     : name of the font-awesome icon. (default 'fa-power-off')
+- **data-background-icon** : name of the font-awesome icon for background (default '')
+- **data-on-background-color : color of ON state (default '#aa6900')
+- **data-off-background-color : color of OFF state (default '#505050')
+- **data-on-color** : color of ON state (default '#aa6900')
+- **data-off-color**: color of Off state (default '#505050')
+- **class**		    : 
 
 CSS Class description
 -------
@@ -540,10 +555,34 @@ To change the dim value: push the button and slide up or down
 </div>
 ```
 
+###Pagetab
+**Example** for a tab menu to switch smoothly between multiple pages
+Multiple pagetabs in a template file: menu.html
+```html
+<html>
+<body>
+    <header>MENU</header>
+    <div class="cell">
+        <div data-type="pagetab" data-url="index.html"  data-icon="fa-home" class="cell"></div>
+        <div data-type="pagetab" data-url="index_2.html" data-icon="fa-sliders" class="cell"></div>
+        <div data-type="pagetab" data-url="index_3.html" data-icon="fa-music" class="cell"></div>
+        <div data-type="pagetab" data-url="index_4.html" data-icon="fa-hotel" class="cell"></div>
+        <div data-type="pagetab" data-url="index_5.html" data-icon="fa-music" class="cell"></div>
+        <div data-type="pagetab" data-url="index_6.html" data-icon="fa-database" class="cell"></div>
+        <div data-type="pagetab" data-url="index_7.html" data-icon="fa-fax" class="cell"></div>
+    </div>
+</body>
+</html>
+```
+
+![](http://knowthelist.github.io/fhem-tablet-ui/menu.png)
+
 Format
 -------
 The layout and look can be influinced be the class attribute.
 The available classes are: container,left,right,cell,narrow,darker,big,bigger,small
+
+See CSS descriptions
 
 Specials
 -------
@@ -587,6 +626,18 @@ Cover a lot of other button behind one single button
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/circle_menu_open.png)
 
+Templates
+-------
+Include re-usable code. 
+
+Load a whole extern gridster element
+```html
+<li data-row="1" data-col="1" data-sizex="1" data-sizey="4" data-template="menu.html"></li>
+```
+Load a re-usable widget group
+```html
+<div data-template="template_div.html" class="cell"></div>
+```
 
 Playstream
 -------
