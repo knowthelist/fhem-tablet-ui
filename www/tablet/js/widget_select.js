@@ -68,7 +68,7 @@ var widget_select = {
                 if (select_elem){
                     select_elem.empty();
                     for (var i=0;i<items.length;i++) {
-                        select_elem.append('<option value='+items[i]+'>'+(alias[i]||items[i])+'</option>');
+                        select_elem.append('<option value='+items[i]+'>'+(alias && alias[i]||items[i])+'</option>');
                     }
                 }
             }
