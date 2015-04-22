@@ -1,6 +1,7 @@
 var widget_homestatus = {
   _homestatus: null,
   elements: null,
+  isUpdating:false,
   drawSelector: function () {
 	var sector=0;
 	var c = this.g; // context
@@ -150,7 +151,7 @@ var widget_homestatus = {
                   startPollInterval();
 			},
 			'release' : function (v) { 
-			  if (ready){
+              if (!isUpdating){
 			  		var st=this.o.status;
 			  		switch( this.o.version+this.o.status ) {
 					case 'residents3':
@@ -187,6 +188,7 @@ var widget_homestatus = {
   update: function (dev,par) {
 
     var deviceElements= _homestatus.elements.filter('div[data-device="'+dev+'"]');
+    isUpdating=true;
 	deviceElements.each(function(index) {
 		
 			var value = getDeviceValue( $(this), 'get' );
@@ -219,6 +221,7 @@ var widget_homestatus = {
 					knob_elem.val( val ).trigger('change');		
 			}
 	});
+    isUpdating=false;
    },
 			 
 };

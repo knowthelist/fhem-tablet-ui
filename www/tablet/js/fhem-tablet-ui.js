@@ -13,7 +13,6 @@ var deviceStates={};
 var readings = {"STATE":true};
 var devices = {};
 var types = {};
-var ready = false;
 var DEBUG = false;
 var TOAST = true;
 var doLongPoll = false
@@ -54,12 +53,10 @@ var plugins = {
     },null,true);
   },
   update: function (dev,par) {  
-    ready = false;
     $.each(this.modules, function (index, module) {
       //Iterate each module and run update function
       module.update(dev,par);
     });
-    ready = true;
     DEBUG && console.log('update done for device:'+dev+' parameter:'+par);
   }
 }
@@ -179,9 +176,6 @@ function initWidgets() {
     for (var reading in readings) {
         requestFhem(reading);
     }
-
-    ready = true;
-
 }
 
 function showDeprecationMsg() {

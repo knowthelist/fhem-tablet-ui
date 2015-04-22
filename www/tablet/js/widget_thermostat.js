@@ -1,6 +1,7 @@
 var widget_thermostat = {
   elements: null,
   _thermostat:null,
+  isUpdating:false,
   getClimaValues: function (device) {
 
 	var state = getDeviceValue( device, '');
@@ -195,7 +196,7 @@ var widget_thermostat = {
                 return (this.step<1)?Number(v).toFixed(1):v;
             },
 			'release' : function (v) { 
-			  if (ready){
+              if (!isUpdating){
                     var elem = $(this).find('input');
 		 		    if(v == this.o.min && this.o.off != -1) {
 		 		        v=this.o.off;
@@ -213,6 +214,7 @@ var widget_thermostat = {
   update: function (dev,par) {
   
     var deviceElements= _thermostat.elements.filter('div[data-device="'+dev+'"]');
+    isUpdating=true;
 	deviceElements.each(function(index) {
 
 		var clima = _thermostat.getClimaValues( $(this) );
@@ -245,5 +247,6 @@ var widget_thermostat = {
 		}
 		knob_elem.css({visibility:'visible'});
 	});
+    isUpdating=false;
 },		 
 };

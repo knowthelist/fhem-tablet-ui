@@ -4,6 +4,7 @@ if(typeof widget_widget == 'undefined') {
 
 var widget_knob = $.extend({}, widget_widget, {
     widgetname : 'knob',
+    isUpdating : false,
     init_attr: function(elem) {
         elem.data('get', elem.data('get') || 'STATE');
         readings[elem.data('get')] = true;
@@ -80,7 +81,7 @@ var widget_knob = $.extend({}, widget_widget, {
                         this.o.lastValue = v;
                 },
                 'release' : function (v) { 
-                        if (ready){
+                        if (!isUpdating){
                             //send decimal value
                             v=v*(this.o.origmax/this.o.max);
                             v=v.toFixed(0);
@@ -103,6 +104,7 @@ var widget_knob = $.extend({}, widget_widget, {
         else
             deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
         
+        isUpdating=true;
         deviceElements.each(function(index) {
             if ( $(this).data('get')==par || par =='*'){    
                 var val = getDeviceValue( $(this), 'get' );
@@ -117,5 +119,6 @@ var widget_knob = $.extend({}, widget_widget, {
                 knob_elem.css({visibility:'visible'});
             }
         });
+        isUpdating=false;
     }
 });

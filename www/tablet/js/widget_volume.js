@@ -81,12 +81,12 @@ var widget_volume = $.extend({}, widget_knob, {
   },
   init: function () {
   	base=this;
-  	this.elements = $('div[data-type="'+this.widgetname+'"]');
+    this.elements = $('div[data-type="'+this.widgetname+'"]');
  	this.elements.each(function(index) {
 		var maxval = $(this).data('max') || 70;
 	    $(this).data('max', maxval);
 	    $(this).data('max360', (maxval>360)?360:maxval);
-	
+
 		base.init_attr($(this));
 		var knob_elem =  jQuery('<input/>', {
 			type: 'text',
@@ -158,8 +158,8 @@ var widget_volume = $.extend({}, widget_knob, {
                     }
                     this.o.lastValue = v;
 			},
-			'release' : function (v) { 
-				  if (ready){
+            'release' : function (v) {
+                  if (!isUpdating){
                         if ((this.o.mode>>6) % 2 != 0){
                             //send hex rbg value
                             v=base.hslToRgb(v/this.o.max,1.0,0.5);
@@ -177,14 +177,15 @@ var widget_volume = $.extend({}, widget_knob, {
 				  		this.$.data('curval', v);
 				  }
 			}	
-		});
-	 });
+        });
+     });
   },
   update: function (dev,par) {
 
     var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-	deviceElements.each(function(index) {
-		
+    isUpdating=true;
+    deviceElements.each(function(index) {
+
         if ( $(this).data('get')==par){
 			var val = getDeviceValue( $(this), 'get' );
             var knob_elem = $(this).find('input');
@@ -206,5 +207,6 @@ var widget_volume = $.extend({}, widget_knob, {
             knob_elem.css({visibility:'visible'});
 		}
 	});
+    isUpdating=false;
    }
 });
