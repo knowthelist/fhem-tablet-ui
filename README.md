@@ -90,8 +90,8 @@ All widgets have individual parameter settings. Set following attributes accordi
 - **data-cmd**      : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
 - **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
-- **data-on-background-color : color of ON state (default '#aa6900')
-- **data-off-background-color : color of OFF state (default '#505050')
+- **data-on-background-color** : color of ON state (default '#aa6900')
+- **data-off-background-color** : color of OFF state (default '#505050')
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
 
@@ -104,8 +104,8 @@ data-get-off="!on" means accept all but the data-get-on value (negation)
 - **data-get-off**  : value for OFF status to get. (default 'closed')
 - **data-icon**     : name of the font-awesome icon.  (default 'fa-power-off')
 - **data-background-icon** : name of the font-awesome icon for background (default '')
-- **data-on-background-color : color of ON state (default '#aa6900')
-- **data-off-background-color : color of OFF state (default '#505050')
+- **data-on-background-color** : color of ON state (default '#aa6900')
+- **data-off-background-color** : color of OFF state (default '#505050')
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
 - **data-icons**    : array of icons related to the data-get-on array
@@ -200,8 +200,8 @@ data-version='residents' or 'roommate' or 'guest'
 - **data-url**		: URL of the new page to show
 - **data-icon**     : name of the font-awesome icon. (default 'fa-power-off')
 - **data-background-icon** : name of the font-awesome icon for background (default '')
-- **data-on-background-color : color of ON state (default '#aa6900')
-- **data-off-background-color : color of OFF state (default '#505050')
+- **data-on-background-color** : color of ON state (default '#aa6900')
+- **data-off-background-color** : color of OFF state (default '#505050')
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
 - **class**		    : 
@@ -255,8 +255,8 @@ It is possible to specify color value in Hex or RBG style.
 Hex: #A3CFA3
 RBG: rgb(163, 207, 163) 
 
-Try to avoid flashy color like #ff0000 for red or #00ff00 for green. It is always better to stay below 
-#d0 (208) values for each primary color.
+Try to avoid flashy color like #ff0000 for red or #00ff00 for green. 
+It is always better to stay below #D0 (208) values for each primary color.
 
 You could use this color picker: http://www.w3schools.com/tags/ref_colorpicker.asp
 
@@ -556,7 +556,7 @@ To change the dim value: push the button and slide up or down
 ```
 
 ###Pagetab
-**Example** for a tab menu to switch smoothly between multiple pages
+**Example** for a tab menu to switch smoothly between multiple pages. 
 Multiple pagetabs in a template file: menu.html
 ```html
 <html>
