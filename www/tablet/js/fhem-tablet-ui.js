@@ -226,7 +226,7 @@ function setFhemStatus(cmdline) {
     DEBUG && console.log('send to FHEM: '+cmdline);
 	$.ajax({
 		async: true,
-        url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
+		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
 		data: {
 			cmd: cmdline,
 			XHR: "1"
@@ -260,7 +260,7 @@ function longPoll(roomName) {
 	currLine=0;
 	
 	$.ajax({
-        url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
+		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
 		cache: false,
 		complete: function() {
 			setTimeout(function() {
@@ -340,19 +340,19 @@ function requestFhem(paraname) {
     $.ajax({
         async: true,
         timeout: 15000,
-        cache: false,
-        context:{paraname: paraname},
-        url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
-        data: {
-            cmd: "list " + devs.join() + " " + paraname,
-            XHR: "1"
-        }
-    })
-    .fail (function(jqXHR, textStatus, errorThrown) {
-            $.toast("Error: " + textStatus + ": " + errorThrown);
-    })
-    .done (function( data ) {
-            var lines = data.replace(/\n\)/g,")\n").split(/\n/);
+		cache: false,
+		context:{paraname: paraname},
+		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
+		data: {
+			cmd: "list " + devs.join() + " " + paraname,
+			XHR: "1"
+		}
+	})
+	.fail (function(jqXHR, textStatus, errorThrown) {
+    		$.toast("Error: " + textStatus + ": " + errorThrown);
+  	})
+  	.done (function( data ) {
+			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
             var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\.?[0-9]{0,3}\s+(.*)$/;
             for (var i=0; i < lines.length; i++) {
                 var date,key,val;
