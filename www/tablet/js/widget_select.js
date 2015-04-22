@@ -41,7 +41,8 @@ var widget_select = {
 	deviceElements.each(function(index) {  
         if ( $(this).data('get')==par || $(this).data('list')==par){
 			var state = getDeviceValue( $(this), 'get' );
-            var items = $(this).data('items')
+            var items = $(this).data('items');
+            var alias = $(this).data('alias')||$(this).data('items');
             if (!jQuery.isArray(items)){
                 items = getDeviceValue( $(this), 'list' );
                 if (items){
@@ -67,7 +68,7 @@ var widget_select = {
                 if (select_elem){
                     select_elem.empty();
                     for (var i=0;i<items.length;i++) {
-                        select_elem.append('<option value='+items[i]+'>'+items[i]+'</option>');
+                        select_elem.append('<option value='+items[i]+'>'+(alias[i]||items[i])+'</option>');
                     }
                 }
             }
