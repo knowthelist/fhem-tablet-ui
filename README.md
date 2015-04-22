@@ -111,6 +111,8 @@ data-get-off="!on" means accept all but the data-get-on value (negation)
 - **data-icons**    : array of icons related to the data-get-on array
 - **data-on-colors**: array of colors related to the data-get-on array
 
+data-get-on and data-get-off accept also RegEx values.
+
 To use multiple icons, data-get-on,data-icons and data-on-colors have to be an array with the same size.
 The value for one icon can also contain an additional animatation CSS name, e.g. "fa-exclamation-triangle fa-blink" for a blinking symbol
 
@@ -127,7 +129,8 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-get**  : name of the reading that get the selected item of the list
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
 - **data-list** : name of the reading to get a :-separated list from FHEM
-- **data-items**: a array of fix items to show in the selection box (alternative if data-list is empty)
+- **data-items**: a array of fix items to show in the selection box and send to FHEM  (alternative if data-list is empty)
+- **data-alias**: a array of fix names to show only in the selection box as an alias to the real items
 - **data-cmd**  : name of the command to send to FHEM (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **class**     : wider, w1x, w2x, w3x
 
@@ -191,6 +194,8 @@ data-version='residents' or 'roommate' or 'guest'
 - **data-get**      : name of the reading to get the weather literal from FHEM (default 'STATE')
 
 ####CircleMenu widgets
+- **data-item-diameter** : (default 52)
+- **data-circle-radius** : (default 70)
 - **class**		    : 
 
 ####Playstream widgets
