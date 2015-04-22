@@ -37,6 +37,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             toggleOn: function() { base.toggleOn(elem) },
             toggleOff: function() { base.toggleOff(elem) },
         });
+        return elem;
     },
     init: function () {
         var base = this;
