@@ -6,12 +6,12 @@ var widget_thermostat = {
 
 	var state = getDeviceValue( device, '');
     var val_desired = getDeviceValue( device, 'get');
-    var val_desired = ( state && state.indexOf('set_') < 0 ) ? val_desired : getPart(state,2);
+    val_desired = ( state && state.indexOf('set_') < 0 ) ? val_desired : getPart(state,2);
     var val_temp = getDeviceValue( device, 'temp');
 
 	return {
-        temp: getPart(val_temp,'(\\d+[.,]?\\d+).*'),
-        desired: getPart(val_desired,'(\\d+[.,]?\\d+).*'),
+        temp: getPart(val_temp,'(\\S+).*'),
+        desired: getPart(val_desired,'(\\S+).*'),
         valve: getDeviceValue( device, 'valve')
 	};
 },
@@ -216,11 +216,11 @@ var widget_thermostat = {
     var deviceElements= _thermostat.elements.filter('div[data-device="'+dev+'"]');
     isUpdating=true;
 	deviceElements.each(function(index) {
-
+		var textdisplay=false;
 		var clima = _thermostat.getClimaValues( $(this) );
 		switch(clima.desired) {
-		    case $(this).data('off'):   clima.desired=$(this).data('min'); break;
-		    case $(this).data('boost'): clima.desired=$(this).data('max'); break;
+		    case $(this).data('off'):   clima.desired=$(this).data('min'); textdisplay=$(this).data('off'); break;
+		    case $(this).data('boost'): clima.desired=$(this).data('max'); textdisplay=$(this).data('boost'); break;
 		}
 
         var knob_elem = $(this).find('input');
@@ -245,6 +245,10 @@ var widget_thermostat = {
 			knob_elem.data('curvalve', clima.valve);
 			DEBUG && console.log( 'thermo dev:'+dev+' par:'+par+' change:clima.valve' );
 		}
+		
+		if(textdisplay)
+		    knob_elem.val(textdisplay);
+		
 		knob_elem.css({visibility:'visible'});
 	});
     isUpdating=false;
