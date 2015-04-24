@@ -75,6 +75,7 @@ More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tab
 By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
 
 All widgets have individual parameter settings. Set following attributes according your needs.
+Attributes with defaults are optional and does not have to be set.
 
 ####All widgets
 - **data-type**      : widget type
@@ -168,12 +169,15 @@ data-version='' (default)
 data-version='residents' or 'roommate' or 'guest'
   residents states are valid (absent,gone,asleep,home)
 
-####Slider widgets (currently vertical only)
+####Slider widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
 - **data-cmd**  : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 100)
+- **data-on**   : value where the slider moves to max  (default 'on')
+- **data-off**  : value where the slider moves to min  (default 'off')
+- **class**		: mini, horizontal
 
 ####Dimmer widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
