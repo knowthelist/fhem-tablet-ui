@@ -10,6 +10,8 @@ var widget_slider = {
 		$(this).data('get', $(this).data('get') || 'STATE');
 		$(this).data('set', $(this).data('set') || '');
 		$(this).data('cmd', $(this).data('cmd') || 'set');
+        $(this).data('on', $(this).data('on') || 'on');
+        $(this).data('off', $(this).data('off') || 'off');
 		readings[$(this).data('get')] = true;
 		//ToDo: more data parameter: color etc. 
 		
@@ -19,11 +21,11 @@ var widget_slider = {
 		}).appendTo($(this));
 
 		var pwrng = new Powerange(elem[0], { 
-			vertical: true,
+            vertical: !$(this).hasClass('horizontal'),
 			hideRange: true,
 			'min': $(this).data('min') || 0,
 			'max': $(this).data('max') || 100,
-            klass: 'slider_vertical',
+            klass: $(this).hasClass('horizontal')?'slider_horizontal':'slider_vertical',
 			start: (storeval)?storeval:'5',
 		});
 		$(this).data('Powerange',pwrng);
@@ -43,8 +45,7 @@ var widget_slider = {
 			e.preventDefault();
 		});
 		
-		//ToDo: make fit for horizontal
-		$(this).addClass('slider_vertical');
+        $(this).addClass(pwrng.options.klass);
 
 	 });
   },
@@ -57,9 +58,11 @@ var widget_slider = {
 
 			var state = getDeviceValue( $(this), 'get' );
 			if (state) {
+                var pwrng = $(this).data('Powerange');
 				var elem = $(this).find('input');
+                if (state==$(this).data('off')) state=pwrng.options.min;
+                if (state==$(this).data('on')) state=pwrng.options.max;
 				if ($.isNumeric(state) && elem) {
-					var pwrng = $(this).data('Powerange');
 					pwrng.setStart(parseInt(state));
 					DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+state );
 				}

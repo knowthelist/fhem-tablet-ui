@@ -2,7 +2,7 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.4.0
+* Version: 1.4.2
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
@@ -24,6 +24,7 @@ var shortpollInterval = 30 * 1000; // 30 seconds
 var devs=Array();
 var pars=Array();
 var gridster;
+var styleCollection={};
 
 var plugins = {
   modules: [],
@@ -68,6 +69,7 @@ $(document).on('ready', function() {
     //add background for modal dialogs
     $("<div id='shade' />").prependTo('body').hide();
 	
+    loadStyleSchema();
     initPage();
 
     if ( doLongPoll ){
@@ -397,6 +399,28 @@ function loadplugin_async(plugin, success, error) {
     return loadplugin(plugin, success, error, true);
 }
 
+function loadStyleSchema(){
+    $.each($('link[href$="-ui.css"]') , function (index, thisSheet) {
+        var rules = thisSheet.sheet.cssRules;
+        for (var r in rules){
+            if (rules[r].style){
+               var styles = rules[r].style.cssText.split(';');
+               styles.pop();
+               var elmName = rules[r].selectorText;
+               var params = {};
+               for (var s in styles){
+                   var param = styles[s].split(':');
+                   if (param[0].match(/color/)){
+                      params[$.trim(param[0])]=$.trim(param[1]);
+                   }
+               }
+               if (Object.keys(params).length>0)
+                    styleCollection[elmName]=params;
+            }
+        }
+    });
+}
+
 this.getPart = function (s,p) {
 	if ($.isNumeric(p)){
 		var c = (s && typeof s != "undefined") ? s.split(" ") : '';
@@ -433,6 +457,11 @@ this.getParameter = function (device, src) {
         return ( params && params[paraname] ) ? params[paraname] : null;
     }
     return null;
+}
+
+this.getStyle = function (selector, prop) {
+    var props = styleCollection[selector];
+    return ( props && props[prop] ) ? props[prop] : null;
 }
 
 // global helper functions

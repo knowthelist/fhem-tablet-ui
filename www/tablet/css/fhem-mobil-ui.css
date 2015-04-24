@@ -1,0 +1,39 @@
+body {
+    background-color: #ffffff;
+    color: #222222;
+}
+
+.gridster ul li {
+    background-color:#eee;
+    overflow: hidden;
+    text-align: center;
+}
+
+.gridster li header {
+    background: #ffffff;
+    color: #222;
+    border-bottom: 1px solid #222;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+.range-quantity {
+  background-color: #0088CC !important;
+}
+.range-handle {
+  background-color: #fff !important;
+}
+.range-bar {
+  background-color: #aaa !important;
+}
+
+.symbol.on{color:#aa6900;background-color:#aa6900;}
+.symbol.off{color:#505050;background-color:#505050;}
+.switch.on{color:#eee;background-color:#0088CC;}
+.switch.off{color:#eee;background-color:#aaa;}
+.thermostat.tkcolor{color:#888;}
+.thermostat.fgcolor{color:#666;}
+.volume.hdcolor{color:#0088CC;}
+.volume.fgcolor{color:#666;}

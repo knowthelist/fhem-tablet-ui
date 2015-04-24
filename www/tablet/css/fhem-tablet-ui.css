@@ -141,6 +141,9 @@ input {
 .slider_vertical{
 margin:10px 0px 0px 27% !important;
 }
+.slider_horizontal{
+margin:30px 20px 20px 5px !important;
+}
 
 .jq-toast-wrap{
         z-index:100;
@@ -303,4 +306,7 @@ select {
   pointer-events: none;
 }
 
-
+.symbol.on{color:#aa6900;background-color:#aa6900;}
+.symbol.off{color:#505050;background-color:#505050;}
+.switch.on{color:#2A2A2A;background-color:#aa6900;}
+.switch.off{color:#2A2A2A;background-color:#505050;}

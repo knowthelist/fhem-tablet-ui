@@ -86,6 +86,7 @@ var widget_volume = $.extend({}, widget_knob, {
 		var maxval = $(this).data('max') || 70;
 	    $(this).data('max', maxval);
 	    $(this).data('max360', (maxval>360)?360:maxval);
+        $(this).data('fgcolor', $(this).data('fgcolor') || getStyle('.volume.fgcolor','color') || '#ccc');
 
 		base.init_attr($(this));
 		var knob_elem =  jQuery('<input/>', {
@@ -97,7 +98,7 @@ var widget_volume = $.extend({}, widget_knob, {
 		var device = $(this).data('device');
 		
 		var mode=0; //no hue colors
-		var hdDefaultColor='#aa6900';
+        var hdDefaultColor=getStyle('.volume.hdcolor','color') || '#aa6900';
 		if ($(this).hasClass('hue-back')){
 			mode = mode | 1<<0;
 			hdDefaultColor='#cccccc'; 
@@ -135,7 +136,7 @@ var widget_volume = $.extend({}, widget_knob, {
 			'angleOffset': $(this).data('angleoffset'),
 			'angleArc': $(this).data('anglearc'),
 			'bgColor': $(this).data('bgcolor'),
-			'fgColor': $(this).data('fgcolor'),
+            'fgColor': $(this).data('fgcolor'),
 			'tkColor': $(this).data('tkcolor'),
 			'hdColor': $(this).data('hdcolor') || hdDefaultColor,
             'thickness': ($(this).hasClass('mini'))?.45:.25,

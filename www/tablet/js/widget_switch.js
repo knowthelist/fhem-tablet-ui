@@ -17,8 +17,10 @@ var widget_switch = {
 		var elem = $(this).famultibutton({
 			icon: 'fa-lightbulb-o',
 			backgroundIcon: 'fa-circle',
-			offColor: '#2A2A2A',
-			onColor: '#2A2A2A',
+            offColor: getStyle('.switch.off','color')                       || '#2A2A2A',
+            offBackgroundColor: getStyle('.switch.off','background-color')  || '#505050',
+            onColor: getStyle('.switch.on','color')                         || '#2A2A2A',
+            onBackgroundColor: getStyle('.switch.on','background-color')    || '#aa6900',
             mode:$(this).hasClass('readonly')?'signal':'toggle',
 			// Called in toggle on state.
 			toggleOn: function( ) {

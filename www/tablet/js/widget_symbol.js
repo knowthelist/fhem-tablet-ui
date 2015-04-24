@@ -8,10 +8,10 @@ var widget_symbol = $.extend({}, widget_famultibutton, {
         var base = this;
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {
-            $(this).data('off-color',               $(this).data('off-color')           || '#505050');
-            $(this).data('off-background-color',    $(this).data('off-background-color')|| '#505050');
-            $(this).data('on-color',                $(this).data('on-color')            || '#aa6900');
-            $(this).data('on-background-color',     $(this).data('on-background-color') || '#aa6900');
+            $(this).data('off-color',               $(this).data('off-color')           || getStyle('.symbol.off','color')              || '#505050');
+            $(this).data('off-background-color',    $(this).data('off-background-color')|| getStyle('.symbol.off','background-color')   || '#505050');
+            $(this).data('on-color',                $(this).data('on-color')            || getStyle('.symbol.on','color')               || '#aa6900');
+            $(this).data('on-background-color',     $(this).data('on-background-color') || getStyle('.symbol.on','background-color')    || '#aa6900');
             $(this).data('background-icon',         $(this).data('background-icon')     || null);
             $(this).data('icon',                    $(this).data('icon')                || (( $.isArray($(this).data('icons')) )?$(this).data('icons')[0]:'fa-windows'));
             $(this).data('get-on',                  $(this).data('get-on')              || 'open');
