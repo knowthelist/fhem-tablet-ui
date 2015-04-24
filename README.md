@@ -19,7 +19,7 @@ Install
  * copy the whole tree into the corresponding folder of your FHEM server /\<fhem-path\>/www/tablet
  * add 'define tablet_ui HTTPSRV tablet/ ./www/tablet Tablet Frontend' in fhem.cfg
  * rename the index-example.html to index.html or create your own index.html
- * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/tablet
+ * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/tablet/
  
  or just use 'update all https://raw.githubusercontent.com/knowthelist/fhem-tablet-ui/master/controls_fhemtabletui.txt'
  on the FHEM commandline (or input field of FHEMWEB)
@@ -102,7 +102,7 @@ data-get-off="!on" means accept all but the data-get-on value (negation)
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
 - **data-get-on**   : value for ON status to get or an array of states (default 'open')
 - **data-get-off**  : value for OFF status to get. (default 'closed')
-- **data-icon**     : name of the font-awesome icon.  (default 'fa-power-off')
+- **data-icon**     : name of the font-awesome icon.  (default 'fa-windows')
 - **data-background-icon** : name of the font-awesome icon for background (default '')
 - **data-on-background-color** : color of ON state (default '#aa6900')
 - **data-off-background-color** : color of OFF state (default '#505050')
