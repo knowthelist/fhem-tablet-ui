@@ -200,7 +200,8 @@ data-version='residents' or 'roommate' or 'guest'
 ####CircleMenu widgets
 - **data-item-diameter** : diameter of the circle (default 52)
 - **data-circle-radius** : radius of each item, in pixel (default 70)
-- **data-direction**     : position of the items in relation to the center (default full). 
+- **data-direction**     : position of the items in relation to the center (default full).  
+
 Optionen are: top | right | bottom | left | top-right | top-left | bottom-right | bottom-left | top-half | right-half | bottom-half | left-half | full
 - **class**		    : 
 
