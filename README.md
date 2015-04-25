@@ -1,4 +1,4 @@
-fhem-tablet-ui
+ die fhem-tablet-ui
 ========
 
 Just another dashboard for FHEM  http://fhem.de/fhem.html  
@@ -198,8 +198,10 @@ data-version='residents' or 'roommate' or 'guest'
 - **data-get**      : name of the reading to get the weather literal from FHEM (default 'STATE')
 
 ####CircleMenu widgets
-- **data-item-diameter** : (default 52)
-- **data-circle-radius** : (default 70)
+- **data-item-diameter** : diameter of the circle (default 52)
+- **data-circle-radius** : radius of the items (default 70)
+- **data-direction**     : position of the items (default full)
+Optionen See: top | right | bottom | left | top-right | top-left | bottom-right | bottom-left | top-half | right-half | bottom-half | left-half | full
 - **class**		    : 
 
 ####Playstream widgets
