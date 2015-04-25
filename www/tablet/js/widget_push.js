@@ -20,4 +20,5 @@ var widget_push = $.extend({}, widget_famultibutton, {
             base.init_ui($(this));
         });
     },
+    update: function (dev,par) {},
 });

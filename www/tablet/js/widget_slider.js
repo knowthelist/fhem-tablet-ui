@@ -30,10 +30,18 @@ var widget_slider = {
 		});
 		$(this).data('Powerange',pwrng);
 
-        if ($(this).hasClass('mini'))
-            $(this).css({'height': '60px','max-height': '60px'})
-        else
-            $(this).css({'height': '100px','max-height': '100px'});
+        if ($(this).hasClass('horizontal')){
+            if ($(this).hasClass('mini'))
+                $(this).css({'max-width': '60px'})
+            else
+                $(this).css({'max-width': '120px'});
+        }
+        else {
+            if ($(this).hasClass('mini'))
+                $(this).css({'height': '60px','max-height': '60px'})
+            else
+                $(this).css({'height': '120px','max-height': '120px'});
+        }
 
 		var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
 
