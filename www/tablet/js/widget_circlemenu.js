@@ -24,7 +24,7 @@ var widget_circlemenu= {
                         timeoutMenu=setTimeout(function(){
                             elem.close();
                             setTimeout(function(){showModal(false);},1000);
-                        },4000);
+                        },parent.data('close-after')||Math.max(4000, parent.find('li').length-1));
                     }
                    showModal(true);
                 },
