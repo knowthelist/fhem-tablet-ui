@@ -81,6 +81,9 @@ body {
     text-align: center;
 }
 
+.top-narrow{ margin-top: -15px !important; }
+.top-narrow-2x{ margin-top: -30px !important; }
+
 .top-space{ margin-top: 15px !important; }
 .top-space-2x{ margin-top: 30px !important; }
 .top-space-3x{ margin-top: 45px !important; }
@@ -146,7 +149,7 @@ input {
 margin:10px 0px 0px 27% !important;
 }
 .slider_horizontal{
-margin:12px 20px 30px 5px !important;
+margin:12px 20px 25px 5px !important;
 }
 .range-min,
 .range-max {

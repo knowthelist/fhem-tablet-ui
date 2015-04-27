@@ -1,0 +1,56 @@
+<html>
+<title>FHEM</title>
+<head>
+   <!--
+    /* FHEM tablet ui */
+    /*
+    * modul page
+    *
+    load this template via
+
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1" data-template="template_player.html"></li>
+
+-->
+
+</head>
+<body>
+    <header>PLAYER</header>
+    <div class="cell">
+        <div data-type="push" data-device="dummy1"
+             data-icon="fa-step-backward" data-background-icon="-"
+             data-set="back" class="inline">
+        </div>
+        <div data-type="push" data-device="dummy1"
+             data-icon="fa-stop" data-background-icon="-"
+             data-set="stop" class="inline">
+        </div>
+        <div data-type="push" data-device="dummy1"
+             data-icon="fa-play" data-background-icon="-"
+             data-set="play" class="inline">
+        </div>
+        <div data-type="push" data-device="dummy1"
+             data-icon="fa-step-forward" data-background-icon="-"
+             data-set="fwd" class="inline">
+        </div>
+    </div>
+    <div class="top-narrow">
+        <div data-type="push"
+            data-set="mute"
+            data-icon="fa-volume-off"
+            data-background-icon="-"
+            data-device="dummy1"
+            class="inline top-narrow"></div>
+        <div data-type="slider"
+            data-device="dummy1"
+            data-get="volume"
+            data-set="volume"
+            class="inline horizontal"></div>
+        <div data-type="push"
+            data-set="volume 100"
+            data-icon="fa-volume-up"
+            data-background-icon="-"
+            data-device="dummy1"
+            class="inline top-narrow"></div>
+    </div>
+</body>
+</html>
