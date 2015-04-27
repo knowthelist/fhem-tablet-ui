@@ -1,6 +1,9 @@
-var widget_weather = {
-    _weather: null,
-    elements: null,
+if(typeof widget_widget == 'undefined') {
+    loadplugin('widget_widget');
+}
+
+var widget_weather = $.extend({}, widget_widget, {
+    widgetname:"weather",
     meteoconsmap: {
         // Weather (YAHOO) en
         'tornado' :                     '9',
@@ -70,70 +73,70 @@ var widget_weather = {
     },
     kleinklimamap: {
         // Weather (YAHOO) en
-        'tornado' :                     '/images/default/weather/storm.png',
-        'tropical storm' :              '/images/default/weather/storm.png',
-        'hurricane' :                   '/images/default/weather/storm.png',
-        'severe thunderstorms' :        '/images/default/weather/thunderstorm.png',
-        'thunderstorms' :               '/images/default/weather/thunderstorm.png',
-        'mixed rain and snow' :         '/images/default/weather/rainsnow.png',
-        'mixed rain and sleet' :        '/images/default/weather/sleet.png',
-        'mixed snow and sleet' :        '/images/default/weather/snow.png',
-        'freezing drizzle' :            '/images/default/weather/drizzle.png',
-        'drizzle' :                     '/images/default/weather/drizzle.png',
-        'freezing rain':                '/images/default/weather/icy.png',
-        'showers' :                     '/images/default/weather/chance_of_rain.png',
-        'snow flurries' :               '/images/default/weather/snowflurries.png',
-        'light snow showers' :          '/images/default/weather/chance_of_snow.png',
-        'blowing snow' :                '/images/default/weather/heavysnow.png',
-        'snow' :                        '/images/default/weather/snow.png',
-        'hail' :                        '/images/default/weather/sleet.png',
-        'sleet' :                       '/images/default/weather/sleet.png',
-        'dust' :                        '/images/default/weather/dust.png',
-        'foggy' :                       '/images/default/weather/fog.png',
-        'haze' :                        '/images/default/weather/haze.png',
-        'smoky' :                       '/images/default/weather/smoke.png',
-        'blustery' :                    '/images/default/weather/flurries.png',
-        'windy' :                       '/images/default/weather/windy.png',
-        'cold' :                        '/images/default/weather/cold.png',
-        'cloudy' :                      '/images/default/weather/cloudy.png',
-        'mostly cloudy' :               '/images/default/weather/mostlycloudy.png',
-        'partly cloudy' :               '/images/default/weather/partly_cloudy.png',
-        'clear' :                       '/images/default/weather/sunny.png',
-        'sunny' :                       '/images/default/weather/sunny.png',
-        'fair' :                        '/images/default/weather/mostly_sunny.png',
-        'mixed rain and hail' :         '/images/default/weather/heavyrain.png',
-        'hot' :                         '/images/default/weather/sunny.png',
-        'isolated thunderstorms' :      '/images/default/weather/scatteredthunderstorms.png',
-        'scattered thunderstorms' :     '/images/default/weather/scatteredthunderstorms.png',
-        'scattered showers' :           '/images/default/weather/scatteredshowers.png',
-        'heavy snow' :                  '/images/default/weather/heavysnow.png',
-        'scattered snow showers' :      '/images/default/weather/chance_of_snow.png',
-        'partly cloudy' :               '/images/default/weather/partly_cloudy.png',
-        'thundershowers' :              '/images/default/weather/heavyrain.png',
-        'snow showers' :                '/images/default/weather/chance_of_snow.png',
-        'isolated thundershowers' :     '/images/default/weather/scatteredshowers.png',
+        'tornado' :                     'storm.png',
+        'tropical storm' :              'storm.png',
+        'hurricane' :                   'storm.png',
+        'severe thunderstorms' :        'thunderstorm.png',
+        'thunderstorms' :               'thunderstorm.png',
+        'mixed rain and snow' :         'rainsnow.png',
+        'mixed rain and sleet' :        'sleet.png',
+        'mixed snow and sleet' :        'snow.png',
+        'freezing drizzle' :            'drizzle.png',
+        'drizzle' :                     'drizzle.png',
+        'freezing rain':                'icy.png',
+        'showers' :                     'chance_of_rain.png',
+        'snow flurries' :               'snowflurries.png',
+        'light snow showers' :          'chance_of_snow.png',
+        'blowing snow' :                'heavysnow.png',
+        'snow' :                        'snow.png',
+        'hail' :                        'sleet.png',
+        'sleet' :                       'sleet.png',
+        'dust' :                        'dust.png',
+        'foggy' :                       'fog.png',
+        'haze' :                        'haze.png',
+        'smoky' :                       'smoke.png',
+        'blustery' :                    'flurries.png',
+        'windy' :                       'windy.png',
+        'cold' :                        'cold.png',
+        'cloudy' :                      'cloudy.png',
+        'mostly cloudy' :               'mostlycloudy.png',
+        'partly cloudy' :               'partly_cloudy.png',
+        'clear' :                       'sunny.png',
+        'sunny' :                       'sunny.png',
+        'fair' :                        'mostly_sunny.png',
+        'mixed rain and hail' :         'heavyrain.png',
+        'hot' :                         'sunny.png',
+        'isolated thunderstorms' :      'scatteredthunderstorms.png',
+        'scattered thunderstorms' :     'scatteredthunderstorms.png',
+        'scattered showers' :           'scatteredshowers.png',
+        'heavy snow' :                  'heavysnow.png',
+        'scattered snow showers' :      'chance_of_snow.png',
+        'partly cloudy' :               'partly_cloudy.png',
+        'thundershowers' :              'heavyrain.png',
+        'snow showers' :                'chance_of_snow.png',
+        'isolated thundershowers' :     'scatteredshowers.png',
         
         // PROPLANTA
-        "heiter":                       '/images/default/weather/partly_cloudy.png',
-        "wolkig":                       '/images/default/weather/mostlycloudy.png',
-        "Regenschauer":                 '/images/default/weather/chance_of_rain.png',
-        "stark bewoelkt":               '/images/default/weather/cloudy.png',
-        "Regen":                        '/images/default/weather/rain.png',
-        "bedeckt":                      '/images/default/weather/mostlycloudy.png',
-        "sonnig":                       '/images/default/weather/sunny.png',
-        "Schnee":                       '/images/default/weather/snow.png',
-        'Schneeregen':                  '/images/default/weather/rainsnow.png',
+        "heiter":                       'partly_cloudy.png',
+        "wolkig":                       'mostlycloudy.png',
+        "Regenschauer":                 'chance_of_rain.png',
+        "stark bewoelkt":               'cloudy.png',
+        "Regen":                        'rain.png',
+        "bedeckt":                      'mostlycloudy.png',
+        "sonnig":                       'sunny.png',
+        "Schnee":                       'snow.png',
+        'Schneeregen':                  'rainsnow.png',
         
         // OPENWEATHER (wetter.com) (incomplete)
-        'leichter Schnee - Schauer' :   '/images/default/weather/chance_of_snow.png',
-        'leichter Schnee-Regen' :       '/images/default/weather/rainsnow.png',
-        'm\u00e4\u00dfiger Schneefall' :'/images/default/weather/chance_of_snow.png',
-        'leichter Regen' :              '/images/default/weather/drizzle.png',
+        'leichter Schnee - Schauer' :   'chance_of_snow.png',
+        'leichter Schnee-Regen' :       'rainsnow.png',
+        'm\u00e4\u00dfiger Schneefall' :'chance_of_snow.png',
+        'leichter Regen' :              'drizzle.png',
         
         // others
-        'undefined' :                   '/images/default/weather/na.png',
-        'overcast' :                    '/images/default/weather/overcast.png',
-        'rain':                         '/images/default/weather/rain.png',
+        'undefined' :                   'na.png',
+        'overcast' :                    'overcast.png',
+        'rain':                         'rain.png',
     },
     translationmap: {
         // Weather (YAHOO) de
@@ -163,13 +166,13 @@ var widget_weather = {
         'windig' :                      ':windy',
         'kalt' :                        ':cold',
         'wolkig' :                      ':cloudy',
-        '\u00fcberwiegend wolkig' :         ':mostly cloudy',
+        '\u00fcberwiegend wolkig' :     ':mostly cloudy',
         'teilweise wolkig' :            ':partly cloudy',
         'klar' :                        ':clear',
         'sonnig' :                      ':sunny',
         'heiter' :                      ':fair',
         'Regen und Hagel' :             ':mixed rain and hail',
-        'hei\u00df' :                       ':hot',
+        'hei\u00df' :                   ':hot',
         'einzelne Gewitter' :           ':isolated thunderstorms',
         'vereinzelt Gewitter' :         ':scattered thunderstorms',
         'vereinzelt Schauer' :          ':scattered showers',
@@ -272,18 +275,31 @@ var widget_weather = {
         '999' :                         ':undefined',
     },
   
+    init_attr: function(elem) {
+        elem.data('get', elem.data('get') || 'STATE');
+
+        readings[elem.data('get')] = true;
+        
+        var fhem_path = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
+        fhem_path = fhem_path.replace(/\/$/, '');
+        elem.data('image-path', elem.data('image-path') || fhem_path + '/images/default/weather/')
+        if(!elem.data('image-path').match(/\/$/)) {
+            elem.data('image-path', elem.data('image-path')+'/');
+        }
+    },
+    
     init: function () {
-        _weather=this;
-        _weather.elements = $('div[data-type="weather"]');
-        _weather.elements.each(function(index) {
-            $(this).data('get', $(this).data('get') || 'STATE');
-            readings[$(this).data('get')] = true;
+        base=this;
+        this.elements = $('div[data-type="'+this.widgetname+'"]');
+        this.elements.each(function(index) {
+            base.init_attr($(this));
             $(this).addClass('weather');
         });
     },
     
     update: function (dev,par) {
-        var deviceElements= _weather.elements.filter('div[data-device="'+dev+'"]');
+        base=this;
+        var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
         deviceElements.each(function(index) {
             if ( $(this).data('get')==par){
                 var value = getDeviceValue( $(this), 'get' );
@@ -293,24 +309,22 @@ var widget_weather = {
 
                     //wheater icons
                     $(this).empty();
-                    // translate val to a ':key'
-                    var translation = _weather.translationmap[val];
+                    // translate val to ':key'
+                    var translation = base.translationmap[val];
                     while(typeof mapped != "undefined" && !mapped.match(/^:/)) {
-                        translation = _weather.translationmap[mapped];
+                        translation = base.translationmap[mapped];
                     }
 
                     var mapped = typeof translation == "undefined"?val:translation;
                     if($(this).data('imageset')=="kleinklima") {
-                        mapped = _weather.kleinklimamap[mapped.replace(/^:/, '')];
-                        var fhem = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
-                        fhem = fhem.replace(/\/$/, '');
-                        $(this).prepend('<img style="width:100%" src="' + fhem + mapped + '" title="' + val + '">');
+                        mapped = base.kleinklimamap[mapped.replace(/^:/, '')];
+                        $(this).prepend('<img style="width:100%" src="' + $(this).data('image-path') + mapped + '" title="' + val + '">');
                     } else {
-                        mapped = _weather.meteoconsmap[mapped.replace(/^:/, '')];
+                        mapped = base.meteoconsmap[mapped.replace(/^:/, '')];
                         $(this).attr('data-icon', mapped);
                     }
                  }
             }
         });
     }
-};
+});
