@@ -40,7 +40,6 @@ UPD 2015-04-22_00:19:46 6206 www/tablet/js/widget_simplechart.js
 UPD 2015-04-27_19:19:13 2681 www/tablet/js/widget_slider.js
 UPD 2015-04-23_23:23:50 2514 www/tablet/js/widget_switch.js
 UPD 2015-04-23_23:41:31 1550 www/tablet/js/widget_symbol.js
-UPD 2015-04-22_00:19:46 600 www/tablet/js/widget_template.js
 UPD 2015-04-24_06:38:11 8691 www/tablet/js/widget_thermostat.js
 UPD 2015-04-24_21:41:01 6847 www/tablet/js/widget_volume.js
 UPD 2015-04-22_07:00:52 16860 www/tablet/js/widget_weather.js
