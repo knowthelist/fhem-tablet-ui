@@ -1,3 +1,4 @@
 FHEM tablet UI last change:
-2015-04-25
- - Push widget is derived now and bugfix for slider widget
+2015-04-27
+ - Added: Regex for label limits and symbol get-on arrays
+Fixed: slider margins
