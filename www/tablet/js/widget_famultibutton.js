@@ -4,20 +4,46 @@ if(typeof widget_widget == 'undefined') {
 
 var widget_famultibutton = $.extend({}, widget_widget, {
     widgetname : 'famultibutton',
+    _doubleclicked: function(elem, onoff) {
+        if(elem.data('doubleclick')*1>0) {
+            if(! elem.data('_firstclick')) {
+                elem.data('_firstclick', true);
+                elem.data('_firstclick_reset', setTimeout(function() {
+                    elem.data('_firstclick', false);
+                }, elem.data('doubleclick')*1));
+                if(onoff == 'on') {
+                    elem.setOff();
+                } else {
+                    elem.setOn();
+                }
+                elem.children().first().css('color', elem.data('firstclick-background-color'));
+                elem.children().last().css('color', elem.data('firstclick-color'));
+                return false;
+            } else {
+                elem.data('_firstclick', false);
+                clearTimeout(elem.data('_firstclick_reset'));
+            }
+        }
+        return true;
+    },
     toggleOn : function(elem) {
-        var device = elem.data('device');
-        var cmd = [elem.data('cmd'), device, elem.data('set-on')].join(' ');
-        setFhemStatus(cmd);
-        if( device && typeof device != "undefined") {
-            TOAST && $.toast(cmd);
+        if(this._doubleclicked(elem, 'on')) {
+            var device = elem.data('device');
+            var cmd = [elem.data('cmd'), device, elem.data('set-on')].join(' ');
+            setFhemStatus(cmd);              
+            if( device && typeof device != "undefined") {
+                TOAST && $.toast(cmd);       
+            }
         }
     },
     toggleOff : function(elem) {
-        var device = elem.data('device');
-        var cmd = [elem.data('cmd'), device, elem.data('set-off')].join(' ');
-        setFhemStatus(cmd);
-        if( device && typeof device != "undefined") {
-            TOAST && $.toast(cmd);
+        if(this._doubleclicked(elem, 'off')) {
+            var device = elem.data('device');
+            var cmd = [elem.data('cmd'), device, elem.data('set-off')].join(' ');
+            setFhemStatus(cmd);
+            if( device && typeof device != "undefined") {
+                TOAST && $.toast(cmd);
+            }
         }
     },
     init_attr : function(elem) {
@@ -28,6 +54,9 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         elem.data('set-on',     elem.data('set-on')     || elem.data('get-on'));
         elem.data('set-off',    elem.data('set-off')    || elem.data('get-off'));
         elem.data('mode',       elem.data('mode')       || 'toggle');
+        elem.data('doubleclick',                    elem.data('doubleclick')                    || 0);
+        elem.data('firstclick-background-color',    elem.data('firstclick-background-color')    ||  '#6F4500');
+        elem.data('firstclick-color',               elem.data('firstclick-color')               ||  null);
         readings[elem.data('get')] = true;
     },
     init_ui : function(elem) {
