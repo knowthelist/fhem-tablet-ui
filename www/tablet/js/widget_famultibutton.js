@@ -31,8 +31,8 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             var device = elem.data('device');
             var cmd = [elem.data('cmd'), device, elem.data('set-on')].join(' ');
             setFhemStatus(cmd);              
-            if( device && typeof device != "undefined") {
-                TOAST && $.toast(cmd);       
+            if( device && typeof device != "undefined" && device !== " ") {
+                TOAST && $.toast(typeof device +'+'+cmd);
             }
         }
     },
@@ -41,7 +41,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             var device = elem.data('device');
             var cmd = [elem.data('cmd'), device, elem.data('set-off')].join(' ');
             setFhemStatus(cmd);
-            if( device && typeof device != "undefined") {
+            if( device && typeof device != "undefined" && device !== " ") {
                 TOAST && $.toast(cmd);
             }
         }
