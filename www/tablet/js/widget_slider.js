@@ -32,9 +32,9 @@ var widget_slider = {
 
         if ($(this).hasClass('horizontal')){
             if ($(this).hasClass('mini'))
-                $(this).css({'max-width': '60px'})
+                $(this).css({'width': '60px','max-width': '60px','height':'0px'})
             else
-                $(this).css({'max-width': '120px'});
+                $(this).css({'width': '120px','max-width': '120px','height':'0px'});
         }
         else {
             if ($(this).hasClass('mini'))

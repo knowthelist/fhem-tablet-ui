@@ -133,6 +133,10 @@ body {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+canvas#progress{
+z-index:100;
+position:relative;
+}
 
 input {
         visibility:hidden;
@@ -142,7 +146,11 @@ input {
 margin:10px 0px 0px 27% !important;
 }
 .slider_horizontal{
-margin:30px 20px 20px 5px !important;
+margin:12px 20px 30px 5px !important;
+}
+.range-min,
+.range-max {
+    visibility:hidden;
 }
 
 .jq-toast-wrap{

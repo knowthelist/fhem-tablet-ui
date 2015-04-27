@@ -59,7 +59,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                         var colors=$(this).data('on-colors');
                         if (icons && colors && states && icons.length == colors.length && icons.length == states.length ) {
                             var elm=$(this).children().last();
-                            var idx=states.indexOf(state);
+                            var idx=indexOfGeneric(states,state);
                             if (idx>-1){    elm.removeClass()
                                 .addClass('fa fa-stack-1x')
                                 .addClass(icons[idx])
@@ -71,9 +71,9 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                             $(this).data('famultibutton').setOn();
                         else if ( state == $(this).data('get-off') )
                             $(this).data('famultibutton').setOff();
-                        else if ( state.match(RegExp('^' + $(this).data('get-on') + '$')) )
+                        else if ( state.match(new RegExp('^' + $(this).data('get-on') + '$')) )
                             $(this).data('famultibutton').setOn();
-                        else if ( state.match(RegExp('^' + $(this).data('get-off') + '$')) )
+                        else if ( state.match(new RegExp('^' + $(this).data('get-off') + '$')) )
                             $(this).data('famultibutton').setOff();
                         else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
                             $(this).data('famultibutton').setOff();

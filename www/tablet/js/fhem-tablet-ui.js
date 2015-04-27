@@ -361,10 +361,6 @@ function requestFhem(paraname) {
                     if (groups.length>2){
                         date = $.trim( groups[2]);
                         val = $.trim( groups[3]);
-                        /*if(!date && paraname!="STATE") {
-                                val=date;
-                                date=  $.trim(groups[3]);
-                         }*/
                     }
                     //console.log('paraname',paraname,'date:',date,'val',val);
                     var params = deviceStates[key] || {};
@@ -499,8 +495,35 @@ Date.prototype.hhmmss = function() {
   return (hh[1]?hh:"0"+hh[0])+':'+ (mm[1]?mm:"0"+mm[0])+':'+(ss[1]?ss:"0"+ss[0]); // padding
  };
  
- Date.prototype.mmdd = function() {
+Date.prototype.mmdd = function() {
   var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
   var dd  = this.getDate().toString();
   return (mm[1]?mm:"0"+mm[0])+'-'+(dd[1]?dd:"0"+dd[0]); // padding
  };
+
+//sadly it not possible to use Array.prototype. here
+this.indexOfGeneric = function(array,find){
+  for (var i=0;i<array.length;i++) {
+    if (!$.isNumeric(array[i]))
+        return indexOfRegex(array,find);
+  }
+  return indexOfNumeric(array,find);
+};
+
+this.indexOfNumeric = function(array,val){
+   var ret=-1;
+   for (var i=0;i<array.length;i++) {
+       if (Number(val)>=Number(array[i]))
+           ret=i;
+   }
+   return ret;
+};
+
+this.indexOfRegex = function(array,find){
+  for (var i=0;i<array.length;i++) {
+      var match = find.match(new RegExp(array[i]));
+      if (match)
+            return i
+  }
+  return array.indexOf(find);
+};

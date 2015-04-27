@@ -31,11 +31,11 @@ var widget_label = {
 				if ($.isNumeric(val)){
 					var limits=$(this).data('limits');
 					var colors=$(this).data('colors');
-					if (limits && colors && limits.length == colors.length){
-						for (var i=0;i<limits.length;i++) {
-							if (val>limits[i])
-								$(this).css("color", colors[i]);
-						}
+                    if (limits && colors && limits.length == colors.length){
+                        var idx = indexOfGeneric(limits,val);
+                        if (idx>-1)
+                            $(this).css("color", colors[idx]);
+
 					}
 				}
 			 }
