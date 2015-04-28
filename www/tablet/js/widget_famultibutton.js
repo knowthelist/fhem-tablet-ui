@@ -32,7 +32,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             var cmd = [elem.data('cmd'), device, elem.data('set-on')].join(' ');
             setFhemStatus(cmd);              
             if( device && typeof device != "undefined" && device !== " ") {
-                TOAST && $.toast(typeof device +'+'+cmd);
+                TOAST && $.toast(cmd);
             }
         }
     },

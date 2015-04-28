@@ -1,20 +1,26 @@
-var widget_select = {
-  _select: null,
-  elements: null,
+if(typeof widget_widget == 'undefined') {
+    loadplugin('widget_widget');
+}
+
+var widget_select= $.extend({}, widget_widget, {
+  widgetname:"select",
+  init_attr: function(elem) {
+        elem.data('get', elem.data('get') || 'STATE');
+        elem.data('set', elem.data('set') || ((elem.data('get')!='STATE')?elem.attr('data-get'): ''));
+        elem.data('cmd', elem.data('cmd') || 'set');
+        elem.data('list', elem.data('list') || 'setList');
+
+        readings[elem.data('get')] = true;
+        readings[elem.data('list')] = true;
+  },
   init: function () {
-    _select=this;
-    _select.elements = $('div[data-type="select"]');
-    _select.elements.each(function(index) {
+      var base=this;
+      this.elements = $('div[data-type="'+this.widgetname+'"]');
+      this.elements.each(function(index) {
 
-        var device = $(this).data('device');
-        $(this).data('get', $(this).data('get') || 'STATE');
-        $(this).data('set', $(this).data('set') || ($(this).data('get')!='STATE')?$(this).attr('data-get'): '');
-        $(this).data('cmd', $(this).data('cmd') || 'set');
-        $(this).data('list', $(this).data('list') || 'setList');
 
-        readings[$(this).data('get')] = true;
-        readings[$(this).data('list')] = true;
 
+        base.init_attr($(this));
         $(this).addClass('select');
         var select_elem = jQuery('<select/>', { })
         .on('change', function (e) {
@@ -22,25 +28,25 @@ var widget_select = {
             var valueSelected = this.value;
             var parent = $(this).parent('div[data-type="select"]');
             $(this).blur();
-            var cmdl = [parent.data('cmd'),device,parent.data('set'),valueSelected].join(' ');
+            var cmdl = [parent.data('cmd'),parent.data('device'),parent.data('set'),valueSelected].join(' ');
             setFhemStatus(cmdl);
             $.toast(cmdl);
         })
         .appendTo($(this));
 
-	 });
+     });
   },
   update: function (dev,par) {
 
-	var deviceElements;
-	if ( dev == '*' )
-        deviceElements= _select.elements;
-	else
-        deviceElements= _select.elements.filter('div[data-device="'+dev+'"]');
+    var deviceElements;
+    if ( dev == '*' )
+        deviceElements= this.elements;
+    else
+        deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
 
-	deviceElements.each(function(index) {  
+    deviceElements.each(function(index) {
         if ( $(this).data('get')==par || $(this).data('list')==par){
-			var state = getDeviceValue( $(this), 'get' );
+            var state = getDeviceValue( $(this), 'get' );
             var items = $(this).data('items');
             var alias = $(this).data('alias')||$(this).data('items');
             if (!jQuery.isArray(items)){
@@ -74,8 +80,8 @@ var widget_select = {
             }
             if (state && select_elem)
                 select_elem.val(state);
-		}
-	});
+        }
+    });
    }
-			 
-};
+
+});
