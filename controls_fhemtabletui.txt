@@ -4,7 +4,7 @@ DIR www/tablet/fonts
 DIR www/tablet/js
 DIR www/tablet/lib
 UPD 2015-04-24_22:56:36 787 www/tablet/css/fhem-mobil-ui.css
-UPD 2015-04-27_21:45:27 5961 www/tablet/css/fhem-tablet-ui.css
+UPD 2015-04-29_01:45:29 6841 www/tablet/css/fhem-tablet-ui.css
 UPD 2015-04-22_00:19:45 127396 www/tablet/fonts/fhemSVG.eot
 UPD 2015-04-22_00:19:45 528460 www/tablet/fonts/fhemSVG.svg
 UPD 2015-04-22_00:19:46 127232 www/tablet/fonts/fhemSVG.ttf
@@ -15,6 +15,10 @@ UPD 2015-04-22_00:19:46 122092 www/tablet/fonts/fontawesome-webfont.ttf
 UPD 2015-04-22_00:19:46 71508 www/tablet/fonts/fontawesome-webfont.woff
 UPD 2015-04-22_00:19:46 56780 www/tablet/fonts/fontawesome-webfont.woff2
 UPD 2015-04-22_00:19:45 93888 www/tablet/fonts/FontAwesome.otf
+UPD 2015-04-29_00:58:30 1344 www/tablet/fonts/FTUI-icons.eot
+UPD 2015-04-29_00:58:30 937 www/tablet/fonts/FTUI-icons.svg
+UPD 2015-04-29_00:58:30 1168 www/tablet/fonts/FTUI-icons.ttf
+UPD 2015-04-29_00:58:30 1244 www/tablet/fonts/FTUI-icons.woff
 UPD 2015-04-22_00:19:46 10454 www/tablet/fonts/meteocons-webfont.eot
 UPD 2015-04-22_00:19:46 33061 www/tablet/fonts/meteocons-webfont.svg
 UPD 2015-04-22_00:19:46 22724 www/tablet/fonts/meteocons-webfont.ttf
@@ -39,7 +43,7 @@ UPD 2015-04-28_07:19:22 3177 www/tablet/js/widget_select.js
 UPD 2015-04-22_00:19:46 6206 www/tablet/js/widget_simplechart.js
 UPD 2015-04-27_19:19:13 2681 www/tablet/js/widget_slider.js
 UPD 2015-04-28_00:58:09 1335 www/tablet/js/widget_switch.js
-UPD 2015-04-23_23:41:31 1550 www/tablet/js/widget_symbol.js
+UPD 2015-04-28_20:14:12 1551 www/tablet/js/widget_symbol.js
 UPD 2015-04-24_06:38:11 8691 www/tablet/js/widget_thermostat.js
 UPD 2015-04-24_21:41:01 6847 www/tablet/js/widget_volume.js
 UPD 2015-04-27_23:03:27 15856 www/tablet/js/widget_weather.js
