@@ -71,15 +71,15 @@
         <header>GARTEN</header>
         <div data-type="switch" data-device="GartenLicht" class="cell" ></div>
         <div data-type="label" class="cell">Licht</div>
-        <div data-type="symbol" data-device="Eingangstuer" class="cell"></div>
-        <div data-type="label" class="cell">T&#252;r</div>
-        <div data-type="label" data-device="OutTemp" data-part="2" data-limits='[-73,10,23]' data-colors='["#6699FF","#AA6900","#FF0000"]' data-unit="%B0C%0A" class="cell bigger thin"></div>
+        <div data-type="symbol" data-device="Eingangstuer" data-icon="ftui-door" class="cell narrow"></div>
+        <div data-type="label" class="cell narrow darker">T&#252;r</div>
+        <div data-type="label" data-device="OutTemp" data-part="2" data-limits='[-73,10,23]' data-colors='["#6699FF","#AA6900","#FF0000"]' data-unit="%B0C%0A" class="cell bigger thin top-space-2x"></div>
         <div data-type="label" class="cell">Temperatur</div>
-        <div data-type="label" class="cell darker wider">Heute</div>
+        <div data-type="label" class="cell darker top-space">Heute</div>
         <div data-type="weather" data-device="AgroWeather" data-get="fc0_weatherDay" class="cell big"></div>
         <div data-type="label" data-device="AgroWeather" data-get="fc0_weatherDay" class="cell narrow"></div>
         <div data-type="label" data-device="AgroWeather" data-get="fc0_tempMax" data-unit="%B0C%0A" class="cell large"></div>
-        <div data-type="label" class="cell darker wider">Morgen</div>
+        <div data-type="label" class="cell darker top-space">Morgen</div>
         <div data-type="weather" data-device="AgroWeather" data-get="fc1_weatherDay" class="cell big"></div>
         <div data-type="label" data-device="AgroWeather" data-get="fc1_weatherDay" class="cell narrow"></div>
         <div data-type="label" data-device="AgroWeather" data-get="fc1_tempMax" data-unit="%B0C%0A" class="cell large"></div>
@@ -123,7 +123,8 @@
           <div class="right">
                 <div data-type="switch" data-device="HerdLicht_Sw" class="cell"></div>
                 <div data-type="label" class="cell">HerdLicht</div>
-                <div data-type="symbol" data-device="KuechenFenster" class="cell"></div>
+                <div data-type="symbol" data-device="KuechenFenster" class="top-space-2x narrow"></div>
+                <div data-type="label" class="narrow darker small">Fenster</div>
           </div>
         </div>
 </li>
@@ -144,7 +145,7 @@
           </div>
           <div class="right">
                 <div class="cell">
-                        <div data-type="symbol" data-device="TerrassenTuer" class="narrow"></div>
+                        <div data-type="symbol" data-device="TerrassenTuer" data-icon="ftui-door" class="narrow"></div>
                         <div data-type="label" class="narrow darker small">Terassent&#252;r</div>
                 </div>
                 <div class="cell right">
@@ -152,7 +153,6 @@
                         <div data-type="label" class="cell">Temperatur</div>
                         <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="cell bigger thin"></div>
                         <div data-type="label" class="cell">Luftfeuchte</div>
-                        <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-part=".*(\d\d:\d\d):\d\d.*" class="timestamp darker"></div>
                 </div>
           </div>
         </div>
@@ -187,7 +187,7 @@
             <div data-type="volume" data-device='RadioVolumeOnTablet' class="cell left" ></div>
             <div data-type="label" class="cell">Volume</div>
           </div>
-       <div class="left wider">
+       <div class="left top-space-2x">
           <div data-type="label" class="inline w2x">Badradio</div>
           <div data-type="switch" data-device="BadRadio" data-icon="fa-music"></div>
           <div data-type="select" data-device="AvReceiverZ2" data-items='["Airplay","Webradio","BD/DVD","PHONO"]' data-get="input" data-set="input" class="cell w2x" ></div>
@@ -200,9 +200,9 @@
 </li>
 <li data-row="2" data-col="8" data-sizex="1" data-sizey="4">
         <header>LIGHTS</header>
-        <div data-type="slider" data-device='Testschalter' data-min="10" data-max="90" class="cell small" ></div>
+        <div data-type="slider" data-device='dummy1' data-min="10" data-max="90" class="cell mini" ></div>
         <div data-type="label" class="cell">Light1</div>
-        <div data-type="volume" data-device="HUEDevice1" data-min="0" data-max="65353" data-get="hue" data-set="hue" class="hue-tick mini wider" ></div>
+        <div data-type="volume" data-device="HUEDevice1" data-min="0" data-max="65353" data-get="hue" data-set="hue" class="hue-tick mini top-space-3x" ></div>
         <div data-type="label" class="cell">Color</div>
         <div data-type="dimmer" data-device="HUEDevice1" data-get-on="!off" data-get-off="off" data-set="pct" class="cell" ></div>
         <div data-type="label" class="cell">Hell</div>

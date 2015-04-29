@@ -103,7 +103,7 @@ data-get-off="!on" means accept all but the data-get-on value (negation)
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
 - **data-get-on**   : value for ON status to get or an array of states (default 'open')
 - **data-get-off**  : value for OFF status to get. (default 'closed')
-- **data-icon**     : name of the font-awesome icon.  (default 'fa-windows')
+- **data-icon**     : name of the font-awesome icon.  (default 'ftui-window')
 - **data-background-icon** : name of the font-awesome icon for background (default '')
 - **data-on-background-color** : color of ON state (default '#aa6900')
 - **data-off-background-color** : color of OFF state (default '#505050')
@@ -254,6 +254,14 @@ not all widgets support all classes
 Icon configuration
 -------
 
+- Built-in icons
+Built in icons have the ftui- prefix. Currently available are: ftui-window, ftui-door
+
+- Font-Awesome 
+Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons.
+Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
+
+- FHEM and OpenAutomation
 Enable respectively add following lines to index.html to active FHEMWEB icons for FHEM Tablet ui
 ```html
 <link rel="stylesheet" href="/fhem/tablet/lib/openautomation.css" />
@@ -271,9 +279,6 @@ Try to avoid flashy color like #ff0000 for red or #00ff00 for green.
 It is always better to stay below #D0 (208) values for each primary color.
 
 You could use this color picker: http://www.w3schools.com/tags/ref_colorpicker.asp
-
-
-Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons. Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
 
 Meta tags configuration
 -------

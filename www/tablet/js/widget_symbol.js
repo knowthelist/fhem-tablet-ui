@@ -13,7 +13,7 @@ var widget_symbol = $.extend({}, widget_famultibutton, {
             $(this).data('on-color',                $(this).data('on-color')            || getStyle('.symbol.on','color')               || '#aa6900');
             $(this).data('on-background-color',     $(this).data('on-background-color') || getStyle('.symbol.on','background-color')    || '#aa6900');
             $(this).data('background-icon',         $(this).data('background-icon')     || null);
-            $(this).data('icon',                    $(this).data('icon')                || (( $.isArray($(this).data('icons')) )?$(this).data('icons')[0]:'fa-windows'));
+            $(this).data('icon',                    $(this).data('icon')                || (( $.isArray($(this).data('icons')) )?$(this).data('icons')[0]:'ftui-window'));
             $(this).data('get-on',                  $(this).data('get-on')              || 'open');
             $(this).data('get-off',                 $(this).data('get-off')             || 'closed');
             $(this).data('mode', 'signal');
