@@ -135,6 +135,25 @@ body {
 .large { font-size: 150%; }
 .small { font-size: 80%; }
 
+[data-type="symbol"].big { font-size: 250% !important;}
+
+i#warn {
+    font-size: 40% !important;
+    margin-left:24%;
+    margin-top:-19%;
+    color: #aaa;
+    font-weight: bold !important;
+    font-family: sans-serif;
+    letter-spacing: -1px;
+}
+
+i#warn-back {
+    font-size: 75% !important;
+    margin-left:25%;
+    margin-top:-20%;
+    color: #882200;
+}
+
 .doublebox-v {
     min-height: 104px;
     max-height: 104px;

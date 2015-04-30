@@ -492,6 +492,24 @@ temperature	20.1
 </div>
 ```
 
+**Example** for a battery level control with RegEx
+```html
+<div data-type="symbol" data-device="BadHeizung" data-get="batteryLevel"
+	data-icons='["oa-measure_battery_100","oa-measure_battery_75","oa-measure_battery_50","oa-measure_battery_25","oa-measure_battery_0"]'
+    data-get-on='["3\\.[0-9]","2\\.[789]","2\\.[456]","2\\.[123]","((2\\.0)|([01]\\.[0-9]))"]'
+    data-on-colors='["#505050","#505050","#505050","#ad3333","#ad3333"]'>
+</div>
+```       
+
+**Example** for a battery level control with greater-equal compare and 90° rotated symbols
+```html       
+<div data-type="symbol" data-device="BadHeizung" data-get="batteryLevel"
+	data-icons='["oa-measure_battery_0 fa-rotate-90","oa-measure_battery_25 fa-rotate-90","oa-measure_battery_50 fa-rotate-90","oa-measure_battery_75 fa-rotate-90","oa-measure_battery_0 fa-rotate-90"]'
+	data-get-on='["0","2","2.4","2.7","3.0"]'
+	data-on-colors='["#ad3333","#ad3333","#505050","#505050","#505050"]'>
+</div>
+```
+
 ###Weather
 
 **Example** for how to use a label to show a weather icon according reading literal

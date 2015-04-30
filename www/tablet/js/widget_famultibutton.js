@@ -16,8 +16,8 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                 } else {
                     elem.setOn();
                 }
-                elem.children().first().css('color', elem.data('firstclick-background-color'));
-                elem.children().last().css('color', elem.data('firstclick-color'));
+                elem.children().filter('#bg').css('color', elem.data('firstclick-background-color'));
+                elem.children().filter('#fg').css('color', elem.data('firstclick-color'));
                 return false;
             } else {
                 elem.data('_firstclick', false);
@@ -76,8 +76,10 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             base.init_ui($(this));
         });
     },
+    update_cb : function(elem) {},
     update: function (dev,par) {
         var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
+        var base = this;
         deviceElements.each(function(index) {
             if ( $(this).data('get')==par || par =='*') {   
                 var state = getDeviceValue( $(this), 'get' );
@@ -87,7 +89,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                         var icons=$(this).data('icons');
                         var colors=$(this).data('on-colors');
                         if (icons && colors && states && icons.length == colors.length && icons.length == states.length ) {
-                            var elm=$(this).children().last();
+                            var elm=$(this).children().filter('#fg');
                             var idx=indexOfGeneric(states,state);
                             if (idx>-1){    elm.removeClass()
                                 .addClass('fa fa-stack-1x')
@@ -109,6 +111,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                         else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
                             $(this).data('famultibutton').setOn();
                     }
+                    base.update_cb($(this),state);
                 }
             }
         });

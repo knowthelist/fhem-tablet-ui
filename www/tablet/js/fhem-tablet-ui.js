@@ -424,7 +424,7 @@ this.getPart = function (s,p) {
 	}
 	else {
 		if ((s && typeof s != "undefined") )
-			var matches = s.match( RegExp('^' + p + '$') );
+            var matches = s.match( new RegExp('^' + p + '$') );
 		var ret='';
 		if (matches) {
 			for (var i=1;i<matches.length;i++) {

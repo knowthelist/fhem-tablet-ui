@@ -4,6 +4,22 @@ if(typeof widget_famultibutton == 'undefined') {
 
 var widget_symbol = $.extend({}, widget_famultibutton, {
     widgetname : 'symbol',
+    showOverlay : function(elem, value) {
+         elem.children().filter('#warn-back').remove();
+         elem.children().filter('#warn').remove();
+         if (value && value!=""){
+             var val = ($.isNumeric(value)&&value<100)?Number(value).toFixed(0):'!';
+             jQuery('<i/>', {
+                 id: 'warn-back',
+                 class: 'fa fa-stack-1x fa-circle'
+             }).appendTo(elem);
+
+            jQuery('<i/>', {
+                 id: 'warn',
+                 class: 'fa fa-stack-1x '
+            }).html(val).appendTo(elem);
+         }
+    },
     init: function () {
         var base = this;
         this.elements = $('div[data-type="'+this.widgetname+'"]');
@@ -20,5 +36,11 @@ var widget_symbol = $.extend({}, widget_famultibutton, {
             base.init_attr($(this));
             base.init_ui($(this));
         });
+    },
+    update_cb : function(elem,state) {
+        if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
+            this.showOverlay(elem,state);
+        else
+            this.showOverlay(elem,"");
     },
 });
