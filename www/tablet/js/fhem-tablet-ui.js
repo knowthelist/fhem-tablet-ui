@@ -377,11 +377,15 @@ function requestFhem(paraname) {
 }
 
 function loadplugin(plugin, success, error, async) {
-    dir = $('script[src$="fhem-tablet-ui.js"]').attr('src');
+    dynamicload('js/'+plugin+'.js', success, error, async);
+}
+
+function dynamicload(file, success, error, async) {
+    var dir = $('script[src$="fhem-tablet-ui.js"]').attr('src');
     var name = dir.split('/').pop(); 
     dir = dir.replace('/'+name,"");
     $.ajax({
-        url: dir + '/'+plugin+'.js',
+        url: dir + '/../' + file,
         dataType: "script",
         cache: true,
         async: async || false,
@@ -389,10 +393,6 @@ function loadplugin(plugin, success, error, async) {
         success: success||function(){ return true },
         error: error||function(){ return false },
     });
-}
-
-function loadplugin_async(plugin, success, error) {
-    return loadplugin(plugin, success, error, true);
 }
 
 function loadStyleSchema(){
