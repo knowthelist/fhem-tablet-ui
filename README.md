@@ -95,6 +95,7 @@ Attributes with defaults are optional and does not have to be set.
 - **data-off-background-color** : color of OFF state (default '#505050')
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
+- **data-doubleclick**: timeout to wait for a second click or touch. '0' disables the doubleclick feature. (default '0')
 
 data-get-on and data-get-off accept also RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
 data-get-off="!on" means accept all but the data-get-on value (negation)
@@ -140,6 +141,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-icon** : name of the font-awesome icon. 
 - **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
 - **data-cmd**  : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-doubleclick**: timeout to wait for a second click or touch. '0' disables the doubleclick feature. (default '0')
 
 ####Thermostat widgets
 - **data-get**   : name of the reading to get from FHEM (default 'desired-temp')
@@ -196,14 +198,16 @@ data-version='residents' or 'roommate' or 'guest'
 
 ####Weather widgets
 - **data-get**      : name of the reading to get the weather literal from FHEM (default 'STATE')
+- **data-imageset** : collection of images to display current weather situation. Possible values: 'meteocons', 'kleinklima' (Default: 'meteocons')
+- **data-image-path**: path to the images of the selected imageset (default: <fhem-dir>/images/weather/)
+
 
 ####CircleMenu widgets
 - **data-item-diameter** : diameter of the circle (default 52)
 - **data-circle-radius** : radius of each item, in pixel (default 70)
-- **data-direction**     : position of the items in relation to the center (default full).  
-
-Optionen are: top | right | bottom | left | top-right | top-left | bottom-right | bottom-left | top-half | right-half | bottom-half | left-half | full
-- **class**		    : 
+- **data-direction**     : position of the items in relation to the center (default full). Options are: top | right | bottom | left | top-right | top-left | bottom-right | bottom-left | top-half | right-half | bottom-half | left-half | full
+- **data-close-after**   : closing time of the circle-menu (default: (item-count + 1s) or a minimum of 4s)
+- **class**		         : keepopen
 
 ####Playstream widgets
 - **data-url**      : URL of the Radio stream
