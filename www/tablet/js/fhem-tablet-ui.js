@@ -340,7 +340,7 @@ function requestFhem(paraname) {
 		context:{paraname: paraname},
 		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
 		data: {
-			cmd: "list " + devs.join() + " " + paraname,
+			cmd: "list " + $.map(devs, $.trim).join() + " " + paraname,
 			XHR: "1"
 		}
 	})
