@@ -327,6 +327,18 @@ The long format looks like this:
      class="cell">
 </div>
 ```
+
+Example for MAX!:
+```html
+<div data-type="thermostat" data-device="HZ_Tuer" 
+	data-valve="valveposition" 
+	data-get="desiredTemperature" 
+	data-temp="temperature" 
+	data-set="desiredTemperature" 
+	class="cell">
+</div>
+```
+
 The wigets will show the valve value only in case of a valid data-valve attribute.
 The default for data-valve ist null. That means, a empty data-valve attribute hides the valve label for the widget.   
 ![](http://knowthelist.github.io/fhem-tablet-ui/thermo.png)
