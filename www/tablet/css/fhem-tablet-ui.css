@@ -282,7 +282,7 @@ ul, ol {
 
 .ontop{
     position:absolute;
-    z-index:1000;
+    z-index:1003;
     top:10px;
     left:10px;
 }
