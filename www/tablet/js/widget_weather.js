@@ -59,6 +59,7 @@ var widget_weather = $.extend({}, widget_widget, {
         "sonnig":                       "B",
         "Schnee":                       "U",
         'Schneeregen':                  'V',
+        'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'Q',
         
         // OPENWEATHER (Wetter.com) (incomplete)
         'leichter Schnee - Schauer' :   'U',
@@ -126,6 +127,7 @@ var widget_weather = $.extend({}, widget_widget, {
         "sonnig":                       'sunny.png',
         "Schnee":                       'snow.png',
         'Schneeregen':                  'rainsnow.png',
+        'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'scatteredshowers.png',
         
         // OPENWEATHER (wetter.com) (incomplete)
         'leichter Schnee - Schauer' :   'chance_of_snow.png',
@@ -309,10 +311,32 @@ var widget_weather = $.extend({}, widget_widget, {
 
                     //wheater icons
                     $(this).empty();
-                    // translate val to ':key'
-                    var translation = base.translationmap[val];
-                    while(typeof mapped != "undefined" && !mapped.match(/^:/)) {
-                        translation = base.translationmap[mapped];
+                    
+                    var device_type;
+                    if($(this).data('device-type')) {
+                        device_type = $(this).data('device-type');
+                    } else {
+                        if(par.match(/^fc\d+_weather(Day|Evening|Morning|Night)$/)) {
+                            device_type='PROPLANTA';
+                        } else if(par.match(/^fc\d+_condition$/)) {
+                            device_type='Weather';
+                        } else if(par.match(/^fc\d+_weather\d*$/)) {
+                            device_type='OPENWEATHER';
+                        } else if(par.match(/^fc\d+_weatherCode\d*$/)) {
+                            device_type='OPENWEATHER';
+                        } else {
+                            device_type='UNKNOWN';
+                        }
+                    }
+                    
+                    console.log(device_type);
+                    
+                    if(device_type != 'PROPLANTA') {
+                        // translate val to ':key'
+                        var translation = base.translationmap[val];
+                        while(typeof mapped != "undefined" && !mapped.match(/^:/)) {
+                            translation = base.translationmap[mapped];
+                        }
                     }
 
                     var mapped = typeof translation == "undefined"?val:translation;
