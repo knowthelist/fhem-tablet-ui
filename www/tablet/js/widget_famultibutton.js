@@ -88,14 +88,33 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                     if ( $.isArray(states)) {
                         var icons=$(this).data('icons');
                         var colors=$(this).data('on-colors');
-                        if (icons && colors && states && icons.length == colors.length && icons.length == states.length ) {
-                            var elm=$(this).children().filter('#fg');
-                            var idx=indexOfGeneric(states,state);
-                            if (idx>-1){    elm.removeClass()
-                                .addClass('fa fa-stack-1x')
-                                .addClass(icons[idx])
-                                .css( "color", colors[idx] );
+                        
+                        // if data-icons isn't set, try using data-icon or fa-power-off instead
+                        if(typeof icons == 'undefined') {
+                            icons = new Array($(this).data('icon')||'fa-power-off');
+                        }
+                        // if data-colors isn't set, try using data-on-color, data-off-color or #505050 instead
+                        if(typeof colors == 'undefined') {
+                            colors = new Array($(this).data('on-color')||$(this).data('off-color')||'#505050');
+                        }
+                    
+                        // fill up colors and icons to states.length
+                        // if an index s isn't set, use the value of s-1
+                        for(var s=0; s<states.length; s++) {
+                            if(typeof icons[s] == 'undefined') {
+                                icons[s]=icons[s>0?s-1:0];
                             }
+                            if(typeof colors[s] == 'undefined') {
+                                colors[s]=colors[s>0?s-1:0];
+                            }
+                        }
+
+                        var elm=$(this).children().filter('#fg');
+                        var idx=indexOfGeneric(states,state);
+                        if (idx>-1){    elm.removeClass()
+                            .addClass('fa fa-stack-1x')
+                            .addClass(icons[idx])
+                            .css( "color", colors[idx] );
                         }
                     } else {
                         if ( state == $(this).data('get-on') )
