@@ -521,7 +521,7 @@ this.indexOfNumeric = function(array,val){
 
 this.indexOfRegex = function(array,find){
   for (var i=0;i<array.length;i++) {
-      var match = find.match(new RegExp(array[i]));
+      var match = find.match(new RegExp(array[i].replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")));
       if (match)
             return i
   }
