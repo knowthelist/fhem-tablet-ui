@@ -49,10 +49,10 @@ var widget_famultibutton = $.extend({}, widget_widget, {
     init_attr : function(elem) {
         elem.data('get',        elem.data('get')        || 'STATE');
         elem.data('cmd',        elem.data('cmd')        || 'set');
-        elem.data('get-on',     elem.data('get-on')     || 'on');
-        elem.data('get-off',    elem.data('get-off')    || 'off');
-        elem.data('set-on',     elem.data('set-on')     || elem.data('get-on'));
-        elem.data('set-off',    elem.data('set-off')    || elem.data('get-off'));
+        elem.data('get-on',     (elem.attr('data-get-on')  ? elem.data('get-on')  : 'on'));
+        elem.data('get-off',    (elem.attr('data-get-off') ? elem.data('get-off') : 'off'));
+        elem.data('set-on',     (elem.attr('data-set-on')  ? elem.data('set-on')  : elem.data('get-on')));
+        elem.data('set-off',    (elem.attr('data-set-off') ? elem.data('set-off') : elem.data('get-off')));
         elem.data('mode',       elem.data('mode')       || 'toggle');
         elem.data('doubleclick',                    elem.data('doubleclick')                    || 0);
         elem.data('firstclick-background-color',    elem.data('firstclick-background-color')    ||  '#6F4500');
