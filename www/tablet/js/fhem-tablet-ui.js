@@ -89,6 +89,13 @@ $(document).on('ready', function() {
 
 function initPage() {
 
+    var deviceStates={};
+    var readings = {"STATE":true};
+    var devices = {};
+    var types = {};
+    var devs=new Array();
+    var pars=new Array();
+
     wx = parseInt( $("meta[name='widget_base_width']").attr("content") );
     wy = parseInt( $("meta[name='widget_base_height']").attr("content") );
 	doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
@@ -521,7 +528,8 @@ this.indexOfNumeric = function(array,val){
 
 this.indexOfRegex = function(array,find){
   for (var i=0;i<array.length;i++) {
-      var match = find.match(new RegExp(array[i]));
+      //var match = find.match(new RegExp('^'+array[i].replace(/[.?*+^$\\(){}|]/g, "\\$&")+'$'));
+      var match = find.match(new RegExp('^'+array[i]+'$'));
       if (match)
             return i
   }

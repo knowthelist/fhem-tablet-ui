@@ -42,6 +42,40 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             }).html(val).appendTo(elem);
          }
     },
+    showMultiStates : function(elem,states,state){
+
+        var icons=elem.data('icons');
+        var colors=elem.data('on-colors');
+
+        // if data-icons isn't set, try using data-icon or fa-power-off instead
+        if(typeof icons == 'undefined') {
+            icons = new Array(elem.data('icon')||'fa-power-off');
+        }
+        // if data-colors isn't set, try using data-on-color, data-off-color or #505050 instead
+        if(typeof colors == 'undefined') {
+            colors = new Array(elem.data('on-color')||elem.data('off-color')||'#505050');
+        }
+
+        // fill up colors and icons to states.length
+        // if an index s isn't set, use the value of s-1
+        for(var s=0; s<states.length; s++) {
+            if(typeof icons[s] == 'undefined') {
+                icons[s]=icons[s>0?s-1:0];
+            }
+            if(typeof colors[s] == 'undefined') {
+                colors[s]=colors[s>0?s-1:0];
+            }
+        }
+
+        var elm=elem.children().filter('#fg');
+        var idx=indexOfGeneric(states,state);
+        if (idx>-1){
+            elm.removeClass()
+            .addClass('fa fa-stack-1x')
+            .addClass(icons[idx])
+            .css( "color", colors[idx] );
+        }
+    },
     toggleOn : function(elem) {
         if(this._doubleclicked(elem, 'on')) {
             var device = elem.data('device');
@@ -97,54 +131,28 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
         var base = this;
         deviceElements.each(function(index) {
-            if ( $(this).data('get')==par || par =='*') {   
+            if ( $(this).data('get')==par) {
                 var state = getDeviceValue( $(this), 'get' );
                 if (state) {
                     var states=$(this).data('get-on');
                     if ( $.isArray(states)) {
-                        var icons=$(this).data('icons');
-                        var colors=$(this).data('on-colors');
-                        
-                        // if data-icons isn't set, try using data-icon or fa-power-off instead
-                        if(typeof icons == 'undefined') {
-                            icons = new Array($(this).data('icon')||'fa-power-off');
-                        }
-                        // if data-colors isn't set, try using data-on-color, data-off-color or #505050 instead
-                        if(typeof colors == 'undefined') {
-                            colors = new Array($(this).data('on-color')||$(this).data('off-color')||'#505050');
-                        }
-                    
-                        // fill up colors and icons to states.length
-                        // if an index s isn't set, use the value of s-1
-                        for(var s=0; s<states.length; s++) {
-                            if(typeof icons[s] == 'undefined') {
-                                icons[s]=icons[s>0?s-1:0];
-                            }
-                            if(typeof colors[s] == 'undefined') {
-                                colors[s]=colors[s>0?s-1:0];
-                            }
-                        }
-
-                        var elm=$(this).children().filter('#fg');
-                        var idx=indexOfGeneric(states,state);
-                        if (idx>-1){    elm.removeClass()
-                            .addClass('fa fa-stack-1x')
-                            .addClass(icons[idx])
-                            .css( "color", colors[idx] );
-                        }
+                        base.showMultiStates($(this),states,state);
                     } else {
-                        if ( state == $(this).data('get-on') )
-                            $(this).data('famultibutton').setOn();
-                        else if ( state == $(this).data('get-off') )
-                            $(this).data('famultibutton').setOff();
-                        else if ( state.match(new RegExp('^' + $(this).data('get-on') + '$')) )
-                            $(this).data('famultibutton').setOn();
-                        else if ( state.match(new RegExp('^' + $(this).data('get-off') + '$')) )
-                            $(this).data('famultibutton').setOff();
-                        else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
-                            $(this).data('famultibutton').setOff();
-                        else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
-                            $(this).data('famultibutton').setOn();
+                        var elem = $(this).data('famultibutton');
+                        if (elem){
+                            if ( state == $(this).data('get-on') )
+                                 elem.setOn();
+                            else if ( state == $(this).data('get-off') )
+                                 elem.setOff();
+                            else if ( state.match(new RegExp('^' + $(this).data('get-on') + '$')) )
+                                 elem.setOn();
+                            else if ( state.match(new RegExp('^' + $(this).data('get-off') + '$')) )
+                                 elem.setOff();
+                            else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
+                                 elem.setOff();
+                            else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
+                                 elem.setOn();
+                        }
                     }
                     base.update_cb($(this),state);
                 }

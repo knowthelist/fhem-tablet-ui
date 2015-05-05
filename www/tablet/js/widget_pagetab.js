@@ -16,12 +16,12 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
     },
     toggleOn : function(elem) {
         var elem_url=elem.data('url');
-        lastPage=elem_url;
+        this.lastPage=elem_url;
         window.location.hash = elem_url;
         this.loadPage(elem_url);
     },
     toggleOff: function(elem) {
-          setInterval(function() {elem.setOn()}, 50);
+          setTimeout(function() {elem.setOn()}, 50);
     },
     init: function () {
         var base = this;
@@ -44,15 +44,19 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
             }
             $(this).attr('title',$(this).data('url'));
 
-            if (isCurrent)
+            if (isCurrent){
                 elem.setOn();
-            else
+                elem.data('on-colors',[elem.data('on-color')]);
+            }
+            else{
                 elem.setOff();
+                elem.data('on-colors',[elem.data('off-color')]);
+            }
 
             window.onpopstate = function(event) {
                 var hashUrl=window.location.hash.replace('#','');
-                if (lastPage!=hashUrl){
-                        base.loadPage(hashUrl);
+                if (base.lastPage!=hashUrl){
+                       base.loadPage(hashUrl);
                 }
             };
         });
@@ -66,24 +70,27 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
               if (state) {
                   var states=$(this).data('get-on');
                   if ( $.isArray(states)) {
-                      var icons=$(this).data('icons');
-                      var colors=$(this).data('on-colors');
-                      if (icons && colors && states && icons.length == colors.length && icons.length == states.length ) {
-                          var elm=$(this).children().filter('#fg');
-                          var idx=indexOfGeneric(states,state);
-                          if (idx>-1){
-                              elm.removeClass()
-                              .addClass('fa fa-stack-1x')
-                              .addClass(icons[idx])
-                              .css( "color", colors[idx] );
-                          }
-                      }
+                      base.showMultiStates($(this),states,state);
                   }
               }
               if ($(this).hasClass('warn') || $(this).children().filter('#fg').hasClass('warn'))
                   base.showOverlay($(this),state);
               else
                   base.showOverlay($(this),"");
+
+              var id=dev+"_"+$(this).data('url');
+
+              if ($(this).children().filter('#fg').hasClass('activate')){
+                  //only for the first occurance (Flipflop logic)
+                  if ( localStorage.getItem(id)!='true' ){
+                      localStorage.setItem(id, 'true');
+                      base.toggleOn($(this));
+                  }
+              }
+              else{
+                  localStorage.setItem(id, 'false');
+              }
+
           }
       });
     },

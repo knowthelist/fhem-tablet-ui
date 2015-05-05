@@ -114,8 +114,6 @@ data-get-off="!on" means accept all but the data-get-on value (negation)
 - **data-on-colors**: array of colors related to the data-get-on array
 
 data-get-on and data-get-off accept also RegEx values.
-
-To use multiple icons, data-get-on,data-icons and data-on-colors have to be an array with the same size.
 The value for one icon can also contain an additional animatation CSS name, e.g. "fa-exclamation-triangle fa-blink" for a blinking symbol
 
 ####Label widgets
@@ -151,6 +149,8 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-min**   : minimal value to set (default 10)
 - **data-max**   : maximal value to set (default 30)
 - **data-step**  : step size for value adjustment e.g. 0.5 (default 1)
+- **data-off**   : value to send to get the thermostat switch off (for this, dial the knob to then minimum value)
+- **data-boost** : value to send to force boost mode (for this, dial the knob to then maximum value)
 - **class**		 : big, readonly
 
 ####Volume widgets
@@ -220,6 +220,8 @@ data-version='residents' or 'roommate' or 'guest'
 - **data-off-background-color** : color of OFF state (default '#505050')
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
+- **data-get-on**   : array of status to assign a special icon-list from data-icons
+- **data-icons**    : array of icons related to the a data-get-on array
 - **class**		    : 
 
 CSS Class description
@@ -336,6 +338,14 @@ Example for MAX!:
 	data-temp="temperature" 
 	data-set="desiredTemperature" 
 	class="cell">
+</div>
+```
+Example to realize a thermostat off and boost function. It sends 'off' if the dial is set to min value 
+and 'boost' if the max value get selected. 
+```html
+<div data-type="thermostat" data-device="W_HEIZUNG" 
+	data-min="4" data-off="off" 
+	data-max="31" data-boost="boost">
 </div>
 ```
 
@@ -512,7 +522,7 @@ temperature	20.1
 ```html
 <div data-type="symbol" data-device="BadHeizung" data-get="batteryLevel"
 	data-icons='["oa-measure_battery_100","oa-measure_battery_75","oa-measure_battery_50","oa-measure_battery_25","oa-measure_battery_0"]'
-    data-get-on='["3\\.[0-9]","2\\.[789]","2\\.[456]","2\\.[123]","((2\\.0)|([01]\\.[0-9]))"]'
+    data-get-on='["3.[0-9]","2.[789]","2.[456]","2.[123]","((2.0)|([01].[0-9]))"]'
     data-on-colors='["#505050","#505050","#505050","#ad3333","#ad3333"]'>
 </div>
 ```       
@@ -523,6 +533,15 @@ temperature	20.1
 	data-icons='["oa-measure_battery_0 fa-rotate-90","oa-measure_battery_25 fa-rotate-90","oa-measure_battery_50 fa-rotate-90","oa-measure_battery_75 fa-rotate-90","oa-measure_battery_0 fa-rotate-90"]'
 	data-get-on='["0","2","2.4","2.7","3.0"]'
 	data-on-colors='["#ad3333","#ad3333","#505050","#505050","#505050"]'>
+</div>
+```
+
+**Example** for a door symbol which shows a warning sign in case of an open state
+```html  
+<div data-type="symbol" data-device="Eingangstuer" 
+	 data-get-on='["open","closed"]' 
+	 data-icons='["ftui-door warn","ftui-door"]' 
+	 data-on-colors='["#999","#555"]' >
 </div>
 ```
 
@@ -624,6 +643,15 @@ Multiple pagetabs in a template file: menu.html
     </div>
 </body>
 </html>
+```
+
+**Example** for a tab menu item, which shows also the numeric value of a reading 
+```html
+<div data-type="pagetab" data-device="MyFaxDevice"
+		data-get-on='["0","1"]'
+		data-icons='["fa-fax","fa-fax warn"]'
+		data-url="index_7.html" class="cell"></div>
+</div>
 ```
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/menu.png)
