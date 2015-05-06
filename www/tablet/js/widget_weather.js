@@ -18,6 +18,7 @@ var widget_weather = $.extend({}, widget_widget, {
         'drizzle' :                     'R',
         'freezing rain':                'W',
         'showers' :                     'Q',
+        'chance of rain':               'Q',
         'snow flurries' :               'U',
         'light snow showers' :          'U',
         'blowing snow' :                'W',
@@ -59,6 +60,7 @@ var widget_weather = $.extend({}, widget_widget, {
         "sonnig":                       "B",
         "Schnee":                       "U",
         'Schneeregen':                  'V',
+        'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'Q',
         
         // OPENWEATHER (Wetter.com) (incomplete)
         'leichter Schnee - Schauer' :   'U',
@@ -70,6 +72,15 @@ var widget_weather = $.extend({}, widget_widget, {
         'undefined' :                   ')',
         'overcast' :                    'N',
         'rain':                         'R',
+        
+        'chance of storm':              'S',
+        'sunny night'           :       '2',
+        'mostly clear night'    :       '4',
+        'partly cloudy night'   :       '5',
+        'chance of rain night'  :       '7',
+        'showers night'         :       '8',
+        'chance of storm night' :       '9',
+        'haze night'            :       'K',
     },
     kleinklimamap: {
         // Weather (YAHOO) en
@@ -84,7 +95,8 @@ var widget_weather = $.extend({}, widget_widget, {
         'freezing drizzle' :            'drizzle.png',
         'drizzle' :                     'drizzle.png',
         'freezing rain':                'icy.png',
-        'showers' :                     'chance_of_rain.png',
+        'showers' :                     'showers.png',
+        'chance of rain':               'chance_of_rain.png',
         'snow flurries' :               'snowflurries.png',
         'light snow showers' :          'chance_of_snow.png',
         'blowing snow' :                'heavysnow.png',
@@ -111,7 +123,6 @@ var widget_weather = $.extend({}, widget_widget, {
         'scattered showers' :           'scatteredshowers.png',
         'heavy snow' :                  'heavysnow.png',
         'scattered snow showers' :      'chance_of_snow.png',
-        'partly cloudy' :               'partly_cloudy.png',
         'thundershowers' :              'heavyrain.png',
         'snow showers' :                'chance_of_snow.png',
         'isolated thundershowers' :     'scatteredshowers.png',
@@ -126,6 +137,7 @@ var widget_weather = $.extend({}, widget_widget, {
         "sonnig":                       'sunny.png',
         "Schnee":                       'snow.png',
         'Schneeregen':                  'rainsnow.png',
+        'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'scatteredshowers.png',
         
         // OPENWEATHER (wetter.com) (incomplete)
         'leichter Schnee - Schauer' :   'chance_of_snow.png',
@@ -137,6 +149,16 @@ var widget_weather = $.extend({}, widget_widget, {
         'undefined' :                   'na.png',
         'overcast' :                    'overcast.png',
         'rain':                         'rain.png',
+        
+        'chance of storm' :             'chance_of_storm.png',
+        'sunny night'           :       'sunny_night.png',
+        'mostly clear night'    :       'mostly_clear_night.png',
+        'mostly cloudy night'   :       'mostlycloudy_night.png',
+        'partly cloudy night'   :       'partlycloudy_night.png',
+        'chance of rain night'  :       'chance_of_rain_night.png',
+        'showers night'         :       'showers_night.png',
+        'chance of storm night' :       'chance_of_storm_night.png',
+        'haze night'            :       'haze_night.png',
     },
     translationmap: {
         // Weather (YAHOO) de
@@ -273,6 +295,37 @@ var widget_weather = $.extend({}, widget_widget, {
         '95' :                          ':scattered thunderstorms',
         '96' :                          ':thunderstorms',
         '999' :                         ':undefined',
+        
+        // PROPLANTA fc#_weather(Day|Evening|Morning|Night)Icon
+        // thx to Risiko (http://forum.fhem.de/index.php/topic,34233.msg292189.html#msg292189)
+        't1':                           ':sunny',
+        't2':                           ':partly cloudy',
+        't3':                           ':partly cloudy',
+        't4':                           ':mostly cloudy',
+        't5':                           ':cloudy',
+        't6':                           ':chance of rain',
+        't7':                           ':showers',
+        't8':                           ':chance of storm',
+        't9':                           ':light snow showers',
+        't10':                          ':mixed rain and snow',
+        't11':                          ':snow',
+        't12':                          ':haze',
+        't13':                          ':haze',
+        't14':                          ':rain',
+        'n1':                           ':sunny night',
+        'n2':                           ':partly cloudy night',
+        'n3':                           ':partly cloudy night',
+        'n4':                           ':mostly cloudy night',
+        'n5':                           ':overcast',
+        'n6':                           ':chance of rain night',
+        'n7':                           ':showers night',
+        'n8':                           ':chance of storm night',
+        'n9':                           ':sleet',
+        'n10':                          ':mixed rain and snow',
+        'n11':                          ':snow',
+        'n12':                          ':haze night',
+        'n13':                          ':haze night',
+        'n14':                          ':rain',
     },
   
     init_attr: function(elem) {
@@ -306,19 +359,51 @@ var widget_weather = $.extend({}, widget_widget, {
                 if (value){
                     var part =  $(this).data('part') || -1;
                     var val = getPart(value,part);
+                    var _val = val;
 
                     //wheater icons
                     $(this).empty();
-                    // translate val to ':key'
-                    var translation = base.translationmap[val];
-                    while(typeof mapped != "undefined" && !mapped.match(/^:/)) {
-                        translation = base.translationmap[mapped];
+                    
+                    var device_type;
+                    if($(this).data('device-type')) {
+                        device_type = $(this).data('device-type');
+                    } else {
+                        if(par.match(/^fc\d+_weather(Day|Evening|Morning|Night)(?:Icon)?$/)) {
+                            device_type='PROPLANTA';
+                        } else if(par.match(/^fc\d+_condition$/)) {
+                            device_type='Weather';
+                        } else if(par.match(/^fc\d+_weather\d*$/)) {
+                            device_type='OPENWEATHER';
+                        } else if(par.match(/^fc\d+_weatherCode\d*$/)) {
+                            device_type='OPENWEATHER';
+                        } else {
+                            device_type='UNKNOWN';
+                        }
+                    }
+                    var translate = true;
+                    if(device_type == 'PROPLANTA') {
+                        var matches;
+                        if(matches = val.match('^http://www\.proplanta\.de/wetterdaten/images/symbole/([tn][0-9]+)\.gif')) {
+                            val = matches[1];
+                        } else {
+                            translate = false;
+                        }
+                    }
+                    
+                    if(translate) {
+                        // translate val to ':key'
+                        var translation = base.translationmap[val];
+                        while(typeof mapped != "undefined" && !mapped.match(/^:/)) {
+                            translation = base.translationmap[mapped];
+                        }
                     }
 
                     var mapped = typeof translation == "undefined"?val:translation;
                     if($(this).data('imageset')=="kleinklima") {
                         mapped = base.kleinklimamap[mapped.replace(/^:/, '')];
                         $(this).prepend('<img style="width:100%" src="' + $(this).data('image-path') + mapped + '" title="' + val + '">');
+                    } else if($(this).data('imageset')=="reading") {
+                        $(this).prepend('<img style="width:100%" src="' + _val + '">');
                     } else {
                         mapped = base.meteoconsmap[mapped.replace(/^:/, '')];
                         $(this).attr('data-icon', mapped);
