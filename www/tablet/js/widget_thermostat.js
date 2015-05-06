@@ -71,7 +71,7 @@ var widget_thermostat = {
 		c.beginPath();
 		c.strokeStyle = this.o.bgColor;
 		c.arc(this.xy, this.xy, this.radius, this.endAngle - 0.00001, this.startAngle + 0.00001, true);
-		c.stroke();
+        c.stroke();
 	}
 	
 	var tick_w = (2 * Math.PI) / 360;
@@ -89,7 +89,7 @@ var widget_thermostat = {
 		c.beginPath();
 		
         if ((tick > acAngle && tick < a.s) || (tick-tick_w*dist <= acAngle && tick+tick_w*dist >= a.s)){
-			// draw diff range in gradient color
+            // draw diff range in gradient color
             c.strokeStyle = _thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-tick)/this.angleArc);
             //if (tick-tick_w*dist <= acAngle )
             //    destcolor=c.strokeStyle;
@@ -131,7 +131,7 @@ var widget_thermostat = {
     c.fillText(this.o.isValue ,this.xy+x-5,this.xy+y+5);
 
 	// draw target temp cursor
-	c.beginPath();
+    c.beginPath();
     c.strokeStyle = _thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
 	c.lineWidth = this.lineWidth * 2;
     c.arc(this.xy, this.xy, this.radius-this.lineWidth/2, a.s, a.e, a.d);
@@ -178,8 +178,8 @@ var widget_thermostat = {
 			'bgColor': $(this).data('bgcolor') || 'transparent',
             'fgColor': $(this).data('fgcolor') || getStyle('.thermostat.fgcolor','color') || '#bbbbbb',
             'tkColor': $(this).data('tkcolor') || getStyle('.thermostat.tkcolor','color') || '#696969',
-			'minColor': '#4477ff',
-			'maxColor': '#ff0000',
+            'minColor': $(this).data('mincolor') || getStyle('.thermostat.mincolor','color') ||'#4477ff',
+            'maxColor': $(this).data('maxcolor') || getStyle('.thermostat.maxcolor','color') ||'#ff0000',
             'thickness': .25,
             'cursor': 6,
             'touchPosition': 'left',

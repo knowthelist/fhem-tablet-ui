@@ -529,7 +529,7 @@ this.indexOfNumeric = function(array,val){
 this.indexOfRegex = function(array,find){
   for (var i=0;i<array.length;i++) {
       try {
-      	var match = find.match(new RegExp(array[i]));
+        var match = find.match(new RegExp('^'+array[i]+'$'));
       	if (match)
             return i
       } catch(e) {}

@@ -28,10 +28,10 @@ UPD 2015-05-01_00:18:55 1517848 www/tablet/fonts/openautomation.svg
 UPD 2015-05-01_00:18:55 359552 www/tablet/fonts/openautomation.ttf
 UPD 2015-05-01_00:18:55 359628 www/tablet/fonts/openautomation.woff
 UPD 2015-05-01_00:18:55 12538 www/tablet/index-example.html
-UPD 2015-05-05_21:16:15 15870 www/tablet/js/fhem-tablet-ui.js
+UPD 2015-05-06_22:41:57 15807 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-05-02_11:25:39 1688 www/tablet/js/widget_circlemenu.js
 UPD 2015-05-01_00:18:55 2720 www/tablet/js/widget_dimmer.js
-UPD 2015-05-05_21:49:15 6750 www/tablet/js/widget_famultibutton.js
+UPD 2015-05-06_22:49:17 7765 www/tablet/js/widget_famultibutton.js
 UPD 2015-05-01_00:18:55 6039 www/tablet/js/widget_homestatus.js
 UPD 2015-05-01_00:18:55 1347 www/tablet/js/widget_image.js
 UPD 2015-05-01_00:18:55 5162 www/tablet/js/widget_knob.js
@@ -47,7 +47,7 @@ UPD 2015-05-01_00:18:55 1335 www/tablet/js/widget_switch.js
 UPD 2015-05-01_17:55:57 1776 www/tablet/js/widget_symbol.js
 UPD 2015-05-01_00:18:55 8691 www/tablet/js/widget_thermostat.js
 UPD 2015-05-01_00:18:55 6847 www/tablet/js/widget_volume.js
-UPD 2015-05-01_00:18:55 15856 www/tablet/js/widget_weather.js
+UPD 2015-05-06_21:42:41 20347 www/tablet/js/widget_weather.js
 UPD 2015-05-01_00:18:55 1691 www/tablet/js/widget_widget.js
 UPD 2015-05-01_00:18:55 4719 www/tablet/lib/fa-multi-button.min.js
 UPD 2015-05-01_00:18:55 26586 www/tablet/lib/fhemSVG.css
