@@ -528,10 +528,11 @@ this.indexOfNumeric = function(array,val){
 
 this.indexOfRegex = function(array,find){
   for (var i=0;i<array.length;i++) {
-      //var match = find.match(new RegExp('^'+array[i].replace(/[.?*+^$\\(){}|]/g, "\\$&")+'$'));
-      var match = find.match(new RegExp('^'+array[i]+'$'));
-      if (match)
+      try {
+      	var match = find.match(new RegExp(array[i]));
+      	if (match)
             return i
+      } catch(e) {}
   }
   return array.indexOf(find);
 };
