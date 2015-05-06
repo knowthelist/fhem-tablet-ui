@@ -55,6 +55,11 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         if(typeof colors == 'undefined') {
             colors = new Array(elem.data('on-color')||elem.data('off-color')||'#505050');
         }
+        
+        // if data-background-colors isn't set, try using data-on-background-color, data-off-background-color or #505050 instead
+        if(typeof bgcolors == 'undefined') {
+            bgcolors = new Array(elem.data('on-background-color')||elem.data('off-background-color')||'#505050');
+        }
 
         // fill up colors and icons to states.length
         // if an index s isn't set, use the value of s-1
@@ -65,6 +70,9 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             if(typeof colors[s] == 'undefined') {
                 colors[s]=colors[s>0?s-1:0];
             }
+            if(typeof bgcolors[s] == 'undefined') {
+                bgcolors[s]=bgcolors[s>0?s-1:0];
+            }
         }
 
         var elm=elem.children().filter('#fg');
@@ -74,6 +82,9 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             .addClass('fa fa-stack-1x')
             .addClass(icons[idx])
             .css( "color", colors[idx] );
+            
+            var bgelm=elem.children().filter('#bg');
+            bgelm.css( "color", bgcolors[idx]);
         }
     },
     toggleOn : function(elem) {
