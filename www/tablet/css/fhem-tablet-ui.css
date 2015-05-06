@@ -196,10 +196,10 @@ input {
         visibility:hidden;
 }
 
-.slider_vertical{
+.slider_vertical, .level_vertical{
 margin:10px 0px 0px 27% !important;
 }
-.slider_horizontal{
+.slider_horizontal, .level_horizontal{
 margin:12px 20px 25px 5px !important;
 }
 .range-min,

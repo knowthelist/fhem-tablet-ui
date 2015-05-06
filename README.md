@@ -63,12 +63,13 @@ Currently there are 14 types of widgets in the base installation.
 - **volume** : dial to set a single value (e.g. 0-60)
 - **homestatus** : selector for 4 states (1=home,2=night,3=away,4=holiday) 
 - **dimmer** : toogle button with a setter for on value
-- **slider** : vertical slider to select between min/max value
+- **slider** : vertical/horizontal slider to select between min/max value
 - **image** : insert an image, the URL is given by a reading
 - **weather** : insert an icon or image, represending a weather literal
 - **circlemenu** : Cover multiple widgets behind a single widget
 - **select**	: Combobox to provide a list for selection
 - **pagetab**	: Element to smoothly exchange the whole page with another page
+- **level** : vertical/horizontal bar to show values between min/max value
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -121,7 +122,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)						 
 - **data-part** : split position of the space separated value to show or an RegEx
 - **data-colors** : a array of color values to affect the colour of the label according to the limit value 
-- **data-limits** : a array of numeric values to affect the colour of the label
+- **data-limits** : a array of numeric or RegEx values to affect the colour of the label
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
 - **class**     : small, large, big, bigger, thin, red, green, blue, darker, timestamp, w1x, w2x, w3x
 
@@ -179,6 +180,16 @@ data-version='residents' or 'roommate' or 'guest'
 - **data-max**  : maximal value to set (default 100)
 - **data-on**   : value where the slider moves to max  (default 'on')
 - **data-off**  : value where the slider moves to min  (default 'off')
+- **class**		: mini, horizontal
+
+####Level widgets
+- **data-get**  : name of the reading to get from FHEM (default 'STATE')
+- **data-min**  : minimal value to set (default 0)
+- **data-max**  : maximal value to set (default 100)
+- **data-on**   : value where the slider moves to max  (default 'on')
+- **data-off**  : value where the slider moves to min  (default 'off')
+- **data-colors** : a array of color values to affect the colour of the label according to the limit value 
+- **data-limits** : a array of numeric or RegEx values to affect the colour of the label
 - **class**		: mini, horizontal
 
 ####Dimmer widgets
