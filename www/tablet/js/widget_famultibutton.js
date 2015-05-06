@@ -8,12 +8,17 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         if(elem.data('doubleclick')*1>0) {
             if(! elem.data('_firstclick')) {
                 elem.data('_firstclick', true);
-                elem.data('_firstclick_reset', setTimeout(function() {
-                    elem.data('_firstclick', false);
-                }, elem.data('doubleclick')*1));
                 if(onoff == 'on') {
+                    elem.data('_firstclick_reset', setTimeout(function() {
+                        elem.data('_firstclick', false);
+                        elem.setOff();
+                    }, elem.data('doubleclick')*1));
                     elem.setOff();
                 } else {
+                    elem.data('_firstclick_reset', setTimeout(function() {
+                        elem.data('_firstclick', false);
+                        elem.setOn();
+                    }, elem.data('doubleclick')*1));
                     elem.setOn();
                 }
                 elem.children().filter('#bg').css('color', elem.data('firstclick-background-color'));
