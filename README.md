@@ -222,7 +222,7 @@ data-version='residents' or 'roommate' or 'guest'
 - **data-off-color**: color of Off state (default '#505050')
 - **data-get-on**   : array of status to assign a special icon-list from data-icons
 - **data-icons**    : array of icons related to the a data-get-on array
-- **class**		    : 
+- **class**		    : warn, activate (as additionals for data-icons)
 
 CSS Class description
 -------
@@ -650,7 +650,16 @@ Multiple pagetabs in a template file: menu.html
 <div data-type="pagetab" data-device="MyFaxDevice"
 		data-get-on='["0","1"]'
 		data-icons='["fa-fax","fa-fax warn"]'
-		data-url="index_7.html" class="cell"></div>
+		data-url="index_fax.html" class="cell"></div>
+</div>
+```
+
+**Example** for a tab menu item, which also activate the new page in case of 'on' status
+```html
+<div data-type="pagetab" data-device="myDoorBell"
+		data-get-on='["0","(?:[1-9][0-9]*)","on"]'
+		data-icons='["fa-fax","fa-fax warn","fa-fax warn activate"]'
+		data-url="index_door.html" class="cell"></div>
 </div>
 ```
 

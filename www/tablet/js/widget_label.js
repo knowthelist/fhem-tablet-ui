@@ -27,17 +27,30 @@ var widget_label = {
 
 				$(this).html( val + "<span style='font-size: 50%;'>"+unit+"</span>" );
 
-				//set colors according limits for numeric values
-				if ($.isNumeric(val)){
-					var limits=$(this).data('limits');
-					var colors=$(this).data('colors');
-                    if (limits && colors && limits.length == colors.length){
-                        var idx = indexOfGeneric(limits,val);
-                        if (idx>-1)
-                            $(this).css("color", colors[idx]);
+                //set colors according matches for values
+                var limits=$(this).data('limits');
+                if (limits) {
+                    var colors=$(this).data('colors');
 
-					}
-				}
+                    // if data-colors isn't set, try using #505050 instead
+                    if(typeof colors == 'undefined') {
+                        colors = new Array('#505050');
+                    }
+
+                    // fill up colors and icons to states.length
+                    // if an index s isn't set, use the value of s-1
+                    for(var s=0; s<limits.length; s++) {
+                        if(typeof colors[s] == 'undefined') {
+                            colors[s]=colors[s>0?s-1:0];
+                        }
+                    }
+
+                    var idx=indexOfGeneric(limits,val);
+                    console.log('idx',idx,val);
+                    if (idx>-1){
+                        $(this).css( "color", colors[idx] );
+                    }
+                }
 			 }
 		}
 
