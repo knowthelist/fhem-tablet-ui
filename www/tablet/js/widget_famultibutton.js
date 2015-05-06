@@ -98,11 +98,11 @@ var widget_famultibutton = $.extend({}, widget_widget, {
     },
     init_attr : function(elem) {
         elem.data('get',        elem.data('get')        || 'STATE');
-        elem.data('cmd',        elem.data('cmd')        || 'set');
-        elem.data('get-on',     elem.data('get-on')     || 'on');
-        elem.data('get-off',    elem.data('get-off')    || 'off');
-        elem.data('set-on',     elem.data('set-on')     || elem.data('get-on'));
-        elem.data('set-off',    elem.data('set-off')    || elem.data('get-off'));
+        elem.data('cmd',        typeof elem.data('cmd')     != 'undefined' ? elem.data('cmd')     : 'set');
+        elem.data('get-on',     typeof elem.data('get-on')  != 'undefined' ? elem.data('get-on')  : 'on');
+        elem.data('get-off',    typeof elem.data('get-off') != 'undefined' ? elem.data('get-off') : 'off');
+        elem.data('set-on',     typeof elem.data('set-on')  != 'undefined' ? elem.data('set-on')  : elem.data('get-on'));
+        elem.data('set-off',    typeof elem.data('set-off') != 'undefined' ? elem.data('set-off') : elem.data('get-off'));
         elem.data('mode',       elem.data('mode')       || 'toggle');
         elem.data('doubleclick',                    elem.data('doubleclick')                    || 0);
         elem.data('firstclick-background-color',    elem.data('firstclick-background-color')    ||  '#6F4500');
