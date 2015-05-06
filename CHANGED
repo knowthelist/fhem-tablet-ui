@@ -1,3 +1,3 @@
 FHEM tablet UI last change:
 2015-05-06
- - Merge branch 'nesges-patch-65'
+ - Changed: thermostat mincolor/maxcolor via data

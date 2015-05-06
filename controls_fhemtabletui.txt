@@ -45,7 +45,7 @@ UPD 2015-05-01_00:18:55 6206 www/tablet/js/widget_simplechart.js
 UPD 2015-05-01_00:18:55 2681 www/tablet/js/widget_slider.js
 UPD 2015-05-01_00:18:55 1335 www/tablet/js/widget_switch.js
 UPD 2015-05-01_17:55:57 1776 www/tablet/js/widget_symbol.js
-UPD 2015-05-01_00:18:55 8691 www/tablet/js/widget_thermostat.js
+UPD 2015-05-06_22:26:24 8869 www/tablet/js/widget_thermostat.js
 UPD 2015-05-01_00:18:55 6847 www/tablet/js/widget_volume.js
 UPD 2015-05-06_21:42:41 20347 www/tablet/js/widget_weather.js
 UPD 2015-05-01_00:18:55 1691 www/tablet/js/widget_widget.js
