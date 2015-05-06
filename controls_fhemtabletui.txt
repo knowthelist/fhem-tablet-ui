@@ -4,7 +4,7 @@ DIR www/tablet/fonts
 DIR www/tablet/js
 DIR www/tablet/lib
 UPD 2015-05-01_00:18:55 787 www/tablet/css/fhem-mobil-ui.css
-UPD 2015-05-02_23:11:32 7199 www/tablet/css/fhem-tablet-ui.css
+UPD 2015-05-06_02:05:57 7235 www/tablet/css/fhem-tablet-ui.css
 UPD 2015-05-01_00:18:55 127396 www/tablet/fonts/fhemSVG.eot
 UPD 2015-05-01_00:18:55 528460 www/tablet/fonts/fhemSVG.svg
 UPD 2015-05-01_00:18:55 127232 www/tablet/fonts/fhemSVG.ttf
@@ -36,6 +36,7 @@ UPD 2015-05-01_00:18:55 6039 www/tablet/js/widget_homestatus.js
 UPD 2015-05-01_00:18:55 1347 www/tablet/js/widget_image.js
 UPD 2015-05-01_00:18:55 5162 www/tablet/js/widget_knob.js
 UPD 2015-05-06_01:01:45 2090 www/tablet/js/widget_label.js
+UPD 2015-05-06_02:42:06 3349 www/tablet/js/widget_level.js
 UPD 2015-05-05_22:11:42 3895 www/tablet/js/widget_pagetab.js
 UPD 2015-05-01_00:18:55 1239 www/tablet/js/widget_playstream.js
 UPD 2015-05-01_00:18:55 1088 www/tablet/js/widget_push.js
