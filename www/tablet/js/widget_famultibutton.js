@@ -51,6 +51,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
 
         var icons=elem.data('icons');
         var colors=elem.data('on-colors');
+        var bgcolors=elem.data('on-background-colors');
 
         // if data-icons isn't set, try using data-icon or fa-power-off instead
         if(typeof icons == 'undefined') {
