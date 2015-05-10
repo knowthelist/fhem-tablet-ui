@@ -15,7 +15,6 @@ var widget_push = $.extend({}, widget_famultibutton, {
             $(this).data('set-on',          $(this).data('set-on')          || $(this).data('set') || ' '); 
             $(this).data('set-off',         $(this).data('set-off')         || $(this).data('set') || ' ');
             $(this).data('mode', 'push');
-
             base.init_attr($(this));
             base.init_ui($(this));
         });

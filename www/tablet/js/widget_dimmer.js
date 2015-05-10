@@ -42,7 +42,7 @@ var widget_dimmer = {
 		});
 		var val = localStorage.getItem("dimmer_"+device);
 		if ( val )
-			elem.setValue( parseInt(val));
+            elem.setDimValue( parseInt(val));
 	 });
   },
   update: function (dev,par) {
@@ -52,21 +52,24 @@ var widget_dimmer = {
 
         if ( $(this).data('get')==par){
 
-			var state = getDeviceValue( $(this), 'get' );
+            var state = getDeviceValue( $(this), 'get' );
 			if (state) {
-				if ($.isNumeric(state)) $(this).data('famultibutton').setValue( parseInt(state));
-                if ( state == $(this).data('get-on') )
-					$(this).data('famultibutton').setOn();
-				else if ( state == $(this).data('get-off') )
-					$(this).data('famultibutton').setOff();
-				else if ( state.match(RegExp('^' + $(this).data('get-on') + '$')) )
-						$(this).data('famultibutton').setOn();
-				else if ( state.match(RegExp('^' + $(this).data('get-off') + '$')) )
-						$(this).data('famultibutton').setOff();
-                else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
-                    $(this).data('famultibutton').setOff();
-                else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
-                    $(this).data('famultibutton').setOn();
+                var elem = $(this).data('famultibutton');
+                if (elem){
+                    if ($.isNumeric(state)) elem.setDimValue( parseInt(state));
+                    if ( state == $(this).data('get-on') )
+                        elem.setOn();
+                    else if ( state == $(this).data('get-off') )
+                        elem.setOff();
+                    else if ( state.match(RegExp('^' + $(this).data('get-on') + '$')) )
+                        elem.setOn();
+                    else if ( state.match(RegExp('^' + $(this).data('get-off') + '$')) )
+                        elem.setOff();
+                    else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
+                        elem.setOff();
+                    else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
+                        elem.setOn();
+                 }
 			}
 		}
 	});
