@@ -368,6 +368,99 @@ select {
   pointer-events: none;
 }
 
+.rotor .rotor-wrapper {
+  position: relative;
+  height:100%;
+  width:100%;
+}
+
+.rotor li {
+ position: absolute;
+ left:0;
+ right:0;
+ margin-left:auto;
+ margin-right:auto;
+ display: inline-block;
+}
+
+.rotor li.is-visible {
+ opacity: 1;
+}
+
+.rotor li.is-hidden {
+ opacity:0;
+}
+
+.rotor.fade li.is-visible {
+ animation: fade-in 2.2s;
+}
+
+.rotor.fade li.is-hidden {
+ animation: fade-out 2.2s;
+}
+
+@keyframes fade-in{
+ 0%{opacity:0;}
+ 100%{opacity:1;}
+}
+
+@keyframes fade-out{
+ 0%{opacity:1;}
+ 100%{opacity:0;}
+}
+
+.rotor.rotate li {
+ transform-origin: 50% 100%;
+ transform: rotateX(180deg);
+}
+
+.rotor.rotate li.is-visible {
+ transform: rotateX(0deg);
+ animation: rotate-in 1.2s;
+}
+
+.rotor.rotate li.is-hidden {
+ transform: rotateX(180deg);
+ animation: rotate-out 1.2s;
+}
+
+
+@keyframes rotate-in {
+ 0% {
+   transform: rotateX(180deg);
+   opacity: 0;
+ }
+ 35% {
+   transform: rotateX(120deg);
+   opacity: 0;
+ }
+ 65% {
+   opacity: 0;
+ }
+ 100% {
+   transform: rotateX(360deg);
+   opacity: 1;
+ }
+}
+
+@keyframes rotate-out {
+ 0% {
+   transform: rotateX(0deg);
+   opacity: 1;
+ }
+ 35% {
+   transform: rotateX(-40deg);
+   opacity: 1;
+ }
+ 65% {
+   opacity: 0;
+ }
+ 100% {
+   transform: rotateX(180deg);
+   opacity: 0;
+ }
+}
+
 .symbol.on{color:#aa6900;background-color:#aa6900;}
 .symbol.off{color:#505050;background-color:#505050;}
 .switch.on{color:#2A2A2A;background-color:#aa6900;}
