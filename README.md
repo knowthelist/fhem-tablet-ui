@@ -54,7 +54,7 @@ Change the widgets you have and want to see on the dashboard
 ```
 Widgets
 -------
-Currently there are 14 types of widgets in the base installation.
+Currently there are 16 types of widgets in the base installation.
 - **thermostat** : dial for heater thermostates to set desired value and show current value
 - **switch** : Toggle any command to FHEM (e.g. on / off)
 - **label** : show state as text (colourable)
@@ -70,6 +70,7 @@ Currently there are 14 types of widgets in the base installation.
 - **select**	: Combobox to provide a list for selection
 - **pagetab**	: Element to smoothly exchange the whole page with another page
 - **level** : vertical/horizontal bar to show values between min/max value
+- **rotor** :slider between multiple widgets at one position
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -212,7 +213,6 @@ data-version='residents' or 'roommate' or 'guest'
 - **data-imageset** : collection of images to display current weather situation. Possible values: 'meteocons', 'kleinklima' (Default: 'meteocons')
 - **data-image-path**: path to the images of the selected imageset (default: <fhem-dir>/images/weather/)
 
-
 ####CircleMenu widgets
 - **data-item-diameter** : diameter of the circle (default 52)
 - **data-circle-radius** : radius of each item, in pixel (default 70)
@@ -234,6 +234,10 @@ data-version='residents' or 'roommate' or 'guest'
 - **data-get-on**   : array of status to assign a special icon-list from data-icons
 - **data-icons**    : array of icons related to the a data-get-on array
 - **class**		    : warn, activate (as additionals for data-icons)
+
+####Rotor widgets
+- **data-delay**    : time in millisecondes to wait until next list item get shown. (default: 3500)
+- **class**		    : fade, rotate  (default: '' means no animation)  
 
 CSS Class description
 -------
@@ -673,8 +677,31 @@ Multiple pagetabs in a template file: menu.html
 		data-url="index_door.html" class="cell"></div>
 </div>
 ```
-
+    
 ![](http://knowthelist.github.io/fhem-tablet-ui/menu.png)
+
+
+###Rotor
+**Example** for a rotor widget, which switches between to days of weather forecast 
+```html
+<div data-type="rotor" class="fade">
+ <ul>
+  <li>
+	<div data-type="label" class="darker">Heute</div>
+	<div data-type="weather" data-device="AgroWeather" data-get="fc0_weatherDay" class="big"></div>
+	<div data-type="label" data-device="AgroWeather" data-get="fc0_weatherDay" class=""></div>
+	<div data-type="label" data-device="AgroWeather" data-get="fc0_tempMax" data-unit="%B0C%0A" class="large"></div>
+  </li>
+  <li>
+	<div data-type="label" class="darker">Morgen</div>
+	<div data-type="weather" data-device="AgroWeather" data-get="fc1_weatherDay" class="big"></div>
+	<div data-type="label" data-device="AgroWeather" data-get="fc1_weatherDay" class=""></div>
+	<div data-type="label" data-device="AgroWeather" data-get="fc1_tempMax" data-unit="%B0C%0A" class="large"></div>
+  </li>
+ </ul>
+</div>
+```
+
 
 Format
 -------
