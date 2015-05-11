@@ -484,6 +484,7 @@ temperature	20.1
 ```html
 <div data-type="push" data-device="MyLamp" data-set="on-for-timer 300"  class="cell" ></div>
 ```
+![](http://knowthelist.github.io/fhem-tablet-ui/push_on-for-timer.png)
 
 ###Switch
 **Example** for how to create a widget for MILIGHT via toggle button. Usage of RegEx pattern for state request:
@@ -593,6 +594,30 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 <div data-type="label" class="cell">Light1</div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/slider.png)
+
+###Level
+**Example** for how to create a widget for a double level control with additional labels
+```html
+<div class="cell">
+	<div data-type="level" data-device='Tablet'  data-get='powerLevel'
+		data-limits='["[12]*[0-9]","[3456][0-9]","([789][0-9]|100)"]'
+		data-colors='["#dd3366","#ffcc00","#55aa44"]'
+		class="horizontal left" >
+	</div>
+	<div data-type="label" data-device='Tablet'
+		 data-get='powerLevel'
+		 data-unit="%" class="top-space left"></div>
+</div>
+<div class="cell">
+	<div data-type="level" data-device='dummy1'
+		data-limits='["20","70","95"]'
+		data-colors='["#dd3366","#ffcc00","#55aa44"]'
+		class="horizontal left" >
+	</div>
+	<div data-type="label" data-device='dummy1' data-unit="%" class="top-space left"></div>
+</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/level_limits.png)
 
 ###Volume
 **Example** for how to create a widget for a HueDevice to set hue values:
