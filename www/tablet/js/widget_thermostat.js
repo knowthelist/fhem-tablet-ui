@@ -1,6 +1,9 @@
-var widget_thermostat = {
-  elements: null,
-  _thermostat:null,
+if(typeof widget_knob == 'undefined') {
+    loadplugin('widget_knob');
+}
+
+var widget_thermostat = $.extend({}, widget_knob, {
+  widgetname: 'thermostat',
   isUpdating:false,
   getClimaValues: function (device) {
 
@@ -14,7 +17,7 @@ var widget_thermostat = {
         desired: getPart(val_desired,'(\\S+).*'),
         valve: getDeviceValue( device, 'valve')
 	};
-},
+  },
   getGradientColor: function(start_color, end_color, percent) {
    // strip the leading # if it's there
    start_color = start_color.replace(/^\s*#|\s*$/g, '');
@@ -90,7 +93,7 @@ var widget_thermostat = {
 		
         if ((tick > acAngle && tick < a.s) || (tick-tick_w*dist <= acAngle && tick+tick_w*dist >= a.s)){
             // draw diff range in gradient color
-            c.strokeStyle = _thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-tick)/this.angleArc);
+            c.strokeStyle = base.getGradientColor(maxcolor, mincolor, (this.endAngle-tick)/this.angleArc);
             //if (tick-tick_w*dist <= acAngle )
             //    destcolor=c.strokeStyle;
         }
@@ -132,7 +135,7 @@ var widget_thermostat = {
 
 	// draw target temp cursor
     c.beginPath();
-    c.strokeStyle = _thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
+    c.strokeStyle = base.getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
 	c.lineWidth = this.lineWidth * 2;
     c.arc(this.xy, this.xy, this.radius-this.lineWidth/2, a.s, a.e, a.d);
     c.stroke();
@@ -148,9 +151,9 @@ var widget_thermostat = {
   return false;
 },
   init: function () {
-  	_thermostat=this;
-	_thermostat.elements=$('div[data-type="thermostat"]');
-	_thermostat.elements.each(function( index ) {
+  	base=this;
+	this.elements=$('div[data-type="'+this.widgetname+'"]');
+	this.elements.each(function( index ) {
         var knob_elem =  jQuery('<input/>', {
 			type: 'text',
 			value: '10',
@@ -176,17 +179,17 @@ var widget_thermostat = {
 			'angleOffset': $(this).data('angleoffset') || -120,
 			'angleArc': $(this).data('anglearc') || 240,
 			'bgColor': $(this).data('bgcolor') || 'transparent',
-            'fgColor': $(this).data('fgcolor') || getStyle('.thermostat.fgcolor','color') || '#bbbbbb',
-            'tkColor': $(this).data('tkcolor') || getStyle('.thermostat.tkcolor','color') || '#696969',
-            'minColor': $(this).data('mincolor') || getStyle('.thermostat.mincolor','color') ||'#4477ff',
-            'maxColor': $(this).data('maxcolor') || getStyle('.thermostat.maxcolor','color') ||'#ff0000',
+            'fgColor': $(this).data('fgcolor') || getStyle('.'+base.widgetname+'.fgcolor','color') || '#bbbbbb',
+            'tkColor': $(this).data('tkcolor') || getStyle('.'+base.widgetname+'.tkcolor','color') || '#696969',
+            'minColor': $(this).data('mincolor') || getStyle('.'+base.widgetname+'.mincolor','color') ||'#4477ff',
+            'maxColor': $(this).data('maxcolor') || getStyle('.'+base.widgetname+'.maxcolor','color') ||'#ff0000',
             'thickness': .25,
             'cursor': 6,
             'touchPosition': 'left',
 			'readOnly' : $(this).hasClass('readonly')?true:false,
 			'cmd': $(this).data('cmd') || 'set',
 			'set': $(this).data('set') || 'desired-temp',
-			'draw' : _thermostat.drawDial,
+			'draw' : base.drawDial,
 			'change' : function (v) { 
                 //reset shortpoll timer to avoid jump back
                 startPollInterval();
@@ -212,12 +215,12 @@ var widget_thermostat = {
 	});
   },
   update: function (dev,par) {
-  
-    var deviceElements= _thermostat.elements.filter('div[data-device="'+dev+'"]');
+    base = this;
+    var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
     isUpdating=true;
 	deviceElements.each(function(index) {
 		var textdisplay=false;
-		var clima = _thermostat.getClimaValues( $(this) );
+		var clima = base.getClimaValues( $(this) );
 		switch(clima.desired) {
 		    case $(this).data('off'):   clima.desired=$(this).data('min'); textdisplay=$(this).data('off'); break;
 		    case $(this).data('boost'): clima.desired=$(this).data('max'); textdisplay=$(this).data('boost'); break;
@@ -252,5 +255,5 @@ var widget_thermostat = {
 		knob_elem.css({visibility:'visible'});
 	});
     isUpdating=false;
-},		 
-};
+},
+});
