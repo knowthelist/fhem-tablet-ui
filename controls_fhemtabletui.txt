@@ -50,9 +50,9 @@ UPD 2015-05-11_20:43:37 8773 www/tablet/js/widget_thermostat.js
 UPD 2015-05-01_00:18:55 6847 www/tablet/js/widget_volume.js
 UPD 2015-05-06_21:42:41 20347 www/tablet/js/widget_weather.js
 UPD 2015-05-01_00:18:55 1691 www/tablet/js/widget_widget.js
-UPD 2015-05-10_23:22:07 5211 www/tablet/lib/fa-multi-button.min.js
+UPD 2015-05-11_23:57:41 5201 www/tablet/lib/fa-multi-button.min.js
 UPD 2015-05-01_00:18:55 26586 www/tablet/lib/fhemSVG.css
-UPD 2015-05-01_00:18:55 23665 www/tablet/lib/font-awesome.min.css
+UPD 2015-05-11_23:45:03 23640 www/tablet/lib/font-awesome.min.css
 UPD 2015-05-01_00:18:55 10011 www/tablet/lib/jquery.circlemenu.js
 UPD 2015-05-01_00:18:55 3021 www/tablet/lib/jquery.gridster.min.css
 UPD 2015-05-01_00:18:55 44235 www/tablet/lib/jquery.gridster.min.js
