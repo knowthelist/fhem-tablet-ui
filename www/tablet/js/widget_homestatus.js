@@ -73,16 +73,9 @@ var widget_homestatus = {
 		c.stroke(); 
 
         //cavans font
-        var cfont=null,cfafont=null,coffset=0;
-        if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)){
-            cfont="100 18px sans-serif";
-            cfafont="42px FontAwesome";
-            coffset=10;
-        }
-         else{
-            cfont="100 11px sans-serif";
-            cfafont="22px FontAwesome";
-        }
+        var cfont=10*window.devicePixelRatio +"px sans-serif";
+        var cfafont=22*window.devicePixelRatio +"px FontAwesome";
+        var coffset=5*window.devicePixelRatio;
 
 		
 		c.fillStyle = (sector==1)?this.o.minColor:this.o.maxColor;

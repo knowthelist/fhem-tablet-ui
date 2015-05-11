@@ -101,6 +101,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             if( device && typeof device != "undefined" && device !== " ") {
                 TOAST && $.toast(cmd);
             }
+            elem.trigger("toggleOn");
         }
     },
     toggleOff : function(elem) {

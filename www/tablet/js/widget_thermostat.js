@@ -117,11 +117,7 @@ var widget_thermostat = {
 	}
 
     //cavans font
-    var cfont = null;
-    if (navigator.userAgent.match(/(iPod|iPhone|iPad)/))
-        cfont="18px sans-serif";
-     else
-        cfont="10px sans-serif";
+    var cfont=10*window.devicePixelRatio +"px sans-serif";
 
     //draw current value as text
     var x = this.radius*0.7*Math.cos(acAngle);
