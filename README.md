@@ -480,6 +480,11 @@ temperature	20.1
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/square-push-v.png)
 
+**Example** a push button to switch a lamp on for 5 minutes. The control shows a progress circle while countdown is running.
+```html
+<div data-type="push" data-device="MyLamp" data-set="on-for-timer 300"  class="cell" ></div>
+```
+
 ###Switch
 **Example** for how to create a widget for MILIGHT via toggle button. Usage of RegEx pattern for state request:
 ```html
