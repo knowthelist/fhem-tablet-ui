@@ -482,7 +482,8 @@ temperature	20.1
 
 **Example** a push button to switch a lamp on for 5 minutes. The control shows a progress circle while countdown is running.
 ```html
-<div data-type="push" data-device="MyLamp" data-set="on-for-timer 300"  class="cell" ></div>
+<div data-type="push" data-device="MyLamp" data-set="on-for-timer 300"  
+	 class="cell" ></div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/push_on-for-timer.png)
 
@@ -614,7 +615,8 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 		data-colors='["#dd3366","#ffcc00","#55aa44"]'
 		class="horizontal left" >
 	</div>
-	<div data-type="label" data-device='dummy1' data-unit="%" class="top-space left"></div>
+	<div data-type="label" data-device='dummy1' data-unit="%" 
+		 class="top-space left"></div>
 </div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/level_limits.png)

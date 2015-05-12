@@ -43,15 +43,36 @@ var widget_slider = {
                 $(this).css({'height': '120px','max-height': '120px'});
         }
 
-		var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
+        if ($(this).hasClass('readonly')){
+            $(this).children().find('.range-handle').css({'visibility':'hidden'});
+        }
+        else
+        {
+            var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
+            $(this).bind(releaseEventType, function(e) {
+                var v = $(this).find('input').val();
+                var cmdl = $(this).data('cmd')+' '+device+' '+$(this).data('set')+' '+v;
+                var pwrng = $(this).data('Powerange');
+                if (e.touches) e = e.touches[0];
 
-		$(this).bind(releaseEventType, function(e) {
-			var v = $(this).find('input').val();
-			var cmdl = $(this).data('cmd')+' '+device+' '+$(this).data('set')+' '+v;
-			setFhemStatus(cmdl);
-			$.toast(cmdl);
-			e.preventDefault();
-		});
+                if (e.target.className !== 'range-handle') {
+                    var offset = 0;
+                    var parent = pwrng.handle;
+                    while (parent = parent.offsetParent)
+                      offset += parent.offsetLeft;
+                    pwrng.startX = offset - window.scrollX + pwrng.handle.offsetLeft + pwrng.handle.clientWidth / 2;
+                    pwrng.handleOffsetX = pwrng.handle.offsetLeft;
+                    pwrng.restrictHandleX = pwrng.slider.offsetWidth - pwrng.handle.offsetWidth;
+                    pwrng.unselectable(pwrng.slider, true);
+                    pwrng.onmousemove(e);
+                }
+                else{
+                    setFhemStatus(cmdl);
+                    $.toast(cmdl);
+                }
+                e.preventDefault();
+            });
+        }
 		
         $(this).addClass(pwrng.options.klass);
 
