@@ -160,19 +160,16 @@ i#warn-back {
     min-width: 52px;
     max-width: 52px;
 }
-
 .doublebox-h {
     min-width: 104px;
     max-width: 104px;
     min-height: 52px;
     max-height: 52px;
 }
-
 .doublebox-v [data-type]{
     margin-top:-4px;
     margin-bottom:-4px;
 }
-
 .doublebox-h [data-type]{
     margin-left:-6px;
     margin-right:-6px;
@@ -197,7 +194,7 @@ input {
 }
 
 .slider_vertical, .level_vertical{
-margin:10px 0px 0px 27% !important;
+margin:10px 0px 0px 20% !important;
 }
 .slider_horizontal, .level_horizontal{
 margin:12px 20px 25px 5px !important;
@@ -205,6 +202,10 @@ margin:12px 20px 25px 5px !important;
 .range-min,
 .range-max {
     visibility:hidden;
+}
+
+.slider_vertical .slidertext{
+margin:10px 0px 0px -30% !important;
 }
 
 .jq-toast-wrap{
