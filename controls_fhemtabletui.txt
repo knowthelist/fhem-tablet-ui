@@ -4,7 +4,7 @@ DIR www/tablet/fonts
 DIR www/tablet/js
 DIR www/tablet/lib
 UPD 2015-05-12_00:52:03 787 www/tablet/css/fhem-mobil-ui.css
-UPD 2015-05-12_00:52:03 8432 www/tablet/css/fhem-tablet-ui.css
+UPD 2015-05-14_02:30:47 8499 www/tablet/css/fhem-tablet-ui.css
 UPD 2015-05-12_00:52:03 127396 www/tablet/fonts/fhemSVG.eot
 UPD 2015-05-12_00:52:03 528460 www/tablet/fonts/fhemSVG.svg
 UPD 2015-05-12_00:52:03 127232 www/tablet/fonts/fhemSVG.ttf
@@ -43,7 +43,7 @@ UPD 2015-05-12_00:52:04 1907 www/tablet/js/widget_push.js
 UPD 2015-05-12_00:52:04 1204 www/tablet/js/widget_rotor.js
 UPD 2015-05-12_00:52:04 3177 www/tablet/js/widget_select.js
 UPD 2015-05-12_00:52:04 6206 www/tablet/js/widget_simplechart.js
-UPD 2015-05-12_01:58:22 3750 www/tablet/js/widget_slider.js
+UPD 2015-05-14_02:26:36 5297 www/tablet/js/widget_slider.js
 UPD 2015-05-12_00:52:04 1335 www/tablet/js/widget_switch.js
 UPD 2015-05-12_00:52:04 1776 www/tablet/js/widget_symbol.js
 UPD 2015-05-12_00:52:04 8773 www/tablet/js/widget_thermostat.js
@@ -61,5 +61,6 @@ UPD 2015-05-12_00:52:04 10878 www/tablet/lib/jquery.knob.mod.min.js
 UPD 2015-05-12_00:52:04 1107 www/tablet/lib/jquery.toast.min.css
 UPD 2015-05-12_00:52:04 5303 www/tablet/lib/jquery.toast.min.js
 UPD 2015-05-12_00:52:04 23826 www/tablet/lib/openautomation.css
-UPD 2015-05-12_00:52:04 1068 www/tablet/lib/powerange.min.css
-UPD 2015-05-12_00:52:04 17646 www/tablet/lib/powerange.min.js
+UPD 2015-05-14_02:33:54 40787 www/tablet/lib/powerange.js
+UPD 2015-05-13_19:23:17 1194 www/tablet/lib/powerange.min.css
+UPD 2015-05-14_02:35:19 18255 www/tablet/lib/powerange.min.js
