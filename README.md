@@ -179,9 +179,10 @@ data-version='residents' or 'roommate' or 'guest'
 - **data-cmd**  : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 100)
-- **data-on**   : value where the slider moves to max  (default 'on')
-- **data-off**  : value where the slider moves to min  (default 'off')
-- **class**		: mini, horizontal
+- **data-on**   : value where the slider moves to max  [RegEx] (default 'on')
+- **data-off**  : value where the slider moves to min  [RegEx] (default 'off')
+- **data-value**: show the value in a text box (default 'false')
+- **class**		: mini, horizontal, negated
 
 ####Level widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
