@@ -33,7 +33,7 @@ UPD 2015-05-12_00:52:04 1662 www/tablet/js/widget_circlemenu.js
 UPD 2015-05-12_00:52:04 2831 www/tablet/js/widget_dimmer.js
 UPD 2015-05-12_00:52:04 7859 www/tablet/js/widget_famultibutton.js
 UPD 2015-05-12_00:52:04 5885 www/tablet/js/widget_homestatus.js
-UPD 2015-05-12_00:52:04 1347 www/tablet/js/widget_image.js
+UPD 2015-05-18_19:11:03 2260 www/tablet/js/widget_image.js
 UPD 2015-05-12_00:52:04 5162 www/tablet/js/widget_knob.js
 UPD 2015-05-12_00:52:04 2090 www/tablet/js/widget_label.js
 UPD 2015-05-12_00:52:04 3349 www/tablet/js/widget_level.js
@@ -46,7 +46,7 @@ UPD 2015-05-12_00:52:04 6206 www/tablet/js/widget_simplechart.js
 UPD 2015-05-14_02:26:36 5297 www/tablet/js/widget_slider.js
 UPD 2015-05-12_00:52:04 1335 www/tablet/js/widget_switch.js
 UPD 2015-05-12_00:52:04 1776 www/tablet/js/widget_symbol.js
-UPD 2015-05-12_00:52:04 8773 www/tablet/js/widget_thermostat.js
+UPD 2015-05-18_19:11:03 8866 www/tablet/js/widget_thermostat.js
 UPD 2015-05-12_00:52:04 6847 www/tablet/js/widget_volume.js
 UPD 2015-05-12_00:52:04 20347 www/tablet/js/widget_weather.js
 UPD 2015-05-12_00:52:04 1691 www/tablet/js/widget_widget.js
