@@ -86,7 +86,7 @@ Attributes with defaults are optional and does not have to be set.
 
 ####Switch widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
-- **data-get-on**   : value for ON status to get. (default 'on')
+- **data-get-on**   : value for ON status to get or an array of states (default 'on')
 - **data-get-off**  : value for OFF status to get. (default 'off')
 - **data-set-on**   : value for ON status to set. (default: value of data-get-on)
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
@@ -98,6 +98,9 @@ Attributes with defaults are optional and does not have to be set.
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
 - **data-doubleclick**: timeout to wait for a second click or touch. '0' disables the doubleclick feature. (default '0')
+- **data-icons**    : array of icons related to the data-get-on array
+- **data-on-colors**: array of colors related to the data-get-on array
+- **data-on-background-colors**: array of colors related to the data-get-on array
 
 data-get-on and data-get-off accept also RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
 data-get-off="!on" means accept all but the data-get-on value (negation)

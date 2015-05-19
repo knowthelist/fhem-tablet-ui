@@ -25,10 +25,9 @@ var widget_select= $.extend({}, widget_widget, {
         var select_elem = jQuery('<select/>', { })
         .on('change', function (e) {
             var optionSelected = $("option:selected", this);
-            var valueSelected = this.value;
             var parent = $(this).parent('div[data-type="select"]');
             $(this).blur();
-            var cmdl = [parent.data('cmd'),parent.data('device'),parent.data('set'),valueSelected].join(' ');
+            var cmdl = [parent.data('cmd'),parent.data('device'),parent.data('set'),optionSelected.text()].join(' ');
             setFhemStatus(cmdl);
             $.toast(cmdl);
         })
