@@ -96,7 +96,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
     toggleOn : function(elem) {
         if(this._doubleclicked(elem, 'on')) {
             var device = elem.data('device');
-            var cmd = [elem.data('cmd'), device, elem.data('set-on')].join(' ');
+            var cmd = [elem.data('cmd'), device, elem.data('set'), elem.data('set-on')].join(' ');
             setFhemStatus(cmd);              
             if( device && typeof device != "undefined" && device !== " ") {
                 TOAST && $.toast(cmd);
@@ -107,15 +107,18 @@ var widget_famultibutton = $.extend({}, widget_widget, {
     toggleOff : function(elem) {
         if(this._doubleclicked(elem, 'off')) {
             var device = elem.data('device');
-            var cmd = [elem.data('cmd'), device, elem.data('set-off')].join(' ');
+            var cmd = [elem.data('cmd'), device, elem.data('set'), elem.data('set-off')].join(' ');
             setFhemStatus(cmd);
             if( device && typeof device != "undefined" && device !== " ") {
                 TOAST && $.toast(cmd);
             }
         }
     },
+    valueChanged: function(elem,v) {
+    },
     init_attr : function(elem) {
         elem.data('get',        elem.data('get')        || 'STATE');
+        elem.data('set',        typeof elem.data('set')     != 'undefined' ? elem.data('set')     : '');
         elem.data('cmd',        typeof elem.data('cmd')     != 'undefined' ? elem.data('cmd')     : 'set');
         elem.data('get-on',     typeof elem.data('get-on')  != 'undefined' ? elem.data('get-on')  : 'on');
         elem.data('get-off',    typeof elem.data('get-off') != 'undefined' ? elem.data('get-off') : 'off');
@@ -133,6 +136,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             mode: elem.data('mode'),
             toggleOn: function() { base.toggleOn(elem) },
             toggleOff: function() { base.toggleOff(elem) },
+            valueChanged: function(v) { base.valueChanged(elem,v) },
         });
         return elem;
     },

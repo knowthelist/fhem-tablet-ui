@@ -1,78 +1,99 @@
-var widget_dimmer = {
-  _dimmer: null,
-  elements: null,
-  init: function () {
-  	_dimmer=this;
-  	_dimmer.elements = $('div[data-type="dimmer"]');
- 	_dimmer.elements.each(function(index) {
+if(typeof widget_famultibutton == 'undefined') {
+    loadplugin('widget_famultibutton');
+}
 
-		var device = $(this).data('device');
-		$(this).data('get', $(this).data('get') || 'STATE');
-		$(this).data('set', $(this).data('set') || '');
-		$(this).data('cmd', $(this).data('cmd') || 'set');
-		$(this).data('get-on', $(this).attr('data-get-on') || $(this).attr('data-on') || 'on');
-		$(this).data('get-off', $(this).attr('data-get-off') || $(this).attr('data-off') || 'off');
-		$(this).data('set-off', $(this).attr('data-set-off') || $(this).data('get-off'));
-		readings[$(this).data('get')] = true;
-		var elem = $(this).famultibutton({
-			icon: 'fa-lightbulb-o',
-			backgroundIcon: 'fa-circle',
-			offColor: '#2A2A2A',
-			onColor: '#2A2A2A',
-			mode: 'dimmer', 
-			
-			// Called in toggle on state.
-			toggleOn: function( ) {
-				var v = $(this).data('famultibutton').getValue();
-				var cmdl = $(this).data('cmd')+' '+device+' '+$(this).data('set')+' '+v;
-				setFhemStatus(cmdl);
-				$.toast(cmdl);
-			},
-			toggleOff: function( ) {
-				 setFhemStatus($(this).data('cmd')+' '+device+' '+$(this).data('set-off'));
-			},
-            valueChanged: function(v) {
-				localStorage.setItem("dimmer_"+device, v);
-				if ($(this).data('famultibutton').getState()){
-				 	var cmdl = $(this).data('cmd')+' '+device+' '+$(this).data('set')+' '+v;
-				  	setFhemStatus(cmdl);
-				  	$.toast(cmdl);
-				}
-			},
-		});
-		var val = localStorage.getItem("dimmer_"+device);
-		if ( val )
-            elem.setDimValue( parseInt(val));
-	 });
-  },
-  update: function (dev,par) {
+var widget_dimmer = $.extend({}, widget_famultibutton, {
+    widgetname : 'dimmer',
+    init: function () {
+         var base = this;
+         this.elements = $('div[data-type="'+this.widgetname+'"]');
+         this.elements.each(function(index) {
+             $(this).data('off-color',               $(this).data('off-color')           || getStyle('.'+this.widgetname+'.off','color')              || '#2A2A2A');
+             $(this).data('off-background-color',    $(this).data('off-background-color')|| getStyle('.'+this.widgetname+'.off','background-color')   || '#505050');
+             $(this).data('on-color',                $(this).data('on-color')            || getStyle('.'+this.widgetname+'.on','color')               || '#2A2A2A');
+             $(this).data('on-background-color',     $(this).data('on-background-color') || getStyle('.'+this.widgetname+'.on','background-color')    || '#aa6900');
+             $(this).data('background-icon',         $(this).data('background-icon')     || 'fa-circle');
+             $(this).data('icon',                    $(this).data('icon')                || 'fa-lightbulb-o');
+             $(this).data('mode','dimmer');
+             var elem=$(this);
+             base.init_attr(elem);
+             base.init_ui(elem);
 
-    var deviceElements= _dimmer.elements.filter('div[data-device="'+dev+'"]');
-	deviceElements.each(function(index) {
+             $(this).data('dim',     typeof $(this).data('dim')  != 'undefined' ? $(this).data('dim')  : $(this).data('get'));
+             readings[$(this).data('dim')] = true;
 
-        if ( $(this).data('get')==par){
-
-            var state = getDeviceValue( $(this), 'get' );
-			if (state) {
-                var elem = $(this).data('famultibutton');
-                if (elem){
-                    if ($.isNumeric(state)) elem.setDimValue( parseInt(state));
-                    if ( state == $(this).data('get-on') )
-                        elem.setOn();
-                    else if ( state == $(this).data('get-off') )
-                        elem.setOff();
-                    else if ( state.match(RegExp('^' + $(this).data('get-on') + '$')) )
-                        elem.setOn();
-                    else if ( state.match(RegExp('^' + $(this).data('get-off') + '$')) )
-                        elem.setOff();
-                    else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
-                        elem.setOff();
-                    else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
-                        elem.setOn();
+             var val = localStorage.getItem(base.widgetname+"_"+elem.data('device'));
+             if ( val )
+                 elem.setDimValue( parseInt(val));
+         });
+     },
+     toggleOn : function(elem) {
+         if(this._doubleclicked(elem, 'on')) {
+             var device = elem.data('device');
+             var v = elem.getValue();
+             console.log(elem.data('dim'),elem.data('get'));
+             var cmd = (elem.data('dim')!=elem.data('get'))
+                     ? [elem.data('cmd'), device, elem.data('set'), elem.data('set-on')].join(' ')
+                     : [elem.data('cmd'), device, elem.data('set'), v].join(' ');
+             setFhemStatus(cmd);
+             if( device && typeof device != "undefined" && device !== " ") {
+                 TOAST && $.toast(cmd);
+             }
+             elem.trigger("toggleOn");
+         }
+     },
+     valueChanged: function(elem,v) {
+         var device = elem.data('device');
+         localStorage.setItem(this.widgetname+"_"+device, v);
+         if (elem.data('famultibutton').getState()){
+             var cmd = [elem.data('cmd'), device ,elem.data('dim'), v].join(' ');
+             setFhemStatus(cmd);
+             TOAST && $.toast(cmd);
+         }
+     },
+     update: function (dev,par) {
+         var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
+         var base = this;
+         deviceElements.each(function(index) {
+             if ( $(this).data('get')==par) {
+                 var state = getDeviceValue( $(this), 'get' );
+                 if (state) {
+                     var states=$(this).data('get-on');
+                     if ( $.isArray(states)) {
+                         base.showMultiStates($(this),states,state);
+                     } else {
+                         var elem = $(this).data('famultibutton');
+                         if (elem){
+                             if ( state == $(this).data('get-on') )
+                                  elem.setOn();
+                             else if ( state == $(this).data('get-off') )
+                                  elem.setOff();
+                             else if ( state.match(new RegExp('^' + $(this).data('get-on') + '$')) )
+                                  elem.setOn();
+                             else if ( state.match(new RegExp('^' + $(this).data('get-off') + '$')) )
+                                  elem.setOff();
+                             else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
+                                  elem.setOff();
+                             else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
+                                  elem.setOn();
+                         }
+                     }
+                     base.update_cb($(this),state);
                  }
-			}
-		}
-	});
-   }
-			 
-};
+             }
+             if ( $(this).data('dim')
+               && $(this).data('dim') == par
+               && $(this).data('dim') != $(this).data('get')) {
+                 var state = getDeviceValue( $(this), 'dim' );
+                 var elem = $(this).data('famultibutton');
+                 if (elem && $.isNumeric(state)) elem.setDimValue( parseInt(state));
+             }
+         });
+     },
+     update_cb : function(elem,state) {
+         if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
+             this.showOverlay(elem,state);
+         else
+             this.showOverlay(elem,"");
+     },
+});

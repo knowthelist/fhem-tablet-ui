@@ -17,9 +17,9 @@ Requires
 Install
 -------
  * copy the whole tree into the corresponding folder of your FHEM server /\<fhem-path\>/www/tablet
- * add 'define tablet_ui HTTPSRV tablet/ ./www/tablet Tablet Frontend' in fhem.cfg
+ * add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet-UI' in fhem.cfg
  * rename the index-example.html to index.html or create your own index.html
- * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/tablet/
+ * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/ftui/
  
  or just use 'update all https://raw.githubusercontent.com/knowthelist/fhem-tablet-ui/master/controls_fhemtabletui.txt'
  on the FHEM commandline (or input field of FHEMWEB)
@@ -79,10 +79,31 @@ By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
 All widgets have individual parameter settings. Set following attributes according your needs.
 Attributes with defaults are optional and does not have to be set.
 
+General attribute meaning
+----
+- A general command to FHEM locks like this
+**\<command\> \<device\> \<reading\> \<value\>**
+
+- e.g. 
+**set MyLamp dim 75**
+
+- widget attributes
+**data-cmd data-device data-set data-set-on**
+
+- receive data
+data-get		: 		Reading name
+data-get-on     : 		Value for ON
+data-get-off    : 		Value for OFF
+
+- send data
+data-set		: 		Reading name
+data-set-on     : 		Value for ON
+data-set-off    : 		Value for OFF
+
 ####All widgets
 - **data-type**      : widget type
-- **data-device**    : FHEM device name (call FHEM's 'list' command to get names)
-- **class**		     : css classes for look and formatting of the widget
+- **data-device**    : FHEM device name (call FHEM's 'list' command to get all names)
+- **class**		     : CSS classes for look and formatting of the widget
 
 ####Switch widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
@@ -140,11 +161,13 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **class**     : wider, w1x, w2x, w3x
 
 ####Push widgets
-- **data-set**  : value to send to FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
-- **data-icon** : name of the font-awesome icon. 
+- **data-set**    : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
+- **data-set-on** : value to send when the the button get pressed. (default '')
+- **data-icon**   : name of the font-awesome icon. 
 - **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
 - **data-cmd**  : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-doubleclick**: timeout to wait for a second click or touch. '0' disables the doubleclick feature. (default '0')
+- **data-countdown**: secondes for the countdown progress control (default: autodetect from 'on-for-timer' command)
 
 ####Thermostat widgets
 - **data-get**   : name of the reading to get from FHEM (default 'desired-temp')
@@ -178,7 +201,7 @@ data-version='residents' or 'roommate' or 'guest'
 
 ####Slider widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
-- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
+- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-cmd**  : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 100)
@@ -201,9 +224,11 @@ data-version='residents' or 'roommate' or 'guest'
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
 - **data-get-on**   : value for ON status to get. (default 'on')
 - **data-get-off**  : value for OFF status to get. (default 'off')
+- **data-set**  	: name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
+- **data-set-on**   : value for ON status to set. (default: value of data-get-on)
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
-- **data-cmd**      : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
-- **data-set**      : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
+- **data-cmd**      : name of the command (**\<command\>** \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-dim**      : name of the reading responsible for dim  (\<command\> \<device\> **\<reading\>** \<value\>) (default: value of data-get-on)
 - **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
 
 ####Image widgets
@@ -446,7 +471,7 @@ temperature	20.1
 <div data-type="push" 
      data-device="LightAll" 
      data-cmd="trigger" 
-     data-set="on" 
+     data-set-on="on" 
      class="cell">
 </div>
 ```
@@ -456,11 +481,11 @@ temperature	20.1
     <div class="doublebox-h">
         <div data-type="push" data-device="Rollo" 
         	 data-icon="fa-angle-up" data-background-icon="fa-square-o" 
-        	 data-set="up">
+        	 data-set-on="up">
         </div>
         <div data-type="push" data-device="Rollo" 
         	 data-icon="fa-angle-down" data-background-icon="fa-square-o" 
-        	 data-set="down">
+        	 data-set-on="down">
         </div>
     </div>
 </div>
@@ -473,11 +498,11 @@ temperature	20.1
     <div class="doublebox-v">
         <div data-type="push" data-device="Rollo" 
              data-icon="fa-chevron-up" data-background-icon="fa-square-o" 
-             data-set="up">
+             data-set-on="up">
     	</div>
         <div data-type="push" data-device="Rollo" 
         	data-icon="fa-chevron-down" data-background-icon="fa-square-o" 
-        	data-set="down">
+        	data-set-on="down">
         </div>
     </div>
 </div>
@@ -486,7 +511,7 @@ temperature	20.1
 
 **Example** a push button to switch a lamp on for 5 minutes. The control shows a progress circle while countdown is running.
 ```html
-<div data-type="push" data-device="MyLamp" data-set="on-for-timer 300"  
+<div data-type="push" data-device="MyLamp" data-set-on="on-for-timer 300"  
 	 class="cell" ></div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/push_on-for-timer.png)
@@ -660,10 +685,22 @@ To change the dim value: push the button and slide up or down
 ```html
 <div data-type="volume" data-device="HUEDevice1" data-min="0" data-max="65353" data-get="hue" data-set="hue" class="hue-tick mini wider" ></div>
 <div data-type="label" class="cell">Color</div>
-<div data-type="dimmer" data-device="HUEDevice1" data-get-on="!off" data-get-off="off" data-set="pct" class="cell" ></div>
+<div data-type="dimmer" data-device="HUEDevice1" data-get-on="!off" data-get-off="off" class="cell" ></div>
 <div data-type="label" class="cell">Hell</div>
 ```
 
+**Example** for the same HUEDevice but with separat reading for dim
+```html
+<div data-type="dimmer" data-device="HUEDevice1"
+     data-get="onoff"
+     data-get-on="1" data-get-off="0"
+     data-set=""
+     data-set-on="on" data-set-off="off"
+     data-dim="pct"
+     class="top-space-2x" ></div>
+<div data-type="label" class="cell">Philips</div>
+```  
+  
 ![](http://knowthelist.github.io/fhem-tablet-ui/hue_pct.png)
 
 ###Image
@@ -763,22 +800,22 @@ Cover a lot of other button behind one single button
 	<ul class="menu">
 	  <li><div data-type="push" data-icon="fa-wrench"></div></li>
 	  <li><div data-type="push" data-device="AvReceiver" 
-	  		   data-set="remoteControl subwoofer-temporary-level -6" 
+	  		   data-set="remoteControl" data-set-on="subwoofer-temporary-level -6" 
 	  		   data-icon="">-6</div></li>
 	  <li><div data-type="push" data-device="AvReceiver" 
-	  		   data-set="remoteControl subwoofer-temporary-level -2" 
+	  		   data-set="remoteControl" data-set-on="subwoofer-temporary-level -2" 
 	  		   data-icon="">-2</div></li>
 	  <li><div data-type="push" data-device="AvReceiver" 
-	  		   data-set="remoteControl subwoofer-temporary-level 0" 
+	  		   data-set="remoteControl" data-set-on="subwoofer-temporary-level 0" 
 	  		   data-icon="">0</div></li>
 	  <li><div data-type="push" data-device="AvReceiver" 
-	  		   data-set="remoteControl subwoofer-temporary-level +3" 
+	  		   data-set="remoteControl" data-set-on="subwoofer-temporary-level +3" 
 	  		   data-icon="">2</div></li>
 	  <li><div data-type="push" data-device="AvReceiver" 
-	  		   data-set="remoteControl subwoofer-temporary-level +9" 
+	  		   data-set="remoteControl" data-set-on="subwoofer-temporary-level +9" 
 	  		   data-icon="">9</div></li>
 	  <li><div data-type="push" data-device="AvReceiver" 
-	  		   data-set="remoteControl subwoofer-temporary-level +C" 
+	  		   data-set="remoteControl" data-set-on="subwoofer-temporary-level +C" 
 	  		   data-icon="">12</div></li>
 	</ul>
 </div>

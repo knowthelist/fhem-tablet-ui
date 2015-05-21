@@ -25,19 +25,19 @@ var widget_push = $.extend({}, widget_famultibutton, {
             $(this).data('off-color',       $(this).data('off-color')       || '#505050');
             $(this).data('on-color',        $(this).data('on-color')        || '#aa6900');
             $(this).data('background-icon', $(this).data('background-icon') || 'fa-circle-thin');
-            $(this).data('set-on',          $(this).data('set-on')          || $(this).data('set') || ' '); 
-            $(this).data('set-off',         $(this).data('set-off')         || $(this).data('set') || ' ');
+            $(this).data('set-on',          $(this).data('set-on')          || '');
+            $(this).data('set-off',         $(this).data('set-off')         || '');
             $(this).data('mode', 'push');
             base.init_attr($(this));
             base.init_ui($(this));
-            var elem = $(this);
-
+            var elem = $(this); var secondes;
             $(this).bind("toggleOn", function( event ){
-                if (getPart(elem.data("set"),1)=="on-for-timer"){
-                    var secondes = getPart(elem.data("set"),2);
-                    if (secondes && $.isNumeric(secondes)){
-                         base.startTimer(elem,parseInt(secondes));
-                    }
+                if (elem.data("set-on") && getPart(elem.data("set-on"),1)=="on-for-timer")
+                    secondes = getPart(elem.data("set-on"),2);
+                if (elem.data("countdown"))
+                    secondes = elem.data("countdown");
+                if (secondes && $.isNumeric(secondes)){
+                     base.startTimer(elem,parseInt(secondes));
                 }
             });
         });
