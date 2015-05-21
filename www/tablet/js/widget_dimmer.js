@@ -19,7 +19,7 @@ var widget_dimmer = $.extend({}, widget_famultibutton, {
              base.init_attr(elem);
              base.init_ui(elem);
 
-             $(this).data('dim',     typeof $(this).data('dim')  != 'undefined' ? $(this).data('dim')  : $(this).data('get'));
+             $(this).data('dim',     typeof $(this).data('dim')  != 'undefined' ? $(this).data('dim')  : $(this).data('set'));
              readings[$(this).data('dim')] = true;
 
              var val = localStorage.getItem(base.widgetname+"_"+elem.data('device'));
@@ -31,10 +31,9 @@ var widget_dimmer = $.extend({}, widget_famultibutton, {
          if(this._doubleclicked(elem, 'on')) {
              var device = elem.data('device');
              var v = elem.getValue();
-             console.log(elem.data('dim'),elem.data('get'));
-             var cmd = (elem.data('dim')!=elem.data('get'))
+             var cmd = (elem.data('dim')!=elem.data('set'))
                      ? [elem.data('cmd'), device, elem.data('set'), elem.data('set-on')].join(' ')
-                     : [elem.data('cmd'), device, elem.data('set'), v].join(' ');
+                     : [elem.data('cmd'), device, elem.data('dim'), v].join(' ');
              setFhemStatus(cmd);
              if( device && typeof device != "undefined" && device !== " ") {
                  TOAST && $.toast(cmd);
@@ -45,11 +44,9 @@ var widget_dimmer = $.extend({}, widget_famultibutton, {
      valueChanged: function(elem,v) {
          var device = elem.data('device');
          localStorage.setItem(this.widgetname+"_"+device, v);
-         if (elem.data('famultibutton').getState()){
-             var cmd = [elem.data('cmd'), device ,elem.data('dim'), v].join(' ');
-             setFhemStatus(cmd);
-             TOAST && $.toast(cmd);
-         }
+         var cmd = [elem.data('cmd'), device ,elem.data('dim'), v].join(' ');
+         setFhemStatus(cmd);
+         TOAST && $.toast(cmd);
      },
      update: function (dev,par) {
          var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
@@ -83,7 +80,7 @@ var widget_dimmer = $.extend({}, widget_famultibutton, {
              }
              if ( $(this).data('dim')
                && $(this).data('dim') == par
-               && $(this).data('dim') != $(this).data('get')) {
+               && $(this).data('dim') != $(this).data('set')) {
                  var state = getDeviceValue( $(this), 'dim' );
                  var elem = $(this).data('famultibutton');
                  if (elem && $.isNumeric(state)) elem.setDimValue( parseInt(state));

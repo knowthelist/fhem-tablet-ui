@@ -685,7 +685,7 @@ To change the dim value: push the button and slide up or down
 ```html
 <div data-type="volume" data-device="HUEDevice1" data-min="0" data-max="65353" data-get="hue" data-set="hue" class="hue-tick mini wider" ></div>
 <div data-type="label" class="cell">Color</div>
-<div data-type="dimmer" data-device="HUEDevice1" data-get-on="!off" data-get-off="off" class="cell" ></div>
+<div data-type="dimmer" data-device="HUEDevice1" data-get-on="!off" data-get-off="off" data-set="pct" class="cell" ></div>
 <div data-type="label" class="cell">Hell</div>
 ```
 
