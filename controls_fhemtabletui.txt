@@ -30,8 +30,8 @@ UPD 2015-05-12_00:52:04 359628 www/tablet/fonts/openautomation.woff
 UPD 2015-05-12_00:52:04 12538 www/tablet/index-example.html
 UPD 2015-05-18_19:43:09 15822 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-05-12_00:52:04 1662 www/tablet/js/widget_circlemenu.js
-UPD 2015-05-12_00:52:04 2831 www/tablet/js/widget_dimmer.js
-UPD 2015-05-12_00:52:04 7859 www/tablet/js/widget_famultibutton.js
+UPD 2015-05-21_19:44:47 5022 www/tablet/js/widget_dimmer.js
+UPD 2015-05-21_19:22:30 8113 www/tablet/js/widget_famultibutton.js
 UPD 2015-05-12_00:52:04 5885 www/tablet/js/widget_homestatus.js
 UPD 2015-05-18_19:11:03 2260 www/tablet/js/widget_image.js
 UPD 2015-05-12_00:52:04 5162 www/tablet/js/widget_knob.js
@@ -39,7 +39,7 @@ UPD 2015-05-12_00:52:04 2090 www/tablet/js/widget_label.js
 UPD 2015-05-12_00:52:04 3349 www/tablet/js/widget_level.js
 UPD 2015-05-12_00:52:04 3895 www/tablet/js/widget_pagetab.js
 UPD 2015-05-12_00:52:04 1239 www/tablet/js/widget_playstream.js
-UPD 2015-05-12_00:52:04 1907 www/tablet/js/widget_push.js
+UPD 2015-05-21_20:38:41 1964 www/tablet/js/widget_push.js
 UPD 2015-05-12_00:52:04 1204 www/tablet/js/widget_rotor.js
 UPD 2015-05-19_20:17:59 3141 www/tablet/js/widget_select.js
 UPD 2015-05-12_00:52:04 6206 www/tablet/js/widget_simplechart.js
