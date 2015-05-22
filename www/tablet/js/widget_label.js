@@ -25,6 +25,13 @@ var widget_label = {
 				var val = getPart(value,part);
 				val = ( $.isNumeric(val)  && fix>=0 ) ? Number(val).toFixed(fix) : val;
 
+				if($(this).data('substitution') && $(this).data('substitution').match(/^s/)) {
+                    			var substitution = $(this).data('substitution');
+                    			var f = substitution.substr(1,1);
+                    			var subst = substitution.split(f);
+                    			val = val.replace(new RegExp(subst[1],subst[3]), subst[2]);
+                		}
+
 				$(this).html( val + "<span style='font-size: 50%;'>"+unit+"</span>" );
 
                 //set colors according matches for values
