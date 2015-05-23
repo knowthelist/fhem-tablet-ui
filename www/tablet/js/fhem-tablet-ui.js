@@ -315,7 +315,12 @@ function longPoll(roomName) {
 								var paraname = 'STATE';
 								var val = parname_val;
 							}
-							if ( (paraname in readings) && (key in devices) ){
+//              console.log('TEST +key:' + key+ '+  para:'+paraname+'+   val:'+val+'+');
+              // Special hack for readingsGroups (all params will be accepted)
+              if ( ( ( room == 'readingsGroup' ) && (key in devices) ) ||
+							     ( (paraname in readings) && (key in devices) ) ) {
+//							if ( (paraname in readings) && (key in devices) ){
+//                        console.log('MATCHED #'+line+'#');
 								var value = {"date": date,
 											  "room": room,
 												"val": val
