@@ -32,7 +32,7 @@ var widget_label = $.extend({}, widget_widget, {
         return ( $.isNumeric(value) && fix>=0 ) ? Number(value).toFixed(fix) : value;
     },
     update_substitution : function(value, substitution) {
-        console.log(value, substitution);
+        DEBUG && console.log(value, substitution);
         if(substitution.match(/^s/)) {
             var f = substitution.substr(1,1);
             var subst = substitution.split(f);
