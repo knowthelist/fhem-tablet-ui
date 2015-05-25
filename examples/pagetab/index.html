@@ -6,7 +6,7 @@
 	 /*
 	 * Just another dashboard for FHEM
 	 *
-         * Version: 1.3.6
+         * Version: 1.3.7
 	 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 	 * URL: https://github.com/knowthelist/fhem-tablet-ui
 	 *
@@ -27,7 +27,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
-        <meta name="debug" content="1"> <!-- 1=output to console;0=not output -->
+        <meta name="debug" content="0"> <!-- 1=output to console;0=not output -->
 	
 	<link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
         <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
@@ -38,7 +38,6 @@
         <!-- define your personal style here, it wont be overwritten  -->
         <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui-user.css" />
 
-
 	<script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
         <script type="text/javascript" src="/fhem/tablet/lib/jquery.knob.mod.min.js"></script>
 	<script type="text/javascript" src="/fhem/tablet/lib/jquery.toast.min.js"></script>
@@ -48,9 +47,7 @@
         <script type="text/javascript" src="/fhem/tablet/lib/fa-multi-button.min.js"></script>
 	<script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.js"></script>
 
-        <script type="text/javascript" src="/fhem/tablet/js/widget_pagetab.js"></script>
-
-	<!-- Enable this lines for usage with WebViewControl -->
+        <!-- Remove this line to enable for usage with WebViewControl
         <script type="text/javascript" src="/fhem/pgm2/cordova-2.3.0.js"></script>
 	<script type="text/javascript" src="/fhem/js/webviewcontrol.js"></script>
 	<script type="text/javascript">var wvcDevices = {'12345': 'Tablet'}; var wvcUserCssFile="webviewcontrol.css"</script>
@@ -58,15 +55,11 @@
 
 </head>
 <body>
-
-<!-- available class: container,left,right,cell,narrow,darker,big,bigger,small,thin,large,wider,top-space -->
-<!-- available data-type: symbol,dimmer,homestatus,label,push,slider,switch,thermostat,volume,weather -->
-
-<div class="gridster">
-    <ul>
-        <li data-row="1" data-col="1" data-sizex="1" data-sizey="9" data-template="menu.html"></li>
-    </ul>
-</div> 
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizex="1" data-sizey="9" data-template="menu.html"></li>
+        </ul>
+    </div>
 </body>
 
 </html>
