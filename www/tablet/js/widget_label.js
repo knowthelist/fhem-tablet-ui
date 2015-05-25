@@ -1,67 +1,75 @@
-var widget_label = {
-  _label: null,
-  elements: null,
-  init: function () {
-  	_label=this;
-  	_label.elements = $('div[data-type="label"]');
- 	_label.elements.each(function(index) {
-   		$(this).data('get', $(this).data('get') || 'STATE');
-   		readings[$(this).data('get')] = true;
-	 });
-  },
-  update: function (dev,par) {
+if(typeof widget_widget == 'undefined') {
+    loadplugin('widget_widget');
+}
 
-    var deviceElements= _label.elements.filter('div[data-device="'+dev+'"]');
-	deviceElements.each(function(index) {
-        if ( $(this).data('get')==par){
-            var value = ($(this).hasClass('timestamp'))
-                        ?getReadingDate( $(this), 'get' )
-                        :getDeviceValue( $(this), 'get' );
-			if (value){
-				var part =  $(this).data('part') || -1;
-				var unit = ($(this).data('unit')) ? unescape($(this).data('unit')) : '';
-				var fix =  $(this).data('fix');
-				fix = ( $.isNumeric(fix) ) ? fix : -1;
-				var val = getPart(value,part);
-				val = ( $.isNumeric(val)  && fix>=0 ) ? Number(val).toFixed(fix) : val;
+var widget_label = $.extend({}, widget_widget, {
+    widgetname:"label",
+    init_attr: function(elem) {
+        elem.data('get',            elem.data('get')                    || 'STATE');
+        elem.data('part',           elem.data('part')                   || -1);
+        elem.data('unit',           unescape(elem.data('unit')          || '' ));
+        elem.data('limits',         elem.data('limits')                 || new Array());
+        elem.data('colors',         elem.data('colors')                 || new Array('#505050'));
+        // fill up colors to limits.length
+        // if an index s isn't set, use the value of s-1
+        for(var s=0; s<elem.data('limits').length; s++) {
+            if(typeof elem.data('colors')[s] == 'undefined') {
+                elem.data('colors')[s]=elem.data('colors')[s>0?s-1:0];
+            }
+        }
 
-				if($(this).data('substitution') && $(this).data('substitution').match(/^s/)) {
-                    			var substitution = $(this).data('substitution');
-                    			var f = substitution.substr(1,1);
-                    			var subst = substitution.split(f);
-                    			val = val.replace(new RegExp(subst[1],subst[3]), subst[2]);
-                		}
-
-				$(this).html( val + "<span style='font-size: 50%;'>"+unit+"</span>" );
-
-                //set colors according matches for values
-                var limits=$(this).data('limits');
-                if (limits) {
-                    var colors=$(this).data('colors');
-
-                    // if data-colors isn't set, try using #505050 instead
-                    if(typeof colors == 'undefined') {
-                        colors = new Array('#505050');
-                    }
-
-                    // fill up colors and icons to states.length
-                    // if an index s isn't set, use the value of s-1
-                    for(var s=0; s<limits.length; s++) {
-                        if(typeof colors[s] == 'undefined') {
-                            colors[s]=colors[s>0?s-1:0];
-                        }
-                    }
-
-                    var idx=indexOfGeneric(limits,val);
-                    console.log('idx',idx,val);
-                    if (idx>-1){
-                        $(this).css( "color", colors[idx] );
-                    }
-                }
-			 }
-		}
-
-	});
-   }
-			 
-};
+        elem.data('fix',            Number(elem.data('fix'))            || -1);
+        elem.data('substitution',   elem.data('substitution')           || '');
+        readings[$(this).data('get')] = true;
+    },
+    init: function () {
+        this.elements = $('div[data-type="'+this.widgetname+'"]');
+        this.elements.each(function(index) {
+            widget_label.init_attr($(this));
+        });
+    },
+    update_fix : function(value, fix) {
+        return ( $.isNumeric(value) && fix>=0 ) ? Number(value).toFixed(fix) : value;
+    },
+    update_substitution : function(value, substitution) {
+        console.log(value, substitution);
+        if(substitution.match(/^s/)) {
+            var f = substitution.substr(1,1);
+            var subst = substitution.split(f);
+            return value.replace(new RegExp(subst[1],subst[3]), subst[2]);
+        }
+        return value;
+    },
+    update_colorize : function(value, elem) {
+        //set colors according matches for values
+        var limits = elem.data('limits');
+        var colors = elem.data('colors');
+        
+        var idx=indexOfGeneric(limits,value);
+        if (idx>-1) {
+            elem.css( "color", colors[idx] );
+        }
+    },
+    update: function (dev,par) {
+        var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
+        deviceElements.each(function(index) {
+            if ( $(this).data('get')==par){
+                var value = ($(this).hasClass('timestamp'))
+                            ?getReadingDate( $(this), 'get' )
+                            :getDeviceValue( $(this), 'get' );
+                if (value){
+                    var part = $(this).data('part');
+                    var val = getPart(value,part);
+                    
+                    widget_label.update_fix(value, $(this).data('fix'))
+                    widget_label.update_substitution(val, $(this).data('substitution'))
+        
+                    var unit = $(this).data('unit');
+                    $(this).html( val + "<span style='font-size: 50%;'>"+unit+"</span>" );
+        
+                    widget_label.update_colorize(val, $(this));
+                 }
+            }
+        });
+    }
+});
