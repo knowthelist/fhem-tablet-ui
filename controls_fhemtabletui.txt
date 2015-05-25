@@ -35,7 +35,7 @@ UPD 2015-05-21_19:22:30 8113 www/tablet/js/widget_famultibutton.js
 UPD 2015-05-12_00:52:04 5885 www/tablet/js/widget_homestatus.js
 UPD 2015-05-18_19:11:03 2260 www/tablet/js/widget_image.js
 UPD 2015-05-12_00:52:04 5162 www/tablet/js/widget_knob.js
-UPD 2015-05-25_23:47:37 3128 www/tablet/js/widget_label.js
+UPD 2015-05-26_00:47:35 3137 www/tablet/js/widget_label.js
 UPD 2015-05-12_00:52:04 3349 www/tablet/js/widget_level.js
 UPD 2015-05-25_22:39:31 6521 www/tablet/js/widget_pagetab.js
 UPD 2015-05-12_00:52:04 1239 www/tablet/js/widget_playstream.js
