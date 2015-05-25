@@ -98,6 +98,10 @@ function initPage() {
 
     wx = parseInt( $("meta[name='widget_base_width']").attr("content") );
     wy = parseInt( $("meta[name='widget_base_height']").attr("content") );
+    if ( $("meta[name='widget_margin']").attr("content") )
+      wm = parseInt( $("meta[name='widget_margin']").attr("content") );
+    else
+      wm = 5;
 	doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
 	DEBUG  = ($("meta[name='debug']").attr("content") == '1');
     TOAST  = ($("meta[name='toast']").attr("content") != '0');
@@ -115,16 +119,16 @@ function initPage() {
     //init gridster
     if (gridster)
         gridster.destroy();
-        gridster = $(".gridster > ul").gridster({
-          widget_base_dimensions: [wx, wy],
-          widget_margins: [5, 5],
-          draggable: {
-            handle: 'header'
-          }
-        }).data('gridster');
-        if($("meta[name='gridster_disable']").attr("content") == '1') {
-            gridster.disable();
-        }
+    gridster = $(".gridster > ul").gridster({
+      widget_base_dimensions: [wx, wy],
+      widget_margins: [wm, wm],
+      draggable: {
+        handle: 'header'
+      }
+    }).data('gridster');
+    if($("meta[name='gridster_disable']").attr("content") == '1') {
+        gridster.disable();
+    }
 	
     //include extern html code
     var total = $('[data-template]').length;

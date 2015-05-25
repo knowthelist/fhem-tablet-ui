@@ -149,6 +149,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-colors** : a array of color values to affect the colour of the label according to the limit value 
 - **data-limits** : a array of numeric or RegEx values to affect the colour of the label
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
+- **data-substitution**: regex-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
 - **class**     : small, large, big, bigger, thin, red, green, blue, darker, timestamp, w1x, w2x, w3x
 
 ####Select widgets
