@@ -61,6 +61,7 @@ var widget_weather = $.extend({}, widget_widget, {
         "Schnee":                       "U",
         'Schneeregen':                  'V',
         'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'Q',
+        'Nebel':                        'F',
         
         // OPENWEATHER (Wetter.com) (incomplete)
         'leichter Schnee - Schauer' :   'U',
@@ -138,6 +139,7 @@ var widget_weather = $.extend({}, widget_widget, {
         "Schnee":                       'snow.png',
         'Schneeregen':                  'rainsnow.png',
         'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'scatteredshowers.png',
+        'Nebel':                        'fog.png',
         
         // OPENWEATHER (wetter.com) (incomplete)
         'leichter Schnee - Schauer' :   'chance_of_snow.png',
