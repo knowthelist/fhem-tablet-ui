@@ -93,7 +93,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
 		
         if ((tick > acAngle && tick < a.s) || (tick-tick_w*dist <= acAngle && tick+tick_w*dist >= a.s)){
             // draw diff range in gradient color
-            c.strokeStyle = base.getGradientColor(maxcolor, mincolor, (this.endAngle-tick)/this.angleArc);
+            c.strokeStyle = widget_thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-tick)/this.angleArc);
             //if (tick-tick_w*dist <= acAngle )
             //    destcolor=c.strokeStyle;
         }
@@ -131,7 +131,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
 
 	// draw target temp cursor
     c.beginPath();
-    c.strokeStyle = base.getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
+    c.strokeStyle = widget_thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
 	c.lineWidth = this.lineWidth * 2;
     c.arc(this.xy, this.xy, this.radius-this.lineWidth/2, a.s, a.e, a.d);
     c.stroke();
@@ -185,7 +185,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
 			'readOnly' : $(this).hasClass('readonly')?true:false,
 			'cmd': $(this).data('cmd') || 'set',
 			'set': $(this).data('set') || 'desired-temp',
-			'draw' : base.drawDial,
+			'draw' : widget_thermostat.drawDial,
 			'change' : function (v) { 
                 //reset shortpoll timer to avoid jump back
                 startPollInterval();
@@ -211,12 +211,11 @@ var widget_thermostat = $.extend({}, widget_knob, {
 	});
   },
   update: function (dev,par) {
-    base = this;
     var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
     isUpdating=true;
 	deviceElements.each(function(index) {
 		var textdisplay=false;
-		var clima = base.getClimaValues( $(this) );
+		var clima = widget_thermostat.getClimaValues( $(this) );
 		switch(clima.desired) {
 		    case $(this).data('off'):   clima.desired=$(this).data('min'); textdisplay=$(this).data('off'); break;
 		    case $(this).data('boost'): clima.desired=$(this).data('max'); textdisplay=$(this).data('boost'); break;
