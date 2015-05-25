@@ -81,7 +81,7 @@ Attributes with defaults are optional and does not have to be set.
 
 General attribute meaning
 ----
-- A general command to FHEM locks like this
+- A general command to FHEM looks like this
 **\<command\> \<device\> \<reading\> \<value\>**
 
 - e.g. 
@@ -159,6 +159,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-items**: a array of fix items to show in the selection box and send to FHEM  (alternative if data-list is empty)
 - **data-alias**: a array of fix names to show only in the selection box as an alias to the real items
 - **data-cmd**  : name of the command to send to FHEM (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-quote** : characters to enclose the send value. (default '')
 - **class**     : wider, w1x, w2x, w3x
 
 ####Push widgets
@@ -209,6 +210,8 @@ data-version='residents' or 'roommate' or 'guest'
 - **data-on**   : value where the slider moves to max  [RegEx] (default 'on')
 - **data-off**  : value where the slider moves to min  [RegEx] (default 'off')
 - **data-value**: show the value in a text box (default 'false')
+- **data-width**: width for horizontal sliders (default '120px', for mini '60px')
+- **data-height**: height for vertical sliders (default '120px', for mini '60px')
 - **class**		: mini, horizontal, negated
 
 ####Level widgets
@@ -351,6 +354,11 @@ Change this to adjust the size of a Gridster base (data-sizey=1/data-sizex=1)
 <meta name="widget_base_width" content="116">
 <meta name="widget_base_height" content="131">
 ```
+Add this to adjust the size of the Gridster margin
+```html
+<meta name="widget_margin" content="4">
+```
+
 
 Examples
 -------

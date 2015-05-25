@@ -1,0 +1,86 @@
+<html>
+<title>FHEM</title>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * second page
+     *
+     load this page via widget pagetab
+
+     <div data-type="pagetab" data-url="index_music.html" data-icon="fa-music" class="cell"></div>
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="widget_base_width" content="74">
+    <meta name="widget_base_height" content="71">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="debug" content="1"> <!-- 1=output to console;0=not output -->
+
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/powerange.min.css" />
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui-user.css" />
+
+
+    <script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/jquery.knob.mod.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/jquery.toast.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/jquery.circlemenu.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/powerange.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/fa-multi-button.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.js"></script>
+
+</head>
+<body>
+    <div class="gridster">
+        <ul>
+        <!-- li data-row="1" data-col="1" data-sizex="1" data-sizey="4" data-template="menu.html"></li-->
+<li data-row="1" data-col="2" data-sizex="4" data-sizey="5">
+     <header>MUSIC-SERVER</header>
+     <!-- <div data-type="itunes_artwork"
+              data-device="MPD1"
+              data-get='["artist","album","title"]'
+              class="top-space">
+     </div> -->
+     <div data-type="mpdnowplaying"
+              data-device="MPD1"
+              data-mask='[<span class="bold">$2</span><br>][<span class="thin large">$5</span><br>$3]'></div>
+      <div class="wider">
+      <div data-type="push" data-device="MPD1"
+           data-icon="fa-step-backward" data-background-icon="-"
+           data-set-on="previous" class="inline">
+      </div>
+      <div data-type="multistatebutton"
+             data-device="MPD1"
+             data-get-on='["play","pause","stop"]'
+             data-set='["pause","play"]'
+             data-set-default="play"
+             data-background-icon="fa-circle-thin"
+             data-background-color="#555"
+             data-color="#555"
+             data-icons='["fa-pause","fa-play","fa-play"]'
+             class="big"></div>
+      <div data-type="push" data-device="MPD1"
+           data-icon="fa-step-forward" data-background-icon="-"
+           data-set-on="next" class="inline">
+      </div>
+      <div data-type="select" data-device="MPD1" data-list="ur_playlists" data-get="current_playlist" data-set="playlist" data-quote='"' class="cell" ></div>
+
+  </div>
+</li>
+<li data-row="2" data-col="3" data-sizex="3" data-sizey="3">
+     <header>VOLUME</header>
+            <div data-type="volume" data-device='RadioVolumeOnTablet' class="cell left" ></div>
+</li>
+        </ul>
+    </div>
+</body>
+</html>

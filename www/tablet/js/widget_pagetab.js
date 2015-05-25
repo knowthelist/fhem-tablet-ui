@@ -12,25 +12,23 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
         } else {
           history.replaceState( history.state, history.title, '#'+goUrl )
         }
-        // fadeout seems to trouble gridster, so that elements are wrongly sorted on the page
-        //        $('div.gridster').fadeOut('fast');
+        // Wrong base_width, base_height seems to trouble gridster, so that elements are wrongly sorted on the page
+        // not fadeOut-In
+        $('div.gridster').fadeOut('fast');
         $.get(goUrl, function (data_html) {
 
           $('div.gridster')
-              .html($(data_html).closest('div.gridster').html());
-//              .fadeIn('slow');
+              .html($(data_html).closest('div.gridster').html())
+              .fadeIn('slow');
             initPage();
-//            $('div.gridster').fadeIn('slow');
+            $('div.gridster').fadeIn('slow');
         });
     },
     toggleOn : function(elem) {
         var elem_url=elem.data('url');
         this.lastPage=elem_url;
         DEBUG && console.log( 'change window location : ' + elem_url);
-//        localStorage.setItem('pagetab_doload', elem_url);  
         localStorage.setItem('pagetab_doload', 'initializing');  
-//        history.replaceState( history.state, history.title, elem_url )
-//        window.location.hash = elem_url;
         DEBUG && console.log( 'toggle on with : ' + elem_url);
         this.loadPage(elem_url, true);
     },
@@ -41,7 +39,6 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
         var base = this;
           
         DEBUG && console.log( 'init is executed / currently at : ' + window.location);
-//        DEBUG && console.log( 'get localStore (init) to: ' + localStorage.getItem('pagetab'));
         this.elements = $('div[data-type="'+this.widgetname+'"]');
 
         DEBUG && console.log( 'get localStore pagetab_doload (init) to: ' + localStorage.getItem('pagetab_doload'));

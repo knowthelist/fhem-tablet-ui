@@ -8,6 +8,7 @@ var widget_select= $.extend({}, widget_widget, {
         elem.data('get', elem.data('get') || 'STATE');
         elem.data('set', elem.data('set') || ((elem.data('get')!='STATE')?elem.attr('data-get'): ''));
         elem.data('cmd', elem.data('cmd') || 'set');
+        elem.data('quote', elem.data('quote') || '');
         elem.data('list', elem.data('list') || 'setList');
 
         readings[elem.data('get')] = true;
@@ -24,10 +25,10 @@ var widget_select= $.extend({}, widget_widget, {
         $(this).addClass('select');
         var select_elem = jQuery('<select/>', { })
         .on('change', function (e) {
-            var optionSelected = $("option:selected", this);
             var parent = $(this).parent('div[data-type="select"]');
+            var optionSelected = parent.data('quote') + $("option:selected", this).val() + parent.data('quote');
             $(this).blur();
-            var cmdl = [parent.data('cmd'),parent.data('device'),parent.data('set'),optionSelected.text()].join(' ');
+            var cmdl = [parent.data('cmd'),parent.data('device'),parent.data('set'),optionSelected].join(' ');
             setFhemStatus(cmdl);
             $.toast(cmdl);
         })
@@ -73,7 +74,7 @@ var widget_select= $.extend({}, widget_widget, {
                 if (select_elem){
                     select_elem.empty();
                     for (var i=0;i<items.length;i++) {
-                        select_elem.append('<option value='+items[i]+'>'+(alias && alias[i]||items[i])+'</option>');
+                        select_elem.append('<option value="'+items[i]+'">'+(alias && alias[i]||items[i])+'</option>');
                     }
                 }
             }
