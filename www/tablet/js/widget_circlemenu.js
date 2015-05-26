@@ -11,7 +11,7 @@ var widget_circlemenu= {
                 trigger:'click',
                 circle_radius:parent.data('circle-radius')||70,
                 direction: parent.data('direction') || 'full',
-                close_event:$(this).hasClass("keepopen")?'':'click',
+                close_event:($(this).hasClass("keepopen")||parent.hasClass("keepopen"))?'':'click',
                 close:function() {
                     setTimeout(function(){showModal(false);},50);
                 },
@@ -31,6 +31,7 @@ var widget_circlemenu= {
             })
             .addClass('menu')
             .closest('.gridster>ul>li').css({overflow: 'visible'});
+
 
      });
             $('.menu li:not(:first-child)').on('click', function(){
