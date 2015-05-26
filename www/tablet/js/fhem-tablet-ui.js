@@ -519,6 +519,7 @@ Date.prototype.mmdd = function() {
 
 //sadly it not possible to use Array.prototype. here
 this.indexOfGeneric = function(array,find){
+    if (!array) return -1;
   for (var i=0;i<array.length;i++) {
     if (!$.isNumeric(array[i]))
         return indexOfRegex(array,find);

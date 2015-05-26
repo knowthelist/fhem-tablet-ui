@@ -18,7 +18,7 @@ var widget_label = $.extend({}, widget_widget, {
             }
         }
 
-        elem.data('fix',            Number(elem.data('fix'))            || -1);
+        elem.data('fix',            ( $.isNumeric(elem.data('fix')) ) ?  Number(elem.data('fix'))           : -1);
         elem.data('substitution',   elem.data('substitution')           || '');
         readings[$(this).data('get')] = true;
     },
@@ -33,7 +33,7 @@ var widget_label = $.extend({}, widget_widget, {
     },
     update_substitution : function(value, substitution) {
         DEBUG && console.log(value, substitution);
-        if(substitution.match(/^s/)) {
+        if(substitution && substitution.match(/^s/)) {
             var f = substitution.substr(1,1);
             var subst = substitution.split(f);
             return value.replace(new RegExp(subst[1],subst[3]), subst[2]);
@@ -44,7 +44,7 @@ var widget_label = $.extend({}, widget_widget, {
         //set colors according matches for values
         var limits = elem.data('limits');
         var colors = elem.data('colors');
-        
+
         var idx=indexOfGeneric(limits,value);
         if (idx>-1) {
             elem.css( "color", colors[idx] );
@@ -61,8 +61,8 @@ var widget_label = $.extend({}, widget_widget, {
                     var part = $(this).data('part');
                     var val = getPart(value,part);
                     
-                    widget_label.update_fix(value, $(this).data('fix'))
-                    widget_label.update_substitution(val, $(this).data('substitution'))
+                    val = widget_label.update_fix(val, $(this).data('fix'));
+                    val = widget_label.update_substitution(val, $(this).data('substitution'));
         
                     var unit = $(this).data('unit');
                     $(this).html( val + "<span style='font-size: 50%;'>"+unit+"</span>" );
