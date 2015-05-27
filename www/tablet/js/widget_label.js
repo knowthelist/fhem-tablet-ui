@@ -44,10 +44,11 @@ var widget_label = $.extend({}, widget_widget, {
         //set colors according matches for values
         var limits = elem.data('limits');
         var colors = elem.data('colors');
-
-        var idx=indexOfGeneric(limits,value);
-        if (idx>-1) {
-            elem.css( "color", colors[idx] );
+        if(limits && colors) {
+            var idx=indexOfGeneric(limits,value);
+            if (idx>-1) {
+                elem.css( "color", colors[idx] );
+            }
         }
     },
     update: function (dev,par) {
