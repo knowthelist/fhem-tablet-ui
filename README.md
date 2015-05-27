@@ -160,7 +160,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-alias**: a array of fix names to show only in the selection box as an alias to the real items
 - **data-cmd**  : name of the command to send to FHEM (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-quote** : characters to enclose the send value. (default '')
-- **class**     : wider, w1x, w2x, w3x
+- **class**     : wider, w1x, w2x, w3x, large, big
 
 ####Push widgets
 - **data-set**    : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')

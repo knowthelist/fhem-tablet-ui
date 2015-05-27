@@ -73,7 +73,7 @@ body {
 }
 
 .cell {
-    margin:5px 10px !important;
+    margin:10px 10px !important;
     width: auto;
     text-align: center;
     vertical-align: middle;
@@ -134,8 +134,14 @@ body {
 .big { font-size: 200%; }
 .large { font-size: 150%; }
 .small { font-size: 80%; }
+.normal { font-size: 100%; }
+.bigplus { font-size: 270%; }
 
-[data-type="symbol"].big { font-size: 250% !important;}
+.bottom {vertical-align: bottom;}
+
+.maxw40 { max-width: 40px; }
+
+[data-type="symbol"].big, [data-type="multistatebutton"].big { font-size: 250% !important;}
 
 i#warn {
     font-size: 40% !important;
@@ -173,6 +179,16 @@ i#warn-back {
 .doublebox-h [data-type]{
     margin-left:-6px;
     margin-right:-6px;
+}
+.triplebox-v {
+    min-height: 140x;
+    max-height: 140px;
+    min-width: 52px;
+    max-width: 52px;
+}
+.triplebox-v [data-type]{
+    margin-top:-4px;
+    margin-bottom:-4px;
 }
 
 .red{ color:#ad3333; }
@@ -269,6 +285,7 @@ ul, ol {
 }
 .menu li div{
     color: #555;
+    height: 80px;
 }
 .menu{
     position:absolute;
@@ -333,6 +350,14 @@ select {
     color: #eeeeee;
 }
 
+.large > select {
+    font-size: 120%;
+}
+
+.big > select {
+    font-size: 150%;
+}
+
 .w3x > select, [data-type="label"].w3x {
     min-width: 160px;
     max-width: 160px;
@@ -364,7 +389,7 @@ select {
   font-style: normal;
   font-weight: normal;
   text-decoration: inherit;
-  font-size: 15px;
+  font-size: 150%;
   padding: 5px !important;
   pointer-events: none;
 }
