@@ -149,6 +149,29 @@ function initPage() {
 
 }
 
+function initReadingsArray(get) {
+    if(! $.isArray(get)) {
+        get = new Array(get);
+    }
+    for(var g=0; g<get.length; g++) {
+        reading = get[g];
+        // fully qualified readings => DEVICE:READING
+        if(reading.match(/:/)) {
+            var fqreading = reading.split(':');
+            var device = fqreading[0]
+            if(!devices[device]){
+                devices[device] = true;
+                devs.push(device);
+            }
+            reading = fqreading[1];
+        }
+        if(!readings[reading]){
+            readings[reading] = true;
+            pars.push(reading);
+        }
+    }
+}
+
 function initWidgets() {
 
     showDeprecationMsg();
@@ -172,11 +195,7 @@ function initWidgets() {
     //collect required readings
     DEBUG && console.log('Collecting required readings');
     $('[data-get]').each(function(index){
-        var reading = $(this).data("get");
-        if(!readings[reading]){
-            readings[reading] = true;
-            pars.push(reading);
-        }
+        initReadingsArray($(this).data("get"));
     });
 
     //init widgets
@@ -451,16 +470,32 @@ this.getPart = function (s,p) {
 	}
 };
 
+this.getDeviceValueByName = function (devname, paraname) {
+    var param = getParameterByName(devname, paraname);
+    return ( param ) ? param.val : null;
+}
 this.getDeviceValue = function (device, src) {
     var param = getParameter(device, src);
     return ( param ) ? param.val : null;
 }
 
+this.getReadingDateByName = function (devname, paraname) {
+    var param = getParameterByName(devname, paraname);
+    return ( param ) ? param.date : null;
+}
 this.getReadingDate = function (device, src) {
     var param = getParameter(device, src);
     return ( param ) ? param.date : null;
 }
 
+this.getParameterByName = function (devname, paraname) {
+    paraname = paraname || Object.keys(readings)[0];
+    if (devname && devname.length>0){
+        var params = deviceStates[devname];
+        return ( params && params[paraname] ) ? params[paraname] : null;
+    }
+    return null;
+}
 this.getParameter = function (device, src) {
     var devname	= device.data('device');
     var paraname =	(src && src != '') ? device.data(src) : Object.keys(readings)[0];
@@ -469,6 +504,35 @@ this.getParameter = function (device, src) {
         return ( params && params[paraname] ) ? params[paraname] : null;
     }
     return null;
+}
+
+this.hasSubscription = function (device, paraname) {
+    var get = device.data('get');
+    if(! $.isArray(get)) {
+        get = new Array(get);
+    }
+
+    var pars;
+    if(paraname.match(/,/)) {
+        pars = paraname.split(',');
+    } else {
+        pars = new Array(paraname);
+    }
+
+    for(var g=0; g<get.length; g++) {
+        for(var p=0; p<pars.length; p++) {
+            var reading;
+            if(get[g].match(/:/)) {
+                reading = get[g].split(':')[1];
+            } else {
+                reading = get[g];
+            }
+            if(pars[p] == reading) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 this.getStyle = function (selector, prop) {
