@@ -28,14 +28,14 @@ UPD 2015-05-12_00:52:03 1517848 www/tablet/fonts/openautomation.svg
 UPD 2015-05-12_00:52:04 359552 www/tablet/fonts/openautomation.ttf
 UPD 2015-05-12_00:52:04 359628 www/tablet/fonts/openautomation.woff
 UPD 2015-05-26_00:05:57 12693 www/tablet/index-example.html
-UPD 2015-05-26_08:16:10 16333 www/tablet/js/fhem-tablet-ui.js
+UPD 2015-05-27_22:53:30 17997 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-05-26_01:43:19 1694 www/tablet/js/widget_circlemenu.js
 UPD 2015-05-22_00:48:15 4885 www/tablet/js/widget_dimmer.js
 UPD 2015-05-21_19:22:30 8113 www/tablet/js/widget_famultibutton.js
 UPD 2015-05-12_00:52:04 5885 www/tablet/js/widget_homestatus.js
 UPD 2015-05-18_19:11:03 2260 www/tablet/js/widget_image.js
 UPD 2015-05-12_00:52:04 5162 www/tablet/js/widget_knob.js
-UPD 2015-05-26_08:45:49 3192 www/tablet/js/widget_label.js
+UPD 2015-05-27_22:24:04 3248 www/tablet/js/widget_label.js
 UPD 2015-05-12_00:52:04 3349 www/tablet/js/widget_level.js
 UPD 2015-05-25_22:39:31 6521 www/tablet/js/widget_pagetab.js
 UPD 2015-05-12_00:52:04 1239 www/tablet/js/widget_playstream.js
