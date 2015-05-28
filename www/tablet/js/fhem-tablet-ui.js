@@ -363,7 +363,22 @@ function longPoll(roomName) {
 	});
 }
             
-function requestFhem(paraname) {
+function requestFhem(paraname, devicename) {
+    var devicelist;
+    
+    // paraname = DEVICE:READING; devicename is ignored
+    if(paraname.match(/:/)) {
+        var temp = paraname.split(':');
+        devicename = temp[0];
+        paraname = temp[1];
+    }
+    
+    if(typeof devicename != 'undefined') {
+        devicelist = devicename;
+    } else {
+        devicelist = $.map(devs, $.trim).join();
+    }
+    
 /* 'list' is still the fastest cmd to get all important data
 */
     $.ajax({
@@ -373,7 +388,7 @@ function requestFhem(paraname) {
 		context:{paraname: paraname},
 		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
 		data: {
-			cmd: "list " + $.map(devs, $.trim).join() + " " + paraname,
+			cmd: "list " + devlist + " " + paraname,
 			XHR: "1"
 		}
 	})
@@ -487,6 +502,12 @@ this.getReadingDate = function (device, src) {
 }
 
 this.getParameterByName = function (devname, paraname) {
+    // devname = DEVICE:READING; paraname is ignored
+    if(devname.match(/:/)) {
+        var temp = devname.split(':');
+        devname = temp[0];
+        paraname = temp[1];
+    }
     paraname = paraname || Object.keys(readings)[0];
     if (devname && devname.length>0){
         var params = deviceStates[devname];
