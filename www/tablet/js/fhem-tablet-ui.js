@@ -520,7 +520,7 @@ this.hasSubscription = function (device, paraname) {
     for(var g=0; g<get.length; g++) {
         for(var p=0; p<pars.length; p++) {
             var reading;
-            if(get[g].match(/:/)) {
+            if(get[g] && get[g].match(/:/)) {
                 reading = get[g].split(':')[1];
             } else {
                 reading = get[g];
