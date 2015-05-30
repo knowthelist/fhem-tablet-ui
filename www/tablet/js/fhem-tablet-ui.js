@@ -388,7 +388,7 @@ function requestFhem(paraname, devicename) {
 		context:{paraname: paraname},
 		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
 		data: {
-			cmd: "list " + devlist + " " + paraname,
+            cmd: "list " + devicelist + " " + paraname,
 			XHR: "1"
 		}
 	})
