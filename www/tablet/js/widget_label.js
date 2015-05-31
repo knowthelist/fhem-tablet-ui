@@ -66,7 +66,9 @@ var widget_label = $.extend({}, widget_widget, {
                     val = widget_label.update_substitution(val, $(this).data('substitution'));
         
                     var unit = $(this).data('unit');
-                    $(this).html( val + "<span style='font-size: 50%;'>"+unit+"</span>" );
+                    if ( ! $(this).hasClass('fixedlabel') ) {
+                      $(this).html( val + "<span style='font-size: 50%;'>"+unit+"</span>" );
+                    }
         
                     widget_label.update_colorize(val, $(this));
                  }
