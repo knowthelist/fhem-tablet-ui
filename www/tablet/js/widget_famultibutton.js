@@ -95,23 +95,58 @@ var widget_famultibutton = $.extend({}, widget_widget, {
     },
     toggleOn : function(elem) {
         if(this._doubleclicked(elem, 'on')) {
-            var device = elem.data('device');
-            var cmd = [elem.data('cmd'), device, elem.data('set'), elem.data('set-on')].join(' ');
-            setFhemStatus(cmd);              
-            if( device && typeof device != "undefined" && device !== " ") {
-                TOAST && $.toast(cmd);
+            this.clicked(elem, 'on')
+            var blink = elem.data('blink');
+            // blink=on     -> always reset state after 200ms
+            // blink=off    -> never reset state after 200ms
+            // blink=undef  -> reset state after 200ms if device is not set
+            if(blink == 'on' || (! elem.data('device') && blink !='off')) {
+                setInterval(function() {elem.setOff()}, 200);
             }
-            elem.trigger("toggleOn");
         }
     },
     toggleOff : function(elem) {
         if(this._doubleclicked(elem, 'off')) {
-            var device = elem.data('device');
-            var cmd = [elem.data('cmd'), device, elem.data('set'), elem.data('set-off')].join(' ');
-            setFhemStatus(cmd);
-            if( device && typeof device != "undefined" && device !== " ") {
-                TOAST && $.toast(cmd);
+            this.clicked(elem, 'off')
+            var blink = elem.data('blink');
+            if(blink == 'on' || (! elem.data('device') && blink !='off')) {
+                setInterval(function() {elem.setOn()}, 200);
             }
+        }
+    },
+    clicked: function(elem, onoff) {
+        var target;
+        var type;
+        
+        if(elem.attr('data-url')) {
+            target = elem.attr('data-url');
+            type = 'url';
+        } else if(elem.attr('data-url-xhr')) {
+            target = elem.attr('data-url-xhr');
+            type = 'url-xhr';
+        } else if(elem.attr('data-fhem-cmd')) {
+            target = elem.attr('data-fhem-cmd');
+            type = 'fhem-cmd';
+        } else {
+            target = [elem.data('cmd'), elem.data('device'), elem.data('set'), elem.data('set-'+onoff)].join(' ');
+            type = 'fhem-cmd';
+        }
+        switch(type) {
+            case 'url':
+                document.location.href = target;
+                break;
+            case 'url-xhr':
+                if(target && typeof target != "undefined" && target !== " ") {
+                    $.get(target);
+                    TOAST && $.toast(target);
+                }
+                break;
+            case 'fhem-cmd':
+                if(target && typeof target != "undefined" && target !== " ") {
+                    setFhemStatus(target);
+                    TOAST && $.toast(target);
+                }
+                break;
         }
     },
     valueChanged: function(elem,v) {
