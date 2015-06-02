@@ -560,6 +560,8 @@ this.getStyle = function (selector, prop) {
 }
 
 this.getIconId = function(iconName){
+    if (!iconName || iconName=='')
+        return "?";
     var rules = $('link[href$="font-awesome.min.css"]')[0].sheet.cssRules;
     for (var rule in rules){
         if ( rules[rule].selectorText && rules[rule].selectorText.match(new RegExp(iconName+':') )){
