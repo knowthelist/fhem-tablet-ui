@@ -247,6 +247,8 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-url**      : URL of the image to show (use data-url + data-refresh or data-device + data-get, not both)
 - **data-refresh**  : Interval in seconds for image refresh for usage together with data-url (default: 900)
 
+If 'data-url' is not set, then the URL for image src is built from: data-path + valueof data-get + data-suffix
+
 ####Weather widgets
 - **data-get**      : name of the reading to get the weather literal from FHEM (default 'STATE')
 - **data-imageset** : collection of images to display current weather situation. Possible values: 'meteocons', 'kleinklima' (Default: 'meteocons')
