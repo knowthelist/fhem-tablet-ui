@@ -559,6 +559,16 @@ this.getStyle = function (selector, prop) {
     return ( props && props[prop] ) ? props[prop] : null;
 }
 
+this.getIconId = function(iconName){
+    var rules = $('link[href$="font-awesome.min.css"]')[0].sheet.cssRules;
+    for (var rule in rules){
+        if ( rules[rule].selectorText && rules[rule].selectorText.match(new RegExp(iconName+':') )){
+            var id = rules[rule].style.content;
+            return (id)?id.replace(/"/g,''):"?";
+        }
+    }
+}
+
 // global helper functions
 this.showModal = function (modal) {
     if(modal)

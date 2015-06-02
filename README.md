@@ -1,4 +1,4 @@
- die fhem-tablet-ui
+fhem-tablet-ui
 ========
 
 Just another dashboard for FHEM  http://fhem.de/fhem.html  
@@ -192,14 +192,18 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **class**		: small, mini, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
 
 ####Homestatus widget
-- **data-get**  : name of the reading to get from FHEM (default 'STATE')
-- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
-- **data-version**  : name of the special dummy device to represent
+- **data-get**      : name of the reading to get from FHEM (default 'STATE')
+- **data-set**      : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
+- **data-get-on**   : array of states using for get (default ['1','2','3','4'])
+- **data-set-on**   : array of states using for set. (default: value of data-get-on)
+- **data-alias**	: array of fix names to show only in the UI as an alias to the real states
+- **data-icons**    : array of icons related to the data-get-on array
+- **data-version**  : name of the status model e.g. 'residents','roommate','guest' (default NULL)
 
-data-version='' (default)
-  4 states are valid: 1,2,3 or 4 (1=home,2=night,3=away,4=holiday) 
-data-version='residents' or 'roommate' or 'guest'
-  residents states are valid (absent,gone,asleep,home)
+  The default version has 4 states: '1','2','3','4' 
+  The default aliases are 'Home','Night','Away','Holiday';
+  data-version='residents' or 'roommate' or 'guest' has 5 states ('home','asleep','absent','gone','gotosleep')
+  They have these aliases 'Home','Night','Away','Holiday','Retire'
 
 ####Slider widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
