@@ -1,3 +1,3 @@
 FHEM tablet UI last change:
 2015-06-02
- - Update: homestatus widget for 5 states
+ - Added data-path to image widget
