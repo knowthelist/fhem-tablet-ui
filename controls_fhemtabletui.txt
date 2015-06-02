@@ -33,7 +33,7 @@ UPD 2015-05-26_01:43:19 1694 www/tablet/js/widget_circlemenu.js
 UPD 2015-05-22_00:48:15 4885 www/tablet/js/widget_dimmer.js
 UPD 2015-06-02_22:46:07 9332 www/tablet/js/widget_famultibutton.js
 UPD 2015-06-02_19:56:08 9212 www/tablet/js/widget_homestatus.js
-UPD 2015-06-02_22:06:35 2333 www/tablet/js/widget_image.js
+UPD 2015-06-02_23:20:39 2455 www/tablet/js/widget_image.js
 UPD 2015-05-12_00:52:04 5162 www/tablet/js/widget_knob.js
 UPD 2015-05-27_22:24:04 3248 www/tablet/js/widget_label.js
 UPD 2015-05-12_00:52:04 3349 www/tablet/js/widget_level.js
