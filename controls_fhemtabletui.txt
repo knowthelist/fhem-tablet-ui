@@ -28,7 +28,7 @@ UPD 2015-05-12_00:52:03 1517848 www/tablet/fonts/openautomation.svg
 UPD 2015-05-12_00:52:04 359552 www/tablet/fonts/openautomation.ttf
 UPD 2015-05-12_00:52:04 359628 www/tablet/fonts/openautomation.woff
 UPD 2015-05-26_00:05:57 12693 www/tablet/index-example.html
-UPD 2015-06-02_19:09:11 18921 www/tablet/js/fhem-tablet-ui.js
+UPD 2015-06-02_20:55:12 18976 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-05-26_01:43:19 1694 www/tablet/js/widget_circlemenu.js
 UPD 2015-05-22_00:48:15 4885 www/tablet/js/widget_dimmer.js
 UPD 2015-05-21_19:22:30 8113 www/tablet/js/widget_famultibutton.js
