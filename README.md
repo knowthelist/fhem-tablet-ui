@@ -241,6 +241,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 
 ####Image widgets
 - **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')
+- **data-path**     : first part of the URL of the image to show (for usage data-device + data-get)
 - **data-size**     : width of the image in px or %, the height scales proportionally. (default: 50%)
 - **data-url**      : URL of the image to show (use data-url + data-refresh or data-device + data-get, not both)
 - **data-refresh**  : Interval in seconds for image refresh for usage together with data-url (default: 900)
