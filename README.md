@@ -1,4 +1,4 @@
- die fhem-tablet-ui
+fhem-tablet-ui
 ========
 
 Just another dashboard for FHEM  http://fhem.de/fhem.html  
@@ -192,14 +192,19 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **class**		: small, mini, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
 
 ####Homestatus widget
-- **data-get**  : name of the reading to get from FHEM (default 'STATE')
-- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
-- **data-version**  : name of the special dummy device to represent
+- **data-get**      : name of the reading to get from FHEM (default 'STATE')
+- **data-set**      : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
+- **data-get-on**   : array of states using for get (default ['1','2','3','4'])
+- **data-set-on**   : array of states using for set. (default: value of data-get-on)
+- **data-alias**	: array of fix names to show only in the UI as an alias to the real states
+- **data-icons**    : array of icons related to the data-get-on array
+- **data-version**  : name of the status model e.g. 'residents','roommate','guest' (default NULL)
+- **class**			: small, readonly
 
-data-version='' (default)
-  4 states are valid: 1,2,3 or 4 (1=home,2=night,3=away,4=holiday) 
-data-version='residents' or 'roommate' or 'guest'
-  residents states are valid (absent,gone,asleep,home)
+  The default version has 4 states: '1','2','3','4' 
+  The default aliases are 'Home','Night','Away','Holiday';
+  data-version='residents' or 'roommate' or 'guest' has 5 states ('home','asleep','absent','gone','gotosleep')
+  They have these aliases 'Home','Night','Away','Holiday','Retire'
 
 ####Slider widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
@@ -237,9 +242,13 @@ data-version='residents' or 'roommate' or 'guest'
 
 ####Image widgets
 - **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')
+- **data-path**     : first part of the URL of the image to show [for usage data-device + data-get] (default '')
+- **data-suffix**   : last part of the URL of the image to show [for usage data-device + data-get] (default '')
 - **data-size**     : width of the image in px or %, the height scales proportionally. (default: 50%)
 - **data-url**      : URL of the image to show (use data-url + data-refresh or data-device + data-get, not both)
 - **data-refresh**  : Interval in seconds for image refresh for usage together with data-url (default: 900)
+
+If 'data-url' is not set, then the URL for image src is built from: data-path + valueof data-get + data-suffix
 
 ####Weather widgets
 - **data-get**      : name of the reading to get the weather literal from FHEM (default 'STATE')
@@ -722,6 +731,18 @@ To change the dim value: push the button and slide up or down
 </div>
 ```
 
+###Homestatus
+**Example** for how to individualize the homestatus widget:
+```html
+<div data-type="homestatus" data-device='hs_normal' class="small" ></div>
+
+<div data-type="homestatus" data-device='hs_extra'
+        data-get-on='["home","asleep","absent","gone","gotosleep"]'
+        data-alias='["Home","Night","Away","Holiday","Retire"]'
+        data-icons='["fa-fire","fa-film","fa-plus","fa-car","fa-tint"]'
+        data-version='residents'>
+```
+
 ###Pagetab
 **Example** for a tab menu to switch smoothly between multiple pages. 
 Multiple pagetabs in a template file: menu.html
@@ -872,6 +893,12 @@ Create two comboboxes to select the inputs of a two zone AV receiver. List for Z
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/select_2x.png)       
        
+Donation
+--------
+You can support the creator of this beautiful UI so the he can buy a new laptop
+
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PD4C2XM2VTD9A"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" alt="[paypal]" /></a>
+
 
 License
 -------

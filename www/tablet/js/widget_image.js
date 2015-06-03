@@ -11,6 +11,8 @@ var widget_image = $.extend({}, widget_widget, {
         elem.data('width',      elem.data('width')      || '100%');
         elem.data('size',       elem.data('size')       || '50%');
         elem.data('url',        elem.data('url'));
+        elem.data('path',       elem.data('path'));
+        elem.data('suffix',     elem.data('suffix'));
         elem.data('refresh',    elem.data('refresh')    || 15*60);
         
         readings[$(this).data('get')] = true;
@@ -53,7 +55,8 @@ var widget_image = $.extend({}, widget_widget, {
             if ( $(this).data('get')==par){
                 var value = getDeviceValue( $(this), 'get' );
                 if (img && value){
-                        img.attr('src',value );
+                    var src = [$(this).data('path'), value, $(this).data('suffix')].join('');
+                    img.attr('src', src );
                 }
             }
         });
