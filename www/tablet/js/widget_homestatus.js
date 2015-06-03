@@ -97,7 +97,7 @@ var widget_homestatus = $.extend({}, widget_widget, {
 		
 		c.fillStyle = (sector==1)?this.o.minColor:this.o.maxColor;
         c.font = cfont;
-        c.fillText(this.o.texts[0], this.xy-14, this.xy+15+coffset);
+        c.fillText(this.o.texts[0], this.xy-15, this.xy+10+coffset);
         c.font = cfafont;
         c.fillText(getIconId(this.o.icons[0]), this.xy-12, this.xy+2);
 		
@@ -109,7 +109,7 @@ var widget_homestatus = $.extend({}, widget_widget, {
 		
         c.fillStyle = (sector==4)?this.o.minColor:this.o.maxColor;
         c.font = cfafont;
-        c.fillText(getIconId(this.o.icons[3]), this.xy+this.radius*0.4, this.xy-this.radius*0.4);
+        c.fillText(getIconId(this.o.icons[3]), this.xy+this.radius*0.35, this.xy-this.radius*0.4);
         c.font = cfont;
         c.fillText(this.o.texts[3], this.xy+this.radius*0.44, this.xy-10);
 
@@ -128,9 +128,9 @@ var widget_homestatus = $.extend({}, widget_widget, {
         else{
             c.fillStyle = (sector==3)?this.o.minColor:this.o.maxColor;
             c.font = cfafont;
-            c.fillText(getIconId(this.o.icons[2]), this.xy-12, this.xy+this.radius*0.73-coffset);
+            c.fillText(getIconId(this.o.icons[2]), this.xy-this.radius*0.15, this.xy+this.radius*0.65+coffset);
             c.font = cfont;
-            c.fillText(this.o.texts[2], this.xy-12, this.xy+this.radius*0.65+15);
+            c.fillText(this.o.texts[2], this.xy-12, this.xy+this.radius*0.82+coffset);
         }
 
 		this.o.status = sector;
@@ -149,6 +149,12 @@ var widget_homestatus = $.extend({}, widget_widget, {
         elem.data('cmd',        elem.data('cmd') || 'set');
         elem.data('get-on',     typeof elem.data('get-on')  != 'undefined' ? elem.data('get-on')  : defaultStates);
         elem.data('set-on',     typeof elem.data('set-on')  != 'undefined' ? elem.data('set-on')  : elem.data('get-on'));
+        elem.data('height', 1*elem.attr('data-height')||210);
+        elem.data('width', 1*elem.attr('data-width')||210);
+        if(elem.hasClass('small')) {
+            elem.data('height', 160);
+            elem.data('width', 160);
+        }
         readings[elem.data('get')] = true;
 
         var texts = elem.data('alias')||[];
@@ -174,21 +180,20 @@ var widget_homestatus = $.extend({}, widget_widget, {
             'min': 0,
             'max': 2 * Math.PI,
             'step': 0.01,
-            'height':210,
-            'width':210,
-            'bgColor': $(this).data('bgcolor') || '#aaaaaa',
-            'fgColor': $(this).data('fgcolor') || '#aa6900',
-            'tkColor': $(this).data('tkcolor') || '#696969',
+            'height':elem.data('height'),
+            'width':elem.data('width'),
+            'bgColor': elem.data('bgcolor') || '#aaaaaa',
+            'fgColor': elem.data('fgcolor') || '#aa6900',
+            'tkColor': elem.data('tkcolor') || '#696969',
             'minColor': '#2A2A2A',
             'maxColor': '#696969',
             'thickness': 0.4,
             'lastvalue':0,
             'displayInput': false,
+            'readOnly' : elem.hasClass('readonly'),
             'angleOffset' : 0,
             'texts': elem.data('texts'),
             'icons': elem.data('icons'),
-            'cmd': elem.data('cmd') || 'set',
-            'set': elem.data('set') || '',
             'draw' : widget_homestatus.drawSelector,
             'change' : function (v) {
                   startPollInterval();

@@ -199,6 +199,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-alias**	: array of fix names to show only in the UI as an alias to the real states
 - **data-icons**    : array of icons related to the data-get-on array
 - **data-version**  : name of the status model e.g. 'residents','roommate','guest' (default NULL)
+- **class**			: small, readonly
 
   The default version has 4 states: '1','2','3','4' 
   The default aliases are 'Home','Night','Away','Holiday';
@@ -730,6 +731,18 @@ To change the dim value: push the button and slide up or down
 </div>
 ```
 
+###Homestatus
+**Example** for how to individualize the homestatus widget:
+```html
+<div data-type="homestatus" data-device='hs_normal' class="small" ></div>
+
+<div data-type="homestatus" data-device='hs_extra'
+        data-get-on='["home","asleep","absent","gone","gotosleep"]'
+        data-alias='["Home","Night","Away","Holiday","Retire"]'
+        data-icons='["fa-fire","fa-film","fa-plus","fa-car","fa-tint"]'
+        data-version='residents'>
+```
+
 ###Pagetab
 **Example** for a tab menu to switch smoothly between multiple pages. 
 Multiple pagetabs in a template file: menu.html
@@ -880,6 +893,16 @@ Create two comboboxes to select the inputs of a two zone AV receiver. List for Z
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/select_2x.png)       
        
+Donation
+--------
+You can support the creator of this beautiful UI so the he can buy a new laptop
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="4AE3UV52ML3WQ">
+<input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen – mit PayPal.">
+<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+</form>
+
 
 License
 -------
