@@ -129,6 +129,9 @@ function initPage() {
     if($("meta[name='gridster_disable']").attr("content") == '1') {
         gridster.disable();
     }
+    if($("meta[name='gridster_starthidden']").attr("content") == '1') {
+        $('div.gridster').hide();
+    }
 	
     //include extern html code
     var total = $('[data-template]').length;
