@@ -31,7 +31,7 @@ UPD 2015-05-26_00:05:57 12693 www/tablet/index-example.html
 UPD 2015-06-02_20:55:12 18976 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-05-26_01:43:19 1694 www/tablet/js/widget_circlemenu.js
 UPD 2015-05-22_00:48:15 4885 www/tablet/js/widget_dimmer.js
-UPD 2015-06-02_22:46:07 9332 www/tablet/js/widget_famultibutton.js
+UPD 2015-06-05_01:58:57 9677 www/tablet/js/widget_famultibutton.js
 UPD 2015-06-03_19:20:03 9461 www/tablet/js/widget_homestatus.js
 UPD 2015-06-02_23:20:39 2455 www/tablet/js/widget_image.js
 UPD 2015-05-12_00:52:04 5162 www/tablet/js/widget_knob.js
@@ -39,6 +39,7 @@ UPD 2015-05-27_22:24:04 3248 www/tablet/js/widget_label.js
 UPD 2015-05-12_00:52:04 3349 www/tablet/js/widget_level.js
 UPD 2015-05-25_22:39:31 6521 www/tablet/js/widget_pagetab.js
 UPD 2015-05-12_00:52:04 1239 www/tablet/js/widget_playstream.js
+UPD 2015-06-05_01:22:51 2480 www/tablet/js/widget_progress.js
 UPD 2015-05-21_20:38:41 1964 www/tablet/js/widget_push.js
 UPD 2015-05-25_20:40:34 1667 www/tablet/js/widget_readingsgroup.js
 UPD 2015-05-12_00:52:04 1204 www/tablet/js/widget_rotor.js
