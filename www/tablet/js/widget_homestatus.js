@@ -62,17 +62,17 @@ var widget_homestatus = $.extend({}, widget_widget, {
 		c.strokeStyle = this.o.tkColor;
 		c.lineWidth = this.radius*0.6;
 		c.beginPath();
-		c.arc(this.xy, this.xy, this.radius*0.7, 0, 0.02);
+        c.arc(this.xy, this.xy, this.radius*0.7, 0, 0.025);
 		c.stroke();
 		c.beginPath();
-		c.arc(this.xy, this.xy, this.radius*0.7, Math.PI -0.02, Math.PI);
+        c.arc(this.xy, this.xy, this.radius*0.7, Math.PI-0.025, Math.PI);
 		c.stroke();
 		c.beginPath();
-		c.arc(this.xy, this.xy, this.radius*0.7, 1.5 * Math.PI-0.02, 1.5 * Math.PI);
+        c.arc(this.xy, this.xy, this.radius*0.7, 1.5 * Math.PI-0.025, 1.5 * Math.PI);
 		c.stroke();
         if (this.o.texts.length > 4){
             c.beginPath();
-            c.arc(this.xy, this.xy, this.radius*0.7, 0.5 * Math.PI-0.02, 0.5 * Math.PI);
+            c.arc(this.xy, this.xy, this.radius*0.7, 0.5 * Math.PI-0.025, 0.5 * Math.PI);
             c.stroke();
         }
 		

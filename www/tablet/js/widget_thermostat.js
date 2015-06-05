@@ -77,7 +77,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
         c.stroke();
 	}
 	
-	var tick_w = (2 * Math.PI) / 360;
+    var tick_w = (2 * Math.PI) / 360;
 	var step =  (this.o.max - this.o.min) / this.angleArc;
 	var acAngle = ((this.o.isValue - this.o.min) / step) + this.startAngle;
 	var dist = this.o.tickdistance || 4;
@@ -87,7 +87,8 @@ var widget_thermostat = $.extend({}, widget_knob, {
 	
 	// draw ticks
 	for (tick = this.startAngle; tick < this.endAngle + 0.00001; tick+=tick_w*dist) {
-		i = step * (tick-this.startAngle)+this.o.min;
+        var i = step * (tick-this.startAngle)+this.o.min;
+        var w = tick_w;
 		
 		c.beginPath();
 		
@@ -105,16 +106,16 @@ var widget_thermostat = $.extend({}, widget_knob, {
 		// thicker lines every 5 ticks
 		if ( Math.round(i*10)/10 % 5 == 0 ){ 
 			w = tick_w*2;
-			w *= (c.strokeStyle != this.o.tkColor) ? 1.5 : 1; 
+            w *= (c.strokeStyle != this.o.tkColor) ? 1.5 : 1;
 		}
 		else {
-			w = tick_w;
-			w *= (c.strokeStyle != this.o.tkColor) ? 2 : 1;
+            w *= (c.strokeStyle != this.o.tkColor) ? 2 : 1;
 		}
 		// thicker lines every at current value
-		if (acAngle > tick-tick_w && acAngle < tick+tick_w)
-			w *= 1.9;	
-			
+        if (acAngle > tick-tick_w && acAngle < tick+tick_w)
+            w *= 1.9;
+
+        if (w<0.025) w=0.025;
         c.arc( this.xy, this.xy, this.radius, tick, tick+w , false);
 		c.stroke();
 	}
