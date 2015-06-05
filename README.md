@@ -71,6 +71,7 @@ Currently there are 16 types of widgets in the base installation.
 - **pagetab**	: Element to smoothly exchange the whole page with another page
 - **level** : vertical/horizontal bar to show values between min/max value
 - **rotor** :slider between multiple widgets at one position
+- **progress** :round symbolic display  for percent values
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -171,6 +172,8 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-doubleclick**: timeout to wait for a second click or touch. '0' disables the doubleclick feature. (default '0')
 - **data-countdown**: secondes for the countdown progress control (default: autodetect from 'on-for-timer' command)
 
+'data-set-on' can also be an array of values to toggle between this values
+
 ####Thermostat widgets
 - **data-get**   : name of the reading to get from FHEM (default 'desired-temp')
 - **data-temp**  : name of the reading for measured temperature of thermostates (default 'measured-temp')
@@ -228,6 +231,11 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-colors** : a array of color values to affect the colour of the label according to the limit value 
 - **data-limits** : a array of numeric or RegEx values to affect the colour of the label
 - **class**		: mini, horizontal
+
+####Progress widgets
+- **data-get**  : name of the reading to get from FHEM (default 'STATE')
+- **data-max**  : maximal value to set or name of the reading which helds the max value (default 100)
+- **class**		: novalue, percent
 
 ####Dimmer widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
@@ -667,6 +675,13 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 </div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/level_limits.png)
+
+###Progress
+**Example** for how to create a widget for a percent display
+```html
+<div data-type="progress" data-device="dummy1" data-get='pct'></div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/progress.png)
 
 ###Volume
 **Example** for how to create a widget for a HueDevice to set hue values:

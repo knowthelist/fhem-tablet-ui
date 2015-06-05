@@ -117,6 +117,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
     clicked: function(elem, onoff) {
         var target;
         var type;
+        var device = elem.data('device');
         
         if(elem.attr('data-url')) {
             target = elem.attr('data-url');
@@ -128,7 +129,15 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             target = elem.attr('data-fhem-cmd');
             type = 'fhem-cmd';
         } else {
-            target = [elem.data('cmd'), elem.data('device'), elem.data('set'), elem.data('set-'+onoff)].join(' ');
+            var sets = elem.data('set-'+onoff);
+            if(!$.isArray(sets)) {
+                sets = new Array(sets);
+            }
+            var s = elem.data('state') || 0;
+            var set = typeof sets[s] != 'undefined' ? sets[s] : sets[0];
+            s++; if (s >= sets.length) s=0;
+            elem.data('state',s);
+            target = [elem.data('cmd'), device, elem.data('set'), set ].join(' ');
             type = 'fhem-cmd';
         }
         switch(type) {
@@ -136,13 +145,13 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                 document.location.href = target;
                 break;
             case 'url-xhr':
-                if(target && typeof target != "undefined" && target !== " ") {
+                if( device && typeof device != "undefined" && device !== " ") {
                     $.get(target);
                     TOAST && $.toast(target);
                 }
                 break;
             case 'fhem-cmd':
-                if(target && typeof target != "undefined" && target !== " ") {
+                if( device && typeof device != "undefined" && device !== " ") {
                     setFhemStatus(target);
                     TOAST && $.toast(target);
                 }
