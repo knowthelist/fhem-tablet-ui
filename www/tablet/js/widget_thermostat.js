@@ -88,10 +88,10 @@ var widget_thermostat = $.extend({}, widget_knob, {
 	// draw ticks
 	for (tick = this.startAngle; tick < this.endAngle + 0.00001; tick+=tick_w*dist) {
         var i = step * (tick-this.startAngle)+this.o.min;
-        var w = tick_w;
+        w = tick_w;
 		
-		c.beginPath();
-		
+        c.beginPath();
+
         if ((tick > acAngle && tick < a.s) || (tick-tick_w*dist <= acAngle && tick+tick_w*dist >= a.s)){
             // draw diff range in gradient color
             c.strokeStyle = widget_thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-tick)/this.angleArc);
@@ -100,22 +100,21 @@ var widget_thermostat = $.extend({}, widget_knob, {
         }
 		else {
 			// draw normal ticks
-			c.strokeStyle = this.o.tkColor;//'#4477ff';
+            c.strokeStyle = this.o.tkColor;
 		}
-		
+
 		// thicker lines every 5 ticks
 		if ( Math.round(i*10)/10 % 5 == 0 ){ 
-			w = tick_w*2;
+            w = tick_w*2.2;
             w *= (c.strokeStyle != this.o.tkColor) ? 1.5 : 1;
 		}
 		else {
             w *= (c.strokeStyle != this.o.tkColor) ? 2 : 1;
 		}
 		// thicker lines every at current value
-        if (acAngle > tick-tick_w && acAngle < tick+tick_w)
-            w *= 1.9;
+        if (acAngle > tick-tick_w-w && acAngle < tick+tick_w)
+            w *= 1.5;
 
-        if (w<0.025) w=0.025;
         c.arc( this.xy, this.xy, this.radius, tick, tick+w , false);
 		c.stroke();
 	}
@@ -177,7 +176,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
 			'angleArc': $(this).data('anglearc') || 240,
 			'bgColor': $(this).data('bgcolor') || 'transparent',
             'fgColor': $(this).data('fgcolor') || getStyle('.'+base.widgetname+'.fgcolor','color') || '#bbbbbb',
-            'tkColor': $(this).data('tkcolor') || getStyle('.'+base.widgetname+'.tkcolor','color') || '#696969',
+            'tkColor': $(this).data('tkcolor') || getStyle('.'+base.widgetname+'.tkcolor','color') || '#666',
             'minColor': $(this).data('mincolor') || getStyle('.'+base.widgetname+'.mincolor','color') ||'#4477ff',
             'maxColor': $(this).data('maxcolor') || getStyle('.'+base.widgetname+'.maxcolor','color') ||'#ff0000',
             'thickness': .25,

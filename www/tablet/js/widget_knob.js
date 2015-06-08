@@ -33,7 +33,7 @@ var widget_knob = $.extend({}, widget_widget, {
         
         elem.data('bgcolor', elem.data('bgcolor') || 'transparent');
         elem.data('fgcolor', elem.data('fgcolor') || '#cccccc');
-        elem.data('tkcolor', elem.data('tkcolor') || '#696969');
+        elem.data('tkcolor', elem.data('tkcolor') || '#666');
     },
     init: function () {
         base=this;

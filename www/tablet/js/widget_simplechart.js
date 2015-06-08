@@ -1,6 +1,5 @@
 var widget_simplechart = {
-  _simplechart: null,
-  elements: null,
+  widgetname : 'simplechart',
   createElem: function(elem) {
       return $(document.createElementNS('http://www.w3.org/2000/svg', elem));
     },
@@ -11,11 +10,11 @@ var widget_simplechart = {
            res.push(arg[i].join(','));
        }
        return res.join(' ');
-},
+    },
   init: function () {
-  	_simplechart=this;
-  	_simplechart.elements = $('div[data-type="simplechart"]');
- 	_simplechart.elements.each(function(index) {
+      base=this;
+      this.elements = $('div[data-type="'+this.widgetname+'"]');
+      this.elements.each(function(index) {
 
 		
         $(this).css("width", "90%");
@@ -30,10 +29,10 @@ var widget_simplechart = {
 			' </g></svg>');
 		svgElement.appendTo($(this));
 
-        //_simplechart.refresh.apply(this);
+        base.refresh.apply(this);
 
      });
-  },
+    },
   refresh: function () {
       var min = $(this).data('minvalue')||0;
       var max = $(this).data('maxvalue')||100;
@@ -127,7 +126,7 @@ var widget_simplechart = {
             for (var i=min;i<=max;i++){
                 // thicker lines every 5 ticks
                 if ( Math.round(i*10)/10 % 10 == 0 ){
-                    var line = _simplechart.createElem('line');
+                    var line = widget_simplechart.createElem('line');
                     line.attr({
                                 'x1':'0',
                                 'y1':i,
@@ -141,7 +140,7 @@ var widget_simplechart = {
             }
 
 
-              var tick1 = _simplechart.createElem('line');
+              var tick1 = widget_simplechart.createElem('line');
               tick1.attr({
                              'id':'tick1',
                               'x1':'93%',
@@ -151,7 +150,7 @@ var widget_simplechart = {
                               'vector-effect':'non-scaling-stroke',
                               'y2':'100%'});
               polyline.parent().append(tick1);
-              var tick2 = _simplechart.createElem('line');
+              var tick2 = widget_simplechart.createElem('line');
               tick2.attr({
                              'id':'tick1',
                               'x1':'5%',
@@ -162,7 +161,7 @@ var widget_simplechart = {
                               'y2':'100%'});
               polyline.parent().append(tick2);
 
-              polyline.attr('points',_simplechart.getSvgPoints(points));
+              polyline.attr('points',widget_simplechart.getSvgPoints(points));
           }
           // jQuery's attr() fails here
           svg[0].setAttribute('viewBox', [10, (-max), xrange, (max-min)].join(' '));
@@ -172,20 +171,13 @@ var widget_simplechart = {
       }
   });
     },
+    update: function (dev,par) {
 
-  update: function (dev,par) {
-
-	var deviceElements;
-	if ( dev == '*' )
-		deviceElements= _simplechart.elements;
-	else
-   		deviceElements= _simplechart.elements.filter('div[data-device="'+dev+'"]');
-
-	deviceElements.each(function(index) {
+      var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
+      deviceElements.each(function(index) {
 		if ( $(this).data('get')==par || par =='*'){	
-            _simplechart.refresh.apply(this);
+            this.refresh.apply(this);
 		}
 	});
-   }
-			 
+   },
 };

@@ -17,7 +17,7 @@ Requires
 Install
 -------
  * copy the whole tree into the corresponding folder of your FHEM server /\<fhem-path\>/www/tablet
- * add 'define TABLETUI HTTPSRV ftui ./www/tablet/ Tablet-UI' in fhem.cfg
+ * add 'define TABLETUI HTTPSRV ftui/ ./www/tablet/ Tablet-UI' in fhem.cfg
  * rename the index-example.html to index.html or create your own index.html
  * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/ftui/
  

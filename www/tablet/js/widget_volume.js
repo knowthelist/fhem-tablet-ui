@@ -46,21 +46,17 @@ var widget_volume = $.extend({}, widget_knob, {
 			// draw normal ticks
 			c.strokeStyle = this.o.tkColor;//'#4477ff';
 		}
-		
-		// thicker lines every 5 ticks
+
+        // thicker lines every 5 ticks
 		if ( Math.round(i*10)/10 % 5 == 0 ){ 
-			w = tick_w*2;
+            w = tick_w*2.2;
 			w *= (c.strokeStyle != this.o.tkColor) ? 1.5 : 1; 
 		}
 		else {
 			w *= (c.strokeStyle != this.o.tkColor) ? 2 : 1;
 		}
-        if (w<0.025) w=0.025;
-		// thicker lines every at current value
-		//if (acAngle > tick-tick_w && acAngle < tick+tick_w)
-			//w *= 1.9;	
 			
-        c.arc( this.xy, this.xy, this.radius, tick, tick+0.025 , false);
+        c.arc( this.xy, this.xy, this.radius, tick, tick+w , false);
 		c.stroke();
 	}
 
