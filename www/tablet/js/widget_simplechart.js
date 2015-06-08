@@ -19,14 +19,13 @@ var widget_simplechart = {
 		
         $(this).css("width", "90%");
         $(this).css("height", "90%");
-        var svgElement = $('<svg width="100%" height="100%" '+
-                'preserveAspectRatio="none" >'+
-                '<g transform="scale(1, -1)">'+
+        var svgElement = $('<svg width="100%" height="100%">'+
+                '<svg id="chart" preserveAspectRatio="none"><g transform="scale(1, -1)">'+
                 '<polyline points=""'+
                 'style="fill:none;stroke:orange;stroke-width:2px" '+
                 'vector-effect="non-scaling-stroke"/>'+
-                'vector-effect="non-scaling-stroke"/>'+
-			' </g></svg>');
+            '</g></svg>'+
+        '</svg>');
 		svgElement.appendTo($(this));
 
         base.refresh.apply(this);
@@ -117,7 +116,7 @@ var widget_simplechart = {
       var xrange  = parseInt(diffMinutes(mindate,maxdate));
       //console.log( "xrange: " + xrange );
 
-      var svg = this.elem.find('svg');
+      var svg = this.elem.find('svg#chart');
       if (svg){
           svg.find('line').remove();
           var polyline = svg.find('polyline');
@@ -136,29 +135,36 @@ var widget_simplechart = {
                                 'vector-effect':'non-scaling-stroke',
                                 });
                     polyline.parent().prepend(line);
+                    var text = widget_simplechart.createElem('text');
+                    text.attr({
+                                'x':0,
+                                  'y':(((max-i)*100)/(max-min)*0.9+7)+'%',
+                                'fill':'#fff',
+                                });
+                    text.html(i);
+                    svg.parent().append(text);
                 }
             }
-
 
               var tick1 = widget_simplechart.createElem('line');
               tick1.attr({
                              'id':'tick1',
                               'x1':'93%',
-                              'y1':'95%',
+                              'y1':min,
                               'x2':'93%',
                               'style':'stroke:#555;stroke-width:1px',
                               'vector-effect':'non-scaling-stroke',
-                              'y2':'100%'});
+                              'y2':min+1});
               polyline.parent().append(tick1);
               var tick2 = widget_simplechart.createElem('line');
               tick2.attr({
                              'id':'tick1',
                               'x1':'5%',
-                              'y1':'95%',
+                              'y1':min,
                               'x2':'5%',
                               'style':'stroke:#555;stroke-width:1px',
                               'vector-effect':'non-scaling-stroke',
-                              'y2':'100%'});
+                              'y2':min+1});
               polyline.parent().append(tick2);
 
               polyline.attr('points',widget_simplechart.getSvgPoints(points));

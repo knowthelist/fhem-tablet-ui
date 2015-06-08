@@ -192,6 +192,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-cmd**  : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
+- **data-tickstep** : distance between ticks (default 4|20)
 - **class**		: small, mini, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
 
 ####Homestatus widget
