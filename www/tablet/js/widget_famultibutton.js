@@ -146,15 +146,15 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                 break;
             case 'url-xhr':
                 if( device && typeof device != "undefined" && device !== " ") {
-                    $.get(target);
                     TOAST && $.toast(target);
                 }
+                $.get(target);
                 break;
             case 'fhem-cmd':
                 if( device && typeof device != "undefined" && device !== " ") {
-                    setFhemStatus(target);
                     TOAST && $.toast(target);
                 }
+                setFhemStatus(target);
                 break;
         }
     },
