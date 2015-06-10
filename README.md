@@ -72,6 +72,7 @@ Currently there are 16 types of widgets in the base installation.
 - **level** : vertical/horizontal bar to show values between min/max value
 - **rotor** :slider between multiple widgets at one position
 - **progress** :round symbolic display  for percent values
+- **simplechart** :simple XY line chart for one value (reads directly from fhem log file)
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -289,6 +290,16 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 ####Rotor widgets
 - **data-delay**    : time in millisecondes to wait until next list item get shown. (default: 3500)
 - **class**		    : fade, rotate  (default: '' means no animation)  
+
+####Simplechart widgets
+- **data-logdevice**   : name of the logdevice (e.g. FileLog_WohnzimmerHeizung)
+- **data-logfile**     : name of the logfile   (e.g. WohnzimmerHeizung-2015.log)
+- **data-columnspec**  : definition for how to find the values (e.g. "4:meas.*:1:int")
+- **data-minvalue**    : min Y value to show (default 0)
+- **data-maxvalue**    : max Y value to show (default 100) 
+- **data-xticks**      : value distance between Y tick lines (default 5)
+- **data-daysago**     : number of days back from now (default 0)
+- **data-caption**     : name of the chart to show as text
 
 CSS Class description
 -------
