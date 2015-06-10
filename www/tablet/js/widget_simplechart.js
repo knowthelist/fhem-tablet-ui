@@ -174,9 +174,9 @@ var widget_simplechart = {
               var tick2 = widget_simplechart.createElem('line');
               tick2.attr({
                              'id':'tick2',
-                              'x1':'0%',
+                              'x1':'1',
                               'y1':min,
-                              'x2':'0%',
+                              'x2':'2',
                               'style':'stroke:#555;stroke-width:1px',
                               'vector-effect':'non-scaling-stroke',
                               'y2':max});
