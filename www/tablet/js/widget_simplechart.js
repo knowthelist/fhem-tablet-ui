@@ -16,6 +16,7 @@ var widget_simplechart = {
       this.elements = $('div[data-type="'+this.widgetname+'"]');
       this.elements.each(function(index) {
 
+        var defaultHeight = $(this).hasClass('fullsize') ? '85%' : '';
         var svgElement = $('<svg>'+
                 '<svg id="chart" preserveAspectRatio="none"><g transform="scale(1, -1)">'+
                 '<polyline points=""'+
@@ -23,7 +24,9 @@ var widget_simplechart = {
                 'vector-effect="non-scaling-stroke"/>'+
             '</g></svg>'+
         '</svg>');
-		svgElement.appendTo($(this));
+        svgElement.appendTo($(this))
+          .css("width",$(this).data('width') || '95%')
+          .css("height",$(this).data('height') || defaultHeight);
 
         base.refresh.apply(this);
 
@@ -139,9 +142,10 @@ var widget_simplechart = {
                     polyline.parent().prepend(line);
                     var text = widget_simplechart.createElem('text');
                     text.attr({
-                                  'x':'93%',
-                                  'y':(((max-i)*100)/(max-min)*0.9-2)+'%',
+                                  'x':'99%',
+                                  'y':(((max-i)*100)/(max-min)*0.9+2)+'%',
                                   'style':'font-size:9px',
+                                  'text-anchor':"end",
                                 'fill':'#fff',
                                 });
                     text.html(i);
@@ -180,9 +184,10 @@ var widget_simplechart = {
               polyline.parent().append(tick2);
               text = widget_simplechart.createElem('text');
               text.attr({
-                          'x':'88%',
+                          'x':'99%',
                           'y':'100%',
-                       'fill':'#fff',
+                          'text-anchor':"end",
+                          'fill':'#fff',
                             'style':'font-size:9px',
                             });
               text.html(dateFromString(maxdate).ddmm());

@@ -237,11 +237,6 @@ ul, ol {
     height: 100% !important;
 }
 
-.fullsize > svg{
-    width: 95% !important;
-    height: 85% !important;
-}
-
 .gridster {
     width: auto;
 }
