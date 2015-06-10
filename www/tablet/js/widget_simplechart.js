@@ -36,6 +36,7 @@ var widget_simplechart = {
       var min = $(this).data('minvalue')||0;
       var max = $(this).data('maxvalue')||100;
       var xticks = $(this).data('xticks')||5;
+      var yticks = $(this).data('yticks')||4;
       var caption = $(this).data('caption')
 
       var days = parseFloat($(this).attr('data-daysago')||0);
@@ -127,15 +128,13 @@ var widget_simplechart = {
           var polyline = svg.find('polyline');
           if (polyline){
 
-            for (var i=min;i<=max;i++){
-                // lines every x
-                if ( Math.round(i*xticks)/xticks % xticks == 0 ){
+            for ( var y=min; y<=max; y+=4 ){
                     var line = widget_simplechart.createElem('line');
                     line.attr({
                                 'x1':'0',
-                                'y1':i,
+                                'y1':y,
                                 'x2':xrange,
-                                'y2':i,
+                                'y2':y,
                                 'style':'stroke:#555;stroke-width:1px',
                                 'vector-effect':'non-scaling-stroke',
                                 });
@@ -143,14 +142,14 @@ var widget_simplechart = {
                     var text = widget_simplechart.createElem('text');
                     text.attr({
                                   'x':'99%',
-                                  'y':(((max-i)*100)/(max-min)*0.9+2)+'%',
+                                  'y':(((max-y)*100)/(max-min)*0.85+7)+'%',
                                   'style':'font-size:9px',
                                   'text-anchor':"end",
-                                'fill':'#fff',
+                                'fill':'#ddd',
                                 });
-                    text.html(i);
+                    text.html(y);
                     svg.parent().append(text);
-                }
+
             }
 
               /*var tick1 = widget_simplechart.createElem('line');
@@ -167,7 +166,7 @@ var widget_simplechart = {
               text.attr({
                           'x':0,
                           'y':'100%',
-                          'fill':'#fff',
+                          'fill':'#ddd',
                           'style':'font-size:9px',
                             });
               text.html(dateFromString(mindate).ddmm());
@@ -187,7 +186,7 @@ var widget_simplechart = {
                           'x':'99%',
                           'y':'100%',
                           'text-anchor':"end",
-                          'fill':'#fff',
+                          'fill':'#ddd',
                             'style':'font-size:9px',
                             });
               text.html(dateFromString(maxdate).ddmm());
@@ -197,7 +196,7 @@ var widget_simplechart = {
             text.attr({
                         'x':'40%',
                         'y':'100%',
-                     'fill':'#fff',
+                     'fill':'#ddd',
                           'style':'font-size:10px',
                           });
             text.html(caption);
@@ -206,7 +205,7 @@ var widget_simplechart = {
               polyline.attr('points',widget_simplechart.getSvgPoints(points));
           }
           // jQuery's attr() fails here
-          svg[0].setAttribute('viewBox', [0, (-max), xrange*1.05, (max-min)*1.1].join(' '));
+          svg[0].setAttribute('viewBox', [-2, (-max)-((max-min)*0.06), xrange*1.06, (max-min)*1.2].join(' '));
 
 
 

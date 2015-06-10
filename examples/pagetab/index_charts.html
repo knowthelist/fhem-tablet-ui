@@ -1,0 +1,63 @@
+<html>
+<title>FHEM</title>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * charts page
+     *
+     load this page via widget pagetab
+
+     <div data-type="pagetab" data-url="index_main.html" data-icon="fa-home" class="cell"></div>
+    -->
+
+</head>
+<body>
+<div class="gridster">
+<ul>
+<li data-row="1" data-col="1" data-sizex="1" data-sizey="9" data-template="menu.html"></li>
+<li data-row="1" data-col="2" data-sizex="8" data-sizey="3">
+<header>CHARTS</header>
+
+    <div data-type="simplechart"
+            data-logdevice="FileLog_WohnzimmerHeizung2"
+            data-logfile="WohnzimmerHeizung2-2015.log"
+            data-columnspec="4:meas.*:1:int"
+            data-minvalue="10"
+            data-maxvalue="30"
+            data-xticks="4"
+            data-daysago="0"
+            data-width="320px"
+            data-height="95%"
+            data-caption="Wohnzimmer" class="inline cell top-space-2x">
+    </div>
+    <div data-type="simplechart"
+            data-logdevice="FileLog_KuecheHeizung"
+            data-logfile="KuecheHeizung-2015.log"
+            data-columnspec="4:meas.*:1:int"
+            data-minvalue="12"
+            data-maxvalue="28"
+            data-xticks="6"
+            data-daysago="2"
+            data-width="220px"
+            data-height="95%"
+            data-caption="Küche" class="inline cell top-space-2x">
+    </div>
+</li>
+      <li data-row="4" data-col="2" data-sizex="8" data-sizey="3">
+      <header>CHART</header>
+              <div data-type="simplechart"
+                      data-logdevice="FileLog_WohnzimmerHeizung2"
+                      data-logfile="WohnzimmerHeizung2-2015.log"
+                      data-columnspec="4:meas.*:1:int"
+                      data-minvalue="10"
+                      data-maxvalue="30"
+                      data-xticks="4"
+                      data-daysago="0"
+                      data-caption="Wohnzimmer" class="fullsize">
+              </div>
+      </li>
+</ul>
+</div>
+</body>
+</html>

@@ -297,7 +297,7 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 - **data-columnspec**  : definition for how to find the values (e.g. "4:meas.*:1:int")
 - **data-minvalue**    : min Y value to show (default 0)
 - **data-maxvalue**    : max Y value to show (default 100) 
-- **data-xticks**      : value distance between Y tick lines (default 5)
+- **data-yticks**      : value distance between Y tick lines (default 5)
 - **data-daysago**     : number of days back from now (default 0)
 - **data-caption**     : name of the chart to show as text
 - **class**		       : fullsize
@@ -849,7 +849,7 @@ Multiple pagetabs in a template file: menu.html
 		data-columnspec="4:meas.*:1:int"
 		data-minvalue="10"
 		data-maxvalue="30"
-		data-xticks="4"
+		data-yticks="4"
 		data-daysago="0"
 		data-caption="Wohnzimmer" class="inline cell top-space-2x">
     </div>
@@ -859,7 +859,7 @@ Multiple pagetabs in a template file: menu.html
 		data-columnspec="4:meas.*:1:int"
 		data-minvalue="12"
 		data-maxvalue="28"
-		data-xticks="6"
+		data-yticks="6"
 		data-daysago="2"
 		data-caption="Küche" class="inline cell  top-space-2x">
     </div>
@@ -878,7 +878,7 @@ Multiple pagetabs in a template file: menu.html
 		data-columnspec="4:meas.*:1:int"
 		data-minvalue="10"
 		data-maxvalue="30"
-		data-xticks="4"
+		data-yticks="4"
 		data-daysago="0"
 		data-caption="Wohnzimmer" class="fullsize">
 	</div>
