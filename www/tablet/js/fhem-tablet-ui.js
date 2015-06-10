@@ -296,7 +296,7 @@ function longPoll(roomName) {
                 longPoll();
 			}, 100);
 		},
-		timeout: 60000,
+        timeout: 60000,
 		async: true,
 		data: {
 			XHR:1,
@@ -609,10 +609,10 @@ Date.prototype.hhmmss = function() {
   return (hh[1]?hh:"0"+hh[0])+':'+ (mm[1]?mm:"0"+mm[0])+':'+(ss[1]?ss:"0"+ss[0]); // padding
  };
  
-Date.prototype.mmdd = function() {
+Date.prototype.ddmm = function() {
   var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
   var dd  = this.getDate().toString();
-  return (mm[1]?mm:"0"+mm[0])+'-'+(dd[1]?dd:"0"+dd[0]); // padding
+  return (dd[1]?dd:"0"+dd[0])+'-'+(mm[1]?mm:"0"+mm[0]); // padding
  };
 
 //sadly it not possible to use Array.prototype. here
