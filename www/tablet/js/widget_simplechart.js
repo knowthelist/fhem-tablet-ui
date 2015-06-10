@@ -17,8 +17,7 @@ var widget_simplechart = {
       this.elements.each(function(index) {
 
 		
-        $(this).css("width", "90%");
-        $(this).css("height", "90%");
+        $(this).css({"width":"95%","margin":"10px","height":"90%"});
         var svgElement = $('<svg width="100%" height="100%">'+
                 '<svg id="chart" preserveAspectRatio="none"><g transform="scale(1, -1)">'+
                 '<polyline points=""'+
@@ -35,11 +34,14 @@ var widget_simplechart = {
   refresh: function () {
       var min = $(this).data('minvalue')||0;
       var max = $(this).data('maxvalue')||100;
+      var xticks = $(this).data('xticks')||5;
+      var caption = $(this).data('caption')
 
       var days = parseFloat($(this).attr('data-daysago')||0);
       var now = new Date();
       var ago = new Date();
       var mindate=now;
+      var maxdate=now;
       if (days>0 && days<1){
           ago.setTime(now.getTime() - (days*24*60*60*1000));
           mindate= ago.yyyymmdd() + '_'+ago.hhmmss() ;
@@ -49,7 +51,9 @@ var widget_simplechart = {
           mindate= ago.yyyymmdd() + '_00:00:00';
       }
 
-      var maxdate= now.yyyymmdd() + '_23:59:59';
+      //var maxdate= now.yyyymmdd() + '_23:59:59';
+      maxdate.setDate(now.getDate() + 1);
+      maxdate = maxdate.yyyymmdd() + '_00:00:00';
 
       console.log( "mindate: " + mindate);
       console.log( "maxdate: " + maxdate);
@@ -123,8 +127,8 @@ var widget_simplechart = {
           if (polyline){
 
             for (var i=min;i<=max;i++){
-                // thicker lines every 5 ticks
-                if ( Math.round(i*10)/10 % 10 == 0 ){
+                // lines every x
+                if ( Math.round(i*xticks)/xticks % xticks == 0 ){
                     var line = widget_simplechart.createElem('line');
                     line.attr({
                                 'x1':'0',
@@ -137,8 +141,9 @@ var widget_simplechart = {
                     polyline.parent().prepend(line);
                     var text = widget_simplechart.createElem('text');
                     text.attr({
-                                'x':0,
-                                  'y':(((max-i)*100)/(max-min)*0.9+7)+'%',
+                                  'x':'93%',
+                                  'y':(((max-i)*100)/(max-min)*0.8+9)+'%',
+                                  'style':'font-size:9px',
                                 'fill':'#fff',
                                 });
                     text.html(i);
@@ -146,31 +151,59 @@ var widget_simplechart = {
                 }
             }
 
-              var tick1 = widget_simplechart.createElem('line');
+              /*var tick1 = widget_simplechart.createElem('line');
               tick1.attr({
                              'id':'tick1',
-                              'x1':'93%',
+                              'x1':'90%',
                               'y1':min,
-                              'x2':'93%',
+                              'x2':'90%',
                               'style':'stroke:#555;stroke-width:1px',
                               'vector-effect':'non-scaling-stroke',
                               'y2':min+1});
-              polyline.parent().append(tick1);
+              polyline.parent().append(tick1);*/
+              text = widget_simplechart.createElem('text');
+              text.attr({
+                          'x':0,
+                          'y':'100%',
+                          'fill':'#fff',
+                          'style':'font-size:9px',
+                            });
+              text.html(dateFromString(mindate).ddmm());
+              svg.parent().append(text);
               var tick2 = widget_simplechart.createElem('line');
               tick2.attr({
-                             'id':'tick1',
-                              'x1':'5%',
+                             'id':'tick2',
+                              'x1':'0%',
                               'y1':min,
-                              'x2':'5%',
+                              'x2':'0%',
                               'style':'stroke:#555;stroke-width:1px',
                               'vector-effect':'non-scaling-stroke',
-                              'y2':min+1});
+                              'y2':max});
               polyline.parent().append(tick2);
+              text = widget_simplechart.createElem('text');
+              text.attr({
+                          'x':'88%',
+                          'y':'100%',
+                       'fill':'#fff',
+                            'style':'font-size:9px',
+                            });
+              text.html(dateFromString(maxdate).ddmm());
+              svg.parent().append(text);
+            //chart text
+            text = widget_simplechart.createElem('text');
+            text.attr({
+                        'x':'40%',
+                        'y':'100%',
+                     'fill':'#fff',
+                          'style':'font-size:10px',
+                          });
+            text.html(caption);
+            svg.parent().append(text);
 
               polyline.attr('points',widget_simplechart.getSvgPoints(points));
           }
           // jQuery's attr() fails here
-          svg[0].setAttribute('viewBox', [10, (-max), xrange, (max-min)].join(' '));
+          svg[0].setAttribute('viewBox', [-50, (-max), xrange*1.05, (max-min)*1.2].join(' '));
 
 
 
