@@ -87,7 +87,7 @@ body {
 
 .inline {
   display: inline-block;
-  margin:0px 5px 0px 0px !important;
+  margin:0px 5px 0px 0px;
 }
 
 
@@ -232,9 +232,14 @@ ul, ol {
     list-style: none;
 }
 
-.gridster > ul{
+.gridster > ul, .fullsize{
     width: 100% !important;
     height: 100% !important;
+}
+
+.fullsize > svg{
+    width: 95% !important;
+    height: 85% !important;
 }
 
 .gridster {
@@ -491,3 +496,9 @@ select {
 .symbol.off{color:#505050;background-color:#505050;}
 .switch.on{color:#2A2A2A;background-color:#aa6900;}
 .switch.off{color:#2A2A2A;background-color:#505050;}
+.progress.value {
+font-size: 70% !important;
+color: #aaa;
+font-family: sans-serif;
+letter-spacing: -1px;
+}

@@ -300,13 +300,19 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 - **data-xticks**      : value distance between Y tick lines (default 5)
 - **data-daysago**     : number of days back from now (default 0)
 - **data-caption**     : name of the chart to show as text
+- **class**		       : fullsize
 
-CSS Class description
+Format
 -------
+The layout and look can be influinced be the class attribute.
+
+**CSS Class description**
+
 not all widgets support all classes
 - readonly		: changing of state is not allowed 
 - wider			: 15px extra space for the widget all around 
 - narrow		: shorter distant to the widget above 
+- fullsize		: 100% in width and height
 - w1x, w2x, w3x	: set the widget to a fix width: 1x, 2x, 3x width
 - small			: font 80% size (label), small diameter for volume widget
 - mini			: lowest diameter for volume widget
@@ -832,19 +838,51 @@ Multiple pagetabs in a template file: menu.html
 </div>
 ```
 
-
-Format
--------
-The layout and look can be influinced be the class attribute.
-The available classes are: container,left,right,cell,narrow,darker,big,bigger,small
-
-See CSS descriptions
-
-Specials
--------
-**Example** to call a command directly to FHEM. This calls "set dummy1 off"
+###Rotor
+**Example** for simplechart widget: two charts inline
 ```html
-<div onclick="setFhemStatus('set dummy1 off')">All off!</div>
+<li data-row="4" data-col="4" data-sizex="8" data-sizey="3">
+<header>CHARTS</header>
+    <div data-type="simplechart"
+		data-logdevice="FileLog_WohnzimmerHeizung"
+		data-logfile="WohnzimmerHeizung.log"
+		data-columnspec="4:meas.*:1:int"
+		data-minvalue="10"
+		data-maxvalue="30"
+		data-xticks="4"
+		data-daysago="0"
+		data-caption="Wohnzimmer" class="inline cell top-space-2x">
+    </div>
+    <div data-type="simplechart"
+		data-logdevice="FileLog_KuecheHeizung"
+		data-logfile="KuecheHeizung.log"
+		data-columnspec="4:meas.*:1:int"
+		data-minvalue="12"
+		data-maxvalue="28"
+		data-xticks="6"
+		data-daysago="2"
+		data-caption="Küche" class="inline cell  top-space-2x">
+    </div>
+</li>
+```
+
+![](http://knowthelist.github.io/fhem-tablet-ui/simplechart-two.png)
+
+**Example** for simplechart widget: one chart fill the whole gridster element
+```html
+<li data-row="4" data-col="4" data-sizex="8" data-sizey="3">
+<header>CHART</header>
+	<div data-type="simplechart"
+		data-logdevice="FileLog_WohnzimmerHeizung2"
+		data-logfile="WohnzimmerHeizung2.log"
+		data-columnspec="4:meas.*:1:int"
+		data-minvalue="10"
+		data-maxvalue="30"
+		data-xticks="4"
+		data-daysago="0"
+		data-caption="Wohnzimmer" class="fullsize">
+	</div>
+</li>
 ```
 
 Circle Menu
@@ -882,18 +920,6 @@ Cover a lot of other button behind one single button
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/circle_menu_open.png)
 
-Templates
--------
-Include re-usable code. 
-
-Load a whole extern gridster element
-```html
-<li data-row="1" data-col="1" data-sizex="1" data-sizey="4" data-template="menu.html"></li>
-```
-Load a re-usable widget group
-```html
-<div data-template="template_div.html" class="cell"></div>
-```
 
 Playstream
 -------
@@ -920,6 +946,26 @@ Create two comboboxes to select the inputs of a two zone AV receiver. List for Z
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/select_2x.png)       
        
+       Specials
+-------
+**Example** to call a command directly to FHEM. This calls "set dummy1 off"
+```html
+<div onclick="setFhemStatus('set dummy1 off')">All off!</div>
+```
+
+Templates
+-------
+Include re-usable code. 
+
+Load a whole extern gridster element
+```html
+<li data-row="1" data-col="1" data-sizex="1" data-sizey="4" data-template="menu.html"></li>
+```
+Load a re-usable widget group
+```html
+<div data-template="template_div.html" class="cell"></div>
+```
+
 Donation
 --------
 You can support the creator of this beautiful UI so the he can buy a new laptop

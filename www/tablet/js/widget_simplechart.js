@@ -16,9 +16,7 @@ var widget_simplechart = {
       this.elements = $('div[data-type="'+this.widgetname+'"]');
       this.elements.each(function(index) {
 
-		
-        $(this).css({"width":"95%","margin":"10px","height":"90%"});
-        var svgElement = $('<svg width="100%" height="100%">'+
+        var svgElement = $('<svg>'+
                 '<svg id="chart" preserveAspectRatio="none"><g transform="scale(1, -1)">'+
                 '<polyline points=""'+
                 'style="fill:none;stroke:orange;stroke-width:2px" '+
@@ -142,7 +140,7 @@ var widget_simplechart = {
                     var text = widget_simplechart.createElem('text');
                     text.attr({
                                   'x':'93%',
-                                  'y':(((max-i)*100)/(max-min)*0.8+9)+'%',
+                                  'y':(((max-i)*100)/(max-min)*0.9-2)+'%',
                                   'style':'font-size:9px',
                                 'fill':'#fff',
                                 });
@@ -203,14 +201,14 @@ var widget_simplechart = {
               polyline.attr('points',widget_simplechart.getSvgPoints(points));
           }
           // jQuery's attr() fails here
-          svg[0].setAttribute('viewBox', [-50, (-max), xrange*1.05, (max-min)*1.2].join(' '));
+          svg[0].setAttribute('viewBox', [0, (-max), xrange*1.05, (max-min)*1.1].join(' '));
 
 
 
       }
   });
     },
-    update: function (dev,par) {
+  update: function (dev,par) {
 
       var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
       deviceElements.each(function(index) {
@@ -218,5 +216,5 @@ var widget_simplechart = {
             this.refresh.apply(this);
 		}
 	});
-   },
+    },
 };
