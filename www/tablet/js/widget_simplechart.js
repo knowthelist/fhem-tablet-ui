@@ -147,7 +147,7 @@ var widget_simplechart = {
                                   'text-anchor':"end",
                                 'fill':'#ddd',
                                 });
-                    text.html(y);
+                    text.text(y);
                     svg.parent().append(text);
 
             }
@@ -169,7 +169,7 @@ var widget_simplechart = {
                           'fill':'#ddd',
                           'style':'font-size:9px',
                             });
-              text.html(dateFromString(mindate).ddmm());
+              text.text(dateFromString(mindate).ddmm());
               svg.parent().append(text);
               var tick2 = widget_simplechart.createElem('line');
               tick2.attr({
@@ -189,7 +189,7 @@ var widget_simplechart = {
                           'fill':'#ddd',
                             'style':'font-size:9px',
                             });
-              text.html(dateFromString(maxdate).ddmm());
+              text.text(dateFromString(maxdate).ddmm());
               svg.parent().append(text);
             //chart text
             text = widget_simplechart.createElem('text');
@@ -199,7 +199,7 @@ var widget_simplechart = {
                      'fill':'#ddd',
                           'style':'font-size:10px',
                           });
-            text.html(caption);
+            text.text(caption);
             svg.parent().append(text);
 
               polyline.attr('points',widget_simplechart.getSvgPoints(points));

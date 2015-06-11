@@ -293,7 +293,7 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 
 ####Simplechart widgets
 - **data-logdevice**   : name of the logdevice (e.g. FileLog_WohnzimmerHeizung)
-- **data-logfile**     : name of the logfile   (e.g. WohnzimmerHeizung-2015.log)
+- **data-logfile**     : name of the logfile   (e.g. WohnzimmerHeizung-2015.log) (default '-' means current logfile)
 - **data-columnspec**  : definition for how to find the values (e.g. "4:meas.*:1:int")
 - **data-minvalue**    : min Y value to show (default 0)
 - **data-maxvalue**    : max Y value to show (default 100) 
@@ -847,20 +847,22 @@ Multiple pagetabs in a template file: menu.html
 <header>CHARTS</header>
     <div data-type="simplechart"
 		data-logdevice="FileLog_WohnzimmerHeizung"
-		data-logfile="WohnzimmerHeizung.log"
 		data-columnspec="4:meas.*:1:int"
 		data-minvalue="10"
 		data-maxvalue="30"
+        data-width="250px"
+        data-height="120px"
 		data-yticks="4"
 		data-daysago="0"
 		data-caption="Wohnzimmer" class="inline cell top-space-2x">
     </div>
     <div data-type="simplechart"
 		data-logdevice="FileLog_KuecheHeizung"
-		data-logfile="KuecheHeizung.log"
 		data-columnspec="4:meas.*:1:int"
 		data-minvalue="12"
 		data-maxvalue="28"
+        data-width="250px"
+        data-height="120px"
 		data-yticks="6"
 		data-daysago="2"
 		data-caption="Küche" class="inline cell  top-space-2x">
@@ -877,7 +879,7 @@ Multiple pagetabs in a template file: menu.html
 	<div data-type="simplechart"
 		data-logdevice="FileLog_WohnzimmerHeizung2"
 		data-logfile="WohnzimmerHeizung2.log"
-		data-columnspec="4:meas.*:1:int"
+		data-columnspec="4:temp:1:int"
 		data-minvalue="10"
 		data-maxvalue="30"
 		data-yticks="4"
