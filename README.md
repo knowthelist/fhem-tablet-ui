@@ -300,6 +300,8 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 - **data-yticks**      : value distance between Y tick lines (default 5)
 - **data-daysago**     : number of days back from now (default 0)
 - **data-caption**     : name of the chart to show as text
+- **data-width**       : fixe size for width
+- **data-height**      : fixe size for height
 - **class**		       : fullsize
 
 Format
