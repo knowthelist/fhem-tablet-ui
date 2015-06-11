@@ -128,7 +128,7 @@ var widget_simplechart = {
           var polyline = svg.find('polyline');
           if (polyline){
 
-            for ( var y=min; y<=max; y+=4 ){
+            for ( var y=min; y<=max; y+=yticks ){
                     var line = widget_simplechart.createElem('line');
                     line.attr({
                                 'x1':'0',
