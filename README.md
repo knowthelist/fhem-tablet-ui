@@ -840,7 +840,7 @@ Multiple pagetabs in a template file: menu.html
 </div>
 ```
 
-###Rotor
+###Simplechart
 **Example** for simplechart widget: two charts inline
 ```html
 <li data-row="4" data-col="4" data-sizex="8" data-sizey="3">
