@@ -854,7 +854,7 @@ Multiple pagetabs in a template file: menu.html
         data-height="120px"
 		data-yticks="4"
 		data-daysago="0"
-		data-caption="Wohnzimmer" class="inline cell top-space-2x">
+		data-caption="Wohnzimmer" class="inline cell">
     </div>
     <div data-type="simplechart"
 		data-logdevice="FileLog_KuecheHeizung"
@@ -865,7 +865,7 @@ Multiple pagetabs in a template file: menu.html
         data-height="120px"
 		data-yticks="6"
 		data-daysago="2"
-		data-caption="Küche" class="inline cell  top-space-2x">
+		data-caption="Küche" class="inline cell">
     </div>
 </li>
 ```

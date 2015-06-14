@@ -131,7 +131,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         } else {
             var sets = elem.data('set-'+onoff);
             if(!$.isArray(sets)) {
-                sets = new Array(sets);
+                sets = new Array(String(sets));
             }
             var s = elem.data('state') || 0;
             var set = typeof sets[s] != 'undefined' ? sets[s] : sets[0];
