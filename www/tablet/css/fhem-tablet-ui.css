@@ -241,7 +241,7 @@ ul, ol {
     width: auto;
 }
 
-.gridster * {
+.gridster > * {
   margin:0;
   padding:0;
 }
