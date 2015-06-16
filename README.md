@@ -166,7 +166,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 
 ####Push widgets
 - **data-set**    : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
-- **data-set-on** : value to send when the the button get pressed. (default '')
+- **data-set-on** : value (or an array of values) to send when the the button get pressed. (default '')
 - **data-icon**   : name of the font-awesome icon. 
 - **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
 - **data-cmd**  : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
@@ -295,9 +295,10 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 - **data-logdevice**   : name of the logdevice (e.g. FileLog_WohnzimmerHeizung)
 - **data-logfile**     : name of the logfile   (e.g. WohnzimmerHeizung-2015.log) (default '-' means current logfile)
 - **data-columnspec**  : definition for how to find the values (e.g. "4:meas.*:1:int")
-- **data-minvalue**    : min Y value to show (default 0)
-- **data-maxvalue**    : max Y value to show (default 100) 
+- **data-minvalue**    : min Y value to show (default 10)
+- **data-maxvalue**    : max Y value to show (default 30) 
 - **data-yticks**      : value distance between Y tick lines (default 5)
+- **data-xticks**      : time range between each X tick line (default 360 minutes)
 - **data-daysago**     : number of days back from now (default 0)
 - **data-caption**     : name of the chart to show as text
 - **data-width**       : fixe size for width
@@ -334,11 +335,13 @@ not all widgets support all classes
 - blue			: foreground color blue
 - doublebox-v	: container to place 2 small widgets (e.g. switch) one above the other 
 - doublebox-h	: container to place 2 small widgets (e.g. switch) side by side
+- triplebox-v   : container to place 3 small widgets (e.g. switch) one above the other 
 - timestamp		: deliver the date time for the reading instead of the value
 - inline		: positioning elements in a row, no line break
 - top-space     : 15px extra on top (top-space-2x -> 30px; top-space-3x -> 45px)
 - left-space	: 15px extra on left (left-space-2x -> 30px; left-space-3x -> 45px)
 - right-space  	: 15px extra on right (right-space-2x -> 30px; right-space-3x -> 45px)
+- centered		: horizontal centered
 - blink         : blink animatation for label or symbol widget
 
 

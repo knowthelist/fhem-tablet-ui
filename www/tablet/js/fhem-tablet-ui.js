@@ -589,9 +589,7 @@ this.dateFromString = function (str) {
 }
 
 this.diffMinutes = function(date1,date2){
-       var end   = dateFromString(date2),
-       start   = dateFromString(date1),
-       diff  = new Date(end - start);
+       diff  = new Date(date2 - date1);
        return (diff/1000/60).toFixed(0);
 }
    
@@ -600,6 +598,12 @@ Date.prototype.yyyymmdd = function() {
   var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
   var dd  = this.getDate().toString();
   return yyyy+'-'+ (mm[1]?mm:"0"+mm[0])+'-'+(dd[1]?dd:"0"+dd[0]); // padding
+ };
+
+Date.prototype.hhmm = function() {
+  var hh = this.getHours().toString();
+  var mm = this.getMinutes().toString();
+  return (hh[1]?hh:"0"+hh[0])+':'+ (mm[1]?mm:"0"+mm[0]); // padding
  };
 
 Date.prototype.hhmmss = function() {
@@ -612,7 +616,7 @@ Date.prototype.hhmmss = function() {
 Date.prototype.ddmm = function() {
   var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
   var dd  = this.getDate().toString();
-  return (dd[1]?dd:"0"+dd[0])+'-'+(mm[1]?mm:"0"+mm[0]); // padding
+    return (dd[1]?dd:"0"+dd[0])+'.'+(mm[1]?mm:"0"+mm[0])+'.'; // padding
  };
 
 //sadly it not possible to use Array.prototype. here
