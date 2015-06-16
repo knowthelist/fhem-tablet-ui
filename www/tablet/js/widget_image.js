@@ -18,7 +18,7 @@ var widget_image = $.extend({}, widget_widget, {
         readings[$(this).data('get')] = true;
     },
     init: function () {
-        base=this;
+        var base=this;
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {
             base.init_attr($(this));

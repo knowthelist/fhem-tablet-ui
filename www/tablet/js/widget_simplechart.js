@@ -12,7 +12,7 @@ var widget_simplechart = {
        return res.join(' ');
     },
   init: function () {
-      base=this;
+      var base=this;
       this.elements = $('div[data-type="'+this.widgetname+'"]');
       this.elements.each(function(index) {
 

@@ -147,7 +147,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
   return false;
 },
   init: function () {
-  	base=this;
+  	var base=this;
 	this.elements=$('div[data-type="'+this.widgetname+'"]');
 	this.elements.each(function( index ) {
         var knob_elem =  jQuery('<input/>', {
