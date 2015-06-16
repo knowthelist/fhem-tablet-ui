@@ -57,8 +57,8 @@ var widget_simplechart = {
       maxdate.setDate(now.getDate() + 1);
       maxdate = maxdate.yyyymmdd() + '_00:00:00';
 
-      console.log( "mindate: " + mindate);
-      console.log( "maxdate: " + maxdate);
+      //console.log( "mindate: " + mindate);
+      //console.log( "maxdate: " + maxdate);
 
       var column_spec;
       if($(this).attr("data-columnspec")) {
@@ -189,7 +189,7 @@ var widget_simplechart = {
                                 'style':'font-size:9px',
                                 });
                   tx.setMinutes(tstart.getMinutes() + x);
-                  console.log(tx);
+                  //console.log(tx);
                   var textX2Value = (xrange > 1440) ? tx.ddmm() : tx.hhmm() ;
                   textX2.text(textX2Value);
                   svg.parent().append(textX2);
