@@ -295,15 +295,15 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 ####Simplechart widgets
 - **data-logdevice**   : name of the logdevice (e.g. FileLog_WohnzimmerHeizung)
 - **data-logfile**     : name of the logfile   (e.g. WohnzimmerHeizung-2015.log) (default '-' means current logfile)
-- **data-columnspec**  : definition for how to find the values (e.g. "4:meas.*:1:int")
+- **data-columnspec**  : definition for how to find the values (e.g. "4:meas.*")
 - **data-minvalue**    : min Y value to show (default 10)
 - **data-maxvalue**    : max Y value to show (default 30) 
 - **data-yticks**      : value distance between Y tick lines (default 5)
 - **data-xticks**      : time range between each X tick line (default 360 minutes)
 - **data-daysago**     : number of days back from now (default 0)
 - **data-caption**     : name of the chart to show as text
-- **data-width**       : fixe size for width
-- **data-height**      : fixe size for height
+- **data-width**       : fixe size for width (in % or px)
+- **data-height**      : fixe size for height (in % or px)
 - **class**		       : fullsize
 
 Format
