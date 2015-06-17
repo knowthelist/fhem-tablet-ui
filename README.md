@@ -109,6 +109,7 @@ data-set-off    : 		Value for OFF
 
 ####Switch widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
+- **data-set**      : name of the reading to set from FHEM (default '')
 - **data-get-on**   : value for ON status to get or an array of states (default 'on')
 - **data-get-off**  : value for OFF status to get. (default 'off')
 - **data-set-on**   : value for ON status to set. (default: value of data-get-on)
