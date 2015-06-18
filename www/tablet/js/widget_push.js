@@ -37,7 +37,7 @@ var widget_push = $.extend({}, widget_famultibutton, {
                 if (elem.data("countdown"))
                     secondes = elem.data("countdown");
                 if (secondes && $.isNumeric(secondes)){
-                     base.startTimer(elem,parseInt(secondes));
+                     widget_push.startTimer(elem,parseInt(secondes));
                 }
             });
         });
