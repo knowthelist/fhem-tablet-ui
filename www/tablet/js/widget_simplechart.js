@@ -18,10 +18,9 @@ var widget_simplechart = {
 
         var defaultHeight = $(this).hasClass('fullsize') ? '85%' : '';
         var svgElement = $('<svg>'+
-                '<svg class="chart" preserveAspectRatio="none"><g>'+
-                '<polyline points=""'+
-                'style="fill:none;stroke:orange;stroke-width:2px" '+
-                'vector-effect="non-scaling-stroke"/>'+
+                '<svg class="chart" x="0%" width="91%" preserveAspectRatio="none">'+
+                '<g transform="scale(1, -1)">'+
+                '<polyline points=""/>'+
                 '</g></svg>'+
         '</svg>');
         svgElement.appendTo($(this))
@@ -33,8 +32,8 @@ var widget_simplechart = {
      });
     },
   refresh: function () {
-      var min = $(this).data('minvalue')||10;
-      var max = $(this).data('maxvalue')||30;
+      var min = typeof $(this).data('minvalue') != 'undefined' ? $(this).data('minvalue') : 10;
+      var max = typeof $(this).data('maxvalue') != 'undefined' ? $(this).data('maxvalue') : 30;
       var xticks = $(this).data('xticks')||360;
       var yticks = $(this).data('yticks')||5;
       var caption = $(this).data('caption')
@@ -97,7 +96,6 @@ var widget_simplechart = {
           var points=[];
           var lines = data.split('\n');
           var point=[];
-          var lastVal = 0;
           var i=0;
           var tstart = dateFromString(mindate);
           $.each( lines, function( index, value ) {
@@ -107,11 +105,7 @@ var widget_simplechart = {
                   if (val && minutes && $.isNumeric(val) ){
                       point=[minutes,val];
                       i++;
-                      if (lastVal != val ){
-                          points[index]=point;
-                          lastVal=val;
-                          //console.log( "added: " + minutes+ ": " + val );
-                      }
+                      points[index]=point;
                   }
                }
            });
@@ -120,25 +114,26 @@ var widget_simplechart = {
           points[i]=point;
 
       var xrange  = parseInt(diffMinutes(tstart,dateFromString(maxdate)));
-      //console.log( "xrange: " + xrange );
+      var strokeWidth = (document.documentElement.style.vectorEffect === undefined) ? (max-min)/150 : 1;
+      //console.log( "xrange: " + xrange ,strokeWidth);
 
       var svg = this.elem.find('svg.chart');
       if (svg){
           svg.find('line').remove();
           var polyline = svg.find('polyline');
           if (polyline){
-
               var graph = polyline.parent();
               //y-axis
               var yaxis = widget_simplechart.createElem('line');
               yaxis.attr({
                             'id':'yaxis',
-                            'x1':'1',
+                            'x1':'3',
                             'y1':min,
-                            'x2':'2',
-                            'style':'stroke:#555;stroke-width:1px',
+                            'x2':'3',
+                            'y2':max,
+                            'style':'stroke:#555;stroke-width:'+strokeWidth+'px',
                             'vector-effect':'non-scaling-stroke',
-                            'y2':max});
+                            });
               polyline.parent().append(yaxis);
               //y-ticks
               for ( var y=min; y<=max; y+=yticks ){
@@ -148,14 +143,15 @@ var widget_simplechart = {
                                 'y1':y,
                                 'x2':xrange,
                                 'y2':y,
-                                'style':'stroke:#555;stroke-width:1px',
+                                'style':'stroke:#555;stroke-width:'+strokeWidth+'px',
                                 'vector-effect':'non-scaling-stroke',
                                 });
-                    polyline.parent().prepend(line);
+                    graph.prepend(line);
                     var text = widget_simplechart.createElem('text');
                     var textY = (caption)
                                 ? (((max-y)*100)/(max-min)*0.8+12)
-                                : (((max-y)*100)/(max-min)*0.83+9);
+                                : (((max-y)*100)/(max-min)*0.87+5);
+                    //console.log('y:',max,min,y,textY);
                     text.attr({
                                 'x':'99%',
                                 'y': textY+'%',
@@ -168,9 +164,9 @@ var widget_simplechart = {
               }
 
               //x-axis
-             var textX1 = widget_simplechart.createElem('text');
+              var textX1 = widget_simplechart.createElem('text');
               textX1.attr({
-                              'x':'0',
+                            'x':'0',
                             'y':'100%',
                             'fill':'#ddd',
                             'style':'font-size:9px',
@@ -184,13 +180,13 @@ var widget_simplechart = {
                   var textX2 = widget_simplechart.createElem('text');
                   textX2.attr({ 'x':93*x/xrange+'%',
                                 'y':'100%',
-                                'text-anchor':(x==1)?"end":"middle",
+                                'text-anchor':"middle",
                                 'fill':'#ddd',
                                 'style':'font-size:9px',
                                 });
                   tx.setMinutes(tstart.getMinutes() + x);
                   //console.log(tx);
-                  var textX2Value = (xrange > 1440) ? tx.ddmm() : tx.hhmm() ;
+                  var textX2Value = (tx.hhmm()=="00:00") ? tx.ddmm() : tx.hhmm() ;
                   textX2.text(textX2Value);
                   svg.parent().append(textX2);
 
@@ -199,12 +195,11 @@ var widget_simplechart = {
                                 'y1':min,
                                 'x2':100*x/xrange+'%',
                                 'y2':max,
-                                'stroke-dasharray':'2,2',
-                                'style':'stroke:#555;stroke-width:1px',
+                                'stroke-dasharray':strokeWidth*2+','+strokeWidth*2,
+                                'style':'stroke:#555;stroke-width:1.2px',
                                 'vector-effect':'non-scaling-stroke',
                                 });
                   graph.append(xtick1);
-
             }
 
             //show chart caption if set
@@ -221,17 +216,16 @@ var widget_simplechart = {
                 svg.parent().append(textCaption);
             }
             //The graph it self
-            polyline.attr('points',widget_simplechart.getSvgPoints(points));
+            polyline.attr({'points':widget_simplechart.getSvgPoints(points),
+                           'style':'fill:none;stroke:orange;stroke-width:'+strokeWidth*2+'px',
+                           'vector-effect':'non-scaling-stroke'
+                          });
           }
-
           //Viewbox (autoscaler)
-          var graphHeight = (caption) ? 0.8 : 0.85;
-          var graphYShift = (caption) ? 5 : 4;
-          graph.attr({"transform":"scale(0.93, -"+graphHeight+") translate(0 "+graphYShift+")"});
-          svg[0].setAttribute('viewBox', [-4, -max, xrange, max-min ].join(' '));
-
-
-
+          var graphHeight = (caption) ? 80 : 87;
+          var graphTop = (caption) ? 10 : 2;
+          svg.attr({"height":graphHeight+"%",y:graphTop+"%"});
+          svg[0].setAttribute('viewBox', [0, -max, xrange, max-min ].join(' '));
       }
   });
     },

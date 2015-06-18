@@ -133,10 +133,10 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             if(!$.isArray(sets)) {
                 sets = new Array(String(sets));
             }
-            var s = elem.data('state') || 0;
+            var s = localStorage.getItem(this.widgetname+device+'index') || 0;
             var set = typeof sets[s] != 'undefined' ? sets[s] : sets[0];
             s++; if (s >= sets.length) s=0;
-            elem.data('state',s);
+            localStorage.setItem(this.widgetname+device+'index',s);
             target = [elem.data('cmd'), device, elem.data('set'), set ].join(' ');
             type = 'fhem-cmd';
         }
