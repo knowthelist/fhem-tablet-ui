@@ -44,7 +44,7 @@ UPD 2015-06-19_00:06:01 1971 www/tablet/js/widget_push.js
 UPD 2015-06-11_02:25:17 1667 www/tablet/js/widget_readingsgroup.js
 UPD 2015-06-11_02:25:17 1204 www/tablet/js/widget_rotor.js
 UPD 2015-06-11_02:25:17 3242 www/tablet/js/widget_select.js
-UPD 2015-06-18_23:28:52 9282 www/tablet/js/widget_simplechart.js
+UPD 2015-06-21_14:34:42 10114 www/tablet/js/widget_simplechart.js
 UPD 2015-06-11_02:25:17 5830 www/tablet/js/widget_slider.js
 UPD 2015-06-11_02:25:17 1335 www/tablet/js/widget_switch.js
 UPD 2015-06-11_02:25:17 1776 www/tablet/js/widget_symbol.js
