@@ -302,6 +302,7 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 - **data-xticks**      : time range between each X tick line (default 360 minutes)
 - **data-daysago**     : number of days back from now (default 0)
 - **data-caption**     : name of the chart to show as text
+- **data-yunit**       : unit of the value to show beside of each Y ticks
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
 - **class**		       : fullsize
@@ -976,7 +977,7 @@ Load a re-usable widget group
 
 Donation
 --------
-You can support the creator of this beautiful UI so the he can buy a new laptop
+You can support the creator of this beautiful UI so that he can buy a new laptop
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PD4C2XM2VTD9A"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" alt="[paypal]" /></a>
 

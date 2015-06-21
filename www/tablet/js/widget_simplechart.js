@@ -3,6 +3,11 @@ var widget_simplechart = {
   createElem: function(elem) {
       return $(document.createElementNS('http://www.w3.org/2000/svg', elem));
     },
+  precision: function(a) {
+      var s = a + "",
+      d = s.indexOf('.') + 1;
+      return !d ? 0 : s.length - d;
+    },
   getSvgPoints: function (arg) {
        var res = [];
        for (var i=0,l=arg.length;i<l;i++) {
@@ -11,10 +16,20 @@ var widget_simplechart = {
        }
        return res.join(' ');
     },
+    init_attr: function(elem) {
+        elem.data('minvalue', typeof elem.data('minvalue') != 'undefined' ? elem.data('minvalue')  : 10);
+        elem.data('maxvalue', typeof elem.data('maxvalue') != 'undefined' ? elem.data('maxvalue')  : 30);
+        elem.data('xticks'   ,elem.data('xticks')                                                 || 360);
+        elem.data('yticks'   ,elem.data('yticks')                                                 || 5);
+        elem.data('yunit',    unescape(elem.data('yunit')                                        || '' ));
+
+    },
   init: function () {
       var base=this;
       this.elements = $('div[data-type="'+this.widgetname+'"]');
       this.elements.each(function(index) {
+
+        widget_simplechart.init_attr($(this));
 
         var defaultHeight = $(this).hasClass('fullsize') ? '85%' : '';
         var svgElement = $('<svg>'+
@@ -32,10 +47,12 @@ var widget_simplechart = {
      });
     },
   refresh: function () {
-      var min = typeof $(this).data('minvalue') != 'undefined' ? $(this).data('minvalue') : 10;
-      var max = typeof $(this).data('maxvalue') != 'undefined' ? $(this).data('maxvalue') : 30;
-      var xticks = $(this).data('xticks')||360;
-      var yticks = $(this).data('yticks')||5;
+      var min = parseFloat( $(this).data('minvalue'));
+      var max = parseFloat( $(this).data('maxvalue'));
+      var xticks = parseFloat( $(this).data('xticks'));
+      var yticks = parseFloat( $(this).data('yticks'));
+      var fix = widget_simplechart.precision( $(this).data('yticks') );
+      var unit = $(this).data('yunit');
       var caption = $(this).data('caption')
 
       var days = parseFloat($(this).attr('data-daysago')||0);
@@ -159,8 +176,8 @@ var widget_simplechart = {
                                 'text-anchor':"end",
                                 'fill':'#ddd',
                                 });
-                    text.text(y);
-                    svg.parent().append(text);
+                  text.text( ((fix>-1 && fix<=20) ? y.toFixed(fix) : y)+unit);
+                  svg.parent().append(text);
               }
 
               //x-axis
