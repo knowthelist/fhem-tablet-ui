@@ -77,7 +77,7 @@ var widget_volume = $.extend({}, widget_knob, {
   return false;
   },
   init: function () {
-  	base=this;
+  	var base=this;
     this.elements = $('div[data-type="'+this.widgetname+'"]');
  	this.elements.each(function(index) {
 		var maxval = $(this).data('max') || 70;
@@ -182,6 +182,7 @@ var widget_volume = $.extend({}, widget_knob, {
   update: function (dev,par) {
 
     var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
+    var base=this;
     isUpdating=true;
     deviceElements.each(function(index) {
 

@@ -36,7 +36,7 @@ var widget_knob = $.extend({}, widget_widget, {
         elem.data('tkcolor', elem.data('tkcolor') || '#666');
     },
     init: function () {
-        base=this;
+        var base=this;
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {
             base.init_attr($(this));
@@ -99,6 +99,7 @@ var widget_knob = $.extend({}, widget_widget, {
     },
     update: function (dev,par) {
         var deviceElements;
+        var base=this;
         if ( dev == '*' )
             deviceElements= this.elements;
         else
