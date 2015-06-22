@@ -84,6 +84,7 @@ var widget_volume = $.extend({}, widget_knob, {
 	    $(this).data('max', maxval);
 	    $(this).data('max360', (maxval>360)?360:maxval);
         $(this).data('fgcolor', $(this).data('fgcolor') || getStyle('.volume.fgcolor','color') || '#ccc');
+        $(this).data('part',    $(this).data('part')                   || -1);
 
 		base.init_attr($(this));
 		var knob_elem =  jQuery('<input/>', {
@@ -185,9 +186,11 @@ var widget_volume = $.extend({}, widget_knob, {
     deviceElements.each(function(index) {
 
         if ( $(this).data('get')==par){
-			var val = getDeviceValue( $(this), 'get' );
+            var value = getDeviceValue( $(this), 'get' );
             var knob_elem = $(this).find('input');
-			if (val){
+            if (value){
+                var part = $(this).data('part');
+                var val = getPart(value,part);
                 if ((parseInt($(this).data('mode'))>>6) % 2 != 0){
                     //is hex rgb
                     val=base.rgbToHsl(val)[0];

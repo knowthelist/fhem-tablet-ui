@@ -148,9 +148,11 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 ####Label widgets
 - **data-get**  : name of the reading to get from FHEM
 - **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)						 
-- **data-part** : split position of the space separated value to show or an RegEx
+- **data-part** : part number of the space separated value to show or an RegEx
 - **data-colors** : a array of color values to affect the colour of the label according to the limit value 
+- **data-limits-get**  : name of the DEVICE:Reading to colorize the label (default: data-device:data-get)	
 - **data-limits** : a array of numeric or RegEx values to affect the colour of the label
+- **data-limits-part**  : part number of the space separated value to show or an RegEx (default '-1' -> all)	
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
 - **data-substitution**: regex-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
 - **class**     : small, large, big, bigger, thin, red, green, blue, darker, timestamp, w1x, w2x, w3x
@@ -195,6 +197,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
 - **data-tickstep** : distance between ticks (default 4|20)
+- **data-part** : part number of the space separated value to show or an RegEx
 - **class**		: small, mini, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
 
 ####Homestatus widget
@@ -220,6 +223,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-max**  : maximal value to set (default 100)
 - **data-on**   : value where the slider moves to max  [RegEx] (default 'on')
 - **data-off**  : value where the slider moves to min  [RegEx] (default 'off')
+- **data-part** : part number of the space separated value to show or an RegEx
 - **data-value**: show the value in a text box (default 'false')
 - **data-width**: width for horizontal sliders (default '120px', for mini '60px')
 - **data-height**: height for vertical sliders (default '120px', for mini '60px')
@@ -231,6 +235,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-max**  : maximal value to set (default 100)
 - **data-on**   : value where the slider moves to max  (default 'on')
 - **data-off**  : value where the slider moves to min  (default 'off')
+- **data-part** : part number of the space separated value to show or an RegEx
 - **data-colors** : a array of color values to affect the colour of the label according to the limit value 
 - **data-limits** : a array of numeric or RegEx values to affect the colour of the label
 - **class**		: mini, horizontal

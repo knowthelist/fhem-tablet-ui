@@ -10,6 +10,9 @@ var widget_label = $.extend({}, widget_widget, {
         elem.data('unit',           unescape(elem.data('unit')          || '' ));
         elem.data('limits',         elem.data('limits')                 || new Array());
         elem.data('colors',         elem.data('colors')                 || new Array('#505050'));
+        elem.data('limits-get',     typeof elem.data('limits-get')      != 'undefined' ? elem.data('limits-get')  : elem.data('device') + ':' + elem.data('get'));
+        elem.data('limits-part',    typeof elem.data('limits-part')     != 'undefined' ? elem.data('limits-part') : elem.data('part'));
+
         // fill up colors to limits.length
         // if an index s isn't set, use the value of s-1
         for(var s=0; s<elem.data('limits').length; s++) {
@@ -20,7 +23,12 @@ var widget_label = $.extend({}, widget_widget, {
 
         elem.data('fix',            ( $.isNumeric(elem.data('fix')) ) ?  Number(elem.data('fix'))           : -1);
         elem.data('substitution',   elem.data('substitution')           || '');
-        readings[$(this).data('get')] = true;
+        readings[elem.data('get')] = true;
+
+        //add extra reading into collection
+        initReadingsArray(elem.data('limits-get'));
+        requestFhem(elem.data('limits-get'));
+
     },
     init: function () {
         this.elements = $('div[data-type="'+this.widgetname+'"]');
@@ -52,6 +60,7 @@ var widget_label = $.extend({}, widget_widget, {
         }
     },
     update: function (dev,par) {
+
         var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
         deviceElements.each(function(index) {
             if ( $(this).data('get')==par){
@@ -69,10 +78,21 @@ var widget_label = $.extend({}, widget_widget, {
                     if ( ! $(this).hasClass('fixedlabel') ) {
                       $(this).html( val + "<span style='font-size: 50%;'>"+unit+"</span>" );
                     }
-        
-                    widget_label.update_colorize(val, $(this));
                  }
             }
         });
+        //extra reading for colorize
+        var sideElements= this.elements.filterData('limits-get',dev+':'+par);
+        if (sideElements && sideElements.length>0){
+            var val = getDeviceValueByName(dev, par);
+            if(val) {
+                sideElements.each(function(index) {
+                    var part = $(this).data('limits-part');
+                    var v = getPart(val,part);
+                    widget_label.update_colorize(v, $(this));
+                });
+            }
+        }
+
     }
 });

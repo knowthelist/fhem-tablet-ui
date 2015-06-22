@@ -14,6 +14,7 @@ var widget_dimmer = $.extend({}, widget_famultibutton, {
              $(this).data('on-background-color',     $(this).data('on-background-color') || getStyle('.'+this.widgetname+'.on','background-color')    || '#aa6900');
              $(this).data('background-icon',         $(this).data('background-icon')     || 'fa-circle');
              $(this).data('icon',                    $(this).data('icon')                || 'fa-lightbulb-o');
+             $(this).data('part',   $(this).data('part')                   || -1);
              $(this).data('mode','dimmer');
              var elem=$(this);
              base.init_attr(elem);
@@ -81,9 +82,11 @@ var widget_dimmer = $.extend({}, widget_famultibutton, {
              if ( $(this).data('dim')
                && $(this).data('dim') == par
                && $(this).data('dim') != $(this).data('set')) {
-                 var state = getDeviceValue( $(this), 'dim' );
-                 var elem = $(this).data('famultibutton');
-                 if (elem && $.isNumeric(state)) elem.setDimValue( parseInt(state));
+                 var value = getDeviceValue( $(this), 'dim' );
+                 var part = $(this).data('part');
+                 var val = getPart(value, part);
+                 var elemDim = $(this).data('famultibutton');
+                 if (elemDim && $.isNumeric(val)) elemDim.setDimValue( parseInt(val));
              }
          });
      },

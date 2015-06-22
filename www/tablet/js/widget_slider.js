@@ -14,6 +14,7 @@ var widget_slider = {
         $(this).data('off', $(this).data('off') || 'off');
         $(this).data('width', $(this).data('width'));
         $(this).data('height', $(this).data('height'));
+        $(this).data('part',   $(this).data('part')                   || -1);
 
         readings[$(this).data('get')] = true;
         //ToDo: more data parameter: color etc.
@@ -124,7 +125,8 @@ var widget_slider = {
             if (lstate) {
                 var pwrng = $(this).data('Powerange');
                 var elem = $(this).find('input');
-                var nstate = lstate;
+                var part = $(this).data('part');
+                var nstate = getPart(lstate, part);
                 if ( new RegExp('^' + $(this).data('on') + '$').test( nstate.toString() ) )
                     nstate=pwrng.options.max;
                 if ( new RegExp('^' + $(this).data('off') + '$').test( nstate.toString() ) )
@@ -136,7 +138,7 @@ var widget_slider = {
                     pwrng.setStart(parseInt(v));
                     localStorage.setItem("slider_"+dev, v);
                     if ( $(this).data('value') ) {
-                        $(this).find( '#slidervalue' ).text( lstate );
+                        $(this).find( '#slidervalue' ).text( nstate );
                     }
                     DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
                 }

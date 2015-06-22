@@ -438,7 +438,7 @@ function dynamicload(file, success, error, async) {
     $.ajax({
         url: dir + '/../' + file,
         dataType: "script",
-        cache: true,
+        cache: DEBUG ? false : true,
         async: async || false,
         context:{name: name},
         success: success||function(){ return true },

@@ -10,6 +10,7 @@ var widget_level= {
 		$(this).data('get', $(this).data('get') || 'STATE');
         $(this).data('on', $(this).data('on') || 'on');
         $(this).data('off', $(this).data('off') || 'off');
+        $(this).data('part',   $(this).data('part')                   || -1);
 		readings[$(this).data('get')] = true;
 
 		var elem =  jQuery('<input/>', {
@@ -51,14 +52,20 @@ var widget_level= {
 
         if ( $(this).data('get')==par){
 
-			var state = getDeviceValue( $(this), 'get' );
-			if (state) {
+            var value = getDeviceValue( $(this), 'get' );
+            if (value) {
                 var pwrng = $(this).data('Powerange');
                 var elem = $(this).find('input');
-                if (state==$(this).data('off')) state=pwrng.options.min;
-                if (state==$(this).data('on')) state=pwrng.options.max;
-                if ($.isNumeric(state) && pwrng) {
-                    pwrng.setStart(parseInt(state));
+                var part = $(this).data('part');
+                var val = getPart(value, part);
+                if (val==$(this).data('off')) val=pwrng.options.min;
+                if (val==$(this).data('on')) val=pwrng.options.max;
+                if ($.isNumeric(val) && pwrng) {
+
+                    var v = $(this).hasClass('negated')
+                            ? pwrng.options.max + pwrng.options.min - parseInt(val)
+                            : parseInt(val);
+                    pwrng.setStart(parseInt(v));
 
                     //set colors according matches for values
                     var limits=$(this).data('limits');
@@ -79,7 +86,6 @@ var widget_level= {
                         }
 
                         var idx=indexOfGeneric(limits,state);
-                        console.log('idx',idx,state);
                         if (idx>-1){
                             $(this).children().find('.range-quantity').css( "background-color", colors[idx] );
                         }
