@@ -170,7 +170,6 @@ var widget_thermostat = $.extend({}, widget_knob, {
 		readings[$(this).data('get')] = true;
 		readings[$(this).data('temp')] = true;
 		readings[$(this).data('valve')] = true;
-		
 		knob_elem.knob({
             'min': $(this).data('min'),
             'max': $(this).data('max'),
@@ -182,10 +181,10 @@ var widget_thermostat = $.extend({}, widget_knob, {
             'angleOffset': $(this).data('angleoffset') || -120,
             'angleArc': $(this).data('anglearc') || 240,
 			'bgColor': $(this).data('bgcolor') || 'transparent',
-            'fgColor': getStyle('.'+this.widgetname+'.fgcolor','color') || $(this).data('fgcolor') || '#bbbbbb',
-            'tkColor': getStyle('.'+this.widgetname+'.tkcolor','color') || $(this).data('tkcolor') || '#666',
-            'minColor': getStyle('.'+this.widgetname+'.mincolor','color') || $(this).data('mincolor') || '#4477ff',
-            'maxColor': getStyle('.'+this.widgetname+'.maxcolor','color') || $(this).data('maxcolor') || '#ff0000',
+            'fgColor': getStyle('.'+base.widgetname+'.fgcolor','color') || $(this).data('fgcolor') || '#bbbbbb',
+            'tkColor': getStyle('.'+base.widgetname+'.tkcolor','color') || $(this).data('tkcolor') || '#666',
+            'minColor': getStyle('.'+base.widgetname+'.mincolor','color') || $(this).data('mincolor') || '#4477ff',
+            'maxColor': getStyle('.'+base.widgetname+'.maxcolor','color') || $(this).data('maxcolor') || '#ff0000',
             'thickness': .25,
             'cursor': 6,
             'touchPosition': 'left',

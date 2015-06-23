@@ -34,6 +34,6 @@ ul, ol {
 .switch.on{color:#eee;background-color:#0088CC;}
 .switch.off{color:#eee;background-color:#aaa;}
 .thermostat.tkcolor{color:#888;}
-.thermostat.fgcolor{color:#666;}
+.thermostat.fgcolor{color:#555;}
 .volume.hdcolor{color:#0088CC;}
-.volume.fgcolor{color:#666;}
+.volume.fgcolor{color:#555;}
