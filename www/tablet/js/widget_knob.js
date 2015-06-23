@@ -16,16 +16,12 @@ var widget_knob = $.extend({}, widget_widget, {
         elem.data('max', maxval);
         elem.data('max360', (maxval>360)?360:maxval);
         
-        elem.data('height', 1*elem.attr('data-height')||150);
-        elem.data('width', 1*elem.attr('data-width')||150);
-        if(elem.hasClass('small')) {
-            elem.data('height', 100);
-            elem.data('width', 100);
-        }
-        if(elem.hasClass('mini')) {
-            elem.data('height', 52);
-            elem.data('width', 52);
-        }
+        elem.data('height', elem.isValidData('height')?elem.data('height'):150);
+        elem.data('width', elem.isValidData('width')?elem.data('width'):150);
+        if(elem.hasClass('bigger')) { elem.data('height', 200); elem.data('width', 200);}
+        if(elem.hasClass('big')) { elem.data('height', 150); elem.data('width', 150);}
+        if(elem.hasClass('small')) { elem.data('height', 100); elem.data('width', 100);}
+        if(elem.hasClass('mini')) { elem.data('height', 52); elem.data('width', 52);}
         
         elem.data('step', 1*elem.data('step') || 1);
         elem.data('angleoffset', elem.data('angleoffset') || -120);
@@ -36,7 +32,7 @@ var widget_knob = $.extend({}, widget_widget, {
         elem.data('tkcolor', elem.data('tkcolor') || '#666');
     },
     init: function () {
-        base=this;
+        var base=this;
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {
             base.init_attr($(this));

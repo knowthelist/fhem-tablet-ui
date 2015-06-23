@@ -121,7 +121,7 @@ data-set-off    : 		Value for OFF
 - **data-off-background-color** : color of OFF state (default '#505050')
 - **data-on-color** : color of ON state (default '#aa6900')
 - **data-off-color**: color of Off state (default '#505050')
-- **data-doubleclick**: timeout to wait for a second click or touch. '0' disables the doubleclick feature. (default '0')
+- **data-doubleclick**: timeout to wait for x millisecondes click or touch. '0' disables the doubleclick feature. (default '0')
 - **data-icons**    : array of icons related to the data-get-on array
 - **data-on-colors**: array of colors related to the data-get-on array
 - **data-on-background-colors**: array of colors related to the data-get-on array
@@ -188,7 +188,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-step**  : step size for value adjustment e.g. 0.5 (default 1)
 - **data-off**   : value to send to get the thermostat switch off (for this, dial the knob to then minimum value)
 - **data-boost** : value to send to force boost mode (for this, dial the knob to then maximum value)
-- **class**		 : big, readonly
+- **class**		 : mini, small, big, bigger, readonly
 
 ####Volume widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
@@ -198,7 +198,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-max**  : maximal value to set (default 70)
 - **data-tickstep** : distance between ticks (default 4|20)
 - **data-part** : part number of the space separated value to show or an RegEx
-- **class**		: small, mini, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
+- **class**		: mini, small, big, bigger, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
 
 ####Homestatus widget
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')

@@ -77,7 +77,7 @@ var widget_volume = $.extend({}, widget_knob, {
   return false;
   },
   init: function () {
-  	base=this;
+    var base=this;
     this.elements = $('div[data-type="'+this.widgetname+'"]');
  	this.elements.each(function(index) {
 		var maxval = $(this).data('max') || 70;
@@ -144,7 +144,7 @@ var widget_volume = $.extend({}, widget_knob, {
             'touchPosition': 'left',
 			'cmd': $(this).data('cmd'),
 			'set': $(this).data('set'),
-			'draw' : base.drawDial,
+            'draw' : widget_volume.drawDial,
 			'readOnly' : $(this).hasClass('readonly'),
 			'change' : function (v) { 
                   startPollInterval();
@@ -161,7 +161,7 @@ var widget_volume = $.extend({}, widget_knob, {
                   if (!isUpdating){
                         if ((this.o.mode>>6) % 2 != 0){
                             //send hex rbg value
-                            v=base.hslToRgb(v/this.o.max,1.0,0.5);
+                            v=this.prototype.hslToRgb(v/this.o.max,1.0,0.5);
                         }
                         else{
                            //send decimal value
@@ -193,7 +193,7 @@ var widget_volume = $.extend({}, widget_knob, {
                 var val = getPart(value,part);
                 if ((parseInt($(this).data('mode'))>>6) % 2 != 0){
                     //is hex rgb
-                    val=base.rgbToHsl(val)[0];
+                    val=this.prototype.rgbToHsl(val)[0];
                     val=val*$(this).data('max360');
                 }
                 else{
@@ -202,7 +202,7 @@ var widget_volume = $.extend({}, widget_knob, {
                 }
                 if ( knob_elem.val() != val ){
 					knob_elem.val( val ).trigger('change');
-					DEBUG && console.log( base.widgetname + ' dev:'+dev+' par:'+par+' change '+$(this).data('device')+':knob to ' +val );
+                    DEBUG && console.log( this.widgetname + ' dev:'+dev+' par:'+par+' change '+$(this).data('device')+':knob to ' +val );
 				}	
 			}
             knob_elem.css({visibility:'visible'});

@@ -53,3 +53,7 @@ $.fn.filterData = function(key, value) {
         return $(this).data(key) == value;
     });
 };
+$.fn.isValidData = function(key) {
+    return typeof $(this).data(key) != 'undefined';
+};
+

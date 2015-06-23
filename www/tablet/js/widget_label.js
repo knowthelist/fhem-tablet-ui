@@ -10,8 +10,8 @@ var widget_label = $.extend({}, widget_widget, {
         elem.data('unit',           unescape(elem.data('unit')          || '' ));
         elem.data('limits',         elem.data('limits')                 || new Array());
         elem.data('colors',         elem.data('colors')                 || new Array('#505050'));
-        elem.data('limits-get',     typeof elem.data('limits-get')      != 'undefined' ? elem.data('limits-get')  : elem.data('device') + ':' + elem.data('get'));
-        elem.data('limits-part',    typeof elem.data('limits-part')     != 'undefined' ? elem.data('limits-part') : elem.data('part'));
+        elem.data('limits-get',     elem.isValidData('limits-get')  ? elem.data('limits-get')  : elem.data('device') + ':' + elem.data('get'));
+        elem.data('limits-part',    elem.isValidData('limits-part') ? elem.data('limits-part') : elem.data('part'));
 
         // fill up colors to limits.length
         // if an index s isn't set, use the value of s-1
@@ -26,6 +26,8 @@ var widget_label = $.extend({}, widget_widget, {
         readings[elem.data('get')] = true;
 
         //add extra reading into collection
+        if(!elem.data('limits-get').match(/:/))
+            elem.data('limits-get', elem.data('device') + ':' + elem.data('limits-get'))
         initReadingsArray(elem.data('limits-get'));
         requestFhem(elem.data('limits-get'));
 

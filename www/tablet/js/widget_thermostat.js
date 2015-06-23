@@ -147,9 +147,18 @@ var widget_thermostat = $.extend({}, widget_knob, {
   return false;
 },
   init: function () {
-  	base=this;
+    var base=this;
 	this.elements=$('div[data-type="'+this.widgetname+'"]');
 	this.elements.each(function( index ) {
+
+        $(this).data('get', $(this).data('get') || 'desired-temp');
+        $(this).data('temp', $(this).data('temp') || 'measured-temp');
+        $(this).data('height', $(this).isValidData('height') ? $(this).data('height') :100);
+        $(this).data('width',  $(this).isValidData('width')  ? $(this).data('width')  :100);
+        $(this).data('max',    $(this).isValidData('max')    ? $(this).data('max')    :30);
+        $(this).data('min',    $(this).isValidData('min')    ? $(this).data('min')    :10);
+
+        base.init_attr($(this));
         var knob_elem =  jQuery('<input/>', {
 			type: 'text',
 			value: '10',
@@ -157,35 +166,33 @@ var widget_thermostat = $.extend({}, widget_knob, {
 		}).appendTo($(this));
 
 		var device = $(this).data('device');  
-		//default reading parameter name
-		$(this).data('get', $(this).data('get') || 'desired-temp');
-		$(this).data('temp', $(this).data('temp') || 'measured-temp');
+
 		readings[$(this).data('get')] = true;
 		readings[$(this).data('temp')] = true;
 		readings[$(this).data('valve')] = true;
 		
 		knob_elem.knob({
-			'min':$(this).attr('data-min')?1*$(this).data('min'):10,
-			'max':1*$(this).data('max') || 30,
+            'min': $(this).data('min'),
+            'max': $(this).data('max'),
 			'off':$(this).attr('data-off')?$(this).data('off'):-1,
 			'boost':$(this).attr('data-boost')?$(this).data('boost'):-1,
-            'height':$(this).hasClass('big')?150:100,
-            'width':$(this).hasClass('big')?150:100,
-			'step': 1*$(this).data('step') || 1,
-			'angleOffset': $(this).data('angleoffset') || -120,
-			'angleArc': $(this).data('anglearc') || 240,
+            'height':$(this).data('height'),
+            'width':$(this).data('width'),
+            'step': 1*$(this).data('step') || 1,
+            'angleOffset': $(this).data('angleoffset') || -120,
+            'angleArc': $(this).data('anglearc') || 240,
 			'bgColor': $(this).data('bgcolor') || 'transparent',
-            'fgColor': $(this).data('fgcolor') || getStyle('.'+base.widgetname+'.fgcolor','color') || '#bbbbbb',
-            'tkColor': $(this).data('tkcolor') || getStyle('.'+base.widgetname+'.tkcolor','color') || '#666',
-            'minColor': $(this).data('mincolor') || getStyle('.'+base.widgetname+'.mincolor','color') ||'#4477ff',
-            'maxColor': $(this).data('maxcolor') || getStyle('.'+base.widgetname+'.maxcolor','color') ||'#ff0000',
+            'fgColor': getStyle('.'+this.widgetname+'.fgcolor','color') || $(this).data('fgcolor') || '#bbbbbb',
+            'tkColor': getStyle('.'+this.widgetname+'.tkcolor','color') || $(this).data('tkcolor') || '#666',
+            'minColor': getStyle('.'+this.widgetname+'.mincolor','color') || $(this).data('mincolor') || '#4477ff',
+            'maxColor': getStyle('.'+this.widgetname+'.maxcolor','color') || $(this).data('maxcolor') || '#ff0000',
             'thickness': .25,
             'cursor': 6,
             'touchPosition': 'left',
 			'readOnly' : $(this).hasClass('readonly')?true:false,
 			'cmd': $(this).data('cmd') || 'set',
 			'set': $(this).data('set') || 'desired-temp',
-			'draw' : widget_thermostat.drawDial,
+            'draw' : widget_thermostat.drawDial,
 			'change' : function (v) { 
                 //reset shortpoll timer to avoid jump back
                 startPollInterval();
