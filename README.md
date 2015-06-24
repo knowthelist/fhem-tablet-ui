@@ -21,6 +21,9 @@ Install
  * rename the index-example.html to index.html or create your own index.html
  * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/ftui/
  
+ Depending on the HTTPSRV version, only this cfg works:
+ 'define TABLETUI HTTPSRV ftui ./www/tablet/ Tablet-UI'
+ 
  or just use 'update all https://raw.githubusercontent.com/knowthelist/fhem-tablet-ui/master/controls_fhemtabletui.txt'
  on the FHEM commandline (or input field of FHEMWEB)
 
