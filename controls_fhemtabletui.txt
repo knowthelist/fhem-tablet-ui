@@ -49,7 +49,7 @@ UPD 2015-06-22_20:58:37 5972 www/tablet/js/widget_slider.js
 UPD 2015-06-11_02:25:17 1335 www/tablet/js/widget_switch.js
 UPD 2015-06-11_02:25:17 1776 www/tablet/js/widget_symbol.js
 UPD 2015-06-23_19:50:33 9342 www/tablet/js/widget_thermostat.js
-UPD 2015-06-23_02:03:21 7031 www/tablet/js/widget_volume.js
+UPD 2015-06-25_22:48:23 7026 www/tablet/js/widget_volume.js
 UPD 2015-06-11_02:25:17 20547 www/tablet/js/widget_weather.js
 UPD 2015-06-23_00:24:44 1913 www/tablet/js/widget_widget.js
 UPD 2015-06-11_02:25:17 5201 www/tablet/lib/fa-multi-button.min.js
