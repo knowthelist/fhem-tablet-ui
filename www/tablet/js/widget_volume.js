@@ -161,7 +161,7 @@ var widget_volume = $.extend({}, widget_knob, {
                   if (!isUpdating){
                         if ((this.o.mode>>6) % 2 != 0){
                             //send hex rbg value
-                            v=this.prototype.hslToRgb(v/this.o.max,1.0,0.5);
+                            v=widget_knob.hslToRgb(v/this.o.max,1.0,0.5);
                         }
                         else{
                            //send decimal value
@@ -193,7 +193,8 @@ var widget_volume = $.extend({}, widget_knob, {
                 var val = getPart(value,part);
                 if ((parseInt($(this).data('mode'))>>6) % 2 != 0){
                     //is hex rgb
-                    val=this.prototype.rgbToHsl(val)[0];
+
+                    val=widget_knob.rgbToHsl(val)[0];
                     val=val*$(this).data('max360');
                 }
                 else{
