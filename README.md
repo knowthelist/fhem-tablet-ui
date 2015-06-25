@@ -779,6 +779,15 @@ To change the dim value: push the button and slide up or down
 </div>
 ```
 
+**Example** for how to grab a live image every 5 secondes
+```html
+<div data-type="image"
+     data-size="95%"
+     data-url="http://vusolo2/grab?format=jpg"
+     data-refresh="5">
+</div>
+```
+
 ###Homestatus
 **Example** for how to individualize the homestatus widget:
 ```html

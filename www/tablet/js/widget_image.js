@@ -40,9 +40,9 @@ var widget_image = $.extend({}, widget_widget, {
                 elem.attr('src', url );
                 setInterval(function() {
                     counter++;
-                    if(counter == refresh) {
+                    if(counter >= refresh) {
                         counter = 0;
-                        elem.attr('src',url);
+                        elem.attr('src',url+'#'+$.now());
                     }
                 }, 1000);
             }
