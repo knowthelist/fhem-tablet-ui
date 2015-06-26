@@ -1,3 +1,5 @@
 FHEM tablet UI last change:
-2015-06-25
- - Fixed bug in volume widget
+2015-06-26
+ - Merge pull request #113 from nesges/patch-88
+
+widget_image: data-nocache
