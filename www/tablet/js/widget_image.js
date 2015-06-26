@@ -14,11 +14,12 @@ var widget_image = $.extend({}, widget_widget, {
         elem.data('path',       elem.data('path'));
         elem.data('suffix',     elem.data('suffix'));
         elem.data('refresh',    elem.data('refresh')    || 15*60);
+        elem.data('nocache',    elem.data('nocache')    || false);
         
         readings[$(this).data('get')] = true;
     },
     init: function () {
-        base=this;
+        var base=this;
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {
             base.init_attr($(this));
@@ -34,15 +35,22 @@ var widget_image = $.extend({}, widget_widget, {
     
             //3rd party source refresh
             if ($(this).data('url')){
-                var counter=0;
-                var url=$(this).data('url');
-                var refresh=$(this).data('refresh');
+                var url = $(this).data('url');
+                if($(this).data('nocache')) {
+                    url = base.addurlparam(url, '_', new Date().getTime());
+                }
                 elem.attr('src', url );
+                
+                var counter=0;
+                var refresh=$(this).data('refresh');
                 setInterval(function() {
                     counter++;
-                    if(counter >= refresh) {
+                    if(counter == refresh) {
                         counter = 0;
-                        elem.attr('src',url+'#'+$.now());
+                        if(url.match(/_=\d+/)) {
+                            url = base.addurlparam(url, '_', new Date().getTime());
+                        }
+                        elem.attr('src', url);
                     }
                 }, 1000);
             }
@@ -60,5 +68,25 @@ var widget_image = $.extend({}, widget_widget, {
                 }
             }
         });
+    },
+    addurlparam: function(uri, key, value) {
+        // http://stackoverflow.com/a/6021027
+        var hash = uri.replace(/^.*#/, '#');
+        if(hash!=uri) {
+            uri = uri.replace(hash, '');
+        } else {
+            hash = '';
+        }
+        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+
+        if (uri.match(re)) {
+            uri = uri.replace(re, '$1' + key + "=" + value + '$2');
+        } else {
+            uri = uri + separator + key + "=" + value;
+        }
+        uri += hash;
+        DEBUG && console.log(uri);
+        return uri;
     }
 });
