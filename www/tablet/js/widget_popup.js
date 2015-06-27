@@ -5,10 +5,11 @@ if(typeof widget_widget == 'undefined') {
 var widget_popup= $.extend({}, widget_widget, {
     widgetname: 'popup',
     init_attr: function(elem) {
-        elem.data('get',        elem.data('get')        || 'STATE');
-        elem.data('alert',      elem.data('alert')      || '');
-        elem.data('height',     elem.data('height')     || 'auto');
-        elem.data('width',      elem.data('width')      || '100%');
+        elem.data('get',        elem.data('get')                                    || 'STATE');
+        elem.data('get-on',     elem.isValidData('get-on')  ? elem.data('get-on')    : 'on');
+        elem.data('get-off',    elem.isValidData('get-off') ? elem.data('get-off')   : 'off');
+        elem.data('height',     elem.data('height')                                 || 'auto');
+        elem.data('width',      elem.data('width')                                  || '100%');
         
         readings[$(this).data('get')] = true;
     },
@@ -39,7 +40,7 @@ var widget_popup= $.extend({}, widget_widget, {
                 });
 
                 //prepare events
-                close.click(function() {
+                close.on('click',function() {
                   dialog.fadeOut(500, function() {
                     showModal(false);
                   });
@@ -60,8 +61,18 @@ var widget_popup= $.extend({}, widget_widget, {
            if ( $(this).data('get')==par) {
                var state = getDeviceValue( $(this), 'get' );
                if (state) {
-                   if ( state == $(this).data('alert') )
-                       $(this).children(":first").trigger('click');
+                   if ( state == $(this).data('get-on') )
+                        $(this).children(":first").trigger('click');
+                   else if ( state == $(this).data('get-off') )
+                        $(this).find('a.dialog-close').trigger('click');
+                   else if ( state.match(new RegExp('^' + $(this).data('get-on') + '$')) )
+                        $(this).children(":first").trigger('click');
+                   else if ( state.match(new RegExp('^' + $(this).data('get-off') + '$')) )
+                        $(this).find('a.dialog-close').trigger('click');
+                   else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
+                        $(this).children(":first").trigger('click');
+                   else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
+                        $(this).find('a.dialog-close').trigger('click');
                }
            }
        });

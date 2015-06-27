@@ -319,7 +319,8 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 
 ####Popup widgets
 - **data-get**         : name of the reading where to get the alert value from (default 'STATE')
-- **data-alert**       : value which trigger to open the popup (default '')
+- **data-get-on**      : value which trigger to open the dialog (default 'on')
+- **data-get-off**     : value which trigger to close the dialog (default 'off')
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
 
