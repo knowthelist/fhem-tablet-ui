@@ -97,6 +97,36 @@ body {
     display: inline-block;
 }
 
+.dialog {
+  display: none;
+  position: absolute;
+  z-index: 2000;
+  width: 98%;
+  border-bottom: 1px solid #aaa;
+  border-radius: 4px;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color:#2A2A2A;
+  background-clip: padding-box;
+}
+
+a.dialog-close {
+  line-height: 1;
+  font-size: 1.5em;
+  position: absolute;
+  top: 3px;
+  right: 2%;
+  text-decoration: none;
+  color: #bbb;
+}
+
+a.dialog-close:hover {
+  color: #aa6900;
+  -webkit-transition: color 1s ease;
+  -moz-transition: color 1s ease;
+  transition: color 1s ease;
+}
+
 [data-type]:not([data-type="label"]):not(.readonly):not([data-type="symbol"]){
     cursor: pointer;
 }

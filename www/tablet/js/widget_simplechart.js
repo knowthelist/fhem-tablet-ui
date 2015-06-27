@@ -21,8 +21,8 @@ var widget_simplechart = {
         elem.data('maxvalue', typeof elem.data('maxvalue') != 'undefined' ? elem.data('maxvalue')  : 30);
         elem.data('xticks'   ,elem.data('xticks')                                                 || 360);
         elem.data('yticks'   ,elem.data('yticks')                                                 || 5);
-        elem.data('yunit',    unescape(elem.data('yunit')                                        || '' ));
-
+        elem.data('yunit',    unescape(elem.data('yunit')                                         || '' ));
+        elem.data('noticks'   ,elem.data('noticks')                                               || false);
     },
   init: function () {
       var base=this;
@@ -54,7 +54,7 @@ var widget_simplechart = {
       var fix = widget_simplechart.precision( $(this).data('yticks') );
       var unit = $(this).data('yunit');
       var caption = $(this).data('caption')
-
+      var noticks = ( $(this).data('width') <=100 ) ? true : $(this).data('noticks');
       var days = parseFloat($(this).attr('data-daysago')||0);
       var now = new Date();
       var ago = new Date();
@@ -68,7 +68,6 @@ var widget_simplechart = {
           ago.setDate(now.getDate() - days);
           mindate= ago.yyyymmdd() + '_00:00:00';
       }
-
       //var maxdate= now.yyyymmdd() + '_23:59:59';
       maxdate.setDate(now.getDate() + 1);
       maxdate = maxdate.yyyymmdd() + '_00:00:00';
@@ -152,72 +151,90 @@ var widget_simplechart = {
                             'vector-effect':'non-scaling-stroke',
                             });
               polyline.parent().append(yaxis);
-              //y-ticks
-              for ( var y=min; y<=max; y+=yticks ){
-                    var line = widget_simplechart.createElem('line');
-                    line.attr({
-                                'x1':'0',
-                                'y1':y,
-                                'x2':xrange,
-                                'y2':y,
-                                'style':'stroke:#555;stroke-width:'+strokeWidth+'px',
-                                'vector-effect':'non-scaling-stroke',
-                                });
-                    graph.prepend(line);
-                    var text = widget_simplechart.createElem('text');
-                    var textY = (caption)
-                                ? (((max-y)*100)/(max-min)*0.8+12)
-                                : (((max-y)*100)/(max-min)*0.87+5);
-                    //console.log('y:',max,min,y,textY);
-                    text.attr({
-                                'x':'99%',
-                                'y': textY+'%',
-                                'style':'font-size:9px',
-                                'text-anchor':"end",
+
+              if (!noticks){
+                  //y-ticks
+                  for ( var y=min; y<=max; y+=yticks ){
+                        var line = widget_simplechart.createElem('line');
+                        line.attr({
+                                    'x1':'0',
+                                    'y1':y,
+                                    'x2':xrange,
+                                    'y2':y,
+                                    'style':'stroke:#555;stroke-width:'+strokeWidth+'px',
+                                    'vector-effect':'non-scaling-stroke',
+                                    });
+                        graph.prepend(line);
+                        var text = widget_simplechart.createElem('text');
+                        var textY = (caption)
+                                    ? (((max-y)*100)/(max-min)*0.8+12)
+                                    : (((max-y)*100)/(max-min)*0.87+5);
+
+                        text.attr({
+                                    'x':'99%',
+                                    'y': textY+'%',
+                                    'style':'font-size:9px',
+                                    'text-anchor':"end",
+                                    'fill':'#ddd',
+                                    });
+                      text.text( ((fix>-1 && fix<=20) ? y.toFixed(fix) : y)+unit);
+                      svg.parent().append(text);
+                  }
+
+                  //x-axis
+                  var textX1 = widget_simplechart.createElem('text');
+                  textX1.attr({
+                                'x':'0',
+                                'y':'100%',
                                 'fill':'#ddd',
+                                'style':'font-size:9px',
                                 });
-                  text.text( ((fix>-1 && fix<=20) ? y.toFixed(fix) : y)+unit);
-                  svg.parent().append(text);
+                  textX1.text(tstart.ddmm());
+                  svg.parent().append(textX1);
+
+                  for ( var x=xticks; x<=xrange; x+=xticks ){
+
+                      var tx = new Date(tstart);
+                      var textX2 = widget_simplechart.createElem('text');
+                      textX2.attr({ 'x':93*x/xrange+'%',
+                                    'y':'100%',
+                                    'text-anchor':"middle",
+                                    'fill':'#ddd',
+                                    'style':'font-size:9px',
+                                    });
+                      tx.setMinutes(tstart.getMinutes() + x);
+                      //console.log(tx);
+                      var textX2Value = (tx.hhmm()=="00:00") ? tx.ddmm() : tx.hhmm() ;
+                      textX2.text(textX2Value);
+                      svg.parent().append(textX2);
+
+                      var xtick1 = widget_simplechart.createElem('line');
+                      xtick1.attr({ 'x1':100*x/xrange+'%',
+                                    'y1':min,
+                                    'x2':100*x/xrange+'%',
+                                    'y2':max,
+                                    'stroke-dasharray':strokeWidth*2+','+strokeWidth*2,
+                                    'style':'stroke:#555;stroke-width:1.2px',
+                                    'vector-effect':'non-scaling-stroke',
+                                    });
+                      graph.append(xtick1);
+                }
+
+            }
+              else{
+                  var line = widget_simplechart.createElem('line');
+                  line.attr({
+                              'x1':'0',
+                              'y1':min,
+                              'x2':xrange,
+                              'y2':min,
+                              'style':'stroke:#555;stroke-width:'+strokeWidth+'px',
+                              'vector-effect':'non-scaling-stroke',
+                              });
+                  graph.prepend(line);
+
               }
 
-              //x-axis
-              var textX1 = widget_simplechart.createElem('text');
-              textX1.attr({
-                            'x':'0',
-                            'y':'100%',
-                            'fill':'#ddd',
-                            'style':'font-size:9px',
-                            });
-              textX1.text(tstart.ddmm());
-              svg.parent().append(textX1);
-
-              for ( var x=xticks; x<=xrange; x+=xticks ){
-
-                  var tx = new Date(tstart);
-                  var textX2 = widget_simplechart.createElem('text');
-                  textX2.attr({ 'x':93*x/xrange+'%',
-                                'y':'100%',
-                                'text-anchor':"middle",
-                                'fill':'#ddd',
-                                'style':'font-size:9px',
-                                });
-                  tx.setMinutes(tstart.getMinutes() + x);
-                  //console.log(tx);
-                  var textX2Value = (tx.hhmm()=="00:00") ? tx.ddmm() : tx.hhmm() ;
-                  textX2.text(textX2Value);
-                  svg.parent().append(textX2);
-
-                  var xtick1 = widget_simplechart.createElem('line');
-                  xtick1.attr({ 'x1':100*x/xrange+'%',
-                                'y1':min,
-                                'x2':100*x/xrange+'%',
-                                'y2':max,
-                                'stroke-dasharray':strokeWidth*2+','+strokeWidth*2,
-                                'style':'stroke:#555;stroke-width:1.2px',
-                                'vector-effect':'non-scaling-stroke',
-                                });
-                  graph.append(xtick1);
-            }
 
             //show chart caption if set
             if (caption){

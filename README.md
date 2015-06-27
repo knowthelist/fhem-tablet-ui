@@ -73,9 +73,10 @@ Currently there are 16 types of widgets in the base installation.
 - **select**	: Combobox to provide a list for selection
 - **pagetab**	: Element to smoothly exchange the whole page with another page
 - **level** : vertical/horizontal bar to show values between min/max value
-- **rotor** :slider between multiple widgets at one position
-- **progress** :round symbolic display  for percent values
-- **simplechart** :simple XY line chart for one value (reads directly from fhem log file)
+- **rotor** : slider between multiple widgets at one position
+- **progress** : round symbolic display  for percent values
+- **simplechart** :s imple XY line chart for one value (reads directly from fhem log file)
+- **popup** : a popup dialog which open on click on another widget 
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -313,7 +314,14 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 - **data-yunit**       : unit of the value to show beside of each Y ticks
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
+- **data-noticks**	   : draw no ticks, only graph and axis (default false)
 - **class**		       : fullsize
+
+####Popup widgets
+- **data-get**         : name of the reading where to get the alert value from (default 'STATE')
+- **data-alert**       : value which trigger to open the popup (default '')
+- **data-width**       : fixe size for width (in % or px)
+- **data-height**      : fixe size for height (in % or px)
 
 Format
 -------
