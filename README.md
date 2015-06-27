@@ -1009,8 +1009,8 @@ Create a mini chart in the UI which opens a dialog with the full size of the cha
 		  data-columnspec="4:temp"
 		  data-minvalue="-25"
 		  data-maxvalue="35"
-		  data-height="30"
-		  data-width="80"
+		  data-height="50"
+		  data-width="100"
 		  class="cell">
 	</div>
 	<div class="dialog">
