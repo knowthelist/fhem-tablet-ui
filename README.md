@@ -978,6 +978,56 @@ Create two comboboxes to select the inputs of a two zone AV receiver. List for Z
 </div>
 ```
 
+dialog
+-------
+Create a Label in the UI which opens a dialog with sub widgets .
+
+```html
+<div data-type="popup" data-height="150px" data-width="250px">
+  <div data-type="label" class="cell">show temperatur</div>
+  <div class="dialog">
+	  <header>DIALOG</header>
+	  <div class="right top-space right-space-2x">
+		<div class="inline">
+		  <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin"></div>
+		  <div data-type="label" class="cell">Temperatur</div>
+		</div>
+		<div class="inline">
+		  <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="bigger thin"></div>
+		  <div data-type="label" class="cell">Luftfeuchte</div>
+		</div>
+	  </div>
+  </div>
+</div>
+```
+Create a mini chart in the UI which opens a dialog with the full size of the chart.
+
+```html
+<div data-type="popup" data-width="450px">
+	<div data-type="simplechart"
+		  data-logdevice="FileLog_OutTemp"
+		  data-columnspec="4:temp"
+		  data-minvalue="-25"
+		  data-maxvalue="35"
+		  data-height="30"
+		  data-width="80"
+		  class="cell">
+	</div>
+	<div class="dialog">
+		<header>BIG-CHART</header>
+		<div data-type="simplechart"
+			  data-logdevice="FileLog_OutTemp"
+			  data-columnspec="4:temp"
+			  data-minvalue="-25"
+			  data-maxvalue="35"
+			  data-yticks="5"
+			  data-height="150"
+			  class="cell">
+		</div>
+	</div>
+</div>
+```
+
 ![](http://knowthelist.github.io/fhem-tablet-ui/select_2x.png)       
        
        Specials
