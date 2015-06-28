@@ -39,7 +39,7 @@ UPD 2015-06-23_00:58:41 4311 www/tablet/js/widget_label.js
 UPD 2015-06-22_21:03:29 3660 www/tablet/js/widget_level.js
 UPD 2015-06-11_02:25:17 6521 www/tablet/js/widget_pagetab.js
 UPD 2015-06-11_02:25:17 1239 www/tablet/js/widget_playstream.js
-UPD 2015-06-27_12:50:49 3460 www/tablet/js/widget_popup.js
+UPD 2015-06-28_11:05:51 3434 www/tablet/js/widget_popup.js
 UPD 2015-06-11_02:25:17 2480 www/tablet/js/widget_progress.js
 UPD 2015-06-19_00:06:01 1971 www/tablet/js/widget_push.js
 UPD 2015-06-11_02:25:17 1667 www/tablet/js/widget_readingsgroup.js
