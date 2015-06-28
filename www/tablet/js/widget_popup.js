@@ -22,8 +22,7 @@ var widget_popup= $.extend({}, widget_widget, {
 
             var dialog = elem.find('.dialog');
             var starter = elem.children(":first");
-            var close = jQuery('<a/>', {
-                 href: '#',
+            var close = jQuery('<div/>', {
                  class: 'dialog-close'
               }).html('x').appendTo(dialog);
 
