@@ -33,8 +33,8 @@ var widget_popup= $.extend({}, widget_widget, {
                 elem.closest('.gridster>ul>li').css({overflow: 'visible'});
                 $(window).resize(function() {
                   dialog.css({
-                    top: ($(window).height()/ 2 - dialog.outerHeight()) / 2,
-                    left: ($(window).width()/ 2 - dialog.outerWidth()) / 2
+                    top: ($(window).height() / 2 - dialog.outerHeight()) / 2,
+                    left: ($(window).width() / 2 - dialog.outerWidth()) / 2
                   });
                 });
 
@@ -63,15 +63,15 @@ var widget_popup= $.extend({}, widget_widget, {
                    if ( state == $(this).data('get-on') )
                         $(this).children(":first").trigger('click');
                    else if ( state == $(this).data('get-off') )
-                        $(this).find('a.dialog-close').trigger('click');
+                        $(this).find('.dialog-close').trigger('click');
                    else if ( state.match(new RegExp('^' + $(this).data('get-on') + '$')) )
                         $(this).children(":first").trigger('click');
                    else if ( state.match(new RegExp('^' + $(this).data('get-off') + '$')) )
-                        $(this).find('a.dialog-close').trigger('click');
+                        $(this).find('.dialog-close').trigger('click');
                    else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
                         $(this).children(":first").trigger('click');
                    else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
-                        $(this).find('a.dialog-close').trigger('click');
+                        $(this).find('.dialog-close').trigger('click');
                }
            }
        });
