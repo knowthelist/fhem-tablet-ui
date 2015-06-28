@@ -110,7 +110,7 @@ body {
   background-clip: padding-box;
 }
 
-a.dialog-close {
+.dialog-close {
   line-height: 1;
   font-size: 1.5em;
   position: absolute;
@@ -120,7 +120,7 @@ a.dialog-close {
   color: #bbb;
 }
 
-a.dialog-close:hover {
+.dialog-close:hover {
   color: #aa6900;
   -webkit-transition: color 1s ease;
   -moz-transition: color 1s ease;
