@@ -33,8 +33,8 @@ var widget_popup= $.extend({}, widget_widget, {
                 elem.closest('.gridster>ul>li').css({overflow: 'visible'});
                 $(window).resize(function() {
                   dialog.css({
-                    top: ($(window).height() - dialog.outerHeight()) / 2,
-                    left: ($(window).width() - dialog.outerWidth()) / 2
+                    top: ($(window).height()/ 2 - dialog.outerHeight()) / 2,
+                    left: ($(window).width()/ 2 - dialog.outerWidth()) / 2
                   });
                 });
 
