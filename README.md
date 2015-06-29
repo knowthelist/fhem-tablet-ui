@@ -314,8 +314,7 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 - **data-yunit**       : unit of the value to show beside of each Y ticks
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
-- **data-noticks**	   : draw no ticks, only graph and axis (default false)
-- **class**		       : fullsize
+- **class**		       : fullsize, noticks
 
 ####Popup widgets
 - **data-get**         : name of the reading where to get the alert value from (default 'STATE')

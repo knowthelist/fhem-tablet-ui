@@ -99,7 +99,7 @@ body {
 
 .dialog {
   display: none;
-  position: absolute;
+  position: fixed;
   z-index: 2000;
   width: 98%;
   border-bottom: 1px solid #aaa;
@@ -110,11 +110,15 @@ body {
   background-clip: padding-box;
 }
 
+.dialog header{
+    cursor: default !important;
+}
+
 .dialog-close {
   line-height: 1;
   font-size: 1.5em;
   position: absolute;
-  top: 3px;
+  top: 1px;
   right: 2%;
   text-decoration: none;
   color: #bbb;
