@@ -33,16 +33,22 @@ var widget_popup= $.extend({}, widget_widget, {
                 elem.closest('.gridster>ul>li').css({overflow: 'visible'});
                 $(window).resize(function() {
                   dialog.css({
-                    top: ($(window).height() / 2 - dialog.outerHeight()) / 2,
-                    left: ($(window).width() / 2 - dialog.outerWidth()) / 2
+                    top: ($(window).height() / 2 - dialog.outerHeight() / 2),
+                    left: ($(window).width() / 2 - dialog.outerWidth() / 2)
                   });
                 });
 
                 //prepare events
                 close.on('click',function() {
-                  dialog.fadeOut(500, function() {
+                    dialog.fadeOut(500, function() {
                     showModal(false);
-                  });
+                    });
+                });
+
+                $(document).on('shadeClicked', function() {
+                    dialog.fadeOut(500, function() {
+                      showModal(false);
+                    });
                 });
 
                 starter.on('click',function(e) {

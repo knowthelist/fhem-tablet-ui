@@ -68,6 +68,10 @@ $(document).on('ready', function() {
 
     //add background for modal dialogs
     $("<div id='shade' />").prependTo('body').hide();
+    $("#shade").on('click',function() {
+        $(document).trigger("shadeClicked");
+    });
+
 	
     loadStyleSchema();
     initPage();
