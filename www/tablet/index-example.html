@@ -132,28 +132,73 @@
 </li>
 <li data-row="2" data-col="4" data-sizex="4" data-sizey="2">
         <header>WOHNZIMMER</header>
-        <div class="container">
-          <div class="left">
-                <div data-type="thermostat" data-device="WohnzimmerHeizung_Clima" data-valve="ValvePosition" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
-                <div data-type="thermostat" data-device="WohnzimmerHeizung2_Clima" data-valve="ValvePosition" data-get="desired-temp" data-temp="measured-temp" class="cell"></div>
+        <div class="left">
+              <div data-type="thermostat" data-device="WohnzimmerHeizung_Clima" data-valve="ValvePosition" data-get="desired-temp" data-temp="measured-temp" class="cell left-space"></div>
+              <div data-type="thermostat" data-device="WohnzimmerHeizung2_Clima" data-valve="ValvePosition" data-get="desired-temp" data-temp="measured-temp" class="top-narrow left-space"></div>
+        </div>
+        <div class="right right-space">
+              <div data-type="switch" data-device="PowerAV_Sw" class="cell"></div>
+              <div data-type="label" class="">SchrankLicht</div>
+              <div data-type="dimmer" data-device="HUEDevice1" data-get-on="!off" data-get-off="off" class="top-space-2x" ></div>
+              <div data-type="label" class="cell">Philips</div>
+        </div>
+        <div class="right top-space right-space-2x">
+         <div class="inline">
+                <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin"></div>
+                <div data-type="label" class="cell">Temperatur</div>
+         </div>
+         <div class="inline">
+                <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="bigger thin"></div>
+                <div data-type="label" class="cell">Luftfeuchte</div>
           </div>
-          <div class="right">
-                <div data-type="switch" data-device="PowerAV_Sw" class="cell"></div>
-                <div data-type="label" class="cell">SchrankLicht</div>
+          <div class="cell">
+          <div data-type="popup" data-width="450px" class="inline">
+               <div data-type="simplechart"
+                  data-logdevice="FileLog_THSensorWZ"
+                  data-columnspec="4:temperature"
+                  data-minvalue="15"
+                  data-maxvalue="25"
+                  data-height="60"
+                  data-width="90"
+                  class="noticks">
+                </div>
+                <div class="dialog">
+                  <header>TEMPERATURE</header>
+                  <div data-type="simplechart"
+                       data-logdevice="FileLog_THSensorWZ"
+                       data-columnspec="4:temperature"
+                       data-minvalue="15"
+                       data-maxvalue="25"
+                       data-yticks="2"
+                       data-height="250">
+                  </div>
+                </div>
           </div>
-          <div class="right">
-                <div class="cell">
-                        <div data-type="symbol" data-device="TerrassenTuer" class="narrow"></div>
-                        <div data-type="label" class="narrow darker small">Terassent&#252;r</div>
+          <div data-type="popup" data-width="450px" class="inline">
+               <div data-type="simplechart"
+                  data-logdevice="FileLog_THSensorWZ"
+                  data-columnspec="4:humidity"
+                  data-minvalue="0"
+                  data-maxvalue="100"
+                  data-height="60"
+                  data-width="90"
+                  class="noticks">
                 </div>
-                <div class="cell right">
-                        <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="cell bigger thin"></div>
-                        <div data-type="label" class="cell">Temperatur</div>
-                        <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="cell bigger thin"></div>
-                        <div data-type="label" class="cell">Luftfeuchte</div>
+                <div class="dialog">
+                  <header>HUMIDITY</header>
+                  <div data-type="simplechart"
+                       data-logdevice="FileLog_THSensorWZ"
+                       data-columnspec="4:humidity"
+                       data-minvalue="0"
+                       data-maxvalue="100"
+                       data-yticks="20"
+                       data-height="250">
+                  </div>
                 </div>
+          </div>
           </div>
         </div>
+      </div>
 </li>
 <li data-row="4" data-col="4" data-sizex="4" data-sizey="2">
         <header>MULTIMEDIA</header>

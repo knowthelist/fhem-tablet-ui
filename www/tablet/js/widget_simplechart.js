@@ -22,7 +22,6 @@ var widget_simplechart = {
         elem.data('xticks'   ,elem.data('xticks')                                                 || 360);
         elem.data('yticks'   ,elem.data('yticks')                                                 || 5);
         elem.data('yunit',    unescape(elem.data('yunit')                                         || '' ));
-        elem.data('noticks'   ,elem.data('noticks')                                               || false);
     },
   init: function () {
       var base=this;
@@ -54,7 +53,7 @@ var widget_simplechart = {
       var fix = widget_simplechart.precision( $(this).data('yticks') );
       var unit = $(this).data('yunit');
       var caption = $(this).data('caption')
-      var noticks = ( $(this).data('width') <=100 ) ? true : $(this).data('noticks');
+      var noticks = ( $(this).data('width') <=100 ) ? true : $(this).hasClass('noticks');
       var days = parseFloat($(this).attr('data-daysago')||0);
       var now = new Date();
       var ago = new Date();
