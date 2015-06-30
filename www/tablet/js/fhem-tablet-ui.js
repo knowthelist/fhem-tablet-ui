@@ -436,13 +436,14 @@ function loadplugin(plugin, success, error, async) {
 }
 
 function dynamicload(file, success, error, async) {
+    var cache = (DEBUG) ? false : true;
     var dir = $('script[src$="fhem-tablet-ui.js"]').attr('src');
     var name = dir.split('/').pop(); 
     dir = dir.replace('/'+name,"");
     $.ajax({
         url: dir + '/../' + file,
         dataType: "script",
-        cache: DEBUG ? false : true,
+        cache: cache,
         async: async || false,
         context:{name: name},
         success: success||function(){ return true },
