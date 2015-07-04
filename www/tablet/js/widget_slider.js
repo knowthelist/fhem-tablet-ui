@@ -137,10 +137,10 @@ var widget_slider = {
                             : parseInt(nstate);
                     pwrng.setStart(parseInt(v));
                     localStorage.setItem("slider_"+dev, v);
-                    if ( $(this).data('value') ) {
-                        $(this).find( '#slidervalue' ).text( nstate );
-                    }
                     DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
+                }
+                if ( $(this).data('value') ) {
+                    $(this).find( '#slidervalue' ).text( nstate );
                 }
                 elem.css({visibility:'visible'});
             }
