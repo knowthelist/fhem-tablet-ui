@@ -85,10 +85,12 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         var idx=indexOfGeneric(states,state);
         if (idx>-1){
             var faelem = elem.data('famultibutton');
-            if ( idx == 0 ) {
-               faelem.setOn();
-            } else {
-               faelem.setOff();
+            if ( faelem ) {
+              if ( idx == 0 ) {
+                 faelem.setOn();
+              } else {
+                 faelem.setOff();
+              }
             }
             elm.removeClass()
             .addClass('fa fa-stack-1x')
