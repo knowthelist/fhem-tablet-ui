@@ -133,7 +133,7 @@ var widget_simplechart = {
 
       var xrange  = parseInt(diffMinutes(tstart,dateFromString(maxdate)));
       var strokeWidth = (document.documentElement.style.vectorEffect === undefined) ? (max-min)/150 : 1;
-      //console.log( "xrange: " + xrange ,strokeWidth);
+      var strokeWidthDashed = (strokeWidth==1) ? 1.2 : 10;
 
       var svg = this.elem.find('svg.chart');
       if (svg){
@@ -216,7 +216,7 @@ var widget_simplechart = {
                                     'x2':100*x/xrange+'%',
                                     'y2':max,
                                     'stroke-dasharray':strokeWidth*2+','+strokeWidth*2,
-                                    'style':'stroke:#555;stroke-width:1.2px',
+                                    'style':'stroke:#555;stroke-width:'+strokeWidthDashed+'px',
                                     'vector-effect':'non-scaling-stroke',
                                     });
                       graph.append(xtick1);
