@@ -37,7 +37,7 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
     },
     init: function () {
         var base = this;
-          
+
         DEBUG && console.log( 'init is executed / currently at : ' + window.location);
         this.elements = $('div[data-type="'+this.widgetname+'"]');
 
@@ -97,10 +97,12 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
               if (isCurrent){
                   elem.setOn();
                   elem.data('on-colors',[elem.data('on-color')]);
+                  elem.data('on-background-colors',[elem.data('on-background-color')]);
               }
               else{
                   elem.setOff();
                   elem.data('on-colors',[elem.data('off-color')]);
+                  elem.data('on-background-colors',[elem.data('off-background-color')]);
               }
 
               window.onpopstate = function(event) {
