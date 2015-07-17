@@ -1036,6 +1036,12 @@ Create a mini chart in the UI which opens a dialog with the full size of the cha
 ```html
 <div onclick="setFhemStatus('set dummy1 off')">All off!</div>
 ```
+**Example** to call a Perl function directly to FHEM. This calls the myUtils_HeizungUpDown function located in 99_myUtils.pm:
+	myUtils_HeizungUpDown("WZ.Thermostat_Climate","up")
+```html
+<div onclick="setFhemStatus('{myUtils_HeizungUpDown(&quot;WZ.Thermostat_Climate&quot;,&quot;up&quot;)}')"
+	class="cell big">+</div>
+```
 
 Templates
 -------
