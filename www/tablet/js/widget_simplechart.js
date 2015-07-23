@@ -22,6 +22,9 @@ var widget_simplechart = {
         elem.data('xticks'   ,elem.data('xticks')                                                 || 360);
         elem.data('yticks'   ,elem.data('yticks')                                                 || 5);
         elem.data('yunit',    unescape(elem.data('yunit')                                         || '' ));
+        elem.data('get',        elem.data('get')                                    || 'STATE');
+        devices[elem.data('logdevice')] = true;
+        devs.push(elem.data('logdevice'));
     },
   init: function () {
       var base=this;
@@ -41,7 +44,7 @@ var widget_simplechart = {
           .css("width",$(this).data('width') || '93%')
           .css("height",$(this).data('height') || defaultHeight);
 
-        base.refresh.apply(this);
+        //base.refresh.apply(this);
 
      });
     },
@@ -52,7 +55,7 @@ var widget_simplechart = {
       var yticks = parseFloat( $(this).data('yticks'));
       var fix = widget_simplechart.precision( $(this).data('yticks') );
       var unit = $(this).data('yunit');
-      var caption = $(this).data('caption')
+      var caption = $(this).data('caption');
       var noticks = ( $(this).data('width') <=100 ) ? true : $(this).hasClass('noticks');
       var days = parseFloat($(this).attr('data-daysago')||0);
       var now = new Date();
@@ -130,7 +133,7 @@ var widget_simplechart = {
 
       var xrange  = parseInt(diffMinutes(tstart,dateFromString(maxdate)));
       var strokeWidth = (document.documentElement.style.vectorEffect === undefined) ? (max-min)/150 : 1;
-      //console.log( "xrange: " + xrange ,strokeWidth);
+      var strokeWidthDashed = (strokeWidth==1) ? 1.2 : 10;
 
       var svg = this.elem.find('svg.chart');
       if (svg){
@@ -213,7 +216,7 @@ var widget_simplechart = {
                                     'x2':100*x/xrange+'%',
                                     'y2':max,
                                     'stroke-dasharray':strokeWidth*2+','+strokeWidth*2,
-                                    'style':'stroke:#555;stroke-width:1.2px',
+                                    'style':'stroke:#555;stroke-width:'+strokeWidthDashed+'px',
                                     'vector-effect':'non-scaling-stroke',
                                     });
                       graph.append(xtick1);
@@ -263,11 +266,11 @@ var widget_simplechart = {
   });
     },
   update: function (dev,par) {
-
-      var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
+      var base = this;
+      var deviceElements= this.elements.filter('div[data-logdevice="'+dev+'"]');
       deviceElements.each(function(index) {
-		if ( $(this).data('get')==par || par =='*'){	
-            this.refresh.apply(this);
+        if ( $(this).data('get')==par){
+            base.refresh.apply(this);
 		}
 	});
     },
