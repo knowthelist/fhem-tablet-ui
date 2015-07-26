@@ -339,7 +339,8 @@ var widget_weather = $.extend({}, widget_widget, {
         
         var fhem_path = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
         fhem_path = fhem_path.replace(/\/$/, '');
-        elem.data('image-path', elem.data('image-path') || fhem_path + '/images/default/weather/')
+        var image_path = $("meta[name='weather_image_path']").attr("content") || fhem_path + '/images/default/weather/';
+        elem.data('image-path', elem.data('image-path') || image_path);
         if(!elem.data('image-path').match(/\/$/)) {
             elem.data('image-path', elem.data('image-path')+'/');
         }
