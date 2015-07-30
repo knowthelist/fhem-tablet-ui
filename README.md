@@ -77,6 +77,7 @@ Currently there are 16 types of widgets in the base installation.
 - **progress** : round symbolic display  for percent values
 - **simplechart** :s imple XY line chart for one value (reads directly from fhem log file)
 - **popup** : a popup dialog which open on click on another widget 
+- **readingsgroup** : displaying a readingsgroup defined in fhem
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -323,6 +324,13 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
 
+####Readingsgroup widgets
+- **data-max-update**         : Specify a minimum number of seconds between an update of the widget to avoid high load on the system
+
+  Formatting will be taken from the corresponding readingsGroup formatting. 
+  If the readingsgrouop uses css references, images or similar pieces, then the corresponding files / links need to be also reachable / included
+
+  
 Format
 -------
 The layout and look can be influinced be the class attribute.

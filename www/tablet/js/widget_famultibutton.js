@@ -84,13 +84,21 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         var elm=elem.children().filter('#fg');
         var idx=indexOfGeneric(states,state);
         if (idx>-1){
+            var faelem = elem.data('famultibutton');
+            if ( faelem ) {
+              if ( idx == 0 ) {
+                 faelem.setOn();
+              } else {
+                 faelem.setOff();
+              }
+            }
             elm.removeClass()
             .addClass('fa fa-stack-1x')
             .addClass(icons[idx])
             .css( "color", colors[idx] );
-            
             var bgelm=elem.children().filter('#bg');
             bgelm.css( "color", bgcolors[idx]);
+            
         }
     },
     toggleOn : function(elem) {
