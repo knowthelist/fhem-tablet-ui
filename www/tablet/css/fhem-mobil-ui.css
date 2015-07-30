@@ -33,6 +33,10 @@ select {
     color: #444;
 }
 
+svg > text {
+    fill: #444;
+}
+
 .symbol.on{color:#aa6900;background-color:#aa6900;}
 .symbol.off{color:#505050;background-color:#505050;}
 .switch.on{color:#eee;background-color:#0088CC;}
