@@ -79,7 +79,7 @@ $(document).on('ready', function() {
     if ( doLongPoll ){
         setTimeout(function() {
                 longPoll();
-        }, 1000);
+        }, 10000);
         shortpollInterval = 15 * 60 * 1000; // 15 minutes
     }
 
@@ -247,7 +247,7 @@ function showDeprecationMsg() {
 function startPollInterval() {
      clearInterval(timer);
      timer = setInterval(function () {
-		//get current values of readings every x seconds
+        //get current values of readings every x seconds
 		for (var reading in readings) {
 			requestFhem(reading);
         }
