@@ -162,6 +162,10 @@ body {
 .right-space-2x{ margin-right: 30px !important; }
 .right-space-3x{ margin-right: 45px !important; }
 
+.bottom-space{ margin-bottom: 15px !important; }
+.bottom-space-2x{ margin-bottom: 30px !important; }
+.bottom-space-3x{ margin-bottom: 45px !important; }
+
 .darker { color: #8C8C8C; }
 .thin { font-weight: lighter; }
 .bigger { font-size: 320% !important; }
@@ -171,7 +175,10 @@ body {
 .normal { font-size: 100%; }
 .bigplus { font-size: 270%; }
 
-.bottom {vertical-align: bottom;}
+.bottom {
+vertical-align: bottom;
+position: absolute;
+bottom: 0;}
 
 .maxw40 { max-width: 40px; }
 
@@ -344,8 +351,8 @@ ul, ol {
     z-index:1001;
     background-color:#000000;
     opacity:0.5;
-    height:500%;
-    width:120%;
+    height:100%;
+    width:100%;
     top:0px;
     left:0px;
 }
