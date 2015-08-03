@@ -9,12 +9,12 @@ UPD 2015-06-11_02:25:17 127396 www/tablet/fonts/fhemSVG.eot
 UPD 2015-06-11_02:25:17 528460 www/tablet/fonts/fhemSVG.svg
 UPD 2015-06-11_02:25:17 127232 www/tablet/fonts/fhemSVG.ttf
 UPD 2015-06-11_02:25:17 127308 www/tablet/fonts/fhemSVG.woff
-UPD 2015-06-11_02:25:17 60767 www/tablet/fonts/fontawesome-webfont.eot
-UPD 2015-06-11_02:25:17 313398 www/tablet/fonts/fontawesome-webfont.svg
-UPD 2015-06-11_02:25:17 122092 www/tablet/fonts/fontawesome-webfont.ttf
-UPD 2015-06-11_02:25:17 71508 www/tablet/fonts/fontawesome-webfont.woff
-UPD 2015-06-11_02:25:17 56780 www/tablet/fonts/fontawesome-webfont.woff2
-UPD 2015-06-11_02:25:17 93888 www/tablet/fonts/FontAwesome.otf
+UPD 2015-08-02_01:24:46 68875 www/tablet/fonts/fontawesome-webfont.eot
+UPD 2015-08-02_01:24:46 355981 www/tablet/fonts/fontawesome-webfont.svg
+UPD 2015-08-02_01:24:46 138204 www/tablet/fonts/fontawesome-webfont.ttf
+UPD 2015-08-02_01:24:46 81284 www/tablet/fonts/fontawesome-webfont.woff
+UPD 2015-08-02_01:24:46 64464 www/tablet/fonts/fontawesome-webfont.woff2
+UPD 2015-08-02_01:24:46 106260 www/tablet/fonts/FontAwesome.otf
 UPD 2015-06-11_02:25:17 1344 www/tablet/fonts/FTUI-icons.eot
 UPD 2015-06-11_02:25:17 937 www/tablet/fonts/FTUI-icons.svg
 UPD 2015-06-11_02:25:17 1168 www/tablet/fonts/FTUI-icons.ttf
@@ -55,7 +55,7 @@ UPD 2015-07-30_23:05:38 20641 www/tablet/js/widget_weather.js
 UPD 2015-06-23_00:24:44 1913 www/tablet/js/widget_widget.js
 UPD 2015-06-11_02:25:17 5201 www/tablet/lib/fa-multi-button.min.js
 UPD 2015-06-11_02:25:17 26586 www/tablet/lib/fhemSVG.css
-UPD 2015-06-11_02:25:17 23640 www/tablet/lib/font-awesome.min.css
+UPD 2015-08-02_01:24:46 26711 www/tablet/lib/font-awesome.min.css
 UPD 2015-06-11_02:25:17 10011 www/tablet/lib/jquery.circlemenu.js
 UPD 2015-06-11_02:25:17 3021 www/tablet/lib/jquery.gridster.min.css
 UPD 2015-06-11_02:25:17 44235 www/tablet/lib/jquery.gridster.min.js
