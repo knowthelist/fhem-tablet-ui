@@ -55,7 +55,7 @@ UPD 2015-07-30_23:05:38 20641 www/tablet/js/widget_weather.js
 UPD 2015-06-23_00:24:44 1913 www/tablet/js/widget_widget.js
 UPD 2015-06-11_02:25:17 5201 www/tablet/lib/fa-multi-button.min.js
 UPD 2015-06-11_02:25:17 26586 www/tablet/lib/fhemSVG.css
-UPD 2015-08-02_01:24:46 26711 www/tablet/lib/font-awesome.min.css
+UPD 2015-08-03_23:48:31 26637 www/tablet/lib/font-awesome.min.css
 UPD 2015-06-11_02:25:17 10011 www/tablet/lib/jquery.circlemenu.js
 UPD 2015-06-11_02:25:17 3021 www/tablet/lib/jquery.gridster.min.css
 UPD 2015-06-11_02:25:17 44235 www/tablet/lib/jquery.gridster.min.js
