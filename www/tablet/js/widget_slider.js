@@ -127,6 +127,7 @@ var widget_slider = {
                 var elem = $(this).find('input');
                 var part = $(this).data('part');
                 var nstate = getPart(lstate, part);
+                var tstate = nstate;
                 if ( new RegExp('^' + $(this).data('on') + '$').test( nstate.toString() ) )
                     nstate=pwrng.options.max;
                 if ( new RegExp('^' + $(this).data('off') + '$').test( nstate.toString() ) )
@@ -140,7 +141,11 @@ var widget_slider = {
                     DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
                 }
                 if ( $(this).data('value') ) {
-                    $(this).find( '#slidervalue' ).text( nstate );
+                    if ( $(this).hasClass('textvalue') ) {
+                      $(this).find( '#slidervalue' ).text( tstate );
+                    } else {
+                      $(this).find( '#slidervalue' ).text( nstate );
+                    }
                 }
                 elem.css({visibility:'visible'});
             }
