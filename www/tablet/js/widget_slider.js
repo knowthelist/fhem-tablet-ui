@@ -55,7 +55,11 @@ var widget_slider = {
               }
 
               if ( $(this).data('value') ) {
-                $(this).find( '#slidervalue' ).text( v );
+                  if ( $(this).hasClass('textvalue') ) {
+                    $(this).find( '#slidervalue' ).text( tstate );
+                  } else {
+                    $(this).find( '#slidervalue' ).text( nstate );
+                  }
               }
 
               // isunsel == false (0) means drag is over
@@ -140,7 +144,11 @@ var widget_slider = {
                     DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
                 }
                 if ( $(this).data('value') ) {
-                    $(this).find( '#slidervalue' ).text( nstate );
+                    if ( $(this).hasClass('textvalue') ) {
+                      $(this).find( '#slidervalue' ).text( tstate );
+                    } else {
+                      $(this).find( '#slidervalue' ).text( nstate );
+                    }
                 }
                 elem.css({visibility:'visible'});
             }

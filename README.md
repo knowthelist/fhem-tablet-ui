@@ -232,7 +232,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-value**: show the value in a text box (default 'false')
 - **data-width**: width for horizontal sliders (default '120px', for mini '60px')
 - **data-height**: height for vertical sliders (default '120px', for mini '60px')
-- **class**		: mini, horizontal, negated
+- **class**		: mini, horizontal, negated, textvalue
 
 ####Level widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
