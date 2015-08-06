@@ -268,6 +268,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-size**     : width of the image in px or %, the height scales proportionally. (default: 50%)
 - **data-url**      : URL of the image to show (use data-url + data-refresh or data-device + data-get, not both)
 - **data-refresh**  : Interval in seconds for image refresh for usage together with data-url (default: 900)
+- **class**			: nocache
 
 If 'data-url' is not set, then the URL for image src is built from: data-path + valueof data-get + data-suffix
 
@@ -801,6 +802,16 @@ To change the dim value: push the button and slide up or down
      data-size="95%"
      data-url="http://vusolo2/grab?format=jpg"
      data-refresh="5">
+</div>
+```
+
+**Example** for how to update a web image every 15 secondes
+```html
+<div data-type="image"
+   data-size="95%"
+   data-url="http://lorempixel.com/400/200"
+   data-refresh="15"
+   class="nocache">
 </div>
 ```
 

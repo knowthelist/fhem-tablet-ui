@@ -141,10 +141,13 @@ var widget_slider = {
                     DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
                 }
                 if ( $(this).data('value') ) {
-                    if ( $(this).hasClass('textvalue') ) {
-                      $(this).find( '#slidervalue' ).text( tstate );
-                    } else {
-                      $(this).find( '#slidervalue' ).text( nstate );
+                    var slidervalue = $(this).find( '#slidervalue' );
+                    if (slidervalue){
+                        if ( $(this).hasClass('textvalue') ) {
+                          slidervalue.text( tstate );
+                        } else {
+                          slidervalue.text( nstate );
+                        }
                     }
                 }
                 elem.css({visibility:'visible'});

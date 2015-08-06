@@ -14,7 +14,6 @@ var widget_image = $.extend({}, widget_widget, {
         elem.data('path',       elem.data('path'));
         elem.data('suffix',     elem.data('suffix'));
         elem.data('refresh',    elem.data('refresh')    || 15*60);
-        elem.data('nocache',    elem.data('nocache')    || false);
         
         readings[$(this).data('get')] = true;
     },
@@ -36,7 +35,7 @@ var widget_image = $.extend({}, widget_widget, {
             //3rd party source refresh
             if ($(this).data('url')){
                 var url = $(this).data('url');
-                if($(this).data('nocache')) {
+                if( $(this).data('nocache') || $(this).hasClass('nocache') ) {
                     url = base.addurlparam(url, '_', new Date().getTime());
                 }
                 elem.attr('src', url );
