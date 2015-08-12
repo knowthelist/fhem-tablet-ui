@@ -5,6 +5,8 @@ var widget_playstream = {
         elem.data('get',        elem.data('get')        || 'STATE');
         elem.data('get-on',     typeof elem.data('get-on')  != 'undefined' ? elem.data('get-on')  : 'on');
         elem.data('get-off',    typeof elem.data('get-off') != 'undefined' ? elem.data('get-off') : 'off');
+        elem.data('volume',     typeof elem.data('volume')  != 'undefined' ? elem.data('volume')  : 'volume');
+        readings[elem.data('volume')] = true;
     },
 
   init: function () {
@@ -70,6 +72,13 @@ var widget_playstream = {
 					}
                 }
 
+            }
+            if ( $(this).data('volume')==par){
+                var volume = getDeviceValue( $(this), 'volume' );
+                if ( $.isNumeric(volume) ) {
+                    DEBUG && console.log('playstream - set volume to :',parseInt(volume)/100.0);
+                    $(this).data('audio').volume = parseInt(volume)/100.0;
+                }
             }
         });
 

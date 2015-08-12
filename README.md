@@ -286,6 +286,11 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 
 ####Playstream widgets
 - **data-url**      : URL of the Radio stream
+- **data-get**      : name of the reading to get the control state from FHEM (default 'STATE')
+- **data-get-on**   : value for PLAY status to get. (default 'on')
+- **data-get-off**  : value for STOP status to get. (default 'off')
+- **data-volume**   : name of the reading to get the volume value (0-100) (default: volume)
+
 
 ####Pagetab widgets
 - **data-url**		: URL of the new page to show
@@ -983,6 +988,16 @@ Create a simple button to play a webradio stream directly on the tablet
 <div data-type="label" class="darker">Radio eins</div>
 ```
 
+Use a FHEM dummy device to start/stop stream and set volume
+
+```html
+<div data-type="playstream" data-url="http://radioeins.de/stream" 
+	 data-device="dummy1" 
+	 data-get-on="play" data-get-off="stop"
+     data-volume="volume">
+</div>
+```
+      
 Select
 -------
 Create two comboboxes to select the inputs of a two zone AV receiver. List for Zone2 is fix, list for Zone1 will be received from FHEM.
