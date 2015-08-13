@@ -127,17 +127,17 @@ var widget_simplechart = {
                       i++;
                       points[index]=point;
                       if (val>max && $.isArray(maxarray) ) {
-                          for(var i=0; i<maxarray.length; i++) {
-                              if (maxarray[i]>val) {
-                                  max = maxarray[i];
+                          for(var j=0; j<maxarray.length; j++) {
+                              if (maxarray[j]>val) {
+                                  max = maxarray[j];
                                   break;
                               }
                           }
                       }
                       if (val<min && $.isArray(minarray) ) {
-                          for(var i=0; i<minarray.length; i++) {
-                              if (minarray[i]<val) {
-                                  min = minarray[i];
+                          for(var j=0; j<minarray.length; j++) {
+                              if (minarray[j]<val) {
+                                  min = minarray[j];
                                   break;
                               }
                           }
