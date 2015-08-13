@@ -258,8 +258,10 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-set-on**   : value for ON status to set. (default: value of data-get-on)
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
 - **data-cmd**      : name of the command (**\<command\>** \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
-- **data-dim**      : name of the reading responsible for dim  (\<command\> \<device\> **\<reading\>** \<value\>) (default: value of data-get-on)
+- **data-dim**      : name of the reading responsible for dim  (\<command\> \<device\> **\<reading\>** \<value\>) (default: value of data-set)
 - **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
+
+If 'data-dim' equal 'data-set' the Dimmer widget sends the dim value for 'on', otherwise 'data-set' and 'data-set-on' is used. 
 
 ####Image widgets
 - **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')
