@@ -49,8 +49,10 @@ var widget_simplechart = {
      });
     },
   refresh: function () {
-      var min = parseFloat( $(this).data('minvalue'));
-      var max = parseFloat( $(this).data('maxvalue'));
+      var minarray = $(this).data('minvalue');
+      var maxarray = $(this).data('maxvalue');
+      var min = parseFloat( $.isArray(minarray) ? minarray[0] : minarray );
+      var max = parseFloat( $.isArray(maxarray) ? maxarray[0] : maxarray );
       var xticks = parseFloat( $(this).data('xticks'));
       var yticks = parseFloat( $(this).data('yticks'));
       var fix = widget_simplechart.precision( $(this).data('yticks') );
@@ -124,6 +126,22 @@ var widget_simplechart = {
                       point=[minutes,val];
                       i++;
                       points[index]=point;
+                      if (val>max && $.isArray(maxarray) ) {
+                          for(var i=0; i<maxarray.length; i++) {
+                              if (maxarray[i]>val) {
+                                  max = maxarray[i];
+                                  break;
+                              }
+                          }
+                      }
+                      if (val<min && $.isArray(minarray) ) {
+                          for(var i=0; i<minarray.length; i++) {
+                              if (minarray[i]<val) {
+                                  min = minarray[i];
+                                  break;
+                              }
+                          }
+                      }
                   }
                }
            });
