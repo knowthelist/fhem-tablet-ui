@@ -528,6 +528,14 @@ select {
  }
 }
 
+.rotate-90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
 .symbol.on{color:#aa6900;background-color:#aa6900;}
 .symbol.off{color:#505050;background-color:#505050;}
 .switch.on{color:#2A2A2A;background-color:#aa6900;}

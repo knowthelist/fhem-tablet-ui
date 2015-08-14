@@ -377,6 +377,7 @@ not all widgets support all classes
 - right-space  	: 15px extra on right (right-space-2x -> 30px; right-space-3x -> 45px)
 - centered		: horizontal centered
 - blink         : blink animatation for label or symbol widget
+- rotate-90		: rotate (e.g an image) for 90 degres  
 
 
 Icon configuration
