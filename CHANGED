@@ -1,3 +1,3 @@
 FHEM tablet UI last change:
-2015-08-13
- - Added dynamic min max to simplechart
+2015-08-14
+ - Added CSS class rotate-90
