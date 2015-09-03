@@ -13,6 +13,7 @@ var deviceStates={};
 var readings = {"STATE":true};
 var devices = {};
 var types = {};
+var updateStatus = {};
 var DEBUG = false;
 var TOAST = true;
 var doLongPoll = false
@@ -79,7 +80,7 @@ $(document).on('ready', function() {
     if ( doLongPoll ){
         setTimeout(function() {
                 longPoll();
-        }, 10000);
+        }, 30000);
         shortpollInterval = 15 * 60 * 1000; // 15 minutes
     }
 
@@ -92,13 +93,6 @@ $(document).on('ready', function() {
 });
 
 function initPage() {
-
-    var deviceStates={};
-    var readings = {"STATE":true};
-    var devices = {};
-    var types = {};
-    var devs=new Array();
-    var pars=new Array();
 
     wx = parseInt( $("meta[name='widget_base_width']").attr("content") );
     wy = parseInt( $("meta[name='widget_base_height']").attr("content") );
@@ -181,6 +175,14 @@ function initReadingsArray(get) {
 
 function initWidgets() {
 
+    deviceStates={};
+    readings = {"STATE":true};
+    devices = {};
+    types = {};
+    updateStatus = {};
+    devs=new Array();
+    pars=new Array();
+
     showDeprecationMsg();
 
     //collect required widgets types
@@ -248,8 +250,9 @@ function startPollInterval() {
      clearInterval(timer);
      timer = setInterval(function () {
         //get current values of readings every x seconds
+        updateStatus = {};
 		for (var reading in readings) {
-			requestFhem(reading);
+            requestFhem(reading);
         }
      }, shortpollInterval); 
  }
@@ -269,10 +272,10 @@ function setFhemStatus(cmdline) {
     		$.toast("Error: " + textStatus + ": " + errorThrown);
 	})
   	.done ( function( data ) {
-  		if ( !doLongPoll ){
+        if ( !doLongPoll ){
 			setTimeout(function(){
-				for (var reading in readings) {
-					requestFhem(reading);
+                for (var reading in readings) {
+                    requestFhem(reading);
 				}
 			}, 4000);
 		}
@@ -380,7 +383,7 @@ function requestFhem(paraname, devicename) {
         paraname = temp[1];
     }
     
-    if(typeof devicename != 'undefined') {
+    if(typeof devicename != 'undefined' && devicename !== 'undefined') {
         devicelist = devicename;
     } else {
         devicelist = $.map(devs, $.trim).join();
@@ -388,25 +391,28 @@ function requestFhem(paraname, devicename) {
     
 /* 'list' is still the fastest cmd to get all important data
 */
-    $.ajax({
-        async: true,
-        timeout: 15000,
-		cache: false,
-		context:{paraname: paraname},
-		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
-		data: {
-            cmd: "list " + devicelist + " " + paraname,
-			XHR: "1"
-		}
-	})
-	.fail (function(jqXHR, textStatus, errorThrown) {
-    		$.toast("Error: " + textStatus + ": " + errorThrown);
-  	})
-  	.done (function( data ) {
+    if(typeof paraname != 'undefined' && paraname !== 'undefined') {
+        $.ajax({
+            async: true,
+            timeout: 15000,
+            cache: false,
+            context:{paraname: paraname},
+            url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
+            data: {
+                cmd: ["list",devicelist,paraname].join(' '),
+                XHR: "1"
+            }
+        })
+        .fail (function(jqXHR, textStatus, errorThrown) {
+                $.toast("Error: " + textStatus + ": " + errorThrown);
+        })
+        .done (function( data ) {
 			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
             var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\.?[0-9]{0,3}\s+(.*)$/;
             for (var i=0; i < lines.length; i++) {
-                var date,key,val;
+                var date="";
+                var key="";
+                var val="";
                 var line = $.trim( lines[i] );
                 //console.log('line: '+line);
                 if (regCapture.test(line) ) {
@@ -417,18 +423,23 @@ function requestFhem(paraname, devicename) {
                         date = $.trim( groups[2]);
                         val = $.trim( groups[3]);
                     }
-                    //console.log('paraname',paraname,'date:',date,'val',val);
+                    //console.log('paraname',paraname,'date:',date,'val',val,'key',key);
                     var params = deviceStates[key] || {};
                     var value = {"date": date, "val": val};
                     params[paraname]=value;
                     if (key in devices){
                         deviceStates[key]=params;
-                        plugins.update(key,paraname);
+                        //check if update is already done
+                        var pair = [key,paraname].join('_');
+                        if(!updateStatus[pair]){
+                            updateStatus[pair] = true;
+                            plugins.update(key,paraname);
+                        }
                     }
                 }
             }
-    });
-
+        });
+    }
 }
 
 function loadplugin(plugin, success, error, async) {

@@ -29,7 +29,8 @@ var widget_label = $.extend({}, widget_widget, {
         if(!elem.data('limits-get').match(/:/))
             elem.data('limits-get', elem.data('device') + ':' + elem.data('limits-get'))
         initReadingsArray(elem.data('limits-get'));
-        requestFhem(elem.data('limits-get'));
+        if ( elem.data('get') != elem.data('limits-get') )
+            requestFhem(elem.data('limits-get'));
 
     },
     init: function () {
@@ -42,7 +43,7 @@ var widget_label = $.extend({}, widget_widget, {
         return ( $.isNumeric(value) && fix>=0 ) ? Number(value).toFixed(fix) : value;
     },
     update_substitution : function(value, substitution) {
-        DEBUG && console.log(value, substitution);
+        DEBUG && console.log(this.widgetname,'value',value,'substitution',substitution);
         if(substitution && substitution.match(/^s/)) {
             var f = substitution.substr(1,1);
             var subst = substitution.split(f);
