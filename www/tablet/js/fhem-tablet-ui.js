@@ -15,6 +15,7 @@ var devices = {};
 var types = {};
 var updateStatus = {};
 var DEBUG = false;
+var debuglevel;
 var TOAST = true;
 var doLongPoll = false
 var timer;
@@ -48,7 +49,6 @@ var plugins = {
         for (var reading in readings) {
             if (pars.indexOf(reading)<0){
                 pars.push(reading);
-                requestFhem(reading);
             }
         }
 
@@ -72,7 +72,6 @@ $(document).on('ready', function() {
     $("#shade").on('click',function() {
         $(document).trigger("shadeClicked");
     });
-
 	
     loadStyleSchema();
     initPage();
@@ -101,7 +100,8 @@ function initPage() {
     else
       wm = 5;
 	doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
-	DEBUG  = ($("meta[name='debug']").attr("content") == '1');
+    debuglevel  = $("meta[name='debug']").attr("content") || 0;
+    DEBUG = ( debuglevel>0 );
     TOAST  = ($("meta[name='toast']").attr("content") != '0');
 	
 	//self path
@@ -175,13 +175,15 @@ function initReadingsArray(get) {
 
 function initWidgets() {
 
-    deviceStates={};
     readings = {"STATE":true};
     devices = {};
     types = {};
     updateStatus = {};
     devs=new Array();
     pars=new Array();
+
+    //restore divecestates from storage
+    deviceStates=JSON.parse(localStorage.getItem('deviceStates')) || {};
 
     showDeprecationMsg();
 
@@ -214,9 +216,12 @@ function initWidgets() {
 
     //get current values of readings
     DEBUG && console.log('Request readings from FHEM');
-    for (var reading in readings) {
-        requestFhem(reading);
-    }
+    setTimeout(function(){
+        for (var reading in readings) {
+            requestFhem(reading);
+        }
+    }, 500);
+
 }
 
 function showDeprecationMsg() {
@@ -375,7 +380,7 @@ function longPoll(roomName) {
             
 function requestFhem(paraname, devicename) {
     var devicelist;
-    
+
     // paraname = DEVICE:READING; devicename is ignored
     if(paraname.match(/:/)) {
         var temp = paraname.split(':');
@@ -414,30 +419,36 @@ function requestFhem(paraname, devicename) {
                 var key="";
                 var val="";
                 var line = $.trim( lines[i] );
-                //console.log('line: '+line);
+                if (debuglevel>=6) console.log('line: '+line);
                 if (regCapture.test(line) ) {
                     var groups = line.match( regCapture );
                     var paraname = this.paraname;
                     key = $.trim( line.match( regCapture )[1]);
-                    if (groups.length>2){
-                        date = $.trim( groups[2]);
-                        val = $.trim( groups[3]);
-                    }
-                    //console.log('paraname',paraname,'date:',date,'val',val,'key',key);
-                    var params = deviceStates[key] || {};
-                    var value = {"date": date, "val": val};
-                    params[paraname]=value;
+
                     if (key in devices){
-                        deviceStates[key]=params;
-                        //check if update is already done
-                        var pair = [key,paraname].join('_');
-                        if(!updateStatus[pair]){
-                            updateStatus[pair] = true;
+                        if (groups.length>2){
+                            date = $.trim( groups[2]);
+                            val = $.trim( groups[3]);
+                        }
+                        if (debuglevel>=5) console.log('requestFhem::done: Line parser result: key:'+key+' paraname:'+paraname+' date:'+date+' val:'+val);
+
+                        //check if update is necessary
+                        var oldParams = getParameterByName(key,paraname);
+                        //if (oldParams) console.log('requestFhem::done: check for update: oldVal:',oldParams.val,' newVal:',val,' oldDate:',oldParams.date,' newDate:',date);
+                        if(!oldParams || oldParams.val!=val || oldParams.date!=date){
+                            var params = deviceStates[key] || {};
+                            var value = {"date": date, "val": val};
+                            params[paraname]=value;
+                            deviceStates[key]=params;
                             plugins.update(key,paraname);
                         }
+
                     }
                 }
             }
+            //save deviceStates into localStorage
+            var dataToStore = JSON.stringify(deviceStates);
+            localStorage.setItem('deviceStates', dataToStore);
         });
     }
 }

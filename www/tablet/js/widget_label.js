@@ -29,8 +29,7 @@ var widget_label = $.extend({}, widget_widget, {
         if(!elem.data('limits-get').match(/:/))
             elem.data('limits-get', elem.data('device') + ':' + elem.data('limits-get'))
         initReadingsArray(elem.data('limits-get'));
-        if ( elem.data('get') != elem.data('limits-get') )
-            requestFhem(elem.data('limits-get'));
+        //readings[elem.data('limits-get')] = true;
 
     },
     init: function () {
