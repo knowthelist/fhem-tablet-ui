@@ -27,7 +27,7 @@ UPD 2015-06-11_02:25:17 359744 www/tablet/fonts/openautomation.eot
 UPD 2015-06-11_02:25:17 1517848 www/tablet/fonts/openautomation.svg
 UPD 2015-06-11_02:25:17 359552 www/tablet/fonts/openautomation.ttf
 UPD 2015-06-11_02:25:17 359628 www/tablet/fonts/openautomation.woff
-UPD 2015-07-05_23:59:21 14714 www/tablet/index-example.html
+UPD 2015-09-06_23:35:32 14877 www/tablet/index-example.html
 UPD 2015-09-06_12:17:22 20668 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-06-11_02:25:17 1694 www/tablet/js/widget_circlemenu.js
 UPD 2015-06-22_21:50:49 5072 www/tablet/js/widget_dimmer.js
@@ -45,7 +45,7 @@ UPD 2015-06-19_00:06:01 1971 www/tablet/js/widget_push.js
 UPD 2015-06-11_02:25:17 1667 www/tablet/js/widget_readingsgroup.js
 UPD 2015-06-11_02:25:17 1204 www/tablet/js/widget_rotor.js
 UPD 2015-06-11_02:25:17 3242 www/tablet/js/widget_select.js
-UPD 2015-09-03_22:54:55 12038 www/tablet/js/widget_simplechart.js
+UPD 2015-09-06_23:21:58 11944 www/tablet/js/widget_simplechart.js
 UPD 2015-08-06_19:36:17 6290 www/tablet/js/widget_slider.js
 UPD 2015-06-11_02:25:17 1335 www/tablet/js/widget_switch.js
 UPD 2015-06-11_02:25:17 1776 www/tablet/js/widget_symbol.js
