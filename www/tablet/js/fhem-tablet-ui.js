@@ -79,7 +79,7 @@ $(document).on('ready', function() {
     if ( doLongPoll ){
         setTimeout(function() {
                 longPoll();
-        }, 30000);
+        }, 10000);
         shortpollInterval = 15 * 60 * 1000; // 15 minutes
     }
 
@@ -294,7 +294,7 @@ function longPoll(roomName) {
 	- no separat node for parameter name
 	- multiple nodes with the same data (2xdate)
 */
-	DEBUG && console.log('start longpoll');
+    DEBUG && console.log('start longpoll');
 	
 	if (xhr)
 		xhr.abort();
@@ -334,7 +334,6 @@ function longPoll(roomName) {
                         //date = ..... new Date(); //do we need this?
 						var line = $.trim( lines[i] );
                         //console.log('#'+line+'#');
-						
 						if ( regDate.test( line ))
 							date = $.trim(line.match( regDate )[1]);
 						if ( regDevice.test( line )) {
@@ -360,10 +359,10 @@ function longPoll(roomName) {
 								var value = {"date": date,
 											  "room": room,
 												"val": val
-											};
+                                            };
 								params[paraname]=value;
 								deviceStates[key]=params;
-								DEBUG && console.log(date + ' / ' + key+' / '+paraname+' / '+val);
+                                DEBUG && console.log(date + ' / ' + key+' / '+paraname+' / '+val);
                                 plugins.update(key,paraname);
 							}
 							//console.log(date + ' / ' + key+' / '+paraname+' / '+val);
