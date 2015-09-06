@@ -23,8 +23,6 @@ var widget_simplechart = {
         elem.data('yticks'   ,elem.data('yticks')                                                 || 5);
         elem.data('yunit',    unescape(elem.data('yunit')                                         || '' ));
         elem.data('get',        elem.data('get')                                    || 'STATE');
-        devices[elem.data('logdevice')] = true;
-        devs.push(elem.data('logdevice'));
     },
   init: function () {
       var base=this;
@@ -285,7 +283,7 @@ var widget_simplechart = {
     },
   update: function (dev,par) {
       var base = this;
-      var deviceElements= this.elements.filter('div[data-logdevice="'+dev+'"]');
+      var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
       deviceElements.each(function(index) {
         if ( $(this).data('get')==par){
             base.refresh.apply(this);

@@ -903,6 +903,7 @@ Multiple pagetabs in a template file: menu.html
 <li data-row="4" data-col="4" data-sizex="8" data-sizey="3">
 <header>CHARTS</header>
     <div data-type="simplechart"
+    	data-device="WohnzimmerHeizung"
 		data-logdevice="FileLog_WohnzimmerHeizung"
 		data-columnspec="4:meas.*:1:int"
 		data-minvalue="10"
@@ -914,6 +915,7 @@ Multiple pagetabs in a template file: menu.html
 		data-caption="Wohnzimmer" class="inline cell">
     </div>
     <div data-type="simplechart"
+	    data-device="KuecheHeizung"
 		data-logdevice="FileLog_KuecheHeizung"
 		data-columnspec="4:meas.*:1:int"
 		data-minvalue="12"
@@ -934,6 +936,7 @@ Multiple pagetabs in a template file: menu.html
 <li data-row="4" data-col="4" data-sizex="8" data-sizey="3">
 <header>CHART</header>
 	<div data-type="simplechart"
+		data-device="WohnzimmerHeizung2"
 		data-logdevice="FileLog_WohnzimmerHeizung2"
 		data-logfile="WohnzimmerHeizung2.log"
 		data-columnspec="4:temp:1:int"
@@ -1042,6 +1045,7 @@ Create a mini chart in the UI which opens a dialog with the full size of the cha
 ```html
 <div data-type="popup" data-width="450px">
 	<div data-type="simplechart"
+	 	  data-device="OutTemp"
 		  data-logdevice="FileLog_OutTemp"
 		  data-columnspec="4:temp"
 		  data-minvalue="-25"
@@ -1053,6 +1057,7 @@ Create a mini chart in the UI which opens a dialog with the full size of the cha
 	<div class="dialog">
 		<header>BIG-CHART</header>
 		<div data-type="simplechart"
+	 		  data-device="OutTemp"
 			  data-logdevice="FileLog_OutTemp"
 			  data-columnspec="4:temp"
 			  data-minvalue="-25"
