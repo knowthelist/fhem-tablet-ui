@@ -85,6 +85,9 @@ body {
   display:table;
 }
 
+.left-align {text-align: left;}
+.right-align {text-align: right;}
+
 .inline {
   display: inline-block;
   margin:0px 5px 0px 0px !important;
@@ -147,6 +150,7 @@ body {
     text-align: center;
 }
 
+.top-narrow-10{ margin-top: -10px !important; }
 .top-narrow{ margin-top: -15px !important; }
 .top-narrow-2x{ margin-top: -30px !important; }
 
