@@ -375,7 +375,10 @@ not all widgets support all classes
 - top-space     : 15px extra on top (top-space-2x -> 30px; top-space-3x -> 45px)
 - left-space	: 15px extra on left (left-space-2x -> 30px; left-space-3x -> 45px)
 - right-space  	: 15px extra on right (right-space-2x -> 30px; right-space-3x -> 45px)
+- top-narrow    : -15px closer on top  (top-narrow-2x -> -30px; top-narrow-10 -> -10px)
 - centered		: horizontal centered
+- left-align	: align text left
+- right-align	: align text right
 - blink         : blink animatation for label or symbol widget
 - rotate-90		: rotate (e.g an image) for 90 degres  
 
