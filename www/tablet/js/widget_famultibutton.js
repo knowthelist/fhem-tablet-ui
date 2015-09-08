@@ -115,8 +115,11 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         }
     },
     toggleOff : function(elem) {
-        if(this._doubleclicked(elem, 'off')) {
-            this.clicked(elem, 'off')
+        if (elem.data('set-off')==''){
+            elem.setOn();
+        }
+        else if(this._doubleclicked(elem, 'off')) {
+            this.clicked(elem, 'off');
             var blink = elem.data('blink');
             if(blink == 'on' || (! elem.data('device') && blink !='off')) {
                 setInterval(function() {elem.setOn()}, 200);

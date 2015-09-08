@@ -133,6 +133,7 @@ data-set-off    : 		Value for OFF
 
 data-get-on and data-get-off accept also RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
 data-get-off="!on" means accept all but the data-get-on value (negation)
+data-set-off="" suppress sending off
 
 ####Symbol widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
