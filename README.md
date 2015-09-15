@@ -236,7 +236,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-height**: height for vertical sliders (default '120px', for mini '60px')
 - **class**		: mini, horizontal, negated, textvalue, tap
 
-The slider supports tap to target only if the CSS class 'tap' is added
+The slider supports tap to target only if the CSS class 'tap' is added. 
 
 ####Level widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
