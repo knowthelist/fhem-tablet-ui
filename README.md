@@ -333,6 +333,14 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
 
+####Datetimepicker widgets
+same as Label Widgets
+- **data-format**      : date and time format of the output  (default 'Y-m-d H:i')
+- **data-theme**       : color scheme: normal, dark (default 'dark')
+- **data-timepicker**  : show the time picker (default 'true')
+- **data-datepicker**  : show the date picker (default 'true')
+- **data-step**        : step for time in minutes (default '60')
+
 ####Readingsgroup widgets
 - **data-max-update**         : Specify a minimum number of seconds between an update of the widget to avoid high load on the system
 
@@ -1021,8 +1029,9 @@ Create two comboboxes to select the inputs of a two zone AV receiver. List for Z
           <div data-type="select" data-device="AvReceiver" data-list="inputs" data-get="input" data-set="input" class="cell w2x" ></div>
 </div>
 ```
+![](http://knowthelist.github.io/fhem-tablet-ui/select_2x.png)    
 
-dialog
+Dialog
 -------
 Create a Label in the UI which opens a dialog with sub widgets .
 
@@ -1074,9 +1083,30 @@ Create a mini chart in the UI which opens a dialog with the full size of the cha
 </div>
 ```
 
-![](http://knowthelist.github.io/fhem-tablet-ui/select_2x.png)       
-       
-       Specials
+Datetimepicker
+-------
+Create a Label in the UI which opens a datetime picker.
+
+```html
+<div class="cell left" >
+    <div data-type="label" class="inline thin" >Start:</div>
+    <div data-type="datetimepicker" data-device="dummy1" class="inline large thin organge"></div>
+</div>    
+```
+
+Create a Label in the UI which opens a time picker.
+
+```html
+<div class="cell left" >
+    <div data-type="label" class="inline thin" >Bad:</div>
+    <div data-type="datetimepicker" data-device="dummy1"
+         data-datepicker="false" data-format="H:i"
+         class="inline large thin organge"></div>
+</div
+
+![](http://knowthelist.github.io/fhem-tablet-ui/timepicker.png)
+
+Specials
 -------
 **Example** to call a command directly to FHEM. This calls "set dummy1 off"
 ```html

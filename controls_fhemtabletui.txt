@@ -28,14 +28,15 @@ UPD 2015-06-11_02:25:17 1517848 www/tablet/fonts/openautomation.svg
 UPD 2015-06-11_02:25:17 359552 www/tablet/fonts/openautomation.ttf
 UPD 2015-06-11_02:25:17 359628 www/tablet/fonts/openautomation.woff
 UPD 2015-09-06_23:35:32 14877 www/tablet/index-example.html
-UPD 2015-09-06_12:17:22 20668 www/tablet/js/fhem-tablet-ui.js
+UPD 2015-09-14_06:32:28 20523 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-06-11_02:25:17 1694 www/tablet/js/widget_circlemenu.js
+UPD 2015-09-15_22:48:47 2017 www/tablet/js/widget_datetimepicker.js
 UPD 2015-06-22_21:50:49 5072 www/tablet/js/widget_dimmer.js
 UPD 2015-09-08_23:12:03 10098 www/tablet/js/widget_famultibutton.js
 UPD 2015-06-11_02:25:17 9482 www/tablet/js/widget_homestatus.js
 UPD 2015-08-06_19:39:39 3450 www/tablet/js/widget_image.js
 UPD 2015-06-23_01:52:30 5311 www/tablet/js/widget_knob.js
-UPD 2015-09-05_21:42:38 4355 www/tablet/js/widget_label.js
+UPD 2015-09-15_22:41:24 4412 www/tablet/js/widget_label.js
 UPD 2015-06-22_21:03:29 3660 www/tablet/js/widget_level.js
 UPD 2015-07-13_20:12:24 6688 www/tablet/js/widget_pagetab.js
 UPD 2015-08-12_08:21:06 3226 www/tablet/js/widget_playstream.js
@@ -57,6 +58,8 @@ UPD 2015-06-11_02:25:17 5201 www/tablet/lib/fa-multi-button.min.js
 UPD 2015-06-11_02:25:17 26586 www/tablet/lib/fhemSVG.css
 UPD 2015-08-03_23:48:31 26637 www/tablet/lib/font-awesome.min.css
 UPD 2015-06-11_02:25:17 10011 www/tablet/lib/jquery.circlemenu.js
+UPD 2015-09-15_22:38:53 18412 www/tablet/lib/jquery.datetimepicker.css
+UPD 2015-09-15_19:11:38 80573 www/tablet/lib/jquery.datetimepicker.js
 UPD 2015-06-11_02:25:17 3021 www/tablet/lib/jquery.gridster.min.css
 UPD 2015-06-11_02:25:17 44235 www/tablet/lib/jquery.gridster.min.js
 UPD 2015-06-11_02:25:17 27838 www/tablet/lib/jquery.knob.mod.js
