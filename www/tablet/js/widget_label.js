@@ -29,7 +29,6 @@ var widget_label = $.extend({}, widget_widget, {
         if(!elem.data('limits-get').match(/:/))
             elem.data('limits-get', elem.data('device') + ':' + elem.data('limits-get'))
         initReadingsArray(elem.data('limits-get'));
-        //readings[elem.data('limits-get')] = true;
 
     },
     init: function () {
@@ -61,8 +60,9 @@ var widget_label = $.extend({}, widget_widget, {
             }
         }
     },
+    update_cb : function(elem) {},
     update: function (dev,par) {
-
+        var base = this;
         var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
         deviceElements.each(function(index) {
             if ( $(this).data('get')==par){
@@ -76,10 +76,11 @@ var widget_label = $.extend({}, widget_widget, {
                     val = widget_label.update_fix(val, $(this).data('fix'));
                     val = widget_label.update_substitution(val, $(this).data('substitution'));
         
-                    var unit = $(this).data('unit');
                     if ( ! $(this).hasClass('fixedlabel') ) {
+                      var unit = $(this).data('unit');
                       $(this).html( val + "<span style='font-size: 50%;'>"+unit+"</span>" );
                     }
+                    base.update_cb($(this),val);
                  }
             }
         });
@@ -95,6 +96,5 @@ var widget_label = $.extend({}, widget_widget, {
                 });
             }
         }
-
     }
 });

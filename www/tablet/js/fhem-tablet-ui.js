@@ -128,7 +128,7 @@ function initPage() {
         gridster.disable();
     }
     if($("meta[name='gridster_starthidden']").attr("content") == '1') {
-        $('div.gridster').hide();
+        $('.gridster').hide();
     }
 	
     //include extern html code
@@ -221,7 +221,6 @@ function initWidgets() {
             requestFhem(reading);
         }
     }, 500);
-
 }
 
 function showDeprecationMsg() {
@@ -458,9 +457,6 @@ function loadplugin(plugin, success, error, async) {
 
 function dynamicload(file, success, error, async) {
     var cache = (DEBUG) ? false : true;
-    var dir = $('script[src$="fhem-tablet-ui.js"]').attr('src');
-    var name = dir.split('/').pop(); 
-    dir = dir.replace('/'+name,"");
     $.ajax({
         url: dir + '/../' + file,
         dataType: "script",
@@ -647,7 +643,7 @@ Date.prototype.ddmm = function() {
 
 //sadly it not possible to use Array.prototype. here
 this.indexOfGeneric = function(array,find){
-    if (!array) return -1;
+  if (!array) return -1;
   for (var i=0;i<array.length;i++) {
     if (!$.isNumeric(array[i]))
         return indexOfRegex(array,find);
