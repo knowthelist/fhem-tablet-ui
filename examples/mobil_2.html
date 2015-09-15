@@ -6,7 +6,7 @@
          /*
          * Versin for mobil phones
          *
-         * Version: 1.4.2
+         * Version: 1.4.5
          * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
          * URL: https://github.com/knowthelist/fhem-tablet-ui
          *
@@ -36,17 +36,6 @@
         <link rel="stylesheet" href="/fhem/tablet/css/fhem-mobil-ui.css" />
         <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
         <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
-        <link rel="stylesheet" href="/fhem/tablet/lib/powerange.min.css" />
-
-
-        <script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
-        <script type="text/javascript" src="/fhem/tablet/lib/jquery.knob.mod.js"></script>
-        <script type="text/javascript" src="/fhem/tablet/lib/jquery.toast.min.js"></script>
-        <script type="text/javascript" src="/fhem/tablet/lib/jquery.circlemenu.js"></script>
-        <script type="text/javascript" src="/fhem/tablet/lib/powerange.min.js"></script>
-        <script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
-        <script type="text/javascript" src="/fhem/tablet/lib/fa-multi-button.min.js"></script>
-        <script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.js"></script>
 
 </head>
 <body>
@@ -119,7 +108,7 @@
         <div class="cell">
         <div data-type="label" class="inline w2x">Playlists</div>
 
-    <div data-type="select" data-device="MPD1" data-list="ur_playlists" data-get="current_playlist" data-set="playlist" data-quote='"' class="inline w3x" ></div>
+    <div data-type="select" data-device="MPD1" data-list="playlistcollection" data-get="playlistname" data-set="playlist" class="inline w3x" ></div>
     </div>
     <div class="cell top-space-2x">
     <div data-type="label" data-device="MPD1" data-get="artist" class="inline bold"></div>
@@ -147,4 +136,8 @@
 </ul>
 </div>
 </body>
+      <script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
+      <script type="text/javascript" src="/fhem/tablet/lib/jquery.toast.min.js"></script>
+      <script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
+      <script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.min.js"></script>
 </html>

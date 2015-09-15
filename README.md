@@ -78,6 +78,7 @@ Currently there are 16 types of widgets in the base installation.
 - **simplechart** :s imple XY line chart for one value (reads directly from fhem log file)
 - **popup** : a popup dialog which open on click on another widget 
 - **readingsgroup** : displaying a readingsgroup defined in fhem
+- **datetimepicker** : select a date and time value from calendar
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -233,7 +234,9 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-value**: show the value in a text box (default 'false')
 - **data-width**: width for horizontal sliders (default '120px', for mini '60px')
 - **data-height**: height for vertical sliders (default '120px', for mini '60px')
-- **class**		: mini, horizontal, negated, textvalue
+- **class**		: mini, horizontal, negated, textvalue, tap
+
+The slider supports tap to target only if the CSS class 'tap' is added
 
 ####Level widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
@@ -1102,9 +1105,11 @@ Create a Label in the UI which opens a time picker.
     <div data-type="datetimepicker" data-device="dummy1"
          data-datepicker="false" data-format="H:i"
          class="inline large thin organge"></div>
-</div
+</div>
+```
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/timepicker.png)
+
 
 Specials
 -------

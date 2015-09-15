@@ -1653,11 +1653,14 @@ Horizontal.prototype.onmousedown = function(e) {
   if (e.touches) e = e.touches[0];
     // snap to the touched position
     if (e.target.className !== 'range-handle') {
+        if (!this.options.tap)
+            return;
       var offset = 0;
       var parent = this.handle;
       while (parent = parent.offsetParent)
         offset += parent.offsetLeft;
       this.startX = offset - window.scrollX + this.handle.offsetLeft + this.handle.clientWidth / 2;
+
     } else
       this.startX = e.clientX;
   this.handleOffsetX = this.handle.offsetLeft;
@@ -1785,6 +1788,8 @@ Vertical.prototype.onmousedown = function(e) {
   if (e.touches) e = e.touches[0];
   // snap to the touched position
    if (e.target.className !== 'range-handle') {
+       if (!this.options.tap)
+           return;
       var offset = 0;
       var parent = this.handle;
       while (parent = parent.offsetParent)

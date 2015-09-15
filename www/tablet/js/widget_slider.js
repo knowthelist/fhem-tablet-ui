@@ -2,6 +2,11 @@ var widget_slider = {
   _slider: null,
   elements: null,
   init: function () {
+
+    if (!$.fn.Powerange){
+        dynamicload('lib/powerange.min.js', null, null, false);
+        $('head').append('<link rel="stylesheet" href="'+ dir + '/../lib/powerange.min.css" type="text/css" />');
+    }
     _slider=this;
     _slider.elements = $('div[data-type="slider"]');
     _slider.elements.each(function(index) {
@@ -39,6 +44,7 @@ var widget_slider = {
             vertical: !$(this).hasClass('horizontal'),
             'min': $(this).data('min') || 0,
             'max': $(this).data('max') || 100,
+            'tap': $(this).hasClass('tap') || false,
             klass: $(this).hasClass('horizontal')?'slider_horizontal':'slider_vertical',
             callback: (function() {
               var pwrng = $(this).data('Powerange');
