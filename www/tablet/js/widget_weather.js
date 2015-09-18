@@ -148,7 +148,9 @@ var widget_weather = $.extend({}, widget_widget, {
         'leichter Schnee-Regen' :       'rainsnow.png',
         'm\u00e4\u00dfiger Schneefall' :'chance_of_snow.png',
         'leichter Regen' :              'drizzle.png',
-        
+        'leicht bew\u00f6lkt' :         'partly_cloudy.png',
+        'Regen - Schauer':              'chance_of_rain.png',
+   
         // others
         'undefined' :                   'na.png',
         'overcast' :                    'overcast.png',
