@@ -236,10 +236,11 @@ i#warn-back {
     margin-bottom:-4px;
 }
 
-.organge{ color:#aa6900; }
+.orange{ color:#aa6900; }
 .red{ color:#ad3333; }
 .green{ color:#32a054; }
-.blue{ color:#6699FF; }
+.ligthblue{ color:#6699FF; }
+.blue{ color:#337ab7; }
 .gray { color: #8C8C8C; }
 
 * {

@@ -86,9 +86,9 @@ var widget_thermostat = $.extend({}, widget_knob, {
     var destcolor = this.o.tkColor;
 	
 	// draw ticks
-	for (tick = this.startAngle; tick < this.endAngle + 0.00001; tick+=tick_w*dist) {
+    for (var tick = this.startAngle; tick < this.endAngle + 0.00001; tick+=tick_w*dist) {
         var i = step * (tick-this.startAngle)+this.o.min;
-        w = tick_w;
+        var w = tick_w;
 		
         c.beginPath();
 
@@ -138,8 +138,8 @@ var widget_thermostat = $.extend({}, widget_knob, {
   
 	//draw valve value as text
 	if ( this.o.valveValue ) {
-		var x = -5;
-		var y = this.radius*0.55;
+        x = -5;
+        y = this.radius*0.55;
 		c.fillStyle = this.o.tkColor;
         c.font=cfont;
 		c.fillText(this.o.valveValue+'%',this.xy+x,this.xy+y+5);
@@ -228,26 +228,26 @@ var widget_thermostat = $.extend({}, widget_knob, {
 		}
 
         var knob_elem = $(this).find('input');
-				
+
         if ( ($(this).data('get')==par) &&
 			clima.desired && clima.desired > 0 && knob_elem.data('desvalue') != clima.desired ){	
 			knob_elem.val( clima.desired ).trigger('change');
 			knob_elem.data('desvalue', clima.desired);
-			DEBUG && console.log( 'thermo dev:'+dev+' par:'+par+' change:clima.desired' );
+            DEBUG && console.log( 'thermo dev:'+dev+' par:'+par+' change:clima.desired' );
 		}
 		if ( clima.temp && clima.temp > 0 && knob_elem.data('curvalue') != clima.temp ){
 			knob_elem.trigger( 
 				'configure', { "isValue": clima.temp }
 			);		
 			knob_elem.data('curvalue', clima.temp);
-			DEBUG && console.log( 'thermo dev:'+dev+' par:'+par+' change:clima.temp' );
+            DEBUG && console.log( 'thermo dev:'+dev+' par:'+par+' change:clima.temp' );
 		}			
 		if ( clima.valve && knob_elem.data('curvalve') != clima.valve ){
 			knob_elem.trigger( 
 				'configure', { "valveValue": clima.valve }
 			);		
 			knob_elem.data('curvalve', clima.valve);
-			DEBUG && console.log( 'thermo dev:'+dev+' par:'+par+' change:clima.valve' );
+            DEBUG && console.log( 'thermo dev:'+dev+' par:'+par+' change:clima.valve' );
 		}
 		
 		if(textdisplay)

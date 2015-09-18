@@ -2,6 +2,10 @@ if(typeof widget_widget == 'undefined') {
     loadplugin('widget_widget');
 }
 
+if (!$.fn.knob){
+    dynamicload('lib/jquery.knob.mod.js', null, null, false);
+}
+
 var widget_knob = $.extend({}, widget_widget, {
     widgetname : 'knob',
     isUpdating : false,

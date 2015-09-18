@@ -8,10 +8,10 @@ var widget_dimmer = $.extend({}, widget_famultibutton, {
          var base = this;
          this.elements = $('div[data-type="'+this.widgetname+'"]');
          this.elements.each(function(index) {
-             $(this).data('off-color',               $(this).data('off-color')           || getStyle('.'+this.widgetname+'.off','color')              || '#2A2A2A');
-             $(this).data('off-background-color',    $(this).data('off-background-color')|| getStyle('.'+this.widgetname+'.off','background-color')   || '#505050');
-             $(this).data('on-color',                $(this).data('on-color')            || getStyle('.'+this.widgetname+'.on','color')               || '#2A2A2A');
-             $(this).data('on-background-color',     $(this).data('on-background-color') || getStyle('.'+this.widgetname+'.on','background-color')    || '#aa6900');
+             $(this).data('off-color',               $(this).data('off-color')           || getStyle('.'+base.widgetname+'.off','color')              || '#2A2A2A');
+             $(this).data('off-background-color',    $(this).data('off-background-color')|| getStyle('.'+base.widgetname+'.off','background-color')   || '#505050');
+             $(this).data('on-color',                $(this).data('on-color')            || getStyle('.'+base.widgetname+'.on','color')               || '#2A2A2A');
+             $(this).data('on-background-color',     $(this).data('on-background-color') || getStyle('.'+base.widgetname+'.on','background-color')    || '#aa6900');
              $(this).data('background-icon',         $(this).data('background-icon')     || 'fa-circle');
              $(this).data('icon',                    $(this).data('icon')                || 'fa-lightbulb-o');
              $(this).data('part',   $(this).data('part')                   || -1);

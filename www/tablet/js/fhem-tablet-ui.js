@@ -27,6 +27,7 @@ var devs=Array();
 var pars=Array();
 var gridster;
 var styleCollection={};
+var stdColors=["green","orange","red","ligthblue","blue","gray"];
 
 var plugins = {
   modules: [],
@@ -105,7 +106,7 @@ function initPage() {
     TOAST  = ($("meta[name='toast']").attr("content") != '0');
 	
 	//self path
-	dir = $('script[src$="fhem-tablet-ui.js"]').attr('src');
+    dir = $('script[src*="fhem-tablet-ui"]').attr('src');
 	var name = dir.split('/').pop(); 
 	dir = dir.replace('/'+name,"");
 	DEBUG && console.log('Plugin dir: '+dir);
@@ -328,7 +329,7 @@ function longPoll(roomName) {
                     var regParaname = /^(\S{2,}):(?:\s(.*))?$/;
 					lines.pop(); //remove last empty line
 					
-					for (var i=currLine; i < lines.length; i++) {
+                    for (var i=currLine, len = lines.length; i < len; i++) {
 						var date;
                         //date = ..... new Date(); //do we need this?
 						var line = $.trim( lines[i] );
@@ -412,7 +413,7 @@ function requestFhem(paraname, devicename) {
         .done (function( data ) {
 			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
             var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\.?[0-9]{0,3}\s+(.*)$/;
-            for (var i=0; i < lines.length; i++) {
+            for (var i=0, len=lines.length; i < len; i++) {
                 var date="";
                 var key="";
                 var val="";
@@ -582,6 +583,15 @@ this.hasSubscription = function (device, paraname) {
 this.getStyle = function (selector, prop) {
     var props = styleCollection[selector];
     return ( props && props[prop] ) ? props[prop] : null;
+}
+
+this.getClassColor = function (elem) {
+    for (var i=0, len=stdColors.length; i<len; i++) {
+        if ( elem.hasClass(stdColors[i]) ){
+            return getStyle('.'+stdColors[i],'color');
+        }
+    }
+    return null;
 }
 
 this.getIconId = function(iconName){

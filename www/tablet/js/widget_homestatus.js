@@ -2,6 +2,10 @@ if(typeof widget_widget == 'undefined') {
     loadplugin('widget_widget');
 }
 
+if (!$.fn.knob){
+    dynamicload('lib/jquery.knob.mod.js', null, null, false);
+}
+
 var widget_homestatus = $.extend({}, widget_widget, {
     widgetname : 'homestatus',
     isUpdating:false,
@@ -183,8 +187,8 @@ var widget_homestatus = $.extend({}, widget_widget, {
             'height':elem.data('height'),
             'width':elem.data('width'),
             'bgColor': elem.data('bgcolor') || '#aaaaaa',
-            'fgColor': elem.data('fgcolor') || '#aa6900',
-            'tkColor': elem.data('tkcolor') || '#696969',
+            'fgColor': elem.data('fgcolor') || getClassColor(elem) || getStyle('.homestatus.fgcolor','color')  || '#aa6900',
+            'tkColor': elem.data('tkcolor') || getStyle('.homestatus.tkcolor','color') || '#696969',
             'minColor': '#2A2A2A',
             'maxColor': '#696969',
             'thickness': 0.4,

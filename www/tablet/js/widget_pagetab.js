@@ -64,10 +64,10 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
           DEBUG && console.log( 'normal init : ');
 
           this.elements.each(function(index) {
-              $(this).data('off-color',               $(this).data('off-color')           || getStyle('.'+this.widgetname+'.off','color')              || '#606060');
-              $(this).data('off-background-color',    $(this).data('off-background-color')|| getStyle('.'+this.widgetname+'.off','background-color')   || 'transparent');
-              $(this).data('on-color',                $(this).data('on-color')            || getStyle('.'+this.widgetname+'.on','color')               || '#222222');
-              $(this).data('on-background-color',     $(this).data('on-background-color') || getStyle('.'+this.widgetname+'.on','background-color')    || '#606060');
+              $(this).data('off-color',               $(this).data('off-color')           || getStyle('.'+base.widgetname+'.off','color')              || '#606060');
+              $(this).data('off-background-color',    $(this).data('off-background-color')|| getStyle('.'+base.widgetname+'.off','background-color')   || 'transparent');
+              $(this).data('on-color',                $(this).data('on-color')            || getStyle('.'+base.widgetname+'.on','color')               || '#222222');
+              $(this).data('on-background-color',     $(this).data('on-background-color') || getStyle('.'+base.widgetname+'.on','background-color')    || '#606060');
               $(this).data('background-icon',         $(this).data('background-icon')     || 'fa-circle');
               $(this).data('mode', 'toggle');
               base.init_attr($(this));

@@ -148,6 +148,7 @@ data-set-off="" suppress sending off
 - **data-off-color**: color of Off state (default '#505050')
 - **data-icons**    : array of icons related to the data-get-on array
 - **data-on-colors**: array of colors related to the data-get-on array
+- **class**     	: readonly, 
 
 data-get-on and data-get-off accept also RegEx values.
 The value for one icon can also contain an additional animatation CSS name, e.g. "fa-exclamation-triangle fa-blink" for a blinking symbol
@@ -162,7 +163,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-limits-part**  : part number of the space separated value to show or an RegEx (default '-1' -> all)	
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
 - **data-substitution**: regex-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
-- **class**     : small, large, big, bigger, thin, red, green, blue, darker, timestamp, w1x, w2x, w3x
+- **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x
 
 ####Select widgets
 - **data-get**  : name of the reading that get the selected item of the list
@@ -353,7 +354,7 @@ same as Label Widgets
   
 Format
 -------
-The layout and look can be influinced be the class attribute.
+The layout, look and behavior can be influenced by the class attribute.
 
 **CSS Class description**
 
@@ -379,6 +380,7 @@ not all widgets support all classes
 - red			: foreground color red
 - green			: foreground color green
 - blue			: foreground color blue
+- orange		: foreground color orange
 - doublebox-v	: container to place 2 small widgets (e.g. switch) one above the other 
 - doublebox-h	: container to place 2 small widgets (e.g. switch) side by side
 - triplebox-v   : container to place 3 small widgets (e.g. switch) one above the other 
@@ -421,6 +423,13 @@ RBG: rgb(163, 207, 163)
 
 Try to avoid flashy color like #ff0000 for red or #00ff00 for green. 
 It is always better to stay below #D0 (208) values for each primary color.
+
+Recommended colors:
+Orange: #aa6900
+Red:	#ad3333
+Green:	#32a054
+Blue:	#6699FF
+Gray:	#8C8C8C
 
 You could use this color picker: http://www.w3schools.com/tags/ref_colorpicker.asp
 
@@ -1093,7 +1102,7 @@ Create a Label in the UI which opens a datetime picker.
 ```html
 <div class="cell left" >
     <div data-type="label" class="inline thin" >Start:</div>
-    <div data-type="datetimepicker" data-device="dummy1" class="inline large thin organge"></div>
+    <div data-type="datetimepicker" data-device="dummy1" class="inline large thin orange"></div>
 </div>    
 ```
 
@@ -1104,7 +1113,7 @@ Create a Label in the UI which opens a time picker.
     <div data-type="label" class="inline thin" >Bad:</div>
     <div data-type="datetimepicker" data-device="dummy1"
          data-datepicker="false" data-format="H:i"
-         class="inline large thin organge"></div>
+         class="inline large thin orange"></div>
 </div>
 ```
 

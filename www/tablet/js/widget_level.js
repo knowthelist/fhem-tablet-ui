@@ -2,6 +2,12 @@ var widget_level= {
   _level: null,
   elements: null,
   init: function () {
+
+    if (!$.fn.Powerange){
+      dynamicload('lib/powerange.js', null, null, false);
+      $('head').append('<link rel="stylesheet" href="'+ dir + '/../lib/powerange.min.css" type="text/css" />');
+    }
+
     _level=this;
     _level.elements = $('div[data-type="level"]');
     _level.elements.each(function(index) {
@@ -85,7 +91,7 @@ var widget_level= {
                             }
                         }
 
-                        var idx=indexOfGeneric(limits,state);
+                        var idx=indexOfGeneric(limits,val);
                         if (idx>-1){
                             $(this).children().find('.range-quantity').css( "background-color", colors[idx] );
                         }

@@ -10,6 +10,9 @@
 
      <div data-type="pagetab" data-url="index_main.html" data-icon="fa-home" class="cell"></div>
     -->
+
+    <!-- script type="text/javascript" src="/fhem/tablet/js/widget_circlemenu.js"></script -->
+
 </head>
 <body>
 
@@ -17,7 +20,7 @@
 <ul>
 <li data-row="1" data-col="1" data-sizex="1" data-sizey="9" data-template="menu.html"></li>
 <li data-row="1" data-col="2" data-sizex="3" data-sizey="2">
-	<header>BAD</header>
+        <header>BAD</header>
         <div data-type="thermostat" data-device="BadHeizung_Clima" data-valve="ValvePosition" class="cell left left-space"></div>
         <div class="cell right">
                 <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
@@ -25,20 +28,20 @@
         </div>
 </li>
 <li data-row="1" data-col="3" data-sizex="3" data-sizey="2">
-	<header>SCHLAFZIMMER</header>
+        <header>SCHLAFZIMMER</header>
         <div data-type="thermostat" data-device="SchlafzimmerHeizung_Clima" data-valve="ValvePosition" class="cell left left-space"></div>
-	<div class="cell right">
+        <div class="cell right">
                 <div data-type="symbol" data-device="SchlafzimmerFenster" class="narrow big"></div>
-		<div data-type="label" class="narrow darker small">Fenster</div>
-	</div>
+                <div data-type="label" class="narrow darker small">Fenster</div>
+        </div>
 </li>
 <li data-row="1" data-col="4" data-sizex="3" data-sizey="2">
-	<header>KINDERZIMMER</header>
+        <header>KINDERZIMMER</header>
         <div data-type="thermostat" data-device="KinderzimmerHeizung_Clima" data-valve="ValvePosition" class="cell left left-space"></div>
-	<div class="cell right">
+        <div class="cell right">
                 <div data-type="symbol" data-device="KinderzimmerFenster" class="narrow big"></div>
-		<div data-type="label" class="narrow darker small">Fenster</div>
-	</div>
+                <div data-type="label" class="narrow darker small">Fenster</div>
+        </div>
 </li>
 <li data-row="1" data-col="11" data-sizex="2" data-sizey="2">
         <header>GALERIE</header>
@@ -46,23 +49,23 @@
         <div data-type="label" class="">Licht</div>
 </li>
 <li data-row="2" data-col="2" data-sizex="3" data-sizey="3">
-	<header>KUECHE</header>
-	<div class="container">
+        <header>KUECHE</header>
+        <div class="container">
           <div class="left left-space">
                 <div data-type="thermostat" data-device="KuecheHeizung_Clima" data-valve="ValvePosition" class="cell"></div>
                 <div data-type="thermostat" data-device="KuecheHeizung2_Clima" data-valve="ValvePosition" class="top-narrow"></div>
-	  </div>
+          </div>
           <div class="right right-space">
                 <div data-type="switch" data-device="HerdLicht_Sw" class="cell"></div>
                 <div data-type="label" class="cell">HerdLicht</div>
                 <div data-type="symbol" data-device="KuechenFenster" class="top-space narrow big"></div>
                 <div data-type="label" class="narrow darker small">Fenster</div>
           </div>
-	</div>
+        </div>
 </li>
 <li data-row="4" data-col="1" data-sizex="3" data-sizey="4">
-	<header>HOMESTATUS</header>
-        <div data-type="homestatus" data-device='HomeStatus' data-version='' class="" ></div>
+        <header>HOMESTATUS</header>
+        <div data-type="homestatus" data-device='HomeStatus' class="" ></div>
         <div class="cell inline">
             <div data-type="symbol" data-device="TerrassenTuer" data-icon="ftui-door" class="narrow big"></div>
             <div data-type="label" class="narrow darker small">Terassent&#252;r</div>
@@ -73,12 +76,12 @@
         </div>
 </li>
 <li data-row="2" data-col="4" data-sizex="6" data-sizey="3">
-	<header>WOHNZIMMER</header>
-	<div class="container">
-	  <div class="left">
+        <header>WOHNZIMMER</header>
+        <div class="container">
+          <div class="left">
                 <div data-type="thermostat" data-device="WohnzimmerHeizung_Clima" data-valve="ValvePosition" data-get="desired-temp" data-temp="measured-temp" class="cell left-space"></div>
                 <div data-type="thermostat" data-device="WohnzimmerHeizung2_Clima" data-valve="ValvePosition" data-get="desired-temp" data-temp="measured-temp" class="top-narrow left-space"></div>
-	  </div>
+          </div>
           <div class="right right-space">
                 <div data-type="switch" data-device="PowerAV_Sw" class="cell"></div>
                 <div data-type="label" class="">SchrankLicht</div>
@@ -87,24 +90,75 @@
           </div>
           <div class="right top-space right-space-2x">
            <div class="inline">
-                  <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin"></div>
+                  <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#ad3333"]' data-unit="%B0C%0A" class="bigger thin"></div>
                   <div data-type="label" class="cell">Temperatur</div>
            </div>
            <div class="inline">
-                  <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="bigger thin"></div>
+                  <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#ad3333"]' data-unit="%" class="bigger thin"></div>
                   <div data-type="label" class="cell">Luftfeuchte</div>
-</div>
-</div>
-	</div>
+            </div>
+            <div class="cell">
+            <div data-type="popup" data-width="450px" class="inline">
+                 <div data-type="simplechart"
+                    data-device="THSensorWZ"
+                    data-logdevice="FileLog_THSensorWZ"
+                    data-columnspec="4:temperature"
+                    data-minvalue="10"
+                    data-maxvalue="30"
+                    data-height="60"
+                    data-width="90"
+                    class="noticks">
+                  </div>
+                  <div class="dialog">
+                    <header>TEMPERATURE</header>
+                    <div data-type="simplechart"
+                         data-device="THSensorWZ"
+                         data-logdevice="FileLog_THSensorWZ"
+                         data-columnspec="4:temperature"
+                         data-minvalue="[20,10,0]"
+                         data-maxvalue="[25,35]"
+                         data-yticks="2"
+                         data-height="250">
+                    </div>
+                  </div>
+            </div>
+            <div data-type="popup" data-width="450px" class="inline">
+                 <div data-type="simplechart"
+                    data-device="THSensorWZ"
+                    data-logdevice="FileLog_THSensorWZ"
+                    data-columnspec="4:humidity"
+                    data-minvalue="0"
+                    data-maxvalue="100"
+                    data-height="60"
+                    data-width="90"
+                    class="noticks">
+                  </div>
+                  <div class="dialog">
+                    <header>HUMIDITY</header>
+                    <div data-type="simplechart"
+                         data-device="THSensorWZ"
+                         data-logdevice="FileLog_THSensorWZ"
+                         data-columnspec="4:humidity"
+                         data-minvalue="0"
+                         data-maxvalue="100"
+                         data-yticks="20"
+                         data-height="250"
+                         class="cell">
+                    </div>
+                  </div>
+            </div>
+            </div>
+          </div>
+        </div>
 </li>
 <li data-row="4" data-col="3" data-sizex="6" data-sizey="4">
-	<header>MULTIMEDIA</header>
-	<div class="container">
-	  <div class="left">
-		<div data-type="switch" data-device="Fernsehen" data-icon="fa-film" class="cell" ></div>
+        <header>MULTIMEDIA</header>
+        <div class="container">
+          <div class="left">
+                <div data-type="switch" data-device="Fernsehen" data-icon="fa-tv" class="cell" ></div>
                 <div data-type="label" class="">TV</div>
-	  </div>
-	  <div class="left">
+          </div>
+          <div class="left">
           <div data-type="circlemenu" class="cell circlemenu">
               <ul>
                 <li><div data-type="push" data-icon="fa-wrench"></div></li>
@@ -117,16 +171,16 @@
               </ul>
           </div>
           <div data-type="label" class="">Woofer</div>
-	  </div>
-	  <div class="left">
+          </div>
+          <div class="left">
                 <div data-type="push" data-device="WebRadio" data-icon="fa-step-backward" data-set-on="Prev" class="cell" ></div>
                 <div data-type="push" data-device="WebRadio" data-icon="fa-step-forward" data-set-on="Next" class="cell" ></div>
                 <div data-type="label" data-device="WebRadio" class="">radio</div>
-	  </div>
+          </div>
           <div class="right">
-            <div data-type="volume" data-device='RadioVolumeOnTablet' class="cell left" ></div>
-            <div data-type="label" class="">Volume</div>
-            <div class="top-space-2x">
+            <div data-type="volume" data-device='RadioVolumeOnTablet' class="cell" ></div>
+            <div data-type="label" class="top-narrow-2x">Volume</div>
+            <div class="top-space-3x">
                 <div data-type="push" data-device="MPD1"
                      data-icon="fa-step-backward" data-background-icon="-"
                      data-set-on="previous" class="inline">
@@ -134,7 +188,7 @@
                 <div data-type="multistatebutton"
                        data-device="MPD1"
                        data-get-on='["play","pause","stop"]'
-                       data-set='["pause","play"]'
+                       data-set='["pause","play","play"]'
                        data-set-default="play"
                        data-background-icon="fa-circle-thin"
                        data-background-color="#555"
@@ -159,7 +213,7 @@
           <div></div>
           <div data-type="mpdnowplaying"
                    data-device="MPD1"
-                   data-mask='[<span class="bold">$2</span>] - [$5]'
+                   data-mask='[<span class="bold">$2</span>]  [$5]'
                    class="top-space w3x">
            </div>
        </div>
@@ -171,19 +225,24 @@
         <div data-type="switch" data-device="GartenLicht" class="cell" ></div>
         <div data-type="label" class="">Licht</div>
 
-        <div data-type="label" data-device="OutTemp" data-part="2" data-limits='[-73,10,23]' data-colors='["#6699FF","#AA6900","#FF0000"]' data-unit="%B0C%0A" class="cell bigger thin top-space-2x"></div>
+        <div data-type="label" data-device="OutTemp" data-part="2" data-limits='[-73,10,23]' data-colors='["#6699FF","#aa6900","#ad3333"]' data-unit="%B0C%0A" class="cell bigger thin top-space"></div>
         <div data-type="label" class="cell">Temperatur</div>
         <div data-type="label" class="cell darker top-space">Heute</div>
-        <div data-type="weather" data-device="AgroWeather" data-get="fc0_weatherDay" class="cell big"></div>
-        <div data-type="label" data-device="AgroWeather" data-get="fc0_weatherDay" class="cell narrow"></div>
-        <div data-type="label" data-device="AgroWeather" data-get="fc0_tempMax" data-unit="%B0C%0A" class="cell large"></div>
+        <div data-type="weather" data-device="AgroWeather" data-get="fc0_weatherDay" class="cell big top-narrow"></div>
+        <div data-type="label" data-device="AgroWeather" data-get="fc0_weatherDay" class="cell top-narrow"></div>
+        <div data-type="label" data-device="AgroWeather" data-get="fc0_tempMax" data-unit="%B0C%0A" class="cell large top-narrow-10"></div>
         <div data-type="label" class="cell darker top-space">Morgen</div>
-        <div data-type="weather" data-device="AgroWeather" data-get="fc1_weatherDay" class="cell big"></div>
-        <div data-type="label" data-device="AgroWeather" data-get="fc1_weatherDay" class="cell narrow"></div>
-        <div data-type="label" data-device="AgroWeather" data-get="fc1_tempMax" data-unit="%B0C%0A" class="cell large"></div>
+        <div data-type="weather" data-device="AgroWeather" data-get="fc1_weatherDay" class="cell big top-narrow"></div>
+        <div data-type="label" data-device="AgroWeather" data-get="fc1_weatherDay" class="cell top-narrow"></div>
+        <div data-type="label" data-device="AgroWeather" data-get="fc1_tempMax" data-unit="%B0C%0A" class="cell large top-narrow-10"></div>
+        <div data-type="label" class="cell darker top-space">Übermorgen</div>
+        <div data-type="weather" data-device="AgroWeather" data-get="fc2_weatherDay" class="cell big top-narrow"></div>
+        <div data-type="label" data-device="AgroWeather" data-get="fc2_weatherDay" class="cell top-narrow"></div>
+        <div data-type="label" data-device="AgroWeather" data-get="fc2_tempMax" data-unit="%B0C%0A" class="cell large top-narrow-10"></div>
+
 </li>
 </ul>
-</div> 
+</div>
 </body>
 
 </html>

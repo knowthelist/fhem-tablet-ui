@@ -22,8 +22,10 @@ var widget_push = $.extend({}, widget_famultibutton, {
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {
             $(this).data('device',          $(this).data('device')          || ' ');
-            $(this).data('off-color',       $(this).data('off-color')       || '#505050');
-            $(this).data('on-color',        $(this).data('on-color')        || '#aa6900');
+            $(this).data('off-color',               $(this).data('off-color')                                     || getStyle('.push.off','color')              || '#505050');
+            $(this).data('off-background-color',    $(this).data('off-background-color')                          || getStyle('.push.off','background-color')   || '#505050');
+            $(this).data('on-color',                $(this).data('on-color')            || getClassColor($(this)) || getStyle('.push.on','color')               || '#aa6900');
+            $(this).data('on-background-color',     $(this).data('on-background-color') || getClassColor($(this)) || getStyle('.push.on','background-color')    || '#aa6900');
             $(this).data('background-icon', $(this).data('background-icon') || 'fa-circle-thin');
             $(this).data('set-on',          $(this).data('set-on')          || '');
             $(this).data('set-off',         $(this).data('set-off')         || '');

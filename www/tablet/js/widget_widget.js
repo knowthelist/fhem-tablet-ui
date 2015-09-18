@@ -47,6 +47,14 @@ var widget_widget = {
         }
         return [hex(Math.round(r * 255)), hex(Math.round(g * 255)), hex(Math.round(b * 255))].join('');
     },
+    rgbToHex: function(rgb){
+     if (!rgb) return null;
+     var tokens = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+     return (tokens && tokens.length === 4) ? "#" +
+      ("0" + parseInt(tokens[1],10).toString(16)).slice(-2) +
+      ("0" + parseInt(tokens[2],10).toString(16)).slice(-2) +
+      ("0" + parseInt(tokens[3],10).toString(16)).slice(-2) : null;
+    },
 }
 $.fn.filterData = function(key, value) {
     return this.filter(function() {

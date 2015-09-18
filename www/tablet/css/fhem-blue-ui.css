@@ -1,0 +1,19 @@
+
+
+/* Slider colors */
+.range-quantity {
+  background-color: #337ab7 !important;
+}
+
+
+polyline {
+    stroke: #337ab7 !important;
+}
+
+.pagetab.on{background-color:#337ab7;}
+.dimmer.on{background-color:#337ab7;}
+.symbol.on{color:#337ab7;background-color:#337ab7;}
+.switch.on{background-color:#337ab7;}
+.push.on{color:#337ab7;background-color:#337ab7;}
+.homestatus.fgcolor{color:#337ab7;}
+.volume.hdcolor{color:#337ab7;}

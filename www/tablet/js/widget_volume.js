@@ -96,7 +96,7 @@ var widget_volume = $.extend({}, widget_knob, {
 		var device = $(this).data('device');
 		
 		var mode=0; //no hue colors
-        var hdDefaultColor=getStyle('.volume.hdcolor','color') || '#aa6900';
+        var hdDefaultColor = getClassColor($(this)) || getStyle('.volume.hdcolor','color') || '#aa6900';
 		if ($(this).hasClass('hue-back')){
 			mode = mode | 1<<0;
 			hdDefaultColor='#cccccc'; 

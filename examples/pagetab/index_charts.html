@@ -16,47 +16,79 @@
 <div class="gridster">
 <ul>
 <li data-row="1" data-col="1" data-sizex="1" data-sizey="9" data-template="menu.html"></li>
-<li data-row="1" data-col="2" data-sizex="8" data-sizey="3">
-<header>CHARTS</header>
-
+<li data-row="1" data-col="2" data-sizex="3" data-sizey="3">
+    <header>Wohnzimmer</header>
     <div data-type="simplechart"
             data-logdevice="FileLog_WohnzimmerHeizung2"
-            data-logfile="WohnzimmerHeizung2-2015.log"
-            data-columnspec="4:meas.*:1:int"
-            data-minvalue="10"
-            data-maxvalue="30"
-            data-yticks="4"
-            data-daysago="0"
-            data-width="300px"
-            data-height="95%"
-            data-caption="Wohnzimmer" class="inline cell top-space-2x">
-    </div>
-    <div data-type="simplechart"
-            data-logdevice="FileLog_KuecheHeizung"
-            data-logfile="KuecheHeizung-2015.log"
-            data-columnspec="4:meas.*:1:int"
-            data-minvalue="10"
-            data-maxvalue="30"
-            data-yticks="4"
-            data-daysago="0"
-            data-width="300px"
-            data-height="95%"
-            data-caption="Küche" class="inline cell top-space-2x">
+            data-columnspec="4:meas.*"
+            data-minvalue="15"
+            data-maxvalue="25"
+            data-yticks="2"
+            data-height="150"
+            class="cell">
     </div>
 </li>
-      <li data-row="4" data-col="2" data-sizex="8" data-sizey="3">
-      <header>CHART</header>
-              <div data-type="simplechart"
-                      data-logdevice="FileLog_OutTemp"
-                      data-logfile="OutTemp-2015.log"
-                      data-columnspec="4:temp:1:int"
-                      data-minvalue="0"
-                      data-maxvalue="36"
-                      data-yticks="5"
-                      data-daysago="0"
-                      data-caption="Außen" class="fullsize">
-              </div>
-      </li>
+<li data-row="1" data-col="5" data-sizex="3" data-sizey="3">
+    <header>Küche</header>
+    <div data-type="simplechart"
+            data-logdevice="FileLog_KuecheHeizung"
+            data-columnspec="4:meas.*"
+            data-minvalue="15"
+            data-maxvalue="25"
+            data-yticks="2"
+            data-height="150"
+            class="cell">
+    </div>
+</li>
+<li data-row="1" data-col="8" data-sizex="3" data-sizey="3">
+    <header>Außen</header>
+    <div data-type="simplechart"
+            data-logdevice="FileLog_OutTemp"
+            data-columnspec="4:temp"
+            data-minvalue="-25"
+            data-maxvalue="35"
+            data-yticks="5"
+            data-height="150"
+            class="cell">
+    </div>
+</li>
+<li data-row="4" data-col="2" data-sizex="3" data-sizey="3">
+    <header>Schlafzimmer</header>
+    <div data-type="simplechart"
+            data-logdevice="FileLog_SchlafzimmerHeizung"
+            data-columnspec="4:meas.*"
+            data-minvalue="15"
+            data-maxvalue="25"
+            data-yticks="2"
+            data-height="150"
+            class="cell">
+    </div>
+</li>
+<li data-row="4" data-col="5" data-sizex="3" data-sizey="3">
+    <header>Kinderzimmer</header>
+    <div data-type="simplechart"
+            data-logdevice="FileLog_KinderzimmerHeizung"
+            data-columnspec="4:meas.*"
+            data-minvalue="15"
+            data-maxvalue="25"
+            data-yticks="2"
+            data-height="150"
+            class="cell">
+    </div>
+</li>
+<li data-row="4" data-col="8" data-sizex="3" data-sizey="3">
+    <header>Bad</header>
+    <div data-type="simplechart"
+            data-logdevice="FileLog_BadHeizung"
+            data-columnspec="4:meas.*"
+            data-minvalue="15"
+            data-maxvalue="25"
+            data-yticks="2"
+            data-height="150"
+            data-yunit="°"
+            class="cell">
+    </div>
+</li>
 </ul>
 </div>
 </body>

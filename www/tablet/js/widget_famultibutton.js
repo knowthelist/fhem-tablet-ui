@@ -2,6 +2,10 @@ if(typeof widget_widget == 'undefined') {
     loadplugin('widget_widget');
 }
 
+if (!$.fn.famultibutton){
+    dynamicload('lib/fa-multi-button.min.js', null, null, false);
+}
+
 var widget_famultibutton = $.extend({}, widget_widget, {
     widgetname : 'famultibutton',
     _doubleclicked: function(elem, onoff) {
