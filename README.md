@@ -318,6 +318,7 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 ####Simplechart widgets
 - **data-logdevice**   : name of the logdevice (e.g. FileLog_WohnzimmerHeizung)
 - **data-logfile**     : name of the logfile   (e.g. WohnzimmerHeizung-2015.log) (default '-' means current logfile)
+- **data-get**         : name of the reading which triggers the update (default 'STATE')
 - **data-columnspec**  : definition for how to find the values (e.g. "4:meas.*")
 - **data-minvalue**    : min Y value to show  or an array of values for dynamic minY (default 10)
 - **data-maxvalue**    : max Y value to show  or an array of values for dynamic maxY (default 30) 
@@ -329,6 +330,8 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
 - **class**		       : fullsize, noticks
+
+The chart gets updated every time the data-get reading is changed and after each shortpoll interval  (15 min).
 
 ####Popup widgets
 - **data-get**         : name of the reading where to get the alert value from (default 'STATE')

@@ -295,50 +295,47 @@ function moveScale() {
 	
 }
 
-
+    var touch_pos_x,touch_pos_y;
 	if (options['mode'] == 'push'){ 
-        var clickEventType=((document.ontouchstart!==null)?'mousedown':'touchstart');
-		var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
-        var leaveEventType=((document.ontouchleave!==null)?'mouseout':'touchleave');
-		this.bind(clickEventType, function(e) {
+        this.bind('touchstart', '.action-feature', function(e) {
+          touch_pos_y = $(window).scrollTop();
+          touch_pos_x = $(window).scrollLeft();
+        }).bind('click touchend', '.action-feature', function(e) {
+          if(e.type=='touchend' && (Math.abs(touch_pos_y-$(window).scrollTop())>3
+                  || (Math.abs(touch_pos_x-$(window).scrollLeft())>3))) return;
+          setOn();
 
-			setOn(); 
-			
-			if(typeof options['toggleOn'] === 'function'){
-				options['toggleOn'].call(this);
-			}
-            //e.preventDefault();
-		});
-		this.bind(releaseEventType, function(e) {
-		
-			fadeOff(); 
-            //e.preventDefault();
-		});
-		this.bind(leaveEventType, function(e) {
-		
-			fadeOff(); 
-            //e.preventDefault();
-		});
+          if(typeof options['toggleOn'] === 'function'){
+              options['toggleOn'].call(this);
+          }
+          e.preventDefault();
+          setTimeout( function() {
+              fadeOff();
+              }, 200);
+        });
 	}
 	else if (options['mode'] == 'toggle'){ 
-		var clickEventType=((document.ontouchstart!==null)?'click':'touchstart');
-		this.bind(clickEventType, function(e) {
+        this.bind('touchstart', '.action-feature', function(e) {
+            touch_pos_y = $(window).scrollTop();
+            touch_pos_x = $(window).scrollLeft();
+          }).bind('click touchend', '.action-feature', function(e) {
+            if(e.type=='touchend' && (Math.abs(touch_pos_y-$(window).scrollTop())>3
+                    || (Math.abs(touch_pos_x-$(window).scrollLeft())>3))) return;
+          if(state){
 
-				if(state){
-				
-					setOff();	
-					if(typeof options['toggleOff'] === 'function'){
-						options['toggleOff'].call(this);
-					}
-				}else{
-				
-					setOn(); 
-					if(typeof options['toggleOn'] === 'function'){
-						options['toggleOn'].call(this);
-					}
-				}
-				e.preventDefault();
-		});
+              setOff();
+              if(typeof options['toggleOff'] === 'function'){
+                  options['toggleOff'].call(this);
+              }
+          }else{
+
+              setOn();
+              if(typeof options['toggleOn'] === 'function'){
+                  options['toggleOn'].call(this);
+              }
+          }
+          e.preventDefault();
+        });
 	}
 	else if (options['mode'] == 'dimmer'){ 
 		var clickEventType=((document.ontouchstart!==null)?'mousedown':'touchstart');
