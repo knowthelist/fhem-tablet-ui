@@ -29,8 +29,8 @@ UPD 2015-06-11_02:25:17 359744 www/tablet/fonts/openautomation.eot
 UPD 2015-06-11_02:25:17 1517848 www/tablet/fonts/openautomation.svg
 UPD 2015-06-11_02:25:17 359552 www/tablet/fonts/openautomation.ttf
 UPD 2015-06-11_02:25:17 359628 www/tablet/fonts/openautomation.woff
-UPD 2015-09-06_23:35:32 14877 www/tablet/index-example.html
-UPD 2015-09-18_21:03:24 20852 www/tablet/js/fhem-tablet-ui.js
+UPD 2015-09-20_11:13:46 14267 www/tablet/index-example.html
+UPD 2015-09-20_11:36:46 20852 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-09-18_21:03:30 11310 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2015-09-11_19:17:11 1635 www/tablet/js/widget_circlemenu.js
 UPD 2015-09-15_22:48:47 2017 www/tablet/js/widget_datetimepicker.js
@@ -57,8 +57,8 @@ UPD 2015-09-13_01:16:02 9380 www/tablet/js/widget_thermostat.js
 UPD 2015-09-17_21:05:58 7054 www/tablet/js/widget_volume.js
 UPD 2015-09-19_00:34:57 20759 www/tablet/js/widget_weather.js
 UPD 2015-09-17_23:49:25 2322 www/tablet/js/widget_widget.js
-UPD 2015-09-18_23:49:21 11343 www/tablet/lib/fa-multi-button.js
-UPD 2015-09-18_23:54:24 5829 www/tablet/lib/fa-multi-button.min.js
+UPD 2015-09-20_10:38:26 11762 www/tablet/lib/fa-multi-button.js
+UPD 2015-09-20_10:40:10 6064 www/tablet/lib/fa-multi-button.min.js
 UPD 2015-06-11_02:25:17 26586 www/tablet/lib/fhemSVG.css
 UPD 2015-08-03_23:48:31 26637 www/tablet/lib/font-awesome.min.css
 UPD 2015-06-11_02:25:17 10011 www/tablet/lib/jquery.circlemenu.js
