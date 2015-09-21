@@ -225,7 +225,6 @@ function initWidgets() {
 }
 
 function showDeprecationMsg() {
-
     //make it HTML conform (remove this after migration)
     $('div[type]').each(function() {
         $(this).attr({

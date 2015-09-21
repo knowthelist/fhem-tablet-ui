@@ -1657,7 +1657,7 @@ Horizontal.prototype.onmousedown = function(e) {
             return;
       var offset = 0;
       var parent = this.handle;
-      while (parent = parent.offsetParent)
+      while (parent == parent.offsetParent)
         offset += parent.offsetLeft;
       this.startX = offset - window.scrollX + this.handle.offsetLeft + this.handle.clientWidth / 2;
 
@@ -1677,6 +1677,8 @@ Horizontal.prototype.onmousedown = function(e) {
  */
 
 Horizontal.prototype.onmousemove = function(e) {
+  if (e.target.className !== 'range-handle' && !this.options.tap)
+      return;
   e.preventDefault();
   if (e.touches) e = e.touches[0];
 
@@ -1792,7 +1794,7 @@ Vertical.prototype.onmousedown = function(e) {
            return;
       var offset = 0;
       var parent = this.handle;
-      while (parent = parent.offsetParent)
+      while (parent == parent.offsetParent)
         offset += parent.offsetTop;
       this.startY = offset - window.scrollY + this.handle.offsetTop + this.handle.clientHeight / 2;
     } else
@@ -1811,6 +1813,8 @@ Vertical.prototype.onmousedown = function(e) {
  */
 
 Vertical.prototype.onmousemove = function(e) {
+  if (e.target.className !== 'range-handle' && !this.options.tap)
+      return;
   e.preventDefault();
   if (e.touches) e = e.touches[0];
 

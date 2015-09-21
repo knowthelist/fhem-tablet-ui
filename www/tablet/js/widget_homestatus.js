@@ -104,13 +104,13 @@ var widget_homestatus = $.extend({}, widget_widget, {
         c.fillText(this.o.texts[0], this.xy-15, this.xy+10+coffset);
         c.font = cfafont;
         c.fillText(getIconId(this.o.icons[0]), this.xy-12, this.xy+2);
-		
-		c.fillStyle = (sector==2)?this.o.minColor:this.o.maxColor;
+
+        c.fillStyle = (sector==2)?this.o.minColor:this.o.maxColor;
         c.font = cfafont;
         c.fillText(getIconId(this.o.icons[1]), this.xy-this.radius*0.7, this.xy-this.radius*0.4);
         c.font = cfont;
         c.fillText(this.o.texts[1], this.xy-this.radius*0.85, this.xy-10);
-		
+
         c.fillStyle = (sector==4)?this.o.minColor:this.o.maxColor;
         c.font = cfafont;
         c.fillText(getIconId(this.o.icons[3]), this.xy+this.radius*0.35, this.xy-this.radius*0.4);
@@ -257,8 +257,10 @@ var widget_homestatus = $.extend({}, widget_widget, {
                             val=0;
                     }
                 }
-                if ( elem && elem.data('curval') != val )
+                if ( elem && $(this).data('curval') != val ){
                     elem.val( val ).trigger('change');
+                    $(this).data('curval', val);
+                }
 			}
 	});
     isUpdating=false;

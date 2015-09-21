@@ -301,7 +301,7 @@ function moveScale() {
     var leaveEventType=((document.ontouchleave!==null)?'mouseout':'touchleave');
 
 	if (options['mode'] == 'push'){ 
-        this.bind(clickEventType, '.action-feature', function(e) {
+        this.bind(clickEventType, function(e) {
           touch_pos_y = $(window).scrollTop();
           touch_pos_x = $(window).scrollLeft();
         }).bind(releaseEventType, function(e) {
@@ -312,14 +312,14 @@ function moveScale() {
           if(typeof options['toggleOn'] === 'function'){
               options['toggleOn'].call(this);
           }
-          e.preventDefault();
+          //e.preventDefault();
           setTimeout( function() {
               fadeOff();
               }, 200);
         });
 	}
 	else if (options['mode'] == 'toggle'){ 
-        this.bind(clickEventType, '.action-feature', function(e) {
+        this.bind(clickEventType, function(e) {
             touch_pos_y = $(window).scrollTop();
             touch_pos_x = $(window).scrollLeft();
           }).bind(releaseEventType, function(e) {
