@@ -349,6 +349,8 @@ The chart gets updated every time the data-get reading is changed and after each
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
 
+It's important that a <div class="dialog"> inside the widget can be found. See [Dialog][] basic structure of popup
+
 ####Datetimepicker widgets
 same as Label Widgets
 - **data-format**      : date and time format of the output  (default 'Y-m-d H:i')
@@ -670,12 +672,18 @@ temperature	20.1
 ![](http://knowthelist.github.io/fhem-tablet-ui/group.png)
 
 ###Symbol
+
+**Example** for a simple window symbol
+```html
+<div data-type="symbol" data-device="SchlafzimmerFenster" class="narrow big"></div>
+```
+
 **Example** for a tristate icon
 ```html
 <div data-type="symbol" data-device="dummy1" 
- data-get-on='["wert1","wert2","wert3"]' 
+ data-states='["wert1","wert2","wert3"]' 
  data-icons='["fa-arrow-up","fa-user","fa-arrow-down"]' 
- data-on-colors='["SeaGreen","SlateBlue","IndianRed"]' 
+ data-colors='["SeaGreen","SlateBlue","IndianRed"]' 
  class="cell big">
 </div>
 ```
@@ -683,36 +691,37 @@ temperature	20.1
 **Example** for a tristate icon with blink and spin animation
 ```html
 <div data-type="symbol" data-device="dummy1" 
+  data-states='["Wert1","Wert2","Wert3"]'
   data-icons='["fa-exclamation-triangle fa-blink","fa-exclamation-circle","fa-cog fa-spin"]' 
-  data-on-colors='["Crimson","GoldenRod","SeaGreen"]' 
-  data-get-on='["Wert1","Wert2","Wert3"]' >
+  data-colors='["Crimson","GoldenRod","SeaGreen"]' 
+   >
 </div>
 ```
 
 **Example** for a battery level control with RegEx
 ```html
 <div data-type="symbol" data-device="BadHeizung" data-get="batteryLevel"
+    data-states='["3.[0-9]","2.[789]","2.[456]","2.[123]","((2.0)|([01].[0-9]))"]'
 	data-icons='["oa-measure_battery_100","oa-measure_battery_75","oa-measure_battery_50","oa-measure_battery_25","oa-measure_battery_0"]'
-    data-get-on='["3.[0-9]","2.[789]","2.[456]","2.[123]","((2.0)|([01].[0-9]))"]'
-    data-on-colors='["#505050","#505050","#505050","#ad3333","#ad3333"]'>
+    data-colors='["#505050","#505050","#505050","#ad3333","#ad3333"]'>
 </div>
 ```       
 
 **Example** for a battery level control with greater-equal compare and 90° rotated symbols
 ```html       
 <div data-type="symbol" data-device="BadHeizung" data-get="batteryLevel"
+	data-states='["0","2","2.4","2.7","3.0"]'
 	data-icons='["oa-measure_battery_0 fa-rotate-90","oa-measure_battery_25 fa-rotate-90","oa-measure_battery_50 fa-rotate-90","oa-measure_battery_75 fa-rotate-90","oa-measure_battery_0 fa-rotate-90"]'
-	data-get-on='["0","2","2.4","2.7","3.0"]'
-	data-on-colors='["#ad3333","#ad3333","#505050","#505050","#505050"]'>
+	data-colors='["#ad3333","#ad3333","#505050","#505050","#505050"]'>
 </div>
 ```
 
 **Example** for a door symbol which shows a warning sign in case of an open state
 ```html  
 <div data-type="symbol" data-device="Eingangstuer" 
-	 data-get-on='["open","closed"]' 
+	 data-states='["open","closed"]' 
 	 data-icons='["ftui-door warn","ftui-door"]' 
-	 data-on-colors='["#999","#555"]' >
+	 data-colors='["#999","#555"]' >
 </div>
 ```
 
@@ -1055,10 +1064,19 @@ Create two comboboxes to select the inputs of a two zone AV receiver. List for Z
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/select_2x.png)    
 
-Dialog
+### Dialog ###
 -------
+Basic structure for a popup:
+```html
+<div data-type="popup" data-height="150px" data-width="250px">
+  <div><!-- click object to open the popup --></div>
+  <div class="dialog">
+	  <header>DIALOG</header>
+	  <div><!-- widget(s) inside the popup dialog --></div>
+  </div>
+</div>
+```
 Create a Label in the UI which opens a dialog with sub widgets .
-
 ```html
 <div data-type="popup" data-height="150px" data-width="250px">
   <div data-type="label" class="cell">show temperatur</div>
