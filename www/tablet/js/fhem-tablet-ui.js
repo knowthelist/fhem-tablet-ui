@@ -2,7 +2,7 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.4.2
+* Version: 1.4.3
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
@@ -226,27 +226,6 @@ function initWidgets() {
 
 function showDeprecationMsg() {
     //make it HTML conform (remove this after migration)
-    $('div[type]').each(function() {
-        $(this).attr({
-            'data-type' : $(this).attr('type'),
-        })
-        .removeAttr('type');
-        console.log('Please rename widget attribute "type" into "data-type" in ' + document.location + ($(this).attr('data-device')?' device: '+$(this).attr('data-device'):'') + ' - Details below:');
-        console.log($(this));
-    });
-    $('div[device]').each(function() {
-        $(this).attr({
-            'data-device' : $(this).attr('device'),
-        })
-        .removeAttr('device');
-        console.log('Please rename widget attribute "device" into "data-device" in ' + document.location + ($(this).attr('data-device')?' device: '+$(this).attr('data-device'):'') + ' - Details below:');
-        console.log($(this));
-    });
-    $('div[data-type="contact"]').each(function() {
-        $(this).attr({'data-type' : 'symbol',})
-        console.log('Please rename widget "contact" into "symbol" in ' + document.location + ($(this).attr('data-device')?' device: '+$(this).attr('data-device'):'') + ' - Details below:');
-        console.log($(this));
-    });
     //end **** (remove this after migration)
 }
 
@@ -469,7 +448,7 @@ function dynamicload(file, success, error, async) {
 }
 
 function loadStyleSchema(){
-    $.each($('link[href$="-ui.css"]') , function (index, thisSheet) {
+    $.each($('link[href$="-ui.css"],link[href$="-ui.min.css"]') , function (index, thisSheet) {
         var rules = thisSheet.sheet.cssRules;
         for (var r in rules){
             if (rules[r].style){

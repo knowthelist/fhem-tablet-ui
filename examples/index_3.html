@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<title>FHEM</title>
+<head>
+   <!--
+    /* FHEM tablet ui */
+    /*
+    * Just another dashboard for FHEM
+    *
+    * Version: 1.4.3
+    * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
+    * URL: https://github.com/knowthelist/fhem-tablet-ui
+    *
+    * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
+    * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+    *
+    * - create a new folder named 'tablet' in /<fhem-path>/www
+    * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+    * - add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
+    * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+    */
+   -->
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+   <meta name="widget_base_width" content="74">
+   <meta name="widget_base_height" content="71">
+   <meta name="mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+   <meta name="debug" content="0"> <!-- 1=output to console;0=not output -->
+
+   <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
+   <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.min.css" />
+   <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
+   <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
+
+</head>
+<body>
+<div class="gridster">
+<ul>
+  <li data-row="1" data-col="1" data-sizex="3" data-sizey="4">
+    <header>ROLLO EXAMPLE</header>
+    <div class="top-space-2x">
+        <div data-type="switch" data-device="dummy1"
+          data-get-on="100|[89][0-9]" data-get-off="!on"
+          data-set-on="100" data-set-off="" class="green"
+          data-icon="fa-angle-double-up" data-background-icon="fa-square" ></div>
+        <div data-type="label" class="inline w1x">Auf</div>
+     </div>
+    <div>
+        <div data-type="switch" data-device="dummy1"
+          data-get-on="[1-7][0-9]" data-get-off="!on"
+          data-set-on="25" data-set-off="" class="blue"
+          data-icon="fa-angle-down" data-background-icon="fa-square"></div>
+        <div data-type="label" class="inline w1x">25</div>
+     </div>
+    <div>
+        <div data-type="switch" data-device="dummy1"
+          data-get-on="[0-9]" data-get-off="!on"
+          data-set-on="0" data-set-off="" class="ligthblue"
+          data-icon="fa-angle-double-down" data-background-icon="fa-square"></div>
+        <div data-type="label" class="inline w1x">Zu</div>
+     </div>
+    <div>
+        <div data-type="push" data-device="dummy1"
+          data-set-on="stop" data-off-color="#2A2A2A"
+          data-icon="fa-ellipsis-h" data-background-icon="fa-square"></div>
+        <div data-type="label" class="inline w1x">Stop</div>
+    </div>
+</li>
+<li data-row="5" data-col="1" data-sizex="3" data-sizey="3">
+  <header>ALARM-TIME</header>
+  <div class="cell left" >
+   <div data-type="label" class="inline thin" >Bad:</div>
+   <div data-type="datetimepicker" data-device="dummy1"
+       data-datepicker="false" data-format="H:i"
+       class="inline large thin orange"></div>
+  </div>
+</li>
+<li data-row="1" data-col="4" data-sizex="6" data-sizey="4">
+   <header>COLOR-BUTTONS</header>
+    <div class="inline top-space-2x">
+      <div data-type="switch" data-device="dummy1" data-icon="fa-home" class="blue"></div>
+      <div data-type="label">blue</div>
+    </div>
+    <div class="inline">
+      <div data-type="switch" data-device="dummy2" data-icon="fa-music" class="green"></div>
+      <div data-type="label">green</div>
+    </div>
+    <div class="inline">
+      <div data-type="switch" data-device="dummy3" data-icon="fa-sliders" class="ligthblue"></div>
+      <div data-type="label">ligthblue</div>
+    </div>
+    <div class="inline">
+      <div data-type="switch" data-device="dummy4" data-icon="fa-lightbulb-o" class="orange"></div>
+      <div data-type="label">orange</div>
+    </div>
+    <div class="inline">
+      <div data-type="switch" data-device="dummy5" data-icon="fa-line-chart" class="red"></div>
+      <div data-type="label">red</div>
+    </div>
+</li>
+<li data-row="1" data-col="10" data-sizex="3" data-sizey="4">
+    <header>EXAMPLE</header>
+    <div data-type="symbol"
+        data-device="Aquarium_Thermostat"
+        data-states='["on","off"]'
+        data-icons='["fa-arrow-up","fa-arrow-down"]'
+        data-colors='["IndianRed","SeaGreen"]'
+        class="big">
+    </div>
+</li>
+<li data-row="5" data-col="10" data-sizex="3" data-sizey="3">
+  <header>DATETIME</header>
+  <div class="cell left" >
+  <div data-type="label" class="inline thin" >Start:</div>
+  <div data-type="datetimepicker" data-device="dummy1" class="inline large thin orange"></div>
+  </div>
+  <div class="cell left" >
+  <div data-type="label" class="inline thin">Ende:</div>
+  <div data-type="datetimepicker" data-device="Testschalter" class="inline large thin orange"></div>
+  </div>
+</li>
+<li data-row="5" data-col="4" data-sizex="6" data-sizey="3">
+  <header>LED16 EXAMPLE</header>
+      <div class="inline">
+          <div>
+              <div data-type="symbol" data-device="dummy1" data-get-on='["off","green","orange","red"]' data-on-colors='["SeaGreen","SeaGreen","GoldenRod","Crimson"]' data-icons='["fa-bell","fa-bell","fa-bell"]' class="narrow inline"></div>
+              <div data-type="label" class="w2x left-align darker inline">LED 1</div>
+          </div>
+          <div>
+              <div data-type="symbol" data-device="dummy1" data-get-on='["off","green","orange","red"]' data-on-colors='["GoldenRod","SeaGreen","GoldenRod","Crimson"]' data-icons='["fa-bell","fa-bell","fa-bell"]' class="narrow inline"></div>
+              <div data-type="label" class="w2x left-align darker inline">LED 3</div>
+          </div>
+          <div>
+              <div data-type="symbol" data-device="og.sz.led.eg.fl.tuer5" data-get-on='["off","green","orange","red"]' data-on-colors='["#505050","SeaGreen","GoldenRod","Crimson"]' data-icons='["fa-bell","fa-bell","fa-bell"]' class="narrow inline"></div>
+              <div data-type="label" class="w2x left-align darker inline">LED 5</div>
+          </div>
+          <div>
+              <div data-type="symbol" data-device="og.sz.led.eg.fl.tuer7" data-get-on='["off","green","orange","red"]' data-on-colors='["#505050","SeaGreen","GoldenRod","Crimson"]' data-icons='["fa-bell","fa-bell","fa-bell"]' class="narrow inline"></div>
+              <div data-type="label" class="w2x left-align darker inline">LED 7</div>
+          </div>
+      </div>
+      <div class="inline">
+          <div>
+              <div data-type="label" class="w2x right-align darker inline">LED 2</div>
+              <div data-type="symbol" data-device="og.sz.led.eg.fl.tuer2" data-get-on='["off","green","orange","red"]' data-on-colors='["#505050","SeaGreen","GoldenRod","Crimson"]' data-icons='["fa-bell","fa-bell","fa-bell"]' class="narrow inline"></div>
+          </div>
+          <div>
+              <div data-type="label" class="w2x right-align darker inline">LED 4</div>
+              <div data-type="symbol" data-device="dummy1" data-get-on='["off","green","orange","red"]' data-on-colors='["Crimson","SeaGreen","GoldenRod","Crimson"]' data-icons='["fa-bell","fa-bell","fa-bell"]' class="narrow inline"></div>
+          </div>
+          <div>
+              <div data-type="label" class="w2x right-align darker inline">LED 6</div>
+              <div data-type="symbol" data-device="dummy1" data-get-on='["off","green","orange","red"]' data-on-colors='["GoldenRod","SeaGreen","GoldenRod","Crimson"]' data-icons='["fa-bell","fa-bell","fa-bell"]' class="narrow inline"></div>
+          </div>
+          <div>
+              <div data-type="label" class="w2x right-align darker inline">LED 8</div>
+              <div data-type="symbol" data-device="og.sz.led.eg.fl.tuer8" data-get-on='["off","green","orange","red"]' data-on-colors='["#505050","SeaGreen","GoldenRod","Crimson"]' data-icons='["fa-bell","fa-bell","fa-bell"]' class="narrow inline"></div>
+          </div>
+      </div>
+</li>
+</ul>
+</div>
+  </body>
+    <script src="/fhem/pgm2/jquery.min.js"></script>
+    <script src="/fhem/tablet/lib/jquery.toast.min.js"></script>
+    <script src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
+    <script src="/fhem/tablet/js/fhem-tablet-ui.min.js"></script>
+</html>

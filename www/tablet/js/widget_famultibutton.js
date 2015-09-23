@@ -54,18 +54,22 @@ var widget_famultibutton = $.extend({}, widget_widget, {
     showMultiStates : function(elem,states,state){
 
         var icons=elem.data('icons');
-        var colors=elem.data('on-colors');
-        var bgcolors=elem.data('on-background-colors');
+        var bgicons=elem.data('background-icons');
+        var colors=elem.data('colors') || elem.data('on-colors');
+        var bgcolors=elem.data('background-colors') || elem.data('on-background-colors');
 
         // if data-icons isn't set, try using data-icon or fa-power-off instead
         if(typeof icons == 'undefined') {
             icons = new Array(elem.data('icon')||'fa-power-off');
         }
+        // if data-background-icons isn't set, try using data-background-icon or '' instead
+        if(typeof bgicons == 'undefined') {
+            bgicons = new Array(elem.data('background-icon')||'');
+        }
         // if data-colors isn't set, try using data-on-color, data-off-color or #505050 instead
         if(typeof colors == 'undefined') {
             colors = new Array(elem.data('on-color')||elem.data('off-color')||'#505050');
         }
-        
         // if data-background-colors isn't set, try using data-on-background-color, data-off-background-color or #505050 instead
         if(typeof bgcolors == 'undefined') {
             bgcolors = new Array(elem.data('on-background-color')||elem.data('off-background-color')||'#505050');
@@ -76,6 +80,9 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         for(var s=0; s<states.length; s++) {
             if(typeof icons[s] == 'undefined') {
                 icons[s]=icons[s>0?s-1:0];
+            }
+            if(typeof bgicons[s] == 'undefined') {
+                bgicons[s]=bgicons[s>0?s-1:0];
             }
             if(typeof colors[s] == 'undefined') {
                 colors[s]=colors[s>0?s-1:0];
@@ -101,6 +108,9 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             .addClass(icons[idx])
             .css( "color", colors[idx] );
             var bgelm=elem.children().filter('#bg');
+            bgelm.removeClass()
+            .addClass('fa fa-stack-2x')
+            .addClass(bgicons[idx])
             bgelm.css( "color", bgcolors[idx]);
             
         }
@@ -216,7 +226,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             if ( $(this).data('get')==par) {
                 var state = getDeviceValue( $(this), 'get' );
                 if (state) {
-                    var states=$(this).data('get-on');
+                    var states=$(this).data('states') || $(this).data('get-on');
                     if ( $.isArray(states)) {
                         base.showMultiStates($(this),states,state);
                     } else {

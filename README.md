@@ -116,41 +116,50 @@ data-set-off    : 		Value for OFF
 ####Switch widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
 - **data-set**      : name of the reading to set from FHEM (default '')
-- **data-get-on**   : value for ON status to get or an array of states (default 'on')
-- **data-get-off**  : value for OFF status to get. (default 'off')
 - **data-set-on**   : value for ON status to set. (default: value of data-get-on)
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
 - **data-cmd**      : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
-- **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
-- **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
-- **data-on-background-color** : color of ON state (default '#aa6900')
-- **data-off-background-color** : color of OFF state (default '#505050')
-- **data-on-color** : color of ON state (default '#aa6900')
-- **data-off-color**: color of Off state (default '#505050')
 - **data-doubleclick**: timeout to wait for x millisecondes click or touch. '0' disables the doubleclick feature. (default '0')
-- **data-icons**    : array of icons related to the data-get-on array
-- **data-on-colors**: array of colors related to the data-get-on array
-- **data-on-background-colors**: array of colors related to the data-get-on array
+dual state notation
+- **data-get-on**   : value for ON status to get or an array of states (default 'on')
+- **data-get-off**  : value for OFF status to get. (default 'off')
+- **data-icon**     			: name of the font-awesome icon. (default: fa-lightbulb-o)
+- **data-background-icon** 		: name of the font-awesome icon for background (default 'fa-circle')
+- **data-on-background-color** 	: color of ON state (default '#aa6900')
+- **data-off-background-color** : color of OFF state (default '#505050')
+- **data-on-color** 			: color of ON state (default '#aa6900')
+- **data-off-color**			: color of Off state (default '#505050')
+multi state notation
+- **data-states**   			: array of states 
+- **data-icons**    			: array of icons related to the data-states array 
+- **data-background-icons** 	: array of background icons related to the data-states array 
+- **data-colors**				: array of colors related to the data-states array
+- **data-background-colors**	: array of background colors related to the data-states array
+- **class**     			: readonly, 
 
 data-get-on and data-get-off accept also RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
 data-get-off="!on" means accept all but the data-get-on value (negation)
 data-set-off="" suppress sending off
 
 ####Symbol widgets
-- **data-get**      : name of the reading to get from FHEM (default 'STATE')
-- **data-get-on**   : value for ON status to get or an array of states (default 'open')
-- **data-get-off**  : value for OFF status to get. (default 'closed')
-- **data-icon**     : name of the font-awesome icon.  (default 'ftui-window')
-- **data-background-icon** : name of the font-awesome icon for background (default '')
-- **data-on-background-color** : color of ON state (default '#aa6900')
+- **data-get**      			: name of the reading to get from FHEM (default 'STATE')
+dual state notation
+- **data-get-on**   			: value for ON status to get or an array of states (default 'open')
+- **data-get-off**  			: value for OFF status to get. (default 'closed')
+- **data-icon**     			: name of the font-awesome icon.  (default 'ftui-window')
+- **data-background-icon** 		: name of the font-awesome icon for background (default '')
+- **data-on-background-color** 	: color of ON state (default '#aa6900')
 - **data-off-background-color** : color of OFF state (default '#505050')
-- **data-on-color** : color of ON state (default '#aa6900')
-- **data-off-color**: color of Off state (default '#505050')
-- **data-icons**    : array of icons related to the data-get-on array
-- **data-on-colors**: array of colors related to the data-get-on array
-- **class**     	: readonly, 
+- **data-on-color** 			: color of ON state (default '#aa6900')
+- **data-off-color**			: color of Off state (default '#505050')
+multi state notation
+- **data-states**   			: array of states 
+- **data-icons**    			: array of icons related to the data-states array 
+- **data-background-icons** 	: array of icons related to the data-states array 
+- **data-colors**				: array of colors related to the data-states array
+- **data-background-colors**	: array of colors related to the data-states array
 
-data-get-on and data-get-off accept also RegEx values.
+data-get-on,data-get-off and data-states accept also RegEx values.
 The value for one icon can also contain an additional animatation CSS name, e.g. "fa-exclamation-triangle fa-blink" for a blinking symbol
 
 ####Label widgets
