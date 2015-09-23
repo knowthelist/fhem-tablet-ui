@@ -57,7 +57,7 @@ Change the widgets you have and want to see on the dashboard
 ```
 Widgets
 -------
-Currently there are 16 types of widgets in the base installation.
+Currently there are more then 20 types of widgets in the base installation.
 - **thermostat** : dial for heater thermostates to set desired value and show current value
 - **switch** : Toggle any command to FHEM (e.g. on / off)
 - **label** : show state as text (colourable)
@@ -142,6 +142,7 @@ multi state notation
 data-get-on and data-get-off accept also RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
 data-get-off="!on" means accept all but the data-get-on value (negation)
 data-set-off="" suppress sending off
+See [examples](#switch) of Switch
 
 ####Symbol widgets
 - **data-get**      			: name of the reading to get from FHEM (default 'STATE')
@@ -165,6 +166,7 @@ multi state notation
 
 data-get-on,data-get-off and data-states accept also RegEx values.
 The value for one icon can also contain an additional animatation CSS name, e.g. "fa-exclamation-triangle fa-blink" for a blinking symbol
+See [examples](#symbol) of Symbol
 
 ####Label widgets
 - **data-get**  : name of the reading to get from FHEM
@@ -177,6 +179,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
 - **data-substitution**: regex-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
 - **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x
+See [examples](#label) of Label
 
 ####Select widgets
 - **data-get**  : name of the reading that get the selected item of the list
@@ -311,7 +314,6 @@ If 'data-url' is not set, then the URL for image src is built from: data-path + 
 - **data-get-off**  : value for STOP status to get. (default 'off')
 - **data-volume**   : name of the reading to get the volume value (0-100) (default: volume)
 
-
 ####Pagetab widgets
 - **data-url**		: URL of the new page to show
 - **data-icon**     : name of the font-awesome icon. (default 'fa-power-off')
@@ -353,7 +355,7 @@ The chart gets updated every time the data-get reading is changed and after each
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
 
-It's important that a <div class="dialog"> inside the widget can be found. See the [basic structure](#dialog) of popup
+It's important that a ```html<div class="dialog">``` inside the widget can be found. See the [basic structure](#dialog) of popup
 
 ####Datetimepicker widgets
 same as Label Widgets
