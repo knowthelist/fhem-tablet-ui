@@ -120,7 +120,8 @@ data-set-off    : 		Value for OFF
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
 - **data-cmd**      : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-doubleclick**: timeout to wait for x millisecondes click or touch. '0' disables the doubleclick feature. (default '0')
-dual state notation
+
+dual state notation   
 - **data-get-on**   : value for ON status to get or an array of states (default 'on')
 - **data-get-off**  : value for OFF status to get. (default 'off')
 - **data-icon**     			: name of the font-awesome icon. (default: fa-lightbulb-o)
@@ -129,7 +130,8 @@ dual state notation
 - **data-off-background-color** : color of OFF state (default '#505050')
 - **data-on-color** 			: color of ON state (default '#aa6900')
 - **data-off-color**			: color of Off state (default '#505050')
-multi state notation
+
+multi state notation   
 - **data-states**   			: array of states 
 - **data-icons**    			: array of icons related to the data-states array 
 - **data-background-icons** 	: array of background icons related to the data-states array 
@@ -143,6 +145,7 @@ data-set-off="" suppress sending off
 
 ####Symbol widgets
 - **data-get**      			: name of the reading to get from FHEM (default 'STATE')
+
 dual state notation
 - **data-get-on**   			: value for ON status to get or an array of states (default 'open')
 - **data-get-off**  			: value for OFF status to get. (default 'closed')
@@ -152,7 +155,8 @@ dual state notation
 - **data-off-background-color** : color of OFF state (default '#505050')
 - **data-on-color** 			: color of ON state (default '#aa6900')
 - **data-off-color**			: color of Off state (default '#505050')
-multi state notation
+
+multi state notation   
 - **data-states**   			: array of states 
 - **data-icons**    			: array of icons related to the data-states array 
 - **data-background-icons** 	: array of icons related to the data-states array 
@@ -349,7 +353,7 @@ The chart gets updated every time the data-get reading is changed and after each
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
 
-It's important that a <div class="dialog"> inside the widget can be found. See [basic structure](#Dialog) of popup
+It's important that a <div class="dialog"> inside the widget can be found. See the [basic structure](#dialog) of popup
 
 ####Datetimepicker widgets
 same as Label Widgets
@@ -432,18 +436,18 @@ This font icons has the prefix 'fs-' and 'oa-'
 Color configuration
 -------
 It is possible to specify color value in Hex or RBG style.
-Hex: #A3CFA3
-RBG: rgb(163, 207, 163) 
+- Hex: #A3CFA3
+- RBG: rgb(163, 207, 163) 
 
 Try to avoid flashy color like #ff0000 for red or #00ff00 for green. 
 It is always better to stay below #D0 (208) values for each primary color.
 
 Recommended colors:
-Orange: #aa6900
-Red:	#ad3333
-Green:	#32a054
-Blue:	#6699FF
-Gray:	#8C8C8C
+- Orange: 	#aa6900
+- Red:		#ad3333
+- Green:	#32a054
+- Blue:		#6699FF
+- Gray:		#8C8C8C
 
 You could use this color picker: http://www.w3schools.com/tags/ref_colorpicker.asp
 
