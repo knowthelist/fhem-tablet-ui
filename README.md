@@ -349,7 +349,7 @@ The chart gets updated every time the data-get reading is changed and after each
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
 
-It's important that a <div class="dialog"> inside the widget can be found. See [Dialog][] basic structure of popup
+It's important that a <div class="dialog"> inside the widget can be found. See [basic structure](Dialog) of popup
 
 ####Datetimepicker widgets
 same as Label Widgets
@@ -994,7 +994,7 @@ Multiple pagetabs in a template file: menu.html
 </li>
 ```
 
-Circle Menu
+###Circle Menu
 -------
 Cover a lot of other button behind one single button 
 
@@ -1030,7 +1030,7 @@ Cover a lot of other button behind one single button
 ![](http://knowthelist.github.io/fhem-tablet-ui/circle_menu_open.png)
 
 
-Playstream
+###Playstream
 -------
 Create a simple button to play a webradio stream directly on the tablet
 
@@ -1049,7 +1049,7 @@ Use a FHEM dummy device to start/stop stream and set volume
 </div>
 ```
       
-Select
+###Select
 -------
 Create two comboboxes to select the inputs of a two zone AV receiver. List for Zone2 is fix, list for Zone1 will be received from FHEM.
 
@@ -1064,7 +1064,7 @@ Create two comboboxes to select the inputs of a two zone AV receiver. List for Z
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/select_2x.png)    
 
-### Dialog ###
+###Dialog
 -------
 Basic structure for a popup:
 ```html
