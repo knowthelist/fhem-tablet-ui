@@ -349,7 +349,7 @@ The chart gets updated every time the data-get reading is changed and after each
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
 
-It's important that a <div class="dialog"> inside the widget can be found. See [basic structure](Dialog) of popup
+It's important that a <div class="dialog"> inside the widget can be found. See [basic structure](#Dialog) of popup
 
 ####Datetimepicker widgets
 same as Label Widgets
