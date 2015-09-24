@@ -98,15 +98,15 @@ General attribute meaning
 - widget attributes
 **data-cmd data-device data-set data-set-on**
 
-- receive data
-data-get		: 		Reading name
-data-get-on     : 		Value for ON
-data-get-off    : 		Value for OFF
+**receive data**
+- data-get		: 		Reading name
+- data-get-on   : 		Value for ON
+- data-get-off  : 		Value for OFF
 
-- send data
-data-set		: 		Reading name
-data-set-on     : 		Value for ON
-data-set-off    : 		Value for OFF
+**send data**
+- data-set		: 		Reading name
+- data-set-on   : 		Value for ON
+- data-set-off  : 		Value for OFF
 
 ####All widgets
 - **data-type**      : widget type
@@ -118,7 +118,7 @@ data-set-off    : 		Value for OFF
 - **data-set**      : name of the reading to set from FHEM (default '')
 - **data-set-on**   : value for ON status to set. (default: value of data-get-on)
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
-- **data-cmd**      : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-cmd**      : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-doubleclick**: timeout to wait for x millisecondes click or touch. '0' disables the doubleclick feature. (default '0')
 
 dual state notation   
@@ -142,6 +142,7 @@ multi state notation
 data-get-on and data-get-off accept also RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
 data-get-off="!on" means accept all but the data-get-on value (negation)
 data-set-off="" suppress sending off
+
 See [examples](#switch) of Switch
 
 ####Symbol widgets
@@ -166,6 +167,7 @@ multi state notation
 
 data-get-on,data-get-off and data-states accept also RegEx values.
 The value for one icon can also contain an additional animatation CSS name, e.g. "fa-exclamation-triangle fa-blink" for a blinking symbol
+
 See [examples](#symbol) of Symbol
 
 ####Label widgets
@@ -179,24 +181,25 @@ See [examples](#symbol) of Symbol
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
 - **data-substitution**: regex-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
 - **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x
+
 See [examples](#label) of Label
 
 ####Select widgets
 - **data-get**  : name of the reading that get the selected item of the list
-- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
+- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-list** : name of the reading to get a :-separated list from FHEM
 - **data-items**: a array of fix items to show in the selection box and send to FHEM  (alternative if data-list is empty)
 - **data-alias**: a array of fix names to show only in the selection box as an alias to the real items
-- **data-cmd**  : name of the command to send to FHEM (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-cmd**  : name of the command to send to FHEM (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-quote** : characters to enclose the send value. (default '')
 - **class**     : wider, w1x, w2x, w3x, large, big
 
 ####Push widgets
-- **data-set**    : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
+- **data-set**    : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-set-on** : value (or an array of values) to send when the the button get pressed. (default '')
 - **data-icon**   : name of the font-awesome icon. 
 - **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
-- **data-cmd**  : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-cmd**  : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-doubleclick**: timeout to wait for a second click or touch. '0' disables the doubleclick feature. (default '0')
 - **data-countdown**: secondes for the countdown progress control (default: autodetect from 'on-for-timer' command)
 
@@ -205,7 +208,7 @@ See [examples](#label) of Label
 ####Thermostat widgets
 - **data-get**   : name of the reading to get from FHEM (default 'desired-temp')
 - **data-temp**  : name of the reading for measured temperature of thermostates (default 'measured-temp')
-- **data-set**   : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default 'desired-temp')
+- **data-set**   : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default 'desired-temp')
 - **data-valve** : reading for valve position of thermostates
 - **data-min**   : minimal value to set (default 10)
 - **data-max**   : maximal value to set (default 30)
@@ -216,8 +219,8 @@ See [examples](#label) of Label
 
 ####Volume widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
-- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
-- **data-cmd**  : name of the command (\<command\> \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
+- **data-cmd**  : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
 - **data-tickstep** : distance between ticks (default 4|20)
@@ -226,7 +229,7 @@ See [examples](#label) of Label
 
 ####Homestatus widget
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
-- **data-set**      : name of the reading to set on FHEM (\<command\> \<device\> \<reading\> \<value\>) (default '')
+- **data-set**      : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-get-on**   : array of states using for get (default ['1','2','3','4'])
 - **data-set-on**   : array of states using for set. (default: value of data-get-on)
 - **data-alias**	: array of fix names to show only in the UI as an alias to the real states
@@ -242,11 +245,11 @@ See [examples](#label) of Label
 ####Slider widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
-- **data-cmd**  : name of the command (\<command\> \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-cmd**  : name of the command (**\<command\>** \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 100)
-- **data-on**   : value where the slider moves to max  [RegEx] (default 'on')
-- **data-off**  : value where the slider moves to min  [RegEx] (default 'off')
+- **data-on**   : value or RegEx where the slider moves to max  (default 'on') 
+- **data-off**  : value or RegEx where the slider moves to min  (default 'off')
 - **data-part** : part number of the space separated value to show or an RegEx
 - **data-value**: show the value in a text box (default 'false')
 - **data-width**: width for horizontal sliders (default '120px', for mini '60px')
@@ -279,21 +282,26 @@ The slider supports tap to target only if the CSS class 'tap' is added.
 - **data-set-on**   : value for ON status to set. (default: value of data-get-on)
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
 - **data-cmd**      : name of the command (**\<command\>** \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
-- **data-dim**      : name of the reading responsible for dim  (\<command\> \<device\> **\<reading\>** \<value\>) (default: value of data-set)
+- **data-dim**      : name of the reading responsible for DIM  (\<command\> \<device\> **\<reading\>** \<value\>) (default: value of data-set)
 - **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
 
-If 'data-dim' equal 'data-set' the Dimmer widget sends the dim value for 'on', otherwise 'data-set' and 'data-set-on' is used. 
+To change the dim value: push the button and slide up or down.
+
+In simple mode (no 'data-dim' parameter is given) the dimmer toggles between OFF value and the DIM value.  
+In extented mode ('data-dim' parameter is given and not equal to 'data-set') the DIM value is send to /received from this reading 
+and the button is only used for ON / OFF.
 
 ####Image widgets
 - **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')
-- **data-path**     : first part of the URL of the image to show [for usage data-device + data-get] (default '')
-- **data-suffix**   : last part of the URL of the image to show [for usage data-device + data-get] (default '')
+- **data-path**     : first part of the URL of the image to show  (default '')
+- **data-suffix**   : last part of the URL of the image to show (default '')
 - **data-size**     : width of the image in px or %, the height scales proportionally. (default: 50%)
-- **data-url**      : URL of the image to show (use data-url + data-refresh or data-device + data-get, not both)
+- **data-url**      : URL of the image to show 
 - **data-refresh**  : Interval in seconds for image refresh for usage together with data-url (default: 900)
 - **class**			: nocache
 
 If 'data-url' is not set, then the URL for image src is built from: data-path + valueof data-get + data-suffix
+Use data-url + data-refresh or data-device + data-get, not both.
 
 ####Weather widgets
 - **data-get**      : name of the reading to get the weather literal from FHEM (default 'STATE')
@@ -355,7 +363,7 @@ The chart gets updated every time the data-get reading is changed and after each
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
 
-It's important that a ```html<div class="dialog">``` inside the widget can be found. See the [basic structure](#dialog) of popup
+It's important that a ```<div class="dialog">``` inside the widget can be found. See the [basic structure](#dialog) of popup
 
 ####Datetimepicker widgets
 same as Label Widgets
@@ -380,9 +388,6 @@ The layout, look and behavior can be influenced by the class attribute.
 
 not all widgets support all classes
 - readonly		: changing of state is not allowed 
-- wider			: 15px extra space for the widget all around 
-- narrow		: shorter distant to the widget above 
-- fullsize		: 100% in width and height
 - w1x, w2x, w3x	: set the widget to a fix width: 1x, 2x, 3x width
 - small			: font 80% size (label), small diameter for volume widget
 - mini			: lowest diameter for volume widget
@@ -405,6 +410,12 @@ not all widgets support all classes
 - doublebox-h	: container to place 2 small widgets (e.g. switch) side by side
 - triplebox-v   : container to place 3 small widgets (e.g. switch) one above the other 
 - timestamp		: deliver the date time for the reading instead of the value
+- blink         : blink animatation for label or symbol widget
+- rotate-90		: rotate (e.g an image) for 90 degres  
+
+Positioning:
+- conatainer	: new box or new row
+- col-x-y 		: new column with x/y of width (col-1-3,col-2-3,col-1-2,col-1-4,col-1-8,col-1-5,col-2-5,col-3-5,col-4-5)
 - inline		: positioning elements in a row, no line break
 - top-space     : 15px extra on top (top-space-2x -> 30px; top-space-3x -> 45px)
 - left-space	: 15px extra on left (left-space-2x -> 30px; left-space-3x -> 45px)
@@ -413,9 +424,9 @@ not all widgets support all classes
 - centered		: horizontal centered
 - left-align	: align text left
 - right-align	: align text right
-- blink         : blink animatation for label or symbol widget
-- rotate-90		: rotate (e.g an image) for 90 degres  
-
+- wider			: 15px extra space for the widget all around 
+- narrow		: shorter distant to the widget above 
+- fullsize		: 100% in width and height
 
 Icon configuration
 -------
@@ -481,6 +492,47 @@ Add this to adjust the size of the Gridster margin
 
 Examples
 -------
+
+**Position grid** t
+Two main boxes left and right. The first row of the left box has 3 columns. The second row has 2 columns.  
+
+```html
+<li data-row="1" data-col="4" data-sizex="5" data-sizey="3">
+   <header>EXAMPLE3</header>
+   <div class="container top-space">
+        <div class="col-1-2">
+            <div class="container top-space">
+                <div class="col-1-3">
+                    <div data-type="switch" data-device="Switch1" data-icon="fa-music"></div>
+                    <div data-type="label" class="">Station1</div>
+                </div>
+                <div class="col-1-3">
+                    <div data-type="switch" data-device="Switch2" data-icon="fa-music"></div>
+                    <div data-type="label" class="">Station2</div>
+                </div>
+                <div class="col-1-3">
+                    <div data-type="switch" data-device="Switch3" data-icon="fa-music"></div>
+                    <div data-type="label" class="">Station3</div>
+                </div>
+             </div>
+             <div class="container top-space">
+                 <div class="col-1-2">
+                     <div data-type="symbol" data-device="Switch1" data-icon="fa-battery-4"></div>
+                     <div data-type="label" class="">Value1</div>
+                 </div>
+                 <div class="col-1-2">
+                     <div data-type="symbol" data-device="Switch1" data-icon="fa-battery-4"></div>
+                     <div data-type="label" class="">Value2</div>
+                 </div>
+              </div>
+        </div>
+        <div class="col-1-2">
+            <div data-type="volume" data-device='Volume1' class="" ></div>
+        </div>
+   </div>
+</li>
+```
+
 ####Thermostat 
 Configure as data-device='...' that item which delivers temp and desired-temp as reading.
 
@@ -637,7 +689,8 @@ temperature	20.1
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/square-push-v.png)
 
-**Example** a push button to switch a lamp on for 5 minutes. The control shows a progress circle while countdown is running.
+**Example** for a push button to switch a lamp on for 5 minutes. The control shows a progress circle while countdown is running.
+The countdown time is auto detected via the on-for-timer command. A other value can be set with the parameter data-countdown
 ```html
 <div data-type="push" data-device="MyLamp" data-set-on="on-for-timer 300"  
 	 class="cell" ></div>

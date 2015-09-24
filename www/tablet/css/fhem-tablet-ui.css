@@ -57,7 +57,51 @@ body {
     content:"";
     display:table;
     clear:both;
+    text-align: center;
+    vertical-align: middle;
 }
+
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+[class*='col-'] {
+  float: left;
+}
+
+.col-2-3 {
+  width: 66.66%;
+}
+.col-1-3 {
+  width: 33.33%;
+}
+.col-3-4 {
+  width: 75%;
+}
+.col-1-2,.col-2-4 {
+  width: 50%;
+}
+.col-1-4 {
+  width: 25%;
+}
+.col-1-8 {
+  width: 12.5%;
+}
+.col-1-5 {
+  width: 20%;
+}
+.col-2-5 {
+  width: 40%;
+}
+.col-3-5 {
+  width: 60%;
+}
+.col-4-5 {
+  width: 80%;
+}
+
 
 .bold {
     font-weight: bold !important;
@@ -97,6 +141,7 @@ body {
 .circlemenu {
     min-height: 52px;
     min-width: 52px;
+    margin-bottom: -3px;
     display: inline-block;
 }
 
@@ -152,23 +197,23 @@ body {
 
 .top-narrow-10{ margin-top: -10px !important; }
 .top-narrow{ margin-top: -15px !important; }
-.top-narrow-2x{ margin-top: -30px !important; }
+.top-narrow-2x,.top-narrow-2{ margin-top: -30px !important; }
 
 .top-space{ margin-top: 15px !important; }
-.top-space-2x{ margin-top: 30px !important; }
-.top-space-3x{ margin-top: 45px !important; }
+.top-space-2x,.top-space-2{ margin-top: 30px !important; }
+.top-space-3x,.top-space-3{ margin-top: 45px !important; }
 
 .left-space{ margin-left: 15px !important; }
-.left-space-2x{ margin-left: 30px !important; }
-.left-space-3x{ margin-left: 45px !important; }
+.left-space-2x,.left-space-2{ margin-left: 30px !important; }
+.left-space-3x,.left-space-3{ margin-left: 45px !important; }
 
 .right-space{ margin-right: 15px !important; }
-.right-space-2x{ margin-right: 30px !important; }
-.right-space-3x{ margin-right: 45px !important; }
+.right-space-2x,.right-space-2{ margin-right: 30px !important; }
+.right-space-3x,.right-space-3{ margin-right: 45px !important; }
 
 .bottom-space{ margin-bottom: 15px !important; }
-.bottom-space-2x{ margin-bottom: 30px !important; }
-.bottom-space-3x{ margin-bottom: 45px !important; }
+.bottom-space-2x,.bottom-space-2{ margin-bottom: 30px !important; }
+.bottom-space-3x,.bottom-space-3{ margin-bottom: 45px !important; }
 
 .darker { color: #8C8C8C; }
 .thin { font-weight: lighter; }
@@ -421,6 +466,14 @@ select {
     min-width: 70px;
     max-width: 70px;
     width: 70px;
+}
+
+[data-type="select"] {
+    margin-top: 10px;
+}
+
+[class*='col-'] > .select{
+  width: 90%;
 }
 
 .select{

@@ -51,7 +51,7 @@ polyline {
 .switch.on{color:#eee;background-color:#0088CC;}
 .switch.off{color:#eee;background-color:#aaa;}
 .push.on{color:#0088CC;background-color:#0088CC;}
-.push.off{color:#999;background-color:#999;}
+.push.off{color:#888;background-color:#888;}
 .thermostat.tkcolor{color:#888;}
 .thermostat.fgcolor{color:#555;}
 .homestatus.fgcolor{color:#0088CC;}

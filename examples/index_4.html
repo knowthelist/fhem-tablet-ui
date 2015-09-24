@@ -1,0 +1,100 @@
+<html>
+<title>FHEM</title>
+<head>
+   <!--
+    /* FHEM tablet ui */
+    /*
+    * Just another dashboard for FHEM
+    *
+    * Version: 1.4.3
+    * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
+    * URL: https://github.com/knowthelist/fhem-tablet-ui
+    *
+    * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
+    * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+    *
+    * - create a new folder named 'tablet' in /<fhem-path>/www
+    * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+    * - add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
+    * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+    */
+   -->
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+   <meta name="widget_base_width" content="74">
+   <meta name="widget_base_height" content="71">
+   <meta name="mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+   <meta name="debug" content="0"> <!-- 1=output to console;0=not output -->
+
+   <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
+   <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.min.css" />
+   <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
+   <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
+
+</head>
+<body>
+<div class="gridster">
+<ul>
+  <li data-row="1" data-col="1" data-sizex="3" data-sizey="3">
+    <header>EXAMPLE1</header>
+    <!-- place your widget here -->
+</li>
+<li data-row="4" data-col="1" data-sizex="3" data-sizey="4">
+  <header>EXAMPLE2</header>
+  <!-- place your widget here -->
+</li>
+<li data-row="1" data-col="4" data-sizex="5" data-sizey="3">
+   <header>EXAMPLE3</header>
+   <div class="container top-space">
+        <div class="col-1-2">
+            <div class="container top-space">
+                <div class="col-1-3">
+                    <div data-type="switch" data-device="Switch1" data-icon="fa-music"></div>
+                    <div data-type="label" class="">Station1</div>
+                </div>
+                <div class="col-1-3">
+                    <div data-type="switch" data-device="Switch2" data-icon="fa-music"></div>
+                    <div data-type="label" class="">Station2</div>
+                </div>
+                <div class="col-1-3">
+                    <div data-type="switch" data-device="Switch3" data-icon="fa-music"></div>
+                    <div data-type="label" class="">Station3</div>
+                </div>
+             </div>
+             <div class="container top-space">
+                 <div class="col-1-2">
+                     <div data-type="symbol" data-device="Switch1" data-icon="fa-battery-4"></div>
+                     <div data-type="label" class="">Value1</div>
+                 </div>
+                 <div class="col-1-2">
+                     <div data-type="symbol" data-device="Switch1" data-icon="fa-battery-4"></div>
+                     <div data-type="label" class="">Value2</div>
+                 </div>
+              </div>
+        </div>
+        <div class="col-1-2">
+            <div data-type="volume" data-device='Volume1' class="" ></div>
+        </div>
+   </div>
+</li>
+<li data-row="1" data-col="9" data-sizex="4" data-sizey="3">
+    <header>EXAMPLE4</header>
+    <!-- place your widget here -->
+</li>
+<li data-row="4" data-col="9" data-sizex="4" data-sizey="4">
+  <header>EXAMPLE5</header>
+  <!-- place your widget here -->
+</li>
+<li data-row="4" data-col="4" data-sizex="5" data-sizey="4">
+  <header>EXAMPLE6</header>
+  <!-- place your widget here -->
+</li>
+</ul>
+</div>
+</body>
+  <script src="/fhem/pgm2/jquery.min.js"></script>
+  <script src="/fhem/tablet/lib/jquery.toast.min.js"></script>
+  <script src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
+  <script src="/fhem/tablet/js/fhem-tablet-ui.min.js"></script>
+</html>
