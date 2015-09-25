@@ -5,8 +5,9 @@ DIR www/tablet/js
 DIR www/tablet/lib
 UPD 2015-09-22_00:18:22 415 www/tablet/css/fhem-blue-ui.css
 UPD 2015-09-22_00:18:22 415 www/tablet/css/fhem-green-ui.css
-UPD 2015-09-21_17:49:24 1266 www/tablet/css/fhem-mobil-ui.css
-UPD 2015-09-22_00:18:22 10216 www/tablet/css/fhem-tablet-ui.css
+UPD 2015-09-23_22:00:38 1266 www/tablet/css/fhem-mobil-ui.css
+UPD 2015-09-23_21:50:02 10957 www/tablet/css/fhem-tablet-ui.css
+UPD 2015-09-23_21:50:22 8580 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2015-09-22_00:18:22 127396 www/tablet/fonts/fhemSVG.eot
 UPD 2015-09-22_00:18:22 528460 www/tablet/fonts/fhemSVG.svg
 UPD 2015-09-22_00:18:22 127232 www/tablet/fonts/fhemSVG.ttf

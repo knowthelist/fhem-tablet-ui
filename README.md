@@ -414,7 +414,7 @@ not all widgets support all classes
 - rotate-90		: rotate (e.g an image) for 90 degres  
 
 Positioning:
-- conatainer	: new box or new row
+- container		: new box or new row
 - col-x-y 		: new column with x/y of width (col-1-3,col-2-3,col-1-2,col-1-4,col-1-8,col-1-5,col-2-5,col-3-5,col-4-5)
 - inline		: positioning elements in a row, no line break
 - top-space     : 15px extra on top (top-space-2x -> 30px; top-space-3x -> 45px)
@@ -493,7 +493,7 @@ Add this to adjust the size of the Gridster margin
 Examples
 -------
 
-**Position grid** t
+**Position grid** 
 Two main boxes left and right. The first row of the left box has 3 columns. The second row has 2 columns.  
 
 ```html
