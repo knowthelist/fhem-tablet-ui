@@ -156,6 +156,7 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.1);
   background-color:#2A2A2A;
   background-clip: padding-box;
+  overflow: auto;
 }
 
 .dialog header{
@@ -177,6 +178,14 @@ body {
   -webkit-transition: color 1s ease;
   -moz-transition: color 1s ease;
   transition: color 1s ease;
+}
+
+.events {
+  width: 90%;
+  height: 90%;
+  text-align:left;
+  margin-left:20px;
+  overflow: auto;
 }
 
 [data-type]:not([data-type="label"]):not(.readonly):not([data-type="symbol"]){
