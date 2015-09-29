@@ -34,7 +34,9 @@ var widget_push = $.extend({}, widget_famultibutton, {
             base.init_ui($(this));
             var elem = $(this); var secondes;
             $(this).bind("toggleOn", function( event ){
-                if (elem.data("set-on") && getPart(elem.data("set-on"),1)=="on-for-timer")
+                var seton=elem.data("set-on");
+                if (seton && !$.isNumeric(seton)
+                        && getPart(seton,1)=="on-for-timer")
                     secondes = getPart(elem.data("set-on"),2);
                 if (elem.data("countdown"))
                     secondes = elem.data("countdown");
