@@ -31,8 +31,8 @@ UPD 2015-09-22_00:18:22 1517848 www/tablet/fonts/openautomation.svg
 UPD 2015-09-22_00:18:22 359552 www/tablet/fonts/openautomation.ttf
 UPD 2015-09-22_00:18:22 359628 www/tablet/fonts/openautomation.woff
 UPD 2015-09-22_00:18:22 14267 www/tablet/index-example.html
-UPD 2015-09-29_19:35:25 19871 www/tablet/js/fhem-tablet-ui.js
-UPD 2015-09-29_19:45:54 10483 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2015-09-30_01:09:53 20209 www/tablet/js/fhem-tablet-ui.js
+UPD 2015-09-30_01:14:14 10559 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2015-09-21_19:34:48 1635 www/tablet/js/widget_circlemenu.js
 UPD 2015-09-22_00:18:22 2017 www/tablet/js/widget_datetimepicker.js
 UPD 2015-09-22_00:18:22 5072 www/tablet/js/widget_dimmer.js
