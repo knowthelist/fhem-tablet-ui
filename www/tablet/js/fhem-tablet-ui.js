@@ -44,7 +44,9 @@ var plugins = {
         for (var device in devices) {
             var params = deviceStates[device];
             for (var reading in params) {
-                module.update(device,reading);
+                if(readings[reading]){
+                    module.update(device,reading);
+                }
             }
         }
         //request missing readings

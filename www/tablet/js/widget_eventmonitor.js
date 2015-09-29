@@ -5,8 +5,11 @@ if(typeof widget_widget == 'undefined') {
 var widget_eventmonitor = $.extend({}, widget_widget, {
    widgetname : 'eventmonitor',
    init_attr: function(elem) {
-       elem.data('height',     elem.data('height')                                 || '450px');
-       elem.data('width',      elem.data('width')                                  || '750px');
+       elem.data('height',              elem.data('height')                         || '450px');
+       elem.data('width',               elem.data('width')                          || '750px');
+       elem.data('device-filter',       elem.data('device-filter')                  || '.*');
+       elem.data('reading-filter',      elem.data('reading-filter')                 || '.*');
+       elem.data('max-items',           elem.data('max-items')                      || 100);
    },
    init: function () {
        var base=this;
@@ -66,13 +69,18 @@ var widget_eventmonitor = $.extend({}, widget_widget, {
     },
     update: function (dev,par) {
         this.elements.each(function(index) {
-            var now = new Date();
-            var events=$(this).find('.events');
-            events.last().append("<div class='event'>"
-                    +[now.toLocaleDateString(),now.toLocaleTimeString(),dev,par,getDeviceValueByName(dev,par)].join(' ')
-                    +"</div>")
-            .scrollTop(events.last()[0].scrollHeight);
-
+            if ( dev.match(new RegExp('^' + $(this).data('device-filter') + '$'))
+                    && par.match(new RegExp('^' + $(this).data('reading-filter') + '$'))) {
+                var now = new Date();
+                var events=$(this).find('.events');
+                var max=$(this).data('max-items');
+                if ( events.children().length>max )
+                    events.find('.event:first').remove();
+                events.last().append("<div class='event'>"
+                        +[now.toLocaleDateString(),now.toLocaleTimeString(),dev,par,getDeviceValueByName(dev,par)].join(' ')
+                        +"</div>")
+                .scrollTop(events.last()[0].scrollHeight);
+        }
         });
     },
 });

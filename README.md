@@ -381,8 +381,11 @@ same as Label Widgets
   If the readingsgrouop uses css references, images or similar pieces, then the corresponding files / links need to be also reachable / included
 
 ####Eventmonitor widgets
-- **data-width**       : fixe size for width (in % or px)
-- **data-height**      : fixe size for height (in % or px)
+- **data-width**       : fixe size for width (default '750px')
+- **data-height**      : fixe size for height (default '450px')
+- **device-filter**    : (default '.*')
+- **reading-filter**   : (default '.*')
+- **max-items**        : (default '100')
 
 Please this widget for debugging purpose within a normal page and klick it to see the events which updates all widgets.
 ```html
