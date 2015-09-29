@@ -12,7 +12,7 @@
 var deviceStates={};
 var readings = {"STATE":true};
 var devices = {};
-var types = {};
+var types = Array();
 var updateStatus = {};
 var DEBUG = false;
 var debuglevel;
@@ -35,7 +35,7 @@ var plugins = {
     this.modules.push(module);
   },
   load: function (name) {
-  	loadplugin(name, function () { 
+    return loadplugin(name, function () {
 		DEBUG && console.log('Loaded plugin: '+ name);
 		var module = eval(name);
 		plugins.addModule(module);
@@ -55,7 +55,6 @@ var plugins = {
                 pars.push(reading);
             }
         }
-
     },null,true);
   },
   update: function (dev,par) {  
@@ -181,7 +180,7 @@ function initWidgets() {
 
     readings = {"STATE":true};
     devices = {};
-    types = {};
+    types = new Array();
     updateStatus = {};
     devs=new Array();
     pars=new Array();
@@ -193,9 +192,10 @@ function initWidgets() {
 
     //collect required widgets types
     $('div[data-type]').each(function(index){
-        var t = $(this).data("type");
-        if(!types[t])
-            types[t] = true;
+        var type = $(this).data("type");
+        if (types.indexOf(type)<0){
+              types.push(type);
+        }
     });
 
     //collect required devices
@@ -214,17 +214,17 @@ function initWidgets() {
     });
 
     //init widgets
-    for (var widget_type in types) {
-        plugins.load('widget_'+widget_type);
-    }
+    var deferredArr = $.map(types, function(widget_type, i) {
+        return plugins.load('widget_'+widget_type);
+    });
 
     //get current values of readings
-    DEBUG && console.log('Request readings from FHEM');
-    setTimeout(function(){
+    $.when.apply(this, deferredArr).then(function() {
+        DEBUG && console.log('Request readings from FHEM');
         for (var reading in readings) {
             requestFhem(reading);
         }
-    }, 100);
+    });
 }
 
 function showDeprecationMsg() {
@@ -415,6 +415,10 @@ function requestFhem(paraname, devicename) {
                         //check if update is necessary
                         var oldParams = getParameterByName(key,paraname);
                         //if (oldParams) console.log('requestFhem::done: check for update: oldVal:',oldParams.val,' newVal:',val,' oldDate:',oldParams.date,' newDate:',date);
+                        //if (oldParams){
+                            //$.toast(key+'_'+oldParams.val +'_'+val);
+                             //$.toast(key+'_'+oldParams.date+'/'+date);
+                        //}
                         if(!oldParams || oldParams.val!=val || oldParams.date!=date){
                             var params = deviceStates[key] || {};
                             var value = {"date": date, "val": val};
@@ -434,12 +438,12 @@ function requestFhem(paraname, devicename) {
 }
 
 function loadplugin(plugin, success, error, async) {
-    dynamicload('js/'+plugin+'.js', success, error, async);
+    return dynamicload('js/'+plugin+'.js', success, error, async);
 }
 
 function dynamicload(file, success, error, async) {
     var cache = (DEBUG) ? false : true;
-    $.ajax({
+    return $.ajax({
         url: dir + '/../' + file,
         dataType: "script",
         cache: cache,
