@@ -79,6 +79,7 @@ Currently there are more then 20 types of widgets in the base installation.
 - **popup** : a popup dialog which open on click on another widget 
 - **readingsgroup** : displaying a readingsgroup defined in fhem
 - **datetimepicker** : select a date and time value from calendar
+- **eventmonitor**: for debugging - shows all events which normal widgets 'see'
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -379,6 +380,14 @@ same as Label Widgets
   Formatting will be taken from the corresponding readingsGroup formatting. 
   If the readingsgrouop uses css references, images or similar pieces, then the corresponding files / links need to be also reachable / included
 
+####Eventmonitor widgets
+- **data-width**       : fixe size for width (in % or px)
+- **data-height**      : fixe size for height (in % or px)
+
+Please this widget for debugging purpose within a normal page and klick it to see the events which updates all widgets.
+```html
+<div data-type="eventmonitor">EM</div>
+```
   
 Format
 -------
@@ -494,6 +503,7 @@ Examples
 -------
 
 **Position grid** 
+
 Two main boxes left and right. The first row of the left box has 3 columns. The second row has 2 columns.  
 
 ```html
