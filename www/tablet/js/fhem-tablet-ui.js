@@ -41,8 +41,9 @@ var plugins = {
 		plugins.addModule(module);
         module.init();
         //update all what we have until now
-        for (var reading in readings) {
-            for (var device in devices) {
+        for (var device in devices) {
+            var params = deviceStates[device];
+            for (var reading in params) {
                 module.update(device,reading);
             }
         }
@@ -221,7 +222,7 @@ function initWidgets() {
         for (var reading in readings) {
             requestFhem(reading);
         }
-    }, 500);
+    }, 100);
 }
 
 function showDeprecationMsg() {
