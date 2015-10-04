@@ -60,6 +60,7 @@ var widget_simplechart = {
       var days = parseFloat($(this).attr('data-daysago')||0);
       var now = new Date();
       var ago = new Date();
+      var vals =[];
       var mindate=now;
       var maxdate=now;
       if (days>0 && days<1){
@@ -122,10 +123,11 @@ var widget_simplechart = {
                   var minutes = diffMinutes(tstart,dateFromString(value));
                   if (val && minutes && $.isNumeric(val) ){
                       point=[minutes,val];
+                      vals.push(val);
                       i++;
                       points[index]=point;
                       if (val>max && $.isArray(maxarray) ) {
-                          for(var j=0; j<maxarray.length; j++) {
+                          for(var j=0,len=maxarray.length; j<len; j++) {
                               if (maxarray[j]>val) {
                                   max = maxarray[j];
                                   break;
@@ -133,7 +135,7 @@ var widget_simplechart = {
                           }
                       }
                       if (val<min && $.isArray(minarray) ) {
-                          for(var j=0; j<minarray.length; j++) {
+                          for(var j=0,len=minarray.length; j<len; j++) {
                               if (minarray[j]<val) {
                                   min = minarray[j];
                                   break;
@@ -264,6 +266,8 @@ var widget_simplechart = {
                                 'text-anchor':"middle",
                                 'style':'font-size:10px;font-weight:bold',
                               });
+                caption=caption.replace('$min',Math.min.apply(null, vals))
+                                .replace('$max',Math.max.apply(null, vals));
                 textCaption.text(caption);
                 svg.parent().append(textCaption);
             }
