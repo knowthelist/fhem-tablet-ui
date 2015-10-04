@@ -6,7 +6,7 @@ DIR www/tablet/lib
 UPD 2015-09-22_00:18:22 415 www/tablet/css/fhem-blue-ui.css
 UPD 2015-09-22_00:18:22 415 www/tablet/css/fhem-green-ui.css
 UPD 2015-09-23_22:00:38 1266 www/tablet/css/fhem-mobil-ui.css
-UPD 2015-09-29_07:30:45 11074 www/tablet/css/fhem-tablet-ui.css
+UPD 2015-10-04_22:18:16 11335 www/tablet/css/fhem-tablet-ui.css
 UPD 2015-09-29_07:31:09 8670 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2015-09-22_00:18:22 127396 www/tablet/fonts/fhemSVG.eot
 UPD 2015-09-22_00:18:22 528460 www/tablet/fonts/fhemSVG.svg
@@ -30,7 +30,7 @@ UPD 2015-09-22_00:18:22 359744 www/tablet/fonts/openautomation.eot
 UPD 2015-09-22_00:18:22 1517848 www/tablet/fonts/openautomation.svg
 UPD 2015-09-22_00:18:22 359552 www/tablet/fonts/openautomation.ttf
 UPD 2015-09-22_00:18:22 359628 www/tablet/fonts/openautomation.woff
-UPD 2015-09-22_00:18:22 14267 www/tablet/index-example.html
+UPD 2015-10-04_22:23:05 14267 www/tablet/index-example.html
 UPD 2015-09-30_01:09:53 20209 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-09-30_01:14:14 10559 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2015-09-21_19:34:48 1635 www/tablet/js/widget_circlemenu.js
@@ -51,7 +51,7 @@ UPD 2015-09-29_21:14:18 2555 www/tablet/js/widget_push.js
 UPD 2015-09-22_00:18:22 1667 www/tablet/js/widget_readingsgroup.js
 UPD 2015-09-22_00:18:22 1204 www/tablet/js/widget_rotor.js
 UPD 2015-09-22_00:18:22 3242 www/tablet/js/widget_select.js
-UPD 2015-09-22_00:18:22 11944 www/tablet/js/widget_simplechart.js
+UPD 2015-10-04_19:33:50 12170 www/tablet/js/widget_simplechart.js
 UPD 2015-09-21_19:42:53 6554 www/tablet/js/widget_slider.js
 UPD 2015-09-22_00:18:22 1343 www/tablet/js/widget_switch.js
 UPD 2015-09-22_00:18:22 1880 www/tablet/js/widget_symbol.js
