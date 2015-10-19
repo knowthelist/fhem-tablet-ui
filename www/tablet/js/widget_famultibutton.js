@@ -129,7 +129,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         }
     },
     toggleOff : function(elem) {
-        if (elem.data('set-off')==''){
+        if (elem.data('set-off')===''){
             elem.setOn();
         }
         else if(this._doubleclicked(elem, 'off')) {
