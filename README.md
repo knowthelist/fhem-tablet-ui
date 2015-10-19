@@ -71,7 +71,8 @@ Currently there are more then 20 types of widgets in the base installation.
 - **weather** : insert an icon or image, represending a weather literal
 - **circlemenu** : Cover multiple widgets behind a single widget
 - **select**	: Combobox to provide a list for selection
-- **pagetab**	: Element to smoothly exchange the whole page with another page
+- **pagetab**	 : Element to smoothly exchange the whole page with another page
+- **pagebutton** : Simple element to jump to another page
 - **level** : vertical/horizontal bar to show values between min/max value
 - **rotor** : slider between multiple widgets at one position
 - **progress** : round symbolic display  for percent values
@@ -112,7 +113,7 @@ General attribute meaning
 ####All widgets
 - **data-type**      : widget type
 - **data-device**    : FHEM device name (call FHEM's 'list' command to get all names)
-- **class**		     : CSS classes for look and formatting of the widget
+- **class**          : CSS classes for look and formatting of the widget
 
 ####Switch widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
@@ -181,7 +182,7 @@ See [examples](#symbol) of Symbol
 - **data-limits-part**  : part number of the space separated value to show or an RegEx (default '-1' -> all)	
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
 - **data-substitution**: regex-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
-- **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x
+- **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x, circleborder
 
 See [examples](#label) of Label
 
@@ -210,7 +211,8 @@ See [examples](#label) of Label
 - **data-get**   : name of the reading to get from FHEM (default 'desired-temp')
 - **data-temp**  : name of the reading for measured temperature of thermostates (default 'measured-temp')
 - **data-set**   : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default 'desired-temp')
-- **data-valve** : reading for valve position of thermostates
+- **data-valve** : name of the reading for valve position of thermostates
+- **data-mode**  : name of the reading for mode of thermostates
 - **data-min**   : minimal value to set (default 10)
 - **data-max**   : maximal value to set (default 30)
 - **data-step**  : step size for value adjustment e.g. 0.5 (default 1)
@@ -218,14 +220,19 @@ See [examples](#label) of Label
 - **data-boost** : value to send to force boost mode (for this, dial the knob to then maximum value)
 - **class**		 : mini, small, big, bigger, readonly
 
+// special for MAX! WandThermostat
+date-mode: if the value, retrieved from this reading equals 'auto' then such a command is created "set wz_WandThermostat desiredTemperature **auto** <value>".
+Other values creates somthing like this "set wz_WandThermostat desiredTemperature <value>"
+
 ####Volume widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-cmd**  : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-get-value** : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
+- **data-set-value** : Format of the value to send to FHEM (default '$v': the value only)
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
 - **data-tickstep** : distance between ticks (default 4|20)
-- **data-part** : part number of the space separated value to show or an RegEx
 - **class**		: mini, small, big, bigger, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
 
 ####Homestatus widget
@@ -251,7 +258,8 @@ See [examples](#label) of Label
 - **data-max**  : maximal value to set (default 100)
 - **data-on**   : value or RegEx where the slider moves to max  (default 'on') 
 - **data-off**  : value or RegEx where the slider moves to min  (default 'off')
-- **data-part** : part number of the space separated value to show or an RegEx
+- **data-get-value** : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
+- **data-set-value** : Format of the value to send to FHEM (default '$v': the value only)
 - **data-value**: show the value in a text box (default 'false')
 - **data-width**: width for horizontal sliders (default '120px', for mini '60px')
 - **data-height**: height for vertical sliders (default '120px', for mini '60px')
@@ -276,21 +284,26 @@ The slider supports tap to target only if the CSS class 'tap' is added.
 - **class**		: novalue, percent
 
 ####Dimmer widgets
-- **data-get**      : name of the reading to get from FHEM (default 'STATE')
-- **data-get-on**   : value for ON status to get. (default 'on')
-- **data-get-off**  : value for OFF status to get. (default 'off')
-- **data-set**  	: name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
-- **data-set-on**   : value for ON status to set. (default: value of data-get-on)
-- **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
-- **data-cmd**      : name of the command (**\<command\>** \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
-- **data-dim**      : name of the reading responsible for DIM  (\<command\> \<device\> **\<reading\>** \<value\>) (default: value of data-set)
-- **data-icon**     : name of the font-awesome icon. (default: fa-lightbulb-o)
+- **data-get**       : name of the reading to get from FHEM (default 'STATE')
+- **data-get-on**    : value for ON status to get.  (default 'on')
+- **data-get-off**   : value for OFF status to get. (default 'off')
+- **data-get-value** : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
+- **data-set**       : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
+- **data-set-on**    : string for ON status to set. (default: value of data-get-on)
+- **data-set-off**   : string for OFF status to set. (default: value of data-get-off)
+- **data-set-value** : string for VALUE to get. (default '': numeric value)
+- **data-cmd**       : name of the command (**\<command\>** \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-cmd-value** : name of the command for value changing via slider (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setreading) default: 'set'
+- **data-dim**       : name of the reading responsible for DIM  (\<command\> \<device\> **\<reading\>** \<value\>) (default: '')
+- **data-icon**      : name of the font-awesome icon. (default: fa-lightbulb-o)
 
 To change the dim value: push the button and slide up or down.
 
 In simple mode (no 'data-dim' parameter is given) the dimmer toggles between OFF value and the DIM value.  
-In extented mode ('data-dim' parameter is given and not equal to 'data-set') the DIM value is send to /received from this reading 
+In extented mode ('data-dim' parameter is given) the DIM value is send to /received from this reading
 and the button is only used for ON / OFF.
+
+$v is a placeholder for the numeric value, it will be replaced be the real value at runtime
 
 ####Image widgets
 - **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')
@@ -334,6 +347,10 @@ Use data-url + data-refresh or data-device + data-get, not both.
 - **data-get-on**   : array of status to assign a special icon-list from data-icons
 - **data-icons**    : array of icons related to the a data-get-on array
 - **class**		    : warn, activate (as additionals for data-icons)
+
+####Pagebutton widgets
+- **data-url**	: URL of the new page to show
+all other parameters like switch widget
 
 ####Rotor widgets
 - **data-delay**    : time in millisecondes to wait until next list item get shown. (default: 3500)
@@ -418,12 +435,13 @@ not all widgets support all classes
 - green			: foreground color green
 - blue			: foreground color blue
 - orange		: foreground color orange
-- doublebox-v	: container to place 2 small widgets (e.g. switch) one above the other 
-- doublebox-h	: container to place 2 small widgets (e.g. switch) side by side
-- triplebox-v   : container to place 3 small widgets (e.g. switch) one above the other 
+- doublebox-v           : container to place 2 small widgets (e.g. switch) one above the other
+- doublebox-h           : container to place 2 small widgets (e.g. switch) side by side
+- triplebox-v           : container to place 3 small widgets (e.g. switch) one above the other
 - timestamp		: deliver the date time for the reading instead of the value
-- blink         : blink animatation for label or symbol widget
+- blink                 : blink animatation for label or symbol widget
 - rotate-90		: rotate (e.g an image) for 90 degres  
+- circleborder          : draws a round border around labels
 
 Positioning:
 - container		: new box or new row
@@ -881,7 +899,7 @@ This classes can be combined (e.g. class="cell small hue-tick hue-front")
 ```html
 <div data-type="dimmer" data-device="MyDimmer1" 
 			data-get-on="[0-9]{1,3}|on" 
-			data-get-off="off" 
+                        data-get-off="off"
 			class="cell">
 </div>
 ```
@@ -910,6 +928,16 @@ To change the dim value: push the button and slide up or down
 ```  
   
 ![](http://knowthelist.github.io/fhem-tablet-ui/hue_pct.png)
+
+**Example** for a FS20 Dimmer in simple mode (toggles between OFF value and the DIM value)
+```html
+<div data-type="dimmer" data-device='myFS20Dimmer'
+     data-set-on="dim$v%"
+     data-set-off="dim0%"
+     data-set-value="dim$v%"
+     data-get-on="dim([1-9]\d?)?%"
+     data-get-off="dim0%"></div>
+```
 
 ###Image
 **Example** for how to add an image to the dashboard which its URL is delivered by a FHEM module like PROPLANTA:

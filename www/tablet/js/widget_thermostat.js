@@ -151,8 +151,8 @@ var widget_thermostat = $.extend({}, widget_knob, {
 	this.elements=$('div[data-type="'+this.widgetname+'"]');
 	this.elements.each(function( index ) {
 
-        $(this).data('get', $(this).data('get') || 'desired-temp');
-        $(this).data('temp', $(this).data('temp') || 'measured-temp');
+        $(this).data('get',    $(this).data('get') || 'desired-temp');
+        $(this).data('temp',   $(this).data('temp') || 'measured-temp');
         $(this).data('height', $(this).isValidData('height') ? $(this).data('height') :100);
         $(this).data('width',  $(this).isValidData('width')  ? $(this).data('width')  :100);
         $(this).data('max',    $(this).isValidData('max')    ? $(this).data('max')    :30);
@@ -170,9 +170,11 @@ var widget_thermostat = $.extend({}, widget_knob, {
 		readings[$(this).data('get')] = true;
 		readings[$(this).data('temp')] = true;
 		readings[$(this).data('valve')] = true;
+        readings[$(this).data('mode')] = true;
 		knob_elem.knob({
             'min': $(this).data('min'),
             'max': $(this).data('max'),
+            'mode': $(this).data('mode'),
 			'off':$(this).attr('data-off')?$(this).data('off'):-1,
 			'boost':$(this).attr('data-boost')?$(this).data('boost'):-1,
             'height':$(this).data('height'),
@@ -192,13 +194,12 @@ var widget_thermostat = $.extend({}, widget_knob, {
 			'cmd': $(this).data('cmd') || 'set',
 			'set': $(this).data('set') || 'desired-temp',
             'draw' : widget_thermostat.drawDial,
-			'change' : function (v) { 
-                //reset shortpoll timer to avoid jump back
-                startPollInterval();
-			},
             'format' : function (v) {
                 //fix digits count
                 return (this.step<1)?Number(v).toFixed(1):v;
+            },
+            'change' : function (v) {
+                 startPollInterval();
             },
 			'release' : function (v) { 
               if (!isUpdating){
@@ -208,8 +209,11 @@ var widget_thermostat = $.extend({}, widget_knob, {
 		 		    } else if(v == this.o.max && this.o.boost != -1) {
 		 		        v=this.o.boost;
                     }
+                    var mode = getDeviceValueByName( device, this.o.mode );
+                    if (mode === 'auto')
+                        v = mode + ' ' + v;
 				  	var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v;
-				  	setFhemStatus(cmdl);
+                    setFhemStatus(cmdl);
 				  	$.toast(cmdl);
 			  }
 			}	

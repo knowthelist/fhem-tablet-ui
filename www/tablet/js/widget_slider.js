@@ -17,9 +17,10 @@ var widget_slider = {
         $(this).data('cmd', $(this).data('cmd') || 'set');
         $(this).data('on', $(this).data('on') || 'on');
         $(this).data('off', $(this).data('off') || 'off');
+        $(this).data('set-value', $(this).data('set-value') || '$v');
         $(this).data('width', $(this).data('width'));
         $(this).data('height', $(this).data('height'));
-        $(this).data('part',   $(this).data('part')                   || -1);
+        $(this).data('get-value',   $(this).data('get-value') || $(this).data('part') || -1);
 
         readings[$(this).data('get')] = true;
         //ToDo: more data parameter: color etc.
@@ -67,7 +68,8 @@ var widget_slider = {
               // isunsel == false (0) means drag is over
               if ( ( ! isunsel ) && ( selMode ) ) {
                 var device = $(this).data('device');
-                var cmdl = $(this).data('cmd')+' '+device+' '+$(this).data('set')+' '+v;
+                v = $(this).data('set-value').replace('$v',v.toString());
+                var cmdl = [$(this).data('cmd'),device,$(this).data('set'),v].join(' ');
 
                 // write visible value (from pwrng) to local storage NOT the fhem exposed value)
                 localStorage.setItem("slider_"+device, sliVal);
@@ -131,7 +133,7 @@ var widget_slider = {
             if (lstate) {
                 var pwrng = $(this).data('Powerange');
                 var elem = $(this).find('input');
-                var part = $(this).data('part');
+                var part = $(this).data('get-value');
                 var nstate = getPart(lstate, part);
                 var tstate = nstate;
                 if ( new RegExp('^' + $(this).data('on') + '$').test( nstate.toString() ) )

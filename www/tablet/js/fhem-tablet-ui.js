@@ -36,7 +36,6 @@ var plugins = {
   },
   load: function (name) {
     return loadplugin(name, function () {
-		DEBUG && console.log('Loaded plugin: '+ name);
 		var module = eval(name);
 		plugins.addModule(module);
         module.init();
@@ -49,12 +48,13 @@ var plugins = {
                 }
             }
         }
-        //request missing readings
+        //fill missing readings
         for (var reading in readings) {
             if (pars.indexOf(reading)<0){
                 pars.push(reading);
             }
         }
+        DEBUG && console.log('Loaded plugin: '+ name);
     },null,true);
   },
   update: function (dev,par) {  
@@ -158,7 +158,7 @@ function initReadingsArray(get) {
         get = new Array(get);
     }
     for(var g=0; g<get.length; g++) {
-        reading = get[g];
+        var reading = get[g];
         // fully qualified readings => DEVICE:READING
         if(reading.match(/:/)) {
             var fqreading = reading.split(':');
@@ -218,7 +218,7 @@ function initWidgets() {
         return plugins.load('widget_'+widget_type);
     });
 
-    //get current values of readings
+    //get current values of readings not before all widgets are loaded
     $.when.apply(this, deferredArr).then(function() {
         DEBUG && console.log('Request readings from FHEM');
         for (var reading in readings) {

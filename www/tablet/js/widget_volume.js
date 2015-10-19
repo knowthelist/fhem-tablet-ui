@@ -83,8 +83,8 @@ var widget_volume = $.extend({}, widget_knob, {
 		var maxval = $(this).data('max') || 70;
 	    $(this).data('max', maxval);
 	    $(this).data('max360', (maxval>360)?360:maxval);
-        $(this).data('fgcolor', $(this).data('fgcolor') || getStyle('.volume.fgcolor','color') || '#ccc');
-        $(this).data('part',    $(this).data('part')                   || -1);
+        $(this).data('fgcolor',     $(this).data('fgcolor')     || getStyle('.volume.fgcolor','color') || '#ccc');
+        $(this).data('get-value',   $(this).data('get-value')   || $(this).data('part')         || '-1');
 
 		base.init_attr($(this));
 		var knob_elem =  jQuery('<input/>', {
@@ -144,19 +144,20 @@ var widget_volume = $.extend({}, widget_knob, {
             'touchPosition': 'left',
 			'cmd': $(this).data('cmd'),
 			'set': $(this).data('set'),
+            'setValue': $(this).data('set-value') || '$v',
             'draw' : widget_volume.drawDial,
 			'readOnly' : $(this).hasClass('readonly'),
-			'change' : function (v) { 
-                  startPollInterval();
-                    if (v > this.o.max - this.o.variance && this.o.lastValue < this.o.min + this.o.variance) {
-                        knob_elem.val(this.o.min).change();
-                        return false;
-                    } else if (v < this.o.min + this.o.variance && this.o.lastValue > this.o.max - this.o.variance) {
-                        knob_elem.val(this.o.max).change();
-                        return false;
-                    }
-                    this.o.lastValue = v;
-			},
+            'change' : function (v) {
+                   startPollInterval();
+                     if (v > this.o.max - this.o.variance && this.o.lastValue < this.o.min + this.o.variance) {
+                         knob_elem.val(this.o.min).change();
+                         return false;
+                     } else if (v < this.o.min + this.o.variance && this.o.lastValue > this.o.max - this.o.variance) {
+                         knob_elem.val(this.o.max).change();
+                         return false;
+                     }
+                     this.o.lastValue = v;
+            },
             'release' : function (v) {
                   if (!isUpdating){
                         if ((this.o.mode>>6) % 2 != 0){
@@ -169,7 +170,8 @@ var widget_volume = $.extend({}, widget_knob, {
                            v=v.toFixed(0);
                         }
 				  		if(typeof device!='undefined') {
-                            var cmdl = [this.o.cmd,device,this.o.set,v].join(' ');
+                            var val = this.o.setValue.replace('$v',v.toString());
+                            var cmdl = [this.o.cmd,device,this.o.set,val].join(' ');
 			  				setFhemStatus(cmdl);
 			  				$.toast(cmdl);
 				  		}
@@ -189,7 +191,7 @@ var widget_volume = $.extend({}, widget_knob, {
             var value = getDeviceValue( $(this), 'get' );
             var knob_elem = $(this).find('input');
             if (value){
-                var part = $(this).data('part');
+                var part = $(this).data('get-value');
                 var val = getPart(value,part);
                 if ((parseInt($(this).data('mode'))>>6) % 2 != 0){
                     //is hex rgb
