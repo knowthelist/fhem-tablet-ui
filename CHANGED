@@ -1,3 +1,3 @@
 FHEM tablet UI last change:
 2015-10-22
- - Fixed bug with status arrays and countdown for push widget
+ - Start longpoll after init widgets
