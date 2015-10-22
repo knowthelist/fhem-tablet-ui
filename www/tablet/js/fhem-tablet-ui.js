@@ -79,13 +79,6 @@ $(document).on('ready', function() {
     loadStyleSchema();
     initPage();
 
-    if ( doLongPoll ){
-        setTimeout(function() {
-                longPoll();
-        }, 10000);
-        shortpollInterval = 15 * 60 * 1000; // 15 minutes
-    }
-
     $("*:not(select)").focus(function(){
         $(this).blur();
     });
@@ -223,6 +216,10 @@ function initWidgets() {
         DEBUG && console.log('Request readings from FHEM');
         for (var reading in readings) {
             requestFhem(reading);
+        }
+        if ( doLongPoll ){
+            longPoll();
+            shortpollInterval = 15 * 60 * 1000; // 15 minutes
         }
     });
 }
