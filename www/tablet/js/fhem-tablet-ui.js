@@ -79,6 +79,18 @@ $(document).on('ready', function() {
     loadStyleSchema();
     initPage();
 
+    if ( doLongPoll ){
+        $(document).bind('startLongPoll', function() {
+            $(document).unbind('startLongPoll');
+            longPoll();
+            shortpollInterval = 15 * 60 * 1000; // 15 minutes
+        });
+        //setTimeout(function() {
+
+        //}, 10000);
+
+    }
+
     $("*:not(select)").focus(function(){
         $(this).blur();
     });
@@ -217,10 +229,7 @@ function initWidgets() {
         for (var reading in readings) {
             requestFhem(reading);
         }
-        if ( doLongPoll ){
-            longPoll();
-            shortpollInterval = 15 * 60 * 1000; // 15 minutes
-        }
+        $(document).trigger("startLongPoll");
     });
 }
 
@@ -282,9 +291,9 @@ function longPoll(roomName) {
 		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
 		cache: false,
 		complete: function() {
-			setTimeout(function() {
+            setTimeout(function() {
                 longPoll();
-			}, 100);
+            }, 100);
 		},
         timeout: 60000,
 		async: true,
@@ -352,7 +361,7 @@ function longPoll(roomName) {
     		}, false);
 			return xhr;
 			}
-	});
+    });
 }
             
 function requestFhem(paraname, devicename) {
