@@ -80,15 +80,10 @@ $(document).on('ready', function() {
     initPage();
 
     if ( doLongPoll ){
-        $(document).bind('startLongPoll', function() {
-            $(document).unbind('startLongPoll');
+        setTimeout(function() {
             longPoll();
-            shortpollInterval = 15 * 60 * 1000; // 15 minutes
-        });
-        //setTimeout(function() {
-
-        //}, 10000);
-
+        }, (typeof wvcDevices != 'undefined')?10000:100);
+        shortpollInterval = 15 * 60 * 1000; // 15 minutes
     }
 
     $("*:not(select)").focus(function(){
@@ -229,7 +224,6 @@ function initWidgets() {
         for (var reading in readings) {
             requestFhem(reading);
         }
-        $(document).trigger("startLongPoll");
     });
 }
 
