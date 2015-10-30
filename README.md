@@ -1284,7 +1284,7 @@ Update 2015-10-27: yesterday my old 2007 MacBook died. Total fail of HDD.
 I'm unable to work now and I need to buy a new one.
 
 * Goal  : 13'' MacBook Pro 1445€ 
-* Status: 40€ (thanks :-)
+* Status: 145€ (many thanks to all donators :-)
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PD4C2XM2VTD9A"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" alt="[paypal]" /></a>
 
