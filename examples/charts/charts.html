@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CHART TEST</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="fhemweb_url" content="/fhem">
+    <meta name="widget_dir" content="./js">
+    <meta name="widget_base_width" content="116">
+    <meta name="widget_base_height" content="65">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="debug" content="0"> <!-- 1=output to console;0=no output -->
+    <meta name="request_cache" content="100">
+    <meta name="gridster_disable" content="0"> <!-- verschieben abschalten -->
+
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
+
+    <!-- Charts Theme CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="css/styles.css"/>
+
+    <!-- Javascript -->
+    <script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/jquery.knob.mod.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/jquery.toast.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/jquery.circlemenu.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/powerange.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/fa-multi-button.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.js"></script>
+
+</head>
+<body>
+<div class="gridster">
+    <ul>
+        <!-- Spalte 1-->
+        <li data-row="1" data-col="1" data-sizex="1" data-sizey="9">
+            <header>ACTIONS</header>
+            <!-- css in wopr.css -->
+            <div class="centered container">
+                <table>
+                    <tr>
+                        <td>
+                            <div data-type="button" data-url="#"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div data-type="button" data-url="./meteo.html"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </li>
+
+        <li data-row="1" data-col="2" data-sizex="8" data-sizey="9">
+
+            <header>Charts</header>
+            <div id="ram-container"
+                 data-type="highchart"
+                 data-device="sysmon"
+                 data-logdevice="FileLog_sysmon"
+                 data-columnspec="4:ram_used_stat 5:ram_used_stat 6:ram_used_stat"
+                 data-linenames="min,max,avg"
+                 data-linetypes="area,area,line"
+                 data-minvalue="0"
+                 data-maxvalue="4096"
+                 data-height="300"
+                 data-title="Speichernutzung"
+                 data-xunit="Heute"
+                 data-yunit="RAM"
+                 data-tooltip="{series.name} <b>{point.y:,.0f}</b> MB of RAM"
+                 data-tickInterval="1800000"
+                 data-tickAmount="10" >
+            </div>
+
+            <div id="load-container"
+                 data-type="highchart"
+                 data-device="sysmon"
+                 data-logdevice="FileLog_sysmon"
+                 data-columnspec="4:loadavg"
+                 data-linenames="avg LOAD"
+                 data-minvalue="0"
+                 data-maxvalue="10"
+                 data-yticks="2"
+                 data-title="Kern-Aktivit&auml;t"
+                 data-subtitle="Auslastung des Systems"
+                 data-xunit="Heute"
+                 data-yunit="CPU-Load"
+                 data-legend="0">
+            </div>
+
+            <div id="3d-container"
+                 data-type="highchart3d"
+                 data-device="sysmon"
+                 data-logdevice="FileLog_sysmon"
+                 data-columnspec="4:loadavg"
+                 data-linenames="avg LOAD"
+                 data-minvalue="0"
+                 data-maxvalue="10"
+                 data-yticks="2"
+                 data-title="Kern-Aktivit&auml;t"
+                 data-subtitle="Auslastung des Systems"
+                 data-xunit="Heute"
+                 data-yunit="CPU-Load"
+                 style="width: 1000px; height: 350px;">
+            </div>
+
+        </li>
+
+    </ul>
+</div>
+
+</body>
+
+</html>

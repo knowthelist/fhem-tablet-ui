@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  background: #3e3e40;
+}
+
+#ram-container {
+  height: 250px;
+  width: 450px;
+  float: left;
+}
+
+#load-container {
+  height: 250px;
+  width: 450px;
+  float: left;
+}
