@@ -35,8 +35,9 @@ UPD 2015-10-29_23:28:31 14282 www/tablet/index-example.html
 UPD 2015-10-29_23:28:31 20306 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-10-29_23:28:31 10557 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2015-11-04_19:40:20 116416 www/tablet/js/widget_chart.js
+UPD 2015-11-05_20:09:49 3565 www/tablet/js/widget_checkbox.js
 UPD 2015-10-29_23:28:31 1635 www/tablet/js/widget_circlemenu.js
-UPD 2015-10-29_23:28:31 2017 www/tablet/js/widget_datetimepicker.js
+UPD 2015-11-02_21:11:59 2225 www/tablet/js/widget_datetimepicker.js
 UPD 2015-10-29_23:28:31 5608 www/tablet/js/widget_dimmer.js
 UPD 2015-10-29_23:28:31 3624 www/tablet/js/widget_eventmonitor.js
 UPD 2015-10-29_23:28:31 10752 www/tablet/js/widget_famultibutton.js
@@ -55,7 +56,7 @@ UPD 2015-10-29_23:28:31 1667 www/tablet/js/widget_readingsgroup.js
 UPD 2015-10-29_23:28:31 1204 www/tablet/js/widget_rotor.js
 UPD 2015-10-29_23:28:31 3242 www/tablet/js/widget_select.js
 UPD 2015-10-29_23:28:31 12170 www/tablet/js/widget_simplechart.js
-UPD 2015-10-29_23:28:31 6719 www/tablet/js/widget_slider.js
+UPD 2015-11-03_00:38:05 6728 www/tablet/js/widget_slider.js
 UPD 2015-10-29_23:28:31 1343 www/tablet/js/widget_switch.js
 UPD 2015-10-29_23:28:31 1880 www/tablet/js/widget_symbol.js
 UPD 2015-10-29_23:28:31 9607 www/tablet/js/widget_thermostat.js
@@ -79,3 +80,5 @@ UPD 2015-10-29_23:28:31 23826 www/tablet/lib/openautomation.css
 UPD 2015-10-29_23:28:31 41050 www/tablet/lib/powerange.js
 UPD 2015-10-29_23:28:31 1194 www/tablet/lib/powerange.min.css
 UPD 2015-10-29_23:28:31 19087 www/tablet/lib/powerange.min.js
+UPD 2015-11-05_08:36:09 683 www/tablet/lib/switchery.min.css
+UPD 2015-11-05_19:32:06 24447 www/tablet/lib/switchery.min.js
