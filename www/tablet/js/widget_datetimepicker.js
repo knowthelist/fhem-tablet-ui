@@ -1,4 +1,4 @@
-if(typeof widget_widget == 'undefined') {
+if(typeof widget_label == 'undefined') {
     loadplugin('widget_label');
 }
 if (!$.fn.datetimepicker){
@@ -13,6 +13,7 @@ var widget_datetimepicker  = $.extend({}, widget_label, {
      this.elements.each(function(index) {
          var elem = $(this);
          elem.data('cmd',        elem.isValidData('cmd')        ? elem.data('cmd')          : 'set');
+         elem.data('set-value',  elem.data('set-value')         || '$v');
          elem.data('unit',       elem.isValidData('unit')       ? elem.data('unit')         : '<span style="font-size: 180%;">&#32;&#9660;</span>');
          elem.data('format',     elem.isValidData('format')     ? elem.data('format')       : 'Y-m-d H:i');
          elem.data('theme',      elem.isValidData('theme')      ? elem.data('theme')        : 'dark');
@@ -28,9 +29,11 @@ var widget_datetimepicker  = $.extend({}, widget_label, {
               datepicker: elem.data('datepicker'),
               step: elem.data('step'),
               onChangeDateTime:function(dp,$input){
-                var val=$input.val();
+                var val = v = elem.data('set-value').replace('$v',$input.val().toString());
                 elem.text(val);
-                setFhemStatus(  [elem.data('cmd'), elem.data('device'), elem.data('set'), val ].join(' ') );
+                var command = [elem.data('cmd'), elem.data('device'), elem.data('set'), val ].join(' ');
+                setFhemStatus( command );
+                TOAST && $.toast(command);
               },
          });
      });

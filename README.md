@@ -293,7 +293,7 @@ The slider supports tap to target only if the CSS class 'tap' is added.
 - **data-set**       : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-set-on**    : string for ON status to set. (default: value of data-get-on)
 - **data-set-off**   : string for OFF status to set. (default: value of data-get-off)
-- **data-set-value** : string for VALUE to get. (default '': numeric value)
+- **data-set-value** : Format of the value to send to FHEM (default '$v': the value only)
 - **data-cmd**       : name of the command (**\<command\>** \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-cmd-value** : name of the command for value changing via slider (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setreading) default: 'set'
 - **data-dim**       : name of the reading responsible for DIM  (\<command\> \<device\> **\<reading\>** \<value\>) (default: '')
@@ -423,12 +423,13 @@ The crosshair cursor currently only works dynamically on desktop browsers. On iO
 It's important that a ```<div class="dialog">``` inside the widget can be found. See the [basic structure](#dialog) of popup
 
 ####Datetimepicker widgets
-same as Label Widgets
+All parameters like Label Widgets plus these:
 - **data-format**      : date and time format of the output  (default 'Y-m-d H:i')
 - **data-theme**       : color scheme: normal, dark (default 'dark')
 - **data-timepicker**  : show the time picker (default 'true')
 - **data-datepicker**  : show the date picker (default 'true')
 - **data-step**        : step for time in minutes (default '60')
+- **data-set-value**   : Format of the value to send to FHEM (default '$v': the value only)
 
 ####Readingsgroup widgets
 - **data-max-update**         : Specify a minimum number of seconds between an update of the widget to avoid high load on the system

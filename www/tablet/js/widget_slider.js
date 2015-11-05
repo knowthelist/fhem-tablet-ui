@@ -74,7 +74,7 @@ var widget_slider = {
                 // write visible value (from pwrng) to local storage NOT the fhem exposed value)
                 localStorage.setItem("slider_"+device, sliVal);
                 setFhemStatus(cmdl);
-                $.toast(cmdl);
+                TOAST && $.toast(cmdl);
 
                 $(this).data('selection',0);
 
