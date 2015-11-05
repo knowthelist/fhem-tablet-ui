@@ -47,11 +47,12 @@ var widget_checkbox  = $.extend({}, widget_famultibutton, {
          });
 
          // touchend handler
-         switcherButton.on('touchend', function() {
+         /*switcherButton.on('touchend', function(e) {
              switchery.setPosition(true);
              switchery.handleOnchange(true);
              switcherButton.trigger('click');
-         });
+             //e.preventDefault();
+         });*/
 
          // setState for switchery which lacks of such a function
          switchery.setState = function(checkedBool) {
