@@ -76,11 +76,13 @@ Currently there are more then 20 types of widgets in the base installation.
 - **level** : vertical/horizontal bar to show values between min/max value
 - **rotor** : slider between multiple widgets at one position
 - **progress** : round symbolic display  for percent values
-- **simplechart** :s imple XY line chart for one value (reads directly from fhem log file)
+- **simplechart** : simple XY line chart for one value (reads directly from fhem log file)
 - **popup** : a popup dialog which open on click on another widget 
 - **readingsgroup** : displaying a readingsgroup defined in fhem
 - **datetimepicker** : select a date and time value from calendar
 - **eventmonitor**: for debugging - shows all events which normal widgets 'see'
+- **chart** : multistyle chart for multiple values (reads directly from FHEM log file)
+- **checkbox** : Toggle any command to FHEM (e.g. on / off)
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -445,6 +447,11 @@ Place this widget for debugging purpose within a normal page and klick it to see
 ```html
 <div data-type="eventmonitor">EM</div>
 ```
+
+####Checkbox widgets
+All parameters like Switch widgets
+
+- **class**             small, large
   
 Format
 -------
@@ -535,6 +542,8 @@ Prepared color schemas are available in css folder and can be included with a ad
 ```html
 <link rel="stylesheet" href="/fhem/tablet/css/fhem-blue-ui.css" />
 ```
+These schemas change all widgets together.
+It is also possible to change only color of single widgets by adding one of these CSS classes 'red', 'green', 'blue', 'orange', 'ligthblue', 'gray'
 
 Meta tags configuration
 -------
