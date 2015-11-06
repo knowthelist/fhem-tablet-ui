@@ -7,6 +7,12 @@ if (!$.fn.Switchery){
 }
 var widget_checkbox  = $.extend({}, widget_famultibutton, {
   widgetname : 'checkbox',
+  clicked : function(elem,isClicked) {
+      var value = isClicked ? elem.data('set-on') : elem.data('set-off');
+      var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('set'),value].join(' ');
+      setFhemStatus(cmdl);
+      TOAST && $.toast(cmdl);
+  },
   init: function () {
      var base = this;
      this.elements = $('div[data-type="'+this.widgetname+'"]');
@@ -38,28 +44,33 @@ var widget_checkbox  = $.extend({}, widget_famultibutton, {
          $(switchery.jack).css( 'width',elem.hasClass('small')?'20px':elem.hasClass('large')?'40px':'30px');
 
          // click handler
-         var switcherButton = elem.find('.switchery');
-         switcherButton.on('click', function() {
-             var val = input.is(":checked") ? elem.data('set-on') : elem.data('set-off');
-             var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('set'),val].join(' ');
-             setFhemStatus(cmdl);
-             TOAST && $.toast(cmdl);
+         var $switcherButton = elem.find('.switchery');
+         var touchIsAllowed = false;
+         $switcherButton.on('click', function(event) {
+             touchIsAllowed = false;
+             base.clicked(elem,input.is(":checked"));
          });
 
-         // touchend handler
-         /*switcherButton.on('touchend', function(e) {
-             switchery.setPosition(true);
-             switchery.handleOnchange(true);
-             switcherButton.trigger('click');
-             //e.preventDefault();
-         });*/
+         // touch handler
+         $switcherButton.on('touchend', function(e) {
+             if (touchIsAllowed){
+                switchery.setPosition(true);
+                base.clicked(elem,input.is(":checked"));
+             }
+             touchIsAllowed = true;
+         });
+
+         $switcherButton.on('touchmove', function(e) {
+             e.preventDefault();
+         });
 
          // setState for switchery which lacks of such a function
          switchery.setState = function(checkedBool) {
-              if((checkedBool && !switchery.isChecked()) || (!checkedBool && switchery.isChecked())) {
+             if((checkedBool && !switchery.isChecked()) || (!checkedBool && switchery.isChecked())) {
                   switchery.setPosition(true);
                   switchery.handleOnchange(true);
               }
+
          };
 
          // store input object for usage in update function of base class
