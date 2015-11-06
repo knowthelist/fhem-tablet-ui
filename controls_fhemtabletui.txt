@@ -35,7 +35,7 @@ UPD 2015-10-29_23:28:31 14282 www/tablet/index-example.html
 UPD 2015-10-29_23:28:31 20306 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-10-29_23:28:31 10557 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2015-11-04_19:40:20 116416 www/tablet/js/widget_chart.js
-UPD 2015-11-05_23:48:30 3605 www/tablet/js/widget_checkbox.js
+UPD 2015-11-06_22:06:38 3864 www/tablet/js/widget_checkbox.js
 UPD 2015-10-29_23:28:31 1635 www/tablet/js/widget_circlemenu.js
 UPD 2015-11-02_21:11:59 2225 www/tablet/js/widget_datetimepicker.js
 UPD 2015-10-29_23:28:31 5608 www/tablet/js/widget_dimmer.js
