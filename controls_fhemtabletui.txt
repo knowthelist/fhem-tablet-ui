@@ -34,9 +34,9 @@ UPD 2015-10-29_23:28:31 359628 www/tablet/fonts/openautomation.woff
 UPD 2015-10-29_23:28:31 14282 www/tablet/index-example.html
 UPD 2015-10-29_23:28:31 20306 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-10-29_23:28:31 10557 www/tablet/js/fhem-tablet-ui.min.js
-UPD 2015-11-04_19:40:20 116416 www/tablet/js/widget_chart.js
+UPD 2015-11-07_19:12:42 116652 www/tablet/js/widget_chart.js
 UPD 2015-11-06_22:06:38 3864 www/tablet/js/widget_checkbox.js
-UPD 2015-10-29_23:28:31 1635 www/tablet/js/widget_circlemenu.js
+UPD 2015-09-21_19:34:48 1635 www/tablet/js/widget_circlemenu.js
 UPD 2015-11-02_21:11:59 2225 www/tablet/js/widget_datetimepicker.js
 UPD 2015-10-29_23:28:31 5608 www/tablet/js/widget_dimmer.js
 UPD 2015-10-29_23:28:31 3624 www/tablet/js/widget_eventmonitor.js
@@ -44,12 +44,12 @@ UPD 2015-10-29_23:28:31 10752 www/tablet/js/widget_famultibutton.js
 UPD 2015-10-29_23:28:31 9747 www/tablet/js/widget_homestatus.js
 UPD 2015-10-29_23:28:31 3450 www/tablet/js/widget_image.js
 UPD 2015-10-29_23:28:31 5393 www/tablet/js/widget_knob.js
-UPD 2015-10-29_23:28:31 4412 www/tablet/js/widget_label.js
+UPD 2015-09-29_00:16:56 4412 www/tablet/js/widget_label.js
 UPD 2015-10-29_23:28:31 3862 www/tablet/js/widget_level.js
 UPD 2015-10-29_23:28:31 1875 www/tablet/js/widget_pagebutton.js
 UPD 2015-10-29_23:28:31 6688 www/tablet/js/widget_pagetab.js
 UPD 2015-10-29_23:28:31 3226 www/tablet/js/widget_playstream.js
-UPD 2015-10-29_23:28:31 3641 www/tablet/js/widget_popup.js
+UPD 2015-11-07_19:12:52 3682 www/tablet/js/widget_popup.js
 UPD 2015-10-29_23:28:31 2480 www/tablet/js/widget_progress.js
 UPD 2015-10-29_23:28:31 2575 www/tablet/js/widget_push.js
 UPD 2015-10-29_23:28:31 1667 www/tablet/js/widget_readingsgroup.js
@@ -67,7 +67,7 @@ UPD 2015-10-29_23:28:31 11649 www/tablet/lib/fa-multi-button.js
 UPD 2015-10-29_23:28:31 5877 www/tablet/lib/fa-multi-button.min.js
 UPD 2015-10-29_23:28:31 26586 www/tablet/lib/fhemSVG.css
 UPD 2015-10-29_23:28:31 26638 www/tablet/lib/font-awesome.min.css
-UPD 2015-10-29_23:28:31 10011 www/tablet/lib/jquery.circlemenu.js
+UPD 2015-10-29_23:13:39 10303 www/tablet/lib/jquery.circlemenu.js
 UPD 2015-10-29_23:28:31 18412 www/tablet/lib/jquery.datetimepicker.css
 UPD 2015-10-29_23:28:31 80573 www/tablet/lib/jquery.datetimepicker.js
 UPD 2015-10-29_23:28:31 3021 www/tablet/lib/jquery.gridster.min.css
