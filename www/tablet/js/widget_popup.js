@@ -54,7 +54,7 @@ var widget_popup= $.extend({}, widget_widget, {
                 starter.on('click',function(e) {
                     e.preventDefault();
                     showModal(true);
-                    dialog.fadeIn(500);
+                    dialog.fadeIn(500,function () {$(this).trigger('fadein');});
                   });
             }
         });

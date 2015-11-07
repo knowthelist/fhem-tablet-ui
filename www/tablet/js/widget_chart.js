@@ -1659,11 +1659,16 @@ var widget_chart = {
 		var devices = dev.split(",");
 		var deviceElements= this.elements.filter("div[data-logdevice]");
 		deviceElements.each(function(index) {
-            if ( $(this).data('get')==par &&
-                ( $.isArray($(this).data('logdevice'))) ?
-                    $(this).data('logdevice').join(',').search(dev)>=0 :
-                    $(this).data('logdevice').toString().search(dev)>=0 ) {
-					 base.refresh.apply(this);
+			var isLogdevice = ($.isArray($(this).data('logdevice')))?$(this).data('logdevice').join(',').search(dev)>=0:($(this).data('logdevice').fn.search)?$(this).data('logdevice').search(dev)>=0:false;
+			if ( $(this).data('get')==par && isLogdevice) {
+				if ($(this).parent().is(':visible')) {
+					base.refresh.apply(this);
+				} else {
+					$(this).parent().on("fadein", function(event) {
+						var theObj = $(event.delegateTarget).find("[class^=basesvg]").parent();
+						base.refresh.apply(theObj);
+					});
+				}
 			}
 		});
 	},
