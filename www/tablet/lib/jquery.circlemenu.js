@@ -36,6 +36,8 @@
     CircleMenu.prototype.init = function(){
         var self = this,
             directions = {
+                'vertical':[-400,0],
+                'horizontal':[400,0],
                 'bottom-left':[180,90],
                 'bottom':[135,45],
                 'right':[-45,45],
@@ -72,6 +74,9 @@
                 angle = (self.options.angle.start + (self._step * index)) * (Math.PI/180),
                 x = Math.round(self.options.circle_radius * Math.cos(angle)),
                 y = Math.round(self.options.circle_radius * Math.sin(angle));
+            // linear hack
+            if (self.options.angle.start<-360) {x = 0; y = index * self.options.circle_radius;}
+            if (self.options.angle.start>360) {x = index * self.options.circle_radius;y = 0;}
 
             $item.data('plugin_'+pluginName+'-pos-x', x);
             $item.data('plugin_'+pluginName+'-pos-y', y);

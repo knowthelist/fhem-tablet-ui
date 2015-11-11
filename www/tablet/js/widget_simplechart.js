@@ -155,6 +155,8 @@ var widget_simplechart = {
 
       var svg = this.elem.find('svg.chart');
       if (svg){
+          //clear previous content
+          svg.parent().find('text').remove();
           svg.find('line').remove();
           var polyline = svg.find('polyline');
           if (polyline){
@@ -267,7 +269,8 @@ var widget_simplechart = {
                                 'style':'font-size:10px;font-weight:bold',
                               });
                 caption=caption.replace('$min',Math.min.apply(null, vals))
-                                .replace('$max',Math.max.apply(null, vals));
+                                .replace('$max',Math.max.apply(null, vals))
+                                .replace('$cur',vals[vals.length-1]);
                 textCaption.text(caption);
                 svg.parent().append(textCaption);
             }

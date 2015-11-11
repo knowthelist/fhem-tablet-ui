@@ -76,11 +76,13 @@ Currently there are more then 20 types of widgets in the base installation.
 - **level** : vertical/horizontal bar to show values between min/max value
 - **rotor** : slider between multiple widgets at one position
 - **progress** : round symbolic display  for percent values
-- **simplechart** :s imple XY line chart for one value (reads directly from fhem log file)
+- **simplechart** : simple XY line chart for one value (reads directly from fhem log file)
 - **popup** : a popup dialog which open on click on another widget 
 - **readingsgroup** : displaying a readingsgroup defined in fhem
 - **datetimepicker** : select a date and time value from calendar
 - **eventmonitor**: for debugging - shows all events which normal widgets 'see'
+- **chart** : multistyle chart for multiple values (reads directly from FHEM log file)
+- **checkbox** : Toggle any command to FHEM (e.g. on / off)
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -222,7 +224,7 @@ See [examples](#label) of Label
 
 // special for MAX! WandThermostat
 date-mode: if the value, retrieved from this reading equals 'auto' then such a command is created "set wz_WandThermostat desiredTemperature **auto** <value>".
-Other values creates somthing like this "set wz_WandThermostat desiredTemperature <value>"
+Other values creates something like this "set wz_WandThermostat desiredTemperature <value>"
 
 ####Volume widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
@@ -291,7 +293,7 @@ The slider supports tap to target only if the CSS class 'tap' is added.
 - **data-set**       : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-set-on**    : string for ON status to set. (default: value of data-get-on)
 - **data-set-off**   : string for OFF status to set. (default: value of data-get-off)
-- **data-set-value** : string for VALUE to get. (default '': numeric value)
+- **data-set-value** : Format of the value to send to FHEM (default '$v': the value only)
 - **data-cmd**       : name of the command (**\<command\>** \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-cmd-value** : name of the command for value changing via slider (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setreading) default: 'set'
 - **data-dim**       : name of the reading responsible for DIM  (\<command\> \<device\> **\<reading\>** \<value\>) (default: '')
@@ -325,7 +327,7 @@ Use data-url + data-refresh or data-device + data-get, not both.
 ####CircleMenu widgets
 - **data-item-diameter** : diameter of the circle (default 52)
 - **data-circle-radius** : radius of each item, in pixel (default 70)
-- **data-direction**     : position of the items in relation to the center (default full). Options are: top | right | bottom | left | top-right | top-left | bottom-right | bottom-left | top-half | right-half | bottom-half | left-half | full
+- **data-direction**     : position of the items in relation to the center (default full). Options are: top | right | bottom | left | top-right | top-left | bottom-right | bottom-left | top-half | right-half | bottom-half | left-half | full | vertical | horizontal
 - **data-close-after**   : closing time of the circle-menu (default: (item-count + 1s) or a minimum of 4s)
 - **class**		         : keepopen
 
@@ -374,6 +376,43 @@ all other parameters like switch widget
 
 The chart gets updated every time the data-get reading is changed and after each shortpoll interval  (15 min).
 
+####Chart widgets
+- **data-logdevice** 	name of the logdevice (e.g. FileLog_WohnzimmerHeizung) or array of names if more than one graph shall be displayed
+- **data-logfile** 	name of the logfile (e.g. WohnzimmerHeizung-2015.log) or or array of names if more than one graph shall be displayed 	(default '-' or omitting this data means current logfile)
+- **data-columnspec** 	definition for how to find the values (e.g. "4:meas.*:1:int") or or array of columnspecs if more than one graph shall be displayed
+- **data-style** 	name of the graph style to be used (e.g. 'SVGplot l0' or 'ftui l0dash') or or array of styles if more than one graph shall be displayed using different stlyes. The standard fhem plot styles can be used furthermore there are some more predefined styles existing (details see css file). Own styles can be specified e.g. in the fhem-table-ui-user.css file.
+- **data-ptype** 	name of the plot type (e.g. 'lines' or 'fa-cog') or or array of plottypes if more than one graph shall be displayed. All fhem plot styles are supported. Additionally it is possible to specify symbols (currently supported are font awesome ('fa-...'), open automation ('oa-...') and fhem symbols ('fs-...')) 	(default 'lines')
+- **data-uaxis** 	name of the axis to be used ('primary' or 'secondary') or or array of axis' to be used if more than one graph shall be displayed. The 'primary' axis is labelled on the left side, the 'secondary' axis is labelled on the right side 	(default 'primary'
+- **data-legend** 	caption of the graph (used in the legend and at the cursor) or an array of legend texts if more than one graph shall be displayed.
+- **data-minvalue**	min Y value to Show or an array of values for dynamic minY for primary axis. A value of 'auto' means that the value is calculated from the data displayed dynamically 	(default 10)
+- **data-minvalue_sec**	min Y value to Show or an array of values for dynamic minY for secondary axis. A value of 'auto' means that the value is calculated from the data displayed dynamically 	(default 'auto')
+- **data-maxvalue** 	max Y value to Show or an array of values for dynamic maxY for primary axis. A value of 'auto' means that the value is calculated from the data displayed dynamically 	(default 30)
+- **data-maxvalue_sec**	max Y value to Show or an array of values for dynamic maxY for secondary axis. A value of 'auto' means that the value is calculated from the data displayed dynamically 	(default 'auto')
+- **data-yticks** 	value distance between Y tick lines (related to primary axis). A value of 'auto' means that the value is calculated from the data displayed dynamically. 	(default 'auto')
+- **data-xticks** 	time range between each X tick lines (in minutes). A value of 'auto' means that the value is calculated from the data displayed dynamically 	(default 'auto')
+- **data-daysago_start**	number of days back from now for the start of the plot (0 means the plot starts from today 0:00). Additionally the x-axis start value can be set here unsing standard data formats like ('2013-10-23'), the time portion of the string is only used when data-nofulldays is 'true'. 	(default 0)
+- **data-daysago_end** 	number of days back from now for the end of the plot (-1 means the plot ends today 24:00). Additionally the x-axis end value can be set here unsing standard data formats like ('2013-10-23'), the time portion of the string is only used when data-nofulldays is 'true'. 	(default -1)
+- **data-nofulldays** 	switch to activate/deactivate rounding of the xaxis start and end values to full days ('true' or 'false') 	'false'
+- **data-ytext** 	text to be shown besides the primary y axis.
+- **data-ytext_sec** 	text to be shown besides the secondary y axis.
+- **data-yunit** 	unit of the value to show beside of each Y ticks for primary y axis.
+- **data-crosshair **	switch to activate/deactivate the crosshair cursor ('true' or 'false') 	(default 'false')
+- **data-cursorgroup** 	number to define coupling of the crosshair cursor. The cursors of all charts having the same number are coupled and move together.
+- **data-scrollgroup** 	number to define coupling of the scrolling (shift and zoom). All charts having the same number are scrolled (shifted and zoomed) together.
+- **data-showlegend**	switch to activate/deactivate the initial display of the legend window ('true' or 'false') 	(default 'false')
+- **data-yunit_sec** 	unit of the value to show beside of each Y ticks for secondary y axis.
+- **data-width** 	fixe size for width (in % or px)
+- **data-height** 	fixe size for height (in % or px)
+- **class**             fullsize, noticks, nobuttons
+
+data-logfile can be omitted in this case the default value "-" will be used. This means that the current logfile is going to be used.
+
+There are several buttons that control the dynamic behaviour of the chart. The <-, ->, + and - buttons shift and zoom the displayed data. The "legend" and "cursor" buttons are switching on and off the display of the legend window and the crosshair cursor respectively.
+
+When the legend window is displayed, a click on the legend text shows/hides the respective graph. The legend window can be dragged to other positions on desktop browsers (currently not yet working for iOS and Android).
+
+The crosshair cursor currently only works dynamically on desktop browsers. On iOS and Android you have to tap on the screen to set the cursor to a new position.
+
 ####Popup widgets
 - **data-get**         : name of the reading where to get the alert value from (default 'STATE')
 - **data-get-on**      : value which trigger to open the dialog (default 'on')
@@ -384,12 +423,13 @@ The chart gets updated every time the data-get reading is changed and after each
 It's important that a ```<div class="dialog">``` inside the widget can be found. See the [basic structure](#dialog) of popup
 
 ####Datetimepicker widgets
-same as Label Widgets
+All parameters like Label Widgets plus these:
 - **data-format**      : date and time format of the output  (default 'Y-m-d H:i')
 - **data-theme**       : color scheme: normal, dark (default 'dark')
 - **data-timepicker**  : show the time picker (default 'true')
 - **data-datepicker**  : show the date picker (default 'true')
 - **data-step**        : step for time in minutes (default '60')
+- **data-set-value**   : Format of the value to send to FHEM (default '$v': the value only)
 
 ####Readingsgroup widgets
 - **data-max-update**         : Specify a minimum number of seconds between an update of the widget to avoid high load on the system
@@ -404,10 +444,15 @@ same as Label Widgets
 - **reading-filter**   : (default '.*')
 - **max-items**        : (default '100')
 
-Please this widget for debugging purpose within a normal page and klick it to see the events which updates all widgets.
+Place this widget for debugging purpose within a normal page and klick it to see the events which updates all widgets.
 ```html
 <div data-type="eventmonitor">EM</div>
 ```
+
+####Checkbox widgets
+All parameters like Switch widgets
+
+- **class**             small, large
   
 Format
 -------
@@ -493,6 +538,13 @@ Recommended colors:
 - Gray:		#8C8C8C
 
 You could use this color picker: http://www.w3schools.com/tags/ref_colorpicker.asp
+
+Prepared color schemas are available in css folder and can be included with a additional link at the end of the css link list.
+```html
+<link rel="stylesheet" href="/fhem/tablet/css/fhem-blue-ui.css" />
+```
+These schemas change all widgets together.
+It is also possible to change only color of single widgets by adding one of these CSS classes 'red', 'green', 'blue', 'orange', 'ligthblue', 'gray'
 
 Meta tags configuration
 -------
@@ -1094,6 +1146,41 @@ Multiple pagetabs in a template file: menu.html
 </li>
 ```
 
+**Example** for chart widget
+```html
+<li data-row="4" data-col="9" data-sizex="10" data-sizey="3">
+  <header>CHART</header>
+    <div class="normal"
+         data-type="chart"
+         data-device="WohnzimmerHeizung"
+         data-logdevice='["FileLog_WohnzimmerHeizung","FileLog_WohnzimmerHeizung","FileLog_WohnzimmerHeizung"]'
+         data-columnspec='["4:measured-temp","4:desired-temp","4:ValvePosition"]'
+         data-style='["ftui l0fill","ftui l0dot","ftui l2dash"]'
+         data-ptype='["lines","lines","lines"]'
+         data-uaxis='["primary","primary","secondary"]'
+         data-legend='["Measured", "Desired", "Valve"]'
+         data-yunit="°C"
+         data-ytext="Temperature"
+         data-minvalue="auto"
+         data-maxvalue="auto"
+         data-yunit_sec="%"
+         data-ytext_sec="Percentage"
+         data-yticks="auto"
+         data-minvalue_sec="0"
+         data-maxvalue_sec="100"
+         data-daysago_start="0"
+         data-daysago_end="-1"
+         data-crosshair="true"
+         data-cursorgroup="1"
+         data-scrollgroup="1"
+         data-showlegend="true"
+         data-xticks="auto">
+    </div>
+</li>
+```
+
+![](http://knowthelist.github.io/fhem-tablet-ui/widget_chart_example.png)
+
 ###Circle Menu
 -------
 Cover a lot of other button behind one single button 
@@ -1283,8 +1370,11 @@ You can support the creator of this beautiful UI so that he can buy a new laptop
 Update 2015-10-27: yesterday my old 2007 MacBook died. Total fail of HDD. 
 I'm unable to work now and I need to buy a new one.
 
+Update 2015-11-04: my old 2007 MacBook runs again with the previous HDD, but totaly slow and out of space.
+
 * Goal  : 13'' MacBook Pro 1445€ 
-* Status: 145€ (many thanks to all donators :-)
+* Status: 200€ (many thanks to all donators :-)
+
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PD4C2XM2VTD9A"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" alt="[paypal]" /></a>
 

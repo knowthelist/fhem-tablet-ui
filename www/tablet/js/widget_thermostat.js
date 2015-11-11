@@ -68,6 +68,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
 	pa, // Previous arc
 	r = 1;
 
+    c.clearRect(0, 0, this.w, this.h);
 	c.lineWidth = this.lineWidth;
 	c.lineCap = this.lineCap;
 	if (this.o.bgColor !== "none") {
