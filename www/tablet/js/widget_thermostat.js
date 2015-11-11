@@ -61,13 +61,12 @@ var widget_thermostat = $.extend({}, widget_knob, {
      diff_blue = '0' + diff_blue
 
    return '#' + diff_red + diff_green + diff_blue;
- },
+  },
   drawDial: function () {
   	var c = this.g, // context
 	a = this.arc(this.cv), // Arc
 	pa, // Previous arc
 	r = 1;
-
     c.clearRect(0, 0, this.w, this.h);
 	c.lineWidth = this.lineWidth;
 	c.lineCap = this.lineCap;
@@ -146,79 +145,58 @@ var widget_thermostat = $.extend({}, widget_knob, {
 		c.fillText(this.o.valveValue+'%',this.xy+x,this.xy+y+5);
     }
   return false;
-},
+  },
+  onChange: function (v) {
+     //avoid update from polling at the same time
+     startPollInterval();
+  },
+  onRelease: function (v) {
+      if (!isUpdating){
+            var device = this.$.data('device');
+            if(v == this.o.min && this.$.data('off') != -1) {
+                v=this.$.data('off');
+            } else if(v == this.o.max && this.$.data('boost') != -1) {
+                v=this.$.data('boost');
+            }
+            var mode = getDeviceValueByName( device, this.o.modes );
+            if (mode === 'auto')
+                v = mode + ' ' + v;
+            var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v;
+            setFhemStatus(cmdl);
+            TOAST && $.toast(cmdl);
+      }
+  },
+  onFormat: function (v) {
+     //fix digits count
+     return (this.step<1)?Number(v).toFixed(1):v;
+  },
   init: function () {
     var base=this;
 	this.elements=$('div[data-type="'+this.widgetname+'"]');
 	this.elements.each(function( index ) {
-
         $(this).data('get',    $(this).data('get') || 'desired-temp');
+        $(this).data('set',    $(this).data('set') || $(this).data('get'));
         $(this).data('temp',   $(this).data('temp') || 'measured-temp');
         $(this).data('height', $(this).isValidData('height') ? $(this).data('height') :100);
         $(this).data('width',  $(this).isValidData('width')  ? $(this).data('width')  :100);
         $(this).data('max',    $(this).isValidData('max')    ? $(this).data('max')    :30);
         $(this).data('min',    $(this).isValidData('min')    ? $(this).data('min')    :10);
+        $(this).data('cursor', $(this).isValidData('cursor') ? $(this).data('cursor') :6);
+        $(this).data('off',    $(this).isValidData('off')    ? $(this).data('off')    :-1);
+        $(this).data('boost',  $(this).isValidData('boost')  ? $(this).data('boost')  :-1);
+
+        $(this).data('fgcolor', $(this).data('fgcolor')     ||  getStyle('.'+base.widgetname+'.fgcolor','color')  || '#bbbbbb');
+        $(this).data('mincolor',$(this).data('mincolor')    ||  getStyle('.'+base.widgetname+'.mincolor','color') || '#4477ff');
+        $(this).data('maxcolor',$(this).data('maxcolor')    ||  getStyle('.'+base.widgetname+'.maxcolor','color') || '#ff0000');
+        $(this).data('bgcolor', $(this).data('bgcolor')     ||  getStyle('.'+base.widgetname,'background-color')  || 'none');
+        $(this).data('cursor',  $(this).data('cursor')   || 6);
+        readings[$(this).data('get')] = true;
+        readings[$(this).data('temp')] = true;
+        readings[$(this).data('valve')] = true;
+        readings[$(this).data('mode')] = true;
 
         base.init_attr($(this));
-        var knob_elem =  jQuery('<input/>', {
-			type: 'text',
-			value: '10',
-			disabled : true,
-		}).appendTo($(this));
-
-		var device = $(this).data('device');  
-
-		readings[$(this).data('get')] = true;
-		readings[$(this).data('temp')] = true;
-		readings[$(this).data('valve')] = true;
-        readings[$(this).data('mode')] = true;
-		knob_elem.knob({
-            'min': $(this).data('min'),
-            'max': $(this).data('max'),
-            'mode': $(this).data('mode'),
-			'off':$(this).attr('data-off')?$(this).data('off'):-1,
-			'boost':$(this).attr('data-boost')?$(this).data('boost'):-1,
-            'height':$(this).data('height'),
-            'width':$(this).data('width'),
-            'step': 1*$(this).data('step') || 1,
-            'angleOffset': $(this).data('angleoffset') || -120,
-            'angleArc': $(this).data('anglearc') || 240,
-			'bgColor': $(this).data('bgcolor') || 'transparent',
-            'fgColor': getStyle('.'+base.widgetname+'.fgcolor','color') || $(this).data('fgcolor') || '#bbbbbb',
-            'tkColor': getStyle('.'+base.widgetname+'.tkcolor','color') || $(this).data('tkcolor') || '#666',
-            'minColor': getStyle('.'+base.widgetname+'.mincolor','color') || $(this).data('mincolor') || '#4477ff',
-            'maxColor': getStyle('.'+base.widgetname+'.maxcolor','color') || $(this).data('maxcolor') || '#ff0000',
-            'thickness': .25,
-            'cursor': 6,
-            'touchPosition': 'left',
-			'readOnly' : $(this).hasClass('readonly')?true:false,
-			'cmd': $(this).data('cmd') || 'set',
-			'set': $(this).data('set') || 'desired-temp',
-            'draw' : widget_thermostat.drawDial,
-            'format' : function (v) {
-                //fix digits count
-                return (this.step<1)?Number(v).toFixed(1):v;
-            },
-            'change' : function (v) {
-                 startPollInterval();
-            },
-			'release' : function (v) { 
-              if (!isUpdating){
-                    var elem = $(this).find('input');
-		 		    if(v == this.o.min && this.o.off != -1) {
-		 		        v=this.o.off;
-		 		    } else if(v == this.o.max && this.o.boost != -1) {
-		 		        v=this.o.boost;
-                    }
-                    var mode = getDeviceValueByName( device, this.o.mode );
-                    if (mode === 'auto')
-                        v = mode + ' ' + v;
-				  	var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v;
-                    setFhemStatus(cmdl);
-				  	$.toast(cmdl);
-			  }
-			}	
-		});
+        base.init_ui($(this));
 	});
   },
   update: function (dev,par) {

@@ -56,7 +56,7 @@ var widget_label = $.extend({}, widget_widget, {
         if(limits && colors) {
             var idx=indexOfGeneric(limits,value);
             if (idx>-1) {
-                elem.css( "color", colors[idx] );
+                elem.css( "color", getStyle('.'+colors[idx],'color') || colors[idx] );
             }
         }
     },

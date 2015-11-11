@@ -106,12 +106,12 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             elm.removeClass()
             .addClass('fa fa-stack-1x')
             .addClass(icons[idx])
-            .css( "color", colors[idx] );
+            .css( "color", getStyle('.'+colors[idx],'color') || colors[idx] );
             var bgelm=elem.children().filter('#bg');
             bgelm.removeClass()
             .addClass('fa fa-stack-2x')
             .addClass(bgicons[idx])
-            bgelm.css( "color", bgcolors[idx]);
+            bgelm.css( "color", getStyle('.'+bgcolors[idx],'color') || bgcolors[idx] );
             
         }
     },
