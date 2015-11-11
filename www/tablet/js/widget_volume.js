@@ -75,113 +75,87 @@ var widget_volume = $.extend({}, widget_knob, {
 	c.stroke();
 
   return false;
-  },
-  init: function () {
+    },
+    onChange: function (v) {
+        startPollInterval();
+          if (v > this.o.max - this.o.variance && this.o.lastValue < this.o.min + this.o.variance) {
+              knob_elem.val(this.o.min).change();
+              return false;
+          } else if (v < this.o.min + this.o.variance && this.o.lastValue > this.o.max - this.o.variance) {
+              knob_elem.val(this.o.max).change();
+              return false;
+          }
+          this.o.lastValue = v;
+    },
+    onRelease: function (v) {
+        if (!isUpdating){
+              if ((this.o.mode>>6) % 2 != 0){
+                  //send hex rbg value
+                  v=widget_knob.hslToRgb(v/this.o.max,1.0,0.5);
+              }
+              else{
+                 //send decimal value
+                 v=v*(this.o.origmax/this.o.max);
+                 v=v.toFixed(0);
+              }
+              var device = this.$.data('device');
+              if(typeof device!='undefined') {
+                  var val = this.o.setValue.replace('$v',v.toString());
+                  var cmdl = [this.o.cmd,device,this.o.set,val].join(' ');
+                  setFhemStatus(cmdl);
+                  TOAST && $.toast(cmdl);
+              }
+              this.$.data('curval', v);
+        }
+    },
+    onFormat: function(v) { return v; },
+    init: function () {
     var base=this;
     this.elements = $('div[data-type="'+this.widgetname+'"]');
- 	this.elements.each(function(index) {
-		var maxval = $(this).data('max') || 70;
-	    $(this).data('max', maxval);
-	    $(this).data('max360', (maxval>360)?360:maxval);
-        $(this).data('fgcolor',     $(this).data('fgcolor')     || getStyle('.volume.fgcolor','color') || '#ccc');
+    this.elements.each(function(index) {
+        var maxval = $(this).isValidData('max')  ? $(this).data('max')  :  70;
+        $(this).data('origmax', maxval);
+        $(this).data('max',     (maxval>360)?360:maxval);
+        $(this).data('fgcolor',     $(this).data('fgcolor')     || getStyle('.'+this.widgetname,'color') || '#ccc');
         $(this).data('get-value',   $(this).data('get-value')   || $(this).data('part')         || '-1');
 
-		base.init_attr($(this));
-		var knob_elem =  jQuery('<input/>', {
-			type: 'text',
-			value: $(this).attr('data-initvalue')||'10',
-			disabled : true,
-		}).appendTo($(this));
-		
-		var device = $(this).data('device');
-		
-		var mode=0; //no hue colors
+        var mode=0; //no hue colors
         var hdDefaultColor = getClassColor($(this)) || getStyle('.volume.hdcolor','color') || '#aa6900';
-		if ($(this).hasClass('hue-back')){
-			mode = mode | 1<<0;
-			hdDefaultColor='#cccccc'; 
-		}
-		if ($(this).hasClass('hue-tick')){
-			mode = mode | 1<<1; 
-			hdDefaultColor='#bbbbbb';
-		}
-		if ( $(this).hasClass('hue-front')){
-			mode = mode | 1<<2; 
-		}
-		
-		if ($(this).hasClass('dim-back')){
-			mode = mode | 1<<3;
-		}
-		if ($(this).hasClass('dim-tick')){
-			mode = mode | 1<<4; 
-		}
-		if ( $(this).hasClass('dim-front')){
-			mode = mode | 1<<5; 
-		}
+        if ($(this).hasClass('hue-back')){
+            mode = mode | 1<<0;
+            hdDefaultColor='#cccccc';
+        }
+        if ($(this).hasClass('hue-tick')){
+            mode = mode | 1<<1;
+            hdDefaultColor='#bbbbbb';
+        }
+        if ( $(this).hasClass('hue-front')){
+            mode = mode | 1<<2;
+        }
+
+        if ($(this).hasClass('dim-back')){
+            mode = mode | 1<<3;
+        }
+        if ($(this).hasClass('dim-tick')){
+            mode = mode | 1<<4;
+        }
+        if ( $(this).hasClass('dim-front')){
+            mode = mode | 1<<5;
+        }
         if ( $(this).hasClass('rgb')){
             mode = mode | 1<<6;
         }
         $(this).data('mode',mode);
+        $(this).data('bgcolor',    $(this).data('bgcolor')     || getStyle('.'+base.widgetname,'background-color')    || 'none');
+        $(this).data('hdcolor',    $(this).data('hdcolor')     || hdDefaultColor);
+        $(this).data('tickstep',   $(this).data('tickstep')    || (((mode>>1) % 2 != 0)?4:20));
+        $(this).data('cursor',     $(this).data('cursor')      || 6);
 
-		knob_elem.knob({
-			'min': $(this).data('min'),
-			'max': $(this).data('max360'),
-            'lastValue': 0,
-            'variance': Math.floor($(this).data('max360') / 5),
-			'origmax': $(this).data('max'),
-            'height':$(this).data('height'),
-            'width':$(this).data('width'),
-			'angleOffset': $(this).data('angleoffset'),
-			'angleArc': $(this).data('anglearc'),
-			'bgColor': $(this).data('bgcolor'),
-            'fgColor': $(this).data('fgcolor'),
-			'tkColor': $(this).data('tkcolor'),
-			'hdColor': $(this).data('hdcolor') || hdDefaultColor,
-            'thickness': ($(this).hasClass('mini'))?.45:.25,
-			'tickdistance': $(this).data('tickstep') || (((mode>>1) % 2 != 0)?4:20),
-			'mode': mode,
-			'cursor': 6,
-            'touchPosition': 'left',
-			'cmd': $(this).data('cmd'),
-			'set': $(this).data('set'),
-            'setValue': $(this).data('set-value') || '$v',
-            'draw' : widget_volume.drawDial,
-			'readOnly' : $(this).hasClass('readonly'),
-            'change' : function (v) {
-                   startPollInterval();
-                     if (v > this.o.max - this.o.variance && this.o.lastValue < this.o.min + this.o.variance) {
-                         knob_elem.val(this.o.min).change();
-                         return false;
-                     } else if (v < this.o.min + this.o.variance && this.o.lastValue > this.o.max - this.o.variance) {
-                         knob_elem.val(this.o.max).change();
-                         return false;
-                     }
-                     this.o.lastValue = v;
-            },
-            'release' : function (v) {
-                  if (!isUpdating){
-                        if ((this.o.mode>>6) % 2 != 0){
-                            //send hex rbg value
-                            v=widget_knob.hslToRgb(v/this.o.max,1.0,0.5);
-                        }
-                        else{
-                           //send decimal value
-                           v=v*(this.o.origmax/this.o.max);
-                           v=v.toFixed(0);
-                        }
-				  		if(typeof device!='undefined') {
-                            var val = this.o.setValue.replace('$v',v.toString());
-                            var cmdl = [this.o.cmd,device,this.o.set,val].join(' ');
-			  				setFhemStatus(cmdl);
-			  				$.toast(cmdl);
-				  		}
-				  		this.$.data('curval', v);
-				  }
-			}	
-        });
+        base.init_attr($(this));
+        base.init_ui($(this));
      });
-  },
-  update: function (dev,par) {
+    },
+    update: function (dev,par) {
 
     var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
     isUpdating=true;
@@ -197,20 +171,20 @@ var widget_volume = $.extend({}, widget_knob, {
                     //is hex rgb
 
                     val=widget_knob.rgbToHsl(val)[0];
-                    val=val*$(this).data('max360');
+                    val=val*$(this).data('max');
                 }
                 else{
                     //is decimal value
-                    val = (val * ($(this).data('max360')/$(this).data('max'))).toFixed(0);
+                    val = (val * ($(this).data('max')/$(this).data('origmax'))).toFixed(0);
                 }
                 if ( knob_elem.val() != val ){
-					knob_elem.val( val ).trigger('change');
+                    knob_elem.val( val ).trigger('change');
                     DEBUG && console.log( this.widgetname + ' dev:'+dev+' par:'+par+' change '+$(this).data('device')+':knob to ' +val );
-				}	
-			}
+                }
+            }
             knob_elem.css({visibility:'visible'});
-		}
-	});
+        }
+    });
     isUpdating=false;
-   }
+    }
 });

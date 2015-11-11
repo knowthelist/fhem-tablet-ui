@@ -1,6 +1,6 @@
 body {
     background-color: #000000;
-    font-family: "Helvetica Neue", "Helvetica", "Open Sans", "Arial", "Helvetica", sans-serif;
+    font-family: "Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif;
     -webkit-font-smoothing: antialiased;
     font-size: small;
     color: #eeeeee;
@@ -225,7 +225,8 @@ body {
 
 .darker { color: #8C8C8C; }
 .thin { font-weight: lighter; }
-.bigger { font-size: 320% !important; }
+.grande { font-size: 600% !important; font-family: "Helvetica Neue", "Open Sans", sans-serif-light,sans-serif; }
+.bigger { font-size: 400% !important; font-family: "Helvetica Neue", "Open Sans", sans-serif-light,sans-serif; }
 .big { font-size: 200%; }
 .large { font-size: 150%; }
 .small { font-size: 80%; }
