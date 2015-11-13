@@ -129,9 +129,9 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
           if ( $(this).data('get')==par) {
               var state = getDeviceValue( $(this), 'get' );
               if (state) {
-                  var states=$(this).data('get-on');
+                  var states=$(this).data('states') || $(this).data('get-on');
                   if ( $.isArray(states)) {
-                      base.showMultiStates($(this),states,state);
+                      base.showMultiStates($(this),states,state,-1);
                   }
               }
               if ($(this).hasClass('warn') || $(this).children().filter('#fg').hasClass('warn'))

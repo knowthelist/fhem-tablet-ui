@@ -51,12 +51,13 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             }).html(val).appendTo(elem);
          }
     },
-    showMultiStates : function(elem,states,state){
+    showMultiStates : function(elem,states,state,idxOn){
 
         var icons=elem.data('icons');
         var bgicons=elem.data('background-icons');
         var colors=elem.data('colors') || elem.data('on-colors');
         var bgcolors=elem.data('background-colors') || elem.data('on-background-colors');
+
 
         // if data-icons isn't set, try using data-icon or fa-power-off instead
         if(typeof icons == 'undefined') {
@@ -97,7 +98,8 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         if (idx>-1){
             var faelem = elem.data('famultibutton');
             if ( faelem ) {
-              if ( idx == 0 ) {
+              idxOn = idxOn || 0;
+              if ( idx === idxOn ) {
                  faelem.setOn();
               } else {
                  faelem.setOff();
