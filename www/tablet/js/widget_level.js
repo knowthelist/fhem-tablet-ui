@@ -29,32 +29,50 @@ var widget_level= {
 			'min': $(this).data('min') || 0,
 			'max': $(this).data('max') || 100,
             klass: $(this).hasClass('horizontal')?'level_horizontal':'level_vertical',
-            start: '5',
 		});
 		$(this).data('Powerange',pwrng);
 
         if ($(this).hasClass('horizontal')){
-            if ($(this).hasClass('mini'))
-                $(this).css({'width': '60px','max-width': '60px','height':'0px'})
-            else
-                $(this).css({'width': '120px','max-width': '120px','height':'0px'});
+            if ($(this).data('width')) {
+                $(this).css({'width': $(this).data('width')+'px','max-width': $(this).data('width')+'px','height':'0px'});
+            } else {
+                if ($(this).hasClass('mini'))
+                    $(this).css({'width': '60px','max-width': '60px','height':'0px'});
+                else
+                    $(this).css({'width': '120px','max-width': '120px','height':'0px'});
+            }
+            if ($(this).data('height')) {
+                $(this).children().find('.range-bar').css({'height': $(this).data('height')+'px',
+                                                           'max-height': $(this).data('height')+'px',
+                                                           'top': '-'+$(this).data('height')/2+'px',
+                                                          });
+            }
         }
         else {
-            if ($(this).hasClass('mini'))
-                $(this).css({'height': '60px','max-height': '60px'})
-            else
-                $(this).css({'height': '120px','max-height': '120px'});
+            if ($(this).data('height')) {
+                $(this).css({'height': $(this).data('height')+'px','max-height': $(this).data('height')+'px'});
+            } else {
+                if ($(this).hasClass('mini'))
+                    $(this).css({'height': '60px','max-height': '60px'});
+                else
+                    $(this).css({'height': '120px','max-height': '120px'});
+            }
+            if ($(this).data('width')) {
+                $(this).children().find('.range-bar').css({'width': $(this).data('width')+'px',
+                                                           'max-width': $(this).data('width')+'px',
+                                                           'left': '-'+$(this).data('width')/4+'px',
+                                                          });
+            }
         }
-		
+
         $(this).addClass(pwrng.options.klass);
         $(this).children().find('.range-handle').css({'visibility':'hidden','width':'0px','height':'0px'});
-
 	 });
   },
   update: function (dev,par) {
 
     var deviceElements= _level.elements.filter('div[data-device="'+dev+'"]');
-	deviceElements.each(function(index) {
+    deviceElements.each(function(index) {
 
         if ( $(this).data('get')==par){
 
@@ -71,7 +89,11 @@ var widget_level= {
                     var v = $(this).hasClass('negated')
                             ? pwrng.options.max + pwrng.options.min - parseInt(val)
                             : parseInt(val);
-                    pwrng.setStart(parseInt(v));
+                        // hack for this.slider.offsetHeight=0 issue
+                        setTimeout(function(){
+                            pwrng.setStart(parseInt(v));
+                        }, 50);
+
 
                     //set colors according matches for values
                     var limits=$(this).data('limits');
@@ -96,11 +118,11 @@ var widget_level= {
                             $(this).children().find('.range-quantity').css( "background-color", colors[idx] );
                         }
                     }
-				}
-				elem.css({visibility:'visible'});
-			}
-		}
-	});
+                }
+                elem.css({visibility:'visible'});
+            }
+        }
+    });
    }
-			 
+
 };

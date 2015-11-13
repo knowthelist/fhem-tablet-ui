@@ -209,7 +209,30 @@ See [examples](#label) of Label
 
 'data-set-on' can also be an array of values to toggle between this values
 
+####Knob widgets
+- **data-get**  : name of the reading to get from FHEM (default 'STATE')
+- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
+- **data-cmd**  : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-get-value** : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
+- **data-set-value** : Format of the value to send to FHEM (default '$v': the value only)
+- **data-min**  : minimal value to set (default 0)
+- **data-max**  : maximal value to set (default 70)
+- **data-initvalue**  : (default 10)
+- **data-step**  :  (default 1);
+- **data-angleoffset**  : (default -120);
+- **data-anglearc**  : (default 240);
+- **data-bgcolor**  : (default '#505050');
+- **data-fgcolor**  : (default '#aa6900');
+- **data-inputcolor**  :  (default '#ffffff');
+- **data-tkcolor**  :  (default '#666');
+- **data-hdcolor**  :  (default '#666');
+- **data-displayInput**  : Show the value (default true);
+- **data-font**  :  (default '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
+- **data-font-weight**
+- **class**		: mini, small, large, readonly
+
 ####Thermostat widgets
+all parameters from knob widget plus following additional parameters
 - **data-get**   : name of the reading to get from FHEM (default 'desired-temp')
 - **data-temp**  : name of the reading for measured temperature of thermostates (default 'measured-temp')
 - **data-set**   : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default 'desired-temp')
@@ -227,6 +250,7 @@ date-mode: if the value, retrieved from this reading equals 'auto' then such a c
 Other values creates something like this "set wz_WandThermostat desiredTemperature <value>"
 
 ####Volume widgets
+all parameters from knob widget plus following additional parameters
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-cmd**  : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
@@ -238,6 +262,7 @@ Other values creates something like this "set wz_WandThermostat desiredTemperatu
 - **class**		: mini, small, big, bigger, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
 
 ####Homestatus widget
+all parameters from knob widget plus following additional parameters
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
 - **data-set**      : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-get-on**   : array of states using for get (default ['1','2','3','4'])
@@ -265,7 +290,7 @@ Other values creates something like this "set wz_WandThermostat desiredTemperatu
 - **data-value**: show the value in a text box (default 'false')
 - **data-width**: width for horizontal sliders (default '120px', for mini '60px')
 - **data-height**: height for vertical sliders (default '120px', for mini '60px')
-- **class**		: mini, horizontal, negated, textvalue, tap
+- **class**     : mini, horizontal, negated, textvalue, tap,big,bigger,large
 
 The slider supports tap to target only if the CSS class 'tap' is added. 
 
@@ -278,7 +303,7 @@ The slider supports tap to target only if the CSS class 'tap' is added.
 - **data-part** : part number of the space separated value to show or an RegEx
 - **data-colors** : a array of color values to affect the colour of the label according to the limit value 
 - **data-limits** : a array of numeric or RegEx values to affect the colour of the label
-- **class**		: mini, horizontal
+- **class**	: mini, horizontal,big,bigger,large
 
 ####Progress widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')

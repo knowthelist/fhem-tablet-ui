@@ -226,7 +226,7 @@ body {
 .darker { color: #8C8C8C; }
 .thin { font-weight: lighter; }
 .grande { font-size: 600% !important; font-family: "Helvetica Neue", "Open Sans", sans-serif-light,sans-serif; }
-.bigger { font-size: 400% !important; font-family: "Helvetica Neue", "Open Sans", sans-serif-light,sans-serif; }
+.bigger { font-size: 320% !important; }
 .big { font-size: 200%; }
 .large { font-size: 150%; }
 .small { font-size: 80%; }
@@ -244,8 +244,8 @@ bottom: 0;}
 
 i#warn {
     font-size: 40% !important;
-    margin-left:24%;
-    margin-top:-19%;
+    margin-left:26%;
+    margin-top:-31%;
     color: #aaa;
     font-weight: bold !important;
     font-family: sans-serif;
@@ -254,8 +254,8 @@ i#warn {
 
 i#warn-back {
     font-size: 75% !important;
-    margin-left:25%;
-    margin-top:-20%;
+    margin-left:27%;
+    margin-top:-31%;
     color: #882200;
 }
 
@@ -323,6 +323,16 @@ margin:12px 20px 25px 5px !important;
 
 .slider_vertical .slidertext{
 margin:10px 0px 0px -30% !important;
+}
+
+.big > .vertical .range-bar {
+    width: 15px;
+}
+.bigger > .vertical .range-bar {
+    width: 25px;
+}
+.large > .vertical .range-bar {
+    width: 50px;
 }
 
 .jq-toast-wrap{

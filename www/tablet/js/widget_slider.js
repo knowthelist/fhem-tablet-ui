@@ -102,6 +102,12 @@ var widget_slider = {
                 else
                     $(this).css({'width': '120px','max-width': '120px','height':'0px'});
             }
+            if ($(this).data('height')) {
+                $(this).children().find('.range-bar').css({'height': $(this).data('height')+'px',
+                                                           'max-height': $(this).data('height')+'px',
+                                                           'top': '-'+$(this).data('height')/2+'px',
+                                                          });
+            }
         }
         else {
             if ($(this).data('height')) {
@@ -111,6 +117,12 @@ var widget_slider = {
                     $(this).css({'height': '60px','max-height': '60px'});
                 else
                     $(this).css({'height': '120px','max-height': '120px'});
+            }
+            if ($(this).data('width')) {
+                $(this).children().find('.range-bar').css({'width': $(this).data('width')+'px',
+                                                           'max-width': $(this).data('width')+'px',
+                                                           'left': '-'+$(this).data('width')/4+'px',
+                                                          });
             }
         }
 
@@ -144,7 +156,10 @@ var widget_slider = {
                     var v = $(this).hasClass('negated')
                             ? pwrng.options.max + pwrng.options.min - parseInt(nstate)
                             : parseInt(nstate);
-                    pwrng.setStart(parseInt(v));
+                    // hack for this.slider.offsetHeight=0 issue
+                    setTimeout(function(){
+                        pwrng.setStart(parseInt(v));
+                    }, 50);
                     localStorage.setItem("slider_"+dev, v);
                     DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
                 }
