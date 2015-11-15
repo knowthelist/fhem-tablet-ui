@@ -38,6 +38,7 @@ UPD 2015-10-29_23:28:31 14282 www/tablet/index-example.html
 UPD 2015-11-08_10:53:08 20306 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-10-29_23:28:31 10557 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2015-11-08_00:01:41 20988 www/tablet/js/highcharts-meteogram.js
+UPD 2015-11-15_19:32:40 6748 www/tablet/js/widget_calview.js
 UPD 2015-11-07_19:12:42 116652 www/tablet/js/widget_chart.js
 UPD 2015-11-06_22:06:38 3864 www/tablet/js/widget_checkbox.js
 UPD 2015-09-21_19:34:48 1635 www/tablet/js/widget_circlemenu.js
