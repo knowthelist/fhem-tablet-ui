@@ -524,6 +524,7 @@ Positioning:
 - centered		: horizontal centered
 - left-align	: align text left
 - right-align	: align text right
+- bottom        : align text at the bottom of
 - wider			: 15px extra space for the widget all around 
 - narrow		: shorter distant to the widget above 
 - fullsize		: 100% in width and height
