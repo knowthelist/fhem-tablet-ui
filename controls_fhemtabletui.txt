@@ -9,13 +9,14 @@ DIR www/tablet/lib/highcharts/themes
 UPD 2015-10-29_23:28:31 415 www/tablet/css/fhem-blue-ui.css
 UPD 2015-10-29_23:28:31 415 www/tablet/css/fhem-green-ui.css
 UPD 2015-10-29_23:28:31 1266 www/tablet/css/fhem-mobil-ui.css
-UPD 2015-11-13_08:13:21 11588 www/tablet/css/fhem-tablet-ui.css
+UPD 2015-11-17_15:59:59 12337 www/tablet/css/fhem-tablet-ui.css
 UPD 2015-11-11_21:24:12 9054 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2015-11-04_19:00:41 5534 www/tablet/css/ftui_chart.css
 UPD 2015-10-29_23:28:31 127396 www/tablet/fonts/fhemSVG.eot
 UPD 2015-10-29_23:28:31 528460 www/tablet/fonts/fhemSVG.svg
 UPD 2015-10-29_23:28:31 127232 www/tablet/fonts/fhemSVG.ttf
 UPD 2015-10-29_23:28:31 127308 www/tablet/fonts/fhemSVG.woff
+UPD 2015-11-17_15:53:07 103 www/tablet/fonts/fontawesome-License.txt
 UPD 2015-10-29_23:28:31 68875 www/tablet/fonts/fontawesome-webfont.eot
 UPD 2015-10-29_23:28:31 355981 www/tablet/fonts/fontawesome-webfont.svg
 UPD 2015-10-29_23:28:31 138204 www/tablet/fonts/fontawesome-webfont.ttf
@@ -26,6 +27,7 @@ UPD 2015-10-29_23:28:31 1344 www/tablet/fonts/FTUI-icons.eot
 UPD 2015-10-29_23:28:31 937 www/tablet/fonts/FTUI-icons.svg
 UPD 2015-10-29_23:28:31 1168 www/tablet/fonts/FTUI-icons.ttf
 UPD 2015-10-29_23:28:31 1244 www/tablet/fonts/FTUI-icons.woff
+UPD 2015-11-17_15:54:41 159 www/tablet/fonts/meteocons-License.txt
 UPD 2015-10-29_23:28:31 10454 www/tablet/fonts/meteocons-webfont.eot
 UPD 2015-10-29_23:28:31 33061 www/tablet/fonts/meteocons-webfont.svg
 UPD 2015-10-29_23:28:31 22724 www/tablet/fonts/meteocons-webfont.ttf
@@ -34,6 +36,11 @@ UPD 2015-10-29_23:28:31 359744 www/tablet/fonts/openautomation.eot
 UPD 2015-10-29_23:28:31 1517848 www/tablet/fonts/openautomation.svg
 UPD 2015-10-29_23:28:31 359552 www/tablet/fonts/openautomation.ttf
 UPD 2015-10-29_23:28:31 359628 www/tablet/fonts/openautomation.woff
+UPD 2015-11-17_03:56:30 11388 www/tablet/fonts/Roboto-Thin-webfont-License.txt
+UPD 2015-11-17_03:56:30 21659 www/tablet/fonts/Roboto-Thin-webfont.eot
+UPD 2015-11-17_03:56:30 74077 www/tablet/fonts/Roboto-Thin-webfont.svg
+UPD 2015-11-17_03:56:30 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
+UPD 2015-11-17_03:56:30 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2015-10-29_23:28:31 14282 www/tablet/index-example.html
 UPD 2015-11-08_10:53:08 20306 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-10-29_23:28:31 10557 www/tablet/js/fhem-tablet-ui.min.js
