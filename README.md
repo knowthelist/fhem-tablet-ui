@@ -1392,6 +1392,7 @@ Example of range widgets to visualize max and min temperature value as a range b
     <div data-type="range" data-device="AgroWeather" data-low="fc1_tempMin" data-high="fc1_tempMax" data-max="5" data-min="-5" data-limit-low="0" data-limit-high="2" class="inline left-space nolabels"></div>
     <div data-type="range" data-device="AgroWeather" data-low="fc2_tempMin" data-high="fc2_tempMax" data-max="5" data-min="-5" data-limit-low="0" data-limit-high="2" class="inline left-space nolabels"></div>
 </div>
+```
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/widget_range.png)
 
