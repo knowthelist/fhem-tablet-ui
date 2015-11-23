@@ -9,9 +9,10 @@ DIR www/tablet/lib/highcharts/themes
 UPD 2015-10-29_23:28:31 415 www/tablet/css/fhem-blue-ui.css
 UPD 2015-10-29_23:28:31 415 www/tablet/css/fhem-green-ui.css
 UPD 2015-10-29_23:28:31 1266 www/tablet/css/fhem-mobil-ui.css
-UPD 2015-11-17_15:59:59 12337 www/tablet/css/fhem-tablet-ui.css
+UPD 2015-11-23_20:05:10 12379 www/tablet/css/fhem-tablet-ui.css
 UPD 2015-11-11_21:24:12 9054 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2015-11-04_19:00:41 5534 www/tablet/css/ftui_chart.css
+UPD 2015-11-23_12:59:48 363 www/tablet/css/ftui_range.css
 UPD 2015-10-29_23:28:31 127396 www/tablet/fonts/fhemSVG.eot
 UPD 2015-10-29_23:28:31 528460 www/tablet/fonts/fhemSVG.svg
 UPD 2015-10-29_23:28:31 127232 www/tablet/fonts/fhemSVG.ttf
@@ -42,7 +43,7 @@ UPD 2015-11-17_03:56:30 74077 www/tablet/fonts/Roboto-Thin-webfont.svg
 UPD 2015-11-17_03:56:30 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2015-11-17_03:56:30 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2015-10-29_23:28:31 14282 www/tablet/index-example.html
-UPD 2015-11-08_10:53:08 20306 www/tablet/js/fhem-tablet-ui.js
+UPD 2015-11-23_01:06:35 20323 www/tablet/js/fhem-tablet-ui.js
 UPD 2015-10-29_23:28:31 10557 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2015-11-08_00:01:41 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2015-11-15_19:32:40 6748 www/tablet/js/widget_calview.js
@@ -61,12 +62,13 @@ UPD 2015-11-11_21:02:22 6415 www/tablet/js/widget_knob.js
 UPD 2015-11-07_19:44:42 4449 www/tablet/js/widget_label.js
 UPD 2015-11-13_00:11:58 5288 www/tablet/js/widget_level.js
 UPD 2015-11-08_00:01:41 1857 www/tablet/js/widget_meteogram.js
-UPD 2015-10-29_23:28:31 1875 www/tablet/js/widget_pagebutton.js
+UPD 2015-11-23_14:22:32 1985 www/tablet/js/widget_pagebutton.js
 UPD 2015-11-13_07:40:52 6717 www/tablet/js/widget_pagetab.js
 UPD 2015-10-29_23:28:31 3226 www/tablet/js/widget_playstream.js
 UPD 2015-11-07_19:12:52 3682 www/tablet/js/widget_popup.js
 UPD 2015-10-29_23:28:31 2480 www/tablet/js/widget_progress.js
 UPD 2015-10-29_23:28:31 2575 www/tablet/js/widget_push.js
+UPD 2015-11-23_19:32:23 5303 www/tablet/js/widget_range.js
 UPD 2015-10-29_23:28:31 1667 www/tablet/js/widget_readingsgroup.js
 UPD 2015-10-29_23:28:31 1204 www/tablet/js/widget_rotor.js
 UPD 2015-10-29_23:28:31 3242 www/tablet/js/widget_select.js
@@ -77,7 +79,7 @@ UPD 2015-10-29_23:28:31 1880 www/tablet/js/widget_symbol.js
 UPD 2015-11-11_20:50:39 9115 www/tablet/js/widget_thermostat.js
 UPD 2015-11-11_20:58:04 6624 www/tablet/js/widget_volume.js
 UPD 2015-10-29_23:28:31 20759 www/tablet/js/widget_weather.js
-UPD 2015-10-29_23:28:31 2322 www/tablet/js/widget_widget.js
+UPD 2015-11-23_20:07:40 2944 www/tablet/js/widget_widget.js
 UPD 2015-10-29_23:28:31 11649 www/tablet/lib/fa-multi-button.js
 UPD 2015-10-29_23:28:31 5877 www/tablet/lib/fa-multi-button.min.js
 UPD 2015-10-29_23:28:31 26586 www/tablet/lib/fhemSVG.css
