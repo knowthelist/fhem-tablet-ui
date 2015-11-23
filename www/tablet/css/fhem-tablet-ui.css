@@ -177,10 +177,6 @@ margin: 7px;
   overflow: auto;
 }
 
-.dialog header{
-    cursor: default !important;
-}
-
 .dialog-close {
   line-height: 1;
   font-size: 1.5em;
@@ -342,6 +338,9 @@ input {
 .slider_vertical, .level_vertical{
 margin:10px 0px 0px 20% !important;
 }
+.slider_vertical .narrow, .level_vertical{
+margin:10px 0px 0px -5px !important;
+}
 .slider_horizontal, .level_horizontal{
 margin:12px 20px 25px 5px !important;
 }
@@ -427,7 +426,7 @@ ul, ol {
     color: #555;
     height: 80px;
 }
-.menu{
+.menu, .absolute{
     position:absolute;
 }
 .circleMenu-closed {

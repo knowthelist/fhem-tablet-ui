@@ -61,7 +61,23 @@ $.fn.filterData = function(key, value) {
         return $(this).data(key) == value;
     });
 };
+$.fn.filterDeviceReading = function(key, device, param) {
+    return this.filter(function() {
+        return ( $(this).data(key) == param && $(this).data('device') == device )
+                || $(this).data(key) == device + ':' + param ;
+    });
+};
 $.fn.isValidData = function(key) {
     return typeof $(this).data(key) != 'undefined';
+};
+$.fn.initData = function(key,value) {
+    $(this).data(key, $(this).isValidData(key) ? $(this).data(key) : value);
+    return $(this);
+};
+$.fn.addReading = function(key) {
+    //add extra reading into collection
+    if(!$(this).data(key).match(/:/))
+        $(this).data(key, $(this).data('device') + ':' + $(this).data(key));
+    initReadingsArray($(this).data(key));
 };
 

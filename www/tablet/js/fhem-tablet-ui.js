@@ -82,7 +82,7 @@ $(document).on('ready', function() {
     if ( doLongPoll ){
         setTimeout(function() {
             longPoll();
-        }, (typeof wvcDevices != 'undefined')?10000:100);
+        }, (typeof wvcDevices != 'undefined')?shortpollInterval:100);
         shortpollInterval = 15 * 60 * 1000; // 15 minutes
     }
 
@@ -124,7 +124,7 @@ function initPage() {
       widget_base_dimensions: [wx, wy],
       widget_margins: [wm, wm],
       draggable: {
-        handle: 'header'
+        handle: '.gridster li > header'
       }
     }).data('gridster');
     if($("meta[name='gridster_disable']").attr("content") == '1') {
@@ -526,11 +526,11 @@ this.getParameterByName = function (devname, paraname) {
     }
     return null;
 }
-this.getParameter = function (device, src) {
-    var devname	= device.data('device');
-    var paraname =	(src && src != '') ? device.data(src) : Object.keys(readings)[0];
-    if (devname && devname.length>0){
-        var params = deviceStates[devname];
+this.getParameter = function (elem, src) {
+    var device	= elem.data('device');
+    var paraname =	(src && src != '') ? elem.data(src) : Object.keys(readings)[0];
+    if (device && device.length>0){
+        var params = deviceStates[device];
         return ( params && params[paraname] ) ? params[paraname] : null;
     }
     return null;

@@ -82,7 +82,9 @@ Currently there are more then 20 types of widgets in the base installation.
 - **datetimepicker** : select a date and time value from calendar
 - **eventmonitor**: for debugging - shows all events which normal widgets 'see'
 - **chart** : multistyle chart for multiple values (reads directly from FHEM log file)
+- **highchart** : multistyle chart for multiple values
 - **checkbox** : Toggle any command to FHEM (e.g. on / off)
+- **range** : vertical bar to show a values range between min/max value and high/low limits with different colors
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -179,7 +181,7 @@ See [examples](#symbol) of Symbol
 - **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)						 
 - **data-part** : part number of the space separated value to show or an RegEx
 - **data-colors** : a array of color values to affect the colour of the label according to the limit value 
-- **data-limits-get**  : name of the DEVICE:Reading to colorize the label (default: data-device:data-get)	
+- **data-limits-get**  : name of the DEVICE:Reading to colorize the label (default: data-device:data-get)
 - **data-limits** : a array of numeric or RegEx values to affect the colour of the label
 - **data-limits-part**  : part number of the space separated value to show or an RegEx (default '-1' -> all)	
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
@@ -478,6 +480,23 @@ Place this widget for debugging purpose within a normal page and klick it to see
 All parameters like Switch widgets
 
 - **class**             small, large
+
+####Range widgets
+- **data-high**       : name of the reading to get the high value from FHEM (default 'STATE')
+- **data-low**        : name of the reading to get the low value from FHEM  (default '')
+- **data-max**        : value for the maximal value on the scale (default '30')
+- **data-min**        : value for the minimal value on the scale (default '-10')
+- **data-limit-high** : value for the upper limit, where the range bar changes the color (default '20')
+- **data-limit-low**  : value for the lower limit, where the range bar changes the color (default '0')
+- **data-color**      : rgb value or color name for the normal range of the value bar (default 'orange')
+- **data-color-high** : rgb value or color name for the upper range of the value bar (default 'red')
+- **data-color-low**  : rgb value or color name for the lower range of the value bar (default 'blue')
+- **data-width**      : fixe size for width (default '8px')
+- **data-height**     : fixe size for height (default '220px')
+
+- **class**           : nolabels
+
+See [examples](#range) of Range
   
 Format
 -------
@@ -1100,7 +1119,7 @@ Multiple pagetabs in a template file: menu.html
 
 
 ###Rotor
-**Example** for a rotor widget, which switches between to days of weather forecast 
+**Example** for a rotor widget, which switches between two days of weather forecast
 ```html
 <div data-type="rotor" class="fade">
  <ul>
@@ -1338,7 +1357,7 @@ Create a mini chart in the UI which opens a dialog with the full size of the cha
 </div>
 ```
 
-Datetimepicker
+###Datetimepicker
 -------
 Create a Label in the UI which opens a datetime picker.
 
@@ -1361,6 +1380,20 @@ Create a Label in the UI which opens a time picker.
 ```
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/timepicker.png)
+
+###Range
+-------
+
+Example of range widgets to visualize max and min temperature value as a range bar. Temperatures below zero are shown in blue, values above 2 become red.
+
+```html
+<div class="container">
+    <div data-type="range" data-device="AgroWeather" data-low="fc0_tempMin" data-high="fc0_tempMax" data-max="5" data-min="-5" data-limit-low="0" data-limit-high="2" class="inline left-space"></div>
+    <div data-type="range" data-device="AgroWeather" data-low="fc1_tempMin" data-high="fc1_tempMax" data-max="5" data-min="-5" data-limit-low="0" data-limit-high="2" class="inline left-space nolabels"></div>
+    <div data-type="range" data-device="AgroWeather" data-low="fc2_tempMin" data-high="fc2_tempMax" data-max="5" data-min="-5" data-limit-low="0" data-limit-high="2" class="inline left-space nolabels"></div>
+</div>
+
+![](http://knowthelist.github.io/fhem-tablet-ui/widget_range.png)
 
 
 Specials
@@ -1399,7 +1432,7 @@ I'm unable to work now and I need to buy a new one.
 Update 2015-11-04: my old 2007 MacBook runs again with the previous HDD, but totaly slow and out of space.
 
 * Goal  : 13'' MacBook Pro 1445€ 
-* Status: 255€ (many thanks to all donators :-)
+* Status: 350€ (24% - many thanks to all donators :-)
 
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PD4C2XM2VTD9A"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" alt="[paypal]" /></a>

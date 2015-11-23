@@ -25,8 +25,9 @@ var widget_pagebutton = $.extend({}, widget_famultibutton, {
                 });
                 elem.data('famultibutton').setOn();
             });
-
-            if ( filename && elem_url && elem_url.indexOf(filename)>-1) {
+            console.log( filename, elem_url);
+            if ( filename && elem_url && elem_url.indexOf(filename)>-1
+                    ||  filename==='' && elem_url==='index.html') {
                elem.setOn();
             }
 

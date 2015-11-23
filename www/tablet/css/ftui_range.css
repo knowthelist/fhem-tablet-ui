@@ -1,0 +1,21 @@
+.levelArea {
+    position: relative;
+    border-radius: 15px;
+    background-color: #404040;
+}
+.levelRange {
+    position: absolute;
+    border-radius: 15px;
+}
+.labelMax,.labelMin,.labelLimitMin,.labelLimitMax{
+    position: absolute;
+    left: -32px;
+    text-align: right;
+    width: 30px;
+    color: #888;
+}
+.labelMin{ bottom:-6px; }
+.labelMax{ top:-6px; }
+
+
+
