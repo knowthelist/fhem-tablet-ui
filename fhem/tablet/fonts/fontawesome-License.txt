@@ -1,0 +1,3 @@
+Font Awesome by Dave Gandy - http://fontawesome.io
+
+https://fortawesome.github.io/Font-Awesome/license/
