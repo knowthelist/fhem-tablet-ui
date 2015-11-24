@@ -233,6 +233,8 @@ See [examples](#label) of Label
 - **data-font-weight**
 - **class**		: mini, small, large, readonly
 
+![](http://knowthelist.github.io/fhem-tablet-ui/knob.png)
+
 ####Thermostat widgets
 all parameters from knob widget plus following additional parameters
 - **data-get**   : name of the reading to get from FHEM (default 'desired-temp')
@@ -481,6 +483,8 @@ All parameters like Switch widgets
 
 - **class**             small, large
 
+![](http://knowthelist.github.io/fhem-tablet-ui/Checkboxes.png)
+
 ####Range widgets
 - **data-high**       : name of the reading to get the high value from FHEM (default 'STATE')
 - **data-low**        : name of the reading to get the low value from FHEM  (default '')
@@ -533,7 +537,7 @@ not all widgets support all classes
 - circleborder          : draws a round border around labels
 
 Positioning:
-- container		: new box or new row
+- row                   : new row
 - col-x-y 		: new column with x/y of width (col-1-3,col-2-3,col-1-2,col-1-4,col-1-8,col-1-5,col-2-5,col-3-5,col-4-5)
 - inline		: positioning elements in a row, no line break
 - top-space     : 15px extra on top (top-space-2x -> 30px; top-space-3x -> 45px)
@@ -627,9 +631,9 @@ Two main boxes left and right. The first row of the left box has 3 columns. The 
 ```html
 <li data-row="1" data-col="4" data-sizex="5" data-sizey="3">
    <header>EXAMPLE3</header>
-   <div class="container top-space">
+   <div class="row top-space">
         <div class="col-1-2">
-            <div class="container top-space">
+            <div class="row top-space">
                 <div class="col-1-3">
                     <div data-type="switch" data-device="Switch1" data-icon="fa-music"></div>
                     <div data-type="label" class="">Station1</div>
@@ -643,7 +647,7 @@ Two main boxes left and right. The first row of the left box has 3 columns. The 
                     <div data-type="label" class="">Station3</div>
                 </div>
              </div>
-             <div class="container top-space">
+             <div class="row top-space">
                  <div class="col-1-2">
                      <div data-type="symbol" data-device="Switch1" data-icon="fa-battery-4"></div>
                      <div data-type="label" class="">Value1</div>
@@ -887,9 +891,9 @@ The countdown time is auto detected via the on-for-timer command. A other value 
 
 **Example** for a battery level control with RegEx
 ```html
-<div data-type="symbol" data-device="BadHeizung" data-get="batteryLevel"
+<div data-type="symbol" data-device="WohnzimmerHeizung" data-get="batteryLevel"
     data-states='["3.[0-9]","2.[789]","2.[456]","2.[123]","((2.0)|([01].[0-9]))"]'
-	data-icons='["oa-measure_battery_100","oa-measure_battery_75","oa-measure_battery_50","oa-measure_battery_25","oa-measure_battery_0"]'
+        data-icons='["fa-battery-4","fa-battery-3","fa-battery-2","fa-battery-1","fa-battery-0"]'
     data-colors='["#505050","#505050","#505050","#ad3333","#ad3333"]'>
 </div>
 ```       
