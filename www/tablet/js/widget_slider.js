@@ -59,11 +59,10 @@ var widget_slider = {
                 }
                 sliVal = pwrng.element.value;
                 v = $(this).hasClass('negated')? pwrng.options.max + pwrng.options.min - sliVal:sliVal;
-                DEBUG && console.log("in update slival : "+sliVal);
               }
 
               if ( $(this).data('value') ) {
-                  $(this).find( '#slidervalue' ).text( v );
+                $(this).find( '#slidervalue' ).text( v );
               }
 
               // isunsel == false (0) means drag is over
@@ -157,11 +156,14 @@ var widget_slider = {
                     var v = $(this).hasClass('negated')
                             ? pwrng.options.max + pwrng.options.min - parseInt(nstate)
                             : parseInt(nstate);
-                    // hack for this.slider.offsetHeight=0 issue
-//                  setTimeout(function(){
-//                        pwrng.setStart(parseInt(v));
-//                    }, 50);
-                    pwrng.setStart(parseInt(v));
+                    if ( $(this).hasClass('nodelay') ) {
+                        pwrng.setStart(parseInt(v));
+                    } else {
+                      // hack for this.slider.offsetHeight=0 issue
+                      setTimeout(function(){
+                          pwrng.setStart(parseInt(v));
+                      }, 50);
+                    }
                     localStorage.setItem("slider_"+dev, v);
                     DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
                 }
