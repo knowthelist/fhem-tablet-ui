@@ -159,7 +159,7 @@ var widget_slider = {
                     // hack for this.slider.offsetHeight=0 issue
                     setTimeout(function(){
                         pwrng.setStart(parseInt(v));
-                    }, 50);
+                    }, 250);
                     localStorage.setItem("slider_"+dev, v);
                     DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
                 }

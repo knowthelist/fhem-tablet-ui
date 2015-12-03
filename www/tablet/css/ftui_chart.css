@@ -1,18 +1,3 @@
-/* define your personal style here, it wont be overwritten  */
-
-.mpdnowplaying_get_1:not(.centered),.mpdnowplaying_get_4{
-overflow: hidden;
-white-space:nowrap;
-text-overflow:ellipsis;
-display:inline-block;
-}
-
-div:not(.centered) > .mpdnowplaying_get_1{
-font-size:14px;
-text-align: end;
-margin-right:7px;
-}
-
 /* import needed for availability of FHEM plot stlyes in the HTML files */
 @import "../../pgm2/svg_style.css";
 
@@ -127,48 +112,3 @@ text.ftui.l3, text.ftui.l3sym, text.ftui.l3dot, text.ftui.l3dash, text.ftui.l3fi
 text.ftui.l4, text.ftui.l4sym, text.ftui.l4dot, text.ftui.l4dash, text.ftui.l4fill { stroke:none; fill:#33CC33; }
 
 /* end of styles for chart widget */
-
-.narrow-x {
-    margin-left:0px !important;
-    margin-right:0px !important;
-    margin-top:0px !important;
-    margin-bottom:0px !important;
-    width: auto;
-    text-align: center;
-}
-.narrow-bottom {
-    margin-bottom:-15px !important;
-    width: auto;
-    text-align: center;
-}
-.suppos {
-        vertical-align: baseline;
-        font-size: 0.8em;
-        position: relative;
-        top: -0.4em;
-}
-.subpos {
-        vertical-align: baseline;
-        font-size: 0.8em;
-        position: relative;
-        top: 0.4em;
-}
-.nopadding {
-        height: 100%;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-}
-.joinedlabel_get_0,
-.joinedlabel_get_2,
-.joinedlabel_get_3,
-.joinedlabel_get_5,
-.joinedlabel_get_6,
-.joinedlabel_get_8,
-.joinedlabel_get_9,
-.joinedlabel_get_11,
-.joinedlabel_get_12,
-.joinedlabel_get_14 {
-        font-size: 80%;
-        color: #8C8C8C;
-}

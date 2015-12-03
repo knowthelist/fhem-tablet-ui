@@ -84,7 +84,7 @@ Currently there are more then 20 types of widgets in the base installation.
 - **chart** : multistyle chart for multiple values (reads directly from FHEM log file)
 - **highchart** : multistyle chart for multiple values
 - **checkbox** : Toggle any command to FHEM (e.g. on / off)
-- **range** : vertical bar to show a values range between min/max value and high/low limits with different colors
+- **range** : vertical bar graph to show a values range between min/max value and high/low limits with different colors
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -132,17 +132,17 @@ dual state notation
 - **data-get-off**  : value for OFF status to get. (default 'off')
 - **data-icon**     			: name of the font-awesome icon. (default: fa-lightbulb-o)
 - **data-background-icon** 		: name of the font-awesome icon for background (default 'fa-circle')
-- **data-on-background-color** 	: color of ON state (default '#aa6900')
-- **data-off-background-color** : color of OFF state (default '#505050')
-- **data-on-color** 			: color of ON state (default '#aa6900')
-- **data-off-color**			: color of Off state (default '#505050')
+- **data-on-background-color**          : color for ON state or DEVICE:READING for dynamic setting (default '#aa6900')
+- **data-off-background-color**         : color for OFF state or DEVICE:READING for dynamic setting (default '#505050')
+- **data-on-color** 			: color for ON state or DEVICE:READING for dynamic setting (default '#aa6900')
+- **data-off-color**			: color for Off state or DEVICE:READING for dynamic setting (default '#505050')
 
 multi state notation   
 - **data-states**   			: array of states 
 - **data-icons**    			: array of icons related to the data-states array 
-- **data-background-icons** 	: array of background icons related to the data-states array 
-- **data-colors**				: array of colors related to the data-states array
-- **data-background-colors**	: array of background colors related to the data-states array
+- **data-background-icons**             : array of background icons related to the data-states array
+- **data-colors**                       : array of colors related to the data-states array
+- **data-background-colors**            : array of background colors related to the data-states array
 - **class**     			: readonly, 
 
 data-get-on and data-get-off accept also RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
@@ -159,17 +159,17 @@ dual state notation
 - **data-get-off**  			: value for OFF status to get. (default 'closed')
 - **data-icon**     			: name of the font-awesome icon.  (default 'ftui-window')
 - **data-background-icon** 		: name of the font-awesome icon for background (default '')
-- **data-on-background-color** 	: color of ON state (default '#aa6900')
-- **data-off-background-color** : color of OFF state (default '#505050')
-- **data-on-color** 			: color of ON state (default '#aa6900')
-- **data-off-color**			: color of Off state (default '#505050')
+- **data-on-background-color**          : fix color attribute for ON state or DEVICE:READING for dynamic setting (default '#aa6900')
+- **data-off-background-color**         : fix color attribute for OFF state or DEVICE:READING for dynamic setting (default '#505050')
+- **data-on-color** 			: fix color attribute for ON state or DEVICE:READING for dynamic setting (default '#aa6900')
+- **data-off-color**			: fix color attribute for Off state or DEVICE:READING for dynamic setting (default '#505050')
 
 multi state notation   
 - **data-states**   			: array of states 
 - **data-icons**    			: array of icons related to the data-states array 
-- **data-background-icons** 	: array of icons related to the data-states array 
-- **data-colors**				: array of colors related to the data-states array
-- **data-background-colors**	: array of colors related to the data-states array
+- **data-background-icons**             : array of icons related to the data-states array
+- **data-colors**                       : array of colors related to the data-states array
+- **data-background-colors**            : array of colors related to the data-states array
 
 data-get-on,data-get-off and data-states accept also RegEx values.
 The value for one icon can also contain an additional animatation CSS name, e.g. "fa-exclamation-triangle fa-blink" for a blinking symbol
@@ -343,6 +343,9 @@ $v is a placeholder for the numeric value, it will be replaced be the real value
 - **data-size**     : width of the image in px or %, the height scales proportionally. (default: 50%)
 - **data-url**      : URL of the image to show 
 - **data-refresh**  : Interval in seconds for image refresh for usage together with data-url (default: 900)
+- **data-opacity**  : opacity of the image 0-1 (default 0.8)
+- **data-height**   : height of the image (default 'auto')
+- **data-width**    : width of the image  (default 100%)
 - **class**			: nocache
 
 If 'data-url' is not set, then the URL for image src is built from: data-path + valueof data-get + data-suffix
@@ -502,6 +505,27 @@ All parameters like Switch widgets
 
 See [examples](#range) of Range
   
+####Colorwheel widgets
+- **data-get**         : name of the reading where to get the rgb color value from (default 'STATE')
+- **data-set**         : (default '')
+- **data-cmd**         : (default 'set')
+- **data-width**       : (default 150)
+- **class**            : roundIndicator,barIndicator,lineIndicator
+
+####Link widgets
+- **data-color**                   : rgb value or color name for the text and icon (default 'orange')
+- **data-background-color**        : rgb value or color name for the back (default null)
+- **data-border-color**            : rgb value or color name for the border (default null)
+- **data-icon-left**               : name of the left icon   (default null)
+- **data-icon-right**              : name of the right icon  (default null)
+- **data-width**                   : width of the link  (default 'auto')
+- **data-height**                  : height of the link (default 'auto')
+- **data-text-align**              : alignment of text ['left','center','right']  (default 'center')
+- **data-active-pattern**          : RegEx to define active state  (default null)
+- **data-active-color**            : rgb value or color name for the text and icon in case active-pattern is matching (default same as data-color)
+- **data-active-background-color** : rgb value or color name for the back in case active-pattern is matching (default same as data-background-color)
+- **data-active-border-color**     : rgb value or color name for the border in case active-pattern is matching (default same as data-border-color)
+
 Format
 -------
 The layout, look and behavior can be influenced by the class attribute.
@@ -623,6 +647,8 @@ Add this to adjust the size of the Gridster margin
 
 Examples
 -------
+
+See Live-Demos for widgets here: http://knowthelist.github.io/fhem/tablet/demo_widgets.html
 
 **Position grid** 
 
@@ -1437,7 +1463,7 @@ I'm unable to work now and I need to buy a new one.
 Update 2015-11-04: my old 2007 MacBook runs again with the previous HDD, but totaly slow and out of space.
 
 * Goal  : 13'' MacBook Pro 1445€ 
-* Status: 350€ (24% - many thanks to all donators :-)
+* Status: 467€ (32% - 03.12.2015 -> many thanks to all donators :-)
 
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PD4C2XM2VTD9A"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" alt="[paypal]" /></a>

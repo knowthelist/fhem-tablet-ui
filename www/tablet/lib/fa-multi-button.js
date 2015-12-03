@@ -91,6 +91,7 @@ $.fn.famultibutton = function(pOptions) {
 			drawScale();
 			moveScale();
 		}		
+        elem.o = options;
         elem.data("famultibutton", elem);
 
 return elem;

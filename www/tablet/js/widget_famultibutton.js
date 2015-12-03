@@ -189,18 +189,30 @@ var widget_famultibutton = $.extend({}, widget_widget, {
     valueChanged: function(elem,v) {
     },
     init_attr : function(elem) {
-        elem.data('get',        elem.data('get')        || 'STATE');
-        elem.data('set',        typeof elem.data('set')     != 'undefined' ? elem.data('set')     : '');
-        elem.data('cmd',        typeof elem.data('cmd')     != 'undefined' ? elem.data('cmd')     : 'set');
-        elem.data('get-on',     typeof elem.data('get-on')  != 'undefined' ? elem.data('get-on')  : 'on');
-        elem.data('get-off',    typeof elem.data('get-off') != 'undefined' ? elem.data('get-off') : 'off');
-        elem.data('set-on',     typeof elem.data('set-on')  != 'undefined' ? elem.data('set-on')  : elem.data('get-on'));
-        elem.data('set-off',    typeof elem.data('set-off') != 'undefined' ? elem.data('set-off') : elem.data('get-off'));
-        elem.data('mode',       elem.data('mode')       || 'toggle');
-        elem.data('doubleclick',                    elem.data('doubleclick')                    || 0);
-        elem.data('firstclick-background-color',    elem.data('firstclick-background-color')    ||  '#6F4500');
-        elem.data('firstclick-color',               elem.data('firstclick-color')               ||  null);
-        readings[elem.data('get')] = true;
+        elem.initData('get'         ,'STATE');
+        elem.initData('set'         ,'');
+        elem.initData('cmd'         ,'set');
+        elem.initData('get-on'      ,'on');
+        elem.initData('get-off'     ,'off');
+        elem.initData('set-on'      ,elem.data('get-on'));
+        elem.initData('set-off'     ,elem.data('get-off'));
+        elem.initData('mode'        ,'toggle');
+        elem.initData('doubleclick' ,0);
+        elem.initData('firstclick-background-color', '#6F4500');
+        elem.initData('firstclick-color'           , null);
+
+        elem.addReading('get');
+
+        elem.initData('off-color'           , getStyle('.'+this.widgetname+'.off','color')              || '#505050');
+        elem.initData('off-background-color', getStyle('.'+this.widgetname+'.off','background-color')   || '#505050');
+        elem.initData('on-color'            , getStyle('.'+this.widgetname+'.on','color')               || '#aa6900');
+        elem.initData('on-background-color' , getStyle('.'+this.widgetname+'.on','background-color')    || '#aa6900');
+
+        if ( elem.isDeviceReading('on-color') ) {elem.addReading('on-color');}
+        if ( elem.isDeviceReading('on-background-color') ) {elem.addReading('on-background-color');}
+        if ( elem.isDeviceReading('off-color') ) {elem.addReading('off-color');}
+        if ( elem.isDeviceReading('off-background-color') ) {elem.addReading('off-background-color');}
+
     },
     init_ui : function(elem) {
         var base = this;
@@ -222,35 +234,58 @@ var widget_famultibutton = $.extend({}, widget_widget, {
     },
     update_cb : function(elem) {},
     update: function (dev,par) {
-        var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
         var base = this;
-        deviceElements.each(function(index) {
-            if ( $(this).data('get')==par) {
-                var state = getDeviceValue( $(this), 'get' );
-                if (state) {
-                    var states=$(this).data('states') || $(this).data('get-on');
-                    if ( $.isArray(states)) {
-                        base.showMultiStates($(this),states,state);
-                    } else {
-                        var elem = $(this).data('famultibutton');
-                        if (elem){
-                            if ( state == $(this).data('get-on') )
-                                 elem.setOn();
-                            else if ( state == $(this).data('get-off') )
-                                 elem.setOff();
-                            else if ( state.match(new RegExp('^' + $(this).data('get-on') + '$')) )
-                                 elem.setOn();
-                            else if ( state.match(new RegExp('^' + $(this).data('get-off') + '$')) )
-                                 elem.setOff();
-                            else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
-                                 elem.setOff();
-                            else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
-                                 elem.setOn();
-                        }
+        // update from normal statereading
+        this.elements.filterDeviceReading('get',dev,par)
+        .each(function(index) {
+            var elem = $(this);
+            var state = elem.getReading('get').val;
+            if (state) {
+                var states=elem.data('states') || elem.data('get-on');
+                if ( $.isArray(states)) {
+                    base.showMultiStates(elem,states,state);
+                } else {
+                    var faelem = elem.data('famultibutton');
+                    if (faelem){
+                        if ( state == elem.data('get-on') )
+                             faelem.setOn();
+                        else if ( state == elem.data('get-off') )
+                             faelem.setOff();
+                        else if ( state.match(new RegExp('^' + elem.data('get-on') + '$')) )
+                             faelem.setOn();
+                        else if ( state.match(new RegExp('^' + elem.data('get-off') + '$')) )
+                             faelem.setOff();
+                        else if ( elem.data('get-off')=='!on' && state != elem.data('get-on') )
+                             faelem.setOff();
+                        else if ( elem.data('get-on')=='!off' && state != elem.data('get-off') )
+                             faelem.setOn();
                     }
-                    base.update_cb($(this),state);
                 }
+                base.update_cb(elem,state);
             }
         });
-    }
+        // update from extra reading for colorize
+        var oparm = ['offColor','onColor','onBackgroundColor','offBackgroundColor'];
+        var selec = ['#fg','#fg','#bg','#bg'];
+        var estat = [false,true,true,false];
+        $.each(['off-color','on-color','on-background-color','off-background-color' ], function( index, key ) {
+            base.elements.filterDeviceReading(key,dev,par)
+                .each(function(idx) {
+                    var elem = $(this);
+                    var val = elem.getReading(key).val;
+                    if(val) {
+                        val = '#'+val.replace('#','');
+                        var faelem = elem.data('famultibutton');
+                        if (faelem){
+                            // change color in options
+                            faelem.o[ oparm[index] ] = val;
+                            if ( faelem.getState() === estat[index] ){
+                                // it's current state -> change directly
+                                elem.children().filter( selec[index] ).css( "color", val );
+                            }
+                        }
+                    }
+                });
+            });
+        },
 });

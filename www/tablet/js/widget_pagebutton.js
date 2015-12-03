@@ -8,15 +8,16 @@ var widget_pagebutton = $.extend({}, widget_famultibutton, {
         var base = this;
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {
-            base.init_attr($(this));
+            var elem = $(this);
+            elem.initData('off-color'               ,getStyle('.button.off','color') || '#2A2A2A');
+            elem.initData('off-background-color'    ,getStyle('.button.off','background-color')   || '#505050');
+            elem.initData('on-color'                ,getClassColor($(this)) || getStyle('.button.on','color')               || '#2A2A2A');
+            elem.initData('on-background-color'     ,getStyle('.button.on','background-color')    || '#aa6900');
+            elem.initData('background-icon'         ,'fa-circle');
+            elem.initData('get-warn'                ,-1);
 
-            $(this).data('off-color',            $(this).data('off-color')           || getStyle('.button.off','color')              || '#2A2A2A');
-            $(this).data('off-background-color', $(this).data('off-background-color')|| getStyle('.button.off','background-color')   || '#505050');
-            $(this).data('on-color',             $(this).data('on-color')            || getStyle('.button.on','color')               || '#2A2A2A');
-            $(this).data('on-background-color',  $(this).data('on-background-color') || getClassColor($(this)) || getStyle('.button.on','background-color')    || '#aa6900');
-            $(this).data('background-icon',      $(this).data('background-icon')     || 'fa-circle');
-
-            var elem = base.init_ui($(this));
+            base.init_attr(elem);
+            elem = base.init_ui($(this));
             var elem_url=$(this).data('url');
 
             elem.bind("toggleOn", function( event ){
@@ -25,7 +26,7 @@ var widget_pagebutton = $.extend({}, widget_famultibutton, {
                 });
                 elem.data('famultibutton').setOn();
             });
-            console.log( filename, elem_url);
+
             if ( filename && elem_url && elem_url.indexOf(filename)>-1
                     ||  filename==='' && elem_url==='index.html') {
                elem.setOn();
@@ -36,7 +37,7 @@ var widget_pagebutton = $.extend({}, widget_famultibutton, {
     },
     update_cb : function(elem,state) {
         if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
-            this.showOverlay(elem,state);
+            this.showOverlay(elem,getPart(state,elem.data('get-warn')));
         else
             this.showOverlay(elem,"");
     },

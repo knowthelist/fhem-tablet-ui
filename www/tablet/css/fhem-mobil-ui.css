@@ -42,6 +42,10 @@ polyline {
     stroke: #0088CC !important;
 }
 
+.dialog  {
+    color: #eeeeee;
+}
+
 .pagetab.on{color:#eee;background-color:#0088CC;}
 .pagetab.off{color:#eee;background-color:#aaa;}
 .dimmer.on{color:#eee;background-color:#0088CC;}

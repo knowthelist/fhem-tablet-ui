@@ -6,7 +6,7 @@
     /*
     * Just another dashboard for FHEM
     *
-    * Version: 1.4.3
+    * Version: 1.4.4
     * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
     * URL: https://github.com/knowthelist/fhem-tablet-ui
     *
@@ -27,11 +27,21 @@
    <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
    <meta name="debug" content="0"> <!-- 1=output to console;0=not output -->
 
-   <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
-   <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.min.css" />
-   <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
-   <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
 
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="/fhem/tablet/css/fhem-green-ui.css" / -->
+    <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui-user.css" />
+
+    <script src="/fhem/pgm2/jquery.min.js" defer></script>
+    <script src="/fhem/tablet/lib/jquery.toast.min.js" defer></script>
+    <script src="/fhem/tablet/lib/jquery.gridster.min.js" defer></script>
+    <script src="/fhem/tablet/js/fhem-tablet-ui.min.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
 </head>
 <body>
 <div class="gridster">
@@ -63,8 +73,4 @@
 </ul>
 </div>
 </body>
-  <script src="/fhem/pgm2/jquery.min.js"></script>
-  <script src="/fhem/tablet/lib/jquery.toast.min.js"></script>
-  <script src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
-  <script src="/fhem/tablet/js/fhem-tablet-ui.min.js"></script>
 </html>

@@ -42,10 +42,16 @@ var widget_label = $.extend({}, widget_widget, {
     },
     update_substitution : function(value, substitution) {
         DEBUG && console.log(this.widgetname,'value',value,'substitution',substitution);
-        if(substitution && substitution.match(/^s/)) {
-            var f = substitution.substr(1,1);
-            var subst = substitution.split(f);
-            return value.replace(new RegExp(subst[1],subst[3]), subst[2]);
+        if(substitution){
+            if (substitution.match(/^s/)) {
+                var f = substitution.substr(1,1);
+                var subst = substitution.split(f);
+                return value.replace(new RegExp(subst[1],subst[3]), subst[2]);
+            }
+            else if (substitution.match(/weekdayshort/))
+                  return dateFromString(value).ee();
+            else if (substitution.match(/.*\(\)/))
+                  return eval('value.'+substitution);
         }
         return value;
     },
@@ -72,13 +78,16 @@ var widget_label = $.extend({}, widget_widget, {
                 if (value){
                     var part = $(this).data('part');
                     var val = getPart(value,part);
+                    var unit = $(this).data('unit');
                     
-                    val = widget_label.update_fix(val, $(this).data('fix'));
-                    val = widget_label.update_substitution(val, $(this).data('substitution'));
+                    val = base.update_fix(val, $(this).data('fix'));
+                    val = base.update_substitution(val, $(this).data('substitution'));
         
                     if ( ! $(this).hasClass('fixedlabel') ) {
-                      var unit = $(this).data('unit');
-                      $(this).html( val + "<span style='font-size: 50%;'>"+unit+"</span>" );
+                      if ( unit )
+                        $(this).html( val + "<span style='font-size: 50%;'>"+unit+"</span>" );
+                      else
+                        $(this).html(val);
                     }
                     base.update_cb($(this),val);
                  }

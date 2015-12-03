@@ -86,8 +86,8 @@ var widget_range= $.extend({}, widget_widget, {
         .add( this.elements.filterDeviceReading('low',dev,par) )
         .each(function(index) {
             var elem = $(this);
-            var value_high  = parseFloat( getDeviceValueByName(elem.data('high')) );
-            var value_low   = parseFloat( getDeviceValueByName(elem.data('low')) );
+            var value_high  = parseFloat(elem.getReading('high').val);
+            var value_low   = parseFloat(elem.getReading('low').val);
             var height      = parseFloat(elem.data('height'));
             var min         = parseFloat(elem.data('min'));
             var max         = parseFloat(elem.data('max'));
@@ -113,19 +113,30 @@ var widget_range= $.extend({}, widget_widget, {
                   if ( limit_top < 0) limit_top = 0;
                   if ( limit_bottom > height) limit_bottom = height;
 
-                  var gradient = elem.data('color-high') +' '+ limit_top    +'%,'+
-                                 elem.data('color')      +' '+ limit_top    +'%,'+
-                                 elem.data('color')      +' '+ limit_bottom +'%,'+
-                                 elem.data('color-low')  +' '+ limit_bottom +'%)';
+                  var colorHigh = elem.mappedColor('color-high');
+                  var color     = elem.mappedColor('color');
+                  var colorLow  = elem.mappedColor('color-low');
+
+                  var gradient = colorHigh  +' '+ limit_top    +'%,'+
+                                 color      +' '+ limit_top    +'%,'+
+                                 color      +' '+ limit_bottom +'%,'+
+                                 colorLow   +' '+ limit_bottom +'%)';
                   levelRange.css({
                       top:        height - top + 'px',
                       bottom:     bottom + 'px',
                   });
+
                   levelRange.css({ background: '-webkit-linear-gradient(top, '+gradient,}); /* Chrome10-25,Safari5.1-6 */
                   levelRange.css({ background: 'linear-gradient(to bottom, '+gradient,}); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 
-                  elem.find('.labelLimitMax').css({bottom: llimit_top-6 + 'px'});
-                  elem.find('.labelLimitMin').css({bottom: llimit_bottom-6 + 'px'});
+                  if ( limit_high == max )
+                      elem.find('.labelLimitMax').hide();
+                  else
+                      elem.find('.labelLimitMax').css({bottom: llimit_top-6 + 'px'}).show();
+                  if ( limit_low == min )
+                      elem.find('.labelLimitMin').hide();
+                  else
+                      elem.find('.labelLimitMin').css({bottom: llimit_bottom-6 + 'px'}).show();
                 }
             }
         });

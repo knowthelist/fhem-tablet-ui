@@ -63,8 +63,8 @@ $.fn.filterData = function(key, value) {
 };
 $.fn.filterDeviceReading = function(key, device, param) {
     return this.filter(function() {
-        return ( $(this).data(key) == param && $(this).data('device') == device )
-                || $(this).data(key) == device + ':' + param ;
+        return  ( $(this).data(key) === param && $(this).data('device') === device )
+                || ($(this).data(key) === device + ':' + param);
     });
 };
 $.fn.isValidData = function(key) {
@@ -74,10 +74,26 @@ $.fn.initData = function(key,value) {
     $(this).data(key, $(this).isValidData(key) ? $(this).data(key) : value);
     return $(this);
 };
+$.fn.mappedColor = function(key) {
+    return getStyle('.'+$(this).data(key),'color') || $(this).data(key);
+};
+$.fn.isDeviceReading = function(key) {
+    return $(this).data(key).match(/:/);
+};
 $.fn.addReading = function(key) {
-    //add extra reading into collection
-    if(!$(this).data(key).match(/:/))
-        $(this).data(key, $(this).data('device') + ':' + $(this).data(key));
     initReadingsArray($(this).data(key));
 };
-
+$.fn.getReading = function (key) {
+    var devname = $(this).data('device'),
+        paraname = $(this).data(key);
+    if(paraname && paraname.match(/:/)) {
+        var temp = paraname.split(':');
+        devname = temp[0];
+        paraname = temp[1];
+    }
+    if (devname && devname.length>0){
+        var params = deviceStates[devname];
+        return ( params && params[paraname] ) ? params[paraname] : {};
+    }
+    return {};
+}

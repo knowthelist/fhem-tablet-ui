@@ -18,9 +18,6 @@ var widget_select= $.extend({}, widget_widget, {
       var base=this;
       this.elements = $('div[data-type="'+this.widgetname+'"]');
       this.elements.each(function(index) {
-
-
-
         base.init_attr($(this));
         $(this).addClass('select');
         var select_elem = jQuery('<select/>', { })
@@ -38,12 +35,7 @@ var widget_select= $.extend({}, widget_widget, {
   },
   update: function (dev,par) {
 
-    var deviceElements;
-    if ( dev == '*' )
-        deviceElements= this.elements;
-    else
-        deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-
+    var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
     deviceElements.each(function(index) {
         if ( $(this).data('get')==par || $(this).data('list')==par){
             var state = getDeviceValue( $(this), 'get' );

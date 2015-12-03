@@ -35,8 +35,8 @@ var widget_knob = $.extend({}, widget_widget, {
 
         elem.data('height', elem.isValidData('height')? elem.data('height') :150);
         elem.data('width',  elem.isValidData('width')?  elem.data('width')  :150);
-        if(elem.hasClass('bigger') || elem.hasClass('large')) { elem.data('height', 200); elem.data('width', 200);}
-        if(elem.hasClass('big')) { elem.data('height', 150); elem.data('width', 150);}
+        if(elem.hasClass('big')) { elem.data('height', 210); elem.data('width', 210);}
+        if(elem.hasClass('large')) { elem.data('height', 150); elem.data('width', 150);}
         if(elem.hasClass('small')) { elem.data('height', 100); elem.data('width', 100);}
         if(elem.hasClass('mini')) { elem.data('height', 52); elem.data('width', 52);}
 
@@ -51,7 +51,7 @@ var widget_knob = $.extend({}, widget_widget, {
         elem.data('tkcolor',    elem.data('tkcolor')    ||                           getStyle('.'+this.widgetname+'.tick','color')       || '#666');
         elem.data('hdcolor',    elem.data('hdcolor')    ||                           getStyle('.'+this.widgetname+'.handle','color')     || '#666');
 
-        elem.data('font',       elem.data('font')       || getStyle('.'+this.widgetname,'font-family')  || '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", "Helvetica", "Roboto", sans-serif');
+        elem.data('font',       elem.data('font')       || getStyle('.'+this.widgetname,'font-family')  || '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
         elem.data('font-weight',elem.data('font-weight')|| getStyle('.'+this.widgetname,'font')         || 'normal');
 
     },
@@ -64,7 +64,7 @@ var widget_knob = $.extend({}, widget_widget, {
        }).data(elem.data())
          .data('curval', elem.data('initvalue'))
          .appendTo(elem);
-
+console.log(elem.data('bgcolor'));
        knob_elem.knob({
           'min':        elem.data('min'),
           'max':        elem.data('max'),
@@ -110,15 +110,10 @@ var widget_knob = $.extend({}, widget_widget, {
        });
     },
     update: function (dev,par) {
-        var deviceElements;
-        if ( dev == '*' )
-            deviceElements= this.elements;
-        else
-            deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-        
+        var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
         isUpdating=true;
         deviceElements.each(function(index) {
-            if ( $(this).data('get')==par || par =='*'){    
+            if ( $(this).data('get')==par ){
                 var val = getDeviceValue( $(this), 'get' );
                 var knob_elem = $(this).find('input');
                 if (knob_elem && val){

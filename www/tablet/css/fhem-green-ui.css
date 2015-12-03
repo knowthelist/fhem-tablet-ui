@@ -14,6 +14,7 @@ polyline {
 .dimmer.on{background-color:#32a054;}
 .symbol.on{color:#32a054;background-color:#32a054;}
 .switch.on{background-color:#32a054;}
+.checkbox.on{background-color:#32a054;}
 .push.on{color:#32a054;background-color:#32a054;}
-.homestatus.fgcolor{color:#32a054;}
+.homestatus{color:#32a054;}
 .volume.hdcolor{color:#32a054;}

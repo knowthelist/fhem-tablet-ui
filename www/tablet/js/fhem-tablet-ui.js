@@ -2,7 +2,7 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.4.3
+* Version: 1.4.4
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
@@ -12,9 +12,10 @@
 var deviceStates={};
 var readings = {"STATE":true};
 var devices = {};
-var types = Array();
+var types = [];
 var updateStatus = {};
 var DEBUG = false;
+var DEMO = false;
 var debuglevel;
 var TOAST = true;
 var doLongPoll = false
@@ -23,8 +24,8 @@ var timeoutMenu;
 var dir = '';
 var filename = '';
 var shortpollInterval = 30 * 1000; // 30 seconds
-var devs=Array();
-var pars=Array();
+var devs = [];
+var pars = [];
 var gridster;
 var styleCollection={};
 var stdColors=["green","orange","red","ligthblue","blue","gray"];
@@ -103,6 +104,7 @@ function initPage() {
     else
       wm = 5;
 	doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
+    DEMO = ($("meta[name='demo']").attr("content") == '1');
     debuglevel  = $("meta[name='debug']").attr("content") || 0;
     DEBUG = ( debuglevel>0 );
     TOAST  = ($("meta[name='toast']").attr("content") != '0');
@@ -180,13 +182,18 @@ function initWidgets() {
 
     readings = {"STATE":true};
     devices = {};
-    types = new Array();
+    types = [];
     updateStatus = {};
-    devs=new Array();
-    pars=new Array();
+    devs = [];
+    pars = [];
 
-    //restore divecestates from storage
-    deviceStates=JSON.parse(localStorage.getItem('deviceStates')) || {};
+    //restore divece states from storage
+    if (!DEMO)
+        deviceStates=JSON.parse(localStorage.getItem('deviceStates')) || {};
+    else {
+        $.ajax({async: false,url: "/fhem/tablet/data/"+filename.replace(".html",".dat"),})
+        .done ( function( data ) {deviceStates=JSON.parse(data) || {};});
+    }
 
     showDeprecationMsg();
 
@@ -244,6 +251,7 @@ function startPollInterval() {
  }
 
 function setFhemStatus(cmdline) {
+    if (DEMO) {console.log('DEMO-Mode: no setFhemStatus');return;}
     startPollInterval();
     DEBUG && console.log('send to FHEM: '+cmdline);
 	$.ajax({
@@ -271,10 +279,7 @@ function setFhemStatus(cmdline) {
 var xhr;
 var currLine=0;
 function longPoll(roomName) {
-/* try to avoid this terrible fmt=JSON output format 
-	- no separat node for parameter name
-	- multiple nodes with the same data (2xdate)
-*/
+    if (DEMO) {console.log('DEMO-Mode: no longpoll');return;}
     DEBUG && console.log('start longpoll');
 	
 	if (xhr)
@@ -359,6 +364,7 @@ function longPoll(roomName) {
 }
             
 function requestFhem(paraname, devicename) {
+    if (DEMO) {console.log('DEMO-Mode: no requestFhem');return;}
     var devicelist;
 
     // paraname = DEVICE:READING; devicename is ignored
@@ -466,11 +472,11 @@ function loadStyleSchema(){
                for (var s in styles){
                    var param = styles[s].split(':');
                    if (param[0].match(/color/)){
-                      params[$.trim(param[0])]=$.trim(param[1]);
+                      params[$.trim(param[0])]=$.trim(param[1]).replace('! important','').replace('!important','');
                    }
                }
                if (Object.keys(params).length>0)
-                    styleCollection[elmName]=params;
+                   styleCollection[elmName]=params;
             }
         }
     });
@@ -602,12 +608,20 @@ this.showModal = function (modal) {
 // global date format functions
 this.dateFromString = function (str) {
  var m = str.match(/(\d+)-(\d+)-(\d+)_(\d+):(\d+):(\d+).*/);
- return (m)?new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]):new Date();
+ var m2 = str.match(/(\d\d).(\d\d).(\d\d\d\d)/);
+ var offset = new Date().getTimezoneOffset();
+ return (m) ? new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6])
+            : (m2) ? new Date(+m2[3], +m2[2] - 1, +m2[1], 0, -offset, 0, 0)
+            : new Date();
 }
 
 this.diffMinutes = function(date1,date2){
        diff  = new Date(date2 - date1);
        return (diff/1000/60).toFixed(0);
+}
+
+String.prototype.toDate = function() {
+    return dateFromString(this);
 }
    
 Date.prototype.yyyymmdd = function() {
@@ -633,7 +647,34 @@ Date.prototype.hhmmss = function() {
 Date.prototype.ddmm = function() {
   var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
   var dd  = this.getDate().toString();
-    return (dd[1]?dd:"0"+dd[0])+'.'+(mm[1]?mm:"0"+mm[0])+'.'; // padding
+  return (dd[1]?dd:"0"+dd[0])+'.'+(mm[1]?mm:"0"+mm[0])+'.'; // padding
+ };
+
+Date.prototype.eeee = function() {
+    var weekday_de = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+    var weekday = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var userLang = navigator.language || navigator.userLanguage;
+    if(userLang.split('-')[0] === 'de')
+        return weekday_de[this.getDay()];
+    return weekday[this.getDay()];
+ };
+
+Date.prototype.eee = function() {
+    var weekday_de = ['Son','Mon','Die','Mit','Don','Fre','Sam'];
+    var weekday = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var userLang = navigator.language || navigator.userLanguage;
+    if(userLang.split('-')[0] === 'de')
+        return weekday_de[this.getDay()];
+    return weekday[this.getDay()];
+ };
+
+Date.prototype.ee = function() {
+    var weekday_de = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+    var weekday = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+    var userLang = navigator.language || navigator.userLanguage;
+    if(userLang.split('-')[0] === 'de')
+        return weekday_de[this.getDay()];
+    return weekday[this.getDay()];
  };
 
 //sadly it not possible to use Array.prototype. here

@@ -8,22 +8,25 @@ var widget_symbol = $.extend({}, widget_famultibutton, {
         var base = this;
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {
-            $(this).data('off-color',               $(this).data('off-color')                                     || getStyle('.symbol.off','color')              || '#505050');
-            $(this).data('off-background-color',    $(this).data('off-background-color')                          || getStyle('.symbol.off','background-color')   || '#505050');
-            $(this).data('on-color',                $(this).data('on-color')            || getClassColor($(this)) || getStyle('.symbol.on','color')               || '#aa6900');
-            $(this).data('on-background-color',     $(this).data('on-background-color')                           || getStyle('.symbol.on','background-color')    || '#aa6900');
-            $(this).data('background-icon',         $(this).data('background-icon')     || null);
-            $(this).data('icon',                    $(this).data('icon')                || (( $.isArray($(this).data('icons')) )?$(this).data('icons')[0]:'ftui-window'));
-            $(this).data('get-on',                  $(this).data('get-on')              || 'open');
-            $(this).data('get-off',                 $(this).data('get-off')             || 'closed');
-            $(this).data('mode', 'signal');
-            base.init_attr($(this));
-            base.init_ui($(this));
+            var elem = $(this);
+            elem.initData('off-color'               ,getStyle('.symbol.off','color') || '#505050');
+            elem.initData('off-background-color'    ,getStyle('.symbol.off','background-color')   || '#505050');
+            elem.initData('on-color'                ,getClassColor(elem) || getStyle('.symbol.on','color')               || '#aa6900');
+            elem.initData('on-background-color'     ,getStyle('.symbol.on','background-color')    || '#aa6900');
+            elem.initData('background-icon'         ,null);
+            elem.initData('icon'                    ,(( $.isArray($(this).data('icons')) )?$(this).data('icons')[0]:'ftui-window'));
+            elem.initData('get-on'                  ,'open');
+            elem.initData('get-off'                 ,'closed');
+            elem.initData('get-warn'                ,-1);
+            elem.data('mode', 'signal');
+            base.init_attr(elem);
+            base.init_ui(elem);
         });
     },
     update_cb : function(elem,state) {
+        $('.fa-stack:has(.zero)').removeClass('fa-stack');
         if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
-            this.showOverlay(elem,state);
+            this.showOverlay(elem,getPart(state,elem.data('get-warn')));
         else
             this.showOverlay(elem,"");
     },

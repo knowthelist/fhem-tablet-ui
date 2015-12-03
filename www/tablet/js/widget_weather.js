@@ -49,7 +49,7 @@ var widget_weather = $.extend({}, widget_widget, {
         'thundershowers' :              '8',
         'snow showers' :                '$',
         'isolated thundershowers' :     'R',
-        
+
         // PROPLANTA (most likely incomplete)
         "heiter":                       "H",
         "wolkig":                       "N",
@@ -63,18 +63,18 @@ var widget_weather = $.extend({}, widget_widget, {
         'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'Q',
         'Nebel':                        'F',
         'klar':                         'B',
-        
+
         // OPENWEATHER (Wetter.com) (incomplete)
         'leichter Schnee - Schauer' :   'U',
         'leichter Schnee-Regen' :       'V',
         'm\u00e4\u00dfiger Schneefall' :'U',
         'leichter Regen' :              'R',
-        
+
         // others
         'undefined' :                   ')',
         'overcast' :                    'N',
         'rain':                         'R',
-        
+
         'chance of storm':              'S',
         'sunny night'           :       '2',
         'mostly clear night'    :       '4',
@@ -128,7 +128,7 @@ var widget_weather = $.extend({}, widget_widget, {
         'thundershowers' :              'heavyrain.png',
         'snow showers' :                'chance_of_snow.png',
         'isolated thundershowers' :     'scatteredshowers.png',
-        
+
         // PROPLANTA
         "heiter":                       'partly_cloudy.png',
         "wolkig":                       'mostlycloudy.png',
@@ -142,7 +142,7 @@ var widget_weather = $.extend({}, widget_widget, {
         'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'scatteredshowers.png',
         'Nebel':                        'fog.png',
         'klar':                         'sunny_night.png',
-        
+
         // OPENWEATHER (wetter.com) (incomplete)
         'leichter Schnee - Schauer' :   'chance_of_snow.png',
         'leichter Schnee-Regen' :       'rainsnow.png',
@@ -150,12 +150,12 @@ var widget_weather = $.extend({}, widget_widget, {
         'leichter Regen' :              'drizzle.png',
         'leicht bew\u00f6lkt' :         'partly_cloudy.png',
         'Regen - Schauer':              'chance_of_rain.png',
-   
+
         // others
         'undefined' :                   'na.png',
         'overcast' :                    'overcast.png',
         'rain':                         'rain.png',
-        
+
         'chance of storm' :             'chance_of_storm.png',
         'sunny night'           :       'sunny_night.png',
         'mostly clear night'    :       'mostly_clear_night.png',
@@ -210,7 +210,7 @@ var widget_weather = $.extend({}, widget_widget, {
         'Gewitterregen' :               ':thundershowers',
         'Schneeschauer' :               ':snow showers',
         'vereinzelt Gewitter' :         ':isolated thundershowers',
-        
+
         // Weather (YAHOO) nl
         'zware storm' :                 ':tropical storm',
         'orkaan' :                      ':hurricane',
@@ -253,7 +253,7 @@ var widget_weather = $.extend({}, widget_widget, {
         'onweersbuien' :                ':thundershowers',
         'sneeuwbuien' :                 ':snow showers',
         'af en toe onweersbuien' :      ':isolated thundershowers',
-        
+
         // OPENWEATHER (wetter.com) weatherCode
         '0' :                           ':sunny',
         '1' :                           ':partly cloudy',
@@ -301,7 +301,7 @@ var widget_weather = $.extend({}, widget_widget, {
         '95' :                          ':scattered thunderstorms',
         '96' :                          ':thunderstorms',
         '999' :                         ':undefined',
-        
+
         // PROPLANTA fc#_weather(Day|Evening|Morning|Night)Icon
         // thx to Risiko (http://forum.fhem.de/index.php/topic,34233.msg292189.html#msg292189)
         't1':                           ':sunny',
@@ -333,12 +333,12 @@ var widget_weather = $.extend({}, widget_widget, {
         'n13':                          ':haze night',
         'n14':                          ':rain',
     },
-  
+
     init_attr: function(elem) {
         elem.data('get', elem.data('get') || 'STATE');
 
         readings[elem.data('get')] = true;
-        
+
         var fhem_path = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
         fhem_path = fhem_path.replace(/\/$/, '');
         var image_path = $("meta[name='weather_image_path']").attr("content") || fhem_path + '/images/default/weather/';
@@ -347,7 +347,7 @@ var widget_weather = $.extend({}, widget_widget, {
             elem.data('image-path', elem.data('image-path')+'/');
         }
     },
-    
+
     init: function () {
         base=this;
         this.elements = $('div[data-type="'+this.widgetname+'"]');
@@ -356,7 +356,7 @@ var widget_weather = $.extend({}, widget_widget, {
             $(this).addClass('weather');
         });
     },
-    
+
     update: function (dev,par) {
         base=this;
         var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
@@ -370,7 +370,7 @@ var widget_weather = $.extend({}, widget_widget, {
 
                     //wheater icons
                     $(this).empty();
-                    
+
                     var device_type;
                     if($(this).data('device-type')) {
                         device_type = $(this).data('device-type');
@@ -396,7 +396,7 @@ var widget_weather = $.extend({}, widget_widget, {
                             translate = false;
                         }
                     }
-                    
+
                     if(translate) {
                         // translate val to ':key'
                         var translation = base.translationmap[val];

@@ -75,8 +75,8 @@
                 x = Math.round(self.options.circle_radius * Math.cos(angle)),
                 y = Math.round(self.options.circle_radius * Math.sin(angle));
             // linear hack
-            if (self.options.angle.start<-360) {x = 0; y = index * self.options.circle_radius;}
-            if (self.options.angle.start>360) {x = index * self.options.circle_radius;y = 0;}
+            if (self.options.angle.start<-360) {x = 0; y = index * self.options.circle_radius +self.options.circle_radius;}
+            if (self.options.angle.start>360) {x = index * self.options.circle_radius + self.options.circle_radius;y = 0;}
 
             $item.data('plugin_'+pluginName+'-pos-x', x);
             $item.data('plugin_'+pluginName+'-pos-y', y);

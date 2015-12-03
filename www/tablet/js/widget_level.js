@@ -1,5 +1,4 @@
 var widget_level= {
-  _level: null,
   elements: null,
   init: function () {
 
@@ -8,9 +7,8 @@ var widget_level= {
       $('head').append('<link rel="stylesheet" href="'+ dir + '/../lib/powerange.min.css" type="text/css" />');
     }
 
-    _level=this;
-    _level.elements = $('div[data-type="level"]');
-    _level.elements.each(function(index) {
+    this.elements = $('div[data-type="level"]');
+    this.elements.each(function(index) {
 
 		var device = $(this).data('device');
 		$(this).data('get', $(this).data('get') || 'STATE');
@@ -25,7 +23,7 @@ var widget_level= {
 
 		var pwrng = new Powerange(elem[0], { 
             vertical: !$(this).hasClass('horizontal'),
-			hideRange: true,
+            hideRange: false,
 			'min': $(this).data('min') || 0,
 			'max': $(this).data('max') || 100,
             klass: $(this).hasClass('horizontal')?'level_horizontal':'level_vertical',
@@ -71,7 +69,7 @@ var widget_level= {
   },
   update: function (dev,par) {
 
-    var deviceElements= _level.elements.filter('div[data-device="'+dev+'"]');
+    var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
     deviceElements.each(function(index) {
 
         if ( $(this).data('get')==par){
@@ -92,7 +90,7 @@ var widget_level= {
                         // hack for this.slider.offsetHeight=0 issue
                         setTimeout(function(){
                             pwrng.setStart(parseInt(v));
-                        }, 50);
+                        }, 250);
 
 
                     //set colors according matches for values
