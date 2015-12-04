@@ -436,11 +436,19 @@ function requestFhem(paraname, devicename) {
                     }
                 }
             }
-            //save deviceStates into localStorage
-            var dataToStore = JSON.stringify(deviceStates);
-            localStorage.setItem('deviceStates', dataToStore);
+            saveStatesLocal();
         });
     }
+}
+
+$(window).on('beforeunload', function(){
+    saveStatesLocal();
+});
+
+function saveStatesLocal() {
+    //save deviceStates into localStorage
+    var dataToStore = JSON.stringify(deviceStates);
+    localStorage.setItem('deviceStates', dataToStore);
 }
 
 function loadplugin(plugin, success, error, async) {
