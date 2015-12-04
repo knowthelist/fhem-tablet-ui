@@ -359,9 +359,11 @@ Use data-url + data-refresh or data-device + data-get, not both.
 ####CircleMenu widgets
 - **data-item-diameter** : diameter of the circle (default 52)
 - **data-circle-radius** : radius of each item, in pixel (default 70)
+- **data-border**        : style of border - 'round','square' (default 'round')
+- **data-item-width**    : fixe size for width in px (default value of data-item-diameter)
+- **data-item-height**   : fixe size for height in px (default value of data-item-diameter)
 - **data-direction**     : position of the items in relation to the center (default full). Options are: top | right | bottom | left | top-right | top-left | bottom-right | bottom-left | top-half | right-half | bottom-half | left-half | full | vertical | horizontal
-- **data-close-after**   : closing time of the circle-menu (default: (item-count + 1s) or a minimum of 4s)
-- **class**		         : keepopen
+- **class**		 : keepopen
 
 ####Playstream widgets
 - **data-url**      : URL of the Radio stream

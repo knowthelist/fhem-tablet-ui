@@ -13,6 +13,7 @@
             step_out: 20,
             step_in: -20,
             trigger: 'hover',
+            border: 'round',
             close_event: 'click',
             transition_function: 'ease'
         };
@@ -248,8 +249,8 @@
         $items.attr('style','');
         $items.css({
             'display': 'block',
-            'width': self.options.item_diameter+'px',
-            'height': self.options.item_diameter+'px',
+            'width': (self.options.item_width) ? self.options.item_width : self.options.item_diameter+'px',
+            'height': (self.options.item_height) ? self.options.item_height : self.options.item_diameter+'px',
             'text-align': 'center',
             'line-height': self.options.item_diameter+'px',
             'position': 'absolute',
@@ -261,7 +262,10 @@
             top:0,
             left:0
         });
-        vendorPrefixes($items, 'border-radius', self.options.item_diameter+'px');
+        if ( self.options.border === 'square')
+            vendorPrefixes($items, 'border-radius', self.options.item_diameter/5+'px');
+        else
+            vendorPrefixes($items, 'border-radius', self.options.item_diameter+'px');
         vendorPrefixes(self.menu_items, 'transform', 'scale(.5)');
         setTimeout(function(){
             vendorPrefixes($items, 'transition', 'all '+self.options.speed+'ms '+self.options.transition_function);
