@@ -329,6 +329,18 @@ var widget_chart = {
 		if ($.isArray(array)) var n = array.length;
 		return n;
 	},
+	getnGraphs: function(data) {
+		var nGraphs = 0;
+		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(data.logdevice));
+		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(data.logfile));
+		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(data.columnspec));
+		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(data.ptype));
+		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(data.uaxis));
+		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(data.legend));
+		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(data.style));
+
+		return nGraphs;
+	},
 	getDaysAgo: function (dStr) {	// helper function to check date strings
 		if ($.isNumeric(dStr)) return parseFloat(dStr);
 		var ds = new Date(dStr);
@@ -612,7 +624,7 @@ var widget_chart = {
 		$(this).data('instance', widget_chart.instance);
 
 		var gs = [];
-		for (var k=0; k<$(this).data('logdevice').length; k++) {gs[k]=true;}
+		for (var k=0, ll=widget_chart.getnGraphs($(this).data()); k<ll; k++) {gs[k]=true;}
 		$(this).data('graphsshown',gs);
 
 		var svgElement = $(
@@ -653,6 +665,11 @@ var widget_chart = {
 		var noticks = ( data.width <=100 ) ? true : $(theObj).hasClass('noticks');
 		var nobuttons = $(theObj).hasClass('nobuttons');
 		var scale_sec = 1;
+		
+		var DDD = {};
+		DDD.Setting = $.isArray(data.ddd)?((data.ddd.length==3)?data.ddd:['0','0','0']):['0','0','0']; // set transformation array for 3D display
+		DDD.Space = data.dddspace || 25;
+		DDD.String = 'transform: rotateX('+DDD.Setting[0]+'deg) '+'rotateY('+DDD.Setting[1]+'deg) '+'rotateZ('+DDD.Setting[2]+'deg)'
 
 		var data_old = jQuery.extend({},$(theObj).data());
 
@@ -716,14 +733,8 @@ var widget_chart = {
 		var foundPrimary = false, foundSecondary = false;
 		
 		//check the input arrays to derive the one with biggest length
-		var nGraphs = 0;
-		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(logdevice_array));
-		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(logfile_array));
-		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(columnspec_array));
-		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(ptype_array));
-		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(uaxis_array));
-		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(legend_array));
-		nGraphs = Math.max(nGraphs,widget_chart.getArrayLength(style_array));
+		var nGraphs = widget_chart.getnGraphs(data);
+		DDD.String += '; transform-origin: 0px 0px -'+parseFloat(DDD.Space)*(nGraphs-1)+'px';
 		
 		for (var k=0; k<nGraphs; k++) {	// main loop for getting information from HTTP server (FEHM)
 			var points=[];
@@ -878,7 +889,7 @@ var widget_chart = {
 			xticks = (basewidth>400) ? mdiff/12.0 : (basewidth>200) ? mdiff/6 : mdiff/3;	// set the number of ticks to 12 or 6 if window is not so wide
 		}
 		
-		var defaultHeight = $(this).hasClass('fullsize') ? data.graphHeight + '%' : '';
+		var defaultHeight = $(theObj).hasClass('fullsize') ? data.graphHeight + '%' : '';
 		
 		//include defs from svg_defs.svg for compatibility with fhem plots
 		var defsFHEM =
@@ -937,17 +948,21 @@ var widget_chart = {
 		svg_new = $(
 			'<svg class="basesvg'+instance+'">' + defsFHEM + defs +
 			'<g id="classesContainer" stroke="grey"></g>' +
-			'<rect class="chart-background" x="' + (data.textWidth_prim) + 'px" width="'+data.graphWidth+'%" preserveAspectRatio="none">'+'></rect>'+
-			'<svg class="chart-primary" x="' + (data.textWidth_prim) + 'px" width="'+data.graphWidth+'%" preserveAspectRatio="none">'+
-			'<g class="graph-parent" transform="scale(1, -1)">'+
+			'<rect class="chart-background" x="' + (noticks?0:data.textWidth_prim) + 'px" width="'+data.graphWidth+'%" preserveAspectRatio="none" '+'style="'+DDD.String+'"></rect>'+
+			'<svg class="chart-primary">'+
+			'<svg class="chart-parent viewbox" x="' + (noticks?0:data.textWidth_prim) + 'px" width="'+data.graphWidth+'%" preserveAspectRatio="none">'+
+			'<g class="graph-parent scaleyinvert">'+
 			'<polyline points=""/>'+
 			'<path d=""/>'+
-			'</g></svg>'+
-			'<svg class="chart-secondary" x="' + (data.textWidth_prim) + 'px" width="'+data.graphWidth+'%" preserveAspectRatio="none">'+
-			'<g class="graph-parent" transform="scale(1, -1)">'+
+			'</g></svg></svg>'+
+			'<svg class="chart-secondary">'+
+			'<svg class="chart-parent viewbox" x="' + (noticks?0:data.textWidth_prim) + 'px" width="'+data.graphWidth+'%" preserveAspectRatio="none">'+
+			'<g class="graph-parent scaleyinvert">'+
 			'<polyline points=""/>'+
 			'<path d=""/>'+
-			'</g></svg>'+
+			'</g></svg></svg>'+
+			'<svg class="chart-gridlines viewbox" x="' + (noticks?0:data.textWidth_prim) + 'px" width="'+data.graphWidth+'%" preserveAspectRatio="none" '+'style="'+DDD.String+'">'+
+			'</svg>'+
 			'</svg>');
 		
 		//Save pixel coordinates of graph area for later use
@@ -970,7 +985,7 @@ var widget_chart = {
 		// hack for wrong behaviour of Firefox
 		var attrval = {};
 		var stV = widget_chart.getStyleRuleValue(classesContainer, 'fill', ".chart-background");
-		if (stV) {if(stV.indexOf("url") >= 0) {attrval.style = attrval.style + ';fill: ' +  stV.slice(0,4)+stV.slice(-(stV.length-stV.lastIndexOf("#"))).replace(/\"/g,'');}}
+		if (stV) {if(stV.indexOf("url") >= 0) {attrval.style = svg_new.find("rect.chart-background").attr('style') + ';fill: ' +  stV.slice(0,4)+stV.slice(-(stV.length-stV.lastIndexOf("#"))).replace(/\"/g,'');}}
 		svg_new.find("rect.chart-background").attr(attrval);
 
 		// test for functions on touch devices, currently not running yet
@@ -1232,19 +1247,21 @@ var widget_chart = {
 			}
 			
 			var svg = svg_new.find('svg.chart-'+uaxis);
+			var svg_chart = svg.find('svg.chart-parent').first().clone(false);
+			svg.find('svg.chart-parent').parent().append(svg_chart);
 
 			if (svg){
-				var polyline = svg.find('path');
+				var polyline = svg_chart.find('path');
 				if (polyline){
 					if (!axis_done[uaxis]) {
 						svg.find('line').remove();
 						var graph = polyline.parent();
 						
-						if (!gridlines) {var gridlines = widget_chart.createElem('g').attr({'class':'gridlines','stroke':widget_chart.getStyleRuleValue(classesContainer, 'color', '')});}
+						if (!gridlines) {var gridlines = widget_chart.createElem('g').attr({'class':'gridlines scaleyinvert','stroke':widget_chart.getStyleRuleValue(classesContainer, 'color', '')});}
 						if (!buttons) {var buttons = widget_chart.createElem('g').attr({'class':'buttons'});}
 						if (!tyaxis) {var tyaxis = widget_chart.createElem('g').attr({'class':(uaxis != 'secondary') ? 'text yaxis_primary' : 'text yaxis_secondary'});}
 						if (!txaxis) {var txaxis = widget_chart.createElem('g').attr({'class':'text xaxis'});}
-						if (!taxes) {var taxes = widget_chart.createElem('g').attr({'class':'text axes'});}
+						if (!taxes) {var taxes = widget_chart.createElem('g').attr({'class':'text axes scaleyinvert','style':DDD.String});}
 						
 						taxes.append(tyaxis);
 						taxes.append(txaxis);
@@ -1434,73 +1451,51 @@ var widget_chart = {
 						}
 
 						if (!(axis_done['primary'] || axis_done['secondary'])) {
-							graph.prepend(gridlines);
+							svg.parent().find('svg.chart-gridlines').append(gridlines);
 							svg.parent().append(taxes);
 						}
 
 						//Viewbox (autoscaler)
 						var graphTop = 100-(baseheight-data.topOffset)/baseheight*100;
-						svg.attr({"height":data.graphHeight+"%","y":graphTop+"%"});
-						svg[0].setAttribute('viewBox', [0, -max, xrange, max-min ].join(' '));
+						svg.parent().find('svg.chart-gridlines').attr({"height":data.graphHeight+"%","y":graphTop+"%"});
+						DDDStr = 'transform: rotateX('+DDD.Setting[0]+'deg) '+'rotateY('+DDD.Setting[1]+'deg) '+'rotateZ('+DDD.Setting[2]+'deg)'+'; transform-origin: 0px 0px -'+parseFloat(DDD.Space)*(k)+'px';
+						svg.find('svg.chart-parent').last().attr({"height":data.graphHeight+"%","y":graphTop+"%",'style':DDDStr});
+						svg.parent().find("[class*=viewbox]").each(function(index) {$(this)[0].setAttribute('viewBox', [0, -max, xrange, max-min ].join(' '));});
 						svg.parent().find('rect.chart-background').attr({"height":data.graphHeight+"%","y":graphTop+"%"});
 
-						// add graphs themselves
-						switch(ptype) {
-							case 'lines':
-							case 'steps':
-							case 'fsteps':
-							case 'histeps':
-							case 'bars':
-							case 'ibars':
-							case 'cubic':
-							case 'quadratic':
-							case 'quadraticSmooth':
-								if (points.length > 1) {polyline.attr(attrval);}
-								polyline.attr('id',uaxis + "-graph-" + instance + "-" + k + "-" + ptype);
-								data.graphsshown[k]?polyline.attr('animstate','hide'):polyline.attr('animstate','show');
-								if (!data.graphsshown[k]) {polyline.attr('transform', "translate(0,"+min+") "+ "scale(1,0)");}
-								polyline.attr('min',min);
-								polyline.attr('xrange', xrange);
-								var color = (polyline.css("stroke"))?polyline.css("stroke"):polyline.css("fill");
-								break;
-						}
 						axis_done[uaxis] = true;
 					}
 					else {
-					
-						if (!axis_done[uaxis]) {
+						if (!axis_done[uaxis]||true) {
 							//Viewbox (autoscaler)
 							var graphTop = 100-(baseheight-data.topOffset)/baseheight*100;
-							svg.attr({"height":data.graphHeight+"%","y":graphTop+"%"});
-							svg[0].setAttribute('viewBox', [0, -max, xrange, max-min ].join(' '));
+							DDDStr = 'transform: rotateX('+DDD.Setting[0]+'deg) '+'rotateY('+DDD.Setting[1]+'deg) '+'rotateZ('+DDD.Setting[2]+'deg)'+'; transform-origin: 0px 0px -'+parseFloat(DDD.Space)*(k)+'px';
+							svg.find('svg.chart-parent').last().attr({"height":data.graphHeight+"%","y":graphTop+"%",'style':DDDStr});
 							svg.parent().find('rect.chart-background').attr({"height":data.graphHeight+"%","y":graphTop+"%"});
 						}
 						axis_done[uaxis] = true;
-
-						switch(ptype) {
-							case 'lines':
-							case 'steps':
-							case 'fsteps':
-							case 'histeps':
-							case 'bars':
-							case 'ibars':
-							case 'cubic':
-							case 'quadratic':
-							case 'quadraticSmooth':
-								var polyline_new = widget_chart.createElem('path').attr(attrval);
-								polyline_new.attr('id',uaxis + "-graph-" + instance + "-" + k + "-" + ptype);
-								data.graphsshown[k]?polyline_new.attr('animstate','hide'):polyline_new.attr('animstate','show');
-								if (!data.graphsshown[k]) {polyline_new.attr('transform', "translate(0,"+min+") "+ "scale(1,0)");}
-								polyline_new.attr('min',min);
-								polyline_new.attr('xrange', xrange);
-								if (points.length > 1) polyline_new.attr(attrval);
-								svg.find('polyline').parent().append(polyline_new);
-								break;
-								svg.find('polyline').parent().append(g);
-								break;
-						}
+						svg.parent().find("[class*=viewbox]").each(function(index) {$(this)[0].setAttribute('viewBox', [0, -max, xrange, max-min ].join(' '));});
 					}
 					switch(ptype) {
+						// add graphs themselves
+						case 'lines':
+						case 'steps':
+						case 'fsteps':
+						case 'histeps':
+						case 'bars':
+						case 'ibars':
+						case 'cubic':
+						case 'quadratic':
+						case 'quadraticSmooth':
+							if (points.length > 1) {polyline.attr(attrval);}
+							polyline.attr('id',uaxis + "-graph-" + instance + "-" + k + "-" + ptype);
+							data.graphsshown[k]?polyline.attr('animstate','hide'):polyline.attr('animstate','show');
+							if (!data.graphsshown[k]) {polyline.attr('transform', "translate(0,"+min+") "+ "scale(1,0)");}
+							polyline.attr('min',min);
+							polyline.attr('xrange', xrange);
+							var color = (polyline.css("stroke"))?polyline.css("stroke"):polyline.css("fill");
+							break;
+
 						case 'points':
 							var g = widget_chart.createElem('g');
 							g.attr('class',style);
@@ -1520,7 +1515,7 @@ var widget_chart = {
 								point_new.attr(attrval);
 								g.append(point_new);
 							}
-							svg.find('polyline').parent().append(g);
+							svg_chart.find('polyline').parent().append(g);
 							break;
 						case 'symbol':
 							var g = widget_chart.createElem('g');
@@ -1542,7 +1537,7 @@ var widget_chart = {
 								point_new.text(symbol);
 								g.append(point_new);
 							}
-							svg.find('polyline').parent().append(g);
+							svg_chart.find('polyline').parent().append(g);
 							break;
 					}
 					//show chart legend if set
@@ -1564,6 +1559,8 @@ var widget_chart = {
 				}
 			}
 		}
+
+		svg_new.find("[class*=scaleyinvert]").each(function(index) {$(this).attr({'transform':'scale(1 -1)'});});
 
 		// register events for crosshair cursor
 		svg_new.find("rect.chart-background, [id*='graph-']").on("mouseenter",function(event) {
@@ -1587,16 +1584,21 @@ var widget_chart = {
 			.css("height",data.height || defaultHeight);
 			
 		if (type=='shift' || type=='scale') { // prepare and trigger animation when shifting or scaling
-			var graphs_old = svg_old.find("[id*='primary-graph-']");
-			for (var i=0,l=graphs_old.length; i<l; i++) {
-				$(graphs_old[i]).attr('id',$(graphs_old[i]).attr('id').replace("graph-","graphold-"));
-			}
-			svg_new.find('svg.chart-primary').find('g.graph-parent').append(graphs_old);
-			var graphs_old = svg_old.find("[id*='secondary-graph-']");
-			for (var i=0,l=graphs_old.length; i<l; i++) {
-				$(graphs_old[i]).attr('id',$(graphs_old[i]).attr('id').replace("graph-","graphold-"));
-			}
-			svg_new.find('svg.chart-secondary').find('g.graph-parent').append(graphs_old);
+			svg_old.find('svg.chart-parent').each(function(index) {
+				var graphs_old = $(this).find("[id*='primary-graph-']");
+				if (graphs_old.length > 0) {
+					var id=$(graphs_old).attr('id');
+					$(graphs_old).attr('id',id.replace("graph-","graphold-"));
+					svg_new.find("[id*='"+id+"']").parent().append(graphs_old);
+				}
+
+				var graphs_old = $(this).find("[id*='secondary-graph-']");
+				if (graphs_old.length > 0) {
+					var id=$(graphs_old).attr('id');
+					$(graphs_old).attr('id',$(graphs_old).attr('id').replace("graph-","graphold-"));
+					svg_new.find("[id*='"+id+"']").parent().append(graphs_old);
+				}
+			});
 
 			(type=='shift')?
 				widget_chart.swipe(svg_new,instance,"horizontal-shift",swoffset,$(theObj).data(),data_old):
@@ -1659,14 +1661,15 @@ var widget_chart = {
 		var devices = dev.split(",");
 		var deviceElements= this.elements.filter("div[data-logdevice]");
 		deviceElements.each(function(index) {
-			var isLogdevice = ($.isArray($(this).data('logdevice')))?$(this).data('logdevice').join(',').search(dev)>=0:($(this).data('logdevice').fn.search)?$(this).data('logdevice').search(dev)>=0:false;
+			var isLogdevice = ($.isArray($(this).data('logdevice')))?$(this).data('logdevice').join(',').search(dev)>=0:(typeof $(this).data('logdevice') == 'string')?$(this).data('logdevice')==dev:false;
+			if (isLogdevice) {console.log($(this).data('logdevice'), dev, isLogdevice, $(this).data('get'), par);}
 			if ( $(this).data('get')==par && isLogdevice) {
 				if ($(this).parent().is(':visible')) {
 					base.refresh.apply(this);
 				} else {
 					$(this).parent().on("fadein", function(event) {
 						var theObj = $(event.delegateTarget).find("[class^=basesvg]").parent();
-						base.refresh.apply(theObj);
+						theObj.each( function(index) {base.refresh.apply($(this));});
 					});
 				}
 			}

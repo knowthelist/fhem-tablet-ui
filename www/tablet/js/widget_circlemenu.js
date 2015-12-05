@@ -10,15 +10,19 @@ var widget_circlemenu= {
     _circlemenu.elements = $('div[data-type="circlemenu"]>ul');
     _circlemenu.elements.each(function(index){
         var parent = $(this).parent('div[data-type="circlemenu"]');
-        $(this).circleMenu({item_diameter: parent.data('item-diameter')||52,
-            trigger:'click',
-            circle_radius:parent.data('circle-radius')||70,
-            direction: parent.data('direction') || 'full',
-            close_event:($(this).hasClass("keepopen")||parent.hasClass("keepopen"))?'':'click',
-            close:function() {
+        $(this).circleMenu({
+            item_diameter   : parent.data('item-diameter') || 52,
+            item_width      : parent.data('item-width'),
+            item_height     : parent.data('item-height'),
+            trigger         : 'click',
+            circle_radius   : parent.data('circle-radius')||70,
+            direction       : parent.data('direction') || 'full',
+            border          : parent.data('border') || 'round',
+            close_event     : ($(this).hasClass("keepopen")||parent.hasClass("keepopen"))?'':'click',
+            close           : function() {
                 setTimeout(function(){showModal(false);},50);
             },
-            select:function() {
+            select          : function() {
                setTimeout(function(){showModal(false);},50);
             },
             open:function(){
