@@ -156,10 +156,14 @@ var widget_slider = {
                     var v = $(this).hasClass('negated')
                             ? pwrng.options.max + pwrng.options.min - parseInt(nstate)
                             : parseInt(nstate);
-                    // hack for this.slider.offsetHeight=0 issue
-                    setTimeout(function(){
+                    if ( $(this).hasClass('nodelay') ) {
                         pwrng.setStart(parseInt(v));
-                    }, 250);
+                    } else {
+                      // hack for this.slider.offsetHeight=0 issue
+                      setTimeout(function(){
+                          pwrng.setStart(parseInt(v));
+                      }, 250);
+                    }
                     localStorage.setItem("slider_"+dev, v);
                     DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
                 }
