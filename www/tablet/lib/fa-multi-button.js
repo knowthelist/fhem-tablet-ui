@@ -339,7 +339,7 @@ function moveScale() {
                   options['toggleOn'].call(this);
               }
           }
-          e.preventDefault();
+          //e.preventDefault();
         });
 	}
 	else if (options['mode'] == 'dimmer'){ 
