@@ -14,14 +14,17 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
         }
         // Wrong base_width, base_height seems to trouble gridster, so that elements are wrongly sorted on the page
         // not fadeOut-In
-        $('div.gridster').fadeOut('fast');
+//        $('div.gridster').fadeOut('fast');
+        $('div.gridster').fadeTo(200,0);
         $.get(goUrl, function (data_html) {
 
           $('div.gridster')
               .html($(data_html).closest('div.gridster').html())
-              .fadeIn('slow');
+              .fadeTo(600,1);
+//              .fadeIn('slow');
             initPage();
-            $('div.gridster').fadeIn('slow');
+//            $('div.gridster').fadeIn('slow')
+            $('div.gridster').fadeTo(600,1);
         });
     },
     toggleOn : function(elem) {
