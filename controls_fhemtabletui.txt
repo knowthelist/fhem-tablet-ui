@@ -83,8 +83,8 @@ UPD 2015-12-03_07:04:15 9115 www/tablet/js/widget_thermostat.js
 UPD 2015-12-03_07:04:15 6624 www/tablet/js/widget_volume.js
 UPD 2015-12-03_15:31:31 20618 www/tablet/js/widget_weather.js
 UPD 2015-12-03_07:04:15 3421 www/tablet/js/widget_widget.js
-UPD 2015-12-03_07:04:15 11675 www/tablet/lib/fa-multi-button.js
-UPD 2015-12-03_15:25:31 5883 www/tablet/lib/fa-multi-button.min.js
+UPD 2015-12-07_15:36:14 11677 www/tablet/lib/fa-multi-button.js
+UPD 2015-12-07_15:38:09 5865 www/tablet/lib/fa-multi-button.min.js
 UPD 2015-11-17_22:49:00 17041 www/tablet/lib/farbtastic.js
 UPD 2015-12-03_07:04:15 26586 www/tablet/lib/fhemSVG.css
 UPD 2015-12-03_07:04:15 26638 www/tablet/lib/font-awesome.min.css
