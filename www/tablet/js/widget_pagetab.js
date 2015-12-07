@@ -12,18 +12,13 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
         } else {
           history.replaceState( history.state, history.title, '#'+goUrl )
         }
-        // Wrong base_width, base_height seems to trouble gridster, so that elements are wrongly sorted on the page
-        // not fadeOut-In
-//        $('div.gridster').fadeOut('fast');
         $('div.gridster').fadeTo(200,0);
         $.get(goUrl, function (data_html) {
 
           $('div.gridster')
               .html($(data_html).closest('div.gridster').html())
               .fadeTo(600,1);
-//              .fadeIn('slow');
             initPage();
-//            $('div.gridster').fadeIn('slow')
             $('div.gridster').fadeTo(600,1);
         });
     },
