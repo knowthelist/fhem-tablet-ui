@@ -1,8 +1,9 @@
+// Version Chris1284 25-11-2015 18:15 V1.0
 var widget_calview = {
 	_calview: null,
 	elements: null,
 	init: function () {
-		console.log("calview");		
+		console.log("calview");	
 		_calview=this;
 		_calview.elements = $('div[data-type="calview"]');
 		_calview.elements.each(function(index) {
@@ -10,13 +11,14 @@ var widget_calview = {
 			console.log("device: " + device);
 			console.log("get: " + $(this).data('get'));	
 			console.log("max: " + $(this).data('max'));	
-			
 			var num;
 			var value;
 			$(this).data('get', $(this).data('get') || 'STATE');
 			$(this).data('max', $(this).data('max') || 100);
 			if ($(this).data('get') == 'today') {
 				value = $(this).data('max');
+				$(this).data('c-today', 'c-today');
+				readings['c-today'] = true;
 				for (i = 1; i <= value; i++) {
 					num = "00";
 					num = num+i;
@@ -34,7 +36,7 @@ var widget_calview = {
 				for (i = 1; i <= value; i++) {
 					num = "00";
 					num = num+i;
-					num = num.slice(-3);					
+					num = num.slice(-3);
 					$(this).data('tomorrow_'+num+'_summary', 'tomorrow_'+num+'_summary');
 					console.log('tomorow_' + num + '_summary'+$(this).data('tomorrow_'+num+'_summary', 'tomorrow_'+num+'_summary'));
 					readings['tomorrow_'+num+'_summary'] = true;
@@ -44,8 +46,9 @@ var widget_calview = {
 			}
 			else if ($(this).data('get')  == 'all') {
 				value = $(this).data('max');
+				$(this).data('c-term', 'c-term');
+				readings['c-term'] = true;
 				for (i = 1; i <= value; i++) {
-					console.log("all: " + i);	
 					num = "00";
 					num = num+i;
 					num = num.slice(-3);
@@ -65,112 +68,105 @@ var widget_calview = {
 		var termcounter;
 		var text;
 		var num;
+		var ctoday;
+		var ctommorow;
+		var cterm;
 		if ( dev == '*' ) {deviceElements= _calview.elements;}
 		else { deviceElements= _calview.elements.filter('div[data-device="'+dev+'"]');}
-		
-							
+
 		deviceElements.each(function(index) {
-			var get = $(this).data('get');	
+				var get = $(this).data('get');
 				if ($(this).data('get') == 'STATE') {if (getDeviceValue( $(this), 'get' )) {$(this).html( "<div class=\"cell\" data-type=\"label\">"+value+"</div>" );}}
 				else if ($(this).data('get') == 'today') {
 					nullmeldungen = 0;
 					termcounter = 0;
 					text =  "";
-					for (i = 1; i <= $(this).data('max'); i++) {
-						num = "00";
-						num = "00"+i;
-						num = num.slice(-3);
-						if (getDeviceValue($(this), 'today_'+num+'_btime')){
+					ctoday = getDeviceValue($(this), 'c-today');
+					if 	(ctoday == 0){text += "<div data-type=\"label\">Heute keine Termine</div>";}
+					else if (ctoday > $(this).data('max')) {
+						for (i = 1; i <= $(this).data('max'); i++) {
+							num = "00";
+							num = "00"+i;
+							num = num.slice(-3);
 							text += "<div class=\"cell\">";
 							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'today_'+num+'_btime') + "</div>";
 							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'today_'+num+'_summary')+ "</div>";
 							text += "</div>";
-							termcounter ++}
-						else {nullmeldungen ++;}
+						}
 					}
-					if (nullmeldungen > 0 && termcounter == 0){text += "<div data-type=\"label\">Heute keine Termine</div>";}
+					else if ( ctoday <= $(this).data('max') && ctoday != 0 ) {
+						for (i = 1; i <= ctoday; i++) {
+							num = "00";
+							num = "00"+i;
+							num = num.slice(-3);
+							text += "<div class=\"cell\">";
+							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'today_'+num+'_btime') + "</div>";
+							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'today_'+num+'_summary')+ "</div>";
+							text += "</div>";
+						}
+					}
 					$(this).html( text );
 				}
 				else if ($(this).data('get') == 'tomorrow') {
 					nullmeldungen = 0;
 					termcounter = 0;
-					text =  "";					
-					for (i = 1; i <= $(this).data('max'); i++) {
-						num = "00";
-						num = "00"+i;
-						num = num.slice(-3);
-						if (getDeviceValue($(this), 'tomorrow_'+num+'_btime')){
+					text =  "";
+					ctommorow = getDeviceValue($(this), 'c-tomorrow');
+					if 	(ctommorow == 0){text += "<div data-type=\"label\">Morgen keine Termine</div>";}
+					else if (ctommorow > $(this).data('max')) {
+						for (i = 1; i <= $(this).data('max'); i++) {
+							num = "00";
+							num = "00"+i;
+							num = num.slice(-3);
 							text += "<div class=\"cell\">";
 							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'tomorrow_'+num+'_btime') + "</div>";
 							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'tomorrow_'+num+'_summary')+ "</div>";
 							text += "</div>";
-							termcounter ++;}
-						else {nullmeldungen ++;}
+						}
 					}
-					if (nullmeldungen > 0 && termcounter == 0){text += "<div data-type=\"label\">Morgen keine Termine</div>";}
+					else if ( ctommorow <= $(this).data('max') && ctommorow != 0 ) {
+						for (i = 1; i <= ctommorow; i++) {
+							num = "00";
+							num = "00"+i;
+							num = num.slice(-3);
+							text += "<div class=\"cell\">";
+							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'tomorrow_'+num+'_btime') + "</div>";
+							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'tomorrow_'+num+'_summary')+ "</div>";
+							text += "</div>";
+						}
+					}
 					$(this).html( text );
 				}
 				else if ($(this).data('get') == 'all') {
 					nullmeldungen = 0;
 					termcounter = 0;
 					text =  "";
-					var forecastColor = $(this).data('all-forecast-color'); 
-					var todayColor = $(this).data('all-today-color');
-					console.log("max: " + forecastColor + " " + todayColor );
-					
-					for (i = 1; i <= $(this).data('max'); i++) {
-						num = "00";
-						num = "00"+i;
-						num = num.slice(-3);
-						// alter berechnen, sofern in location die entsprechende Jahreszahl angegeben ist						
-						var alter = "";
-						now = new Date();
-						if (/^[0-9]{4}$/.test(getDeviceValue($(this), 't_'+num+'_location'))) {
-							alter = " (" +(now.getFullYear() - getDeviceValue($(this), 't_'+num+'_location')) +")";						
-						}
-						console.log("Ist heute : " + isToday(getDeviceValue($(this), 't_'+num+'_bdate')));
-						console.log("Ist in den nächsten 7 Tagen : " + isEventInThisWeek(getDeviceValue($(this), 't_'+num+'_bdate')));						
-						if (getDeviceValue($(this), 't_'+num+'_bdate')){
-							if (isToday(getDeviceValue($(this), 't_'+num+'_bdate'))) {
-							text += "<div class=\"cell large top-narrow-10 left\" style=\"color:" + todayColor + "\">";
-							} else if (isEventInThisWeek(getDeviceValue($(this), 't_'+num+'_bdate'))) {
-							text += "<div class=\"cell large top-narrow-10 left\" style=\"color:" + forecastColor +"\">";
-							} else {
-							text += "<div class=\"cell large top-narrow-10 left\">";
-							}
+					cterm = getDeviceValue($(this), 'c-term');
+					if 	(cterm == 0){text += "<div data-type=\"label\">Morgen keine Termine</div>";}
+					else if (cterm > $(this).data('max')) {
+						for (i = 1; i <= $(this).data('max'); i++) {
+							num = "00";
+							num = "00"+i;
+							num = num.slice(-3);
+							text += "<div class=\"cell\">";
 							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 't_'+num+'_bdate') + "</div>";
-							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 't_'+num+'_summary') + alter + "</div>";
+							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 't_'+num+'_summary')+ "</div>";
 							text += "</div>";
-							termcounter ++}
-						else {nullmeldungen ++;}
+						}
 					}
-					if (nullmeldungen > 0 && termcounter == 0){text += "<div data-type=\"label\">Keine Termine</div>";}
+					else if ( cterm <= $(this).data('max') && cterm != 0 ) {
+						for (i = 1; i <= cterm; i++) {
+							num = "00";
+							num = "00"+i;
+							num = num.slice(-3);
+							text += "<div class=\"cell\">";
+							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 't_'+num+'_bdate') + "</div>";
+							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 't_'+num+'_summary')+ "</div>";
+							text += "</div>";
+						}
+					}
 					$(this).html( text );
 				}
 		});
 	}
 };
-
-/**
-* Date to check has to be in format dd.mm.yyyy
-**/
-function isToday(dateCheck) {
-	if (dateCheck != null) {
-		var c = dateCheck.split(".");
-		var check = new Date(c[2], c[1]-1, c[0]);
-		var today = new Date();	
-		return today.getFullYear() == check.getFullYear() && today.getMonth() == check.getMonth() && today.getDate() == check.getDate();
-	}
-	return false;	
-	}
-
-function isEventInThisWeek(dateCheck) {
-	if (dateCheck != null) {
-		var c = dateCheck.split(".");
-		var check = new Date(c[2], c[1]-1, c[0]);
-		var lastDayOfForecast = new Date();
-		lastDayOfForecast.setDate(lastDayOfForecast.getDate() + 7);
-		return check >= Date.now() && check <= lastDayOfForecast;
-	}
-	return false;
-}
