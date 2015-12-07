@@ -72,7 +72,7 @@ Currently there are more then 20 types of widgets in the base installation.
 - **circlemenu** : Cover multiple widgets behind a single widget
 - **select**	: Combobox to provide a list for selection
 - **pagetab**	 : Element to smoothly exchange the whole page with another page
-- **pagebutton** : Simple element to jump to another page
+- **pagebutton** : Simple element to jump to another page and is shown as ON on destination Page
 - **level** : vertical/horizontal bar to show values between min/max value
 - **rotor** : slider between multiple widgets at one position
 - **progress** : round symbolic display  for percent values
@@ -385,7 +385,8 @@ Use data-url + data-refresh or data-device + data-get, not both.
 - **class**		    : warn, activate (as additionals for data-icons)
 
 ####Pagebutton widgets
-- **data-url**	: URL of the new page to show
+- **data-url**              : URL of the new page to show
+- **data-active-pattern**   : RegEx to define active state  (default null)
 all other parameters like switch widget
 
 ####Rotor widgets

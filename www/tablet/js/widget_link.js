@@ -21,7 +21,7 @@ var widget_link= $.extend({}, widget_widget, {
       };
     },
     colorize: function(elem) {
-        var url = window.location.pathname + window.location.hash;
+        var url = window.location.pathname + ((window.location.hash.length)?'#'+ window.location.hash:'');
         var isActive = url.match(new RegExp('^'+elem.data('active-pattern')+'$'));
         var color = isActive ? elem.mappedColor('active-color') : elem.mappedColor('color');
         var backgroundColor = isActive ? elem.mappedColor('active-background-color') : elem.mappedColor('background-color');
