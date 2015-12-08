@@ -85,7 +85,7 @@ var widget_label = $.extend({}, widget_widget, {
         
                     if ( ! $(this).hasClass('fixedlabel') ) {
                       if ( unit )
-                        $(this).html( val + "<span style='font-size: 50%;'>"+unit+"</span>" );
+                        $(this).html( val + "<span class='label-unit'>"+unit+"</span>" );
                       else
                         $(this).html(val);
                     }

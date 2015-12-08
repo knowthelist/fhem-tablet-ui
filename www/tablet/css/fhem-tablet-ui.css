@@ -137,6 +137,7 @@ a:active {
 
 
 .row-1-2,.row-2-4 { height: 49.5% !important; }
+.row-2-3          { height: 66.66% !important; }
 .row-1-4,.row-2-8 { height: 24% !important; }
 
 .col-1-1 { width: 99.6% !important; }
@@ -239,6 +240,27 @@ a:active {
     cursor: pointer;
 }
 
+.label-unit{
+    font-size:50%;
+    vertical-align: super;
+}
+
+.center{
+    text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
 .narrow {
     margin:-5px 5px -6px 5px !important;
     width: auto;
@@ -298,6 +320,10 @@ a:active {
 .normal      { font-size: 100%; }
 .small       { font-size: 80%;  }
 
+.top {
+    vertical-align: super;
+    top: 0;
+}
 .bottom {
     vertical-align: baseline;
     bottom: 0;
@@ -408,6 +434,13 @@ margin:10px 0px 0px -30% !important;
 ul, ol {
     list-style: none;
 }
+
+ul,li {
+margin:0;
+padding:0;
+}
+
+
 
 .gridster > ul, .fullsize{
     width: 100% !important;
