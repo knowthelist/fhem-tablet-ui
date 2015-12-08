@@ -13,12 +13,27 @@ if (!$.fn.Swiper){
 
 var widget_swiper= $.extend({}, widget_widget, {
     widgetname : 'swiper',
+    activateSlide : function(elem,states,state) {
+        var idx=indexOfGeneric(states,state);
+        if (idx>-1){
+            var swiper = elem.data('swiper');
+            if (swiper)
+                swiper.slideTo(idx);
+        }
+    },
     init_attr : function(elem) {
+        elem.initData('get'                     ,'STATE');
         elem.initData('width'                   ,'100%');
         elem.initData('height'                  ,'100%');
+        elem.initData('autoplay'                ,null);
+
+        elem.addReading('get');
     },
     init_ui : function(elem) {
         var base = this;
+        var elemPagination = null;
+        var elemPrev = null;
+        var elemNext = null;
 
         // prepare container and wrapper elements
         elem.addClass('swiper-container');
@@ -28,15 +43,33 @@ var widget_swiper= $.extend({}, widget_widget, {
                   width:elem.data('width'),
                   height:elem.data('height'),
                  });
-        var elemPagination=jQuery('<div/>')
-            .addClass('swiper-pagination')
-            .appendTo(elem);
+
+        if (!elem.hasClass('nopagination')){
+            elemPagination=jQuery('<div/>')
+                .addClass('swiper-pagination')
+                .appendTo(elem);
+        }
+        if (elem.hasClass('navbuttons')){
+            elemPrev=jQuery('<div/>')
+                .addClass('swiper-button-prev')
+                .appendTo(elem);
+            elemNext=jQuery('<div/>')
+                .addClass('swiper-button-next')
+                .appendTo(elem);
+        }
 
         var swiper = new Swiper(elem, {
             pagination: elemPagination,
             paginationClickable: true,
+            nextButton: elemNext,
+            prevButton: elemPrev,
             moveStartThreshold:70,
+            autoplay:elem.data('autoplay'),
+            hashnav: elem.hasClass('hashnav'),
         });
+
+        // Store swiper object in data for usage in functions
+        elem.data('swiper',swiper);
 
         return elem;
     },
@@ -48,5 +81,19 @@ var widget_swiper= $.extend({}, widget_widget, {
             base.init_ui($(this));
         });
     },
-    update: function (dev,par) {}
+    update: function (dev,par) {
+        var base = this;
+        // update from normal state reading
+        this.elements.filterDeviceReading('get',dev,par)
+        .each(function(index) {
+            var elem = $(this);
+            var state = elem.getReading('get').val;
+            if (state) {
+                var states=elem.data('states') || elem.data('get-on');
+                if ( $.isArray(states)) {
+                    base.activateSlide(elem,states,state);
+                }
+            }
+        })
+    },
 });

@@ -33,6 +33,7 @@ var widget_image = $.extend({}, widget_widget, {
             });
     
             //3rd party source refresh
+            console.log($(this).data('url'));
             if ($(this).data('url')){
                 var url = $(this).data('url');
                 if( $(this).data('nocache') || $(this).hasClass('nocache') ) {
@@ -44,12 +45,14 @@ var widget_image = $.extend({}, widget_widget, {
                 var refresh=$(this).data('refresh');
                 setInterval(function() {
                     counter++;
-                    if(counter == refresh) {
+                    console.log(counter);
+                    if(counter >= refresh) {
                         counter = 0;
                         if(url.match(/_=\d+/)) {
                             url = base.addurlparam(url, '_', new Date().getTime());
                         }
                         elem.attr('src', url);
+                        console.log('refresh');
                     }
                 }, 1000);
             }

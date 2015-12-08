@@ -74,7 +74,8 @@ Currently there are more then 20 types of widgets in the base installation.
 - **pagetab**	 : Element to smoothly exchange the whole page with another page
 - **pagebutton** : Simple element to jump to another page and is shown as ON on destination Page
 - **level** : vertical/horizontal bar to show values between min/max value
-- **rotor** : slider between multiple widgets at one position
+- **rotor** : slider to switch automatically between multiple widgets at one position
+- **swiper** : touch slider for multiple widgets at one position
 - **progress** : round symbolic display  for percent values
 - **simplechart** : simple XY line chart for one value (reads directly from fhem log file)
 - **popup** : a popup dialog which open on click on another widget 
@@ -391,7 +392,14 @@ all other parameters like switch widget
 
 ####Rotor widgets
 - **data-delay**    : time in millisecondes to wait until next list item get shown. (default: 3500)
-- **class**		    : fade, rotate  (default: '' means no animation)  
+- **class**         : fade, rotate  (default: '' means no animation)
+
+####Swiper widgets
+- **data-width**        : fixe size for width (in % or px)
+- **data-height**       : fixe size for height (in % or px)
+- **data-autoplay**     : delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
+- **class**             :
+
 
 ####Simplechart widgets
 - **data-logdevice**   : name of the logdevice (e.g. FileLog_WohnzimmerHeizung)
@@ -1169,6 +1177,20 @@ Multiple pagetabs in a template file: menu.html
 	<div data-type="label" data-device="AgroWeather" data-get="fc1_tempMax" data-unit="%B0C%0A" class="large"></div>
   </li>
  </ul>
+</div>
+```
+
+###Swiper
+Basic schema for a swiper widget, which switches between multiple DIVs
+```html
+<div data-type="swiper"  data-height="220px" data-width="400px" class="">
+    <ul>
+        <li><div class="">Page1</div></li>
+        <li><div class="">Page2</div></li>
+        <li><div class="">Page3</div></li>
+        <li><div class="">Page4</div></li>
+        <li><div class="">Page5</div></li>
+     </ul>
 </div>
 ```
 
