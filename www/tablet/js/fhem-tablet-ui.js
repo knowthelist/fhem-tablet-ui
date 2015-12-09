@@ -140,12 +140,22 @@ function initPage() {
     var total = $('[data-template]').length;
     if (total>0){
         $('[data-template]').each(function(index) {
-            $(this).load($(this).data('template'), function() {
-                if (index === total - 1) {
-                    //continue after loading the includes
-                    initWidgets();
+            var tempelem = $(this);
+            $.get(
+                tempelem.data('template'),
+                {},
+                function (data) {
+                    var parValues = tempelem.data('parameter');
+                    for (var key in parValues) {
+                        data = data.replace(new RegExp('%' + key + '%', 'g'), parValues[key]);
+                    }
+                    tempelem.html(data);
+                    if (index === total - 1) {
+                        //continue after loading the includes
+                        initWidgets();
+                    }
                 }
-            });
+            );
         });
     }
     else{
