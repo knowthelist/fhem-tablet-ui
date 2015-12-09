@@ -105,13 +105,13 @@ a:active {
 .container.margin{ margin: 7px; }
 .container.margin>.fa{ margin-left: 7px; }
 .container.padding{ padding: 7px; }
-.container.gray,.btn-gray               { background-color:#393939;}
-.container.lightgray,.btn-lightgray     { background-color:#777777;}
-.container.orange,.btn-orange           { background-color:#aa6900; }
-.container.red,.btn-red                 { background-color:#ad3333; }
-.container.green,.btn-green             { background-color:#32a054; }
-.container.ligthblue,.btn-ligthblue     { background-color:#6699FF; }
-.container.blue,.btn-blue               { background-color:#337ab7; }
+.bg-gray,.btn-gray               { background-color:#393939;}
+.bg-lightgray,.btn-lightgray     { background-color:#777777;}
+.bg-orange,.btn-orange           { background-color:#aa6900; }
+.bg-red,.btn-red                 { background-color:#ad3333; }
+.bg-green,.btn-green             { background-color:#32a054; }
+.bg-ligthblue,.btn-ligthblue     { background-color:#6699FF; }
+.bg-blue,.btn-blue               { background-color:#337ab7; }
 
 .row:after {
     content:"";
@@ -188,7 +188,9 @@ a:active {
   display: inline-block;
   margin:0px 5px 0px 0px !important;
 }
-
+.inline.narrow.link {
+    margin: 0px -4px 0px -4px !important;
+}
 
 .circlemenu {
     min-height: 52px;
@@ -266,7 +268,6 @@ a:active {
     width: auto;
     text-align: center;
 }
-
 .wider{
     margin:15px 15px 15px 15px !important;
     width: auto;

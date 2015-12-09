@@ -52,7 +52,6 @@ var widget_push = $.extend({}, widget_famultibutton, {
                 if (elem.data("countdown"))
                     secondes = elem.data("countdown");
                 if (secondes && $.isNumeric(secondes)){
-
                     var now = new Date();
                     var til = new Date();
                     til.setTime(now.getTime() + (parseInt(secondes)*1000));

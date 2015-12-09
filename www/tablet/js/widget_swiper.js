@@ -16,7 +16,7 @@ var widget_swiper= $.extend({}, widget_widget, {
     activateSlide : function(elem,states,state) {
         var idx=indexOfGeneric(states,state);
         if (idx>-1){
-            var swiper = elem.data('swiper');
+            var swiper = elem[0].swiper;
             if (swiper)
                 swiper.slideTo(idx);
         }
@@ -68,8 +68,15 @@ var widget_swiper= $.extend({}, widget_widget, {
             hashnav: elem.hasClass('hashnav'),
         });
 
-        // Store swiper object in data for usage in functions
-        elem.data('swiper',swiper);
+        // navigation via hash value
+        if (elem.hasClass('hashnav')){
+            $(window).bind('hashchange', function() {
+                var hash = window.location.hash.replace('#','');
+                var idx = elem.find('li').index(elem.find('[data-hash="'+hash+'"]'));
+                if (idx > -1)
+                    swiper.slideTo(idx);
+             });
+        }
 
         return elem;
     },

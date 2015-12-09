@@ -253,6 +253,7 @@ function startPollInterval() {
 function setFhemStatus(cmdline) {
     if (DEMO) {console.log('DEMO-Mode: no setFhemStatus');return;}
     startPollInterval();
+    cmdline = cmdline.replace('  ',' ');
     DEBUG && console.log('send to FHEM: '+cmdline);
 	$.ajax({
 		async: true,
