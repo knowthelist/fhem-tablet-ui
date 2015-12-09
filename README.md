@@ -1477,6 +1477,37 @@ Load a re-usable widget group
 ```html
 <div data-template="template_div.html" class="cell"></div>
 ```
+Load a re-usable weather slide for swipe widget with parameters
+```html
+<div data-type="swiper" data-height="250px" data-width="450px">
+<ul>
+    <li data-template="templates/wetter.html" data-parameter='{"par01":"fc0_tempMax","par02":"fc0_weatherDay","par03":"fc0_tempMin","par04":"fc0_date"}'></li>
+    <li data-template="templates/wetter.html" data-parameter='{"par01":"fc1_tempMax","par02":"fc1_weatherDay","par03":"fc1_tempMin","par04":"fc1_date"}'></li>
+    <li data-template="templates/wetter.html" data-parameter='{"par01":"fc2_tempMax","par02":"fc2_weatherDay","par03":"fc2_tempMin","par04":"fc2_date"}'></li>
+    <li data-template="templates/wetter.html" data-parameter='{"par01":"fc3_tempMax","par02":"fc3_weatherDay","par03":"fc3_tempMin","par04":"fc3_date"}'></li>
+ </ul>
+ </div>
+```
+
+The weather template file contains this
+```html
+<html>
+<body>
+    <div class="left">
+       <div data-type="label" data-device="AgroWeather" data-get="par01" data-unit="°C&nbsp;" class="bottom gigantic inline verticalLine"></div>
+       <div class="inline">
+          <div data-type="label" data-device="AgroWeather" data-get="par02" class="large cell"></div>
+          <div data-type="weather" data-device="AgroWeather" data-get="par02" class="bigplus thin"></div>
+          min:&nbsp;<div data-type="label" data-device="AgroWeather" data-get="par03" data-unit="%B0C%0A" class="inline medium"></div>
+       </div>
+    </div><div class="row"></div>
+    <div class="left">
+        <div data-type="label" data-device="AgroWeather" data-get="par04" data-substitution="toDate().eeee()+','" class="left large cell darker"></div>
+        <div data-type="label" data-device="AgroWeather" data-get="par04" data-substitution="toDate().ddmm()" class="left large cell darker"></div>
+    </div>
+</body>
+</html>
+```
 
 ###Donation
 --------

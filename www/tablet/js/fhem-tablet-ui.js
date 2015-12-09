@@ -147,7 +147,7 @@ function initPage() {
                 function (data) {
                     var parValues = tempelem.data('parameter');
                     for (var key in parValues) {
-                        data = data.replace(new RegExp('%' + key + '%', 'g'), parValues[key]);
+                        data = data.replace(new RegExp(key, 'g'), parValues[key]);
                     }
                     tempelem.html(data);
                     if (index === total - 1) {
