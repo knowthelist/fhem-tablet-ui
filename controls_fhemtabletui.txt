@@ -55,7 +55,7 @@ UPD 2015-12-03_09:31:22 3036 www/tablet/js/widget_colorwheel.js
 UPD 2015-12-03_07:04:13 2225 www/tablet/js/widget_datetimepicker.js
 UPD 2015-12-03_07:04:13 5608 www/tablet/js/widget_dimmer.js
 UPD 2015-12-03_07:04:14 3624 www/tablet/js/widget_eventmonitor.js
-UPD 2015-12-07_15:25:46 12254 www/tablet/js/widget_famultibutton.js
+UPD 2015-12-09_12:59:39 12359 www/tablet/js/widget_famultibutton.js
 UPD 2015-12-03_07:04:14 8792 www/tablet/js/widget_highchart.js
 UPD 2015-12-03_07:04:14 8542 www/tablet/js/widget_highchart3d.js
 UPD 2015-12-03_07:04:14 9907 www/tablet/js/widget_homestatus.js
