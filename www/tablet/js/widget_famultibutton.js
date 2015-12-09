@@ -118,10 +118,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         }
     },
     toggleOn : function(elem) {
-        if (elem.data('set-on')===''){
-            elem.setOff();
-        }
-        else if(this._doubleclicked(elem, 'on')) {
+        if(this._doubleclicked(elem, 'on')) {
             this.clicked(elem, 'on');
             elem.trigger("toggleOn");
             var blink = elem.data('blink');
@@ -134,10 +131,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         }
     },
     toggleOff : function(elem) {
-        if (elem.data('set-off')===''){
-            elem.setOn();
-        }
-        else if(this._doubleclicked(elem, 'off')) {
+        if(this._doubleclicked(elem, 'off')) {
             this.clicked(elem, 'off');
             var blink = elem.data('blink');
             if(blink == 'on' || (! elem.data('device') && blink !='off')) {
@@ -161,6 +155,14 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             type = 'fhem-cmd';
         } else {
             var sets = elem.data('set-'+onoff);
+            // no value given means don't send it and keep current state
+            if ( sets === ''){
+                if (onoff==='off')
+                    elem.setOn()
+                else
+                    elem.setOff();
+                return;
+            }
             if(!$.isArray(sets)) {
                 sets = new Array(String(sets));
             }
@@ -238,7 +240,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
     update_cb : function(elem) {},
     update: function (dev,par) {
         var base = this;
-        // update from normal statereading
+        // update from normal state reading
         this.elements.filterDeviceReading('get',dev,par)
         .each(function(index) {
             var elem = $(this);
