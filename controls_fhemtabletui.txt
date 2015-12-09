@@ -9,8 +9,8 @@ DIR www/tablet/lib/highcharts/themes
 UPD 2015-12-03_07:04:09 447 www/tablet/css/fhem-blue-ui.css
 UPD 2015-12-03_07:04:09 447 www/tablet/css/fhem-green-ui.css
 UPD 2015-12-03_07:04:09 1300 www/tablet/css/fhem-mobil-ui.css
-UPD 2015-12-08_01:19:08 15118 www/tablet/css/fhem-tablet-ui.css
-UPD 2015-12-08_01:22:31 11919 www/tablet/css/fhem-tablet-ui.min.css
+UPD 2015-12-09_16:11:32 15133 www/tablet/css/fhem-tablet-ui.css
+UPD 2015-12-09_20:09:18 11922 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2015-12-03_07:04:10 4354 www/tablet/css/ftui_chart.css
 UPD 2015-11-27_22:46:03 1023 www/tablet/css/ftui_colorwheel.css
 UPD 2015-12-03_07:04:10 429 www/tablet/css/ftui_range.css
@@ -44,8 +44,8 @@ UPD 2015-11-24_23:53:37 74077 www/tablet/fonts/Roboto-Thin-webfont.svg
 UPD 2015-11-24_23:53:37 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2015-11-24_23:53:37 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2015-12-03_15:18:21 14033 www/tablet/index-example.html
-UPD 2015-12-07_13:38:43 22137 www/tablet/js/fhem-tablet-ui.js
-UPD 2015-12-08_01:22:56 12076 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2015-12-09_18:30:55 22178 www/tablet/js/fhem-tablet-ui.js
+UPD 2015-12-09_18:31:23 12098 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2015-12-03_07:04:13 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2015-12-07_13:16:00 6415 www/tablet/js/widget_calview.js
 UPD 2015-12-04_21:32:56 117822 www/tablet/js/widget_chart.js
@@ -55,7 +55,7 @@ UPD 2015-12-03_09:31:22 3036 www/tablet/js/widget_colorwheel.js
 UPD 2015-12-03_07:04:13 2225 www/tablet/js/widget_datetimepicker.js
 UPD 2015-12-03_07:04:13 5608 www/tablet/js/widget_dimmer.js
 UPD 2015-12-03_07:04:14 3624 www/tablet/js/widget_eventmonitor.js
-UPD 2015-12-09_12:59:39 12359 www/tablet/js/widget_famultibutton.js
+UPD 2015-12-09_17:15:13 12392 www/tablet/js/widget_famultibutton.js
 UPD 2015-12-03_07:04:14 8792 www/tablet/js/widget_highchart.js
 UPD 2015-12-03_07:04:14 8542 www/tablet/js/widget_highchart3d.js
 UPD 2015-12-03_07:04:14 9907 www/tablet/js/widget_homestatus.js
@@ -70,14 +70,14 @@ UPD 2015-12-07_13:35:53 6571 www/tablet/js/widget_pagetab.js
 UPD 2015-12-03_07:04:14 3226 www/tablet/js/widget_playstream.js
 UPD 2015-12-03_07:04:14 5187 www/tablet/js/widget_popup.js
 UPD 2015-12-03_07:04:14 2480 www/tablet/js/widget_progress.js
-UPD 2015-12-09_08:50:44 3246 www/tablet/js/widget_push.js
+UPD 2015-12-09_12:16:06 3245 www/tablet/js/widget_push.js
 UPD 2015-12-03_07:04:14 5686 www/tablet/js/widget_range.js
 UPD 2015-12-03_05:35:40 1667 www/tablet/js/widget_readingsgroup.js
 UPD 2015-12-03_07:04:14 1204 www/tablet/js/widget_rotor.js
 UPD 2015-12-03_07:04:15 3144 www/tablet/js/widget_select.js
 UPD 2015-12-03_07:04:15 12320 www/tablet/js/widget_simplechart.js
 UPD 2015-12-07_13:34:43 7871 www/tablet/js/widget_slider.js
-UPD 2015-12-08_20:12:10 3225 www/tablet/js/widget_swiper.js
+UPD 2015-12-09_14:55:00 3501 www/tablet/js/widget_swiper.js
 UPD 2015-12-03_07:04:15 1122 www/tablet/js/widget_switch.js
 UPD 2015-12-03_07:04:15 1653 www/tablet/js/widget_symbol.js
 UPD 2015-12-03_07:04:15 9115 www/tablet/js/widget_thermostat.js
