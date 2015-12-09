@@ -4,16 +4,21 @@ if(typeof widget_famultibutton == 'undefined') {
 
 var widget_push = $.extend({}, widget_famultibutton, {
    widgetname : 'push',
-   startTimer: function ($elem,secondes){
-        var count = secondes;
-        var $elm = $elem.data('famultibutton');
-        if ($elm){
-          $elm.setProgressValue(1);
-          $elm.data('countdown',setInterval(function(){
+   startTimer: function (elem,timerid){
+        var now = new Date();
+        var til = new Date(localStorage.getItem("ftui_timer_til_" + timerid));
+        var secondes = localStorage.getItem("ftui_timer_sec_" + timerid );
+        var count = (til-now) / 1000;
+        var faelem = elem.data('famultibutton');
+        if (faelem){
+          faelem.setProgressValue(1);
+          elem.data('countdown',setInterval(function(){
             if (count-- <= 0) {
-              clearInterval($elm.data('countdown'));
+              clearInterval(elem.data('countdown'));
+              localStorage.removeItem("ftui_timer_sec_" + timerid );
+              localStorage.removeItem("ftui_timer_til_" + timerid );
             }
-            $elm.setProgressValue(count/secondes);
+            faelem.setProgressValue(count/secondes);
           }, 1000));
         }
     },
@@ -21,29 +26,46 @@ var widget_push = $.extend({}, widget_famultibutton, {
         var base = this;
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {
-            $(this).data('device',          $(this).data('device')          || ' ');
-            $(this).data('off-color',               $(this).data('off-color')                                     || getStyle('.push.off','color')              || '#505050');
-            $(this).data('off-background-color',    $(this).data('off-background-color')                          || getStyle('.push.off','background-color')   || '#505050');
-            $(this).data('on-color',                $(this).data('on-color')            || getClassColor($(this)) || getStyle('.push.on','color')               || '#aa6900');
-            $(this).data('on-background-color',     $(this).data('on-background-color') || getClassColor($(this)) || getStyle('.push.on','background-color')    || '#aa6900');
-            $(this).data('background-icon', $(this).data('background-icon') || 'fa-circle-thin');
-            $(this).data('set-on',          $(this).data('set-on')          || '');
-            $(this).data('set-off',         $(this).data('set-off')         || '');
-            $(this).data('mode', 'push');
-            base.init_attr($(this));
-            base.init_ui($(this));
-            var elem = $(this); var secondes;
-            $(this).bind("toggleOn", function( event ){
+            var elem = $(this);
+            elem.initData('device'              , ' ');
+            elem.initData('off-color'           , getStyle('.'+this.widgetname+'.off','color')              || '#505050');
+            elem.initData('off-background-color', getStyle('.'+this.widgetname+'.off','background-color')   || '#505050');
+            elem.initData('on-color'            , getClassColor(elem) || getStyle('.'+this.widgetname+'.on','color')               || '#aa6900');
+            elem.initData('on-background-color' , getClassColor(elem) || getStyle('.'+this.widgetname+'.on','background-color')    || '#aa6900');
+            elem.initData('background-icon'     , 'fa-circle-thin');
+            elem.initData('set-on'              , '');
+            elem.initData('set-off'             , '');
+
+            elem.data('mode', 'push');
+            base.init_attr(elem);
+            base.init_ui(elem);
+
+            var id = elem.data("device")+"_"+$(this).data('get');
+
+            // check for on-for-timer
+            elem.bind("toggleOn", function( event ){
                 var seton=elem.data("set-on");
+                var secondes;
                 if (seton && !$.isNumeric(seton) &&!$.isArray(seton)
                         && getPart(seton,1)=="on-for-timer")
                     secondes = getPart(elem.data("set-on"),2);
                 if (elem.data("countdown"))
                     secondes = elem.data("countdown");
                 if (secondes && $.isNumeric(secondes)){
-                     widget_push.startTimer(elem,parseInt(secondes));
+
+                    var now = new Date();
+                    var til = new Date();
+                    til.setTime(now.getTime() + (parseInt(secondes)*1000));
+                    console.log(secondes,til);
+                    localStorage.setItem("ftui_timer_sec_" + id, secondes);
+                    localStorage.setItem("ftui_timer_til_" + id, til);
+                    widget_push.startTimer(elem,id);
                 }
             });
+
+            // any old on-for-timer still active ?
+            if ( localStorage.getItem("ftui_timer_til_" + id) )
+                widget_push.startTimer(elem,id);
         });
     },
     update: function (dev,par) {},
