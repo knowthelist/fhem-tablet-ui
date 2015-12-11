@@ -19,7 +19,6 @@
          * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
          */
         -->
-        <title>FHEM-Mobil-UI</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="widget_base_width" content="120">
         <meta name="widget_base_height" content="131">
@@ -29,14 +28,22 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+        <meta name="longpoll_delay" content="1000">
         <meta name="debug" content="0"> <!-- 1=output to console;0=not output -->
+        <meta http-equiv="Cache-Control" content="no-store" />
 
-        <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
-        <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
-        <link rel="stylesheet" href="/fhem/tablet/css/fhem-mobil-ui.css" />
-        <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
-        <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/css/fhem-mobil-ui.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
 
+    <script src="/fhem/pgm2/jquery.min.js" defer></script>
+    <script src="/fhem/tablet/lib/jquery.toast.min.js" defer></script>
+    <script src="/fhem/tablet/lib/jquery.gridster.min.js" defer></script>
+    <script src="/fhem/tablet/js/fhem-tablet-ui.min.js" defer></script>
+
+    <title>FHEM-Mobil-UI</title>
 </head>
 <body>
 
@@ -136,8 +143,4 @@
 </ul>
 </div>
 </body>
-      <script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
-      <script type="text/javascript" src="/fhem/tablet/lib/jquery.toast.min.js"></script>
-      <script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
-      <script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.min.js"></script>
 </html>

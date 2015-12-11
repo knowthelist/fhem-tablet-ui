@@ -83,10 +83,11 @@ $(document).on('ready', function() {
     loadStyleSchema();
     initPage();
 
+    var longpollDelay = $("meta[name='longpoll_delay']").attr("content") || 100;
     if ( doLongPoll ){
         setTimeout(function() {
             longPoll();
-        }, (typeof wvcDevices != 'undefined')?shortpollInterval:100);
+        }, (typeof wvcDevices != 'undefined')?shortpollInterval:longpollDelay);
         shortpollInterval = 15 * 60 * 1000; // 15 minutes
     }
 
