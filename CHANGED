@@ -1,3 +1,3 @@
 FHEM tablet UI last change:
 2015-12-11
- - Optimized AJAX request handling
+ - Optimized start of longpoll
