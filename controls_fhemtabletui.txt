@@ -8,7 +8,7 @@ DIR www/tablet/lib/highcharts/graphics
 DIR www/tablet/lib/highcharts/themes
 UPD 2015-12-03_07:04:09 447 www/tablet/css/fhem-blue-ui.css
 UPD 2015-12-03_07:04:09 447 www/tablet/css/fhem-green-ui.css
-UPD 2015-12-03_07:04:09 1300 www/tablet/css/fhem-mobil-ui.css
+UPD 2015-12-11_13:38:21 1331 www/tablet/css/fhem-mobil-ui.css
 UPD 2015-12-09_16:11:32 15133 www/tablet/css/fhem-tablet-ui.css
 UPD 2015-12-09_20:09:18 11922 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2015-12-03_07:04:10 4354 www/tablet/css/ftui_chart.css
@@ -44,8 +44,8 @@ UPD 2015-11-24_23:53:37 74077 www/tablet/fonts/Roboto-Thin-webfont.svg
 UPD 2015-11-24_23:53:37 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2015-11-24_23:53:37 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2015-12-03_15:18:21 14033 www/tablet/index-example.html
-UPD 2015-12-10_00:39:57 22558 www/tablet/js/fhem-tablet-ui.js
-UPD 2015-12-10_00:56:11 12191 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2015-12-11_14:04:49 23195 www/tablet/js/fhem-tablet-ui.js
+UPD 2015-12-11_14:01:40 12820 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2015-12-03_07:04:13 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2015-12-07_13:16:00 6415 www/tablet/js/widget_calview.js
 UPD 2015-12-04_21:32:56 117822 www/tablet/js/widget_chart.js
@@ -55,12 +55,12 @@ UPD 2015-12-03_09:31:22 3036 www/tablet/js/widget_colorwheel.js
 UPD 2015-12-03_07:04:13 2225 www/tablet/js/widget_datetimepicker.js
 UPD 2015-12-03_07:04:13 5608 www/tablet/js/widget_dimmer.js
 UPD 2015-12-03_07:04:14 3624 www/tablet/js/widget_eventmonitor.js
-UPD 2015-12-09_17:15:13 12392 www/tablet/js/widget_famultibutton.js
+UPD 2015-12-11_13:55:12 12359 www/tablet/js/widget_famultibutton.js
 UPD 2015-12-03_07:04:14 8792 www/tablet/js/widget_highchart.js
 UPD 2015-12-03_07:04:14 8542 www/tablet/js/widget_highchart3d.js
 UPD 2015-12-03_07:04:14 9907 www/tablet/js/widget_homestatus.js
 UPD 2015-12-08_15:17:56 3586 www/tablet/js/widget_image.js
-UPD 2015-12-03_07:04:14 6264 www/tablet/js/widget_knob.js
+UPD 2015-12-11_13:56:37 6230 www/tablet/js/widget_knob.js
 UPD 2015-12-07_21:59:46 4788 www/tablet/js/widget_label.js
 UPD 2015-12-03_07:04:14 5260 www/tablet/js/widget_level.js
 UPD 2015-12-07_12:39:34 5537 www/tablet/js/widget_link.js
