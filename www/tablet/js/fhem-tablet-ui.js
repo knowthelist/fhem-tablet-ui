@@ -18,10 +18,13 @@ var DEBUG = false;
 var DEMO = false;
 var debuglevel;
 var TOAST = true;
-var doLongPoll = false
+var doLongPoll = false;
+var longPollRequest;
 var timer;
-var timeoutMenu;
 var dir = '';
+var runningRequests = 0;
+var REQ_WAIT = 100;
+var REQ_MAX = 4;
 var filename = '';
 var shortpollInterval = 30 * 1000; // 30 seconds
 var devs = [];
@@ -175,7 +178,7 @@ function initReadingsArray(get) {
         if(reading.match(/:/)) {
             var fqreading = reading.split(':');
             var device = fqreading[0]
-            if(!devices[device]){
+            if(!devices[device] && typeof device != 'undefined' && device !== 'undefined' ){
                 devices[device] = true;
                 devs.push(device);
             }
@@ -218,7 +221,7 @@ function initWidgets() {
     //collect required devices
     $('div[data-device]').each(function(index){
         var device = $(this).data("device");
-        if(!devices[device]){
+        if(!devices[device] && typeof device != 'undefined' && device !== 'undefined' ){
             devices[device] = true;
             devs.push(device);
         }
@@ -234,6 +237,7 @@ function initWidgets() {
     var deferredArr = $.map(types, function(widget_type, i) {
         return plugins.load('widget_'+widget_type);
     });
+    runningRequests = 0;
 
     //get current values of readings not before all widgets are loaded
     $.when.apply(this, deferredArr).then(function() {
@@ -274,13 +278,13 @@ function setFhemStatus(cmdline) {
 		}
 	})
 	.fail (function(jqXHR, textStatus, errorThrown) {
-    		$.toast("Error: " + textStatus + ": " + errorThrown);
+            TOAST && $.toast("Error: " + textStatus + ": " + errorThrown);
 	})
   	.done ( function( data ) {
         if ( !doLongPoll ){
 			setTimeout(function(){
                 for (var reading in readings) {
-                    requestFhem(reading);
+                     requestFhem(reading);
 				}
 			}, 4000);
 		}
@@ -297,13 +301,15 @@ function longPoll(roomName) {
 		xhr.abort();
 	currLine=0;
 	
-	$.ajax({
+    longPollRequest=$.ajax({
 		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
 		cache: false,
 		complete: function() {
-            setTimeout(function() {
-                longPoll();
-            }, 100);
+            if ( doLongPoll ){
+                setTimeout(function() {
+                    longPoll();
+                }, 100);
+            }
 		},
         timeout: 60000,
 		async: true,
@@ -390,10 +396,18 @@ function requestFhem(paraname, devicename) {
     } else {
         devicelist = $.map(devs, $.trim).join();
     }
-    
-/* 'list' is still the fastest cmd to get all important data
-*/
+
+    if ( runningRequests > REQ_MAX ){
+        setTimeout(function() { requestFhem(paraname, devicename) }, REQ_WAIT);
+    }
+    else{
+
+     if (debuglevel>=5) console.log('starting new AJAX requests #'+runningRequests);
+
+    /* 'list' is still the fastest cmd to get all important data
+    */
     if(typeof paraname != 'undefined' && paraname !== 'undefined') {
+        runningRequests++;
         $.ajax({
             async: true,
             timeout: 15000,
@@ -403,12 +417,21 @@ function requestFhem(paraname, devicename) {
             data: {
                 cmd: ["list",devicelist,paraname].join(' '),
                 XHR: "1"
-            }
+            },
+           beforeSend: function(jqXHR, settings) {
+               jqXHR.url = settings.url;
+           },
+           error: function(jqXHR, exception) {
+               //alert(jqXHR.url);
+           }
         })
         .fail (function(jqXHR, textStatus, errorThrown) {
-                $.toast("Error: " + textStatus + ": " + errorThrown);
+            TOAST && $.toast("Error: " + textStatus + ": " + errorThrown  + ": " +  runningRequests);
+            runningRequests--;
         })
         .done (function( data ) {
+            runningRequests--;
+            if (debuglevel>=5) console.log('finished AJAX requests #'+runningRequests);
 			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
             var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\.?[0-9]{0,3}\s+(.*)$/;
             for (var i=0, len=lines.length; i < len; i++) {
@@ -431,11 +454,6 @@ function requestFhem(paraname, devicename) {
 
                         //check if update is necessary
                         var oldParams = getParameterByName(key,paraname);
-                        //if (oldParams) console.log('requestFhem::done: check for update: oldVal:',oldParams.val,' newVal:',val,' oldDate:',oldParams.date,' newDate:',date);
-                        //if (oldParams){
-                            //$.toast(key+'_'+oldParams.val +'_'+val);
-                             //$.toast(key+'_'+oldParams.date+'/'+date);
-                        //}
                         if(!oldParams || oldParams.val!=val || oldParams.date!=date){
                             var params = deviceStates[key] || {};
                             var value = {"date": date, "val": val};
@@ -450,9 +468,13 @@ function requestFhem(paraname, devicename) {
             saveStatesLocal();
         });
     }
+    }
 }
 
 $(window).on('beforeunload', function(){
+    doLongPoll = false;
+    if (longPollRequest)
+        longPollRequest.abort();
     saveStatesLocal();
 });
 

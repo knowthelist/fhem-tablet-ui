@@ -58,6 +58,7 @@ polyline {
 .push.off{color:#888;background-color:#888;}
 .thermostat.tkcolor{color:#888;}
 .thermostat.fgcolor{color:#555;}
+.thermostat.input{color:#444;}
 .homestatus.fgcolor{color:#0088CC;}
 .homestatus.tkcolor{color:#aaa;}
 .volume.hdcolor{color:#0088CC;}

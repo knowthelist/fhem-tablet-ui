@@ -64,7 +64,7 @@ var widget_knob = $.extend({}, widget_widget, {
        }).data(elem.data())
          .data('curval', elem.data('initvalue'))
          .appendTo(elem);
-console.log(elem.data('bgcolor'));
+
        knob_elem.knob({
           'min':        elem.data('min'),
           'max':        elem.data('max'),

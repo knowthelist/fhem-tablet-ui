@@ -171,7 +171,6 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             s++; if (s >= sets.length) s=0;
             localStorage.setItem(this.widgetname+device+'index',s);
             target = [elem.data('cmd'), device, elem.data('set'), set ].join(' ');
-            console.log(target);
             type = 'fhem-cmd';
         }
         switch(type) {
