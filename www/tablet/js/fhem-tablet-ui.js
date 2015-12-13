@@ -650,7 +650,7 @@ this.showModal = function (modal) {
 
 // global date format functions
 this.dateFromString = function (str) {
- var m = str.match(/(\d+)-(\d+)-(\d+)_(\d+):(\d+):(\d+).*/);
+ var m = str.match(/(\d+)-(\d+)-(\d+)[_\s](\d+):(\d+):(\d+).*/);
  var m2 = str.match(/(\d\d).(\d\d).(\d\d\d\d)/);
  var offset = new Date().getTimezoneOffset();
  return (m) ? new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6])
@@ -666,6 +666,25 @@ this.diffMinutes = function(date1,date2){
 String.prototype.toDate = function() {
     return dateFromString(this);
 }
+
+Date.prototype.ago = function() {
+  var now = new Date();
+  var ms = (now - this) ;
+  var x = ms / 1000;
+  var seconds = Math.round(x % 60);
+      x /= 60;
+  var minutes = Math.round(x % 60);
+      x /= 60;
+  var hours = Math.round(x % 24);
+      x /= 24;
+  var days = Math.round(x);
+  var userLang = navigator.language || navigator.userLanguage;
+  var strUnits = (userLang.split('-')[0] === 'de')?['Tage','Stunden','Minuten','Sekunden']:['days','hours','minutes','seconds'];
+  var ret = (days>0)?days +" "+strUnits[0]+ " ":"";
+      ret += (hours>0)?hours +" "+strUnits[1]+ " ":"";
+      ret += (minutes>0)?minutes +" "+strUnits[2]+ " ":"";
+  return ret + seconds +" "+ strUnits[3];
+ };
    
 Date.prototype.yyyymmdd = function() {
   var yyyy = this.getFullYear().toString();
