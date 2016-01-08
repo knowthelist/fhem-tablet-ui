@@ -76,20 +76,20 @@ var widget_label = $.extend({}, widget_widget, {
                         ?elem.getReading('get').date
                         :elem.getReading('get').val;
             if (value){
-                var part = $(this).data('part');
+                var part = elem.data('part');
                 var val = getPart(value,part);
-                var unit = $(this).data('unit');
+                var unit = elem.data('unit');
 
-                val = base.update_fix(val, $(this).data('fix'));
-                val = base.update_substitution(val, $(this).data('substitution'));
+                val = base.update_fix(val, elem.data('fix'));
+                val = base.update_substitution(val, elem.data('substitution'));
 
-                if ( ! $(this).hasClass('fixedlabel') ) {
+                if ( !elem.hasClass('fixedlabel') ) {
                   if ( unit )
-                    $(this).html( val + "<span class='label-unit'>"+unescape(unit)+"</span>" );
+                    elem.html( val + "<span class='label-unit'>"+unescape(unit)+"</span>" );
                   else
-                    $(this).html(val);
+                    elem.html(val);
                 }
-                base.update_cb($(this),val);
+                base.update_cb(elem,val);
             }
             var color = elem.data('color');
             if (color && !elem.isDeviceReading('color'))

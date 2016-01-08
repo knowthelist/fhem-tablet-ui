@@ -636,7 +636,12 @@ this.getIconId = function(iconName){
     for (var rule in rules){
         if ( rules[rule].selectorText && rules[rule].selectorText.match(new RegExp(iconName+':') )){
             var id = rules[rule].style.content;
-            return (id)?id.replace(/"/g,'').replace(/'/g,""):"?";
+            if (!id)
+                return iconName;
+            id = id.replace(/"/g,'').replace(/'/g,"");
+            return (/[^\u0000-\u00ff]/.test(id))
+                    ? id
+                    : String.fromCharCode(parseInt(id.replace('\\',''),16));
         }
     }
 }
