@@ -92,8 +92,8 @@ var widget_label = $.extend({}, widget_widget, {
                 base.update_cb($(this),val);
             }
             var color = elem.data('color');
-            if (color && color.match(/#[a-fA-F0-9]{6}/))
-                elem.css( "color", color );
+            if (color && !elem.isDeviceReading('color'))
+                elem.css( "color", getStyle('.'+color,'color') || color );
 
         });
 
@@ -106,8 +106,6 @@ var widget_label = $.extend({}, widget_widget, {
                 val = '#'+val.replace('#','');
                 elem.css( "color", val );
             }
-            else
-                elem.css( "color", getStyle('.'+elem.data('color'),'color') || elem.data('color') );
         });
 
         //extra reading for colorize
@@ -121,7 +119,5 @@ var widget_label = $.extend({}, widget_widget, {
                 widget_label.update_colorize(v, elem);
             }
         });
-
-
     }
 });
