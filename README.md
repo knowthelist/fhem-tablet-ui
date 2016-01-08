@@ -181,13 +181,16 @@ See [examples](#symbol) of Symbol
 - **data-get**  : name of the reading to get from FHEM
 - **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)						 
 - **data-part** : part number of the space separated value to show or an RegEx
-- **data-colors** : a array of color values to affect the colour of the label according to the limit value 
-- **data-limits-get**  : name of the DEVICE:Reading to colorize the label (default: data-device:data-get)
-- **data-limits** : a array of numeric or RegEx values to affect the colour of the label
-- **data-limits-part**  : part number of the space separated value to show or an RegEx (default '-1' -> all)	
+- **data-color**  : fix color attribute or DEVICE:READING for dynamic setting of label color (default '')
+- **data-colors** : a array of color values. The used element for the label color defines the matching element of the limits array
+- **data-limits** : a array of numeric or RegEx values for comparing with the current value
+- **data-limits-get**  : name of the DEVICE:Reading to retrieve the value for comparing with the limits array (default: data-device:data-get)
+- **data-limits-part**  : filter for the value. part number of the space separated value or an RegEx (default '-1' -> all)
 - **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
 - **data-substitution**: regex-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
 - **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x, circleborder
+
+Use data-color OR data-colors + data-limits, not both.
 
 See [examples](#label) of Label
 
@@ -1519,7 +1522,7 @@ I'm unable to work now and I need to buy a new one.
 Update 2015-11-04: my old 2007 MacBook runs again with the previous HDD, but totaly slow and out of space.
 
 * Goal  : 13'' MacBook Pro 1445€ 
-* Status: 467€ (32% - 03.12.2015 -> many thanks to all donators :-)
+* Status: 796€ (55% - 04.01.2016 -> many thanks to all donators :-)
 
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PD4C2XM2VTD9A"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" alt="[paypal]" /></a>

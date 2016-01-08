@@ -5,13 +5,15 @@ if(typeof widget_widget == 'undefined') {
 var widget_label = $.extend({}, widget_widget, {
     widgetname:"label",
     init_attr: function(elem) {
-        elem.data('get',            elem.data('get')                    || 'STATE');
-        elem.data('part',           elem.data('part')                   || -1);
-        elem.data('unit',           unescape(elem.data('unit')          || '' ));
-        elem.data('limits',         elem.data('limits')                 || new Array());
-        elem.data('colors',         elem.data('colors')                 || new Array('#505050'));
-        elem.data('limits-get',     elem.isValidData('limits-get')  ? elem.data('limits-get')  : elem.data('device') + ':' + elem.data('get'));
-        elem.data('limits-part',    elem.isValidData('limits-part') ? elem.data('limits-part') : elem.data('part'));
+        elem.initData('get'         , 'STATE');
+        elem.initData('part'        , -1);
+        elem.initData('unit'        , '' );
+        elem.initData('color'       , '');
+        elem.initData('limits'      , []);
+        elem.initData('colors'      , ['#505050']);
+        elem.initData('limits-get'  , elem.data('device') + ':' + elem.data('get'));
+        elem.initData('limits-part' , elem.data('part'));
+        elem.initData('substitution'    , '');
 
         // fill up colors to limits.length
         // if an index s isn't set, use the value of s-1
@@ -22,13 +24,10 @@ var widget_label = $.extend({}, widget_widget, {
         }
 
         elem.data('fix',            ( $.isNumeric(elem.data('fix')) ) ?  Number(elem.data('fix'))           : -1);
-        elem.data('substitution',   elem.data('substitution')           || '');
-        readings[elem.data('get')] = true;
 
-        //add extra reading into collection
-        if(!elem.data('limits-get').match(/:/))
-            elem.data('limits-get', elem.data('device') + ':' + elem.data('limits-get'))
-        initReadingsArray(elem.data('limits-get'));
+        elem.addReading('get');
+        elem.addReading('limits-get');
+        if ( elem.isDeviceReading('color') ) {elem.addReading('color');}
 
     },
     init: function () {
@@ -69,41 +68,60 @@ var widget_label = $.extend({}, widget_widget, {
     update_cb : function(elem) {},
     update: function (dev,par) {
         var base = this;
-        var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-        deviceElements.each(function(index) {
-            if ( $(this).data('get')==par){
-                var value = ($(this).hasClass('timestamp'))
-                            ?getReadingDate( $(this), 'get' )
-                            :getDeviceValue( $(this), 'get' );
-                if (value){
-                    var part = $(this).data('part');
-                    var val = getPart(value,part);
-                    var unit = $(this).data('unit');
-                    
-                    val = base.update_fix(val, $(this).data('fix'));
-                    val = base.update_substitution(val, $(this).data('substitution'));
-        
-                    if ( ! $(this).hasClass('fixedlabel') ) {
-                      if ( unit )
-                        $(this).html( val + "<span class='label-unit'>"+unit+"</span>" );
-                      else
-                        $(this).html(val);
-                    }
-                    base.update_cb($(this),val);
-                 }
+        // update from normal state reading
+        this.elements.filterDeviceReading('get',dev,par)
+        .each(function(index) {
+            var elem = $(this);
+            var value = (elem.hasClass('timestamp'))
+                        ?elem.getReading('get').date
+                        :elem.getReading('get').val;
+            if (value){
+                var part = $(this).data('part');
+                var val = getPart(value,part);
+                var unit = $(this).data('unit');
+
+                val = base.update_fix(val, $(this).data('fix'));
+                val = base.update_substitution(val, $(this).data('substitution'));
+
+                if ( ! $(this).hasClass('fixedlabel') ) {
+                  if ( unit )
+                    $(this).html( val + "<span class='label-unit'>"+unescape(unit)+"</span>" );
+                  else
+                    $(this).html(val);
+                }
+                base.update_cb($(this),val);
+            }
+            var color = elem.data('color');
+            if (color && color.match(/#[a-fA-F0-9]{6}/))
+                elem.css( "color", color );
+
+        });
+
+        //extra reading for dynamic color
+        base.elements.filterDeviceReading('color',dev,par)
+        .each(function(idx) {
+            var elem = $(this);
+            var val = elem.getReading('color').val;
+            if(val) {
+                val = '#'+val.replace('#','');
+                elem.css( "color", val );
+            }
+            else
+                elem.css( "color", getStyle('.'+elem.data('color'),'color') || elem.data('color') );
+        });
+
+        //extra reading for colorize
+        base.elements.filterDeviceReading('limits-get',dev,par)
+        .each(function(idx) {
+            var elem = $(this);
+            var val = elem.getReading('limits-get').val;
+            if(val) {
+                var part = elem.data('limits-part');
+                var v = getPart(val,part);
+                widget_label.update_colorize(v, elem);
             }
         });
-        //extra reading for colorize
-        var sideElements= this.elements.filterData('limits-get',dev+':'+par);
-        if (sideElements && sideElements.length>0){
-            var val = getDeviceValueByName(dev, par);
-            if(val) {
-                sideElements.each(function(index) {
-                    var part = $(this).data('limits-part');
-                    var v = getPart(val,part);
-                    widget_label.update_colorize(v, $(this));
-                });
-            }
-        }
+
+
     }
 });
