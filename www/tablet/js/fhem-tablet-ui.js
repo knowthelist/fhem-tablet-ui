@@ -513,7 +513,7 @@ function loadStyleSchema(){
                var elmName = rules[r].selectorText;
                var params = {};
                for (var s in styles){
-                   var param = styles[s].split(':');
+                   var param = styles[s].toString().split(':');
                    if (param[0].match(/color/)){
                       params[$.trim(param[0])]=$.trim(param[1]).replace('! important','').replace('!important','');
                    }
