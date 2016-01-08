@@ -273,6 +273,7 @@ function setFhemStatus(cmdline) {
     DEBUG && console.log('send to FHEM: '+cmdline);
 	$.ajax({
 		async: true,
+        cache:false,
 		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
 		data: {
 			cmd: cmdline,
