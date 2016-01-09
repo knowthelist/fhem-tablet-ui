@@ -30,6 +30,10 @@ Install
 A lot more plugins are available on addiational sources [Widgets-for-fhem-tablet-ui](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 * copy additional widgets **widget_xxx.js** into js folder
 
+Demos
+-------
+[Widgets](http://knowthelist.github.io/fhem/tablet/demo_widgets.html)
+
 Configure
 -------
 Just configure the **index.html** to change the dashboard for your needs.
@@ -554,7 +558,8 @@ not all widgets support all classes
 - large			: font 150% size
 - big			: font 200% size
 - bigger		: font 320% size
-- thin			: font thin
+- gigantic              : font 320% size
+- thin			: font 144px and robotothin font
 - darker		: forecolor in gray
 - hue-tick		: draw ticks in color range
 - hue-front		: draw handle in color range
@@ -578,6 +583,7 @@ Positioning:
 - row                   : new row
 - col-x-y 		: new column with x/y of width (col-1-3,col-2-3,col-1-2,col-1-4,col-1-8,col-1-5,col-2-5,col-3-5,col-4-5)
 - inline		: positioning elements in a row, no line break
+- newline		: positioning elements at a new row, line break
 - top-space     : 15px extra on top (top-space-2x -> 30px; top-space-3x -> 45px)
 - left-space	: 15px extra on left (left-space-2x -> 30px; left-space-3x -> 45px)
 - right-space  	: 15px extra on right (right-space-2x -> 30px; right-space-3x -> 45px)
@@ -901,6 +907,23 @@ The countdown time is auto detected via the on-for-timer command. A other value 
 </div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/group.png)
+
+**Example** for a big homestatus button to toggle between two states
+```html
+<li data-row="1" data-col="1" data-sizex="2" data-sizey="2">
+    <header>HOMESTATUS</header>
+    <div data-type="switch"
+         data-device="dummy3"
+         data-set-on="Anwesend"
+         data-set-off="Abwesend"
+         data-states='["Anwesend","Abwesend"]'
+         data-icons='["fa-home", "fa-car"]'
+         data-colors='["white", "white"]'
+         data-background-colors='["green", "red"]'
+         class="bigger top-space"></div>
+</li>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/homestatus.png)
 
 ###Symbol
 
@@ -1366,22 +1389,22 @@ Basic structure for a popup:
   </div>
 </div>
 ```
-Create a Label in the UI which opens a dialog with sub widgets .
+Create a Link in the UI which opens a dialog with sub widgets .
 ```html
-<div data-type="popup" data-height="150px" data-width="250px">
-  <div data-type="label" class="cell">show temperatur</div>
+<div data-type="popup" data-height="200px" data-width="400px">
+<div data-type="link" class="large thin">Show Temperatur</div>
   <div class="dialog">
-	  <header>DIALOG</header>
-	  <div class="right top-space right-space-2x">
-		<div class="inline">
-		  <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin"></div>
-		  <div data-type="label" class="cell">Temperatur</div>
-		</div>
-		<div class="inline">
-		  <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="bigger thin"></div>
-		  <div data-type="label" class="cell">Luftfeuchte</div>
-		</div>
-	  </div>
+          <header>DIALOG</header>
+          <div class="top-space">
+                <div class="inline">
+                  <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin"></div>
+                  <div data-type="label" class="cell">Temperatur</div>
+                </div>
+                <div class="inline">
+                  <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="bigger thin"></div>
+                  <div data-type="label" class="cell">Luftfeuchte</div>
+                </div>
+          </div>
   </div>
 </div>
 ```

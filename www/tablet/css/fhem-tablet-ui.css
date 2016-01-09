@@ -192,6 +192,10 @@ a:active {
     margin: 0px -4px 0px -4px !important;
 }
 
+.newline{
+    display: block !important;
+}
+
 .circlemenu {
     min-height: 52px;
     min-width: 52px;
@@ -724,10 +728,6 @@ select {
     -o-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
-}
-
-[data-type="menusymbol"]{
-    margin-left: -80%;
 }
 
 .symbol.on{color:#aa6900;background-color:#aa6900;}
