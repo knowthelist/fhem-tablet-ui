@@ -469,6 +469,7 @@ The crosshair cursor currently only works dynamically on desktop browsers. On iO
 - **data-get-off**     : value which trigger to close the dialog (default 'off')
 - **data-width**       : fixe size for width (in % or px)
 - **data-height**      : fixe size for height (in % or px)
+- **data-draggable**   : allow moving of the dialog (default 'true')
 
 It's important that a ```<div class="dialog">``` inside the widget can be found. See the [basic structure](#dialog) of popup
 
@@ -552,14 +553,14 @@ The layout, look and behavior can be influenced by the class attribute.
 
 not all widgets support all classes
 - readonly		: changing of state is not allowed 
-- w1x, w2x, w3x	: set the widget to a fix width: 1x, 2x, 3x width
+- w1x, w2x, w3x         : set the widget to a fix width: 1x, 2x, 3x width
 - small			: font 80% size (label), small diameter for volume widget
 - mini			: lowest diameter for volume widget
 - large			: font 150% size
 - big			: font 200% size
 - bigger		: font 320% size
-- gigantic              : font 320% size
-- thin			: font 144px and robotothin font
+- gigantic              : font 144px and robotothin font
+- thin			: font thin
 - darker		: forecolor in gray
 - hue-tick		: draw ticks in color range
 - hue-front		: draw handle in color range
@@ -570,7 +571,19 @@ not all widgets support all classes
 - red			: foreground color red
 - green			: foreground color green
 - blue			: foreground color blue
+- lightblue		: foreground color lightblue
 - orange		: foreground color orange
+- gray           	: foreground color gray
+- lightgray           	: foreground color lightgray
+- white           	: foreground color white
+- black           	: foreground color black
+- bg-red		: background color red
+- bg-green		: background color green
+- bg-blue		: background color blue
+- bg-lightblue		: background color lightblue
+- bg-orange		: background color orange
+- bg-gray           	: background color gray
+- bg-lightgray         	: background color lightgray
 - doublebox-v           : container to place 2 small widgets (e.g. switch) one above the other
 - doublebox-h           : container to place 2 small widgets (e.g. switch) side by side
 - triplebox-v           : container to place 3 small widgets (e.g. switch) one above the other
