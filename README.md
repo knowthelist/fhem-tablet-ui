@@ -66,7 +66,7 @@ Currently there are more then 20 types of widgets in the base installation.
 - **switch** : Toggle any command to FHEM (e.g. on / off)
 - **label** : show state as text (colourable)
 - **symbol** : show state as an icon (e.g. window open) 
-- **push** : send any command to FHEM e.g. up / down
+- **push** : send one single command to FHEM e.g. up / down
 - **volume** : dial to set a single value (e.g. 0-60)
 - **homestatus** : selector for 4 states (1=home,2=night,3=away,4=holiday) 
 - **dimmer** : toogle button with a setter for on value
