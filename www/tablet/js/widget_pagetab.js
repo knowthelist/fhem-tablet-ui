@@ -6,6 +6,8 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
     widgetname : 'pagetab',
     lastPage : '',
     loadPage: function (goUrl, doPush){
+        var mainElem = this.elements.eq(0);
+        clearTimeout(mainElem.timer);
         DEBUG && console.log( 'load page called with : ' + goUrl);
         if ( doPush ) {
           history.pushState( history.state, history.title, '#'+goUrl )
@@ -21,6 +23,15 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
             initPage();
             $('div.gridster').fadeTo(600,1);
         });
+        // set return timer
+        var waitUntilReturn = mainElem.data('return-time');
+        if ( waitUntilReturn > 0 && goUrl !== mainElem.data('url') ){
+            var base = this;
+            mainElem.timer = setTimeout(function () {
+               // back to first page
+               base.loadPage(mainElem.data('url'),true);
+            }, waitUntilReturn * 1000);
+        }
     },
     toggleOn : function(elem) {
         var elem_url=elem.data('url');
@@ -62,16 +73,19 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
           DEBUG && console.log( 'normal init : ');
 
           this.elements.each(function(index) {
-              $(this).data('off-color',               $(this).data('off-color')           || getStyle('.'+base.widgetname+'.off','color')              || '#606060');
-              $(this).data('off-background-color',    $(this).data('off-background-color')|| getStyle('.'+base.widgetname+'.off','background-color')   || 'transparent');
-              $(this).data('on-color',                $(this).data('on-color')            || getStyle('.'+base.widgetname+'.on','color')               || '#222222');
-              $(this).data('on-background-color',     $(this).data('on-background-color') || getStyle('.'+base.widgetname+'.on','background-color')    || '#606060');
-              $(this).data('background-icon',         $(this).data('background-icon')     || 'fa-circle');
-              $(this).data('mode', 'toggle');
-              base.init_attr($(this));
-              var elem = base.init_ui($(this));
+              var elem = $(this);
+              elem.initData('off-color'             , getStyle('.'+base.widgetname+'.off','color')   || '#606060');
+              elem.initData('off-background-color'  , getStyle('.'+base.widgetname+'.off','background-color')   || 'transparent');
+              elem.initData('on-color'              , getStyle('.'+base.widgetname+'.on','color')               || '#222222');
+              elem.initData('on-background-color'   , getStyle('.'+base.widgetname+'.on','background-color')    || '#606060');
+              elem.initData('background-icon'       , 'fa-circle');
+              elem.initData('mode'                  , 'toggle');
+              elem.initData('return-time'           , 0);
+              base.init_attr(elem);
 
-              var elem_url=$(this).data('url');
+              elem = base.init_ui(elem);
+
+              var elem_url=elem.data('url');
               var isCurrent=false;
 
               if ( ! filename ) {
@@ -90,7 +104,7 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
                 }
               }
 
-              $(this).attr('title',$(this).data('url'));
+              elem.attr('title',elem.data('url'));
 
               if (isCurrent){
                   elem.setOn();
@@ -121,36 +135,35 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
         
     },
     update: function (dev,par) {
-      var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-      var base = this;
-      deviceElements.each(function(index) {
-          if ( $(this).data('get')==par) {
-              var state = getDeviceValue( $(this), 'get' );
+        var base = this;
+        // update from normal state reading
+        this.elements.filterDeviceReading('get',dev,par)
+        .each(function(index) {
+            var elem = $(this);
+            var state = elem.getReading('get').val;
               if (state) {
-                  var states=$(this).data('states') || $(this).data('get-on');
+                  var states=elem.data('states') || elem.data('get-on');
                   if ( $.isArray(states)) {
-                      base.showMultiStates($(this),states,state,-1);
+                      base.showMultiStates(elem,states,state,-1);
                   }
               }
-              if ($(this).hasClass('warn') || $(this).children().filter('#fg').hasClass('warn'))
-                  base.showOverlay($(this),state);
+              if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
+                  base.showOverlay(elem,state);
               else
-                  base.showOverlay($(this),"");
+                  base.showOverlay(elem,"");
 
-              var id=dev+"_"+$(this).data('url');
+              var id=dev+"_"+elem.data('url');
 
-              if ($(this).children().filter('#fg').hasClass('activate')){
+              if (elem.children().filter('#fg').hasClass('activate')){
                   //only for the first occurance (Flipflop logic)
                   if ( localStorage.getItem(id)!='true' ){
                       localStorage.setItem(id, 'true');
-                      base.toggleOn($(this));
+                      base.toggleOn(elem);
                   }
               }
               else{
                   localStorage.setItem(id, 'false');
               }
-
-          }
       });
     },
 });
