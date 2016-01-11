@@ -382,15 +382,16 @@ Use data-url + data-refresh or data-device + data-get, not both.
 
 ####Pagetab widgets
 - **data-url**		: URL of the new page to show
-- **data-icon**     : name of the font-awesome icon. (default 'fa-power-off')
+- **data-icon**         : name of the font-awesome icon. (default 'fa-power-off')
 - **data-background-icon** : name of the font-awesome icon for background (default '')
 - **data-on-background-color** : color of ON state (default '#aa6900')
 - **data-off-background-color** : color of OFF state (default '#505050')
-- **data-on-color** : color of ON state (default '#aa6900')
-- **data-off-color**: color of Off state (default '#505050')
-- **data-get-on**   : array of status to assign a special icon-list from data-icons
-- **data-icons**    : array of icons related to the a data-get-on array
-- **class**		    : warn, activate (as additionals for data-icons)
+- **data-on-color**     : color of ON state (default '#aa6900')
+- **data-off-color**    : color of Off state (default '#505050')
+- **data-get-on**       : array of status to assign a special icon-list from data-icons
+- **data-icons**        : array of icons related to the a data-get-on array
+- **data-return-time**  : time in secondes for the maximal remain time on secondary tabs
+- **class**		: warn, activate (as additionals for data-icons)
 
 ####Pagebutton widgets
 - **data-url**              : URL of the new page to show
