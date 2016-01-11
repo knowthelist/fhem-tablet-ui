@@ -80,8 +80,8 @@ var widget_label = $.extend({}, widget_widget, {
                 var val = getPart(value,part);
                 var unit = elem.data('unit');
 
-                val = base.update_fix(val, elem.data('fix'));
                 val = base.update_substitution(val, elem.data('substitution'));
+                val = base.update_fix(val, elem.data('fix'));
 
                 if ( !elem.hasClass('fixedlabel') ) {
                   if ( unit )
