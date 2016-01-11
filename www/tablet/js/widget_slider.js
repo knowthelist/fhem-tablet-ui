@@ -1,162 +1,169 @@
-var widget_slider = {
-  _slider: null,
-  elements: null,
+if(typeof widget_widget == 'undefined') {
+    dynamicload('js/widget_widget.js');
+}
+
+var widget_slider= $.extend({}, widget_widget, {
+  widgetname: 'slider',
   init: function () {
 
     if (!$.fn.Powerange){
         dynamicload('lib/powerange.min.js', null, null, false);
         $('head').append('<link rel="stylesheet" href="'+ dir + '/../lib/powerange.min.css" type="text/css" />');
     }
-    _slider=this;
-    _slider.elements = $('div[data-type="slider"]');
-    _slider.elements.each(function(index) {
+    var base=this;
+    this.elements = $('div[data-type="'+this.widgetname+'"]');
+    this.elements.each(function(index) {
 
-        var device = $(this).data('device');
-        $(this).data('get', $(this).data('get') || 'STATE');
-        $(this).data('set', $(this).data('set') || '');
-        $(this).data('cmd', $(this).data('cmd') || 'set');
-        $(this).data('on', $(this).data('on') || 'on');
-        $(this).data('off', $(this).data('off') || 'off');
-        $(this).data('set-value', $(this).data('set-value') || '$v');
-        $(this).data('width', $(this).data('width'));
-        $(this).data('height', $(this).data('height'));
-        $(this).data('get-value',   $(this).data('get-value') || $(this).data('part') || -1);
+        var elem = $(this);
 
-        readings[$(this).data('get')] = true;
-        //ToDo: more data parameter: color etc.
-        $(this).data('value', $(this).data('value') || false );
+        elem.initData('get'         ,'STATE');
+        elem.initData('set'         ,'');
+        elem.initData('cmd'         ,'set');
+        elem.initData('on'          ,'on');
+        elem.initData('off'         ,'off');
+        elem.initData('width'       ,null);
+        elem.initData('height'      ,null);
+        elem.initData('value'       ,false);
+        elem.initData('set-value'   ,'$v');
+        elem.initData('get-value'   ,elem.data('part') || -1);
 
+        elem.addReading('get');
 
-        var storeval = localStorage.getItem("slider_"+device);
+        var id = elem.data("device")+"_"+elem.data('get');
+
+        var storeval = localStorage.getItem("slider_"+id);
         storeval = (storeval)?storeval:'5';
-        var elem =  jQuery('<input/>', {
+        var input_elem =  jQuery('<input/>', {
             type: 'text',
-        }).appendTo($(this));
+        }).appendTo(elem);
 
-        if ( $(this).data('value') ) {
+        if ( elem.data('value') ) {
           var lbl =  jQuery('<div/>', {
               id : 'slidervalue',
               class : 'slidertext normal',
-          }).appendTo($(this));
+          }).appendTo(elem);
         }
 
-        $(this).data('selection',0);
-        var pwrng = new Powerange(elem[0], {
-            vertical: !$(this).hasClass('horizontal'),
-            'min': $(this).data('min') || 0,
-            'max': $(this).data('max') || 100,
-            'tap': $(this).hasClass('tap') || false,
-            klass: $(this).hasClass('horizontal')?'slider_horizontal':'slider_vertical',
+        elem.data('selection',0);
+        var pwrng = new Powerange(input_elem[0], {
+            vertical: !elem.hasClass('horizontal'),
+            'min': elem.data('min') || 0,
+            'max': elem.data('max') || 100,
+            'tap': elem.hasClass('tap') || false,
+            klass: elem.hasClass('horizontal')?'slider_horizontal':'slider_vertical',
             callback: (function() {
-              var pwrng = $(this).data('Powerange');
-              var selMode = $(this).data('selection');
+              var pwrng = elem.data('Powerange');
+              var selMode = elem.data('selection');
               var v = 0, sliVal = 0;
               var isunsel = 1;
               if ( pwrng ) {
                 isunsel = $( pwrng.slider ).hasClass('unselectable');
                 if ( isunsel ) {
-                  $(this).data('selection',1);
+                  elem.data('selection',1);
                 }
                 sliVal = pwrng.element.value;
-                v = $(this).hasClass('negated')? pwrng.options.max + pwrng.options.min - sliVal:sliVal;
+                v = elem.hasClass('negated')? pwrng.options.max + pwrng.options.min - sliVal:sliVal;
               }
 
-              if ( $(this).data('value') ) {
-                $(this).find( '#slidervalue' ).text( v );
+              if ( elem.data('value') ) {
+                elem.find( '#slidervalue' ).text( v );
               }
 
               // isunsel == false (0) means drag is over
               if ( ( ! isunsel ) && ( selMode ) ) {
-                var device = $(this).data('device');
-                v = $(this).data('set-value').replace('$v',v.toString());
-                var cmdl = [$(this).data('cmd'),device,$(this).data('set'),v].join(' ');
+                v = elem.data('set-value').replace('$v',v.toString());
+                var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('set'),v].join(' ');
 
                 // write visible value (from pwrng) to local storage NOT the fhem exposed value)
-                localStorage.setItem("slider_"+device, sliVal);
+                localStorage.setItem("slider_"+id, sliVal);
                 setFhemStatus(cmdl);
                 TOAST && $.toast(cmdl);
 
-                $(this).data('selection',0);
+                elem.data('selection',0);
 
               }
               }).bind(this),
         });
-        $(this).data('Powerange',pwrng);
+        elem.data('Powerange',pwrng);
 
-        if ($(this).hasClass('negated')){
-          var rangeQuantity = $(this).find('.range-quantity');
-          var rangeBar = $(this).find('.range-bar');
+        if (elem.hasClass('negated')){
+          var rangeQuantity = elem.find('.range-quantity');
+          var rangeBar = elem.find('.range-bar');
           var rangeBarColor = rangeBar.css('background-color');
           rangeBar.css({'background-color':rangeQuantity.css('background-color')});
           rangeQuantity.css({'background-color':rangeBarColor});
         }
 
-        localStorage.setItem("slider_"+device, storeval );
+        localStorage.setItem("slider_"+id, storeval );
 
-        if ($(this).hasClass('horizontal')){
-            if ($(this).data('width')) {
-                $(this).css({'width': $(this).data('width')+'px','max-width': $(this).data('width')+'px','height':'0px'});
+        if (elem.hasClass('horizontal')){
+            if (elem.data('width')) {
+                elem.css({'width': elem.data('width')+'px','max-width': elem.data('width')+'px','height':'0px'});
             } else {
-                if ($(this).hasClass('mini'))
-                    $(this).css({'width': '60px','max-width': '60px','height':'0px'});
+                if (elem.hasClass('mini'))
+                    elem.css({'width': '60px','max-width': '60px','height':'0px'});
                 else
-                    $(this).css({'width': '120px','max-width': '120px','height':'0px'});
+                    elem.css({'width': '120px','max-width': '120px','height':'0px'});
             }
-            if ($(this).data('height')) {
-                $(this).children().find('.range-bar').css({'height': $(this).data('height')+'px',
-                                                           'max-height': $(this).data('height')+'px',
-                                                           'top': '-'+$(this).data('height')/2+'px',
+            if (elem.data('height')) {
+                elem.children().find('.range-bar').css({'height': elem.data('height')+'px',
+                                                           'max-height': elem.data('height')+'px',
+                                                           'top': '-'+elem.data('height')/2+'px',
                                                           });
             }
         }
         else {
-            if ($(this).data('height')) {
-                $(this).css({'height': $(this).data('height')+'px','max-height': $(this).data('height')+'px'});
+            if (elem.data('height')) {
+                elem.css({'height': elem.data('height')+'px','max-height': elem.data('height')+'px'});
             } else {
-                if ($(this).hasClass('mini'))
-                    $(this).css({'height': '60px','max-height': '60px'});
+                if (elem.hasClass('mini'))
+                    elem.css({'height': '60px','max-height': '60px'});
                 else
-                    $(this).css({'height': '120px','max-height': '120px'});
+                    elem.css({'height': '120px','max-height': '120px'});
             }
-            if ($(this).data('width')) {
-                $(this).children().find('.range-bar').css({'width': $(this).data('width')+'px',
-                                                           'max-width': $(this).data('width')+'px',
-                                                           'left': '-'+$(this).data('width')/4+'px',
+            if (elem.data('width')) {
+                elem.children().find('.range-bar').css({'width': elem.data('width')+'px',
+                                                           'max-width': elem.data('width')+'px',
+                                                           'left': '-'+elem.data('width')/4+'px',
                                                           });
             }
         }
 
-       if ($(this).hasClass('readonly'))
-            $(this).children().find('.range-handle').css({'visibility':'hidden'});
+       if (elem.hasClass('readonly'))
+            elem.children().find('.range-handle').css({'visibility':'hidden'});
 
+       elem.addClass(pwrng.options.klass);
+       pwrng.setStart(storeval);
 
-        $(this).addClass(pwrng.options.klass);
-        pwrng.setStart(storeval);
+       // Refresh slider position after it became visible
+       elem.closest('[data-type="popup"]').on("fadein", function(event) {
+           var storeval = localStorage.getItem("slider_"+id);
+               pwrng.setStart(parseInt(storeval));
+       });
      });
   },
   update: function (dev,par) {
-
-    var deviceElements= _slider.elements.filter('div[data-device="'+dev+'"]');
-    deviceElements.each(function(index) {
-
-    if ( $(this).data('get')==par){
-
-            var lstate = getDeviceValue( $(this), 'get' );
-            if (lstate) {
-                var pwrng = $(this).data('Powerange');
-                var elem = $(this).find('input');
-                var part = $(this).data('get-value');
-                var nstate = getPart(lstate, part);
+      var base = this;
+      // update from normal state reading
+      this.elements.filterDeviceReading('get',dev,par)
+      .each(function(index) {
+          var elem = $(this);
+          var state = elem.getReading('get').val;
+            if (state) {
+                var pwrng = elem.data('Powerange');
+                var input_elem = elem.find('input');
+                var part = elem.data('get-value');
+                var nstate = getPart(state, part);
                 var tstate = nstate;
-                if ( new RegExp('^' + $(this).data('on') + '$').test( nstate.toString() ) )
+                if ( new RegExp('^' + elem.data('on') + '$').test( nstate.toString() ) )
                     nstate=pwrng.options.max;
-                if ( new RegExp('^' + $(this).data('off') + '$').test( nstate.toString() ) )
+                if ( new RegExp('^' + elem.data('off') + '$').test( nstate.toString() ) )
                     nstate=pwrng.options.min;
-                if ($.isNumeric(nstate) && elem) {
-                    var v = $(this).hasClass('negated')
+                if ($.isNumeric(nstate) && input_elem) {
+                    var v = elem.hasClass('negated')
                             ? pwrng.options.max + pwrng.options.min - parseInt(nstate)
                             : parseInt(nstate);
-                    if ( $(this).hasClass('nodelay') ) {
+                    if ( elem.hasClass('nodelay') ) {
                         pwrng.setStart(parseInt(v));
                     } else {
                       // hack for this.slider.offsetHeight=0 issue
@@ -164,23 +171,22 @@ var widget_slider = {
                           pwrng.setStart(parseInt(v));
                       }, 250);
                     }
-                    localStorage.setItem("slider_"+dev, v);
+                    localStorage.setItem("slider_"+dev+"_"+par, v);
                     DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
                 }
-                if ( $(this).data('value') ) {
-                    var slidervalue = $(this).find( '#slidervalue' );
+                if ( elem.data('value') ) {
+                    var slidervalue = elem.find( '#slidervalue' );
                     if (slidervalue){
-                        if ( $(this).hasClass('textvalue') ) {
+                        if ( elem.hasClass('textvalue') ) {
                           slidervalue.text( tstate );
                         } else {
                           slidervalue.text( nstate );
                         }
                     }
                 }
-                elem.css({visibility:'visible'});
+                input_elem.css({visibility:'visible'});
             }
-        }
     });
    }
 
-};
+});
