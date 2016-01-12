@@ -56,6 +56,7 @@ UPD 2015-12-03_09:31:22 3036 www/tablet/js/widget_colorwheel.js
 UPD 2015-12-03_07:04:13 2225 www/tablet/js/widget_datetimepicker.js
 UPD 2015-12-03_07:04:13 5608 www/tablet/js/widget_dimmer.js
 UPD 2015-12-03_07:04:14 3624 www/tablet/js/widget_eventmonitor.js
+UPD 2016-01-12_20:25:09 1275 www/tablet/js/widget_example.js
 UPD 2015-12-11_13:55:12 12359 www/tablet/js/widget_famultibutton.js
 UPD 2015-12-03_07:04:14 8792 www/tablet/js/widget_highchart.js
 UPD 2015-12-03_07:04:14 8542 www/tablet/js/widget_highchart3d.js
@@ -67,7 +68,7 @@ UPD 2015-12-03_07:04:14 5260 www/tablet/js/widget_level.js
 UPD 2015-12-07_12:39:34 5537 www/tablet/js/widget_link.js
 UPD 2015-12-03_07:04:14 1857 www/tablet/js/widget_meteogram.js
 UPD 2015-12-07_12:55:37 2463 www/tablet/js/widget_pagebutton.js
-UPD 2016-01-11_21:57:59 6876 www/tablet/js/widget_pagetab.js
+UPD 2016-01-12_20:39:20 7608 www/tablet/js/widget_pagetab.js
 UPD 2015-12-03_07:04:14 3226 www/tablet/js/widget_playstream.js
 UPD 2015-12-03_07:04:14 5187 www/tablet/js/widget_popup.js
 UPD 2015-12-03_07:04:14 2480 www/tablet/js/widget_progress.js
