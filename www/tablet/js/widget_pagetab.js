@@ -4,10 +4,28 @@ if(typeof widget_famultibutton == 'undefined') {
 
 var widget_pagetab = $.extend({}, widget_famultibutton, {
     widgetname : 'pagetab',
-    lastPage : '',
+    startReturnTimer: function (){
+      var mainElem = this.elements.eq(0);
+      var waitUntilReturn = mainElem.data('return-time');
+      var lastUrl = localStorage.getItem('pagetab_lastUrl');
+      var returnTimer = localStorage.getItem('pagetab_returnTimer');
+      clearTimeout(returnTimer);
+      if ( waitUntilReturn > 0 && lastUrl !== mainElem.data('url') ){
+          var base = this;
+          DEBUG && console.log( 'Reload main tab in : ' + waitUntilReturn + ' seconds');
+          returnTimer = setTimeout(function () {
+             // back to first page
+             localStorage.setItem('pagetab_doload', 'initializing');
+             base.loadPage(mainElem.data('url'),true);
+          }, waitUntilReturn * 1000);
+          localStorage.setItem('pagetab_returnTimer',returnTimer);
+      }
+    },
     loadPage: function (goUrl, doPush){
-        var mainElem = this.elements.eq(0);
-        clearTimeout(mainElem.timer);
+        // set return timer
+        localStorage.setItem('pagetab_lastUrl',goUrl);
+        this.startReturnTimer();
+
         DEBUG && console.log( 'load page called with : ' + goUrl);
         if ( doPush ) {
           history.pushState( history.state, history.title, '#'+goUrl )
@@ -23,19 +41,9 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
             initPage();
             $('div.gridster').fadeTo(600,1);
         });
-        // set return timer
-        var waitUntilReturn = mainElem.data('return-time');
-        if ( waitUntilReturn > 0 && goUrl !== mainElem.data('url') ){
-            var base = this;
-            mainElem.timer = setTimeout(function () {
-               // back to first page
-               base.loadPage(mainElem.data('url'),true);
-            }, waitUntilReturn * 1000);
-        }
     },
     toggleOn : function(elem) {
         var elem_url=elem.data('url');
-        this.lastPage=elem_url;
         DEBUG && console.log( 'change window location : ' + elem_url);
         localStorage.setItem('pagetab_doload', 'initializing');  
         DEBUG && console.log( 'toggle on with : ' + elem_url);
@@ -63,12 +71,12 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
            var dl = localStorage.getItem('pagetab_doload');
            DEBUG && console.log( 'init set doload to <initializing> ' );
            localStorage.setItem('pagetab_doload', 'initializing');  
-           base.loadPage(dl);
+           this.loadPage(dl);
         } else if( ! ( dl == 'initializing' ) ) {
            DEBUG && console.log( 'redirect init : ');
            DEBUG && console.log( 'init set doload to <initializing> ' );
-           localStorage.setItem('pagetab_doload', 'initializing');  
-           base.loadPage(dl);
+           localStorage.setItem('pagetab_doload', 'initializing');
+           this.loadPage(dl);
         } else {
           DEBUG && console.log( 'normal init : ');
 
@@ -116,23 +124,28 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
                   elem.data('on-colors',[elem.data('off-color')]);
                   elem.data('on-background-colors',[elem.data('off-background-color')]);
               }
-
-              window.onpopstate = function(event) {
-                  localStorage.setItem('pagetab_doload', 'initializing');  
-                  var hashUrl=window.location.hash.replace('#','');
-                  if ( hashUrl ) {
-                     base.loadPage(hashUrl);
-                  } else {
-                     base.loadPage(base.elements.eq(0).data('url') );
-                  }
-              };
-
           });
 
-          localStorage.removeItem('pagetab_doload');  
-        
+            $(window).once('popstate', function(event) {
+                localStorage.setItem('pagetab_doload', 'initializing');
+                var hashUrl=window.location.hash.replace('#','');
+                if ( hashUrl ) {
+                   base.loadPage(hashUrl);
+                } else {
+                   base.loadPage(base.elements.eq(0).data('url') );
+                }
+           });
+
+           // start return timer after last activity
+           if ( this.elements.eq(0).data('return-time') > 0 ){
+               var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
+                $('body').once(releaseEventType, function() {
+                       base.startReturnTimer();
+               });
+           }
+
+          localStorage.removeItem('pagetab_doload');         
         }
-        
     },
     update: function (dev,par) {
         var base = this;

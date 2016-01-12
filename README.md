@@ -390,8 +390,10 @@ Use data-url + data-refresh or data-device + data-get, not both.
 - **data-off-color**    : color of Off state (default '#505050')
 - **data-get-on**       : array of status to assign a special icon-list from data-icons
 - **data-icons**        : array of icons related to the a data-get-on array
-- **data-return-time**  : time in secondes for the maximal remain time on secondary tabs
+- **data-return-time**  : time in secondes for the maximal remain time on secondary tabs (default 0 -> endless)
 - **class**		: warn, activate (as additionals for data-icons)
+
+data-return-time has to be placed on the main pagetab (the first one > index 0)
 
 ####Pagebutton widgets
 - **data-url**              : URL of the new page to show
