@@ -1493,6 +1493,33 @@ Example of range widgets to visualize max and min temperature value as a range b
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/widget_range.png)
 
+###Link
+-------
+
+Example for a button-like link. Usable for a popup opener
+
+```html
+<div data-type="link" class="round"
+     data-color="grey"
+     data-border-color="grey"
+     data-icon="fa-server">Details</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/link_small.png)
+
+
+Example for a huge button-like link. Usable to trigger a fhem command
+
+```html
+<div data-type="link" class="round"
+     data-width="130" data-height="50"
+     data-color="white"
+     data-background-color="red"
+     data-icon="fa-lock"
+     data-fhem-cmd="set AllDoors locked">
+    Lock Doors
+</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/link_big.png)
 
 Specials
 -------

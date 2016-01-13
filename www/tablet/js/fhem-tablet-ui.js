@@ -22,6 +22,7 @@ var doLongPoll = false;
 var longPollRequest;
 var timer;
 var dir = '';
+var fhem_dir = '';
 var runningRequests = 0;
 var REQ_WAIT = 100;
 var REQ_MAX = 4;
@@ -123,6 +124,9 @@ function initPage() {
     var url = window.location.pathname;
     filename = url.substring(url.lastIndexOf('/')+1);
     DEBUG && console.log('Filename: '+filename);
+
+    fhem_dir = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
+    DEBUG && console.log('FHEM dir: '+fhem_dir);
 
     //init gridster
     if (gridster)
@@ -274,7 +278,7 @@ function setFhemStatus(cmdline) {
 	$.ajax({
 		async: true,
         cache:false,
-		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
+        url: fhem_dir,
 		data: {
 			cmd: cmdline,
 			XHR: "1"
@@ -305,7 +309,7 @@ function longPoll(roomName) {
 	currLine=0;
 	
     longPollRequest=$.ajax({
-		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
+        url: fhem_dir,
 		cache: false,
 		complete: function() {
             if ( doLongPoll ){
@@ -416,7 +420,7 @@ function requestFhem(paraname, devicename) {
             timeout: 15000,
             cache: false,
             context:{paraname: paraname},
-            url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
+            url: fhem_dir,
             data: {
                 cmd: ["list",devicelist,paraname].join(' '),
                 XHR: "1"
@@ -534,7 +538,7 @@ this.getPart = function (s,p) {
 	else {
 		if ((s && typeof s != "undefined") )
             var matches = s.match( new RegExp('^' + p + '$') );
-		var ret='';
+        var ret='';
 		if (matches) {
 			for (var i=1;i<matches.length;i++) {
 				ret+=matches[i];
@@ -773,4 +777,10 @@ this.indexOfRegex = function(array,find){
       } catch(e) {}
   }
   return array.indexOf(find);
+};
+
+$.fn.once = function(a, b) {
+    return this.each(function() {
+        $(this).off(a).on(a,b);
+    });
 };
