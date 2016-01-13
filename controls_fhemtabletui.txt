@@ -90,7 +90,7 @@ UPD 2015-12-07_15:36:14 11677 www/tablet/lib/fa-multi-button.js
 UPD 2015-12-07_15:38:09 5865 www/tablet/lib/fa-multi-button.min.js
 UPD 2015-11-17_22:49:00 17041 www/tablet/lib/farbtastic.js
 UPD 2015-12-03_07:04:15 26586 www/tablet/lib/fhemSVG.css
-UPD 2016-01-08_22:10:27 27466 www/tablet/lib/font-awesome.min.css
+UPD 2016-01-13_18:49:06 27407 www/tablet/lib/font-awesome.min.css
 UPD 2015-12-03_07:04:15 40391 www/tablet/lib/highcharts/graphics/meteogram-symbols-30px.png
 UPD 2015-12-03_07:04:16 20437 www/tablet/lib/highcharts/highcharts-3d.js
 UPD 2015-12-03_07:04:16 24398 www/tablet/lib/highcharts/highcharts-more.js
