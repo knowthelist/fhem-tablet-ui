@@ -86,6 +86,38 @@ a:active {
     z-index:2;
 }
 
+.levelspinner{
+    border-radius: 30px;
+    margin: 2px;
+}
+
+.levelspinner > .lefticon,.levelspinner > .righticon {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.levelspinner > .levelArea {
+    position: relative;
+    margin-left:12px;
+    margin-right:12px;
+    display:table;
+    border-radius: 5px;
+    background-color: #404040;
+    height: 8px;
+
+}
+.levelspinner .levelRange {
+    position: absolute;
+    border-radius: 5px;
+    width:40px;
+    background-color: #aa6900;
+    height: 8px;
+}
+
 .btn,.link.round,.link.square { margin: 7px;}
 .btn-round,.link.round { border-radius: 17px;}
 
@@ -243,7 +275,7 @@ a:active {
   overflow: auto;
 }
 
-[data-type]:not([data-type="label"]):not(.readonly):not([data-type="symbol"]){
+[data-type]:not([data-type="label"]):not(.readonly):not([data-type="symbol"]):not([data-type="levelspinner"]){
     cursor: pointer;
 }
 
@@ -563,6 +595,9 @@ padding:0;
       -webkit-animation: blink 1s step-start 0s infinite;
     }
 
+option {
+    background-color: #2a2a2a;
+}
 
 select {
     border-radius: 10px;
@@ -576,6 +611,10 @@ select {
     appearance: none;
     font-size: small;
     color: #eeeeee;
+}
+
+select::-ms-expand {
+    display: none;
 }
 
 .large > select {
