@@ -1575,7 +1575,8 @@ Example for a special value spinner. The value is visualized as numeric text wit
     data-device="dummy3"
     data-min="10"
     data-max="30"
-    data-unit="°">
+    data-unit="°"
+    class="valueonly">
 </div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/ftui_spinner3.png)
