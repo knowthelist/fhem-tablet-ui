@@ -130,70 +130,78 @@ var widget_thermostat = $.extend({}, widget_knob, {
     var base=this;
 	this.elements=$('div[data-type="'+this.widgetname+'"]');
 	this.elements.each(function( index ) {
-        $(this).data('get',    $(this).data('get') || 'desired-temp');
-        $(this).data('set',    $(this).data('set') || $(this).data('get'));
-        $(this).data('temp',   $(this).data('temp') || 'measured-temp');
-        $(this).data('height', $(this).isValidData('height') ? $(this).data('height') :100);
-        $(this).data('width',  $(this).isValidData('width')  ? $(this).data('width')  :100);
-        $(this).data('max',    $(this).isValidData('max')    ? $(this).data('max')    :30);
-        $(this).data('min',    $(this).isValidData('min')    ? $(this).data('min')    :10);
-        $(this).data('cursor', $(this).isValidData('cursor') ? $(this).data('cursor') :6);
-        $(this).data('off',    $(this).isValidData('off')    ? $(this).data('off')    :-1);
-        $(this).data('boost',  $(this).isValidData('boost')  ? $(this).data('boost')  :-1);
+        var elem = $(this);
+        elem.initData('get'     ,'desired-temp');
+        elem.initData('set'     , elem.data('get'));
+        elem.initData('temp'    ,'measured-temp');
+        elem.initData('valve'   ,'');
+        elem.initData('mode'    ,'');
+        elem.initData('height'  ,100);
+        elem.initData('width'   ,100);
+        elem.initData('max'     ,30);
+        elem.initData('min'     ,10);
+        elem.initData('cursor'  ,6);
+        elem.initData('off'     ,-1);
+        elem.initData('boost'   ,-1);
+        elem.initData('fgcolor' , getStyle('.'+base.widgetname+'.fgcolor','color')  || '#bbbbbb');
+        elem.initData('mincolor',getStyle('.'+base.widgetname+'.mincolor','color') || '#4477ff');
+        elem.initData('maxcolor',getStyle('.'+base.widgetname+'.maxcolor','color') || '#ff0000');
+        elem.initData('bgcolor' ,getStyle('.'+base.widgetname,'background-color')  || 'none');
 
-        $(this).data('fgcolor', $(this).data('fgcolor')     ||  getStyle('.'+base.widgetname+'.fgcolor','color')  || '#bbbbbb');
-        $(this).data('mincolor',$(this).data('mincolor')    ||  getStyle('.'+base.widgetname+'.mincolor','color') || '#4477ff');
-        $(this).data('maxcolor',$(this).data('maxcolor')    ||  getStyle('.'+base.widgetname+'.maxcolor','color') || '#ff0000');
-        $(this).data('bgcolor', $(this).data('bgcolor')     ||  getStyle('.'+base.widgetname,'background-color')  || 'none');
-        $(this).data('cursor',  $(this).data('cursor')   || 6);
-        readings[$(this).data('get')] = true;
-        readings[$(this).data('temp')] = true;
-        readings[$(this).data('valve')] = true;
-        readings[$(this).data('mode')] = true;
+        elem.addReading('get');
+        elem.addReading('temp');
+        elem.addReading('valve');
+        elem.addReading('mode');
 
-        base.init_attr($(this));
-        base.init_ui($(this));
+        base.init_attr(elem);
+        base.init_ui(elem);
 	});
   },
   update: function (dev,par) {
-    var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
     isUpdating=true;
-	deviceElements.each(function(index) {
-		var textdisplay=false;
-		var clima = widget_thermostat.getClimaValues( $(this) );
-		switch(clima.desired) {
-		    case $(this).data('off'):   clima.desired=$(this).data('min'); textdisplay=$(this).data('off'); break;
-		    case $(this).data('boost'): clima.desired=$(this).data('max'); textdisplay=$(this).data('boost'); break;
-		}
+    var base = this;
+    // update from desired temp reading
+    this.elements.filterDeviceReading('get',dev,par)
+    .each(function(index) {
+      var elem = $(this);
+      var value = elem.getReading('get').val;
+      if (value) {
+          var textdisplay=false;
+          switch(value) {
+              case elem.data('off'):   value=elem.data('min'); textdisplay=elem.data('off'); break;
+              case elem.data('boost'): value=elem.data('max'); textdisplay=elem.data('boost'); break;
+          }
+          var knob_elem = elem.find('input');
+          knob_elem.val( value ).trigger('change');
+          if(textdisplay)
+              knob_elem.val(textdisplay);
+          knob_elem.css({visibility:'visible'});
+      }
+    });
 
-        var knob_elem = $(this).find('input');
+    //extra reading for current temp
+    base.elements.filterDeviceReading('temp',dev,par)
+    .each(function(idx) {
+      var elem = $(this);
+      var value = elem.getReading('temp').val;
+      if(value) {
+          elem.find('input').trigger(
+              'configure', { "isValue": value }
+          );
+      }
+    });
 
-        if ( ($(this).data('get')==par) &&
-			clima.desired && clima.desired > 0 && knob_elem.data('desvalue') != clima.desired ){	
-			knob_elem.val( clima.desired ).trigger('change');
-			knob_elem.data('desvalue', clima.desired);
-            DEBUG && console.log( 'thermo dev:'+dev+' par:'+par+' change:clima.desired' );
-		}
-		if ( clima.temp && clima.temp > 0 && knob_elem.data('curvalue') != clima.temp ){
-			knob_elem.trigger( 
-				'configure', { "isValue": clima.temp }
-			);		
-			knob_elem.data('curvalue', clima.temp);
-            DEBUG && console.log( 'thermo dev:'+dev+' par:'+par+' change:clima.temp' );
-		}			
-		if ( clima.valve && knob_elem.data('curvalve') != clima.valve ){
-			knob_elem.trigger( 
-				'configure', { "valveValue": clima.valve }
-			);		
-			knob_elem.data('curvalve', clima.valve);
-            DEBUG && console.log( 'thermo dev:'+dev+' par:'+par+' change:clima.valve' );
-		}
-		
-		if(textdisplay)
-		    knob_elem.val(textdisplay);
-		
-		knob_elem.css({visibility:'visible'});
-	});
+    //extra reading for valve value
+    base.elements.filterDeviceReading('valve',dev,par)
+    .each(function(idx) {
+    var elem = $(this);
+    var value = elem.getReading('valve').val;
+    if(value) {
+        elem.find('input').trigger(
+            'configure', { "valveValue": value }
+        );
+    }
+  });
     isUpdating=false;
 },
 });
