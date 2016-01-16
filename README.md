@@ -368,8 +368,8 @@ Use data-url + data-refresh or data-device + data-get, not both.
 - **data-item-diameter** : diameter of the circle (default 52)
 - **data-circle-radius** : radius of each item, in pixel (default 70)
 - **data-border**        : style of border - 'round','square' (default 'round')
-- **data-item-width**    : fixe size for width in px (default value of data-item-diameter)
-- **data-item-height**   : fixe size for height in px (default value of data-item-diameter)
+- **data-item-width**    : fixed size for width in px (default value of data-item-diameter)
+- **data-item-height**   : fixed size for height in px (default value of data-item-diameter)
 - **data-direction**     : position of the items in relation to the center (default full). Options are: top | right | bottom | left | top-right | top-left | bottom-right | bottom-left | top-half | right-half | bottom-half | left-half | full | vertical | horizontal
 - **class**		 : keepopen
 
@@ -405,8 +405,8 @@ all other parameters like switch widget
 - **class**         : fade, rotate  (default: '' means no animation)
 
 ####Swiper widgets
-- **data-width**        : fixe size for width (in % or px)
-- **data-height**       : fixe size for height (in % or px)
+- **data-width**        : fixed size for width (in % or px)
+- **data-height**       : fixed size for height (in % or px)
 - **data-autoplay**     : delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
 - **class**             :
 
@@ -423,8 +423,8 @@ all other parameters like switch widget
 - **data-daysago**     : number of days back from now (default 0)
 - **data-caption**     : name of the chart to show as text
 - **data-yunit**       : unit of the value to show beside of each Y ticks
-- **data-width**       : fixe size for width (in % or px)
-- **data-height**      : fixe size for height (in % or px)
+- **data-width**       : fixed size for width (in % or px)
+- **data-height**      : fixed size for height (in % or px)
 - **class**		       : fullsize, noticks
 
 The chart gets updated every time the data-get reading is changed and after each shortpoll interval  (15 min).
@@ -454,8 +454,8 @@ The chart gets updated every time the data-get reading is changed and after each
 - **data-scrollgroup** 	number to define coupling of the scrolling (shift and zoom). All charts having the same number are scrolled (shifted and zoomed) together.
 - **data-showlegend**	switch to activate/deactivate the initial display of the legend window ('true' or 'false') 	(default 'false')
 - **data-yunit_sec** 	unit of the value to show beside of each Y ticks for secondary y axis.
-- **data-width** 	fixe size for width (in % or px)
-- **data-height** 	fixe size for height (in % or px)
+- **data-width** 	fixed size for width (in % or px)
+- **data-height** 	fixed size for height (in % or px)
 - **class**             fullsize, noticks, nobuttons
 
 data-logfile can be omitted in this case the default value "-" will be used. This means that the current logfile is going to be used.
@@ -470,8 +470,8 @@ The crosshair cursor currently only works dynamically on desktop browsers. On iO
 - **data-get**         : name of the reading where to get the alert value from (default 'STATE')
 - **data-get-on**      : value which trigger to open the dialog (default 'on')
 - **data-get-off**     : value which trigger to close the dialog (default 'off')
-- **data-width**       : fixe size for width (in % or px)
-- **data-height**      : fixe size for height (in % or px)
+- **data-width**       : fixed size for width (in % or px)
+- **data-height**      : fixed size for height (in % or px)
 - **data-draggable**   : allow moving of the dialog (default 'true')
 
 It's important that a ```<div class="dialog">``` inside the widget can be found. See the [basic structure](#dialog) of popup
@@ -492,8 +492,8 @@ All parameters like Label Widgets plus these:
   If the readingsgrouop uses css references, images or similar pieces, then the corresponding files / links need to be also reachable / included
 
 ####Eventmonitor widgets
-- **data-width**       : fixe size for width (default '750px')
-- **data-height**      : fixe size for height (default '450px')
+- **data-width**       : fixed size for width (default '750px')
+- **data-height**      : fixed size for height (default '450px')
 - **device-filter**    : (default '.*')
 - **reading-filter**   : (default '.*')
 - **max-items**        : (default '100')
@@ -520,8 +520,8 @@ All parameters like Switch widgets
 - **data-color**      : rgb value or color name for the normal range of the value bar (default 'orange')
 - **data-color-high** : rgb value or color name for the upper range of the value bar (default 'red')
 - **data-color-low**  : rgb value or color name for the lower range of the value bar (default 'blue')
-- **data-width**      : fixe size for width (default '8px')
-- **data-height**     : fixe size for height (default '220px')
+- **data-width**      : fixed size for width (default '8px')
+- **data-height**     : fixed size for height (default '220px')
 
 - **class**           : nolabels
 
@@ -542,11 +542,31 @@ See [examples](#range) of Range
 - **data-icon-right**              : name of the right icon  (default null)
 - **data-width**                   : width of the link  (default 'auto')
 - **data-height**                  : height of the link (default 'auto')
+- **data-url**                     : URL as a adress to jump to (default '')
+- **data-url-xhr**                 : URL as a adress to call in background (default '')
+- **data-fhem-cmd**                : a FHEM command to call (default '')
 - **data-text-align**              : alignment of text ['left','center','right']  (default 'center')
-- **data-active-pattern**          : RegEx to define active state  (default null)
+- **data-active-pattern**          : RegEx to define active state. Match check will be done against current document location  (default null)
 - **data-active-color**            : rgb value or color name for the text and icon in case active-pattern is matching (default same as data-color)
 - **data-active-background-color** : rgb value or color name for the back in case active-pattern is matching (default same as data-background-color)
 - **data-active-border-color**     : rgb value or color name for the border in case active-pattern is matching (default same as data-border-color)
+
+####Spinner widgets
+- **data-color**                   : rgb value or color name for the level bar (default 'orange')
+- **data-gradient-color**          :
+- **data-background-color**        :
+- **data-icon-left-color**         : rgb value or color name for the left icon (default '#aaa')
+- **data-icon-right-color**        : rgb value or color name for the right icon (default '#aaa')
+- **data-text-color**              : fix color attribute or DEVICE:READING for dynamic setting for the text element if shown (default '#ccc')
+- **data-icon-left**               : name of the left icon   (default '-')
+- **data-icon-right**              : name of the right icon  (default '+')
+- **data-width**                   : fixed size for width (in % or px)
+- **data-height**                  : fixed size for height (in % or px)
+- **data-max**                     : numeric value for the maximal value to tune (default '100')
+- **data-min**                     : numeric value for the minimal value to tune (default '0')
+- **data-step                      : numeric value for each increase/descrease (default '1')
+- **data-unit**                    : string to attach after the numeric value for the text element if shown  (default '')
+- **data-get-value**               : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
 
 Format
 -------
@@ -1520,6 +1540,46 @@ Example for a huge button-like link. Usable to trigger a fhem command
 </div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/link_big.png)
+
+
+###Spinner
+-------
+
+Example for a value spinner. Per default the value is visualized as a level bar
+
+```html
+<div data-type="spinner"
+     data-device="dummy1">
+</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/ftui_spinner1.png)
+
+
+Example for a special value spinner. The value is visualized as a dual color level bar
+
+```html
+<div data-type="spinner"
+    data-device="dummy2"
+    data-min="10"
+    data-max="30"
+    data-gradient-color='["blue","red"]'>
+</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/ftui_spinner2.png)
+
+
+Example for a special value spinner. The value is visualized as numeric text with °-unit
+
+```html
+<div data-type="spinner"
+    data-device="dummy3"
+    data-min="10"
+    data-max="30"
+    data-unit="°">
+</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/ftui_spinner3.png)
+
 
 Specials
 -------

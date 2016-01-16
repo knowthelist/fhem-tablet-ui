@@ -673,6 +673,10 @@ this.diffMinutes = function(date1,date2){
        return (diff/1000/60).toFixed(0);
 }
 
+this.mapColor = function(value) {
+    return getStyle('.'+value,'color') || value;
+};
+
 String.prototype.toDate = function() {
     return dateFromString(this);
 }
