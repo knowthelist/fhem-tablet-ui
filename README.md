@@ -216,6 +216,10 @@ See [examples](#label) of Label
 - **data-cmd**  : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-doubleclick**: timeout to wait for a second click or touch. '0' disables the doubleclick feature. (default '0')
 - **data-countdown**: secondes for the countdown progress control (default: autodetect from 'on-for-timer' command)
+- **data-icon**     			: name of the font-awesome icon.  (default 'ftui-window')
+- **data-background-icon** 		: name of the font-awesome icon for background (default '')
+- **data-off-background-color**         : fix color attribute for OFF state or DEVICE:READING for dynamic setting (default '#505050')
+- **data-off-color**			: fix color attribute for Off state or DEVICE:READING for dynamic setting (default '#505050')
 
 'data-set-on' can also be an array of values to toggle between this values
 
@@ -564,7 +568,7 @@ See [examples](#range) of Range
 - **data-height**                  : fixed size for height (in % or px)
 - **data-max**                     : numeric value for the maximal value to tune (default '100')
 - **data-min**                     : numeric value for the minimal value to tune (default '0')
-- **data-step                      : numeric value for each increase/descrease (default '1')
+- **data-step**                    : numeric value for each increase/descrease (default '1')
 - **data-unit**                    : string to attach after the numeric value for the text element if shown  (default '')
 - **data-get-value**               : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
 

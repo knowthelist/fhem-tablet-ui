@@ -184,9 +184,10 @@ var widget_spinner = $.extend({}, widget_widget, {
         var leaveEventType=((document.ontouchleave!==null)?'mouseout':'touchleave');
 
         // UP button
-        elemRightIcon.on(clickEventType,function() {
+        elemRightIcon.on(clickEventType,function(e) {
             elemRightIcon.fadeTo( "fast" , 0.5);
             base.onClicked.call(base,elem,1);
+            e.preventDefault();
         });
         elemRightIcon.on(releaseEventType + ' ' + leaveEventType,function() {
             elemRightIcon.fadeTo( "fast" , 1);
@@ -195,9 +196,10 @@ var widget_spinner = $.extend({}, widget_widget, {
         });
 
         // DOWN button
-        elemLeftIcon.on(clickEventType,function() {
+        elemLeftIcon.on(clickEventType,function(e) {
             elemLeftIcon.fadeTo( "fast" , 0.5);
             base.onClicked.call(base,elem,-1);
+            e.preventDefault();
         });
         elemLeftIcon.on(releaseEventType + ' ' + leaveEventType,function() {
             elemLeftIcon.fadeTo( "fast" , 1);
