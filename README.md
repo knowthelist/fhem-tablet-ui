@@ -1590,7 +1590,7 @@ Specials
 -------
 **Example** to call a command directly to FHEM. This calls "set dummy1 off"
 ```html
-<div onclick="setFhemStatus('set dummy1 off')">All off!</div>
+<div onclick="setFhemStatus('set dummy1 off');">All off!</div>
 ```
 **Example** to call a Perl function directly to FHEM. This calls the myUtils_HeizungUpDown function located in 99_myUtils.pm:
 	myUtils_HeizungUpDown("WZ.Thermostat_Climate","up")

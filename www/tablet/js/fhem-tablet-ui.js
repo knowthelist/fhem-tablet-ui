@@ -13,7 +13,7 @@ var deviceStates={};
 var readings = {"STATE":true};
 var devices = {};
 var types = [];
-var updateStatus = {};
+
 var DEBUG = false;
 var DEMO = false;
 var debuglevel;
@@ -202,7 +202,6 @@ function initWidgets() {
     readings = {"STATE":true};
     devices = {};
     types = [];
-    updateStatus = {};
     devs = [];
     pars = [];
 
@@ -213,7 +212,6 @@ function initWidgets() {
         $.ajax({async: false,url: "/fhem/tablet/data/"+filename.replace(".html",".dat"),})
         .done ( function( data ) {deviceStates=JSON.parse(data) || {};});
     }
-
     showDeprecationMsg();
 
     //collect required widgets types
@@ -248,6 +246,7 @@ function initWidgets() {
     //get current values of readings not before all widgets are loaded
     $.when.apply(this, deferredArr).then(function() {
         DEBUG && console.log('Request readings from FHEM');
+        invalidateReadings();
         for (var reading in readings) {
             requestFhem(reading);
         }
@@ -259,15 +258,28 @@ function showDeprecationMsg() {
     //end **** (remove this after migration)
 }
 
-function startPollInterval() {
-     clearInterval(timer);
-     timer = setInterval(function () {
+function invalidateReadings() {
+    for (var device in devices) {
+        var params = deviceStates[device];
+        for (var reading in params) {
+            params[reading].valid = false;
+        }
+    }
+}
+
+function startPollInterval(interval) {
+    clearInterval(timer);
+    if (!navigator.onLine) return;
+     timer = setTimeout(function () {
         //get current values of readings every x seconds
-        updateStatus = {};
-		for (var reading in readings) {
+        DEBUG && console.log('start shortpoll');
+        // invalidate all for detection of outdated readings
+        invalidateReadings();
+        for (var reading in readings) {
             requestFhem(reading);
         }
-     }, shortpollInterval); 
+        startPollInterval() ;
+     }, interval || shortpollInterval);
  }
 
 function setFhemStatus(cmdline) {
@@ -349,9 +361,9 @@ function longPoll(roomName) {
 						if ( regDevice.test( line )) {
 							//Bad parse hack, but the JSON is not well formed
 							var room = $.trim( line.match( regDevice )[1] );
-							var key = $.trim( line.match( regDevice )[2] );
+                            var dev = $.trim( line.match( regDevice )[2] );
 							var parname_val = $.trim(line.match( regDevice )[3]);
-							var params = deviceStates[key] || {};
+                            var params = deviceStates[dev] || {};
 							var paraname;
 							var val;
 							if ( regParaname.test(parname_val) ){
@@ -362,20 +374,21 @@ function longPoll(roomName) {
 								var paraname = 'STATE';
 								var val = parname_val;
 							}
-//              console.log('TEST +key:' + key+ '+  para:'+paraname+'+   val:'+val+'+');
+//              console.log('TEST +dev:' + dev+ '+  para:'+paraname+'+   val:'+val+'+');
               // Special hack for readingsGroups (all params will be accepted)
-              if ( ( ( room == 'readingsGroup' ) && (key in devices) ) ||
-							     ( (paraname in readings) && (key in devices) ) ) {
+              if ( ( ( room == 'readingsGroup' ) && (dev in devices) ) ||
+                                 ( (paraname in readings) && (dev in devices) ) ) {
 								var value = {"date": date,
-											  "room": room,
-												"val": val
+                                             "room": room,
+                                              "val": val,
+                                              "valid": true
                                             };
 								params[paraname]=value;
-								deviceStates[key]=params;
-                                DEBUG && console.log(date + ' / ' + key+' / '+paraname+' / '+val);
-                                plugins.update(key,paraname);
+                                deviceStates[dev]=params;
+                                DEBUG && console.log(date + ' / ' + dev+' / '+paraname+' / '+val);
+                                plugins.update(dev,paraname);
 							}
-							//console.log(date + ' / ' + key+' / '+paraname+' / '+val);
+                            //console.log(date + ' / ' + dev+' / '+paraname+' / '+val);
 						}
 					}
 					currLine = lines.length;
@@ -439,34 +452,34 @@ function requestFhem(paraname, devicename) {
         .done (function( data ) {
             runningRequests--;
             if (debuglevel>=5) console.log('finished AJAX requests #'+runningRequests);
+            var paraname = this.paraname;
 			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
             var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\.?[0-9]{0,3}\s+(.*)$/;
             for (var i=0, len=lines.length; i < len; i++) {
                 var date="";
-                var key="";
+                var dev="";
                 var val="";
                 var line = $.trim( lines[i] );
                 if (debuglevel>=6) console.log('line: '+line);
                 if (regCapture.test(line) ) {
                     var groups = line.match( regCapture );
-                    var paraname = this.paraname;
-                    key = $.trim( line.match( regCapture )[1]);
-
-                    if (key in devices){
+                    dev = $.trim( line.match( regCapture )[1]);
+                    if (dev in devices){
                         if (groups.length>2){
                             date = $.trim( groups[2]);
                             val = $.trim( groups[3]);
                         }
-                        if (debuglevel>=5) console.log('requestFhem::done: Line parser result: key:'+key+' paraname:'+paraname+' date:'+date+' val:'+val);
+                        if (debuglevel>=5) console.log('requestFhem::done: Line parser result: dev:'+dev+' paraname:'+paraname+' date:'+date+' val:'+val);
+
+                        var params = deviceStates[dev] || {};
+                        var value = {"date": date, "val": val, "valid": true};
+                        params[paraname]=value;
+                        deviceStates[dev]=params;
 
                         //check if update is necessary
-                        var oldParams = getParameterByName(key,paraname);
+                        var oldParams = getParameterByName(dev,paraname);
                         if(!oldParams || oldParams.val!=val || oldParams.date!=date){
-                            var params = deviceStates[key] || {};
-                            var value = {"date": date, "val": val};
-                            params[paraname]=value;
-                            deviceStates[key]=params;
-                            plugins.update(key,paraname);
+                            plugins.update(dev,paraname);
                         }
 
                     }
@@ -478,11 +491,19 @@ function requestFhem(paraname, devicename) {
     }
 }
 
-$(window).on('beforeunload', function(){
+$(window).on('beforeunload offline', function(){
     doLongPoll = false;
+    clearInterval(timer);
     if (longPollRequest)
         longPollRequest.abort();
     saveStatesLocal();
+    if (debuglevel>=1) console.log('FTUI is offline');
+});
+
+$(window).on('online', function(){
+    if (debuglevel>=1) console.log('FTUI is online');
+    startPollInterval(100);
+    doLongPoll  = ($("meta[name='longpoll']").attr("content") == '1');
 });
 
 function saveStatesLocal() {
