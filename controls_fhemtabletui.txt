@@ -45,8 +45,8 @@ UPD 2015-11-24_23:53:37 74077 www/tablet/fonts/Roboto-Thin-webfont.svg
 UPD 2015-11-24_23:53:37 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2015-11-24_23:53:37 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2015-12-03_15:18:21 14033 www/tablet/index-example.html
-UPD 2016-01-19_15:35:33 27191 www/tablet/js/fhem-tablet-ui.js
-UPD 2016-01-19_16:19:37 15150 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2016-01-19_20:20:33 27688 www/tablet/js/fhem-tablet-ui.js
+UPD 2016-01-19_20:22:19 15478 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2015-12-03_07:04:13 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-01-10_20:02:43 1276 www/tablet/js/widget_button.js
 UPD 2015-12-07_13:16:00 6415 www/tablet/js/widget_calview.js
@@ -80,7 +80,7 @@ UPD 2015-12-03_07:04:14 1204 www/tablet/js/widget_rotor.js
 UPD 2015-12-03_07:04:15 3144 www/tablet/js/widget_select.js
 UPD 2015-12-03_07:04:15 12320 www/tablet/js/widget_simplechart.js
 UPD 2016-01-11_17:23:49 7852 www/tablet/js/widget_slider.js
-UPD 2016-01-17_09:39:00 9708 www/tablet/js/widget_spinner.js
+UPD 2016-01-19_20:41:52 9848 www/tablet/js/widget_spinner.js
 UPD 2015-12-09_14:55:00 3501 www/tablet/js/widget_swiper.js
 UPD 2015-12-03_07:04:15 1122 www/tablet/js/widget_switch.js
 UPD 2015-12-03_07:04:15 1653 www/tablet/js/widget_symbol.js
