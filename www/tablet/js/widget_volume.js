@@ -77,7 +77,7 @@ var widget_volume = $.extend({}, widget_knob, {
   return false;
     },
     onChange: function (v) {
-        startPollInterval();
+        startShortPollInterval();
           if (v > this.o.max - this.o.variance && this.o.lastValue < this.o.min + this.o.variance) {
               knob_elem.val(this.o.min).change();
               return false;

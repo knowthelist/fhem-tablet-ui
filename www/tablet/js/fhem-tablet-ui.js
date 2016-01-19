@@ -20,7 +20,8 @@ var debuglevel;
 var TOAST = true;
 var doLongPoll = false;
 var longPollRequest;
-var timer;
+var shortPollTimer;
+var longPollTimer;
 var dir = '';
 var fhem_dir = '';
 var runningRequests = 0;
@@ -71,9 +72,74 @@ var plugins = {
   }
 }
 
+// ToDo: switch step by step to encapsulation of FTUI as an object literal
+var ftui = {
+    openRequests: 0,
+    init: function() {
+        console.log('init - openRequests:',ftui.openRequests);
+    },
+    shortPoll: function() {
+        var reading = null;
+        ftui.log(1,'start shortpoll');
+        // invalidate all readings for detection of outdated ones
+        for (var device in devices) {
+            var params = deviceStates[device];
+            for (reading in params) {
+                params[reading].valid = false;
+            }
+        }
+        // request only the needed readings from FHEM
+        ftui.openRequests = Object.keys(readings).length;
+        ftui.log(1,'shortPoll - openRequests:'+ftui.openRequests);
+        for (reading in readings) {
+            requestFhem(reading);
+        }
+    },
+    decreaseRequests: function( settings ) {
+        ftui.openRequests--;
+        if (ftui.openRequests === 0){
+            if (DEBUG) ftui.toast("Full refresh done");
+            ftui.log(1,'shortPoll - Done');
+        }
+    },
+    setOnline: function(){
+        if (DEBUG) ftui.toast("Network connected");
+        startShortPollInterval(500);
+        if (!doLongPoll){
+            doLongPoll  = ($("meta[name='longpoll']").attr("content") == '1');
+            if ( doLongPoll )
+                startLongPollInterval(5000);
+        }
+        ftui.log(1,'FTUI is online');
+    },
+    setOffline: function(){
+        if (DEBUG) ftui.toast("Lost network connection");
+        doLongPoll = false;
+        clearInterval(shortPollTimer);
+        clearInterval(longPollTimer);
+        if (longPollRequest)
+            longPollRequest.abort();
+        saveStatesLocal();
+        ftui.log(1,'FTUI is offline');
+    },
+    toast: function(text){
+        if (TOAST)
+            $.toast(text);
+    },
+    log: function(level,text){
+        if (debuglevel >= level)
+            console.log(text);
+    },
+}
 
 // event page is loaded
 $(document).on('ready', function() {
+
+    //new encapsulated FTUI
+    ftui.init();
+    $(ftui).on('shortpollfinished', function(){
+        $.toast("shortpollfinished");
+    });
 
     //add background for modal dialogs
     $("<div id='shade' />").prependTo('body').hide();
@@ -87,10 +153,7 @@ $(document).on('ready', function() {
     if ( doLongPoll ){
         var longpollDelay = $("meta[name='longpoll_delay']").attr("content")
             || (typeof wvcDevices != 'undefined')?shortpollInterval:100;
-        setTimeout(function() {
-            longPoll();
-        }, longpollDelay);
-        shortpollInterval = 15 * 60 * 1000; // 15 minutes
+        startLongPollInterval(longpollDelay);
     }
 
     $("*:not(select)").focus(function(){
@@ -98,7 +161,7 @@ $(document).on('ready', function() {
     });
 
     // refresh every x secs
-    startPollInterval();
+    startShortPollInterval();
 });
 
 function initPage() {
@@ -246,10 +309,7 @@ function initWidgets() {
     //get current values of readings not before all widgets are loaded
     $.when.apply(this, deferredArr).then(function() {
         DEBUG && console.log('Request readings from FHEM');
-        invalidateReadings();
-        for (var reading in readings) {
-            requestFhem(reading);
-        }
+        ftui.shortPoll();
     });
 }
 
@@ -258,33 +318,27 @@ function showDeprecationMsg() {
     //end **** (remove this after migration)
 }
 
-function invalidateReadings() {
-    for (var device in devices) {
-        var params = deviceStates[device];
-        for (var reading in params) {
-            params[reading].valid = false;
-        }
-    }
-}
-
-function startPollInterval(interval) {
-    clearInterval(timer);
-    if (!navigator.onLine) return;
-     timer = setTimeout(function () {
+function startShortPollInterval(delay) {
+    clearInterval(shortPollTimer);
+    shortPollTimer = setTimeout(function () {
         //get current values of readings every x seconds
-        DEBUG && console.log('start shortpoll');
-        // invalidate all for detection of outdated readings
-        invalidateReadings();
-        for (var reading in readings) {
-            requestFhem(reading);
-        }
-        startPollInterval() ;
-     }, interval || shortpollInterval);
+        ftui.shortPoll();
+        startShortPollInterval() ;
+     }, delay || shortpollInterval);
  }
+
+function startLongPollInterval(interval) {
+    if (DEBUG) ftui.toast("Start Longpoll in " + interval/1000 + "s");
+    clearInterval(longPollTimer);
+    longPollTimer = setTimeout(function() {
+        longPoll();
+    }, interval);
+    shortpollInterval = 15 * 60 * 1000; // 15 minutes
+}
 
 function setFhemStatus(cmdline) {
     if (DEMO) {console.log('DEMO-Mode: no setFhemStatus');return;}
-    startPollInterval();
+    startShortPollInterval();
     cmdline = cmdline.replace('  ',' ');
     DEBUG && console.log('send to FHEM: '+cmdline);
 	$.ajax({
@@ -302,9 +356,7 @@ function setFhemStatus(cmdline) {
   	.done ( function( data ) {
         if ( !doLongPoll ){
 			setTimeout(function(){
-                for (var reading in readings) {
-                     requestFhem(reading);
-				}
+                ftui.shortPoll();
 			}, 4000);
 		}
 	});
@@ -314,23 +366,16 @@ var xhr;
 var currLine=0;
 function longPoll(roomName) {
     if (DEMO) {console.log('DEMO-Mode: no longpoll');return;}
-    DEBUG && console.log('start longpoll');
-	
+    ftui.log(1,'Start longpoll');
 	if (xhr)
 		xhr.abort();
+    if (longPollRequest)
+        longPollRequest.abort();
 	currLine=0;
-	
+    if (DEBUG) ftui.toast("Longpoll started");
     longPollRequest=$.ajax({
         url: fhem_dir,
 		cache: false,
-		complete: function() {
-            if ( doLongPoll ){
-                setTimeout(function() {
-                    longPoll();
-                }, 100);
-            }
-		},
-        timeout: 60000,
 		async: true,
 		data: {
 			XHR:1,
@@ -397,6 +442,15 @@ function longPoll(roomName) {
     		}, false);
 			return xhr;
 			}
+    })
+    .fail (function(jqXHR, textStatus, errorThrown) {
+        ftui.log(1,"Error while longpoll: " + textStatus + ": " + errorThrown);
+        ftui.toast("Disconnected from FHEM, retry in 10 seconds");
+        if ( doLongPoll ){
+            setTimeout(function(){
+                longPoll();
+            }, 10000);
+        }
     });
 }
             
@@ -417,16 +471,16 @@ function requestFhem(paraname, devicename) {
         devicelist = $.map(devs, $.trim).join();
     }
 
+    // if too much requests are running in paralell, then delay next request
     if ( runningRequests > REQ_MAX ){
         setTimeout(function() { requestFhem(paraname, devicename) }, REQ_WAIT);
     }
     else{
+        ftui.log(5,'starting new AJAX. still running:'+runningRequests);
 
-     if (debuglevel>=5) console.log('starting new AJAX requests #'+runningRequests);
-
-    /* 'list' is still the fastest cmd to get all important data
-    */
-    if(typeof paraname != 'undefined' && paraname !== 'undefined') {
+        /* 'list' is still the fastest cmd to get all important data
+        */
+        if(typeof paraname != 'undefined' && paraname !== 'undefined') {
         runningRequests++;
         $.ajax({
             async: true,
@@ -446,14 +500,15 @@ function requestFhem(paraname, devicename) {
            }
         })
         .fail (function(jqXHR, textStatus, errorThrown) {
-            TOAST && $.toast("Error: " + textStatus + ": " + errorThrown  + ": " +  runningRequests);
+            if (DEBUG) ftui.toast("Error: " + textStatus + ": " + errorThrown  + ": " +  runningRequests);
             runningRequests--;
+            ftui.decreaseRequests();
         })
         .done (function( data ) {
             runningRequests--;
-            if (debuglevel>=5) console.log('finished AJAX requests #'+runningRequests);
+            if (debuglevel>=5) console.log('finished AJAX request. still running:'+runningRequests);
             var paraname = this.paraname;
-			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
+            var lines = data.replace(/\n\)/g,")\n").split(/\n/);
             var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\.?[0-9]{0,3}\s+(.*)$/;
             for (var i=0, len=lines.length; i < len; i++) {
                 var date="";
@@ -485,25 +540,21 @@ function requestFhem(paraname, devicename) {
                     }
                 }
             }
-            saveStatesLocal();
+            ftui.decreaseRequests();
         });
     }
     }
 }
 
-$(window).on('beforeunload offline', function(){
-    doLongPoll = false;
-    clearInterval(timer);
-    if (longPollRequest)
-        longPollRequest.abort();
-    saveStatesLocal();
-    if (debuglevel>=1) console.log('FTUI is offline');
+$(window).on('beforeunload', function(){
+    ftui.setOffline();
 });
 
-$(window).on('online', function(){
-    if (debuglevel>=1) console.log('FTUI is online');
-    startPollInterval(100);
-    doLongPoll  = ($("meta[name='longpoll']").attr("content") == '1');
+$(window).on('online offline', function() {
+    if (navigator.onLine)
+        ftui.setOnline();
+    else
+        ftui.setOffline();
 });
 
 function saveStatesLocal() {

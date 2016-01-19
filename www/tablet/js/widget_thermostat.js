@@ -104,7 +104,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
   },
   onChange: function (v) {
      //avoid update from polling at the same time
-     startPollInterval();
+     startShortPollInterval();
   },
   onRelease: function (v) {
       if (!isUpdating){
