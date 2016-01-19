@@ -81,7 +81,7 @@ UPD 2015-12-03_07:04:15 3144 www/tablet/js/widget_select.js
 UPD 2015-12-03_07:04:15 12320 www/tablet/js/widget_simplechart.js
 UPD 2016-01-11_17:23:49 7852 www/tablet/js/widget_slider.js
 UPD 2016-01-19_20:41:52 9848 www/tablet/js/widget_spinner.js
-UPD 2015-12-09_14:55:00 3501 www/tablet/js/widget_swiper.js
+UPD 2016-01-19_23:04:42 3853 www/tablet/js/widget_swiper.js
 UPD 2015-12-03_07:04:15 1122 www/tablet/js/widget_switch.js
 UPD 2015-12-03_07:04:15 1653 www/tablet/js/widget_symbol.js
 UPD 2016-01-19_12:56:16 6895 www/tablet/js/widget_thermostat.js
