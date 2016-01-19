@@ -2,7 +2,7 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.4.4
+* Version: 1.5.0
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
@@ -24,9 +24,7 @@ var shortPollTimer;
 var longPollTimer;
 var dir = '';
 var fhem_dir = '';
-var runningRequests = 0;
-var REQ_WAIT = 100;
-var REQ_MAX = 4;
+
 var filename = '';
 var shortpollInterval = 30 * 1000; // 30 seconds
 var devs = [];
@@ -74,9 +72,9 @@ var plugins = {
 
 // ToDo: switch step by step to encapsulation of FTUI as an object literal
 var ftui = {
-    openRequests: 0,
+    requests: {'waiting':0,'running':0,'waitTime':100,'maxRunning':4},
     init: function() {
-        console.log('init - openRequests:',ftui.openRequests);
+        console.log('init - waiting requests:',ftui.requests.waiting);
     },
     shortPoll: function() {
         var reading = null;
@@ -89,16 +87,21 @@ var ftui = {
             }
         }
         // request only the needed readings from FHEM
-        ftui.openRequests = Object.keys(readings).length;
-        ftui.log(1,'shortPoll - openRequests:'+ftui.openRequests);
+        ftui.requests.waiting = Object.keys(readings).length;
+        ftui.requests.length = ftui.requests.waiting;
+        ftui.requests.startTime = new Date();
+        ftui.log(1,'shortPoll - waiting requests:'+ftui.requests.waiting);
         for (reading in readings) {
             requestFhem(reading);
         }
     },
     decreaseRequests: function( settings ) {
-        ftui.openRequests--;
-        if (ftui.openRequests === 0){
-            if (DEBUG) ftui.toast("Full refresh done");
+        ftui.requests.waiting--;
+        if (ftui.requests.waiting === 0){
+            var duration = diffSeconds(ftui.requests.startTime,new Date());
+            if (DEBUG) ftui.toast("Full refresh done in "
+                                  +duration+"s for "
+                                  +ftui.requests.length+" readings");
             ftui.log(1,'shortPoll - Done');
         }
     },
@@ -304,7 +307,6 @@ function initWidgets() {
     var deferredArr = $.map(types, function(widget_type, i) {
         return plugins.load('widget_'+widget_type);
     });
-    runningRequests = 0;
 
     //get current values of readings not before all widgets are loaded
     $.when.apply(this, deferredArr).then(function() {
@@ -472,16 +474,16 @@ function requestFhem(paraname, devicename) {
     }
 
     // if too much requests are running in paralell, then delay next request
-    if ( runningRequests > REQ_MAX ){
-        setTimeout(function() { requestFhem(paraname, devicename) }, REQ_WAIT);
+    if ( ftui.requests.running > ftui.requests.maxRunning ){
+        setTimeout(function() { requestFhem(paraname, devicename) }, ftui.requests.waitTime);
     }
     else{
-        ftui.log(5,'starting new AJAX. still running:'+runningRequests);
+        ftui.log(5,'starting new AJAX. still running:'+ftui.requests.running);
 
         /* 'list' is still the fastest cmd to get all important data
         */
         if(typeof paraname != 'undefined' && paraname !== 'undefined') {
-        runningRequests++;
+        ftui.requests.running++;
         $.ajax({
             async: true,
             timeout: 15000,
@@ -500,13 +502,13 @@ function requestFhem(paraname, devicename) {
            }
         })
         .fail (function(jqXHR, textStatus, errorThrown) {
-            if (DEBUG) ftui.toast("Error: " + textStatus + ": " + errorThrown  + ": " +  runningRequests);
-            runningRequests--;
+            if (DEBUG) ftui.toast("Error: " + textStatus + ": " + errorThrown  + ": " +  ftui.requests.running);
+            ftui.requests.running--;
             ftui.decreaseRequests();
         })
         .done (function( data ) {
-            runningRequests--;
-            if (debuglevel>=5) console.log('finished AJAX request. still running:'+runningRequests);
+            ftui.requests.running--;
+            if (debuglevel>=5) console.log('finished AJAX request. still running:'+ftui.requests.running);
             var paraname = this.paraname;
             var lines = data.replace(/\n\)/g,")\n").split(/\n/);
             var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\.?[0-9]{0,3}\s+(.*)$/;
@@ -526,13 +528,13 @@ function requestFhem(paraname, devicename) {
                         }
                         if (debuglevel>=5) console.log('requestFhem::done: Line parser result: dev:'+dev+' paraname:'+paraname+' date:'+date+' val:'+val);
 
+                        var oldParams = getParameterByName(dev,paraname);
                         var params = deviceStates[dev] || {};
                         var value = {"date": date, "val": val, "valid": true};
                         params[paraname]=value;
                         deviceStates[dev]=params;
 
                         //check if update is necessary
-                        var oldParams = getParameterByName(dev,paraname);
                         if(!oldParams || oldParams.val!=val || oldParams.date!=date){
                             plugins.update(dev,paraname);
                         }
@@ -741,8 +743,13 @@ this.dateFromString = function (str) {
 }
 
 this.diffMinutes = function(date1,date2){
-       diff  = new Date(date2 - date1);
+       var diff  = new Date(date2 - date1);
        return (diff/1000/60).toFixed(0);
+}
+
+this.diffSeconds = function(date1,date2){
+       var diff  = new Date(date2 - date1);
+       return (diff/1000).toFixed(1);
 }
 
 this.mapColor = function(value) {
