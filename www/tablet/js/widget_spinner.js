@@ -52,6 +52,7 @@ var widget_spinner = $.extend({}, widget_widget, {
             }
         }
         if ( elem.hasClass('value') || elem.hasClass('valueonly') ) {
+            value = (elem.data('step')<1)?Number(value).toFixed(1):value;
             elem.find('.spinnerText').text(value+elem.data('unit'));
          }
     },
@@ -189,10 +190,11 @@ var widget_spinner = $.extend({}, widget_widget, {
             base.onClicked.call(base,elem,1);
             e.preventDefault();
         });
-        elemRightIcon.on(releaseEventType + ' ' + leaveEventType,function() {
+        elemRightIcon.on(releaseEventType + ' ' + leaveEventType,function(e) {
             elemRightIcon.fadeTo( "fast" , 1);
             if (elem.delayTimer)
                 base.onReleased.call(base,elem);
+            e.preventDefault();
         });
 
         // DOWN button
@@ -201,10 +203,11 @@ var widget_spinner = $.extend({}, widget_widget, {
             base.onClicked.call(base,elem,-1);
             e.preventDefault();
         });
-        elemLeftIcon.on(releaseEventType + ' ' + leaveEventType,function() {
+        elemLeftIcon.on(releaseEventType + ' ' + leaveEventType,function(e) {
             elemLeftIcon.fadeTo( "fast" , 1);
             if (elem.delayTimer)
                 base.onReleased.call(base,elem);
+            e.preventDefault();
         });
     },
     init: function () {
