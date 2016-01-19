@@ -211,7 +211,6 @@ See [examples](#label) of Label
 ####Push widgets
 - **data-set**    : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-set-on** : value (or an array of values) to send when the the button get pressed. (default '')
-- **data-icon**   : name of the font-awesome icon. 
 - **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
 - **data-cmd**  : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-doubleclick**: timeout to wait for a second click or touch. '0' disables the doubleclick feature. (default '0')
@@ -412,7 +411,7 @@ all other parameters like switch widget
 - **data-width**        : fixed size for width (in % or px)
 - **data-height**       : fixed size for height (in % or px)
 - **data-autoplay**     : delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
-- **class**             :
+- **class**             : nopagination, navbuttons
 
 
 ####Simplechart widgets

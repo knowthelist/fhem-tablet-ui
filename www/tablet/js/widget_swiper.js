@@ -65,6 +65,7 @@ var widget_swiper= $.extend({}, widget_widget, {
             prevButton: elemPrev,
             moveStartThreshold:70,
             autoplay:elem.data('autoplay'),
+            autoplayDisableOnInteraction:false,
             hashnav: elem.hasClass('hashnav'),
         });
 
@@ -77,6 +78,15 @@ var widget_swiper= $.extend({}, widget_widget, {
                     swiper.slideTo(idx);
              });
         }
+        elem.find('ul>li').click(function(event) {
+            event.preventDefault();
+            //more functionality here
+        });
+
+        // Refresh swiper after it became visible
+        elem.closest('[data-type="popup"]').on("fadein", function(event) {
+            swiper.update();
+        });
 
         return elem;
     },
