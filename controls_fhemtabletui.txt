@@ -45,8 +45,8 @@ UPD 2015-11-24_23:53:37 74077 www/tablet/fonts/Roboto-Thin-webfont.svg
 UPD 2015-11-24_23:53:37 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2015-11-24_23:53:37 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2015-12-03_15:18:21 14033 www/tablet/index-example.html
-UPD 2016-01-19_20:20:33 27688 www/tablet/js/fhem-tablet-ui.js
-UPD 2016-01-19_20:22:19 15478 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2016-01-20_11:10:37 28048 www/tablet/js/fhem-tablet-ui.js
+UPD 2016-01-20_11:13:53 15709 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2015-12-03_07:04:13 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-01-10_20:02:43 1276 www/tablet/js/widget_button.js
 UPD 2015-12-07_13:16:00 6415 www/tablet/js/widget_calview.js
