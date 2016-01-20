@@ -271,7 +271,7 @@ function initWidgets() {
     devs = [];
     pars = [];
 
-    //restore divece states from storage
+    //restore device states from storage
     if (!DEMO)
         deviceStates=JSON.parse(localStorage.getItem('deviceStates')) || {};
     else {
@@ -445,10 +445,21 @@ function longPoll(roomName) {
 			return xhr;
 			}
     })
+    .done ( function( data ) {
+        ftui.log(1,"Disconnected from FHEM - poll done");
+        ftui.toast("Disconnected from FHEM");
+        if ( doLongPoll ){
+            ftui.toast("Retry to connect in 10 seconds");
+            setTimeout(function(){
+                longPoll();
+            }, 10000);
+        }
+    })
     .fail (function(jqXHR, textStatus, errorThrown) {
         ftui.log(1,"Error while longpoll: " + textStatus + ": " + errorThrown);
-        ftui.toast("Disconnected from FHEM, retry in 10 seconds");
+        ftui.toast("Disconnected from FHEM");
         if ( doLongPoll ){
+            ftui.toast("Retry to connect in 10 seconds");
             setTimeout(function(){
                 longPoll();
             }, 10000);
