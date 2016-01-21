@@ -103,6 +103,7 @@ a:active {
 
 }
 .container.round{ border-radius: 17px;}
+.container.circular{ border-radius: 30px;}
 .container.margin{ margin: 7px; }
 .container.margin>.fa{ margin-left: 7px; }
 .container.padding{ padding: 7px; }
@@ -149,10 +150,10 @@ a:active {
 .col-1-4 { width: 24% !important; }
 .col-1-6 { width: 16.67% !important; }
 .col-1-8 { width: 12.5% !important; }
-.col-1-5 { width: 19.5% !important; }
-.col-2-5 { width: 39.5% !important; }
-.col-3-5 { width: 59.5% !important; }
-.col-4-5 { width: 79.5% !important; }
+.col-1-5 { width: 19% !important; }
+.col-2-5 { width: 39% !important; }
+.col-3-5 { width: 59% !important; }
+.col-4-5 { width: 79% !important; }
 
 .bold {
     font-weight: bold !important;
@@ -355,7 +356,7 @@ i#warn {
 }
 
 i#warn-back {
-    font-size: 75% !important;
+    font-size: 80% !important;
     margin-left:27%;
     margin-top:-31%;
     color: #882200;
@@ -402,17 +403,21 @@ position:relative;
 }
 
 input {
-        visibility:hidden;
+    visibility:hidden;
+}
+
+.autohide.invalid{
+    display: none;
 }
 
 .slider_vertical, .level_vertical{
-margin:10px 0px 0px 20% !important;
+    margin:10px 0px 0px 20% !important;
 }
 .slider_vertical .narrow, .level_vertical{
-margin:10px 0px 0px -5px !important;
+    margin:10px 0px 0px -5px !important;
 }
 .slider_horizontal, .level_horizontal{
-margin:12px 20px 25px 5px !important;
+    margin:12px 20px 25px 5px !important;
 }
 .range-min,
 .range-max {
@@ -420,7 +425,7 @@ margin:12px 20px 25px 5px !important;
 }
 
 .slider_vertical .slidertext{
-margin:10px 0px 0px 30% !important;
+    margin:10px 0px 0px 30% !important;
 }
 
 .big > .vertical .range-bar {
@@ -434,7 +439,7 @@ margin:10px 0px 0px 30% !important;
 }
 
 .jq-toast-wrap{
-        z-index:100;
+    z-index:100;
 }
 
 ul, ol {
@@ -442,12 +447,9 @@ ul, ol {
 }
 
 ul,li {
-margin:0;
-padding:0;
+    margin:0;
+    padding:0;
 }
-
-
-
 .gridster > ul, .fullsize{
     width: 100% !important;
     height: 100% !important;
@@ -614,6 +616,7 @@ select::-ms-expand {
 [data-type="select"] {
     margin-top: 10px;
 }
+
 
 [class*='col-'] > .select{
   width: 90%;

@@ -74,7 +74,6 @@ var plugins = {
 var ftui = {
     requests: {'waiting':0,'running':0,'waitTime':100,'maxRunning':4},
     init: function() {
-        console.log('init - waiting requests:',ftui.requests.waiting);
     },
     shortPoll: function() {
         var reading = null;
@@ -103,7 +102,21 @@ var ftui = {
                                   +duration+"s for "
                                   +ftui.requests.length+" readings");
             ftui.log(1,'shortPoll - Done');
+            ftui.onUpdateDone();
         }
+    },
+    onUpdateDone: function(){
+        ftui.checkInvalidElements();
+    },
+    checkInvalidElements: function(){
+        $('div.autohide[data-get]').each(function(index){
+            var elem = $(this);
+            var valid = elem.getReading('get').valid;
+            if ( valid && valid===true )
+                elem.removeClass('invalid');
+            else
+                elem.addClass('invalid');
+        });
     },
     setOnline: function(){
         if (DEBUG) ftui.toast("Network connected");
@@ -124,6 +137,15 @@ var ftui = {
             longPollRequest.abort();
         saveStatesLocal();
         ftui.log(1,'FTUI is offline');
+    },
+    restartLongPoll: function(){
+        ftui.toast("Disconnected from FHEM");
+        if ( doLongPoll ){
+            ftui.toast("Retry to connect in 10 seconds");
+            setTimeout(function(){
+                longPoll();
+            }, 10000);
+        }
     },
     toast: function(text){
         if (TOAST)
@@ -369,10 +391,10 @@ var currLine=0;
 function longPoll(roomName) {
     if (DEMO) {console.log('DEMO-Mode: no longpoll');return;}
     ftui.log(1,'Start longpoll');
-	if (xhr)
+    /*if (xhr)
 		xhr.abort();
     if (longPollRequest)
-        longPollRequest.abort();
+        longPollRequest.abort();*/
 	currLine=0;
     if (DEBUG) ftui.toast("Longpoll started");
     longPollRequest=$.ajax({
@@ -446,24 +468,12 @@ function longPoll(roomName) {
 			}
     })
     .done ( function( data ) {
-        ftui.log(1,"Disconnected from FHEM - poll done");
-        ftui.toast("Disconnected from FHEM");
-        if ( doLongPoll ){
-            ftui.toast("Retry to connect in 10 seconds");
-            setTimeout(function(){
-                longPoll();
-            }, 10000);
-        }
+        ftui.log(1,"Disconnected from FHEM - poll done - "+data);
+        ftui.restartLongPoll();
     })
     .fail (function(jqXHR, textStatus, errorThrown) {
         ftui.log(1,"Error while longpoll: " + textStatus + ": " + errorThrown);
-        ftui.toast("Disconnected from FHEM");
-        if ( doLongPoll ){
-            ftui.toast("Retry to connect in 10 seconds");
-            setTimeout(function(){
-                longPoll();
-            }, 10000);
-        }
+        ftui.restartLongPoll();
     });
 }
             
