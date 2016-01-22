@@ -135,8 +135,13 @@ var ftui = {
         clearInterval(longPollTimer);
         if (longPollRequest)
             longPollRequest.abort();
-        saveStatesLocal();
+        ftui.saveStatesLocal();
         ftui.log(1,'FTUI is offline');
+    },
+    saveStatesLocal: function(){
+        //save deviceStates into localStorage
+        var dataToStore = JSON.stringify(deviceStates);
+        localStorage.setItem('deviceStates', dataToStore);
     },
     restartLongPoll: function(){
         ftui.toast("Disconnected from FHEM");
@@ -570,21 +575,17 @@ function requestFhem(paraname, devicename) {
 }
 
 $(window).on('beforeunload', function(){
+    ftui.log(5,'beforeunload');
     ftui.setOffline();
 });
 
 $(window).on('online offline', function() {
+    ftui.log(5,'online offline');
     if (navigator.onLine)
         ftui.setOnline();
     else
         ftui.setOffline();
 });
-
-function saveStatesLocal() {
-    //save deviceStates into localStorage
-    var dataToStore = JSON.stringify(deviceStates);
-    localStorage.setItem('deviceStates', dataToStore);
-}
 
 function loadplugin(plugin, success, error, async) {
     return dynamicload('js/'+plugin+'.js', success, error, async);

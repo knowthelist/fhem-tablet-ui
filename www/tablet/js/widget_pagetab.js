@@ -25,6 +25,7 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
         // set return timer
         localStorage.setItem('pagetab_lastUrl',goUrl);
         this.startReturnTimer();
+        ftui.saveStatesLocal();
 
         DEBUG && console.log( 'load page called with : ' + goUrl);
         if ( doPush ) {
