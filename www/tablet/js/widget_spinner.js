@@ -16,6 +16,7 @@ var widget_spinner = $.extend({}, widget_widget, {
         var min         = parseFloat(( $.isNumeric(elem.data('min')) ) ? elem.data('min') : elem.getReading('min').val);
         var width       = parseFloat(elem.data('width'))/2;
         var value       = parseFloat(elem.data('value'));
+        var fix         = parseInt(elem.data('fix'));
         var color       = elem.mappedColor('color');
         var gradColor   = elem.data('gradient-color');
         var valueRel    = (value-min) / (max-min);
@@ -24,18 +25,18 @@ var widget_spinner = $.extend({}, widget_widget, {
         if (levelRange ) {
            // draw bar position / width
            levelRange.css({
-              left: elem.hasClass('positiononly')  ? (pixel-valueRel*10) + 'px': '0px',
+              left:  elem.hasClass('positiononly') ? (pixel-valueRel*10) + 'px': '0px',
               width: elem.hasClass('positiononly') ? '10px' : pixel + 'px',
             });
             // draw gradient bar
             if ( $.isArray(gradColor) && gradColor.length > 1 ){
-                var mid      = 100 * valueRel - 50;
-                var stopHigh = parseInt(mid-mid/2);
-                var stopLow  = parseInt(mid+mid/2);
-                var colorLow = mapColor(gradColor[0]);
+                var mid       = 100 * valueRel - 50;
+                var stopHigh  = parseInt(mid-mid/2);
+                var stopLow   = parseInt(mid+mid/2);
+                var colorLow  = mapColor(gradColor[0]);
                 var colorHigh = mapColor(gradColor[1]);
-                var gradient = colorHigh +' '+ stopHigh +'%,'+
-                               colorLow  +' '+ stopLow +'%)';
+                var gradient  = colorHigh +' '+ stopHigh +'%,'+
+                                colorLow  +' '+ stopLow +'%)';
                 if (elem.hasClass('positiononly')){
                     levelRange.css({
                       background: this.getGradientColor(colorLow,colorHigh,valueRel),
@@ -51,10 +52,9 @@ var widget_spinner = $.extend({}, widget_widget, {
                 levelRange.css({ background: color, });
             }
         }
-        if ( elem.hasClass('value') || elem.hasClass('valueonly') ) {
-            value = (elem.data('step')<1)?Number(value).toFixed(1):value;
-            elem.find('.spinnerText').text(value+elem.data('unit'));
-         }
+        elem.data('textvalue',  (-1<fix&&fix<=20)?Number(value).toFixed(fix) : value);
+        if ( elem.hasClass('value') || elem.hasClass('valueonly') )
+            elem.find('.spinnerText').text(elem.data('textvalue') + elem.data('unit'));
     },
     onClicked: function(elem,factor) {
         var base    = this;
@@ -76,19 +76,19 @@ var widget_spinner = $.extend({}, widget_widget, {
             elem.repeatTimer = setInterval(function () {
                 // long press
                 changeValue();
-            }, 80);
-        }, 500);
+            }, elem.data('shortdelay'));
+        }, elem.data('longdelay'));
     },
     onReleased: function(elem) {
         clearTimeout(elem.repeatTimer);
         clearTimeout(elem.delayTimer);
             var base = this;
             elem.delayTimer = setTimeout(function () {
-                var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('set'),elem.data('value')].join(' ');
+                var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('set'),elem.data('textvalue')].join(' ');
                 setFhemStatus(cmdl);
                 TOAST && $.toast(cmdl);
                 elem.delayTimer=0;
-            }, 500);
+            }, elem.data('longdelay'));
     },
     init_attr : function(elem) {
         elem.initData('get'                     ,'STATE');
@@ -102,12 +102,15 @@ var widget_spinner = $.extend({}, widget_widget, {
         elem.initData('text-color'              ,getStyle('.'+this.widgetname,'text-color')    || '#ccc');
         elem.initData('icon-left'               ,elem.data('icon') || null);
         elem.initData('icon-right'              ,null);
+        elem.initData('shortdelay'              ,80);
+        elem.initData('longdelay'               ,500);
         elem.initData('width'                   ,'200');
         elem.initData('height'                  ,'50');
         elem.initData('value'                   ,'0');
         elem.initData('min'                     ,'0');
         elem.initData('max'                     ,'100');
         elem.initData('step'                    ,'1');
+        elem.initData('fix'                     ,this.precision( elem.data('step')));
         elem.initData('unit'                    ,'');
         elem.initData('get-value'               ,elem.data('part') || -1);
 

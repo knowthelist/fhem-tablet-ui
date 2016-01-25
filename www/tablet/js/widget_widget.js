@@ -98,6 +98,11 @@ var widget_widget = {
 
      return '#' + diff_red + diff_green + diff_blue;
     },
+    precision: function(a) {
+        var s = a + "",
+        d = s.indexOf('.') + 1;
+        return !d ? 0 : s.length - d;
+    },
 }
 $.fn.filterData = function(key, value) {
     return this.filter(function() {
