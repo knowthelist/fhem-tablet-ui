@@ -80,14 +80,14 @@ UPD 2015-12-03_07:04:14 1204 www/tablet/js/widget_rotor.js
 UPD 2015-12-03_07:04:15 3144 www/tablet/js/widget_select.js
 UPD 2015-12-03_07:04:15 12320 www/tablet/js/widget_simplechart.js
 UPD 2016-01-11_17:23:49 7852 www/tablet/js/widget_slider.js
-UPD 2016-01-19_20:41:52 9848 www/tablet/js/widget_spinner.js
+UPD 2016-01-25_22:25:16 10185 www/tablet/js/widget_spinner.js
 UPD 2016-01-19_23:04:42 3853 www/tablet/js/widget_swiper.js
 UPD 2015-12-03_07:04:15 1122 www/tablet/js/widget_switch.js
 UPD 2015-12-03_07:04:15 1653 www/tablet/js/widget_symbol.js
 UPD 2016-01-19_12:56:16 6895 www/tablet/js/widget_thermostat.js
 UPD 2016-01-19_12:56:33 6629 www/tablet/js/widget_volume.js
 UPD 2016-01-17_23:12:49 22344 www/tablet/js/widget_weather.js
-UPD 2016-01-16_12:22:17 5029 www/tablet/js/widget_widget.js
+UPD 2016-01-25_21:15:23 5159 www/tablet/js/widget_widget.js
 UPD 2015-12-07_15:36:14 11677 www/tablet/lib/fa-multi-button.js
 UPD 2015-12-07_15:38:09 5865 www/tablet/lib/fa-multi-button.min.js
 UPD 2015-11-17_22:49:00 17041 www/tablet/lib/farbtastic.js
