@@ -90,6 +90,10 @@ Currently there are more then 20 types of widgets in the base installation.
 - **highchart** : multistyle chart for multiple values
 - **checkbox** : Toggle any command to FHEM (e.g. on / off)
 - **range** : vertical bar graph to show a values range between min/max value and high/low limits with different colors
+- **colorwheel** : select a color from a wheel
+- **link** : link or button link element
+- **spinner** : is a control element to adjust a value by clicking on the up or down icon
+- **departure** : a pulic transport departure schedule widget
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -570,6 +574,17 @@ See [examples](#range) of Range
 - **data-step**                    : numeric value for each increase/descrease (default '1')
 - **data-unit**                    : string to attach after the numeric value for the text element if shown  (default '')
 - **data-get-value**               : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
+
+####Departure widgets
+- **data-color**                   :
+- **data-cmd**                     :  (default 'get')
+- **data-background-color**        : rgb value or color name for the widget background (default '#C0C0C0')
+- **data-icon-color**              : rgb value or color name for the left icon (default '#aa6900')
+- **data-text-color**              : fix color attribute (default '#ddd')
+- **data-icon**                    : name of the left icon   (default 'H')
+- **data-width**                   : fixed size for width (in % or px, default '200px')
+- **data-height**                  : fixed size for height (in % or px, default '250px')
+- **data-interval**                : auto refresh interval in secondes (default '120', 0 means no auto refresh)
 
 Format
 -------
@@ -1653,7 +1668,7 @@ I'm unable to work now and I need to buy a new one.
 Update 2015-11-04: my old 2007 MacBook runs again with the previous HDD, but totaly slow and out of space.
 
 * Goal  : 13'' MacBook Pro 1445€ 
-* Status: 919€ (21.01.2016) -> many thanks to all donators - 526€ still required  :-)
+* Status: 928€ (27.01.2016) -> many thanks to all donators - 517€ still required  :-)
 
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PD4C2XM2VTD9A"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" alt="[paypal]" /></a>
