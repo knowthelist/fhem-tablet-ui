@@ -194,7 +194,7 @@ See [examples](#symbol) of Symbol
 - **data-limits** : a array of numeric or RegEx values for comparing with the current value
 - **data-limits-get**  : name of the DEVICE:Reading to retrieve the value for comparing with the limits array (default: data-device:data-get)
 - **data-limits-part**  : filter for the value. part number of the space separated value or an RegEx (default '-1' -> all)
-- **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
+- **data-unit** : add a unit after a numeric value.
 - **data-substitution**: regex-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
 - **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x, circleborder
 
@@ -246,6 +246,7 @@ See [examples](#label) of Label
 - **data-displayInput**  : Show the value (default true);
 - **data-font**  :  (default '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
 - **data-font-weight**
+- **data-unit** : add a unit after the center value.
 - **class**		: mini, small, large, readonly
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/knob.png)
@@ -278,6 +279,7 @@ all parameters from knob widget plus following additional parameters
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
 - **data-tickstep** : distance between ticks (default 4|20)
+- **data-unit** : add a unit after the desired value.
 - **class**		: mini, small, big, bigger, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
 
 ####Homestatus widget

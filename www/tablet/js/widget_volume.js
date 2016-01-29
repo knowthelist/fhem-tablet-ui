@@ -108,7 +108,11 @@ var widget_volume = $.extend({}, widget_knob, {
               this.$.data('curval', v);
         }
     },
-    onFormat: function(v) { return v; },
+    onFormat: function (v) {
+        //fix digits count
+        var ret = (this.step<1)?Number(v).toFixed(1):v
+        return (this.unit)?ret+unescape(this.unit):ret;
+    },
     init: function () {
     var base=this;
     this.elements = $('div[data-type="'+this.widgetname+'"]');

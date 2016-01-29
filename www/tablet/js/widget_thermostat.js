@@ -119,12 +119,13 @@ var widget_thermostat = $.extend({}, widget_knob, {
                 v = mode + ' ' + v;
             var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v;
             setFhemStatus(cmdl);
-            TOAST && $.toast(cmdl);
+            ftui.toast(cmdl);
       }
   },
   onFormat: function (v) {
      //fix digits count
-     return (this.step<1)?Number(v).toFixed(1):v;
+     var ret = (this.step<1)?Number(v).toFixed(1):v
+     return (this.unit)?ret+unescape(this.unit):ret;
   },
   init: function () {
     var base=this;
@@ -187,7 +188,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
       if(value) {
           elem.find('input').trigger(
               'configure', { "isValue": value }
-          );
+          ).trigger('change');
       }
     });
 
@@ -199,7 +200,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
     if(value) {
         elem.find('input').trigger(
             'configure', { "valveValue": value }
-        );
+        ).trigger('change');
     }
   });
     isUpdating=false;

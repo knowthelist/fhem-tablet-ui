@@ -17,9 +17,8 @@ var widget_knob = $.extend({}, widget_widget, {
                  var val = this.o.setValue.replace('$v',v.toString());
                  var cmdl = [this.o.cmd,device,this.o.set,val].join(' ');
                  setFhemStatus(cmdl);
-                 TOAST && $.toast(cmdl);
+                 ftui.toast(cmdl);
              }
-             this.$.data('curval', v);
        }
     },
     onFormat: function(v) { return v; },
@@ -53,7 +52,7 @@ var widget_knob = $.extend({}, widget_widget, {
 
         elem.data('font',       elem.data('font')       || getStyle('.'+this.widgetname,'font-family')  || '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
         elem.data('font-weight',elem.data('font-weight')|| getStyle('.'+this.widgetname,'font')         || 'normal');
-
+        elem.initData('unit'    ,'');
     },
     init_ui : function(elem) {
        var base = this;
@@ -62,7 +61,6 @@ var widget_knob = $.extend({}, widget_widget, {
            value:       elem.data('initvalue'),
            disabled :   true,
        }).data(elem.data())
-         .data('curval', elem.data('initvalue'))
          .appendTo(elem);
 
        knob_elem.knob({
@@ -91,6 +89,7 @@ var widget_knob = $.extend({}, widget_widget, {
           'set':            elem.data('set'),
           'mode':           elem.data('mode'),
           'cursor':         elem.data('cursor'),
+          'unit':           elem.data('unit'),
           'setValue':       elem.data('set-value'),
           'touchPosition':  elem.data('touchposition') || 'left',
           'draw' :          base.drawDial,
