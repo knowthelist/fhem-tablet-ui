@@ -65,7 +65,7 @@ UPD 2015-12-03_07:04:14 8792 www/tablet/js/widget_highchart.js
 UPD 2015-12-03_07:04:14 8542 www/tablet/js/widget_highchart3d.js
 UPD 2015-12-03_07:04:14 9907 www/tablet/js/widget_homestatus.js
 UPD 2015-12-08_15:17:56 3586 www/tablet/js/widget_image.js
-UPD 2015-12-11_13:56:37 6230 www/tablet/js/widget_knob.js
+UPD 2016-01-30_00:12:16 6220 www/tablet/js/widget_knob.js
 UPD 2016-01-11_16:21:53 4641 www/tablet/js/widget_label.js
 UPD 2015-12-03_07:04:14 5260 www/tablet/js/widget_level.js
 UPD 2015-12-07_12:39:34 5537 www/tablet/js/widget_link.js
@@ -86,8 +86,8 @@ UPD 2016-01-25_22:25:16 10185 www/tablet/js/widget_spinner.js
 UPD 2016-01-19_23:04:42 3853 www/tablet/js/widget_swiper.js
 UPD 2015-12-03_07:04:15 1122 www/tablet/js/widget_switch.js
 UPD 2015-12-03_07:04:15 1653 www/tablet/js/widget_symbol.js
-UPD 2016-01-19_12:56:16 6895 www/tablet/js/widget_thermostat.js
-UPD 2016-01-19_12:56:33 6629 www/tablet/js/widget_volume.js
+UPD 2016-01-30_00:11:21 6980 www/tablet/js/widget_thermostat.js
+UPD 2016-01-30_00:10:20 6762 www/tablet/js/widget_volume.js
 UPD 2016-01-17_23:12:49 22344 www/tablet/js/widget_weather.js
 UPD 2016-01-25_21:15:23 5159 www/tablet/js/widget_widget.js
 UPD 2015-12-07_15:36:14 11677 www/tablet/lib/fa-multi-button.js
