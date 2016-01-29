@@ -378,7 +378,7 @@ Use data-url + data-refresh or data-device + data-get, not both.
 - **data-item-width**    : fixed size for width in px (default value of data-item-diameter)
 - **data-item-height**   : fixed size for height in px (default value of data-item-diameter)
 - **data-direction**     : position of the items in relation to the center (default full). Options are: top | right | bottom | left | top-right | top-left | bottom-right | bottom-left | top-half | right-half | bottom-half | left-half | full | vertical | horizontal
-- **class**		 : keepopen
+- **class**		 : keepopen, noshade
 
 ####Playstream widgets
 - **data-url**      : URL of the Radio stream
@@ -1668,7 +1668,7 @@ I'm unable to work now and I need to buy a new one.
 Update 2015-11-04: my old 2007 MacBook runs again with the previous HDD, but totaly slow and out of space.
 
 * Goal  : 13'' MacBook Pro 1445€ 
-* Status: 928€ (27.01.2016) -> many thanks to all donators - 517€ still required  :-)
+* Status: 928€ (29.01.2016) -> many thanks to all donators - 517€ still required  :-)
 
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PD4C2XM2VTD9A"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" alt="[paypal]" /></a>

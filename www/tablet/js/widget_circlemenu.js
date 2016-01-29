@@ -33,7 +33,8 @@ var widget_circlemenu= {
                         setTimeout(function(){showModal(false);},1000);
                     },parent.data('close-after')||Math.max(4000, 1000*(parent.find('li').length-1)));
                 }
-               showModal(true);
+               if (!elem.parent.hasClass("noshade"))
+                showModal(true);
             },
         })
         .addClass('menu')
