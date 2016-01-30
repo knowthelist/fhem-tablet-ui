@@ -20,6 +20,14 @@
     font-size: 16px;
     font-weight: bold;
 }
+.departure.big .icon {
+    top: 8px;
+    left: 16px;
+    width: 45px;
+    height: 45px;
+    font-size: 28px;
+    border-width: 5px;
+}
 .departure  .icon.fa{
     padding-bottom: 0px;
     border-width: 0px;
@@ -49,9 +57,16 @@
     font-size: 18px;
     font-weight: bold;
 }
+.departure.big .station{
+    font-size: 31px;
+ }
 .departure .header{
     color: #222;
     margin-top: 20px;
+}
+.departure.big .header{
+    font-size: 23px;
+    margin-top: 24px;
 }
 .departure .header .destination{
     width: 52%;
@@ -81,13 +96,17 @@
     top: 54px;
     left: 8px;
     width: 92%;
-    height: 70%;
+    height: 69%;
     background-color: #484848;
     padding-bottom: 3px;
     padding-top: 3px;
     overflow: hidden;
 }
-
+.departure.big .listText {
+    top: 17%;
+    left: 4%;
+    height: 74%
+}
 .DVB.departure{
     color: #EFC822 !important;
     background-color: #CCAE20 !important;
