@@ -290,7 +290,7 @@ function initReadingsArray(get) {
     }
 }
 
-function initWidgets() {
+function initWidgets(sel ="") {
 
     readings = {"STATE":true};
     devices = {};
@@ -308,7 +308,7 @@ function initWidgets() {
     showDeprecationMsg();
 
     //collect required widgets types
-    $('div[data-type]').each(function(index){
+    $(sel+' div[data-type]').each(function(index){
         var type = $(this).data("type");
         if (types.indexOf(type)<0){
               types.push(type);
@@ -316,7 +316,7 @@ function initWidgets() {
     });
 
     //collect required devices
-    $('div[data-device]').each(function(index){
+    $(sel+' div[data-device]').each(function(index){
         var device = $(this).data("device");
         if(!devices[device] && typeof device != 'undefined' && device !== 'undefined' ){
             devices[device] = true;
@@ -326,7 +326,7 @@ function initWidgets() {
 
     //collect required readings
     DEBUG && console.log('Collecting required readings');
-    $('[data-get]').each(function(index){
+    $(sel+' [data-get]').each(function(index){
         initReadingsArray($(this).data("get"));
     });
 
