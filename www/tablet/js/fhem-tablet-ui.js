@@ -291,7 +291,8 @@ function initReadingsArray(get) {
 }
 
 function initWidgets(sel ="") {
-
+    
+    var sel = typeof sel !== 'undefined' ? sel : '';
     readings = {"STATE":true};
     devices = {};
     types = [];
