@@ -1,3 +1,3 @@
 FHEM tablet UI last change:
-2016-01-30
- - Enhanced big class support
+2016-02-01
+ - bugfix to avoid setOnline too often
