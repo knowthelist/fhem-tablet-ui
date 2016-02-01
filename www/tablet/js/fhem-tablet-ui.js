@@ -73,6 +73,7 @@ var plugins = {
 // ToDo: switch step by step to encapsulation of FTUI as an object literal
 var ftui = {
     requests: {'waiting':0,'running':0,'waitTime':100,'maxRunning':4},
+    states: {'lastSetOnline':0},
     init: function() {
     },
     shortPoll: function() {
@@ -119,14 +120,18 @@ var ftui = {
         });
     },
     setOnline: function(){
-        if (DEBUG) ftui.toast("Network connected");
-        startShortPollInterval(500);
-        if (!doLongPoll){
-            doLongPoll  = ($("meta[name='longpoll']").attr("content") == '1');
-            if ( doLongPoll )
-                startLongPollInterval(5000);
+        var ltime = new Date().getTime() / 1000;
+        if ((ltime - ftui.states.lastSetOnline) > 60){
+            if (DEBUG) ftui.toast("Network connected");
+            ftui.states.lastSetOnline = ltime;
+            startShortPollInterval(500);
+            if (!doLongPoll){
+                doLongPoll  = ($("meta[name='longpoll']").attr("content") == '1');
+                if ( doLongPoll )
+                    startLongPollInterval(5000);
+            }
+            ftui.log(1,'FTUI is online');
         }
-        ftui.log(1,'FTUI is online');
     },
     setOffline: function(){
         if (DEBUG) ftui.toast("Lost network connection");
