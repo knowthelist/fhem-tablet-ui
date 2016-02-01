@@ -75,6 +75,25 @@ var widget_label = $.extend({}, widget_widget, {
             var value = (elem.hasClass('timestamp'))
                         ?elem.getReading('get').date
                         :elem.getReading('get').val;
+
+            // hide element when it's value equals data-hide
+            // if data-hideparents is set, it is interpreted als jquery selector to hide elements parents filtered by this selector
+            if(elem.data('hide')) {
+                if(value == elem.data('hide')) {
+                    if(elem.data('hideparents')) {
+                        elem.parents(elem.data('hideparents')).hide();
+                    } else {
+                        elem.hide();
+                    }
+                } else {
+                    if(elem.data('hideparents')) {
+                        elem.parents(elem.data('hideparents')).show();
+                    } else {
+                        elem.show();
+                    }
+                }
+            }
+
             if (value){
                 var part = elem.data('part');
                 var val = getPart(value,part);
