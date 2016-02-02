@@ -319,8 +319,8 @@ a:active {
 .grande      { font-size: 600% !important; font-family: robotothin,sans-serif; }
 .bigger.thin { font-size: 450% !important; font-family: robotothin,sans-serif; font-weight: normal !important;}
 .bigger      { font-size: 320% !important; }
-.bigplus     { font-size: 270%; }
-.big         { font-size: 200%; }
+.bigplus     { font-size: 270% !important; }
+.big         { font-size: 200% !important; }
 .large       { font-size: 150% !important;}
 .large.thin  { letter-spacing: 1.1px;}
 .medium      { font-size: 120% !important;}
@@ -342,8 +342,16 @@ a:active {
     border-right-style: outset;
 }
 
-[data-type="symbol"].big, [data-type="multistatebutton"].big { font-size: 250% !important;}
-[data-type="symbol"].small, [data-type="multistatebutton"].small { font-size: 150% !important;}
+[data-type="symbol"].big, [data-type="multistatebutton"].big,
+[data-type="switch"].big, [data-type="button"].big,
+[data-type="push"].big, [data-type="pagebutton"].big {
+    font-size: 250% !important;
+}
+[data-type="symbol"].small, [data-type="multistatebutton"].small,
+[data-type="switch"].small, [data-type="button"].small,
+[data-type="push"].small, [data-type="pagebutton"].small {
+    font-size: 150% !important;
+}
 
 i#warn {
     font-size: 40% !important;
@@ -508,6 +516,7 @@ ul,li {
 .menu, .absolute{
     position:absolute;
 }
+
 .circleMenu-closed {
     z-index:1000 !important;
     width:0px !important;
@@ -739,6 +748,23 @@ select::-ms-expand {
     -o-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
+}
+@-webkit-keyframes marquee {
+ 0%   { text-indent: 100% }
+ 100% { text-indent: 0% }
+}
+@keyframes marquee {
+ 0%   { text-indent: 100% }
+ 100% { text-indent: 0% }
+}
+.marquee {
+ width: 100%;
+ margin: auto;
+ padding: 2px;
+ overflow: hidden;
+ white-space: nowrap;
+     animation: marquee 10s linear infinite;
+    -webkit-animation: marquee 10s linear infinite;
 }
 
 .symbol.on{color:#aa6900;background-color:#aa6900;}
