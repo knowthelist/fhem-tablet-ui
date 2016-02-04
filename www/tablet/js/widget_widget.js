@@ -1,5 +1,12 @@
 var widget_widget = {
     widgetname : 'widget',
+    FS20: {
+        'dimmerArray':[0, 6, 12, 18, 25, 31, 37, 43, 50, 56, 62, 68, 75, 81, 87, 93, 100],
+        'dimmerValue': function(value){
+            var idx = indexOfNumeric(this.dimmerArray,value);
+            return (idx > -1) ? this.dimmerArray[idx] : 0;
+        }
+    },
     rgbToHsl: function(rgb){
         var r=parseInt(rgb.substring(0,2),16);
         var g=parseInt(rgb.substring(2,4),16);

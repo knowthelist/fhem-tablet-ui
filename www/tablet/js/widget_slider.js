@@ -37,12 +37,6 @@ var widget_slider= $.extend({}, widget_widget, {
             type: 'text',
         }).appendTo(elem);
 
-        if ( elem.data('value') ) {
-          var lbl =  jQuery('<div/>', {
-              id : 'slidervalue',
-              class : 'slidertext normal',
-          }).appendTo(elem);
-        }
 
         elem.data('selection',0);
         var pwrng = new Powerange(input_elem[0], {
@@ -72,6 +66,9 @@ var widget_slider= $.extend({}, widget_widget, {
               // isunsel == false (0) means drag is over
               if ( ( ! isunsel ) && ( selMode ) ) {
                 v = elem.data('set-value').replace('$v',v.toString());
+                if (elem.hasClass('FS20')){
+                    v = base.FS20.dimmerValue(v);
+                }
                 var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('set'),v].join(' ');
 
                 // write visible value (from pwrng) to local storage NOT the fhem exposed value)
@@ -128,6 +125,13 @@ var widget_slider= $.extend({}, widget_widget, {
                                                           });
             }
         }
+
+        if ( elem.data('value') ) {
+         var lbl =  jQuery('<div/>', {
+             id : 'slidervalue',
+             class : 'slidertext normal',
+         }).appendTo(elem.find('.range-container'));
+       }
 
        if (elem.hasClass('readonly'))
             elem.children().find('.range-handle').css({'visibility':'hidden'});

@@ -433,7 +433,16 @@ input {
 }
 
 .slider_vertical .slidertext{
-    margin:10px 0px 0px 30% !important;
+    margin-left: -18px;
+    margin-top: 10px;
+    width: 40px;
+    text-align: center;
+}
+.slider_horizontal .slidertext{
+    margin-left: 110%;
+    margin-top: -11px;
+    width: 40px;
+    text-align: left;
 }
 
 .big > .vertical .range-bar {

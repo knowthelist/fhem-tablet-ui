@@ -311,9 +311,11 @@ all parameters from knob widget plus following additional parameters
 - **data-value**: show the value in a text box (default 'false')
 - **data-width**: width for horizontal sliders (default '120px', for mini '60px')
 - **data-height**: height for vertical sliders (default '120px', for mini '60px')
-- **class**     : mini, horizontal, negated, textvalue, tap,big,bigger,large
+- **class**     : mini, horizontal, negated, textvalue, FS20, tap, big, bigger, large
 
-The slider supports tap to target only if the CSS class 'tap' is added. 
+The slider supports tap to target only if the CSS class 'tap' is added.
+$v is a placeholder for the numeric value, it will be replaced be the real value at runtime.
+class 'FS20' convert values 0-100 to values which are excepted by FS20 dimmers.
 
 ####Level widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
@@ -344,6 +346,7 @@ The slider supports tap to target only if the CSS class 'tap' is added.
 - **data-cmd-value** : name of the command for value changing via slider (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setreading) default: 'set'
 - **data-dim**       : name of the reading responsible for DIM  (\<command\> \<device\> **\<reading\>** \<value\>) (default: '')
 - **data-icon**      : name of the font-awesome icon. (default: fa-lightbulb-o)
+- **class**          : FS20
 
 To change the dim value: push the button and slide up or down.
 
@@ -352,6 +355,7 @@ In extented mode ('data-dim' parameter is given) the DIM value is send to /recei
 and the button is only used for ON / OFF.
 
 $v is a placeholder for the numeric value, it will be replaced be the real value at runtime
+class 'FS20' convert values 0-100 to values which are excepted by FS20 dimmers
 
 ####Image widgets
 - **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')
