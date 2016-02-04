@@ -186,8 +186,8 @@ $(document).on('ready', function() {
     initPage();
 
     if ( doLongPoll ){
-        var longpollDelay = $("meta[name='longpoll_delay']").attr("content")
-            || (typeof wvcDevices != 'undefined')?shortpollInterval:100;
+        var longpollDelay = $("meta[name='longpoll_delay']").attr("content");
+        if (!$.isNumeric(longpollDelay)) longpollDelay = (typeof wvcDevices != 'undefined')?shortpollInterval:100;
         startLongPollInterval(longpollDelay);
     }
 
