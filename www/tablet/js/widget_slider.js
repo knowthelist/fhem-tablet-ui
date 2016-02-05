@@ -65,10 +65,10 @@ var widget_slider= $.extend({}, widget_widget, {
 
               // isunsel == false (0) means drag is over
               if ( ( ! isunsel ) && ( selMode ) ) {
-                v = elem.data('set-value').replace('$v',v.toString());
                 if (elem.hasClass('FS20')){
-                    v = base.FS20.dimmerValue(v);
+                  v = base.FS20.dimmerValue(v);
                 }
+                v = elem.data('set-value').replace('$v',v.toString());
                 var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('set'),v].join(' ');
 
                 // write visible value (from pwrng) to local storage NOT the fhem exposed value)

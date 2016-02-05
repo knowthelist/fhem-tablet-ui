@@ -36,10 +36,10 @@ var widget_dimmer = $.extend({}, widget_famultibutton, {
          if(this._doubleclicked(elem, 'on')) {
              var device = elem.data('device');
              var v = elem.getValue();
-             var seton = elem.data('set-on').replace('$v',v);
              if (elem.hasClass('FS20')){
-                  seton = this.FS20.dimmerValue(seton);
+                  v = this.FS20.dimmerValue(v);
               }
+             var seton = elem.data('set-on').replace('$v',v);
              var cmd = [elem.data('cmd'), device, elem.data('set'), seton].join(' ');
              setFhemStatus(cmd);
              if( device && typeof device != "undefined" && device !== " ") {
@@ -52,10 +52,10 @@ var widget_dimmer = $.extend({}, widget_famultibutton, {
          var device = elem.data('device');
          localStorage.setItem(this.widgetname+"_"+device, v);
          if ( elem.data('famultibutton').getState() === true || elem.data('dim') !== '' ){
+             if (elem.hasClass('FS20')){
+                  v = this.FS20.dimmerValue(v);
+             }
             var val = elem.data('set-value').replace('$v',v.toString());
-            if (elem.hasClass('FS20')){
-                 val = this.FS20.dimmerValue(val);
-            }
             var reading = (elem.data('dim') !== '') ? elem.data('dim') : elem.data('set');
             var cmd = [elem.data('cmd-value'), device, reading, val].join(' ');
             setFhemStatus(cmd);
