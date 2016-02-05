@@ -154,7 +154,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             target = elem.attr('data-fhem-cmd');
             type = 'fhem-cmd';
         } else {
-            var sets = elem.data('set-'+onoff);
+            var sets = elem.data('set-states') || elem.data('set-'+onoff);
             // no value given means don't send it and keep current state
             if ( sets === ''){
                 if (onoff==='off')
@@ -205,6 +205,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         elem.initData('doubleclick' ,0);
         elem.initData('firstclick-background-color', '#6F4500');
         elem.initData('firstclick-color'           , null);
+        elem.initData('get-warn'                ,-1);
 
         elem.addReading('get');
 

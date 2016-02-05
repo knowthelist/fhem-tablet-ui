@@ -131,14 +131,14 @@ General attribute meaning
 ####Switch widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
 - **data-set**      : name of the reading to set from FHEM (default '')
-- **data-set-on**   : value for ON status to set. (default: value of data-get-on)
-- **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
 - **data-cmd**      : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-doubleclick**: timeout to wait for x millisecondes click or touch. '0' disables the doubleclick feature. (default '0')
 
 dual state notation   
 - **data-get-on**   : value for ON status to get or an array of states (default 'on')
 - **data-get-off**  : value for OFF status to get. (default 'off')
+- **data-set-on**   : value for ON status to set. (default: value of data-get-on)
+- **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
 - **data-icon**     			: name of the font-awesome icon. (default: fa-lightbulb-o)
 - **data-background-icon** 		: name of the font-awesome icon for background (default 'fa-circle')
 - **data-on-background-color**          : color for ON state or DEVICE:READING for dynamic setting (default '#aa6900')
@@ -148,6 +148,7 @@ dual state notation
 
 multi state notation   
 - **data-states**   			: array of states 
+- **data-set-states**                   : array of states to set.
 - **data-icons**    			: array of icons related to the data-states array 
 - **data-background-icons**             : array of background icons related to the data-states array
 - **data-colors**                       : array of colors related to the data-states array
