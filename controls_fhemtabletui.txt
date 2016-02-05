@@ -60,7 +60,7 @@ UPD 2016-01-27_15:30:40 4925 www/tablet/js/widget_departure.js
 UPD 2016-02-05_09:40:31 5817 www/tablet/js/widget_dimmer.js
 UPD 2015-12-03_07:04:14 3624 www/tablet/js/widget_eventmonitor.js
 UPD 2016-01-12_20:25:09 1275 www/tablet/js/widget_example.js
-UPD 2015-12-11_13:55:12 12359 www/tablet/js/widget_famultibutton.js
+UPD 2016-02-05_11:25:41 12440 www/tablet/js/widget_famultibutton.js
 UPD 2015-12-03_07:04:14 8792 www/tablet/js/widget_highchart.js
 UPD 2015-12-03_07:04:14 8542 www/tablet/js/widget_highchart3d.js
 UPD 2015-12-03_07:04:14 9907 www/tablet/js/widget_homestatus.js
