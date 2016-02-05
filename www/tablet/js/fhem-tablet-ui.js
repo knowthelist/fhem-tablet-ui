@@ -73,7 +73,7 @@ var plugins = {
 // ToDo: switch step by step to encapsulation of FTUI as an object literal
 var ftui = {
     requests: {'waiting':0,'running':0,'waitTime':100,'maxRunning':4},
-    states: {'lastSetOnline':0},
+    states: {'lastSetOnline':0,'longPollRestart':false},
     init: function() {
     },
     shortPoll: function() {
@@ -401,13 +401,19 @@ var xhr;
 var currLine=0;
 function longPoll(roomName) {
     if (DEMO) {console.log('DEMO-Mode: no longpoll');return;}
-    ftui.log(1,'Start longpoll');
-    /*if (xhr)
-		xhr.abort();
+    ftui.log(1,(ftui.states.longPollRestart)?"Longpoll re-started":"Longpoll started");
+    if (xhr)
+        xhr.abort();
     if (longPollRequest)
-        longPollRequest.abort();*/
-	currLine=0;
-    if (DEBUG) ftui.toast("Longpoll started");
+        longPollRequest.abort();
+    currLine=0;
+    if (DEBUG) {
+        if (ftui.states.longPollRestart)
+            ftui.toast("Longpoll re-started");
+        else
+            ftui.toast("Longpoll started");
+    }
+    ftui.states.longPollRestart=0;
     longPollRequest=$.ajax({
         url: fhem_dir,
 		cache: false,
@@ -472,15 +478,20 @@ function longPoll(roomName) {
 						}
 					}
 					currLine = lines.length;
+                    if (currLine>1024){
+                        ftui.states.longPollRestart=true;
+                        longPoll(room);
+                    }
 				}
- 
-    		}, false);
+     		}, false);
 			return xhr;
 			}
     })
     .done ( function( data ) {
-        ftui.log(1,"Disconnected from FHEM - poll done - "+data);
-        ftui.restartLongPoll();
+        if (!ftui.states.longPollRestart){
+            ftui.log(1,"Disconnected from FHEM - poll done - "+data);
+            ftui.restartLongPoll();
+        }
     })
     .fail (function(jqXHR, textStatus, errorThrown) {
         ftui.log(1,"Error while longpoll: " + textStatus + ": " + errorThrown);
