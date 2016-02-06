@@ -38,6 +38,7 @@ var widget_circlemenu= {
             },
         })
         .addClass('menu')
+        parent.css({minWidth: parent.data('item-width')})
         .closest('.gridster>ul>li').css({overflow: 'visible'});
 
 
