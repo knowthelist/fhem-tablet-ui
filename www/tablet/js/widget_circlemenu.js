@@ -28,12 +28,12 @@ var widget_circlemenu= {
             open:function(){
                 var elem=this;
                 if (elem.options.close_event!=''){
-                    timeoutMenu=setTimeout(function(){
+                    parent.data('timeoutMenu',setTimeout(function(){
                         elem.close();
                         setTimeout(function(){showModal(false);},1000);
-                    },parent.data('close-after')||Math.max(4000, 1000*(parent.find('li').length-1)));
+                    },parent.data('close-after')||Math.max(4000, 1000*(parent.find('li').length-1))));
                 }
-               if (!elem.parent.hasClass("noshade"))
+               if (!parent.hasClass("noshade"))
                 showModal(true);
             },
         })
@@ -43,6 +43,8 @@ var widget_circlemenu= {
 
      });
         $('.menu li:not(:first-child)').on('click', function(){
+            var timeoutMenu = $(this).parent().data('timeoutMenu');
+            if (timeoutMenu)
                 clearTimeout(timeoutMenu);
         });
 

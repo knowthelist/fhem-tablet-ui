@@ -368,7 +368,8 @@ class 'FS20' convert values 0-100 to values which are excepted by FS20 dimmers
 - **data-opacity**  : opacity of the image 0-1 (default 0.8)
 - **data-height**   : height of the image (default 'auto')
 - **data-width**    : width of the image  (default 100%)
-- **class**			: nocache
+- **data-fhem-cmd** : on click FHEM command
+- **class**	    : nocache
 
 If 'data-url' is not set, then the URL for image src is built from: data-path + valueof data-get + data-suffix
 Use data-url + data-refresh or data-device + data-get, not both.

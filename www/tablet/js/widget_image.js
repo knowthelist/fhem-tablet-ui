@@ -22,40 +22,44 @@ var widget_image = $.extend({}, widget_widget, {
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {
             base.init_attr($(this));
-            var elem =  jQuery('<img/>', {
+            var elem = $(this);
+            var elemImg =  jQuery('<img/>', {
                 alt: 'img',
-            }).appendTo($(this));
-            elem.css({
-                'opacity':          $(this).data('opacity'),
-                'height':           $(this).data('height'),
-                'width':            $(this).data('width'),
-                'max-width':        $(this).data('size'),
+            }).appendTo(elem);
+            elemImg.css({
+                'opacity':          elem.data('opacity'),
+                'height':           elem.data('height'),
+                'width':            elem.data('width'),
+                'max-width':        elem.data('size'),
             });
     
             //3rd party source refresh
-            console.log($(this).data('url'));
-            if ($(this).data('url')){
-                var url = $(this).data('url');
-                if( $(this).data('nocache') || $(this).hasClass('nocache') ) {
+            if (elem.data('url')){
+                var url = elem.data('url');
+                if( elem.data('nocache') || elem.hasClass('nocache') ) {
                     url = base.addurlparam(url, '_', new Date().getTime());
                 }
-                elem.attr('src', url );
+                elemImg.attr('src', url );
                 
                 var counter=0;
-                var refresh=$(this).data('refresh');
+                var refresh=elem.data('refresh');
                 setInterval(function() {
                     counter++;
-                    console.log(counter);
                     if(counter >= refresh) {
                         counter = 0;
                         if(url.match(/_=\d+/)) {
                             url = base.addurlparam(url, '_', new Date().getTime());
                         }
-                        elem.attr('src', url);
-                        console.log('refresh');
+                        elemImg.attr('src', url);
                     }
                 }, 1000);
             }
+            // onClick events
+            elem.on('click',function(e) {
+                var cmd = elem.data('fhem-cmd');
+                if (cmd)
+                    setFhemStatus(cmd);
+            });
         });
     },
     update: function (dev,par) {
