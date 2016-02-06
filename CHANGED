@@ -1,3 +1,3 @@
 FHEM tablet UI last change:
-2016-02-05
- - Improved longpoll to avoid out of memory
+2016-02-06
+ - Added data-fhem-cmd to image
