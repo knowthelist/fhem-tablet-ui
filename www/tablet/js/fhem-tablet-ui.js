@@ -480,7 +480,7 @@ function longPoll(roomName) {
 					currLine = lines.length;
                     if (currLine>1024){
                         ftui.states.longPollRestart=true;
-                        longPoll(room);
+                        longPollRequest.abort();
                     }
 				}
      		}, false);
@@ -488,14 +488,20 @@ function longPoll(roomName) {
 			}
     })
     .done ( function( data ) {
-        if (!ftui.states.longPollRestart){
+        if (ftui.states.longPollRestart)
+            longPoll(roomName);
+        else{
             ftui.log(1,"Disconnected from FHEM - poll done - "+data);
             ftui.restartLongPoll();
         }
     })
     .fail (function(jqXHR, textStatus, errorThrown) {
-        ftui.log(1,"Error while longpoll: " + textStatus + ": " + errorThrown);
-        ftui.restartLongPoll();
+        if (ftui.states.longPollRestart)
+            longPoll(roomName);
+        else{
+            ftui.log(1,"Error while longpoll: " + textStatus + ": " + errorThrown);
+            ftui.restartLongPoll();
+        }
     });
 }
             
