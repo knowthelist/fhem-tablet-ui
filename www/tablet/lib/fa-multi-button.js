@@ -47,7 +47,8 @@ $.fn.famultibutton = function(pOptions) {
 		mode: 'toggle',  //toggle, push, signal, dimmer
 		toggleOn: null,
 		toggleOff: null,
-		valueChanged: null
+        valueChanged: null,
+        progressWidth:15,
 	};
 	
 	var options = $.extend({}, defaultOptions, pOptions);
@@ -158,8 +159,8 @@ return elem;
                       var c = canvas.getContext('2d');
                       c.beginPath();
                       c.strokeStyle = options.onColor;
-                      c.arc(x, y, x*0.80, -0.5*Math.PI, (-0.5+value*2)*Math.PI, false);
-                      c.lineWidth = 4;
+                      c.arc(x, y, x * ((-0.4/90)*Number(options.progressWidth)+0.85), -0.5*Math.PI, (-0.5+value*2)*Math.PI, false);
+                      c.lineWidth = x*0.80*options.progressWidth/100;
                       c.stroke();
                   }
              }

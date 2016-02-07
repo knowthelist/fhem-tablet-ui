@@ -252,6 +252,10 @@ a:active {
     font-size:50%;
     vertical-align: super;
 }
+.progress-unit{
+    font-size:60%;
+    margin-left:1px;
+}
 
 .center{
     text-align: center;
@@ -787,4 +791,5 @@ font-size: 70% !important;
 color: #aaa;
 font-family: sans-serif;
 letter-spacing: -1px;
+z-index: 1000;
 }

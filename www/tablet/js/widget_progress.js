@@ -17,6 +17,7 @@ var widget_progress = $.extend({}, widget_famultibutton, {
             $(this).data('set-on',          $(this).data('set-on')          || '');
             $(this).data('set-off',         $(this).data('set-off')         || '');
             $(this).data('max',             $(this).data('max')             || '100');
+            $(this).data('progress-width',  $(this).data('progress-width')  || '15');
             $(this).data('mode', 'symbol');
             base.init_attr($(this));
             base.init_ui($(this));
@@ -34,19 +35,21 @@ var widget_progress = $.extend({}, widget_famultibutton, {
 
      var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
      deviceElements.each(function(index) {
+         var elem = $(this);
          if ( $(this).data('get')==par || $(this).data('max')==par){
              var val = getDeviceValue( $(this), 'get' );
              var max = ( $.isNumeric($(this).data('max')) ) ? $(this).data('max') : getDeviceValue( $(this), 'max' );
-             var $elem = $(this).data('famultibutton');
-             $elem.setProgressValue(val/max);
-             var $value = $elem.find('#value');
+             var faelem = $(this).data('famultibutton');
+             faelem.setProgressValue(val/max);
+             var $value = faelem.find('#value');
+             var unit = elem.data('unit');
              if ($value){
                  if ($(this).hasClass('percent')){
                      if (max>0 && val)
-                        $value.html(Number(val/max*100).toFixed(0));
+                        $value.html(Number(val/max*100).toFixed(0)+ + "<span class='label-unit'>"+unescape(unit)+"</span>");
                  }
                  else
-                    $value.html(val);
+                    $value.html(val + "<span class='progress-unit'>"+unescape(unit)+"</span>");
              }
          }
      });
