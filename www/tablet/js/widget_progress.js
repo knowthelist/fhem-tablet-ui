@@ -8,17 +8,19 @@ var widget_progress = $.extend({}, widget_famultibutton, {
         var base = this;
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {
-            $(this).data('device',          $(this).data('device')          || ' ');
-            $(this).data('off-color',       $(this).data('off-color')       || '#505050');
-            $(this).data('off-background-color', $(this).data('off-background-color')  || '#404040');
-            $(this).data('on-color',        $(this).data('on-color')        || '#aa6900');
-            $(this).data('background-icon', $(this).data('background-icon') || 'fa-circle-thin');
-            $(this).data('icon',            $(this).data('icon')            || '');
-            $(this).data('set-on',          $(this).data('set-on')          || '');
-            $(this).data('set-off',         $(this).data('set-off')         || '');
-            $(this).data('max',             $(this).data('max')             || '100');
-            $(this).data('progress-width',  $(this).data('progress-width')  || '15');
-            $(this).data('mode', 'symbol');
+            var elem = $(this);
+            elem.initData('device'              , ' ');
+            elem.initData('off-color'           , getStyle('.'+this.widgetname+'.off','color')              || '#505050');
+            elem.initData('off-background-color', getStyle('.'+this.widgetname+'.off','background-color')   || '#404040');
+            elem.initData('on-color'            , getClassColor(elem) || getStyle('.'+this.widgetname+'.on','color')               || '#aa6900');
+            elem.initData('on-background-color' , getClassColor(elem) || getStyle('.'+this.widgetname+'.on','background-color')    || '#aa6900');
+            elem.initData('background-icon'     , 'fa-circle-thin');
+            elem.initData('icon'                , '');
+            elem.initData('set-on'              , '');
+            elem.initData('set-off'             , '');
+            elem.initData('max'                 , '100');
+            elem.initData('progress-width'      , '15');
+            elem.data('mode', 'symbol');
             base.init_attr($(this));
             base.init_ui($(this));
             if (!$.isNumeric($(this).data('max')))
@@ -46,7 +48,7 @@ var widget_progress = $.extend({}, widget_famultibutton, {
              if ($value){
                  if ($(this).hasClass('percent')){
                      if (max>0 && val)
-                        $value.html(Number(val/max*100).toFixed(0)+ + "<span class='label-unit'>"+unescape(unit)+"</span>");
+                        $value.html(Number(val/max*100).toFixed(0) + "<span class='label-unit'>"+unescape(unit)+"</span>");
                  }
                  else
                     $value.html(val + "<span class='progress-unit'>"+unescape(unit)+"</span>");

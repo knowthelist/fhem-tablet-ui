@@ -333,6 +333,7 @@ class 'FS20' convert values 0-100 to values which are excepted by FS20 dimmers.
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-max**  : maximal value to set or name of the reading which helds the max value (default 100)
 - **data-progress-width**: width of the circle line in percent (default 15)
+- **data-unit** : add a unit after the center value.
 - **class**		: novalue, percent
 
 ####Dimmer widgets
