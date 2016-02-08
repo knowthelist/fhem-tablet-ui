@@ -1,3 +1,3 @@
 FHEM tablet UI last change:
-2016-02-07
- - Updated controlfile
+2016-02-09
+ - Added transmit & notransmit feature for cross data function
