@@ -152,3 +152,13 @@ $.fn.getReading = function (key) {
     }
     return {};
 }
+$.fn.valOfData = function(key) {
+    var data = $(this).data(key);
+    if (!data) return '';
+    return (data.match(/^#.*/))?$(data).data('value'):data;
+};
+$.fn.transmitCommand = function() {
+    var cmdl = [$(this).valOfData('cmd'),$(this).valOfData('device'),$(this).valOfData('set'),$(this).valOfData('value')].join(' ');
+    setFhemStatus(cmdl);
+    ftui.toast(cmdl);
+};
