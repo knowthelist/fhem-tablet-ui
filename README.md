@@ -211,7 +211,7 @@ See [examples](#label) of Label
 - **data-alias**: a array of fix names to show only in the selection box as an alias to the real items
 - **data-cmd**  : name of the command to send to FHEM (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-quote** : characters to enclose the send value. (default '')
-- **class**     : wider, w1x, w2x, w3x, large, big
+- **class**     : wider, w1x, w2x, w3x, large, big, notransmit
 
 ####Push widgets
 - **data-set**    : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
@@ -645,6 +645,7 @@ not all widgets support all classes
 - rotate-90		: rotate (e.g an image) for 90 degres  
 - circleborder          : draws a round border around labels
 - autohide              : Hides an element in case of an invalid reading (not available for this device)
+- notransmit            : suppress send to FHEM after changes
 
 Positioning:
 - row                   : new row

@@ -105,6 +105,8 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                  faelem.setOff();
               }
             }
+            var id = elem.data('device')+"_"+elem.data('get');
+            localStorage.setItem(this.widgetname+'_'+id+'_index',idx);
             elm.removeClass()
             .addClass('fa fa-stack-1x')
             .addClass(icons[idx])
@@ -166,10 +168,11 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             if(!$.isArray(sets)) {
                 sets = new Array(String(sets));
             }
-            var s = localStorage.getItem(this.widgetname+device+'index') || 0;
+            var id = elem.data('device')+"_"+elem.data('get');
+            var s = localStorage.getItem(this.widgetname+'_'+id+'_index') || 0;
             var set = typeof sets[s] != 'undefined' ? sets[s] : sets[0];
             s++; if (s >= sets.length) s=0;
-            localStorage.setItem(this.widgetname+device+'index',s);
+            localStorage.setItem(this.widgetname+'_'+id+'_index',s);
             target = [elem.data('cmd'), device, elem.data('set'), set ].join(' ');
             type = 'fhem-cmd';
         }
