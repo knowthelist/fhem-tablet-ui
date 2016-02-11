@@ -89,6 +89,7 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
               elem.initData('on-background-color'   , getStyle('.'+base.widgetname+'.on','background-color')    || '#606060');
               elem.initData('background-icon'       , 'fa-circle');
               elem.initData('mode'                  , 'toggle');
+              elem.initData('text'                  , '');
               elem.initData('return-time'           , 0);
               base.init_attr(elem);
 
@@ -114,6 +115,15 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
               }
 
               elem.attr('title',elem.data('url'));
+
+              // prepare text element
+              if (elem.data('text')){
+                  var elemText = jQuery('<div/>', {
+                      class: 'label',
+                  })
+                  .html(elem.data('text'))
+                  .appendTo(elem);
+              }
 
               if (isCurrent){
                   elem.setOn();

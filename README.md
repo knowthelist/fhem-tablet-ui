@@ -408,7 +408,8 @@ Use data-url + data-refresh or data-device + data-get, not both.
 - **data-get-on**       : array of status to assign a special icon-list from data-icons
 - **data-icons**        : array of icons related to the a data-get-on array
 - **data-return-time**  : time in secondes for the maximal remain time on secondary tabs (default 0 -> endless)
-- **class**		: warn, activate (as additionals for data-icons)
+- **data-text**		: text for label
+- **class**		: warn, activate (as additionals for data-icons), labelright
 
 data-return-time has to be placed on the main pagetab (the first one > index 0)
 
@@ -1681,7 +1682,7 @@ I'm unable to work now and I need to buy a new one.
 Update 2015-11-04: my old 2007 MacBook runs again with the previous HDD, but totaly slow and out of space.
 
 * Goal  : 13'' MacBook Pro 1445€ 
-* Status: 928€ (29.01.2016) -> many thanks to all donators - 517€ still required  :-)
+* Status: 1068€ (11.02.2016) -> many many thanks to all donators - 377€ still required  :-)
 
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PD4C2XM2VTD9A"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" alt="[paypal]" /></a>
