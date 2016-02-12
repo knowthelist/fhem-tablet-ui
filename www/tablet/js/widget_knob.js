@@ -21,7 +21,11 @@ var widget_knob = $.extend({}, widget_widget, {
              }
        }
     },
-    onFormat: function(v) { return v; },
+    onFormat: function (v) {
+      //fix digits count
+      var ret = (this.step<1)?Number(v).toFixed(1):v
+      return (this.unit)?ret+unescape(this.unit):ret;
+    },
     init_attr: function(elem) {
         elem.data('get', elem.data('get') || 'STATE');
         readings[elem.data('get')] = true;
@@ -32,8 +36,9 @@ var widget_knob = $.extend({}, widget_widget, {
         elem.data('min',    elem.isValidData('min')  ?  elem.data('min')    : 0);
         elem.data('max',    elem.isValidData('max')  ?  elem.data('max')    : 100);
 
-        elem.data('height', elem.isValidData('height')? elem.data('height') :150);
-        elem.data('width',  elem.isValidData('width')?  elem.data('width')  :150);
+        elem.data('height', elem.isValidData('height')? elem.data('height') :120);
+        elem.data('width',  elem.isValidData('width')?  elem.data('width')  :120);
+        if(elem.hasClass('bigger')) { elem.data('height', 260); elem.data('width', 260);}
         if(elem.hasClass('big')) { elem.data('height', 210); elem.data('width', 210);}
         if(elem.hasClass('large')) { elem.data('height', 150); elem.data('width', 150);}
         if(elem.hasClass('small')) { elem.data('height', 100); elem.data('width', 100);}
@@ -45,9 +50,8 @@ var widget_knob = $.extend({}, widget_widget, {
         elem.data('anglearc',   elem.isValidData('anglearc')       ? elem.data('anglearc')         :   240);
 
         elem.data('bgcolor',    elem.data('bgcolor')    ||                           getStyle('.'+this.widgetname,'background-color')    || '#505050');
-        elem.data('fgcolor',    elem.data('fgcolor')    || getClassColor(elem) || getStyle('.'+this.widgetname,'color')               || '#aa6900');
+        elem.data('fgcolor',    elem.data('fgcolor')    || getClassColor(elem) || getStyle('.'+this.widgetname,'color')               || '#666');
         elem.data('inputcolor', elem.data('inputcolor') ||                           getStyle('.'+this.widgetname+'.input','color')      || '#ffffff');
-        elem.data('tkcolor',    elem.data('tkcolor')    ||                           getStyle('.'+this.widgetname+'.tick','color')       || '#666');
         elem.data('hdcolor',    elem.data('hdcolor')    ||                           getStyle('.'+this.widgetname+'.handle','color')     || '#666');
 
         elem.data('font',       elem.data('font')       || getStyle('.'+this.widgetname,'font-family')  || '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
@@ -62,7 +66,6 @@ var widget_knob = $.extend({}, widget_widget, {
            disabled :   true,
        }).data(elem.data())
          .appendTo(elem);
-
        knob_elem.knob({
           'min':        elem.data('min'),
           'max':        elem.data('max'),

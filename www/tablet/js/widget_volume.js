@@ -44,16 +44,16 @@ var widget_volume = $.extend({}, widget_knob, {
 		    c.strokeStyle = 'rgb('+cl+','+cl+','+cl+')';  
 	    } else {
 			// draw normal ticks
-			c.strokeStyle = this.o.tkColor;//'#4477ff';
+            c.strokeStyle = this.o.fgColor;//'#4477ff';
 		}
 
         // thicker lines every 5 ticks
 		if ( Math.round(i*10)/10 % 5 == 0 ){ 
             w = tick_w*2.2;
-			w *= (c.strokeStyle != this.o.tkColor) ? 1.5 : 1; 
+            w *= (c.strokeStyle != this.o.fgColor) ? 1.5 : 1;
 		}
 		else {
-			w *= (c.strokeStyle != this.o.tkColor) ? 2 : 1;
+            w *= (c.strokeStyle != this.o.fgColor) ? 2 : 1;
 		}
 			
         c.arc( this.xy, this.xy, this.radius, tick, tick+w , false);
@@ -120,7 +120,7 @@ var widget_volume = $.extend({}, widget_knob, {
         var maxval = $(this).isValidData('max')  ? $(this).data('max')  :  70;
         $(this).data('origmax', maxval);
         $(this).data('max',     (maxval>360)?360:maxval);
-        $(this).data('fgcolor',     $(this).data('fgcolor')     || getStyle('.'+this.widgetname,'color') || '#ccc');
+        $(this).data('fgcolor',     $(this).data('fgcolor')     || getStyle('.'+this.widgetname,'color') || '#666');
         $(this).data('get-value',   $(this).data('get-value')   || $(this).data('part')         || '-1');
 
         var mode=0; //no hue colors

@@ -39,7 +39,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
 	var dist = this.o.tickdistance || 4;
 	var mincolor = this.o.minColor || '#ff0000';
     var maxcolor = this.o.maxColor || '#4477ff';
-    var destcolor = this.o.tkColor;
+    var destcolor = this.o.fgColor;
 	
 	// draw ticks
     for (var tick = this.startAngle; tick < this.endAngle + 0.00001; tick+=tick_w*dist) {
@@ -56,16 +56,16 @@ var widget_thermostat = $.extend({}, widget_knob, {
         }
 		else {
 			// draw normal ticks
-            c.strokeStyle = this.o.tkColor;
+            c.strokeStyle = this.o.fgColor;
 		}
 
 		// thicker lines every 5 ticks
 		if ( Math.round(i*10)/10 % 5 == 0 ){ 
             w = tick_w*2.2;
-            w *= (c.strokeStyle != this.o.tkColor) ? 1.5 : 1;
+            w *= (c.strokeStyle != this.o.fgColor) ? 1.5 : 1;
 		}
 		else {
-            w *= (c.strokeStyle != this.o.tkColor) ? 2 : 1;
+            w *= (c.strokeStyle != this.o.fgColor) ? 2 : 1;
 		}
 		// thicker lines every at current value
         if (acAngle > tick-tick_w-w && acAngle < tick+tick_w)
@@ -76,14 +76,14 @@ var widget_thermostat = $.extend({}, widget_knob, {
 	}
 
     //cavans font
-    var cfont=10*window.devicePixelRatio +"px sans-serif";
+    var cfont=10*window.devicePixelRatio*(this.o.height/100) +"px sans-serif";
 
     //draw current value as text
     var x = this.radius*0.7*Math.cos(acAngle);
     var y = this.radius*0.7*Math.sin(acAngle);
     c.fillStyle = destcolor;
     c.font=cfont;
-    c.fillText(this.o.isValue ,this.xy+x-5,this.xy+y+5);
+    c.fillText(this.o.isValue ,this.xy+x-5*(this.o.height/50),this.xy+y+5*(this.o.height/100));
 
 	// draw target temp cursor
     c.beginPath();
@@ -96,7 +96,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
 	if ( this.o.valveValue ) {
         x = -5;
         y = this.radius*0.55;
-		c.fillStyle = this.o.tkColor;
+        c.fillStyle = this.o.fgColor;
         c.font=cfont;
 		c.fillText(this.o.valveValue+'%',this.xy+x,this.xy+y+5);
     }
@@ -122,11 +122,6 @@ var widget_thermostat = $.extend({}, widget_knob, {
             ftui.toast(cmdl);
       }
   },
-  onFormat: function (v) {
-     //fix digits count
-     var ret = (this.step<1)?Number(v).toFixed(1):v
-     return (this.unit)?ret+unescape(this.unit):ret;
-  },
   init: function () {
     var base=this;
 	this.elements=$('div[data-type="'+this.widgetname+'"]');
@@ -144,7 +139,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
         elem.initData('cursor'  ,6);
         elem.initData('off'     ,-1);
         elem.initData('boost'   ,-1);
-        elem.initData('fgcolor' , getStyle('.'+base.widgetname+'.fgcolor','color')  || '#bbbbbb');
+        elem.initData('fgcolor' , getStyle('.'+base.widgetname+'.fgcolor','color')  || '#666');
         elem.initData('mincolor',getStyle('.'+base.widgetname+'.mincolor','color') || '#4477ff');
         elem.initData('maxcolor',getStyle('.'+base.widgetname+'.maxcolor','color') || '#ff0000');
         elem.initData('bgcolor' ,getStyle('.'+base.widgetname,'background-color')  || 'none');

@@ -239,11 +239,10 @@ See [examples](#label) of Label
 - **data-step**  :  (default 1);
 - **data-angleoffset**  : (default -120);
 - **data-anglearc**  : (default 240);
-- **data-bgcolor**  : (default '#505050');
-- **data-fgcolor**  : (default '#aa6900');
-- **data-inputcolor**  :  (default '#ffffff');
-- **data-tkcolor**  :  (default '#666');
-- **data-hdcolor**  :  (default '#666');
+- **data-bgcolor**      : Color of background (default '#505050');
+- **data-fgcolor**      : Color of ticks (default '#666');
+- **data-inputcolor**   : Color of value  (default '#ffffff');
+- **data-hdcolor**      : Color of handle  (default '#666');
 - **data-displayInput**  : Show the value (default true);
 - **data-font**  :  (default '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
 - **data-font-weight**
