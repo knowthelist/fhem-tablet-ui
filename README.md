@@ -197,6 +197,8 @@ See [examples](#symbol) of Symbol
 - **data-limits-part**  : filter for the value. part number of the space separated value or an RegEx (default '-1' -> all)
 - **data-unit** : add a unit after a numeric value.
 - **data-substitution**: regex-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
+- **data-hide**   : string to compare with current value. hide element when it's value equals data-hide
+- **data-hideparents**: jquery selector to hide element's parents too
 - **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x, circleborder
 
 Use data-color OR data-colors + data-limits, not both.
