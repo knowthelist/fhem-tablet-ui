@@ -53,8 +53,8 @@ var widget_popup= $.extend({}, widget_widget, {
         elem.initData('get'         ,'STATE');
         elem.initData('get-on'      ,'on');
         elem.initData('get-off'     ,'off');
-        elem.initData('height'      ,'400px');
-        elem.initData('width'       ,'100%');
+        elem.initData('height'      ,'300px');
+        elem.initData('width'       ,'400px');
         elem.initData('mode'        ,'animate');
         elem.initData('starter'     ,null);
         elem.initData('draggable'   ,true);
@@ -89,8 +89,8 @@ var widget_popup= $.extend({}, widget_widget, {
                 dialog.options={};
 
                 $(window).resize(function() {
-                    dialog.options.end_top = ($(window).height() - dialog.outerHeight()) / 2;
-                    dialog.options.end_left = ($(window).width() - dialog.outerWidth()) / 2;
+                    dialog.options.end_top = ($(window).height() - parseInt(elem.data('height'))) / 2;
+                    dialog.options.end_left = ($(window).width() - parseInt(elem.data('width'))) / 2;
                     dialog.options.start_top = starter.offset().top;
                     dialog.options.start_left = starter.offset().left;
                     dialog.options.height = elem.data('height');

@@ -360,7 +360,7 @@ a:active {
 [data-type="pagetab"] .label {
     font-size: 50% !important;
     whiteSpace: 'nowrap';
-    padding-top: 29px;
+    padding-top: 30px;
     color: #8C8C8C;
 }
 .labelright[data-type="pagetab"] .label {
