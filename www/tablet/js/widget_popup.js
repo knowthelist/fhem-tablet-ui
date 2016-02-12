@@ -37,7 +37,9 @@ var widget_popup= $.extend({}, widget_widget, {
                top: elem.options.end_top,
                left: elem.options.end_left,
              opacity: 1
-            }, 500, "swing");
+            }, 500, "swing", function() {
+                  elem.trigger('fadein');
+                });
             break;
         default:
             elem.css({
@@ -47,6 +49,7 @@ var widget_popup= $.extend({}, widget_widget, {
                left:     elem.options.end_left,
             });
             elem.fadeIn(500);
+            elem.trigger('fadein');
         }
     },
     init_attr: function(elem) {
