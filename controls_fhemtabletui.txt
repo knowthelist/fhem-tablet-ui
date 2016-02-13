@@ -65,7 +65,7 @@ UPD 2015-12-03_07:04:14 8792 www/tablet/js/widget_highchart.js
 UPD 2015-12-03_07:04:14 8542 www/tablet/js/widget_highchart3d.js
 UPD 2015-12-03_07:04:14 9907 www/tablet/js/widget_homestatus.js
 UPD 2016-02-05_23:05:02 3666 www/tablet/js/widget_image.js
-UPD 2016-02-13_14:01:33 1532 www/tablet/js/widget_input.js
+UPD 2016-02-13_15:05:18 1601 www/tablet/js/widget_input.js
 UPD 2016-02-12_21:46:47 6284 www/tablet/js/widget_knob.js
 UPD 2016-02-12_22:13:46 5398 www/tablet/js/widget_label.js
 UPD 2015-12-03_07:04:14 5260 www/tablet/js/widget_level.js
