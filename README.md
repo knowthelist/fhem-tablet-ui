@@ -219,6 +219,7 @@ See [examples](#label) of Label
 - **data-get**  : name of the reading that get the selected item of the list
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-cmd**  : name of the command to send to FHEM (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-value**: default value
 - **class**     : wider, w1x, w2x, w3x, large, big, notransmit
 
 ####Push widgets

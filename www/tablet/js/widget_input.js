@@ -8,6 +8,7 @@ var widget_input = $.extend({}, widget_widget, {
         elem.initData('get' ,'STATE');
         elem.initData('set' ,'');
         elem.initData('cmd' ,'set');
+        elem.initData('value' ,'');
         elem.addReading('get');
     },
     init_ui : function(elem) {
@@ -18,13 +19,14 @@ var widget_input = $.extend({}, widget_widget, {
         }).attr({
               type: 'text',
         }).css({visibility:'visible'})
+        .val(elem.data('value'))
         .appendTo(elem);
 
         elem.bind("enterKey",function(e){
-            elem.data('value', elem.find('.textinput').val());
             elem.transmitCommand();
         });
         elemInput.keyup(function(e){
+            elem.data('value', elem.find('.textinput').val());
             if(e.keyCode === 13)
                 elem.trigger("enterKey");
         });
