@@ -1,3 +1,8 @@
+/* FTUI Plugin
+* Copyright (c) 2016 Mario Stephan <mstephan@shared-files.de>
+* Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+*/
+
 if(typeof widget_widget == 'undefined') {
     loadplugin('widget_widget');
 }
@@ -23,6 +28,7 @@ var widget_input = $.extend({}, widget_widget, {
         .appendTo(elem);
 
         elem.bind("enterKey",function(e){
+            elemInput.blur();
             elem.transmitCommand();
         });
         elemInput.keyup(function(e){
