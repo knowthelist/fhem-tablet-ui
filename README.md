@@ -215,6 +215,12 @@ See [examples](#label) of Label
 - **data-quote** : characters to enclose the send value. (default '')
 - **class**     : wider, w1x, w2x, w3x, large, big, notransmit
 
+####Input widgets
+- **data-get**  : name of the reading that get the selected item of the list
+- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
+- **data-cmd**  : name of the command to send to FHEM (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **class**     : wider, w1x, w2x, w3x, large, big, notransmit
+
 ####Push widgets
 - **data-set**    : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-set-on** : value (or an array of values) to send when the the button get pressed. (default '')

@@ -602,7 +602,7 @@ option {
     background-color: #2a2a2a;
 }
 
-select {
+select, input.textinput {
     border-radius: 10px;
     border: 2px solid #8C8C8C;
     background: transparent;
@@ -628,25 +628,25 @@ select::-ms-expand {
     font-size: 150%;
 }
 
-.w3x > select, [data-type="label"].w3x {
+.w3x > select, [data-type="label"].w3x, [data-type="input"].w3x {
     min-width: 160px;
     max-width: 160px;
     width: 160px;
 }
 
-.w2x > select, [data-type="label"].w2x {
+.w2x > select, [data-type="label"].w2x, [data-type="input"].w2x {
     min-width: 110px;
     max-width: 110px;
     width: 110px;
 }
 
-.w1x > select, [data-type="label"].w1x {
+.w1x > select, [data-type="label"].w1x, [data-type="input"].w1x {
     min-width: 70px;
     max-width: 70px;
     width: 70px;
 }
 
-[data-type="select"] {
+[data-type="select"], [data-type="input"]>input {
     margin-top: 10px;
 }
 
