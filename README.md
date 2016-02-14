@@ -595,6 +595,7 @@ See [examples](#range) of Range
 - **data-get-value**               : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
 - **data-shortdelay**              : ms til repeat start if button is pressed (default '80')
 - **data-longdelay**               : ms until the command is send after button is released (default '500')
+- **class**                        : valueonly,value,circulate,positiononly
 
 ####Departure widgets
 - **data-color**                   :

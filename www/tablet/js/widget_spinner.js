@@ -52,9 +52,9 @@ var widget_spinner = $.extend({}, widget_widget, {
                 levelRange.css({ background: color, });
             }
         }
-        elem.data('textvalue',  (-1<fix&&fix<=20)?Number(value).toFixed(fix) : value);
+        elem.data('value',  (-1<fix&&fix<=20)?Number(value).toFixed(fix) : value);
         if ( elem.hasClass('value') || elem.hasClass('valueonly') )
-            elem.find('.spinnerText').text(elem.data('textvalue') + elem.data('unit'));
+            elem.find('.spinnerText').text(elem.data('value') + elem.data('unit'));
     },
     onClicked: function(elem,factor) {
         var base    = this;
@@ -65,8 +65,8 @@ var widget_spinner = $.extend({}, widget_widget, {
         clearTimeout(elem.delayTimer);
         changeValue = function() {
             value = value + factor * step;
-            if ( value < min ) value = min;
-            if ( value > max ) value = max;
+            if ( value < min ) value = elem.hasClass('circulate')?max:min;
+            if ( value > max ) value = elem.hasClass('circulate')?min:max;;
             elem.data('value',value);
             base.drawLevel(elem);
         };
@@ -84,9 +84,7 @@ var widget_spinner = $.extend({}, widget_widget, {
         clearTimeout(elem.delayTimer);
             var base = this;
             elem.delayTimer = setTimeout(function () {
-                var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('set'),elem.data('textvalue')].join(' ');
-                setFhemStatus(cmdl);
-                TOAST && $.toast(cmdl);
+            elem.transmitCommand();
                 elem.delayTimer=0;
             }, elem.data('longdelay'));
     },
@@ -211,14 +209,6 @@ var widget_spinner = $.extend({}, widget_widget, {
             if (elem.delayTimer)
                 base.onReleased.call(base,elem);
             e.preventDefault();
-        });
-    },
-    init: function () {
-        var base = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            base.init_attr($(this));
-            base.init_ui($(this));
         });
     },
     update: function (dev,par) {
