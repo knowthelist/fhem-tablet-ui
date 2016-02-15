@@ -138,13 +138,5 @@ var widget_link= $.extend({}, widget_widget, {
 
         return elem;
     },
-    init: function () {
-        var base = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            base.init_attr($(this));
-            base.init_ui($(this));
-        });
-    },
     update: function (dev,par) {}
 });

@@ -107,6 +107,7 @@ var ftui = {
         }
     },
     onUpdateDone: function(){
+        $(document).trigger("updateDone");
         ftui.checkInvalidElements();
     },
     checkInvalidElements: function(){
@@ -288,7 +289,7 @@ function initReadingsArray(get) {
             }
             reading = fqreading[1];
         }
-        if(!readings[reading]){
+        if(!readings[reading] && !reading.match(/^[#\.\[].*/)){
             readings[reading] = true;
             pars.push(reading);
         }
@@ -324,16 +325,19 @@ function initWidgets(sel) {
     //collect required devices
     $(sel+' div[data-device]').each(function(index){
         var device = $(this).data("device");
-        if(!devices[device] && typeof device != 'undefined' && device !== 'undefined' ){
-            devices[device] = true;
-            devs.push(device);
+        if (!device.match(/^[#\.\[].*/)){
+            if(!devices[device] && typeof device != 'undefined' && device !== 'undefined' ){
+                devices[device] = true;
+                devs.push(device);
+            }
         }
     });
 
     //collect required readings
     DEBUG && console.log('Collecting required readings');
     $(sel+' [data-get]').each(function(index){
-        initReadingsArray($(this).data("get"));
+        var param = $(this).data("get");
+        initReadingsArray(param);
     });
 
     //init widgets
@@ -477,7 +481,7 @@ function longPoll(roomName) {
                             //console.log(date + ' / ' + dev+' / '+paraname+' / '+val);
 						}
 					}
-					currLine = lines.length;
+                    currLine = lines.length;
                     if (currLine>1024){
                         ftui.states.longPollRestart=true;
                         longPollRequest.abort();

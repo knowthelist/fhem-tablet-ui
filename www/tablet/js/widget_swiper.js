@@ -90,14 +90,6 @@ var widget_swiper= $.extend({}, widget_widget, {
 
         return elem;
     },
-    init: function () {
-        var base = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            base.init_attr($(this));
-            base.init_ui($(this));
-        });
-    },
     update: function (dev,par) {
         var base = this;
         // update from normal state reading

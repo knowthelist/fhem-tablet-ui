@@ -35,25 +35,21 @@ var widget_select= $.extend({}, widget_widget, {
       elem.addReading('get');
       elem.addReading('list');
   },
-  init: function () {
-      var base=this;
-      this.elements = $('div[data-type="'+this.widgetname+'"]');
-      this.elements.each(function(index) {
-        var elem = $(this);
-        base.init_attr(elem);
-        $(this).addClass('select');
+  init_ui : function(elem) {
+    var base = this;
+    // prepare select element
+        elem.addClass('select');
         var select_elem = jQuery('<select/>', { })
         .on('change', function (e) {
             var parent = $(this).parent('div[data-type="select"]');
             parent.data('value', parent.data('quote') + $("option:selected", this).val() + parent.data('quote'));
             $(this).blur();
-            if (!parent.hasClass('notransmit'))
-                parent.transmitCommand();
+            parent.transmitCommand();
+            elem.trigger('changedValue');
         })
         .appendTo(elem);
         base.fillList(elem);
         elem.data('value', elem.data('quote') + $("option:selected", select_elem).val() + elem.data('quote'));
-     });
   },
   update: function (dev,par) {
       var base = this;

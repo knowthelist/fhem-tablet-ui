@@ -110,6 +110,14 @@ var widget_widget = {
         d = s.indexOf('.') + 1;
         return !d ? 0 : s.length - d;
     },
+    init: function () {
+        var base = this;
+        this.elements = $('div[data-type="'+this.widgetname+'"]');
+        this.elements.each(function(index) {
+            base.init_attr.call(base,$(this));
+            base.init_ui.call(base,$(this));
+        });
+    },
 }
 $.fn.filterData = function(key, value) {
     return this.filter(function() {
@@ -135,8 +143,15 @@ $.fn.mappedColor = function(key) {
 $.fn.isDeviceReading = function(key) {
     return !$.isNumeric($(this).data(key)) && $(this).data(key).match(/:/);
 };
+$.fn.isExternData = function(key) {
+    var data = $(this).data(key);
+    if (!data) return '';
+    return (data.match(/^[#\.\[].*/));
+};
 $.fn.addReading = function(key) {
-    initReadingsArray($(this).data(key));
+    var data = $(this).data(key);
+    if (!data.match(/^[#\.\[].*/))
+        initReadingsArray($(this).data(key));
 };
 $.fn.getReading = function (key) {
     var devname = $(this).data('device'),
@@ -155,10 +170,14 @@ $.fn.getReading = function (key) {
 $.fn.valOfData = function(key) {
     var data = $(this).data(key);
     if (!data) return '';
-    return (data.match(/^#.*/))?$(data).data('value'):data;
+    return (data.match(/^[#\.\[].*/))?$(data).data('value'):data;
 };
 $.fn.transmitCommand = function() {
+    if ($(this).hasClass('notransmit')) return;
     var cmdl = [$(this).valOfData('cmd'),$(this).valOfData('device'),$(this).valOfData('set'),$(this).valOfData('value')].join(' ');
     setFhemStatus(cmdl);
     ftui.toast(cmdl);
+};
+$.fn.requestReading = function(key) {
+    requestFhem($(this).valOfData(key));
 };
