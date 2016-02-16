@@ -26,6 +26,7 @@ var widget_swiper= $.extend({}, widget_widget, {
         elem.initData('width'                   ,'100%');
         elem.initData('height'                  ,'100%');
         elem.initData('autoplay'                ,null);
+        elem.initData('tabclass'                ,'swipertab');
 
         elem.addReading('get');
     },
@@ -67,6 +68,7 @@ var widget_swiper= $.extend({}, widget_widget, {
             autoplay:elem.data('autoplay'),
             autoplayDisableOnInteraction:false,
             hashnav: elem.hasClass('hashnav'),
+            noSwipingClass: 'noswipe',
         });
 
         // navigation via hash value
@@ -78,6 +80,16 @@ var widget_swiper= $.extend({}, widget_widget, {
                     swiper.slideTo(idx);
              });
         }
+        // navigation via tab elements
+        var tabclass = elem.data('tabclass');
+        if (tabclass){
+            $('.'+tabclass).bind('setOn', function() {
+                var idx = $( ".swipertab" ).index( this );
+                if (idx > -1)
+                    swiper.slideTo(idx);
+             });
+        }
+
         elem.find('ul>li').click(function(event) {
             event.preventDefault();
             //more functionality here

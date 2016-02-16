@@ -137,7 +137,7 @@ a:active {
   display: inline-block;
 }
 
-
+.row-1-1,.row-3-3 { height: 99.6% !important; }
 .row-1-2,.row-2-4 { height: 49.5% !important; }
 .row-2-3          { height: 66.66% !important; }
 .row-1-4,.row-2-8 { height: 24% !important; }

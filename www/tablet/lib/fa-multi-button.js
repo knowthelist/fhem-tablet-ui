@@ -100,18 +100,20 @@ return elem;
 
 	function setOn() {
 
-			state = true;
+        state = true;
 			
         elem.children().filter('#bg').css( "color", options['onBackgroundColor'] );
         elem.children().filter('#fg').css( "color", options['onColor'] );
+        elem.trigger('setOn');
 	};
 		
 	function setOff() {
 			
-			state = false;
+        state = false;
 
-            elem.children().filter('#bg').css( "color", options['offBackgroundColor'] );
-            elem.children().filter('#fg').css( "color", options['offColor'] );
+        elem.children().filter('#bg').css( "color", options['offBackgroundColor'] );
+        elem.children().filter('#fg').css( "color", options['offColor'] );
+        elem.trigger('setOff');
 	};
 	
 	function fadeOff() {
@@ -159,7 +161,7 @@ return elem;
                       var c = canvas.getContext('2d');
                       c.beginPath();
                       c.strokeStyle = options.onColor;
-                      c.arc(x, y, x * ((-0.4/90)*Number(options.progressWidth)+0.85), -0.5*Math.PI, (-0.5+value*2)*Math.PI, false);
+                      c.arc(x, y, x * ((-0.4/90)*Number(options.progressWidth)+0.8), -0.5*Math.PI, (-0.5+value*2)*Math.PI, false);
                       c.lineWidth = x*0.80*options.progressWidth/100;
                       c.stroke();
                   }

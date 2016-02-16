@@ -222,6 +222,8 @@ See [examples](#label) of Label
 - **data-value**: default value
 - **class**     : wider, w1x, w2x, w3x, large, big, notransmit
 
+data-device, data-get can be references (jQuery seletor) to select-widgets to change the source dynamically
+
 ####Push widgets
 - **data-set**    : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-set-on** : value (or an array of values) to send when the the button get pressed. (default '')
@@ -431,11 +433,15 @@ all other parameters like switch widget
 - **class**         : fade, rotate  (default: '' means no animation)
 
 ####Swiper widgets
+- **data-get**          : name of the reading (default 'STATE')
+- **data-states**   	: array of states for reading to page assignment
 - **data-width**        : fixed size for width (in % or px)
 - **data-height**       : fixed size for height (in % or px)
 - **data-autoplay**     : delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
+- **data-tabclass**     : CSS class name of the dedicated tab elements (default 'swipertab')
 - **class**             : nopagination, navbuttons
 
+class="noswipe" on page elements prevents page from swiping
 
 ####Simplechart widgets
 - **data-logdevice**   : name of the logdevice (e.g. FileLog_WohnzimmerHeizung)
@@ -666,6 +672,8 @@ Positioning:
 - left-space	: 15px extra on left (left-space-2x -> 30px; left-space-3x -> 45px)
 - right-space  	: 15px extra on right (right-space-2x -> 30px; right-space-3x -> 45px)
 - top-narrow    : -15px closer on top  (top-narrow-2x -> -30px; top-narrow-10 -> -10px)
+- left-narrow	: 15px closer on left (left-narrow-2x -> 30px; left-narrow-3x -> 45px)
+- right-narrow  	: 15px closer on right (right-narrow-2x -> 30px; right-narrow-3x -> 45px)
 - centered		: horizontal centered
 - left-align	: align text left
 - right-align	: align text right
@@ -1454,6 +1462,27 @@ Create two comboboxes to select the inputs of a two zone AV receiver. List for Z
 </div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/select_2x.png)    
+
+###Input
+
+```html
+<li data-row="1" data-col="4" data-sizex="2" data-sizey="2">
+    <header>SELECT</header>
+    <div data-type="select" data-items='["dummy1","dummy2","dummy3","dummy4"]' id="sendDev" class="notransmit w3x"></div>
+    <div data-type="select" data-items='["STATE","warn1","warn2","webCmd","room"]' id="sendParam" class="notransmit w3x"></div>
+    <div data-type="input" data-device="#sendDev" data-get="#sendParam" id="sendValue" data-value="127" class="notransmit w3x centered"></div>
+    <div data-type="link" class="round centered"
+         data-width="80" data-height="40"
+         data-color="white"
+         data-background-color="green"
+         data-icon="fa-feed"
+         data-device="#sendDev"
+         data-set="#sendParam"
+         data-value="#sendValue">
+        OK
+    </div>
+</li>
+``
 
 ###Dialog
 -------
