@@ -9,8 +9,8 @@ DIR www/tablet/lib/highcharts/themes
 UPD 2015-12-03_07:04:09 447 www/tablet/css/fhem-blue-ui.css
 UPD 2015-12-03_07:04:09 447 www/tablet/css/fhem-green-ui.css
 UPD 2015-12-11_13:38:21 1331 www/tablet/css/fhem-mobil-ui.css
-UPD 2016-02-15_22:01:13 16630 www/tablet/css/fhem-tablet-ui.css
-UPD 2016-02-15_22:01:29 13150 www/tablet/css/fhem-tablet-ui.min.css
+UPD 2016-02-16_22:28:46 16732 www/tablet/css/fhem-tablet-ui.css
+UPD 2016-02-16_22:29:54 13239 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2016-02-12_21:23:24 5295 www/tablet/css/ftui_chart.css
 UPD 2015-11-27_22:46:03 1023 www/tablet/css/ftui_colorwheel.css
 UPD 2016-01-30_01:28:12 2397 www/tablet/css/ftui_departure.css
