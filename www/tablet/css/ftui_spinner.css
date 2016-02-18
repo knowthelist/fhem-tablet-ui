@@ -10,11 +10,15 @@
     margin: 3px;
     cursor: default !important;
 }
-.spinner > .lefticon,.spinner > .righticon {
+.spinner > .lefticon {
     display: inline-block;
     vertical-align: middle;
-    padding-bottom: 10px;
-    line-height: 1.05em;
+    font-size: 40px;
+    cursor: pointer;
+}
+.spinner > .righticon {
+    display: inline-block;
+    vertical-align: middle;
     font-size: 40px;
     cursor: pointer;
 }

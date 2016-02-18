@@ -142,8 +142,13 @@ var widget_spinner = $.extend({}, widget_widget, {
         .prependTo(elem);
         if (leftIcon)
             elemLeftIcon.addClass('fa '+ leftIcon +' fa-lg fa-fw');
-        else
+        else{
             elemLeftIcon.html('-');
+            elemLeftIcon.css({
+                fontSize: elem.data('height')*0.9+'px',
+                fontFamily: 'sans serif',
+            })
+        }
 
         // prepare level element
         var levelArea = jQuery('<div/>', {
@@ -168,16 +173,25 @@ var widget_spinner = $.extend({}, widget_widget, {
         .appendTo(elem);
         if (rightIcon)
             elemRightIcon.addClass('fa '+ rightIcon +' fa-lg fa-fw');
-        else
+        else{
             elemRightIcon.html('+');
+            elemRightIcon.css({
+                fontSize: elem.data('height')*0.9+'px',
+                fontFamily: 'sans serif',
+            })
+        }
 
         // prepare text element
         if ( elem.hasClass('value') || elem.hasClass('valueonly') ) {
-          jQuery('<div/>', {
+          var elemText = jQuery('<div/>', {
               class : 'spinnerText',
           }).css({
              width: '50%',
-        }).appendTo(elem);
+            }).appendTo(elem);
+                if ( elem.hasClass('valueonly') )
+                    elemText.css({
+                     fontSize: elem.data('height')*0.6+'px',
+                    });
         }
 
         // event handler
