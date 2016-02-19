@@ -61,7 +61,8 @@ var widget_label = $.extend({}, widget_widget, {
         if(limits && colors) {
             var idx=indexOfGeneric(limits,value);
             if (idx>-1) {
-                elem.css( "color", getStyle('.'+colors[idx],'color') || colors[idx] );
+                var layer = (elem.hasClass('bg-limit')?'background':'color');
+                elem.css( layer, getStyle('.'+colors[idx],'color') || colors[idx] );
             }
         }
     },

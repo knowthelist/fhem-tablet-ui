@@ -2,7 +2,7 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.5.0
+* Version: 1.5.1
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
@@ -535,7 +535,8 @@ function requestFhem(paraname, devicename) {
 
         /* 'list' is still the fastest cmd to get all important data
         */
-        if(typeof paraname != 'undefined' && paraname !== 'undefined') {
+        if(typeof paraname != 'undefined' && paraname !== 'undefined' && paraname !== '' &&
+           typeof devicelist != 'undefined' && devicelist !== 'undefined' && devicelist !== '') {
         ftui.requests.running++;
         $.ajax({
             async: true,
