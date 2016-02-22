@@ -83,7 +83,7 @@ UPD 2015-12-03_07:04:14 1204 www/tablet/js/widget_rotor.js
 UPD 2016-02-14_22:00:59 3204 www/tablet/js/widget_select.js
 UPD 2015-12-03_07:04:15 12320 www/tablet/js/widget_simplechart.js
 UPD 2016-02-05_11:10:33 7983 www/tablet/js/widget_slider.js
-UPD 2016-02-18_22:32:20 10330 www/tablet/js/widget_spinner.js
+UPD 2016-02-22_21:55:17 11142 www/tablet/js/widget_spinner.js
 UPD 2016-02-16_21:04:55 4024 www/tablet/js/widget_swiper.js
 UPD 2015-12-03_07:04:15 1122 www/tablet/js/widget_switch.js
 UPD 2015-12-03_07:04:15 1653 www/tablet/js/widget_symbol.js
