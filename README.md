@@ -200,8 +200,18 @@ See [examples](#symbol) of Symbol
 - **data-hide**   : string to compare with current value. hide element when it's value equals data-hide
 - **data-hideparents**: jquery selector to hide element's parents too
 - **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x, circleborder
+squareborder, bg-limit, icon, square, round
 
 Use data-color OR data-colors + data-limits, not both.
+With class="bg-limit" it changes the background color not the forecolor according data-limits
+class="icon square" or class="icon round" forces the label to a fix width and height in icon style
+
+Special functions for data-substitution:
+data-substitution="toDate().ddmm()"     -  convert to day:month
+data-substitution="toDate().hhmm()"     -  convert to hour:minutes
+data-substitution="toDate().hhmmss()"   -  convert to hour:minutes:secondes
+data-substitution="toDate().eeee()"     -  convert to name of the week day
+data-substitution="toDate().ago()"      -  convert to time span
 
 See [examples](#label) of Label
 
@@ -601,6 +611,8 @@ See [examples](#range) of Range
 - **data-get-value**               : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
 - **data-shortdelay**              : ms til repeat start if button is pressed (default '80')
 - **data-longdelay**               : ms until the command is send after button is released (default '500')
+- **data-off**                     : value to send to get the thermostat switch off (for this, dial to then minimum value)
+- **data-boost**                   : value to send to force boost mode (for this, dial to then maximum value)
 - **class**                        : valueonly,value,circulate,positiononly
 
 ####Departure widgets
@@ -975,21 +987,21 @@ The countdown time is auto detected via the on-for-timer command. A other value 
 ```html
 <div class="cell left">
  <div data-type="switch" data-device="dummy1" 
-      data-get-off="((?!Wert1).)*" 
-      data-get-on="Wert1" class="cell" ></div>
- <div data-type="label" class="cell">Wert1</div>
+      data-get-off="!on" data-set-off="" data-icon="fa-home"
+      data-get-on="Home" class="cell" ></div>
+ <div class="cell">Home</div>
  <div data-type="switch" data-device="dummy1" 
-      data-get-off="((?!Wert2).)*" 
-      data-get-on="Wert2" class="cell" ></div>
- <div data-type="label" class="cell">Wert2</div>
+      data-get-off="!on" data-set-off="" data-icon="fa-bed"
+      data-get-on="Sleep" class="cell" ></div>
+ <div class="cell">Sleep</div>
  <div data-type="switch" data-device="dummy1" 
-      data-get-off="((?!Wert3).)*" 
-      data-get-on="Wert3" class="cell" ></div>
- <div data-type="label" class="cell">Wert3</div>
+      data-get-off="!on" data-set-off="" data-icon="fa-car"
+      data-get-on="Away" class="cell" ></div>
+ <div class="cell">Away</div>
  <div data-type="switch" data-device="dummy1" 
-      data-get-off="((?!Wert4).)*" 
-      data-get-on="Wert4" class="cell" ></div>
- <div data-type="label" class="cell">Wert4</div>
+      data-get-off="!on" data-set-off="" data-icon="fa-suitcase"
+      data-get-on="Holiday" class="cell" ></div>
+ <div class="cell">Holiday</div>
 </div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/group.png)

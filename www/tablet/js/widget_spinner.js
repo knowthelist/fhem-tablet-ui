@@ -11,11 +11,21 @@ $('head').append('<link rel="stylesheet" href="'+ dir + '/../css/ftui_spinner.cs
 
 var widget_spinner = $.extend({}, widget_widget, {
     widgetname : 'spinner',
+    getValueNumeric: function(elem){
+        var value   = elem.data('value');
+        switch(value) {
+            case elem.data('off'):  return elem.data('min');
+            case elem.data('boost'): return elem.data('max');
+            default:
+                value = parseFloat(value);
+                return  (isNaN(value)) ? elem.data('min'):value;
+        }
+    },
     drawLevel: function(elem) {
         var max         = parseFloat(( $.isNumeric(elem.data('max')) ) ? elem.data('max') : elem.getReading('max').val);
         var min         = parseFloat(( $.isNumeric(elem.data('min')) ) ? elem.data('min') : elem.getReading('min').val);
         var width       = parseFloat(elem.data('width'))/2;
-        var value       = parseFloat(elem.data('value'));
+        var value       = this.getValueNumeric(elem);
         var fix         = parseInt(elem.data('fix'));
         var color       = elem.mappedColor('color');
         var gradColor   = elem.data('gradient-color');
@@ -52,21 +62,32 @@ var widget_spinner = $.extend({}, widget_widget, {
                 levelRange.css({ background: color, });
             }
         }
-        elem.data('value',  (-1<fix&&fix<=20)?Number(value).toFixed(fix) : value);
-        if ( elem.hasClass('value') || elem.hasClass('valueonly') )
-            elem.find('.spinnerText').text(elem.data('value') + elem.data('unit'));
+        value = (-1<fix&&fix<=20)?Number(value).toFixed(fix) : value;
+        if(value == min && elem.data('off') != -123) {
+            value=elem.data('off');
+        } else if(value == max && elem.data('boost') != -123) {
+            value=elem.data('boost');
+        }
+        elem.data('value', value );
+        if ( elem.hasClass('value') || elem.hasClass('valueonly') ){
+            var textElem = elem.find('.spinnerText');
+            if(isNaN(value))
+                textElem.text(value);
+            else
+                textElem.text(value + elem.data('unit'));
+        }
     },
     onClicked: function(elem,factor) {
         var base    = this;
         var step    = parseFloat(elem.data('step'));
         var min     = parseFloat(elem.data('min'));
         var max     = parseFloat(elem.data('max'));
-        var value   = parseFloat(elem.data('value'));
+        var value   = base.getValueNumeric(elem);
         clearTimeout(elem.delayTimer);
         changeValue = function() {
             value = value + factor * step;
             if ( value < min ) value = elem.hasClass('circulate')?max:min;
-            if ( value > max ) value = elem.hasClass('circulate')?min:max;;
+            if ( value > max ) value = elem.hasClass('circulate')?min:max;
             elem.data('value',value);
             base.drawLevel(elem);
         };
@@ -107,6 +128,8 @@ var widget_spinner = $.extend({}, widget_widget, {
         elem.initData('value'                   ,'0');
         elem.initData('min'                     ,'0');
         elem.initData('max'                     ,'100');
+        elem.initData('off'                     ,-123);
+        elem.initData('boost'                   ,-123);
         elem.initData('step'                    ,'1');
         elem.initData('fix'                     ,this.precision( elem.data('step')));
         elem.initData('unit'                    ,'');
@@ -234,7 +257,7 @@ var widget_spinner = $.extend({}, widget_widget, {
             var state = elem.getReading('get').val;
             if (state) {
                 var part = elem.data('get-value');
-                var val = parseFloat(getPart(state, part));
+                var val = getPart(state, part);
                 elem.data('value',val);
                 base.drawLevel(elem);
             }
