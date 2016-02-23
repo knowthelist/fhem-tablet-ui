@@ -14,8 +14,8 @@ var widget_spinner = $.extend({}, widget_widget, {
     getValueNumeric: function(elem){
         var value   = elem.data('value');
         switch(value) {
-            case elem.data('off'):  return elem.data('min');
-            case elem.data('boost'): return elem.data('max');
+            case elem.data('off'):  return parseFloat(elem.data('min'))-parseFloat(elem.data('step'));
+            case elem.data('on'): return parseFloat(elem.data('max'))+parseFloat(elem.data('step'));
             default:
                 value = parseFloat(value);
                 return  (isNaN(value)) ? elem.data('min'):value;
@@ -24,6 +24,7 @@ var widget_spinner = $.extend({}, widget_widget, {
     drawLevel: function(elem) {
         var max         = parseFloat(( $.isNumeric(elem.data('max')) ) ? elem.data('max') : elem.getReading('max').val);
         var min         = parseFloat(( $.isNumeric(elem.data('min')) ) ? elem.data('min') : elem.getReading('min').val);
+        var step        = parseFloat(elem.data('step'));
         var width       = parseFloat(elem.data('width'))/2;
         var value       = this.getValueNumeric(elem);
         var fix         = parseInt(elem.data('fix'));
@@ -63,10 +64,10 @@ var widget_spinner = $.extend({}, widget_widget, {
             }
         }
         value = (-1<fix&&fix<=20)?Number(value).toFixed(fix) : value;
-        if(value == min && elem.data('off') != -123) {
+        if(value == min-step && elem.data('off') != -123) {
             value=elem.data('off');
-        } else if(value == max && elem.data('boost') != -123) {
-            value=elem.data('boost');
+        } else if(value == max+step && elem.data('on') != -123) {
+            value=elem.data('on');
         }
         elem.data('value', value );
         if ( elem.hasClass('value') || elem.hasClass('valueonly') ){
@@ -129,7 +130,7 @@ var widget_spinner = $.extend({}, widget_widget, {
         elem.initData('min'                     ,'0');
         elem.initData('max'                     ,'100');
         elem.initData('off'                     ,-123);
-        elem.initData('boost'                   ,-123);
+        elem.initData('on'                      ,-123);
         elem.initData('step'                    ,'1');
         elem.initData('fix'                     ,this.precision( elem.data('step')));
         elem.initData('unit'                    ,'');

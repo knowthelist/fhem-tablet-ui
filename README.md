@@ -611,8 +611,8 @@ See [examples](#range) of Range
 - **data-get-value**               : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
 - **data-shortdelay**              : ms til repeat start if button is pressed (default '80')
 - **data-longdelay**               : ms until the command is send after button is released (default '500')
-- **data-off**                     : value to send to get the thermostat switch off (for this, dial to then minimum value)
-- **data-boost**                   : value to send to force boost mode (for this, dial to then maximum value)
+- **data-off**                     : value which represents the OFF mode
+- **data-on**                      : value which represents the ON mode
 - **class**                        : valueonly,value,circulate,positiononly
 
 ####Departure widgets
@@ -861,10 +861,10 @@ STATE	T: 20.0 H: 61
 ```html
 <div data-type="label" data-device="THSensorWZ" 
      data-part="2" data-unit="%B0C%0A" class="cell big"></div>
-<div data-type="label" class="cell">Temperatur</div>
+<div class="cell">Temperatur</div>
 <div data-type="label" data-device="THSensorWZ" data-part="4" 
      data-unit="%" class="cell big"></div>
-<div data-type="label" class="cell">Luftfeuchte</div>
+<div class="cell">Luftfeuchte</div>
 ```
 But the same result can reached by getting single readings:
 ```
@@ -1732,7 +1732,7 @@ I'm unable to work now and I need to buy a new one.
 Update 2015-11-04: my old 2007 MacBook runs again with the previous HDD, but totaly slow and out of space.
 
 * Goal  : 13'' MacBook Pro 1445€ 
-* Status: 1068€ (11.02.2016) -> many many thanks to all donators - 377€ still required  :-)
+* Status: 1203€ (23.02.2016) -> many many thanks to all donators - 242€ still required  :-)
 
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PD4C2XM2VTD9A"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" alt="[paypal]" /></a>
