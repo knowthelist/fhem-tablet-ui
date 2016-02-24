@@ -228,20 +228,22 @@ function initPage() {
     DEBUG && console.log('FHEM dir: '+fhem_dir);
 
     //init gridster
-    if (gridster)
-        gridster.destroy();
-    gridster = $(".gridster > ul").gridster({
-      widget_base_dimensions: [wx, wy],
-      widget_margins: [wm, wm],
-      draggable: {
-        handle: '.gridster li > header'
-      }
-    }).data('gridster');
-    if($("meta[name='gridster_disable']").attr("content") == '1') {
-        gridster.disable();
-    }
-    if($("meta[name='gridster_starthidden']").attr("content") == '1') {
-        $('.gridster').hide();
+    if ($.fn.gridster){
+        if (gridster)
+            gridster.destroy();
+        gridster = $(".gridster > ul").gridster({
+          widget_base_dimensions: [wx, wy],
+          widget_margins: [wm, wm],
+          draggable: {
+            handle: '.gridster li > header'
+          }
+        }).data('gridster');
+        if($("meta[name='gridster_disable']").attr("content") == '1') {
+            gridster.disable();
+        }
+        if($("meta[name='gridster_starthidden']").attr("content") == '1') {
+            $('.gridster').hide();
+        }
     }
 	
     //include extern html code
@@ -634,6 +636,7 @@ function dynamicload(file, success, error, async) {
 
 function loadStyleSchema(){
     $.each($('link[href$="-ui.css"],link[href$="-ui.min.css"]') , function (index, thisSheet) {
+        if (!thisSheet || !thisSheet.sheet || !thisSheet.sheet.cssRules) return;
         var rules = thisSheet.sheet.cssRules;
         for (var r in rules){
             if (rules[r].style){
