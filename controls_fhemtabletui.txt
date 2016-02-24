@@ -75,7 +75,7 @@ UPD 2015-12-07_12:55:37 2463 www/tablet/js/widget_pagebutton.js
 UPD 2016-02-11_20:33:42 7981 www/tablet/js/widget_pagetab.js
 UPD 2015-12-03_07:04:14 3226 www/tablet/js/widget_playstream.js
 UPD 2016-02-12_21:19:02 5820 www/tablet/js/widget_popup.js
-UPD 2016-02-13_20:21:52 2485 www/tablet/js/widget_progress.js
+UPD 2016-02-24_09:36:53 2537 www/tablet/js/widget_progress.js
 UPD 2015-12-09_12:16:06 3245 www/tablet/js/widget_push.js
 UPD 2015-12-03_07:04:14 5686 www/tablet/js/widget_range.js
 UPD 2015-12-03_05:35:40 1667 www/tablet/js/widget_readingsgroup.js
