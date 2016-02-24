@@ -16,6 +16,7 @@ var widget_progress = $.extend({}, widget_famultibutton, {
         elem.initData('set-off'             , '');
         elem.initData('max'                 , '100');
         elem.initData('progress-width'      , '15');
+        elem.initData('unit'                , '' );
         elem.data('mode', 'symbol');
         if (!$.isNumeric(elem.data('max')))
             elem.addReading('max');
