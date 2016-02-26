@@ -102,6 +102,12 @@ var widget_label = $.extend({}, widget_widget, {
 
                 val = base.update_substitution(val, elem.data('substitution'));
                 val = base.update_fix(val, elem.data('fix'));
+                if (val.indexOf('.')>-1){
+                    var vals = val.split('.');
+                    val = "<span class='label-precomma'>"+vals[0]+"</span>" +
+                          "<span class='label-comma'>.</span>" +
+                          "<span class='label-aftercomma'>"+vals[1]+"</span>";
+                }
 
                 if ( !elem.hasClass('fixedlabel') ) {
                   if ( unit )
