@@ -74,6 +74,16 @@
 .departure .header .minutes{
     width: 20%;
 }
+.departure .minutes{
+    display: inline-block;
+    width: 17%;
+    text-align: end;
+}
+.departure .connection{
+}
+.departure .connection.even{
+    background: rgba(0, 0, 0, 0.5);
+}
 .departure  .line{
     display: inline-block;
     width: 15%;
@@ -88,7 +98,7 @@
 }
 .departure .minutes{
     display: inline-block;
-    width: 15%;
+    width: 17%;
     text-align: end;
 }
 .departure .listText {

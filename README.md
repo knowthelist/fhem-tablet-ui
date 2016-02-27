@@ -625,6 +625,11 @@ See [examples](#range) of Range
 - **data-width**                   : fixed size for width (in % or px, default '200px')
 - **data-height**                  : fixed size for height (in % or px, default '250px')
 - **data-interval**                : auto refresh interval in secondes (default '120', 0 means no auto refresh)
+- **class**                        : DVB,VVO,alternate,deptime
+
+deptime: show departure time insteat of minutes
+alternate: show background of every second line half transparent
+DVB & VVO: fix style
 
 Format
 -------

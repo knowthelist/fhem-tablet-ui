@@ -13,7 +13,7 @@ UPD 2016-02-24_11:36:19 17103 www/tablet/css/fhem-tablet-ui.css
 UPD 2016-02-24_11:41:43 13561 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2016-02-12_21:23:24 5295 www/tablet/css/ftui_chart.css
 UPD 2015-11-27_22:46:03 1023 www/tablet/css/ftui_colorwheel.css
-UPD 2016-01-30_01:28:12 2397 www/tablet/css/ftui_departure.css
+UPD 2016-02-27_02:20:40 2577 www/tablet/css/ftui_departure.css
 UPD 2015-12-03_07:04:10 429 www/tablet/css/ftui_range.css
 UPD 2016-02-18_22:40:41 1234 www/tablet/css/ftui_spinner.css
 UPD 2015-11-24_23:53:37 127396 www/tablet/fonts/fhemSVG.eot
@@ -56,7 +56,7 @@ UPD 2015-12-03_07:04:13 3864 www/tablet/js/widget_checkbox.js
 UPD 2016-02-07_00:42:48 2101 www/tablet/js/widget_circlemenu.js
 UPD 2015-12-03_09:31:22 3036 www/tablet/js/widget_colorwheel.js
 UPD 2015-12-03_07:04:13 2225 www/tablet/js/widget_datetimepicker.js
-UPD 2016-01-27_15:30:40 4925 www/tablet/js/widget_departure.js
+UPD 2016-02-27_02:32:07 5460 www/tablet/js/widget_departure.js
 UPD 2016-02-05_09:40:31 5817 www/tablet/js/widget_dimmer.js
 UPD 2015-12-03_07:04:14 3624 www/tablet/js/widget_eventmonitor.js
 UPD 2016-01-12_20:25:09 1275 www/tablet/js/widget_example.js

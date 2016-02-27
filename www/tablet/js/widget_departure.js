@@ -11,6 +11,18 @@ $('head').append('<link rel="stylesheet" href="'+ dir + '/../css/ftui_departure.
 
 var widget_departure = $.extend({}, widget_widget, {
     widgetname : 'departure',
+    startTimer: function(elem){
+        var base = this;
+        var interval = elem.data('interval');
+        if ($.isNumeric(interval) && interval>0 ){
+            setTimeout(function () {
+                if (elem.isValidData('timer')){
+                    base.requestUpdate(elem);
+                    base.startTimer(elem);
+                }
+            }, Number(interval)*1000);
+        }
+    },
     requestUpdate: function(elem) {
         var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('get')].join(' ');
         setFhemStatus(cmdl);
@@ -32,7 +44,7 @@ var widget_departure = $.extend({}, widget_widget, {
     init_ui : function(elem) {
         var base = this;
         var icon = elem.data('icon');
-        var interval = elem.data('interval');
+
 
         // prepare container element
         elem.html('')
@@ -79,7 +91,7 @@ var widget_departure = $.extend({}, widget_widget, {
         var text='&nbsp;<div class="header">';
         text+='<div class="line">Linie</div>';
         text+='<div class="destination">Richtung</div>';
-        text+='<div class="minutes">in Min</div></div>';
+        text+=elem.hasClass('deptime')?'<div class="minutes">Zeit</div></div>':'<div class="minutes">in Min</div></div>';
         elem.append(text);
 
         // prepare list text element
@@ -95,11 +107,8 @@ var widget_departure = $.extend({}, widget_widget, {
         });
 
         // init interval timer
-        if ($.isNumeric(interval) && interval>0){
-            setInterval(function () {
-                base.requestUpdate.call(base,elem);
-            }, Number(interval)*1000);
-        }
+        elem.data('timer',true);
+        base.startTimer.call(base,elem);
 
         // first refresh
         base.requestUpdate(elem);
@@ -122,20 +131,23 @@ var widget_departure = $.extend({}, widget_widget, {
             if (list) {
                 var elemText = elem.find('.listText');
                 elemText.fadeOut();
-                var text = '';
-                var collection = JSON.parse(list);
-                for (var idx in collection) {
-                    var line = collection[idx];
-                    text+='<div class="connection">';
-                    text+='<div class="line">'+line[0]+'</div>';
-                    text+='<div class="destination">'+line[1]+'</div>';
-                    text+='<div class="minutes">'+line[2]+'</div></div>';
-                }
-                elemText.html(text).fadeIn();
                 var ts = elem.getReading('get').date;
                 if (ts){
                     elem.find('.time').html(ts.toDate().hhmm());
                 }
+                var text = '';
+                var n = 0;
+                var collection = JSON.parse(list);
+                for (var idx in collection) {
+                    n++;
+                    var line = collection[idx];
+                    var when = elem.hasClass('deptime')?ts.toDate().addMinutes(line[2]).hhmm():line[2];
+                    text+=(n % 2 == 0 && elem.hasClass('alternate'))?'<div class="connection even">':'<div class="connection">';
+                    text+='<div class="line">'+line[0]+'</div>';
+                    text+='<div class="destination">'+line[1]+'</div>';
+                    text+='<div class="minutes">'+when+'</div></div>';
+                }
+                elemText.html(text).fadeIn();
             }
          });
 
