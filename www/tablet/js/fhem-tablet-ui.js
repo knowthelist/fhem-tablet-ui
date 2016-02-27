@@ -41,7 +41,7 @@ var plugins = {
   load: function (name) {
     return loadplugin(name, function () {
 		var module = eval(name);
-		plugins.addModule(module);
+        plugins.addModule(module);
         module.init();
         //update all what we have until now
         for (var device in devices) {
@@ -811,6 +811,10 @@ this.mapColor = function(value) {
 
 String.prototype.toDate = function() {
     return dateFromString(this);
+}
+
+Date.prototype.addMinutes = function(minutes) {
+    return new Date(this.getTime() + minutes*60000);
 }
 
 Date.prototype.ago = function() {
