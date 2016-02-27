@@ -386,6 +386,9 @@ class 'FS20' convert values 0-100 to values which are excepted by FS20 dimmers.
 - **data-cmd-value** : name of the command for value changing via slider (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setreading) default: 'set'
 - **data-dim**       : name of the reading responsible for DIM  (\<command\> \<device\> **\<reading\>** \<value\>) (default: '')
 - **data-icon**      : name of the font-awesome icon. (default: fa-lightbulb-o)
+- **data-max**                     : numeric value for the maximal value to tune (default '100')
+- **data-min**                     : numeric value for the minimal value to tune (default '0')
+- **data-step**                    : numeric value for each increase/descrease (default '1')
 - **class**          : FS20
 
 To change the dim value: push the button and slide up or down.

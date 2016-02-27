@@ -49,6 +49,9 @@ $.fn.famultibutton = function(pOptions) {
 		toggleOff: null,
         valueChanged: null,
         progressWidth:15,
+        max:100,
+        min:0,
+        step:1,
 	};
 	
 	var options = $.extend({}, defaultOptions, pOptions);
@@ -233,10 +236,10 @@ return elem;
 
 function tickTimer() {
 	clearTimeout(objTimer);
-	currVal = (diff > 0) ? currVal-=1 : currVal+=1;
+    currVal = (diff > 0) ? currVal-=options['step'] : currVal+=options['step'];
 
-    if ( currVal>100) currVal=100;
-    if ( currVal<0) currVal=0;
+    if ( currVal>options['max']) currVal=options['max'];
+    if ( currVal<options['min']) currVal=options['min'];
     
     drawScale();
     var d = (resStepValues[Math.abs(diff)]);
@@ -253,7 +256,9 @@ function drawScale() {
 	 
 		var context = canvas.getContext('2d');
 		context.strokeStyle = options['offBackgroundColor'];
-		var valPosition = canvas.height-Math.round(canvas.height * currVal/100);
+        var max = options['max'];
+        var min = options['min'];
+        var valPosition = canvas.height-Math.round(canvas.height *(currVal-min)/(max-min));
 		
 		for (var i=0;i<canvas.height;i+=4){
 			context.lineWidth = 1;
