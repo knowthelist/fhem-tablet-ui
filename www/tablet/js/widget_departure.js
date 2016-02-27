@@ -91,7 +91,7 @@ var widget_departure = $.extend({}, widget_widget, {
         var text='&nbsp;<div class="header">';
         text+='<div class="line">Linie</div>';
         text+='<div class="destination">Richtung</div>';
-        text+=elem.hasClass('deptime')?'<div class="minutes">Zeit</div></div>':'<div class="minutes">in Min</div></div>';
+        text+=elem.hasClass('deptime')?'<div class="minutes">Uhrzeit</div></div>':'<div class="minutes">in Min</div></div>';
         elem.append(text);
 
         // prepare list text element
