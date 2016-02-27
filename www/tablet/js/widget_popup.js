@@ -72,6 +72,14 @@ var widget_popup= $.extend({}, widget_widget, {
 
             var dialog = elem.find('.dialog');
             var starter = (elem.data('starter')) ? $(document).find( elem.data('starter') ) : elem.children(":first");
+            if (starter.hasClass('dialog')){
+                starter = jQuery('<div/>', {
+                             class: 'dialog-starter'
+                          }).prependTo(elem);
+            }
+            else
+                starter.addClass('dialog-starter')
+
             var close = jQuery('<div/>', {
                  class: 'dialog-close'
               }).html('x').appendTo(dialog);
@@ -132,17 +140,17 @@ var widget_popup= $.extend({}, widget_widget, {
            var state = elem.getReading('get').val;
            if (state) {
                if ( state == $(this).data('get-on') )
-                    $(this).children(":first").trigger('click');
+                    elem.find('.dialog-starter').trigger('click');
                else if ( state == $(this).data('get-off') )
-                    $(this).find('.dialog-close').trigger('click');
+                    elem.find('.dialog-close').trigger('click');
                else if ( state.match(new RegExp('^' + $(this).data('get-on') + '$')) )
-                    $(this).children(":first").trigger('click');
+                    elem.find('.dialog-starter').trigger('click');
                else if ( state.match(new RegExp('^' + $(this).data('get-off') + '$')) )
-                    $(this).find('.dialog-close').trigger('click');
+                    elem.find('.dialog-close').trigger('click');
                else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
-                    $(this).children(":first").trigger('click');
+                    elem.find('.dialog-starter').trigger('click');
                else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
-                    $(this).find('.dialog-close').trigger('click');
+                    elem.find('.dialog-close').trigger('click');
            }
        });
    }

@@ -203,8 +203,25 @@ See [examples](#symbol) of Symbol
 squareborder, bg-limit, icon, square, round
 
 Use data-color OR data-colors + data-limits, not both.
+
 With class="bg-limit" it changes the background color not the forecolor according data-limits
+
 class="icon square" or class="icon round" forces the label to a fix width and height in icon style
+
+Special layout can be achieved by overwriting of following classes in the fhem-tablet-ui-user.css:
+
+.label-precomma
+.label-comma
+.label-aftercomma
+.label-unit
+
+e.g.:
+.label-aftercomma{
+    font-size:40%;
+    left: 4px;
+    top: -25px;
+    position: relative;
+}
 
 Special functions for data-substitution:
 data-substitution="toDate().ddmm()"     -  convert to day:month
@@ -625,11 +642,11 @@ See [examples](#range) of Range
 - **data-width**                   : fixed size for width (in % or px, default '200px')
 - **data-height**                  : fixed size for height (in % or px, default '250px')
 - **data-interval**                : auto refresh interval in secondes (default '120', 0 means no auto refresh)
-- **class**                        : DVB,VVO,alternate,deptime
+- **class**                        : DVB,VVO,DB,alternate,deptime
 
 deptime: show departure time insteat of minutes
 alternate: show background of every second line half transparent
-DVB & VVO: fix style
+DVB,VVO,DB: fix style schemas
 
 Format
 -------
