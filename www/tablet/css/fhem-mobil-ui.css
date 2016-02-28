@@ -20,9 +20,6 @@ ul, ol {
 }
 
 /* Slider colors */
-.range-quantity {
-  background-color: #0088CC !important;
-}
 .range-handle {
   background-color: #fff !important;
 }
@@ -61,5 +58,6 @@ polyline {
 .thermostat.input{color:#444;}
 .homestatus.fgcolor{color:#0088CC;}
 .homestatus.tkcolor{color:#aaa;}
+.slider{color:#0088CC;}
 .volume.hdcolor{color:#0088CC;}
 .volume.fgcolor{color:#555;}

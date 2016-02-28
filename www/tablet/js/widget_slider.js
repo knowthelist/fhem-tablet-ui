@@ -23,9 +23,10 @@ var widget_slider= $.extend({}, widget_widget, {
         elem.initData('off'         ,'off');
         elem.initData('width'       ,null);
         elem.initData('height'      ,null);
-        elem.initData('value'       ,false);
+        elem.initData('value'       ,0);
         elem.initData('set-value'   ,'$v');
         elem.initData('get-value'   ,elem.data('part') || -1);
+        elem.initData('color'       ,getClassColor(elem) || getStyle('.slider','color')    || '#aa6900');
 
         elem.addReading('get');
 
@@ -59,7 +60,7 @@ var widget_slider= $.extend({}, widget_widget, {
                 v = elem.hasClass('negated')? pwrng.options.max + pwrng.options.min - sliVal:sliVal;
               }
 
-              if ( elem.data('value') ) {
+              if ( elem.hasClass('value') ) {
                 elem.find( '#slidervalue' ).text( v );
               }
 
@@ -68,13 +69,11 @@ var widget_slider= $.extend({}, widget_widget, {
                 if (elem.hasClass('FS20')){
                   v = base.FS20.dimmerValue(v);
                 }
-                v = elem.data('set-value').replace('$v',v.toString());
-                var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('set'),v].join(' ');
+                elem.data('value', elem.data('set-value').replace('$v',v.toString()));
 
                 // write visible value (from pwrng) to local storage NOT the fhem exposed value)
                 localStorage.setItem("slider_"+id, sliVal);
-                setFhemStatus(cmdl);
-                TOAST && $.toast(cmdl);
+                elem.transmitCommand();
 
                 elem.data('selection',0);
 
@@ -82,9 +81,11 @@ var widget_slider= $.extend({}, widget_widget, {
               }).bind(this),
         });
         elem.data('Powerange',pwrng);
+        var rangeQuantity = elem.find('.range-quantity');
+        rangeQuantity.css({'background-color':elem.data('color')});
 
         if (elem.hasClass('negated')){
-          var rangeQuantity = elem.find('.range-quantity');
+
           var rangeBar = elem.find('.range-bar');
           var rangeBarColor = rangeBar.css('background-color');
           rangeBar.css({'background-color':rangeQuantity.css('background-color')});
@@ -126,7 +127,7 @@ var widget_slider= $.extend({}, widget_widget, {
             }
         }
 
-        if ( elem.data('value') ) {
+        if ( elem.hasClass('value') ) {
          var lbl =  jQuery('<div/>', {
              id : 'slidervalue',
              class : 'slidertext normal',
@@ -178,7 +179,7 @@ var widget_slider= $.extend({}, widget_widget, {
                     localStorage.setItem("slider_"+dev+"_"+par, v);
                     DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
                 }
-                if ( elem.data('value') ) {
+                if ( elem.hasClass('value') ) {
                     var slidervalue = elem.find( '#slidervalue' );
                     if (slidervalue){
                         if ( elem.hasClass('textvalue') ) {

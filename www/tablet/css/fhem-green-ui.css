@@ -1,11 +1,4 @@
 
-
-/* Slider colors */
-.range-quantity {
-  background-color: #32a054 !important;
-}
-
-
 polyline {
     stroke: #32a054 !important;
 }
@@ -17,4 +10,5 @@ polyline {
 .checkbox.on{background-color:#32a054;}
 .push.on{color:#32a054;background-color:#32a054;}
 .homestatus{color:#32a054;}
+.slider{color:#32a054;}
 .volume.hdcolor{color:#32a054;}
