@@ -1,3 +1,10 @@
+/* Slider colors */
+.range-handle {
+  background-color: #bcbcbc !important;
+}
+.range-bar {
+  background-color: #404040;
+}
 
 polyline {
     stroke: #32a054 !important;

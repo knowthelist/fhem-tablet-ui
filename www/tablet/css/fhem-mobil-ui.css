@@ -24,7 +24,7 @@ ul, ol {
   background-color: #fff !important;
 }
 .range-bar {
-  background-color: #aaa !important;
+  background-color: #aaa;
 }
 
 select {
