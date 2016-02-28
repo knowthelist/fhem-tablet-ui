@@ -342,18 +342,22 @@ all parameters from knob widget plus following additional parameters
 - **data-cmd**  : name of the command (**\<command\>** \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 100)
+- **data-step** : step value (default 1)
 - **data-on**   : value or RegEx where the slider moves to max  (default 'on') 
 - **data-off**  : value or RegEx where the slider moves to min  (default 'off')
 - **data-get-value** : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
 - **data-set-value** : Format of the value to send to FHEM (default '$v': the value only)
-- **data-value**: show the value in a text box (default 'false')
 - **data-width**: width for horizontal sliders (default '120px', for mini '60px')
 - **data-height**: height for vertical sliders (default '120px', for mini '60px')
-- **class**     : mini, horizontal, negated, textvalue, FS20, tap, big, bigger, large
+- **data-color** : color for quantity range (default '#aa6900')
+- **data-background-color**         : color for range bar (default '#404040')
+-
+- **class**     : mini, horizontal, negated, value, textvalue, FS20, tap, big, bigger, large
 
 The slider supports tap to target only if the CSS class 'tap' is added.
 $v is a placeholder for the numeric value, it will be replaced be the real value at runtime.
 class 'FS20' convert values 0-100 to values which are excepted by FS20 dimmers.
+class 'value' enables a text element which shows the value
 
 ####Level widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')

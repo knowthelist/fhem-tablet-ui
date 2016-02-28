@@ -1468,10 +1468,13 @@ Powerange.prototype.setValue = function (offset, size) {
  */
 
 Powerange.prototype.step = function(sliderSize, handleSize) {
-  var dimension = sliderSize - handleSize
+
+    var dimension = sliderSize - handleSize
     , part = percentage.from(this.checkStep(this.options.step), this.options.max - this.options.min)
     , interval = percentage.of(part, dimension)
     , steps = [];
+
+    if (interval==0) interval=1;
 
   for (i = 0; i <= dimension; i += interval) {
     steps.push(i);
@@ -1628,6 +1631,7 @@ Horizontal.prototype.setStart = function(start) {
 
   this.setPosition(position);
   this.setValue(this.handle.style.left, this.slider.offsetWidth - this.handle.offsetWidth);
+  if (this.options.step) this.step(this.slider.offsetWidth, this.handle.offsetWidth);
 };
 
 /**
@@ -1767,6 +1771,7 @@ Vertical.prototype.setStart = function(start) {
 
   this.setPosition(position);
   this.setValue(this.handle.style.bottom, this.slider.offsetHeight - this.handle.offsetHeight);
+  this.step(this.slider.offsetHeight, this.handle.offsetHeight);
 };
 
 /**

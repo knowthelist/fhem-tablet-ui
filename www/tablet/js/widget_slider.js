@@ -24,6 +24,9 @@ var widget_slider= $.extend({}, widget_widget, {
         elem.initData('width'           ,null);
         elem.initData('height'          ,null);
         elem.initData('value'           ,0);
+        elem.initData('min'             ,0);
+        elem.initData('max'             ,100);
+        elem.initData('step'            ,1);
         elem.initData('set-value'       ,'$v');
         elem.initData('get-value'       ,elem.data('part') || -1);
         elem.initData('color'           ,getClassColor(elem) || getStyle('.slider','color')    || '#aa6900');
@@ -37,15 +40,16 @@ var widget_slider= $.extend({}, widget_widget, {
         storeval = (storeval)?storeval:'5';
         var input_elem =  jQuery('<input/>', {
             type: 'text',
+            class: 'slider',
         }).appendTo(elem);
-
 
         elem.data('selection',0);
         var pwrng = new Powerange(input_elem[0], {
             vertical: !elem.hasClass('horizontal'),
-            'min': elem.data('min') || 0,
-            'max': elem.data('max') || 100,
-            'tap': elem.hasClass('tap') || false,
+            min: elem.data('min'),
+            max: elem.data('max'),
+            step: elem.data('step'),
+            tap: elem.hasClass('tap') || false,
             klass: elem.hasClass('horizontal')?'slider_horizontal':'slider_vertical',
             callback: (function() {
               var pwrng = elem.data('Powerange');
