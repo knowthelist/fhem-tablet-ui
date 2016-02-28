@@ -26,7 +26,7 @@ var widget_slider= $.extend({}, widget_widget, {
         elem.initData('value'           ,0);
         elem.initData('min'             ,0);
         elem.initData('max'             ,100);
-        elem.initData('step'            ,1);
+        elem.initData('step'            ,null);
         elem.initData('set-value'       ,'$v');
         elem.initData('get-value'       ,elem.data('part') || -1);
         elem.initData('color'           ,getClassColor(elem) || getStyle('.slider','color')    || '#aa6900');

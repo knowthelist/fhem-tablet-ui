@@ -1771,7 +1771,7 @@ Vertical.prototype.setStart = function(start) {
 
   this.setPosition(position);
   this.setValue(this.handle.style.bottom, this.slider.offsetHeight - this.handle.offsetHeight);
-  this.step(this.slider.offsetHeight, this.handle.offsetHeight);
+  if (this.options.step) this.step(this.slider.offsetHeight, this.handle.offsetHeight);
 };
 
 /**
