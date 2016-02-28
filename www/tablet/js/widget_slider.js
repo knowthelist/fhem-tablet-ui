@@ -18,6 +18,7 @@ var widget_slider= $.extend({}, widget_widget, {
 
         elem.initData('get'             ,'STATE');
         elem.initData('set'             ,'');
+        elem.initData('steps'           ,1);
         elem.initData('cmd'             ,'set');
         elem.initData('on'              ,'on');
         elem.initData('off'             ,'off');
@@ -45,6 +46,7 @@ var widget_slider= $.extend({}, widget_widget, {
             vertical: !elem.hasClass('horizontal'),
             'min': elem.data('min') || 0,
             'max': elem.data('max') || 100,
+            'steps': elem.data('steps') || 1,
             'tap': elem.hasClass('tap') || false,
             klass: elem.hasClass('horizontal')?'slider_horizontal':'slider_vertical',
             callback: (function() {
@@ -52,13 +54,16 @@ var widget_slider= $.extend({}, widget_widget, {
               var selMode = elem.data('selection');
               var v = 0, sliVal = 0;
               var isunsel = 1;
+              var steps = 0;              
               if ( pwrng ) {
                 isunsel = $( pwrng.slider ).hasClass('unselectable');
                 if ( isunsel ) {
                   elem.data('selection',1);
                 }
                 sliVal = pwrng.element.value;
+                steps = pwrng.options.steps;
                 v = elem.hasClass('negated')? pwrng.options.max + pwrng.options.min - sliVal:sliVal;
+                v = steps > 1 ? Math.floor(Math.floor(v/steps)*steps):v;
               }
 
               if ( elem.hasClass('value') ) {
