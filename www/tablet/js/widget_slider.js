@@ -16,17 +16,18 @@ var widget_slider= $.extend({}, widget_widget, {
 
         var elem = $(this);
 
-        elem.initData('get'         ,'STATE');
-        elem.initData('set'         ,'');
-        elem.initData('cmd'         ,'set');
-        elem.initData('on'          ,'on');
-        elem.initData('off'         ,'off');
-        elem.initData('width'       ,null);
-        elem.initData('height'      ,null);
-        elem.initData('value'       ,0);
-        elem.initData('set-value'   ,'$v');
-        elem.initData('get-value'   ,elem.data('part') || -1);
-        elem.initData('color'       ,getClassColor(elem) || getStyle('.slider','color')    || '#aa6900');
+        elem.initData('get'             ,'STATE');
+        elem.initData('set'             ,'');
+        elem.initData('cmd'             ,'set');
+        elem.initData('on'              ,'on');
+        elem.initData('off'             ,'off');
+        elem.initData('width'           ,null);
+        elem.initData('height'          ,null);
+        elem.initData('value'           ,0);
+        elem.initData('set-value'       ,'$v');
+        elem.initData('get-value'       ,elem.data('part') || -1);
+        elem.initData('color'           ,getClassColor(elem) || getStyle('.slider','color')    || '#aa6900');
+        elem.initData('background-color',getStyle('.slider','background-color')    || '#404040');
 
         elem.addReading('get');
 
@@ -82,11 +83,11 @@ var widget_slider= $.extend({}, widget_widget, {
         });
         elem.data('Powerange',pwrng);
         var rangeQuantity = elem.find('.range-quantity');
+        var rangeBar = elem.find('.range-bar');
         rangeQuantity.css({'background-color':elem.data('color')});
+        rangeBar.css({'background-color':elem.data('background-color')});
 
         if (elem.hasClass('negated')){
-
-          var rangeBar = elem.find('.range-bar');
           var rangeBarColor = rangeBar.css('background-color');
           rangeBar.css({'background-color':rangeQuantity.css('background-color')});
           rangeQuantity.css({'background-color':rangeBarColor});
