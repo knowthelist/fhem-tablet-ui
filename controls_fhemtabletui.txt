@@ -82,7 +82,7 @@ UPD 2015-12-03_05:35:40 1667 www/tablet/js/widget_readingsgroup.js
 UPD 2015-12-03_07:04:14 1204 www/tablet/js/widget_rotor.js
 UPD 2016-02-14_22:00:59 3204 www/tablet/js/widget_select.js
 UPD 2015-12-03_07:04:15 12320 www/tablet/js/widget_simplechart.js
-UPD 2016-02-28_15:34:16 8444 www/tablet/js/widget_slider.js
+UPD 2016-02-28_15:48:21 8447 www/tablet/js/widget_slider.js
 UPD 2016-02-23_22:38:24 11284 www/tablet/js/widget_spinner.js
 UPD 2016-02-16_21:04:55 4024 www/tablet/js/widget_swiper.js
 UPD 2015-12-03_07:04:15 1122 www/tablet/js/widget_switch.js
@@ -119,9 +119,9 @@ UPD 2015-12-03_07:04:17 10878 www/tablet/lib/jquery.knob.mod.min.js
 UPD 2015-12-03_07:04:17 1107 www/tablet/lib/jquery.toast.min.css
 UPD 2015-12-03_07:04:17 5303 www/tablet/lib/jquery.toast.min.js
 UPD 2015-12-03_07:04:17 23826 www/tablet/lib/openautomation.css
-UPD 2016-02-28_15:38:23 41234 www/tablet/lib/powerange.js
+UPD 2016-02-28_15:47:12 41257 www/tablet/lib/powerange.js
 UPD 2015-12-03_07:04:17 1194 www/tablet/lib/powerange.min.css
-UPD 2016-02-28_15:38:28 19214 www/tablet/lib/powerange.min.js
+UPD 2016-02-28_15:47:28 19237 www/tablet/lib/powerange.min.js
 UPD 2015-12-01_07:04:30 62078 www/tablet/lib/swiper.jquery.min.js
 UPD 2015-12-01_07:04:30 15163 www/tablet/lib/swiper.min.css
 UPD 2015-12-03_07:04:17 683 www/tablet/lib/switchery.min.css
