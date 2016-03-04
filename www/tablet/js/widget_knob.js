@@ -28,7 +28,6 @@ var widget_knob = $.extend({}, widget_widget, {
     },
     init_attr: function(elem) {
         elem.data('get', elem.data('get') || 'STATE');
-        readings[elem.data('get')] = true;
         elem.data('set',        elem.data('set')        || '');
         elem.data('cmd',        elem.data('cmd')        || 'set');
         elem.data('set-value',  elem.data('set-value')  || '$v');
@@ -57,6 +56,7 @@ var widget_knob = $.extend({}, widget_widget, {
         elem.data('font',       elem.data('font')       || getStyle('.'+this.widgetname,'font-family')  || '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
         elem.data('font-weight',elem.data('font-weight')|| getStyle('.'+this.widgetname,'font')         || 'normal');
         elem.initData('unit'    ,'');
+        elem.addReading('get');
     },
     init_ui : function(elem) {
        var base = this;

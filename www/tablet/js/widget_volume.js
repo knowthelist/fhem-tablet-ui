@@ -9,6 +9,7 @@ var widget_volume = $.extend({}, widget_knob, {
 	a = this.arc(this.cv), // Arc
 	r = 1;
 
+    c.clearRect(0, 0, this.w, this.h);
 	c.lineWidth = this.lineWidth;
 	c.lineCap = this.lineCap;
 	if ((this.o.mode>>0) % 2 != 0) {
@@ -77,7 +78,6 @@ var widget_volume = $.extend({}, widget_knob, {
   return false;
     },
     onChange: function (v) {
-        startShortPollInterval();
           if (v > this.o.max - this.o.variance && this.o.lastValue < this.o.min + this.o.variance) {
               knob_elem.val(this.o.min).change();
               return false;
@@ -103,7 +103,7 @@ var widget_volume = $.extend({}, widget_knob, {
                   var val = this.o.setValue.replace('$v',v.toString());
                   var cmdl = [this.o.cmd,device,this.o.set,val].join(' ');
                   setFhemStatus(cmdl);
-                  TOAST && $.toast(cmdl);
+                  ftui.toast(cmdl);
               }
               this.$.data('curval', v);
         }
@@ -183,7 +183,7 @@ var widget_volume = $.extend({}, widget_knob, {
                 }
                 if ( knob_elem.val() != val ){
                     knob_elem.val( val ).trigger('change');
-                    DEBUG && console.log( this.widgetname + ' dev:'+dev+' par:'+par+' change '+$(this).data('device')+':knob to ' +val );
+                    ftui.log(3, this.widgetname + ' dev:'+dev+' par:'+par+' change '+$(this).data('device')+':knob to ' +val );
                 }
             }
             knob_elem.css({visibility:'visible'});

@@ -17,7 +17,7 @@ var widget_label = $.extend({}, widget_widget, {
 
         // fill up colors to limits.length
         // if an index s isn't set, use the value of s-1
-        for(var s=0; s<elem.data('limits').length; s++) {
+        for(var s=0, len=elem.data('limits').length; s<len; s++) {
             if(typeof elem.data('colors')[s] == 'undefined') {
                 elem.data('colors')[s]=elem.data('colors')[s>0?s-1:0];
             }
@@ -40,7 +40,7 @@ var widget_label = $.extend({}, widget_widget, {
         return ( $.isNumeric(value) && fix>=0 ) ? Number(value).toFixed(fix) : value;
     },
     update_substitution : function(value, substitution) {
-        DEBUG && console.log(this.widgetname,'value',value,'substitution',substitution);
+        ftui.log(3,this.widgetname+' - value:'+value+', substitution:'+substitution);
         if(substitution){
             if (substitution.match(/^s/)) {
                 var f = substitution.substr(1,1);
@@ -102,7 +102,7 @@ var widget_label = $.extend({}, widget_widget, {
 
                 val = base.update_substitution(val, elem.data('substitution'));
                 val = base.update_fix(val, elem.data('fix'));
-                if (val.indexOf('.')>-1){
+                if (!isNaN(parseFloat(val)) && isFinite(val) && val.indexOf('.')>-1){
                     var vals = val.split('.');
                     val = "<span class='label-precomma'>"+vals[0]+"</span>" +
                           "<span class='label-comma'>.</span>" +

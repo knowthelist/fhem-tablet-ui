@@ -97,7 +97,6 @@ var widget_homestatus = $.extend({}, widget_knob, {
         var cfafont=22*window.devicePixelRatio +"px "+this.$.data("icon-font");
         var coffset=5*window.devicePixelRatio;
 
-		
 		c.fillStyle = (sector==1)?this.o.minColor:this.o.maxColor;
         c.font = cfont;
         c.fillText(texts[0], this.xy-15, this.xy+10+coffset);
@@ -178,7 +177,7 @@ var widget_homestatus = $.extend({}, widget_knob, {
                 elem.data('height', 160);
                 elem.data('width', 160);
             }
-            readings[elem.data('get')] = true;
+            elem.addReading('get');
 
             var texts = elem.data('alias')||[];
             var icons = elem.data('icons')||[];

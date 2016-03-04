@@ -200,7 +200,7 @@ See [examples](#symbol) of Symbol
 - **data-hide**   : string to compare with current value. hide element when it's value equals data-hide
 - **data-hideparents**: jquery selector to hide element's parents too
 - **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x, circleborder
-squareborder, bg-limit, icon, square, round
+squareborder, bg-limit, icon, square, round, truncate
 
 Use data-color OR data-colors + data-limits, not both.
 
@@ -703,6 +703,7 @@ not all widgets support all classes
 - circleborder          : draws a round border around labels
 - autohide              : Hides an element in case of an invalid reading (not available for this device)
 - notransmit            : suppress send to FHEM after changes
+- truncate              : short a string if necessary and add ... instead
 
 Positioning:
 - row                   : new row

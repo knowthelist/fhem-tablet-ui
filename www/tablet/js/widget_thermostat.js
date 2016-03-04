@@ -78,6 +78,13 @@ var widget_thermostat = $.extend({}, widget_knob, {
     //cavans font
     var cfont=10*window.devicePixelRatio*(this.o.height/100) +"px sans-serif";
 
+	// draw target temp cursor
+    c.beginPath();
+    c.strokeStyle = widget_thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
+	c.lineWidth = this.lineWidth * 2;
+    c.arc(this.xy, this.xy, this.radius-this.lineWidth/2, a.s, a.e, a.d);
+    c.stroke();
+
     //draw current value as text
     var x = this.radius*0.7*Math.cos(acAngle);
     var y = this.radius*0.7*Math.sin(acAngle);
@@ -85,13 +92,6 @@ var widget_thermostat = $.extend({}, widget_knob, {
     c.font=cfont;
     c.fillText(this.o.isValue ,this.xy+x-5*(this.o.height/50),this.xy+y+5*(this.o.height/100));
 
-	// draw target temp cursor
-    c.beginPath();
-    c.strokeStyle = widget_thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
-	c.lineWidth = this.lineWidth * 2;
-    c.arc(this.xy, this.xy, this.radius-this.lineWidth/2, a.s, a.e, a.d);
-    c.stroke();
-  
 	//draw valve value as text
 	if ( this.o.valveValue ) {
         x = -5;
@@ -103,8 +103,6 @@ var widget_thermostat = $.extend({}, widget_knob, {
   return false;
   },
   onChange: function (v) {
-     //avoid update from polling at the same time
-     startShortPollInterval();
   },
   onRelease: function (v) {
       if (!isUpdating){
@@ -162,6 +160,8 @@ var widget_thermostat = $.extend({}, widget_knob, {
       var elem = $(this);
       var value = elem.getReading('get').val;
       if (value) {
+          //var state = deviceStates[dev].STATE;
+          //value = ( state && state.val && state.val.indexOf('set_') > -1 ) ? getPart(state.val,2) : value;
           var textdisplay=false;
           switch(value) {
               case elem.data('off'):   value=elem.data('min'); textdisplay=elem.data('off'); break;

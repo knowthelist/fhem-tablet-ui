@@ -27,7 +27,7 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
         this.startReturnTimer();
         ftui.saveStatesLocal();
 
-        DEBUG && console.log( 'load page called with : ' + goUrl);
+        ftui.log(3, 'load page called with : ' + goUrl);
         if ( doPush ) {
           history.pushState( history.state, history.title, '#'+goUrl )
         } else {
@@ -39,15 +39,15 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
           $('div.gridster')
               .html($(data_html).closest('div.gridster').html())
               .fadeTo(600,1);
-            initPage();
+            ftui.initPage();
             $('div.gridster').fadeTo(600,1);
         });
     },
     toggleOn : function(elem) {
         var elem_url=elem.data('url');
-        DEBUG && console.log( 'change window location : ' + elem_url);
+        ftui.log(3, 'change window location : ' + elem_url);
         localStorage.setItem('pagetab_doload', 'initializing');  
-        DEBUG && console.log( 'toggle on with : ' + elem_url);
+        ftui.log(3, 'toggle on with : ' + elem_url);
         this.loadPage(elem_url, true);
     },
     toggleOff: function(elem) {
@@ -56,30 +56,30 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
     init: function () {
         var base = this;
 
-        DEBUG && console.log( 'init is executed / currently at : ' + window.location);
+        ftui.log(3, 'init is executed / currently at : ' + window.location);
         this.elements = $('div[data-type="'+this.widgetname+'"]');
 
-        DEBUG && console.log( 'get localStore pagetab_doload (init) to: ' + localStorage.getItem('pagetab_doload'));
+        ftui.log(3, 'get localStore pagetab_doload (init) to: ' + localStorage.getItem('pagetab_doload'));
         var dl = localStorage.getItem('pagetab_doload');
         if ( ! dl ) {
           if ( window.location.hash ) {
-            DEBUG && console.log( 'init set doload : ' + window.location.hash);
+            ftui.log(3,  'init set doload : ' + window.location.hash);
             localStorage.setItem('pagetab_doload', window.location.hash.replace('#',''));
           } else {
-            DEBUG && console.log( 'init set doload : ' + 'home: ' + this.elements.eq(0).data('url'));
+            ftui.log(3, 'init set doload : ' + 'home: ' + this.elements.eq(0).data('url'));
             localStorage.setItem('pagetab_doload', this.elements.eq(0).data('url'));  
           }
            var dl = localStorage.getItem('pagetab_doload');
-           DEBUG && console.log( 'init set doload to <initializing> ' );
+           ftui.log(3, 'init set doload to <initializing> ' );
            localStorage.setItem('pagetab_doload', 'initializing');  
            this.loadPage(dl);
         } else if( ! ( dl == 'initializing' ) ) {
-           DEBUG && console.log( 'redirect init : ');
-           DEBUG && console.log( 'init set doload to <initializing> ' );
+           ftui.log(3, 'redirect init : ');
+           ftui.log(3, 'init set doload to <initializing> ' );
            localStorage.setItem('pagetab_doload', 'initializing');
            this.loadPage(dl);
         } else {
-          DEBUG && console.log( 'normal init : ');
+          ftui.log(3, 'normal init : ');
 
           this.elements.each(function(index) {
               var elem = $(this);

@@ -370,7 +370,7 @@ var widget_weather = $.extend({}, widget_widget, {
     init_attr: function(elem) {
         elem.data('get', elem.data('get') || 'STATE');
 
-        readings[elem.data('get')] = true;
+        elem.addReading('get');
 
         var fhem_path = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
         fhem_path = fhem_path.replace(/\/$/, '');

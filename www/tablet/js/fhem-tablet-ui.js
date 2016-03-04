@@ -74,7 +74,12 @@ var plugins = {
 var ftui = {
     requests: {'waiting':0,'running':0,'waitTime':100,'maxRunning':4},
     states: {'lastSetOnline':0,'longPollRestart':false},
+    paramIdMap:{},
+    timestampMap:{},
     init: function() {
+    },
+    initPage: function(){
+        initPage();
     },
     shortPoll: function() {
         var reading = null;
@@ -778,6 +783,12 @@ this.getIconId = function(iconName){
 }
 
 // global helper functions
+this.isValid = function(v){
+    return (typeof v !== 'undefined' && v !== 'undefined'
+         && typeof v !== typeof notusedvar
+         && v !== '' && v !== ' ');
+}
+
 this.showModal = function (modal) {
     if(modal)
         $("#shade").fadeIn();

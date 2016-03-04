@@ -249,15 +249,16 @@ a:active {
     cursor: pointer;
 }
 
+
 .label-unit{
     font-size:50%;
-    vertical-align: super;
-}
-.progress-unit{
-    font-size:60%;
-    margin-left:1px;
 }
 
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .center{
     text-align: center;
     display: -webkit-box;

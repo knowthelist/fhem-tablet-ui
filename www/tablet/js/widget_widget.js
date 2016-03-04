@@ -150,8 +150,39 @@ $.fn.isExternData = function(key) {
 };
 $.fn.addReading = function(key) {
     var data = $(this).data(key);
-    if (!data.match(/^[#\.\[].*/))
-        initReadingsArray($(this).data(key));
+    if (!data.match(/^[#\.\[].*/)){
+        var device = $(this).data('device');
+        if(! $.isArray(data)) {
+            data = new Array(data);
+        }
+        for(var i=0; i<data.length; i++) {
+            var reading = data[i];
+            // fully qualified readings => DEVICE:READING
+            if(reading.match(/:/)) {
+                var fqreading = reading.split(':');
+                device = fqreading[0]
+                reading = fqreading[1];
+            }
+            // fill objects for mapping from ugly fhem ids to device + reading
+
+            if (isValid(device) && isValid(reading)){
+                var paramid = (reading==='STATE') ? device : [device,reading].join('-');
+                var paramidts = [device,reading,'ts'].join('-');
+                ftui.paramIdMap[paramid]={};
+                ftui.paramIdMap[paramid].device=device;
+                ftui.paramIdMap[paramid].reading=reading;
+                ftui.timestampMap[paramidts]={};
+                ftui.timestampMap[paramidts].device=device;
+                ftui.timestampMap[paramidts].reading=reading;
+            }
+            // deprecated
+            // fill separat device + reading objects
+            if(!devices[device] && isValid(device) )
+                devices[device] = true;
+            if(!readings[reading] && !reading.match(/^[#\.\[].*/))
+                readings[reading] = true;
+        }
+    }
 };
 $.fn.getReading = function (key) {
     var devname = $(this).data('device'),
@@ -177,7 +208,4 @@ $.fn.transmitCommand = function() {
     var cmdl = [$(this).valOfData('cmd'),$(this).valOfData('device'),$(this).valOfData('set'),$(this).valOfData('value')].join(' ');
     setFhemStatus(cmdl);
     ftui.toast(cmdl);
-};
-$.fn.requestReading = function(key) {
-    requestFhem($(this).valOfData(key));
 };

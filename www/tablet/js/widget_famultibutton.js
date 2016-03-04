@@ -40,15 +40,22 @@ var widget_famultibutton = $.extend({}, widget_widget, {
          elem.children().filter('#warn').remove();
          if (value && value!=""){
              var val = ($.isNumeric(value)&&value<100)?Number(value).toFixed(0):'!';
-             jQuery('<i/>', {
+             var fgElem = jQuery('<i/>', {
                  id: 'warn-back',
                  class: 'fa fa-stack-1x fa-circle'
-             }).appendTo(elem);
+             })
+             .appendTo(elem);
 
-            jQuery('<i/>', {
+            var bgElem = jQuery('<i/>', {
                  id: 'warn',
                  class: 'fa fa-stack-1x '
-            }).html(val).appendTo(elem);
+            })
+
+             .html(val).appendTo(elem);
+             if (elem.hasClass('warnsamecolor')){
+                 bgElem.css({color:'#000' });
+                 fgElem.css({color:elem.data('on-color') });
+             }
          }
     },
     showMultiStates : function(elem,states,state,idxOn){
@@ -182,13 +189,13 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                 break;
             case 'url-xhr':
                 if( device && typeof device != "undefined" && device !== " ") {
-                    TOAST && $.toast(target);
+                    ftui.toast(target);
                 }
                 $.get(target);
                 break;
             case 'fhem-cmd':
                 if( device && typeof device != "undefined" && device !== " ") {
-                    TOAST && $.toast(target);
+                    ftui.toast(target);
                 }
                 setFhemStatus(target);
                 break;
