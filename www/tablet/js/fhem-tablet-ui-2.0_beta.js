@@ -115,7 +115,7 @@ var ftui = {
               }
             }).data('gridster');
             if($("meta[name='gridster_disable']").attr("content") == '1') {
-                ftui.gridster.disable();
+                ftui.gridster.instance.disable();
             }
             if($("meta[name='gridster_starthidden']").attr("content") == '1') {
                 $('.gridster').hide();
