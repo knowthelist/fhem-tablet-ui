@@ -64,8 +64,8 @@ UPD 2016-03-03_22:10:41 1681 www/tablet/js/widget_example.js
 UPD 2016-03-03_00:41:09 12602 www/tablet/js/widget_famultibutton.js
 UPD 2015-12-03_07:04:14 8792 www/tablet/js/widget_highchart.js
 UPD 2015-12-03_07:04:14 8542 www/tablet/js/widget_highchart3d.js
-UPD 2016-03-02_23:02:17 9893 www/tablet/js/widget_homestatus.js
-UPD 2016-02-05_23:05:02 3666 www/tablet/js/widget_image.js
+UPD 2016-03-06_21:56:11 9608 www/tablet/js/widget_homestatus.js
+UPD 2016-03-06_21:49:16 3386 www/tablet/js/widget_image.js
 UPD 2016-02-14_23:50:44 2579 www/tablet/js/widget_input.js
 UPD 2016-03-04_22:54:07 6273 www/tablet/js/widget_knob.js
 UPD 2016-03-06_20:35:21 6111 www/tablet/js/widget_label.js
@@ -83,7 +83,7 @@ UPD 2015-12-03_05:35:40 1667 www/tablet/js/widget_readingsgroup.js
 UPD 2015-12-03_07:04:14 1204 www/tablet/js/widget_rotor.js
 UPD 2016-02-14_22:00:59 3204 www/tablet/js/widget_select.js
 UPD 2016-03-03_20:56:47 12072 www/tablet/js/widget_simplechart.js
-UPD 2016-02-28_15:48:21 8447 www/tablet/js/widget_slider.js
+UPD 2016-03-06_21:58:35 8435 www/tablet/js/widget_slider.js
 UPD 2016-02-23_22:38:24 11284 www/tablet/js/widget_spinner.js
 UPD 2016-02-16_21:04:55 4024 www/tablet/js/widget_swiper.js
 UPD 2015-12-03_07:04:15 1122 www/tablet/js/widget_switch.js
