@@ -73,7 +73,7 @@ UPD 2016-03-02_23:13:43 5370 www/tablet/js/widget_level.js
 UPD 2016-02-13_15:58:19 5412 www/tablet/js/widget_link.js
 UPD 2015-12-03_07:04:14 1857 www/tablet/js/widget_meteogram.js
 UPD 2015-12-07_12:55:37 2463 www/tablet/js/widget_pagebutton.js
-UPD 2016-03-04_23:08:09 7877 www/tablet/js/widget_pagetab.js
+UPD 2016-03-06_22:20:01 7866 www/tablet/js/widget_pagetab.js
 UPD 2015-12-03_07:04:14 3226 www/tablet/js/widget_playstream.js
 UPD 2016-02-27_14:27:39 6089 www/tablet/js/widget_popup.js
 UPD 2016-02-24_09:36:53 2537 www/tablet/js/widget_progress.js
@@ -83,7 +83,7 @@ UPD 2015-12-03_05:35:40 1667 www/tablet/js/widget_readingsgroup.js
 UPD 2015-12-03_07:04:14 1204 www/tablet/js/widget_rotor.js
 UPD 2016-02-14_22:00:59 3204 www/tablet/js/widget_select.js
 UPD 2016-03-03_20:56:47 12072 www/tablet/js/widget_simplechart.js
-UPD 2016-03-06_21:58:35 8435 www/tablet/js/widget_slider.js
+UPD 2016-03-06_22:20:31 8436 www/tablet/js/widget_slider.js
 UPD 2016-02-23_22:38:24 11284 www/tablet/js/widget_spinner.js
 UPD 2016-02-16_21:04:55 4024 www/tablet/js/widget_swiper.js
 UPD 2015-12-03_07:04:15 1122 www/tablet/js/widget_switch.js
