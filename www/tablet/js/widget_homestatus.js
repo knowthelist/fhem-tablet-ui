@@ -144,13 +144,8 @@ var widget_homestatus = $.extend({}, widget_knob, {
         if (!isUpdating){
             var section=this.o.status;
             var states=this.$.data('set-on');
-            var state=states[section-1] ||'1';
-            var device = this.$.data('device');
-            var cmd = [this.$.data('cmd'), device, this.$.data('set'), state].join(' ');
-            setFhemStatus(cmd);
-            if( device && typeof device != "undefined" && device !== " ") {
-                TOAST && $.toast(cmd);
-            }
+            this.$.data('value',states[section-1] ||'1');
+            this.$.transmitCommand();
             this.$.data('curval', v);
        }
     },
@@ -160,12 +155,12 @@ var widget_homestatus = $.extend({}, widget_knob, {
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {
             var elem = $(this);
-            var defaultAlias =  new Array('Home','Night','Away','Holiday','Retire');
-            var defaultIcons =  new Array('fa-home','fa-bed','fa-car','fa-suitcase','fa-tint');
-            var defaultStates = new Array('1','2','3','4');
+            var defaultAlias =  ['Home','Night','Away','Holiday','Retire'];
+            var defaultIcons =  ['fa-home','fa-bed','fa-car','fa-suitcase','fa-tint'];
+            var defaultStates = ['1','2','3','4'];
 
             if ( elem.data('version')  && elem.data('version') != ''){
-                defaultStates = new Array('home','asleep','absent','gone','gotosleep');
+                defaultStates = ['home','asleep','absent','gone','gotosleep'];
             }
             elem.data('get',        elem.data('get') || 'STATE');
             elem.data('cmd',        elem.data('cmd') || 'set');

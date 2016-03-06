@@ -196,7 +196,7 @@ See [examples](#symbol) of Symbol
 - **data-limits-get**  : name of the DEVICE:Reading to retrieve the value for comparing with the limits array (default: data-device:data-get)
 - **data-limits-part**  : filter for the value. part number of the space separated value or an RegEx (default '-1' -> all)
 - **data-unit** : add a unit after a numeric value.
-- **data-substitution**: regex-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
+- **data-substitution**: multiple functions to replace the original value (see descriptions below)
 - **data-hide**   : string to compare with current value. hide element when it's value equals data-hide
 - **data-hideparents**: jquery selector to hide element's parents too
 - **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x, circleborder
@@ -223,11 +223,20 @@ e.g.:
     position: relative;
 }
 
-Special functions for data-substitution:
+Functions for data-substitution:
+
+1. Array of replacements
+2. RegEx-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
+3. data-substitution="weekdayshort"
+4. JS functions
 data-substitution="toDate().ddmm()"     -  convert to day:month
+
 data-substitution="toDate().hhmm()"     -  convert to hour:minutes
+
 data-substitution="toDate().hhmmss()"   -  convert to hour:minutes:secondes
+
 data-substitution="toDate().eeee()"     -  convert to name of the week day
+
 data-substitution="toDate().ago()"      -  convert to time span
 
 See [examples](#label) of Label

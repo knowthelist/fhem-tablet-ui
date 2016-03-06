@@ -182,7 +182,7 @@ var widget_slider= $.extend({}, widget_widget, {
                       }, 250);
                     }
                     localStorage.setItem("slider_"+dev+"_"+par, v);
-                    DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
+                    ftui.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
                 }
                 if ( elem.hasClass('value') ) {
                     var slidervalue = elem.find( '#slidervalue' );
