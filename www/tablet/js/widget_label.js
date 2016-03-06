@@ -42,7 +42,13 @@ var widget_label = $.extend({}, widget_widget, {
     update_substitution : function(value, substitution) {
         ftui.log(3,this.widgetname+' - value:'+value+', substitution:'+substitution);
         if(substitution){
-            if (substitution.match(/^s/)) {
+            if ($.isArray(substitution)){
+                for(var i=0, len=substitution.length; i<len; i+=2) {
+                    if(value == substitution[i] && i+1<len)
+                        return substitution[i+1];
+                }
+            }
+            else if (substitution.match(/^s/)) {
                 var f = substitution.substr(1,1);
                 var subst = substitution.split(f);
                 return value.replace(new RegExp(subst[1],subst[3]), subst[2]);
