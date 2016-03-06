@@ -12,7 +12,7 @@ var widget_pagetab = $.extend({}, widget_famultibutton, {
       clearTimeout(returnTimer);
       if ( waitUntilReturn > 0 && lastUrl !== mainElem.data('url') ){
           var base = this;
-          DEBUG && console.log( 'Reload main tab in : ' + waitUntilReturn + ' seconds');
+          ftui.log(1,'Reload main tab in : ' + waitUntilReturn + ' seconds');
           returnTimer = setTimeout(function () {
              // back to first page
              localStorage.setItem('pagetab_doload', 'initializing');
