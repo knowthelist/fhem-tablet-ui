@@ -1,14 +1,11 @@
-if(typeof widget_widget == 'undefined') {
-    dynamicload('js/widget_widget.js');
-}
 
-var widget_slider= $.extend({}, widget_widget, {
-  widgetname: 'slider',
-  init: function () {
+var Modul_slider= function () {
+
+  function init() {
 
     if (!$.fn.Powerange){
         dynamicload('lib/powerange.min.js', null, null, false);
-        $('head').append('<link rel="stylesheet" href="'+ dir + '/../lib/powerange.min.css" type="text/css" />');
+        $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/powerange.min.css" type="text/css" />');
     }
     var base=this;
     this.elements = $('div[data-type="'+this.widgetname+'"]');
@@ -32,7 +29,7 @@ var widget_slider= $.extend({}, widget_widget, {
         elem.initData('color'           ,getClassColor(elem) || getStyle('.slider','color')    || '#aa6900');
         elem.initData('background-color',getStyle('.slider','background-color')    || '#404040');
 
-        elem.addReading('get');
+        base.addReading(elem,'get');
 
         var id = elem.data("device")+"_"+elem.data('get');
 
@@ -86,6 +83,7 @@ var widget_slider= $.extend({}, widget_widget, {
               }).bind(this),
         });
         elem.data('Powerange',pwrng);
+        var rangeContainer = elem.find('.range-container');
         var rangeQuantity = elem.find('.range-quantity');
         var rangeBar = elem.find('.range-bar');
         rangeQuantity.css({'background-color':elem.data('color')});
@@ -101,15 +99,15 @@ var widget_slider= $.extend({}, widget_widget, {
 
         if (elem.hasClass('horizontal')){
             if (elem.data('width')) {
-                elem.css({'width': elem.data('width')+'px','max-width': elem.data('width')+'px','height':'0px'});
+                rangeContainer.css({'width': elem.data('width')+'px','max-width': elem.data('width')+'px','height':'0px'});
             } else {
                 if (elem.hasClass('mini'))
-                    elem.css({'width': '60px','max-width': '60px','height':'0px'});
+                    rangeContainer.css({'width': '60px','max-width': '60px'});
                 else
-                    elem.css({'width': '120px','max-width': '120px','height':'0px'});
+                    rangeContainer.css({'width': '120px','max-width': '120px'});
             }
             if (elem.data('height')) {
-                elem.children().find('.range-bar').css({'height': elem.data('height')+'px',
+                rangeBar.css({'height': elem.data('height')+'px',
                                                            'max-height': elem.data('height')+'px',
                                                            'top': '-'+elem.data('height')/2+'px',
                                                           });
@@ -117,15 +115,15 @@ var widget_slider= $.extend({}, widget_widget, {
         }
         else {
             if (elem.data('height')) {
-                elem.css({'height': elem.data('height')+'px','max-height': elem.data('height')+'px'});
+                rangeContainer.css({'height': elem.data('height')+'px','max-height': elem.data('height')+'px'});
             } else {
                 if (elem.hasClass('mini'))
-                    elem.css({'height': '60px','max-height': '60px'});
+                    rangeContainer.css({'height': '60px','max-height': '60px'});
                 else
-                    elem.css({'height': '120px','max-height': '120px'});
+                    rangeContainer.css({'height': '120px','max-height': '120px'});
             }
             if (elem.data('width')) {
-                elem.children().find('.range-bar').css({'width': elem.data('width')+'px',
+                rangeBar.css({'width': elem.data('width')+'px',
                                                            'max-width': elem.data('width')+'px',
                                                            'left': '-'+elem.data('width')/4+'px',
                                                           });
@@ -136,7 +134,7 @@ var widget_slider= $.extend({}, widget_widget, {
          var lbl =  jQuery('<div/>', {
              id : 'slidervalue',
              class : 'slidertext normal',
-         }).appendTo(elem.find('.range-container'));
+         }).appendTo(rangeContainer);
        }
 
        if (elem.hasClass('readonly'))
@@ -151,8 +149,9 @@ var widget_slider= $.extend({}, widget_widget, {
                pwrng.setStart(parseInt(storeval));
        });
      });
-  },
-  update: function (dev,par) {
+  }
+
+  function update(dev,par) {
       var base = this;
       // update from normal state reading
       this.elements.filterDeviceReading('get',dev,par)
@@ -199,4 +198,12 @@ var widget_slider= $.extend({}, widget_widget, {
     });
    }
 
-});
+    // public
+    // inherit all public members from base class
+    return $.extend(new Modul_widget(), {
+        //override or own public members
+        widgetname: 'slider',
+        init: init,
+        update: update,
+    });
+};

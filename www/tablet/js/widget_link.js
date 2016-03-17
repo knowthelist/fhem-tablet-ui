@@ -1,17 +1,26 @@
-/* FTUI Plugin
-* Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
+/* FTUI Plugin for ftui version 2.1
+* Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 */
 
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
+/* for readme:
+   - if  in nav container then nav trigger "changedSelection"
+   - class "default" functionallity
+*/
+var Modul_link = function () {
 
-var widget_link= $.extend({}, widget_widget, {
-    widgetname : 'link',
-    onClicked: function(elem) {
+    function onClicked(elem) {
       if( elem.isValidData('url') ) {
           document.location.href = elem.data('url');
+          var hashUrl=window.location.hash.replace('#','');
+          if ( hashUrl && elem.isValidData('load') ) {
+              elem.closest('nav').trigger('changedSelection',[elem.text()]);
+              var sel = elem.data('load');
+              $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
+                  ftui.log(1,'link: new content from $('+sel+') loaded');
+                  ftui.initPage(sel);
+              });
+          }
       } else if( elem.isValidData('url-xhr') ) {
           ftui.toast(elem.data('url-xhr'));
           $.get(elem.data('url-xhr'));
@@ -21,8 +30,10 @@ var widget_link= $.extend({}, widget_widget, {
       } else if( elem.isValidData('device') ) {
           elem.transmitCommand();
       };
-    },
-    colorize: function(elem) {
+
+    }
+
+    function colorize(elem) {
         var url = window.location.pathname + ((window.location.hash.length)?'#'+ window.location.hash:'');
         var isActive = url.match(new RegExp('^'+elem.data('active-pattern')+'$'));
         var color = isActive ? elem.mappedColor('active-color') : elem.mappedColor('color');
@@ -39,8 +50,13 @@ var widget_link= $.extend({}, widget_widget, {
                 borderStyle: 'solid',
              });
         }
-    },
-    init_attr : function(elem) {
+        if (isActive)
+            elem.addClass('active');
+        else
+            elem.removeClass('active');
+    }
+
+    function init_attr(elem) {
         elem.initData('cmd'                     ,'set');
         elem.initData('color'                   ,getClassColor(elem) || getStyle('.'+this.widgetname,'color')  || '#aa6900');
         elem.initData('background-color'        ,getStyle('.'+this.widgetname,'background-color')    || null);
@@ -54,8 +70,9 @@ var widget_link= $.extend({}, widget_widget, {
         elem.initData('active-color'            ,elem.data('color'));
         elem.initData('active-border-color'     ,elem.data('border-color'));
         elem.initData('active-background-color' ,elem.data('background-color'));
-    },
-    init_ui : function(elem) {
+    }
+
+    function init_ui(elem) {
         var base = this;
         var leftIcon = elem.data('icon-left');
         var rightIcon = elem.data('icon-right');
@@ -81,7 +98,7 @@ var widget_link= $.extend({}, widget_widget, {
         }
 
         // set colors of the container element
-        base.colorize(elem);
+        colorize(elem);
 
         // prepare left icon
         if (leftIcon){
@@ -124,7 +141,7 @@ var widget_link= $.extend({}, widget_widget, {
         var leaveEventType=((document.ontouchleave!==null)?'mouseout':'touchleave');
         elem.on(releaseEventType,function() {
             elem.fadeTo( "fast" , 1);
-            base.onClicked(elem);
+            onClicked(elem);
         });
         elem.on(clickEventType,function() {
             elem.fadeTo( "fast" , 0.5);
@@ -133,10 +150,27 @@ var widget_link= $.extend({}, widget_widget, {
             elem.fadeTo( "fast" , 1);
         });
         $(window).bind( 'hashchange', function(e) {
-            base.colorize(elem);
+            colorize(elem);
         });
 
+        // activate element
+        if (elem.hasClass('default')){
+            setTimeout(function(){
+                onClicked(elem);
+            }, 100);
+        }
+
         return elem;
-    },
-    update: function (dev,par) {}
-});
+    }
+    function update(dev,par) {}
+
+    // public
+    // inherit all public members from base class
+    return $.extend(new Modul_widget(), {
+        //override or own public members
+        widgetname: 'link',
+        init_attr: init_attr,
+        init_ui:init_ui,
+        update: update,
+    });
+};

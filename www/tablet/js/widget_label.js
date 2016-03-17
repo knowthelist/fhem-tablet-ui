@@ -1,10 +1,6 @@
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
+var Modul_label = function () {
 
-var widget_label = $.extend({}, widget_widget, {
-    widgetname:"label",
-    init_attr: function(elem) {
+    function init_attr(elem) {
         elem.initData('get'         , 'STATE');
         elem.initData('part'        , -1);
         elem.initData('unit'        , '' );
@@ -25,21 +21,19 @@ var widget_label = $.extend({}, widget_widget, {
 
         elem.data('fix',            ( $.isNumeric(elem.data('fix')) ) ?  Number(elem.data('fix'))           : -1);
 
-        elem.addReading('get');
-        elem.addReading('limits-get');
-        if ( elem.isDeviceReading('color') ) {elem.addReading('color');}
+        this.addReading(elem,'get');
+        this.addReading(elem,'limits-get');
+        if ( elem.isDeviceReading('color') ) {this.addReading(elem,'color');}
 
-    },
-    init: function () {
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            widget_label.init_attr($(this));
-        });
-    },
-    update_fix : function(value, fix) {
+    }
+
+    function init_ui(elem) {}
+
+    function update_fix(value, fix) {
         return ( $.isNumeric(value) && fix>=0 ) ? Number(value).toFixed(fix) : value;
-    },
-    update_substitution : function(value, substitution) {
+    }
+
+    function update_substitution(value, substitution) {
         ftui.log(3,this.widgetname+' - value:'+value+', substitution:'+substitution);
         if(substitution){
             if ($.isArray(substitution)){
@@ -59,8 +53,9 @@ var widget_label = $.extend({}, widget_widget, {
                   return eval('value.'+substitution);
         }
         return value;
-    },
-    update_colorize : function(value, elem) {
+    }
+
+    function update_colorize(value, elem) {
         //set colors according matches for values
         var limits = elem.data('limits');
         var colors = elem.data('colors');
@@ -71,9 +66,11 @@ var widget_label = $.extend({}, widget_widget, {
                 elem.css( layer, getStyle('.'+colors[idx],'color') || colors[idx] );
             }
         }
-    },
-    update_cb : function(elem) {},
-    update: function (dev,par) {
+    }
+
+    function update_cb(elem) {}
+
+    function update(dev,par) {
         var base = this;
         // update from normal state reading
         this.elements.filterDeviceReading('get',dev,par)
@@ -82,7 +79,6 @@ var widget_label = $.extend({}, widget_widget, {
             var value = (elem.hasClass('timestamp'))
                         ?elem.getReading('get').date
                         :elem.getReading('get').val;
-
             // hide element when it's value equals data-hide
             // if data-hideparents is set, it is interpreted als jquery selector to hide elements parents filtered by this selector
             if(elem.data('hide')) {
@@ -106,8 +102,8 @@ var widget_label = $.extend({}, widget_widget, {
                 var val = getPart(value,part);
                 var unit = elem.data('unit');
 
-                val = base.update_substitution(val, elem.data('substitution'));
-                val = base.update_fix(val, elem.data('fix'));
+                val = update_substitution(val, elem.data('substitution'));
+                val = update_fix(val, elem.data('fix'));
                 if (!isNaN(parseFloat(val)) && isFinite(val) && val.indexOf('.')>-1){
                     var vals = val.split('.');
                     val = "<span class='label-precomma'>"+vals[0]+"</span>" +
@@ -148,8 +144,19 @@ var widget_label = $.extend({}, widget_widget, {
             if(val) {
                 var part = elem.data('limits-part');
                 var v = getPart(val,part);
-                widget_label.update_colorize(v, elem);
+                update_colorize(v, elem);
             }
         });
     }
-});
+
+    // public
+    // inherit all public members from base class
+    return $.extend(new Modul_widget(), {
+        //override or own public members
+        widgetname: 'label',
+        init_attr: init_attr,
+        init_ui:init_ui,
+        update: update,
+        update_cb: update_cb,
+    });
+};

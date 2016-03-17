@@ -3,13 +3,10 @@
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 */
 
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
 
-var widget_select= $.extend({}, widget_widget, {
-    widgetname:"select",
-    fillList: function(elem){
+var Modul_select = function () {
+
+    function fillList(elem){
         var select_elem = elem.find('select')
         if (select_elem){
             var items = elem.data('items')||'';
@@ -19,23 +16,26 @@ var widget_select= $.extend({}, widget_widget, {
                 select_elem.append('<option value="'+items[i]+'">'+(alias && alias[i]||items[i])+'</option>');
             }
         }
-    },
-    setCurrentItem: function(elem){
+    }
+
+    function setCurrentItem(elem){
         var value = elem.getReading('get').val;
         elem.find('select').val(value);
         elem.data('value', value);
-    },
-  init_attr: function(elem) {
+    }
+
+    function init_attr(elem) {
       elem.initData('get'    ,'STATE');
       elem.initData('set'    ,((elem.data('get')!=='STATE')?elem.attr('data-get'): ''));
       elem.initData('cmd'    ,'set');
       elem.initData('quote'  ,'');
       elem.initData('list'   ,'setList');
 
-      elem.addReading('get');
-      elem.addReading('list');
-  },
-  init_ui : function(elem) {
+      this.addReading(elem,'get');
+      this.addReading(elem,'list');
+    }
+
+    function init_ui(elem) {
     var base = this;
     // prepare select element
         elem.addClass('select');
@@ -48,15 +48,16 @@ var widget_select= $.extend({}, widget_widget, {
             elem.trigger('changedValue');
         })
         .appendTo(elem);
-        base.fillList(elem);
+        fillList(elem);
         elem.data('value', elem.data('quote') + $("option:selected", select_elem).val() + elem.data('quote'));
-  },
-  update: function (dev,par) {
+     }
+
+     function update(dev,par) {
       var base = this;
       // update from normal state reading
       this.elements.filterDeviceReading('get',dev,par)
       .each(function(index) {
-          base.setCurrentItem($(this));
+          setCurrentItem($(this));
       });
 
       //extra reading for list items
@@ -82,8 +83,18 @@ var widget_select= $.extend({}, widget_widget, {
                   items = items.split(':');
           }
           elem.data('items',items);
-          base.fillList.call(base,elem);
-          base.setCurrentItem.call(base,elem);
+          fillList(elem);
+          setCurrentItem(elem);
       });
    }
-});
+
+    // public
+    // inherit all public members from base class
+    return $.extend(new Modul_widget(), {
+        //override or own public members
+        widgetname: 'select',
+        init_attr: init_attr,
+        init_ui:init_ui,
+        update: update,
+    });
+};

@@ -1,10 +1,10 @@
-if(typeof widget_famultibutton == 'undefined') {
+if(typeof Module_famultibutton == 'undefined') {
     loadplugin('widget_famultibutton');
 }
 
-var widget_symbol = $.extend({}, widget_famultibutton, {
-    widgetname : 'symbol',
-    init: function () {
+var Modul_symbol = function () {
+
+    function init() {
         var base = this;
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {
@@ -22,12 +22,22 @@ var widget_symbol = $.extend({}, widget_famultibutton, {
             base.init_attr(elem);
             base.init_ui(elem);
         });
-    },
-    update_cb : function(elem,state) {
+    }
+
+    function update_cb(elem,state) {
         $('.fa-stack:has(.zero)').removeClass('fa-stack');
         if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
             this.showOverlay(elem,getPart(state,elem.data('get-warn')));
         else
             this.showOverlay(elem,"");
-    },
-});
+    }
+
+    // public
+    // inherit members from base class
+    return $.extend(new Modul_famultibutton(), {
+        //override members
+        widgetname: 'symbol',
+        init:init,
+        update_cb: update_cb,
+    });
+}

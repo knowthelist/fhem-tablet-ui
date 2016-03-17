@@ -3,15 +3,12 @@
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 */
 
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
 
-$('head').append('<link rel="stylesheet" href="'+ dir + '/../css/ftui_spinner.css" type="text/css" />');
+$('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_spinner.css" type="text/css" />');
 
-var widget_spinner = $.extend({}, widget_widget, {
-    widgetname : 'spinner',
-    getValueNumeric: function(elem){
+var Modul_spinner = function () {
+
+    function getValueNumeric(elem){
         var value   = elem.data('value');
         switch(value) {
             case elem.data('off'):  return parseFloat(elem.data('min'))-parseFloat(elem.data('step'));
@@ -20,13 +17,14 @@ var widget_spinner = $.extend({}, widget_widget, {
                 value = parseFloat(value);
                 return  (isNaN(value)) ? elem.data('min'):value;
         }
-    },
-    drawLevel: function(elem) {
+    }
+
+    function drawLevel(elem) {
         var max         = parseFloat(( $.isNumeric(elem.data('max')) ) ? elem.data('max') : elem.getReading('max').val);
         var min         = parseFloat(( $.isNumeric(elem.data('min')) ) ? elem.data('min') : elem.getReading('min').val);
         var step        = parseFloat(elem.data('step'));
         var width       = parseFloat(elem.data('width'))/2;
-        var value       = this.getValueNumeric(elem);
+        var value       = getValueNumeric(elem);
         var fix         = parseInt(elem.data('fix'));
         var color       = elem.mappedColor('color');
         var gradColor   = elem.data('gradient-color');
@@ -77,20 +75,21 @@ var widget_spinner = $.extend({}, widget_widget, {
             else
                 textElem.text(value + elem.data('unit'));
         }
-    },
-    onClicked: function(elem,factor) {
+    }
+
+    function onClicked(elem,factor) {
         var base    = this;
         var step    = parseFloat(elem.data('step'));
         var min     = parseFloat(elem.data('min'));
         var max     = parseFloat(elem.data('max'));
-        var value   = base.getValueNumeric(elem);
+        var value   = getValueNumeric(elem);
         clearTimeout(elem.delayTimer);
         changeValue = function() {
             value = value + factor * step;
             if ( value < min ) value = elem.hasClass('circulate')?max:min;
             if ( value > max ) value = elem.hasClass('circulate')?min:max;
             elem.data('value',value);
-            base.drawLevel(elem);
+            drawLevel(elem);
         };
         // short press
         changeValue();
@@ -100,8 +99,9 @@ var widget_spinner = $.extend({}, widget_widget, {
                 changeValue();
             }, elem.data('shortdelay'));
         }, elem.data('longdelay'));
-    },
-    onReleased: function(elem) {
+    }
+
+    function onReleased(elem) {
         clearTimeout(elem.repeatTimer);
         clearTimeout(elem.delayTimer);
             var base = this;
@@ -109,8 +109,9 @@ var widget_spinner = $.extend({}, widget_widget, {
             elem.transmitCommand();
                 elem.delayTimer=0;
             }, elem.data('longdelay'));
-    },
-    init_attr : function(elem) {
+    }
+
+    function init_attr(elem) {
         elem.initData('get'                     ,'STATE');
         elem.initData('set'                     ,'');
         elem.initData('cmd'                     ,'set');
@@ -136,10 +137,11 @@ var widget_spinner = $.extend({}, widget_widget, {
         elem.initData('unit'                    ,'');
         elem.initData('get-value'               ,elem.data('part') || -1);
 
-        elem.addReading('get');
-        if ( elem.isDeviceReading('text-color') ) {elem.addReading('text-color');}
-    },
-    init_ui : function(elem) {
+        this.addReading(elem,'get');
+        if ( elem.isDeviceReading('text-color') ) {this.addReading(elem,'text-color');}
+    }
+
+    function init_ui(elem) {
         var base = this;
         var leftIcon = elem.data('icon-left');
         var rightIcon = elem.data('icon-right');
@@ -226,30 +228,31 @@ var widget_spinner = $.extend({}, widget_widget, {
         // UP button
         elemRightIcon.on(clickEventType,function(e) {
             elemRightIcon.fadeTo( "fast" , 0.5);
-            base.onClicked.call(base,elem,1);
+            onClicked(elem,1);
             e.preventDefault();
         });
         elemRightIcon.on(releaseEventType + ' ' + leaveEventType,function(e) {
             elemRightIcon.fadeTo( "fast" , 1);
             if (elem.delayTimer)
-                base.onReleased.call(base,elem);
+                onReleased(elem);
             e.preventDefault();
         });
 
         // DOWN button
         elemLeftIcon.on(clickEventType,function(e) {
             elemLeftIcon.fadeTo( "fast" , 0.5);
-            base.onClicked.call(base,elem,-1);
+            onClicked(elem,-1);
             e.preventDefault();
         });
         elemLeftIcon.on(releaseEventType + ' ' + leaveEventType,function(e) {
             elemLeftIcon.fadeTo( "fast" , 1);
             if (elem.delayTimer)
-                base.onReleased.call(base,elem);
+                onReleased(elem);
             e.preventDefault();
         });
-    },
-    update: function (dev,par) {
+    }
+
+    function update(dev,par) {
         var base = this;
         // update from normal state reading
         this.elements.filterDeviceReading('get',dev,par)
@@ -260,7 +263,7 @@ var widget_spinner = $.extend({}, widget_widget, {
                 var part = elem.data('get-value');
                 var val = getPart(state, part);
                 elem.data('value',val);
-                base.drawLevel(elem);
+                drawLevel(elem);
             }
          });
 
@@ -274,5 +277,15 @@ var widget_spinner = $.extend({}, widget_widget, {
                 elem.find('.spinnerText').css( "color", val );
             }
         });
-    },
-});
+    }
+
+    // public
+    // inherit all public members from base class
+    return $.extend(new Modul_widget(), {
+        //override or own public members
+        widgetname: 'spinner',
+        init_attr: init_attr,
+        init_ui:init_ui,
+        update: update,
+    });
+};

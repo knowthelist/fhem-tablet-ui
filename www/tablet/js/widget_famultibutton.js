@@ -1,14 +1,10 @@
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
-
 if (!$.fn.famultibutton){
     dynamicload('lib/fa-multi-button.min.js', null, null, false);
 }
 
-var widget_famultibutton = $.extend({}, widget_widget, {
-    widgetname : 'famultibutton',
-    _doubleclicked: function(elem, onoff) {
+var Modul_famultibutton = function () {
+
+    function doubleclicked(elem, onoff) {
         if(elem.data('doubleclick')*1>0) {
             if(! elem.data('_firstclick')) {
                 elem.data('_firstclick', true);
@@ -34,8 +30,9 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             }
         }
         return true;
-    },
-    showOverlay : function(elem, value) {
+    }
+
+    function showOverlay(elem, value) {
          elem.children().filter('#warn-back').remove();
          elem.children().filter('#warn').remove();
          if (value && value!=""){
@@ -57,8 +54,9 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                  fgElem.css({color:elem.data('on-color') });
              }
          }
-    },
-    showMultiStates : function(elem,states,state,idxOn){
+    }
+
+    function showMultiStates(elem,states,state,idxOn){
 
         var icons=elem.data('icons');
         var bgicons=elem.data('background-icons');
@@ -85,7 +83,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
 
         // fill up colors and icons to states.length
         // if an index s isn't set, use the value of s-1
-        for(var s=0; s<states.length; s++) {
+        for(var s=0,len=states.length; s<len; s++) {
             if(typeof icons[s] == 'undefined') {
                 icons[s]=icons[s>0?s-1:0];
             }
@@ -123,11 +121,12 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             .addClass('fa fa-stack-2x')
             .addClass(bgicons[idx])
             bgelm.css( "color", getStyle('.'+bgcolors[idx],'color') || bgcolors[idx] );
-            
+
         }
-    },
-    toggleOn : function(elem) {
-        if(this._doubleclicked(elem, 'on')) {
+    }
+
+    function toggleOn(elem) {
+        if(doubleclicked(elem, 'on')) {
             this.clicked(elem, 'on');
             elem.trigger("toggleOn");
             var blink = elem.data('blink');
@@ -138,21 +137,23 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                 setInterval(function() {elem.setOff()}, 200);
             }
         }
-    },
-    toggleOff : function(elem) {
-        if(this._doubleclicked(elem, 'off')) {
+    }
+
+    function toggleOff(elem) {
+        if(doubleclicked(elem, 'off')) {
             this.clicked(elem, 'off');
             var blink = elem.data('blink');
             if(blink == 'on' || (! elem.data('device') && blink !='off')) {
                 setInterval(function() {elem.setOn()}, 200);
             }
         }
-    },
-    clicked: function(elem, onoff) {
+    }
+
+    function clicked(elem, onoff) {
         var target;
         var type;
         var device = elem.data('device');
-        
+
         if(elem.attr('data-url')) {
             target = elem.attr('data-url');
             type = 'url';
@@ -175,7 +176,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             if(!$.isArray(sets)) {
                 sets = new Array(String(sets));
             }
-            var id = elem.data('device')+"_"+elem.data('get');
+            var id = device+"_"+elem.data('get');
             var s = localStorage.getItem(this.widgetname+'_'+id+'_index') || 0;
             var set = typeof sets[s] != 'undefined' ? sets[s] : sets[0];
             s++; if (s >= sets.length) s=0;
@@ -186,6 +187,15 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         switch(type) {
             case 'url':
                 document.location.href = target;
+                var hashUrl=window.location.hash.replace('#','');
+                if ( hashUrl && elem.isValidData('load') ) {
+                    elem.closest('nav').trigger('changedSelection');
+                    var sel = elem.data('load');
+                    $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
+                        console.log('link: new content from $('+sel+') loaded');
+                        ftui.initPage(sel);
+                    });
+                }
                 break;
             case 'url-xhr':
                 if( device && typeof device != "undefined" && device !== " ") {
@@ -200,10 +210,23 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                 setFhemStatus(target);
                 break;
         }
-    },
-    valueChanged: function(elem,v) {
-    },
-    init_attr : function(elem) {
+    }
+
+    function valueChanged(elem,v) {
+    }
+
+    function init_ui(elem) {
+        var base = this;
+        elem.famultibutton({
+            mode: elem.data('mode'),
+            toggleOn: function() { base.toggleOn(elem) },
+            toggleOff: function() { base.toggleOff(elem) },
+            valueChanged: function(v) { base.valueChanged(elem,v) },
+        });
+        return elem;
+    }
+
+    function init_attr(elem) {
         elem.initData('get'         ,'STATE');
         elem.initData('set'         ,'');
         elem.initData('cmd'         ,'set');
@@ -217,31 +240,23 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         elem.initData('firstclick-color'           , null);
         elem.initData('get-warn'                ,-1);
 
-        elem.addReading('get');
+        this.addReading(elem,'get');
 
         elem.initData('off-color'           , getStyle('.'+this.widgetname+'.off','color')              || '#505050');
         elem.initData('off-background-color', getStyle('.'+this.widgetname+'.off','background-color')   || '#505050');
         elem.initData('on-color'            , getStyle('.'+this.widgetname+'.on','color')               || '#aa6900');
         elem.initData('on-background-color' , getStyle('.'+this.widgetname+'.on','background-color')    || '#aa6900');
 
-        if ( elem.isDeviceReading('on-color') ) {elem.addReading('on-color');}
-        if ( elem.isDeviceReading('on-background-color') ) {elem.addReading('on-background-color');}
-        if ( elem.isDeviceReading('off-color') ) {elem.addReading('off-color');}
-        if ( elem.isDeviceReading('off-background-color') ) {elem.addReading('off-background-color');}
+        if ( elem.isDeviceReading('on-color') ) {this.addReading(elem,'on-color');}
+        if ( elem.isDeviceReading('on-background-color') ) {this.addReading(elem,'on-background-color');}
+        if ( elem.isDeviceReading('off-color') ) {this.addReading(elem,'off-color');}
+        if ( elem.isDeviceReading('off-background-color') ) {this.addReading(elem,'off-background-color');}
 
-    },
-    init_ui : function(elem) {
-        var base = this;
-        elem.famultibutton({
-            mode: elem.data('mode'),
-            toggleOn: function() { base.toggleOn(elem) },
-            toggleOff: function() { base.toggleOff(elem) },
-            valueChanged: function(v) { base.valueChanged(elem,v) },
-        });
-        return elem;
-    },
-    update_cb : function(elem) {},
-    update: function (dev,par) {
+    }
+
+    function update_cb(elem) {}
+
+    function update(dev,par) {
         var base = this;
         // update from normal state reading
         this.elements.filterDeviceReading('get',dev,par)
@@ -295,5 +310,22 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                     }
                 });
             });
-        },
-});
+        }
+
+    // public
+    // inherit all public members from base class
+    return $.extend(new Modul_widget(), {
+        //override or own public members
+        widgetname: 'famultibutton',
+        init_attr: init_attr,
+        init_ui:init_ui,
+        toggleOn:toggleOn,
+        toggleOff:toggleOff,
+        clicked:clicked,
+        update: update,
+        update_cb: update_cb,
+        showMultiStates:showMultiStates,
+        valueChanged:valueChanged,
+        showOverlay:showOverlay,
+    });
+};

@@ -1,9 +1,16 @@
 body {
-    background-color: #ffffff;
+    background-color: #eeeeee;
     color: #222222;
 }
 
-.gridster ul li {
+nav {
+    background-color: #1D1F20;
+    background-image: linear-gradient(145deg, #1D1F20,#404348);
+    color: #ffffff;
+    text-align: center;
+}
+
+.gridster ul li, main {
     background-color:#eee;
     overflow: hidden;
     text-align: center;
@@ -17,6 +24,19 @@ body {
 
 ul, ol {
     list-style: none;
+}
+
+[data-type="symbol"].big, [data-type="multistatebutton"].big,
+[data-type="switch"].big, [data-type="button"].big,
+[data-type="push"].big, [data-type="pagebutton"].big {
+    font-size: 200% !important;
+}
+
+section{
+    background-color: #ffffff;
+    border-bottom: 1px solid #888;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 /* Slider colors */
@@ -43,12 +63,23 @@ polyline {
     color: #eeeeee;
 }
 
+i#warn {
+    color: #FFFFFF;
+}
+i#warn-back {
+    color: #DB1D1D;
+}
+
+.bg-gray,.btn-gray               { background-color:#999999;}
+.bg-lightgray,.btn-lightgray     { background-color:#EDEDED;}
+
+option {background-color: #ffffff;}
 .pagetab.on{color:#eee;background-color:#0088CC;}
 .pagetab.off{color:#eee;background-color:#aaa;}
 .dimmer.on{color:#eee;background-color:#0088CC;}
 .dimmer.off{color:#eee;background-color:#aaa;}
 .symbol.on{color:#0088CC;background-color:#0088CC;}
-.symbol.off{color:#eee;background-color:#eee;}
+.symbol.off{color:#222;background-color:#222;}
 .switch.on{color:#eee;background-color:#0088CC;}
 .switch.off{color:#eee;background-color:#aaa;}
 .push.on{color:#0088CC;background-color:#0088CC;}
@@ -58,6 +89,6 @@ polyline {
 .thermostat.input{color:#444;}
 .homestatus.fgcolor{color:#0088CC;}
 .homestatus.tkcolor{color:#aaa;}
-.slider{color:#0088CC;}
+.slider{color:#0088CC;background-color:#999;}
 .volume.hdcolor{color:#0088CC;}
 .volume.fgcolor{color:#555;}
