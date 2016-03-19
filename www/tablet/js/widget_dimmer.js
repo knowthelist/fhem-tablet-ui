@@ -1,13 +1,9 @@
-if(typeof widget_famultibutton == 'undefined') {
-    loadplugin('widget_famultibutton');
-}
+var Modul_dimmer = function () {
 
-var widget_dimmer = $.extend({}, widget_famultibutton, {
-    widgetname : 'dimmer',
-    init: function () {
-     var base = this;
-     this.elements = $('div[data-type="'+this.widgetname+'"]');
-     this.elements.each(function(index) {
+    function init() {
+     var me = this;
+     me.elements = $('div[data-type="'+this.widgetname+'"]',me.area);
+     me.elements.each(function(index) {
          var elem = $(this);
          elem.initData('off-color'           , getStyle('.dimmer.off','color') || '#2A2A2A');
          elem.initData('off-background-color', getStyle('.dimmer.off','background-color')   || '#505050');
@@ -25,26 +21,26 @@ var widget_dimmer = $.extend({}, widget_famultibutton, {
          elem.initData('mode','dimmer');
 
          if ( elem.data('dim')  != '')
-            elem.addReading('dim');
-         base.init_attr(elem);
-         base.init_ui(elem);
-         var val = localStorage.getItem(base.widgetname+"_"+elem.data('device'));
+            me.addReading(elem,'dim');
+         me.init_attr(elem);
+         me.init_ui(elem);
+         var val = localStorage.getItem(me.widgetname+"_"+elem.data('device'));
          if ( val && $.isNumeric(val))
           elem.setDimValue( parseInt(val));
      });
-    },
-     toggleOn : function(elem) {
-         if(this._doubleclicked(elem, 'on')) {
-             var v = elem.getValue();
-             if (elem.hasClass('FS20')){
-                  v = this.FS20.dimmerValue(v);
-              }
-             elem.data('value', elem.data('set-on').replace('$v',v.toString()));
-             elem.transmitCommand();
-             elem.trigger("toggleOn");
-         }
-     },
-     valueChanged: function(elem,v) {
+    };
+
+    function toggleOn (elem) {
+         var v = elem.getValue();
+         if (elem.hasClass('FS20')){
+              v = ftui.FS20.dimmerValue(v);
+          }
+         elem.data('value', elem.data('set-on').replace('$v',v.toString()));
+         elem.transmitCommand();
+         elem.trigger("toggleOn");
+     };
+
+     function valueChanged (elem,v) {
          var device = elem.data('device');
          localStorage.setItem(this.widgetname+"_"+device, v);
          if ( elem.data('famultibutton').getState() === true || elem.data('dim') !== '' ){
@@ -57,51 +53,69 @@ var widget_dimmer = $.extend({}, widget_famultibutton, {
             setFhemStatus(cmd);
             TOAST && $.toast(cmd);
          }
-     },
-     update: function (dev,par) {
-         var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-         var base = this;
-         deviceElements.each(function(index) {
-             if ( $(this).data('get')==par) {
-                 var state = getDeviceValue( $(this), 'get' );
-                 if (state) {
-                     var states=$(this).data('states') || $(this).data('get-on');
-                     if ( $.isArray(states)) {
-                         base.showMultiStates($(this),states,state);
-                     } else {
-                         var elem = $(this).data('famultibutton');
-                         if (elem){
-                             if ( state == $(this).data('get-on') )
-                                  elem.setOn();
-                             else if ( state == $(this).data('get-off') )
-                                  elem.setOff();
-                             else if ( state.match(new RegExp('^' + $(this).data('get-on') + '$')) )
-                                  elem.setOn();
-                             else if ( state.match(new RegExp('^' + $(this).data('get-off') + '$')) )
-                                  elem.setOff();
-                             else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
-                                  elem.setOff();
-                             else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
-                                  elem.setOn();
-                         }
+     };
+
+     function update (dev,par) {
+         var me = this;
+         // update from desired temp reading
+         me.elements.filterDeviceReading('get',dev,par)
+         .each(function(index) {
+           var elem = $(this);
+           var state = elem.getReading('get').val;
+           if (state) {
+                 var states=$(this).data('states') || $(this).data('get-on');
+                 if ( $.isArray(states)) {
+                     me.showMultiStates($(this),states,state);
+                 } else {
+                     var elem = $(this).data('famultibutton');
+                     if (elem){
+                         if ( state == $(this).data('get-on') )
+                              elem.setOn();
+                         else if ( state == $(this).data('get-off') )
+                              elem.setOff();
+                         else if ( state.match(new RegExp('^' + $(this).data('get-on') + '$')) )
+                              elem.setOn();
+                         else if ( state.match(new RegExp('^' + $(this).data('get-off') + '$')) )
+                              elem.setOff();
+                         else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
+                              elem.setOff();
+                         else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
+                              elem.setOn();
                      }
-                     base.update_cb($(this),state);
                  }
+                 me.update_cb($(this),state);
              }
-             if ( $(this).data('dim')
-               && $(this).data('dim') == par ) {
-                 var part = $(this).data('get-value');
-                 var value = getDeviceValue( $(this), 'dim' );
-                 var val = getPart(value, part);
-                 var elemDim = $(this).data('famultibutton');
-                 if (elemDim && $.isNumeric(val)) elemDim.setDimValue( parseInt(val));
-             }
+           });
+           //extra reading for colorize
+           me.elements.filterDeviceReading('dim',dev,par)
+           .each(function(idx) {
+               var elem = $(this);
+               var value = elem.getReading('dim').val;
+               if(value) {
+                   var part = $(this).data('get-value');
+                   var val = getPart(value, part);
+                   var elemDim = $(this).data('famultibutton');
+                   if (elemDim && $.isNumeric(val))
+                       elemDim.setDimValue( parseInt(val));
+
+                }
          });
-     },
-     update_cb : function(elem,state) {
+      };
+
+     function update_cb (elem,state) {
          if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
              this.showOverlay(elem,state);
          else
              this.showOverlay(elem,"");
-     },
-});
+     };
+
+    return $.extend(new Modul_famultibutton(), {
+        widgetname: 'dimmer',
+        init:init,
+        valueChanged:valueChanged,
+        toggleOn:toggleOn,
+        update:update,
+        update_cb:update_cb,
+    });
+};
+

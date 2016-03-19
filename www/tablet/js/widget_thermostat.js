@@ -1,24 +1,12 @@
-if(typeof widget_knob == 'undefined') {
-    loadplugin('widget_knob');
-}
 
-var widget_thermostat = $.extend({}, widget_knob, {
-  widgetname: 'thermostat',
-  isUpdating:false,
-  getClimaValues: function (device) {
+var Modul_thermostat = function () {
 
-	var state = getDeviceValue( device, '');
-    var val_desired = getDeviceValue( device, 'get');
-    val_desired = ( state && state.indexOf('set_') < 0 ) ? val_desired : getPart(state,2);
-    var val_temp = getDeviceValue( device, 'temp');
+  if(typeof Modul_knob == 'undefined')
+        loadplugin('widget_knob');
 
-	return {
-        temp: getPart(val_temp,'(\\S+).*'),
-        desired: getPart(val_desired,'(\\S+).*'),
-        valve: getDeviceValue( device, 'valve')
-	};
-  },
-  drawDial: function () {
+  var isUpdating=false;
+
+  function drawDial () {
   	var c = this.g, // context
 	a = this.arc(this.cv), // Arc
 	pa, // Previous arc
@@ -50,7 +38,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
 
         if ((tick > acAngle && tick < a.s) || (tick-tick_w*dist <= acAngle && tick+tick_w*dist >= a.s)){
             // draw diff range in gradient color
-            c.strokeStyle = widget_thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-tick)/this.angleArc);
+            c.strokeStyle = ftui.getGradientColor(maxcolor, mincolor, (this.endAngle-tick)/this.angleArc);
             //if (tick-tick_w*dist <= acAngle )
             //    destcolor=c.strokeStyle;
         }
@@ -80,7 +68,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
 
 	// draw target temp cursor
     c.beginPath();
-    c.strokeStyle = widget_thermostat.getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
+    c.strokeStyle = ftui.getGradientColor(maxcolor, mincolor, (this.endAngle-a.e)/(this.endAngle-this.startAngle));
 	c.lineWidth = this.lineWidth * 2;
     c.arc(this.xy, this.xy, this.radius-this.lineWidth/2, a.s, a.e, a.d);
     c.stroke();
@@ -101,10 +89,11 @@ var widget_thermostat = $.extend({}, widget_knob, {
 		c.fillText(this.o.valveValue+'%',this.xy+x,this.xy+y+5);
     }
   return false;
-  },
-  onChange: function (v) {
-  },
-  onRelease: function (v) {
+  };
+
+  function onChange (v) {};
+
+  function onRelease (v) {
       if (!isUpdating){
             var device = this.$.data('device');
             if(v == this.o.min && this.$.data('off') != -1) {
@@ -119,11 +108,12 @@ var widget_thermostat = $.extend({}, widget_knob, {
             setFhemStatus(cmdl);
             ftui.toast(cmdl);
       }
-  },
-  init: function () {
-    var base=this;
-	this.elements=$('div[data-type="'+this.widgetname+'"]');
-	this.elements.each(function( index ) {
+  };
+
+  function init () {
+    var me = this;
+    me.elements=$('div[data-type="'+me.widgetname+'"]');
+    me.elements.each(function( index ) {
         var elem = $(this);
         elem.initData('get'     ,'desired-temp');
         elem.initData('set'     , elem.data('get'));
@@ -137,25 +127,26 @@ var widget_thermostat = $.extend({}, widget_knob, {
         elem.initData('cursor'  ,6);
         elem.initData('off'     ,-1);
         elem.initData('boost'   ,-1);
-        elem.initData('fgcolor' , getStyle('.'+base.widgetname+'.fgcolor','color')  || '#666');
-        elem.initData('mincolor',getStyle('.'+base.widgetname+'.mincolor','color') || '#4477ff');
-        elem.initData('maxcolor',getStyle('.'+base.widgetname+'.maxcolor','color') || '#ff0000');
-        elem.initData('bgcolor' ,getStyle('.'+base.widgetname,'background-color')  || 'none');
+        elem.initData('fgcolor' , getStyle('.'+me.widgetname+'.fgcolor','color')  || '#666');
+        elem.initData('mincolor',getStyle('.'+me.widgetname+'.mincolor','color') || '#4477ff');
+        elem.initData('maxcolor',getStyle('.'+me.widgetname+'.maxcolor','color') || '#ff0000');
+        elem.initData('bgcolor' ,getStyle('.'+me.widgetname,'background-color')  || 'none');
 
-        elem.addReading('get');
-        elem.addReading('temp');
-        elem.addReading('valve');
-        elem.addReading('mode');
+        me.addReading(elem,'get');
+        me.addReading(elem,'temp');
+        me.addReading(elem,'valve');
+        me.addReading(elem,'mode');
 
-        base.init_attr(elem);
-        base.init_ui(elem);
+        me.init_attr(elem);
+        me.init_ui(elem);
 	});
-  },
-  update: function (dev,par) {
+  };
+
+  function update (dev,par) {
     isUpdating=true;
-    var base = this;
+    var me = this;
     // update from desired temp reading
-    this.elements.filterDeviceReading('get',dev,par)
+    me.elements.filterDeviceReading('get',dev,par)
     .each(function(index) {
       var elem = $(this);
       var value = elem.getReading('get').val;
@@ -176,7 +167,7 @@ var widget_thermostat = $.extend({}, widget_knob, {
     });
 
     //extra reading for current temp
-    base.elements.filterDeviceReading('temp',dev,par)
+    me.elements.filterDeviceReading('temp',dev,par)
     .each(function(idx) {
       var elem = $(this);
       var value = elem.getReading('temp').val;
@@ -188,16 +179,28 @@ var widget_thermostat = $.extend({}, widget_knob, {
     });
 
     //extra reading for valve value
-    base.elements.filterDeviceReading('valve',dev,par)
+    me.elements.filterDeviceReading('valve',dev,par)
     .each(function(idx) {
-    var elem = $(this);
-    var value = elem.getReading('valve').val;
-    if(value) {
-        elem.find('input').trigger(
-            'configure', { "valveValue": value }
-        ).trigger('change');
-    }
-  });
+        var elem = $(this);
+        var value = elem.getReading('valve').val;
+        if(value) {
+            elem.find('input').trigger(
+                'configure', { "valveValue": value }
+            ).trigger('change');
+        }
+    });
     isUpdating=false;
-},
-});
+    };
+
+    // public
+    // inherit all public members from base class
+    return $.extend(new Modul_knob(), {
+        //override or own public members
+        widgetname: 'thermostat',
+        init:init,
+        update: update,
+        drawDial:drawDial,
+        onRelease:onRelease,
+        onChange:onChange,
+    });
+};

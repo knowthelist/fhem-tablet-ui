@@ -1,31 +1,27 @@
-if(typeof widget_knob == 'undefined') {
-    loadplugin('widget_knob');
-}
+var Modul_homestatus = function () {
 
-if (!$.fn.knob){
-    dynamicload('lib/jquery.knob.mod.js', null, null, false);
-}
+    if(typeof Modul_knob == 'undefined')
+          loadplugin('widget_knob');
 
-var widget_homestatus = $.extend({}, widget_knob, {
-    widgetname : 'homestatus',
-    isUpdating:false,
-    drawDial: function () {
-	var sector=0;
-	var c = this.g; // context
-    var x=this.tx; // touch x position
-    var y=this.ty; // touch y position
-	var mx=this.x+this.w2;
-	var my=this.y+this.w2;
-	var r=this.radius*0.4;
-    var texts = this.$.data('texts');
-    var icons = this.$.data('icons');
+    var isUpdating=false;
+
+    function drawDial () {
+      var sector=0;
+      var c = this.g; // context
+      var x=this.tx; // touch x position
+      var y=this.ty; // touch y position
+      var mx=this.x+this.w2;
+      var my=this.y+this.w2;
+      var r=this.radius*0.4;
+      var texts = this.$.data('texts');
+      var icons = this.$.data('icons');
 
       //Assign sector 1 for center pressed or value is 0
       if ( Math.pow((mx-x),2) + Math.pow((my-y),2) < Math.pow(r,2)
           || this.cv == 0 )
           sector=1;
 
-	if (sector==1){
+      if (sector==1){
 			// inner circle
 			c.lineWidth = this.radius*0.4;
 			c.strokeStyle = this.o.fgColor ;
@@ -137,10 +133,12 @@ var widget_homestatus = $.extend({}, widget_knob, {
 
 		this.o.status = sector;
 	return false;
-    },
-    onChange: function (v) {
-    },
-    onRelease: function (v) {
+    };
+
+    function onChange (v) {
+    };
+
+    function onRelease (v) {
         if (!isUpdating){
             var section=this.o.status;
             var states=this.$.data('set-on');
@@ -148,12 +146,14 @@ var widget_homestatus = $.extend({}, widget_knob, {
             this.$.transmitCommand();
             this.$.data('curval', v);
        }
-    },
-    onFormat: function(v) { return v; },
-    init: function () {
-        var base = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
+    };
+
+    function onFormat (v) { return v; };
+
+    function init () {
+        var me = this;
+        me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
+        me.elements.each(function(index) {
             var elem = $(this);
             var defaultAlias =  ['Home','Night','Away','Holiday','Retire'];
             var defaultIcons =  ['fa-home','fa-bed','fa-car','fa-suitcase','fa-tint'];
@@ -172,7 +172,7 @@ var widget_homestatus = $.extend({}, widget_knob, {
                 elem.data('height', 160);
                 elem.data('width', 160);
             }
-            elem.addReading('get');
+            me.addReading(elem,'get');
 
             var texts = elem.data('alias')||[];
             var icons = elem.data('icons')||[];
@@ -200,8 +200,8 @@ var widget_homestatus = $.extend({}, widget_knob, {
             elem.data('anglearc',    360);
             elem.data('displayinput',false);
 
-            base.init_attr(elem);
-            base.init_ui(elem);
+            me.init_attr(elem);
+            me.init_ui(elem);
 
             // hack: force refresh
             setTimeout(function(){
@@ -210,17 +210,19 @@ var widget_homestatus = $.extend({}, widget_knob, {
                 isUpdating=false;
             }, 15000);
         });
-    },
-    update: function (dev,par) {
-         var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-         var base = this;
-         isUpdating=true;
-         deviceElements.each(function(index) {
-		
-            var state = getDeviceValue( $(this), 'get' );
-            if (state){
-                var elem = $(this).find('input');
-                var states=$(this).data('get-on');
+    };
+
+    function update (dev,par) {
+        isUpdating=true;
+        var me = this;
+        // update from desired temp reading
+        me.elements.filterDeviceReading('get',dev,par)
+        .each(function(index) {
+          var elem = $(this);
+          var state = elem.getReading('get').val;
+          if (state) {
+                var knob_elem = elem.find('input');
+                var states=elem.data('get-on');
                 var val=0;
                 var idx=indexOfGeneric(states,state);
                 if (idx>-1){
@@ -241,12 +243,25 @@ var widget_homestatus = $.extend({}, widget_knob, {
                             val=0;
                     }
                 }
-                if ( elem && $(this).data('curval') != val ){
-                    elem.val( val ).trigger('change');
-                    $(this).data('curval', val);
+                if ( knob_elem && elem.data('curval') != val ){
+                    knob_elem.val( val ).trigger('change');
+                    elem.data('curval', val);
                 }
 			}
 	});
     isUpdating=false;
-    },
-});
+    };
+
+    // public
+    // inherit all public members from base class
+    return $.extend(new Modul_knob(), {
+        //override or own public members
+        widgetname: 'homestatus',
+        init:init,
+        update: update,
+        drawDial:drawDial,
+        onFormat:onFormat,
+        onRelease:onRelease,
+        onChange:onChange,
+    });
+};

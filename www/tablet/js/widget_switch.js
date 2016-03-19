@@ -1,14 +1,13 @@
-if(typeof Module_famultibutton == 'undefined') {
-    loadplugin('widget_famultibutton');
-}
 
 var Modul_switch = function () {
 
+    if(typeof Module_famultibutton == 'undefined')
+        loadplugin('widget_famultibutton');
+
     function init() {
-        var base = this;
-        console.log('switchinit',this.area);
-        this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
-        this.elements.each(function(index) {
+        var me = this;
+        me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
+        me.elements.each(function(index) {
             var elem = $(this);
             elem.initData('off-color'           , getStyle('.switch.off','color') || '#2A2A2A');
             elem.initData('off-background-color', getStyle('.switch.off','background-color')   || '#505050');
@@ -17,10 +16,10 @@ var Modul_switch = function () {
             elem.initData('background-icon'     , 'fa-circle');
             elem.initData('icon'                , 'fa-lightbulb-o');
             elem.data('mode', (elem.hasClass('readonly')?'signal':'toggle'));
-            base.init_attr.call(base,elem);
-            base.init_ui.call(base,elem);
+            me.init_attr(elem);
+            me.init_ui(elem);
         });
-    }
+    };
 
     // public
     // inherit members from base class

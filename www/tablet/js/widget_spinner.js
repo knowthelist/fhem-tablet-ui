@@ -17,7 +17,7 @@ var Modul_spinner = function () {
                 value = parseFloat(value);
                 return  (isNaN(value)) ? elem.data('min'):value;
         }
-    }
+    };
 
     function drawLevel(elem) {
         var max         = parseFloat(( $.isNumeric(elem.data('max')) ) ? elem.data('max') : elem.getReading('max').val);
@@ -48,7 +48,7 @@ var Modul_spinner = function () {
                                 colorLow  +' '+ stopLow +'%)';
                 if (elem.hasClass('positiononly')){
                     levelRange.css({
-                      background: this.getGradientColor(colorLow,colorHigh,valueRel),
+                      background: ftui.getGradientColor(colorLow,colorHigh,valueRel),
                     });
                 }
                 else{
@@ -75,10 +75,9 @@ var Modul_spinner = function () {
             else
                 textElem.text(value + elem.data('unit'));
         }
-    }
+    };
 
     function onClicked(elem,factor) {
-        var base    = this;
         var step    = parseFloat(elem.data('step'));
         var min     = parseFloat(elem.data('min'));
         var max     = parseFloat(elem.data('max'));
@@ -99,17 +98,16 @@ var Modul_spinner = function () {
                 changeValue();
             }, elem.data('shortdelay'));
         }, elem.data('longdelay'));
-    }
+    };
 
     function onReleased(elem) {
         clearTimeout(elem.repeatTimer);
         clearTimeout(elem.delayTimer);
-            var base = this;
             elem.delayTimer = setTimeout(function () {
             elem.transmitCommand();
                 elem.delayTimer=0;
             }, elem.data('longdelay'));
-    }
+    };
 
     function init_attr(elem) {
         elem.initData('get'                     ,'STATE');
@@ -133,16 +131,16 @@ var Modul_spinner = function () {
         elem.initData('off'                     ,-123);
         elem.initData('on'                      ,-123);
         elem.initData('step'                    ,'1');
-        elem.initData('fix'                     ,this.precision( elem.data('step')));
+        elem.initData('fix'                     ,ftui.precision( elem.data('step')));
         elem.initData('unit'                    ,'');
         elem.initData('get-value'               ,elem.data('part') || -1);
 
         this.addReading(elem,'get');
         if ( elem.isDeviceReading('text-color') ) {this.addReading(elem,'text-color');}
-    }
+    };
 
     function init_ui(elem) {
-        var base = this;
+        me = this;
         var leftIcon = elem.data('icon-left');
         var rightIcon = elem.data('icon-right');
 
@@ -250,12 +248,12 @@ var Modul_spinner = function () {
                 onReleased(elem);
             e.preventDefault();
         });
-    }
+    };
 
     function update(dev,par) {
-        var base = this;
+        var me = this;
         // update from normal state reading
-        this.elements.filterDeviceReading('get',dev,par)
+        me.elements.filterDeviceReading('get',dev,par)
         .each(function(index) {
             var elem = $(this);
             var state = elem.getReading('get').val;
@@ -268,7 +266,7 @@ var Modul_spinner = function () {
          });
 
         //extra reading for dynamic color of text
-        base.elements.filterDeviceReading('text-color',dev,par)
+        me.elements.filterDeviceReading('text-color',dev,par)
         .each(function(idx) {
             var elem = $(this);
             var val = elem.getReading('text-color').val;
@@ -277,7 +275,7 @@ var Modul_spinner = function () {
                 elem.find('.spinnerText').css( "color", val );
             }
         });
-    }
+    };
 
     // public
     // inherit all public members from base class

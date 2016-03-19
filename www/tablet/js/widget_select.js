@@ -16,13 +16,13 @@ var Modul_select = function () {
                 select_elem.append('<option value="'+items[i]+'">'+(alias && alias[i]||items[i])+'</option>');
             }
         }
-    }
+    };
 
     function setCurrentItem(elem){
         var value = elem.getReading('get').val;
         elem.find('select').val(value);
         elem.data('value', value);
-    }
+    };
 
     function init_attr(elem) {
       elem.initData('get'    ,'STATE');
@@ -33,10 +33,9 @@ var Modul_select = function () {
 
       this.addReading(elem,'get');
       this.addReading(elem,'list');
-    }
+    };
 
     function init_ui(elem) {
-    var base = this;
     // prepare select element
         elem.addClass('select');
         var select_elem = jQuery('<select/>', { })
@@ -53,7 +52,6 @@ var Modul_select = function () {
      }
 
      function update(dev,par) {
-      var base = this;
       // update from normal state reading
       this.elements.filterDeviceReading('get',dev,par)
       .each(function(index) {
@@ -61,7 +59,7 @@ var Modul_select = function () {
       });
 
       //extra reading for list items
-      base.elements.filterDeviceReading('list',dev,par)
+      this.elements.filterDeviceReading('list',dev,par)
       .each(function(idx) {
           var elem = $(this);
           var items = elem.getReading('list').val;
@@ -86,7 +84,7 @@ var Modul_select = function () {
           fillList(elem);
           setCurrentItem(elem);
       });
-   }
+   };
 
     // public
     // inherit all public members from base class

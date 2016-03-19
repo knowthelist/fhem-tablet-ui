@@ -1,8 +1,8 @@
-if (!$.fn.famultibutton){
-    dynamicload('lib/fa-multi-button.min.js', null, null, false);
-}
 
 var Modul_famultibutton = function () {
+
+    if (!$.fn.famultibutton)
+        dynamicload('lib/fa-multi-button.min.js', null, null, false);
 
     function doubleclicked(elem, onoff) {
         if(elem.data('doubleclick')*1>0) {
@@ -30,7 +30,7 @@ var Modul_famultibutton = function () {
             }
         }
         return true;
-    }
+    };
 
     function showOverlay(elem, value) {
          elem.children().filter('#warn-back').remove();
@@ -54,7 +54,7 @@ var Modul_famultibutton = function () {
                  fgElem.css({color:elem.data('on-color') });
              }
          }
-    }
+    };
 
     function showMultiStates(elem,states,state,idxOn){
 
@@ -123,7 +123,7 @@ var Modul_famultibutton = function () {
             bgelm.css( "color", getStyle('.'+bgcolors[idx],'color') || bgcolors[idx] );
 
         }
-    }
+    };
 
     function toggleOn(elem) {
         if(doubleclicked(elem, 'on')) {
@@ -137,7 +137,7 @@ var Modul_famultibutton = function () {
                 setInterval(function() {elem.setOff()}, 200);
             }
         }
-    }
+    };
 
     function toggleOff(elem) {
         if(doubleclicked(elem, 'off')) {
@@ -147,7 +147,7 @@ var Modul_famultibutton = function () {
                 setInterval(function() {elem.setOn()}, 200);
             }
         }
-    }
+    };
 
     function clicked(elem, onoff) {
         var target;
@@ -210,21 +210,21 @@ var Modul_famultibutton = function () {
                 setFhemStatus(target);
                 break;
         }
-    }
+    };
 
     function valueChanged(elem,v) {
-    }
+    };
 
     function init_ui(elem) {
-        var base = this;
+        var me = this;
         elem.famultibutton({
             mode: elem.data('mode'),
-            toggleOn: function() { base.toggleOn(elem) },
-            toggleOff: function() { base.toggleOff(elem) },
-            valueChanged: function(v) { base.valueChanged(elem,v) },
+            toggleOn: function() { me.toggleOn(elem) },
+            toggleOff: function() { me.toggleOff(elem) },
+            valueChanged: function(v) { me.valueChanged(elem,v) },
         });
         return elem;
-    }
+    };
 
     function init_attr(elem) {
         elem.initData('get'         ,'STATE');
@@ -252,21 +252,21 @@ var Modul_famultibutton = function () {
         if ( elem.isDeviceReading('off-color') ) {this.addReading(elem,'off-color');}
         if ( elem.isDeviceReading('off-background-color') ) {this.addReading(elem,'off-background-color');}
 
-    }
+    };
 
-    function update_cb(elem) {}
+    function update_cb(elem) {};
 
     function update(dev,par) {
-        var base = this;
+        var me = this;
         // update from normal state reading
-        this.elements.filterDeviceReading('get',dev,par)
+        me.elements.filterDeviceReading('get',dev,par)
         .each(function(index) {
             var elem = $(this);
             var state = elem.getReading('get').val;
             if (state) {
                 var states=elem.data('states') || elem.data('get-on');
                 if ( $.isArray(states)) {
-                    base.showMultiStates(elem,states,state);
+                    me.showMultiStates(elem,states,state);
                 } else {
                     var faelem = elem.data('famultibutton');
                     if (faelem){
@@ -284,7 +284,7 @@ var Modul_famultibutton = function () {
                              faelem.setOn();
                     }
                 }
-                base.update_cb(elem,state);
+                me.update_cb(elem,state);
             }
         });
         // update from extra reading for colorize
@@ -292,7 +292,7 @@ var Modul_famultibutton = function () {
         var selec = ['#fg','#fg','#bg','#bg'];
         var estat = [false,true,true,false];
         $.each(['off-color','on-color','on-background-color','off-background-color' ], function( index, key ) {
-            base.elements.filterDeviceReading(key,dev,par)
+            me.elements.filterDeviceReading(key,dev,par)
                 .each(function(idx) {
                     var elem = $(this);
                     var val = elem.getReading(key).val;
@@ -310,7 +310,7 @@ var Modul_famultibutton = function () {
                     }
                 });
             });
-        }
+        };
 
     // public
     // inherit all public members from base class

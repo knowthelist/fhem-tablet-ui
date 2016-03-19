@@ -1,6 +1,7 @@
 var Modul_label = function () {
 
     function init_attr(elem) {
+        var me = this;
         elem.initData('get'         , 'STATE');
         elem.initData('part'        , -1);
         elem.initData('unit'        , '' );
@@ -21,9 +22,9 @@ var Modul_label = function () {
 
         elem.data('fix',            ( $.isNumeric(elem.data('fix')) ) ?  Number(elem.data('fix'))           : -1);
 
-        this.addReading(elem,'get');
-        this.addReading(elem,'limits-get');
-        if ( elem.isDeviceReading('color') ) {this.addReading(elem,'color');}
+        me.addReading(elem,'get');
+        me.addReading(elem,'limits-get');
+        if ( elem.isDeviceReading('color') ) {me.addReading(elem,'color');}
 
     }
 
@@ -34,7 +35,7 @@ var Modul_label = function () {
     }
 
     function update_substitution(value, substitution) {
-        ftui.log(3,this.widgetname+' - value:'+value+', substitution:'+substitution);
+        ftui.log(3,me.widgetname+' - value:'+value+', substitution:'+substitution);
         if(substitution){
             if ($.isArray(substitution)){
                 for(var i=0, len=substitution.length; i<len; i+=2) {
@@ -71,9 +72,9 @@ var Modul_label = function () {
     function update_cb(elem) {}
 
     function update(dev,par) {
-        var base = this;
+        me = this;
         // update from normal state reading
-        this.elements.filterDeviceReading('get',dev,par)
+        me.elements.filterDeviceReading('get',dev,par)
         .each(function(index) {
             var elem = $(this);
             var value = (elem.hasClass('timestamp'))
@@ -117,7 +118,7 @@ var Modul_label = function () {
                   else
                     elem.html(val);
                 }
-                base.update_cb(elem,val);
+                me.update_cb(elem,val);
             }
             var color = elem.data('color');
             if (color && !elem.isDeviceReading('color'))
@@ -126,7 +127,7 @@ var Modul_label = function () {
         });
 
         //extra reading for dynamic color
-        base.elements.filterDeviceReading('color',dev,par)
+        me.elements.filterDeviceReading('color',dev,par)
         .each(function(idx) {
             var elem = $(this);
             var val = elem.getReading('color').val;
@@ -137,7 +138,7 @@ var Modul_label = function () {
         });
 
         //extra reading for colorize
-        base.elements.filterDeviceReading('limits-get',dev,par)
+        me.elements.filterDeviceReading('limits-get',dev,par)
         .each(function(idx) {
             var elem = $(this);
             var val = elem.getReading('limits-get').val;

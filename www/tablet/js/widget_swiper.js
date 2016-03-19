@@ -1,37 +1,36 @@
 /* FTUI Plugin
-* Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
+* Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 */
 
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
+
+var Modul_swiper= function () {
+
 if (!$.fn.Swiper){
     dynamicload('lib/swiper.jquery.min.js', null, null, false);
-    $('head').append('<link rel="stylesheet" href="'+ dir + '/../lib/swiper.min.css" type="text/css" />');
+    $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/swiper.min.css" type="text/css" />');
 }
 
-var widget_swiper= $.extend({}, widget_widget, {
-    widgetname : 'swiper',
-    activateSlide : function(elem,states,state) {
+    function activateSlide (elem,states,state) {
         var idx=indexOfGeneric(states,state);
         if (idx>-1){
             var swiper = elem[0].swiper;
             if (swiper)
                 swiper.slideTo(idx);
         }
-    },
-    init_attr : function(elem) {
+    };
+
+    function init_attr (elem) {
         elem.initData('get'                     ,'STATE');
         elem.initData('width'                   ,'100%');
         elem.initData('height'                  ,'100%');
         elem.initData('autoplay'                ,null);
         elem.initData('tabclass'                ,'swipertab');
 
-        elem.addReading('get');
-    },
-    init_ui : function(elem) {
-        var base = this;
+        this.addReading(elem,'get');
+    };
+
+    function init_ui (elem) {
         var elemPagination = null;
         var elemPrev = null;
         var elemNext = null;
@@ -101,9 +100,9 @@ var widget_swiper= $.extend({}, widget_widget, {
         });
 
         return elem;
-    },
-    update: function (dev,par) {
-        var base = this;
+    };
+
+    function update (dev,par) {
         // update from normal state reading
         this.elements.filterDeviceReading('get',dev,par)
         .each(function(index) {
@@ -112,9 +111,20 @@ var widget_swiper= $.extend({}, widget_widget, {
             if (state) {
                 var states=elem.data('states') || elem.data('get-on');
                 if ( $.isArray(states)) {
-                    base.activateSlide(elem,states,state);
+                    activateSlide(elem,states,state);
                 }
             }
         })
-    },
+    };
+
+
+// public
+// inherit all public members from base class
+return $.extend(new Modul_widget(), {
+    //override or own public members
+    widgetname: 'swiper',
+    init_attr: init_attr,
+    init_ui:init_ui,
+    update: update,
 });
+};

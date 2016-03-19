@@ -1,15 +1,14 @@
 
 var Modul_slider= function () {
-
-  function init() {
-
     if (!$.fn.Powerange){
         dynamicload('lib/powerange.min.js', null, null, false);
         $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/powerange.min.css" type="text/css" />');
     }
-    var base=this;
-    this.elements = $('div[data-type="'+this.widgetname+'"]');
-    this.elements.each(function(index) {
+
+  function init() {
+    var me=this;
+    me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
+    me.elements.each(function(index) {
 
         var elem = $(this);
 
@@ -29,7 +28,7 @@ var Modul_slider= function () {
         elem.initData('color'           ,getClassColor(elem) || getStyle('.slider','color')    || '#aa6900');
         elem.initData('background-color',getStyle('.slider','background-color')    || '#404040');
 
-        base.addReading(elem,'get');
+        me.addReading(elem,'get');
 
         var id = elem.data("device")+"_"+elem.data('get');
 
@@ -69,7 +68,7 @@ var Modul_slider= function () {
               // isunsel == false (0) means drag is over
               if ( ( ! isunsel ) && ( selMode ) ) {
                 if (elem.hasClass('FS20')){
-                  v = base.FS20.dimmerValue(v);
+                  v = ftui.FS20.dimmerValue(v);
                 }
                 elem.data('value', elem.data('set-value').replace('$v',v.toString()));
 
@@ -149,10 +148,9 @@ var Modul_slider= function () {
                pwrng.setStart(parseInt(storeval));
        });
      });
-  }
+  };
 
   function update(dev,par) {
-      var base = this;
       // update from normal state reading
       this.elements.filterDeviceReading('get',dev,par)
       .each(function(index) {
@@ -196,7 +194,7 @@ var Modul_slider= function () {
                 input_elem.css({visibility:'visible'});
             }
     });
-   }
+   };
 
     // public
     // inherit all public members from base class

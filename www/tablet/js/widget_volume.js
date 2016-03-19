@@ -1,10 +1,12 @@
-if(typeof widget_knob == 'undefined') {
-    loadplugin('widget_knob');
-}
 
-var widget_volume = $.extend({}, widget_knob, {
-  widgetname : 'volume',
-    drawDial: function () {
+var Modul_volume = function () {
+
+  if(typeof Modul_knob == 'undefined')
+        loadplugin('widget_knob');
+
+  var isUpdating=false;
+
+  function drawDial () {
   	var c = this.g, // context
 	a = this.arc(this.cv), // Arc
 	r = 1;
@@ -76,22 +78,24 @@ var widget_volume = $.extend({}, widget_knob, {
 	c.stroke();
 
   return false;
-    },
-    onChange: function (v) {
+    };
+
+    function onChange (v) {
           if (v > this.o.max - this.o.variance && this.o.lastValue < this.o.min + this.o.variance) {
-              knob_elem.val(this.o.min).change();
+              this.i.val(this.o.min).change();
               return false;
           } else if (v < this.o.min + this.o.variance && this.o.lastValue > this.o.max - this.o.variance) {
-              knob_elem.val(this.o.max).change();
+              this.i.val(this.o.max).change();
               return false;
           }
           this.o.lastValue = v;
-    },
-    onRelease: function (v) {
+    };
+
+    function onRelease (v) {
         if (!isUpdating){
               if ((this.o.mode>>6) % 2 != 0){
                   //send hex rbg value
-                  v=widget_knob.hslToRgb(v/this.o.max,1.0,0.5);
+                  v=ftui.hslToRgb(v/this.o.max,1.0,0.5);
               }
               else{
                  //send decimal value
@@ -107,88 +111,103 @@ var widget_volume = $.extend({}, widget_knob, {
               }
               this.$.data('curval', v);
         }
-    },
-    onFormat: function (v) {
+    };
+
+    function onFormat (v) {
         //fix digits count
         var ret = (this.step<1)?Number(v).toFixed(1):v
         return (this.unit)?ret+unescape(this.unit):ret;
-    },
-    init: function () {
-    var base=this;
-    this.elements = $('div[data-type="'+this.widgetname+'"]');
-    this.elements.each(function(index) {
-        var maxval = $(this).isValidData('max')  ? $(this).data('max')  :  70;
-        $(this).data('origmax', maxval);
-        $(this).data('max',     (maxval>360)?360:maxval);
-        $(this).data('fgcolor',     $(this).data('fgcolor')     || getStyle('.'+this.widgetname,'color') || '#666');
-        $(this).data('get-value',   $(this).data('get-value')   || $(this).data('part')         || '-1');
+    };
 
-        var mode=0; //no hue colors
-        var hdDefaultColor = getClassColor($(this)) || getStyle('.volume.hdcolor','color') || '#aa6900';
-        if ($(this).hasClass('hue-back')){
-            mode = mode | 1<<0;
-            hdDefaultColor='#cccccc';
-        }
-        if ($(this).hasClass('hue-tick')){
-            mode = mode | 1<<1;
-            hdDefaultColor='#bbbbbb';
-        }
-        if ( $(this).hasClass('hue-front')){
-            mode = mode | 1<<2;
-        }
+    function init () {
+        var me=this;
+        me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
+        me.elements.each(function(index) {
+            var elem = $(this);
+            var maxval = elem.isValidData('max')  ? elem.data('max')  :  70;
+            elem.data('origmax', maxval);
+            elem.data('max',     (maxval>360)?360:maxval);
+            elem.data('fgcolor',     elem.data('fgcolor')     || getStyle('.'+me.widgetname,'color') || '#666');
+            elem.data('get-value',   elem.data('get-value')   || elem.data('part')         || '-1');
 
-        if ($(this).hasClass('dim-back')){
-            mode = mode | 1<<3;
-        }
-        if ($(this).hasClass('dim-tick')){
-            mode = mode | 1<<4;
-        }
-        if ( $(this).hasClass('dim-front')){
-            mode = mode | 1<<5;
-        }
-        if ( $(this).hasClass('rgb')){
-            mode = mode | 1<<6;
-        }
-        $(this).data('mode',mode);
-        $(this).data('bgcolor',    $(this).data('bgcolor')     || getStyle('.'+base.widgetname,'background-color')    || 'none');
-        $(this).data('hdcolor',    $(this).data('hdcolor')     || hdDefaultColor);
-        $(this).data('tickstep',   $(this).data('tickstep')    || (((mode>>1) % 2 != 0)?4:20));
-        $(this).data('cursor',     $(this).data('cursor')      || 6);
+            var mode=0; //no hue colors
+            var hdDefaultColor = getClassColor(elem) || getStyle('.volume.hdcolor','color') || '#aa6900';
+            if (elem.hasClass('hue-back')){
+                mode = mode | 1<<0;
+                hdDefaultColor='#cccccc';
+            }
+            if (elem.hasClass('hue-tick')){
+                mode = mode | 1<<1;
+                hdDefaultColor='#bbbbbb';
+            }
+            if ( elem.hasClass('hue-front')){
+                mode = mode | 1<<2;
+            }
 
-        base.init_attr($(this));
-        base.init_ui($(this));
+            if (elem.hasClass('dim-back')){
+                mode = mode | 1<<3;
+            }
+            if (elem.hasClass('dim-tick')){
+                mode = mode | 1<<4;
+            }
+            if ( elem.hasClass('dim-front')){
+                mode = mode | 1<<5;
+            }
+            if ( elem.hasClass('rgb')){
+                mode = mode | 1<<6;
+            }
+            elem.data('mode',mode);
+            elem.data('bgcolor',    elem.data('bgcolor')     || getStyle('.'+me.widgetname,'background-color')    || 'none');
+            elem.data('hdcolor',    elem.data('hdcolor')     || hdDefaultColor);
+            elem.data('tickstep',   elem.data('tickstep')    || (((mode>>1) % 2 != 0)?4:20));
+            elem.data('cursor',     elem.data('cursor')      || 6);
+
+            me.init_attr(elem);
+            me.init_ui(elem);
      });
-    },
-    update: function (dev,par) {
+    };
 
-    var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
+  function update (dev,par) {
     isUpdating=true;
-    deviceElements.each(function(index) {
+    var me = this;
+    // update from desired temp reading
+    me.elements.filterDeviceReading('get',dev,par)
+    .each(function(index) {
+      var elem = $(this);
+      var value = elem.getReading('get').val;
+      if (value) {
+            var knob_elem = elem.find('input');
+            var part = elem.data('get-value');
+            var val = getPart(value,part);
+            if ((parseInt(elem.data('mode'))>>6) % 2 != 0){
+                //is hex rgb
 
-        if ( $(this).data('get')==par){
-            var value = getDeviceValue( $(this), 'get' );
-            var knob_elem = $(this).find('input');
-            if (value){
-                var part = $(this).data('get-value');
-                var val = getPart(value,part);
-                if ((parseInt($(this).data('mode'))>>6) % 2 != 0){
-                    //is hex rgb
-
-                    val=widget_knob.rgbToHsl(val)[0];
-                    val=val*$(this).data('max');
-                }
-                else{
-                    //is decimal value
-                    val = (val * ($(this).data('max')/$(this).data('origmax'))).toFixed(0);
-                }
-                if ( knob_elem.val() != val ){
-                    knob_elem.val( val ).trigger('change');
-                    ftui.log(3, this.widgetname + ' dev:'+dev+' par:'+par+' change '+$(this).data('device')+':knob to ' +val );
-                }
+                val=widget_knob.rgbToHsl(val)[0];
+                val=val*elem.data('max');
+            }
+            else{
+                //is decimal value
+                val = (val * (elem.data('max')/elem.data('origmax'))).toFixed(0);
+            }
+            if ( knob_elem.val() != val ){
+                knob_elem.val( val ).trigger('change');
+                ftui.log(3, me.widgetname + ' dev:'+dev+' par:'+par+' change '+elem.data('device')+':knob to ' +val );
+            }
             }
             knob_elem.css({visibility:'visible'});
-        }
-    });
+     });
     isUpdating=false;
-    }
-});
+    };
+
+  // public
+  // inherit all public members from base class
+  return $.extend(new Modul_knob(), {
+      //override or own public members
+      widgetname: 'volume',
+      init:init,
+      update: update,
+      drawDial:drawDial,
+      onRelease:onRelease,
+      onChange:onChange,
+  });
+};

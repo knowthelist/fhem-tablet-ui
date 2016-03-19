@@ -1,14 +1,13 @@
-var widget_circlemenu= {
-  _circlemenu: null,
-  elements: null,
-  init: function () {
+var Modul_circlemenu = function () {
+
+   function init () {
 
     if (!$.fn.circleMenu)
         dynamicload('lib/jquery.circlemenu.js', null, null, false);
 
-    _circlemenu=this;
-    _circlemenu.elements = $('div[data-type="circlemenu"]>ul');
-    _circlemenu.elements.each(function(index){
+    var me = this;
+    me.elements = $('div[data-type="circlemenu"]>ul');
+    me.elements.each(function(index){
         var parent = $(this).parent('div[data-type="circlemenu"]');
         $(this).circleMenu({
             item_diameter   : parent.data('item-diameter') || 52,
@@ -49,6 +48,15 @@ var widget_circlemenu= {
                 clearTimeout(timeoutMenu);
         });
 
-  },
-  update: function (dev,par) {}
-};
+  };
+  function update (dev,par) {};
+
+    // public
+    // inherit members from base class
+    return $.extend(new Modul_widget(), {
+        //override members
+        widgetname: 'circlemenu',
+        init:init,
+        update:update,
+    });
+}

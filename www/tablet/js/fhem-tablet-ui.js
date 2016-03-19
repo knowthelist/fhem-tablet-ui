@@ -16,21 +16,20 @@
 // -------- Widget Base---------
 var Modul_widget = function () {
 
+    var me = null;
+
     function init() {
         ftui.log(1,"init widget: "+this.widgetname);
-        var base = this;
+        me = this;
         this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
         this.elements.each(function(index) {
-            base.init_attr($(this));
-            base.init_ui($(this));
+            me.init_attr($(this));
+            me.init_ui($(this));
         });
-    }
+    };
 
-    function precision(a) {
-        var s = a + "",
-        d = s.indexOf('.') + 1;
-        return !d ? 0 : s.length - d;
-    }
+    function init_attr() {};
+    function init_ui() {};
 
     function addReading(elem,key) {
             var data = elem.data(key);
@@ -56,17 +55,19 @@ var Modul_widget = function () {
                     }
                 }
             }
-    }
+    };
 
     function update (dev,par) {ftui.log(1,'warning: '+this.widgetname+' does not implement update function');};
 
     return {
         widgetname: 'widget',
+        me:me,
         area: '',
         init: init,
+        init_attr:init_attr,
+        init_ui:init_ui,
         update: update,
         addReading:addReading,
-        precision:precision,
         subscriptions: {},
     };
 };
@@ -155,8 +156,8 @@ var ftui = {
         ftui.paramIdMap={};
         ftui.timestampMap={};
         ftui.loadStyleSchema();
-        ftui.gridster.wx = parseInt( $("meta[name='widget_base_width']").attr("content") );
-        ftui.gridster.wy = parseInt( $("meta[name='widget_base_height']").attr("content") );
+        ftui.gridster.wx = parseInt( $("meta[name='widget_base_width']").attr("content") || 74);
+        ftui.gridster.wy = parseInt( $("meta[name='widget_base_height']").attr("content") || 71);
         if ( $("meta[name='widget_margin']").attr("content") )
           ftui.gridster.wm = parseInt( $("meta[name='widget_margin']").attr("content") );
         ftui.config.doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
@@ -607,6 +608,122 @@ var ftui = {
                 longPoll();
             }, 10000);
         }
+    },
+
+    FS20: {
+        'dimmerArray':[0, 6, 12, 18, 25, 31, 37, 43, 50, 56, 62, 68, 75, 81, 87, 93, 100],
+        'dimmerValue': function(value){
+            var idx = indexOfNumeric(this.dimmerArray,value);
+            return (idx > -1) ? this.dimmerArray[idx] : 0;
+        }
+    },
+
+    rgbToHsl: function(rgb){
+        var r=parseInt(rgb.substring(0,2),16);
+        var g=parseInt(rgb.substring(2,4),16);
+        var b=parseInt(rgb.substring(4,6),16);
+        r /= 255, g /= 255, b /= 255;
+        var max = Math.max(r, g, b), min = Math.min(r, g, b);
+        var h, s, l = (max + min) / 2;
+
+        if(max == min){
+            h = s = 0; // achromatic
+        } else {
+            var d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch(max){
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+            h /= 6;
+        }
+        return [h, s, l];
+    },
+
+    hslToRgb: function(h, s, l){
+        var r, g, b;
+        var hex = function(x) {
+            return ("0" + parseInt(x).toString(16)).slice(-2);
+        }
+
+        if(s == 0){
+            r = g = b = l; // achromatic
+        } else {
+            function hue2rgb(p, q, t){
+                if(t < 0) t += 1;
+                if(t > 1) t -= 1;
+                if(t < 1/6) return p + (q - p) * 6 * t;
+                if(t < 1/2) return q;
+                if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                return p;
+            }
+                var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+            var p = 2 * l - q;
+            r = hue2rgb(p, q, h + 1/3);
+            g = hue2rgb(p, q, h);
+            b = hue2rgb(p, q, h - 1/3);
+        }
+        return [hex(Math.round(r * 255)), hex(Math.round(g * 255)), hex(Math.round(b * 255))].join('');
+    },
+
+    rgbToHex: function(rgb){
+     var tokens = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+     return (tokens && tokens.length === 4) ? "#" +
+      ("0" + parseInt(tokens[1],10).toString(16)).slice(-2) +
+      ("0" + parseInt(tokens[2],10).toString(16)).slice(-2) +
+      ("0" + parseInt(tokens[3],10).toString(16)).slice(-2) : rgb;
+    },
+
+    getGradientColor: function(start_color, end_color, percent) {
+     // strip the leading # if it's there
+    start_color = this.rgbToHex(start_color).replace(/^\s*#|\s*$/g, '');
+    end_color   = this.rgbToHex(end_color).replace(/^\s*#|\s*$/g, '');
+
+     // convert 3 char codes --> 6, e.g. `E0F` --> `EE00FF`
+     if(start_color.length == 3){
+       start_color = start_color.replace(/(.)/g, '$1$1');
+     }
+
+     if(end_color.length == 3){
+       end_color = end_color.replace(/(.)/g, '$1$1');
+     }
+
+     // get colors
+     var start_red = parseInt(start_color.substr(0, 2), 16),
+         start_green = parseInt(start_color.substr(2, 2), 16),
+         start_blue = parseInt(start_color.substr(4, 2), 16);
+
+     var end_red = parseInt(end_color.substr(0, 2), 16),
+         end_green = parseInt(end_color.substr(2, 2), 16),
+         end_blue = parseInt(end_color.substr(4, 2), 16);
+
+     // calculate new color
+     var diff_red = end_red - start_red;
+     var diff_green = end_green - start_green;
+     var diff_blue = end_blue - start_blue;
+
+     diff_red = ( (diff_red * percent) + start_red ).toString(16).split('.')[0];
+     diff_green = ( (diff_green * percent) + start_green ).toString(16).split('.')[0];
+     diff_blue = ( (diff_blue * percent) + start_blue ).toString(16).split('.')[0];
+
+     // ensure 2 digits by color
+     if( diff_red.length == 1 )
+       diff_red = '0' + diff_red
+
+     if( diff_green.length == 1 )
+       diff_green = '0' + diff_green
+
+     if( diff_blue.length == 1 )
+       diff_blue = '0' + diff_blue
+
+     return '#' + diff_red + diff_green + diff_blue;
+    },
+
+    precision: function(a) {
+        var s = a + "",
+        d = s.indexOf('.') + 1;
+        return !d ? 0 : s.length - d;
     },
 
     toast: function(text){

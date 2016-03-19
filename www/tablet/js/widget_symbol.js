@@ -1,13 +1,14 @@
-if(typeof Module_famultibutton == 'undefined') {
-    loadplugin('widget_famultibutton');
-}
 
 var Modul_symbol = function () {
 
+    if(typeof Module_famultibutton == 'undefined') {
+        loadplugin('widget_famultibutton');
+    }
+
     function init() {
-        var base = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
+        var me = this;
+        me.elements = $('div[data-type="'+me.widgetname+'"]');
+        me.elements.each(function(index) {
             var elem = $(this);
             elem.initData('off-color'               ,getStyle('.symbol.off','color') || '#505050');
             elem.initData('off-background-color'    ,getStyle('.symbol.off','background-color')   || '#505050');
@@ -19,10 +20,10 @@ var Modul_symbol = function () {
             elem.initData('get-off'                 ,'closed');
             elem.initData('get-warn'                ,-1);
             elem.data('mode', 'signal');
-            base.init_attr(elem);
-            base.init_ui(elem);
+            me.init_attr(elem);
+            me.init_ui(elem);
         });
-    }
+    };
 
     function update_cb(elem,state) {
         $('.fa-stack:has(.zero)').removeClass('fa-stack');
@@ -30,7 +31,7 @@ var Modul_symbol = function () {
             this.showOverlay(elem,getPart(state,elem.data('get-warn')));
         else
             this.showOverlay(elem,"");
-    }
+    };
 
     // public
     // inherit members from base class

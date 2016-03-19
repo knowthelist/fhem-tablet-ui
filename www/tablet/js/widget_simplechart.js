@@ -1,26 +1,20 @@
-if(typeof widget_widget == 'undefined') {
-    dynamicload('js/widget_widget.js');
-}
 
-var widget_simplechart = {
-  widgetname : 'simplechart',
-  createElem: function(elem) {
+var Modul_simplechart = function () {
+
+  function createElem(elem) {
       return $(document.createElementNS('http://www.w3.org/2000/svg', elem));
-    },
-  precision: function(a) {
-      var s = a + "",
-      d = s.indexOf('.') + 1;
-      return !d ? 0 : s.length - d;
-    },
-  getSvgPoints: function (arg) {
+  };
+
+  function getSvgPoints (arg) {
        var res = [];
        for (var i=0,l=arg.length;i<l;i++) {
            if(arg[i])
            res.push(arg[i].join(','));
        }
        return res.join(' ');
-    },
-    init_attr: function(elem) {
+    };
+
+    function init_attr (elem) {
         elem.initData('minvalue'    , 10);
         elem.initData('maxvalue'    , 30);
         elem.initData('xticks'      , 360);
@@ -28,42 +22,35 @@ var widget_simplechart = {
         elem.initData('yunit'       , '');
         elem.initData('get'         , 'STATE');
 
-        elem.addReading('get');
-    },
-  init: function () {
-      var base=this;
-      this.elements = $('div[data-type="'+this.widgetname+'"]');
-      this.elements.each(function(index) {
+        this.addReading(elem,'get');
+    };
 
-        widget_simplechart.init_attr($(this));
-
-        var defaultHeight = $(this).hasClass('fullsize') ? '85%' : '';
+    function init_ui (elem) {
+        var defaultHeight = elem.hasClass('fullsize') ? '85%' : '';
         var svgElement = $('<svg>'+
                 '<svg class="chart" x="0%" width="91%" preserveAspectRatio="none">'+
                 '<g transform="scale(1, -1)">'+
                 '<polyline points=""/>'+
                 '</g></svg>'+
         '</svg>');
-        svgElement.appendTo($(this))
-          .css("width",$(this).data('width') || '93%')
-          .css("height",$(this).data('height') || defaultHeight);
+        svgElement.appendTo(elem)
+          .css("width",elem.data('width') || '93%')
+          .css("height",elem.data('height') || defaultHeight);
 
-        //base.refresh.apply(this);
+     };
 
-     });
-    },
-  refresh: function () {
-      var minarray = $(this).data('minvalue');
-      var maxarray = $(this).data('maxvalue');
+   function refresh (elem) {
+      var minarray = elem.data('minvalue');
+      var maxarray = elem.data('maxvalue');
       var min = parseFloat( $.isArray(minarray) ? minarray[0] : minarray );
       var max = parseFloat( $.isArray(maxarray) ? maxarray[0] : maxarray );
-      var xticks = parseFloat( $(this).data('xticks'));
-      var yticks = parseFloat( $(this).data('yticks'));
-      var fix = widget_simplechart.precision( $(this).data('yticks') );
-      var unit = $(this).data('yunit');
-      var caption = $(this).data('caption');
-      var noticks = ( $(this).data('width') <=100 ) ? true : $(this).hasClass('noticks');
-      var days = parseFloat($(this).attr('data-daysago')||0);
+      var xticks = parseFloat( elem.data('xticks'));
+      var yticks = parseFloat( elem.data('yticks'));
+      var fix = ftui.precision( elem.data('yticks') );
+      var unit = elem.data('yunit');
+      var caption = elem.data('caption');
+      var noticks = ( elem.data('width') <=100 ) ? true : elem.hasClass('noticks');
+      var days = parseFloat(elem.attr('data-daysago')||0);
       var now = new Date();
       var ago = new Date();
       var vals =[];
@@ -85,19 +72,19 @@ var widget_simplechart = {
       //console.log( "maxdate: " + maxdate);
 
       var column_spec;
-      if($(this).attr("data-columnspec")) {
-          column_spec = $(this).attr("data-columnspec");
+      if(elem.attr("data-columnspec")) {
+          column_spec = elem.attr("data-columnspec");
       } else {
-          var device = $(this).attr('data-device')||'';
-          var reading = $(this).attr('data-get')||'';
+          var device = elem.attr('data-device')||'';
+          var reading = elem.attr('data-get')||'';
           column_spec = device + ':' + reading;
       }
       if(! column_spec.match(/.+:.+/)) {
-          console.log('columnspec '+column_spec+' is not ok in simplechart' + ($(this).attr('data-device')?' for device '+$(this).attr('data-device'):''));
+          console.log('columnspec '+column_spec+' is not ok in simplechart' + (elem.attr('data-device')?' for device '+elem.attr('data-device'):''));
       }
 
-      var logdevice = $(this).attr("data-logdevice");
-      var logfile = $(this).attr("data-logfile")||"-";
+      var logdevice = elem.attr("data-logdevice");
+      var logfile = elem.attr("data-logfile")||"-";
 
       var cmd =[
            'get',
@@ -109,10 +96,10 @@ var widget_simplechart = {
            column_spec
       ];
       $.ajax({
-          url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
+          url: ftui.config.fhem_dir,
           async: true,
           cache: false,
-          context: {elem: $(this)},
+          context: {elem: elem},
           data: {
               cmd: cmd.join(' '),
               XHR: "1"
@@ -168,7 +155,7 @@ var widget_simplechart = {
           if (polyline){
               var graph = polyline.parent();
               //y-axis
-              var yaxis = widget_simplechart.createElem('line');
+              var yaxis = createElem('line');
               yaxis.attr({
                             'id':'yaxis',
                             'x1':'3',
@@ -183,7 +170,7 @@ var widget_simplechart = {
               if (!noticks){
                   //y-ticks
                   for ( var y=min; y<=max; y+=yticks ){
-                        var line = widget_simplechart.createElem('line');
+                        var line = createElem('line');
                         line.attr({
                                     'x1':'0',
                                     'y1':y,
@@ -193,7 +180,7 @@ var widget_simplechart = {
                                     'vector-effect':'non-scaling-stroke',
                                     });
                         graph.prepend(line);
-                        var text = widget_simplechart.createElem('text');
+                        var text = createElem('text');
                         var textY = (caption)
                                     ? (((max-y)*100)/(max-min)*0.8+12)
                                     : (((max-y)*100)/(max-min)*0.87+5);
@@ -210,7 +197,7 @@ var widget_simplechart = {
                   }
 
                   //x-axis
-                  var textX1 = widget_simplechart.createElem('text');
+                  var textX1 = createElem('text');
                   textX1.attr({
                                 'x':'0',
                                 'y':'100%',
@@ -223,7 +210,7 @@ var widget_simplechart = {
                   for ( var x=xticks; x<=xrange; x+=xticks ){
 
                       var tx = new Date(tstart);
-                      var textX2 = widget_simplechart.createElem('text');
+                      var textX2 = createElem('text');
                       textX2.attr({ 'x':93*x/xrange+'%',
                                     'y':'100%',
                                     'text-anchor':"middle",
@@ -236,7 +223,7 @@ var widget_simplechart = {
                       textX2.text(textX2Value);
                       svg.parent().append(textX2);
 
-                      var xtick1 = widget_simplechart.createElem('line');
+                      var xtick1 = createElem('line');
                       xtick1.attr({ 'x1':100*x/xrange+'%',
                                     'y1':min,
                                     'x2':100*x/xrange+'%',
@@ -250,7 +237,7 @@ var widget_simplechart = {
 
             }
               else{
-                  var line = widget_simplechart.createElem('line');
+                  var line = createElem('line');
                   line.attr({
                               'x1':'0',
                               'y1':min,
@@ -266,7 +253,7 @@ var widget_simplechart = {
 
             //show chart caption if set
             if (caption){
-                var textCaption = widget_simplechart.createElem('text');
+                var textCaption = createElem('text');
                 textCaption.attr({
                                 'x':'50%',
                                 'y':'8',
@@ -281,7 +268,7 @@ var widget_simplechart = {
                 svg.parent().append(textCaption);
             }
             //The graph it self
-            polyline.attr({'points':widget_simplechart.getSvgPoints(points),
+            polyline.attr({'points':getSvgPoints(points),
                            'style':'fill:none;stroke:orange;stroke-width:'+strokeWidth*2+'px',
                            'vector-effect':'non-scaling-stroke'
                           });
@@ -293,14 +280,22 @@ var widget_simplechart = {
           svg[0].setAttribute('viewBox', [0, -max, xrange, max-min ].join(' '));
       }
   });
-    },
-  update: function (dev,par) {
-      var base = this;
-      var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-      deviceElements.each(function(index) {
-        if ( $(this).data('get')==par){
-            base.refresh.apply(this);
-		}
-	});
-    },
+    };
+
+    function update(dev,par) {
+        this.elements.filterDeviceReading('get',dev,par)
+        .each(function(index) {
+            refresh($(this));
+        });
+     };
+
+    // public
+    // inherit all public members from base class
+    return $.extend(new Modul_widget(), {
+        //override or own public members
+        widgetname: 'simplechart',
+        init_attr: init_attr,
+        init_ui:init_ui,
+        update: update,
+    });
 };

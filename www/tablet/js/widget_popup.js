@@ -1,13 +1,10 @@
-if(typeof widget_widget == 'undefined') {
-    dynamicload('js/widget_widget.js');
-}
 
-if (!$.fn.draggable)
-    dynamicload('../pgm2/jquery-ui.min.js', null, null, false);
+var Modul_popup = function () {
 
-var widget_popup= $.extend({}, widget_widget, {
-    widgetname: 'popup',
-    hide: function(elem,mode) {
+    if (!$.fn.draggable)
+        dynamicload('../pgm2/jquery-ui.min.js', null, null, false);
+
+    function hide (elem,mode) {
         switch(mode) {
             case 'animate':
                 elem.animate({
@@ -25,8 +22,9 @@ var widget_popup= $.extend({}, widget_widget, {
                 showModal(false);
             });
         }
-    },
-    show: function(elem,mode) {
+    };
+
+    function show (elem,mode) {
         showModal(true);
         switch(mode) {
             case 'animate':
@@ -51,8 +49,9 @@ var widget_popup= $.extend({}, widget_widget, {
             elem.fadeIn(500);
             elem.trigger('fadein');
         }
-    },
-    init_attr: function(elem) {
+    };
+
+    function init_attr (elem) {
         elem.initData('get'         ,'STATE');
         elem.initData('get-on'      ,'on');
         elem.initData('get-off'     ,'off');
@@ -61,14 +60,15 @@ var widget_popup= $.extend({}, widget_widget, {
         elem.initData('mode'        ,'animate');
         elem.initData('starter'     ,null);
         elem.initData('draggable'   ,true);
-        elem.addReading('get');
-    },
-    init: function () {
-        var base=this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
+        this.addReading(elem,'get');
+    };
+
+    function init () {
+        var me=this;
+        me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
+        me.elements.each(function(index) {
             var elem = $(this);
-            base.init_attr(elem);
+            me.init_attr(elem);
 
             var dialog = elem.find('.dialog');
             var starter = (elem.data('starter')) ? $(document).find( elem.data('starter') ) : elem.children(":first");
@@ -116,24 +116,24 @@ var widget_popup= $.extend({}, widget_widget, {
 
                 //prepare events
                 close.on('click',function() {
-                    base.hide(dialog,elem.data('mode'));
+                    hide(dialog,elem.data('mode'));
                 });
 
                 $(document).on('shadeClicked', function() {
-                    base.hide(dialog,elem.data('mode'));
+                    hide(dialog,elem.data('mode'));
                 });
 
                 starter.on('click',function(e) {
                     e.preventDefault();
-                    base.show(dialog,elem.data('mode'));
+                    show(dialog,elem.data('mode'));
                     $(this).trigger('fadein');
                   });
             }
         });
         $(window).resize();
-    },
-   update: function (dev,par) {
-       var base = this;
+   };
+
+   function update (dev,par) {
        this.elements.filterDeviceReading('get',dev,par)
        .each(function(index) {
            var elem = $(this);
@@ -153,5 +153,15 @@ var widget_popup= $.extend({}, widget_widget, {
                     elem.find('.dialog-close').trigger('click');
            }
        });
-   }
-});
+   };
+
+   // public
+   // inherit all public members from base class
+   return $.extend(new Modul_widget(), {
+       //override or own public members
+       widgetname: 'popup',
+       init: init,
+       init_attr: init_attr,
+       update: update,
+   });
+};

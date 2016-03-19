@@ -20,7 +20,7 @@ var Modul_slideout = function () {
         elem.initData('menu'        ,'nav#menu');
         elem.initData('icon'        ,'fa-bars');
         elem.initData('icon-color'  ,getStyle('.'+this.widgetname,'icon-color')    || '#222');
-    }
+    };
 
     function init_ui(elem) {
 
@@ -67,9 +67,9 @@ var Modul_slideout = function () {
 
 
         return elem;
-    }
+    };
 
-    function update(dev,par) {}
+    function update(dev,par) {};
 
     return $.extend(new Modul_widget(), {
         widgetname: 'slideout',

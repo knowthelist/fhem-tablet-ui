@@ -1,10 +1,7 @@
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
 
-var widget_weather = $.extend({}, widget_widget, {
-    widgetname:"weather",
-    meteoconsmap: {
+var Modul_weather = function () {
+
+    var meteoconsmap = {
         // Weather (YAHOO) en
         'tornado' :                     '9',
         'tropical storm' :              '&',
@@ -85,8 +82,8 @@ var widget_weather = $.extend({}, widget_widget, {
         'showers night'         :       '8',
         'chance of storm night' :       '9',
         'haze night'            :       'K',
-    },
-    kleinklimamap: {
+    };
+    var kleinklimamap = {
         // Weather (YAHOO) en
         'tornado' :                     'storm.png',
         'tropical storm' :              'storm.png',
@@ -169,8 +166,8 @@ var widget_weather = $.extend({}, widget_widget, {
         'showers night'         :       'showers_night.png',
         'chance of storm night' :       'chance_of_storm_night.png',
         'haze night'            :       'haze_night.png',
-    },
-    translationmap: {
+    };
+    var translationmap = {
         // Weather (YAHOO) de
         'Tornado' :                     ':tornado',
         'schwerer Sturm' :              ':tropical storm',
@@ -365,12 +362,14 @@ var widget_weather = $.extend({}, widget_widget, {
         'n12':                          ':haze night',
         'n13':                          ':haze night',
         'n14':                          ':rain',
-    },
+    };
 
-    init_attr: function(elem) {
+    function init_attr (elem) {
+        var me=this;
         elem.data('get', elem.data('get') || 'STATE');
+        elem.addClass('weather');
 
-        elem.addReading('get');
+        me.addReading(elem,'get');
 
         var fhem_path = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
         fhem_path = fhem_path.replace(/\/$/, '');
@@ -379,34 +378,25 @@ var widget_weather = $.extend({}, widget_widget, {
         if(!elem.data('image-path').match(/\/$/)) {
             elem.data('image-path', elem.data('image-path')+'/');
         }
-    },
+    };
 
-    init: function () {
-        base=this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            base.init_attr($(this));
-            $(this).addClass('weather');
-        });
-    },
-
-    update: function (dev,par) {
-        base=this;
-        var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-        deviceElements.each(function(index) {
-            if ( $(this).data('get')==par){
-                var value = getDeviceValue( $(this), 'get' );
-                if (value){
-                    var part =  $(this).data('part') || -1;
-                    var val = getPart(value,part);
+    function update (dev,par) {
+        // update from normal state reading
+        this.elements.filterDeviceReading('get',dev,par)
+        .each(function(index) {
+            var elem = $(this);
+            var state = elem.getReading('get').val;
+              if (state) {
+                    var part =  elem.data('part') || -1;
+                    var val = getPart(state,part);
                     var _val = val;
 
                     //wheater icons
                     $(this).empty();
 
                     var device_type;
-                    if($(this).data('device-type')) {
-                        device_type = $(this).data('device-type');
+                    if(elem.data('device-type')) {
+                        device_type = elem.data('device-type');
                     } else {
                         if(par.match(/^fc\d+_weather(Day|Evening|Morning|Night)(?:Icon)?$/)) {
                             device_type='PROPLANTA';
@@ -432,24 +422,32 @@ var widget_weather = $.extend({}, widget_widget, {
 
                     if(translate) {
                         // translate val to ':key'
-                        var translation = base.translationmap[val];
+                        var translation = translationmap[val];
                         while(typeof mapped != "undefined" && !mapped.match(/^:/)) {
-                            translation = base.translationmap[mapped];
+                            translation = translationmap[mapped];
                         }
                     }
 
                     var mapped = typeof translation == "undefined"?val:translation;
-                    if($(this).data('imageset')=="kleinklima") {
-                        mapped = base.kleinklimamap[mapped.replace(/^:/, '')];
-                        $(this).prepend('<img style="width:100%" src="' + $(this).data('image-path') + mapped + '" title="' + val + '">');
-                    } else if($(this).data('imageset')=="reading") {
-                        $(this).prepend('<img style="width:100%" src="' + _val + '">');
+                    if(elem.data('imageset')=="kleinklima") {
+                        mapped = kleinklimamap[mapped.replace(/^:/, '')];
+                        elem.prepend('<img style="width:100%" src="' + elem.data('image-path') + mapped + '" title="' + val + '">');
+                    } else if(elem.data('imageset')=="reading") {
+                        elem.prepend('<img style="width:100%" src="' + _val + '">');
                     } else {
-                        mapped = base.meteoconsmap[mapped.replace(/^:/, '')];
-                        $(this).attr('data-icon', mapped);
+                        mapped = meteoconsmap[mapped.replace(/^:/, '')];
+                        elem.attr('data-icon', mapped);
                     }
                  }
-            }
         });
-    }
-});
+    };
+
+    // public
+    // inherit members from base class
+    return $.extend(new Modul_widget(), {
+        //override members
+        widgetname: 'weather',
+        init_attr:init_attr,
+        update:update,
+    });
+}

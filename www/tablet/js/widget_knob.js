@@ -1,16 +1,15 @@
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
 
-if (!$.fn.knob){
-    dynamicload('lib/jquery.knob.mod.js', null, null, false);
-}
 
-var widget_knob = $.extend({}, widget_widget, {
-    widgetname : 'knob',
-    isUpdating : false,
-    onChange: null,
-    onRelease: function (v) {
+
+var Modul_knob = function () {
+
+    if (!$.fn.knob){
+        dynamicload('lib/jquery.knob.mod.js', null, null, false);
+    }
+
+    var isUpdating = false;
+    var onChange = null;
+    function onRelease (v) {
        if (!isUpdating){
              var device = this.$.data('device');
              if(typeof device!='undefined') {
@@ -20,13 +19,15 @@ var widget_knob = $.extend({}, widget_widget, {
                  ftui.toast(cmdl);
              }
        }
-    },
-    onFormat: function (v) {
+    };
+
+    function onFormat (v) {
       //fix digits count
       var ret = (this.step<1)?Number(v).toFixed(1):v
       return (this.unit)?ret+unescape(this.unit):ret;
-    },
-    init_attr: function(elem) {
+    };
+
+    function init_attr(elem) {
         elem.data('get', elem.data('get') || 'STATE');
         elem.data('set',        elem.data('set')        || '');
         elem.data('cmd',        elem.data('cmd')        || 'set');
@@ -56,10 +57,10 @@ var widget_knob = $.extend({}, widget_widget, {
         elem.data('font',       elem.data('font')       || getStyle('.'+this.widgetname,'font-family')  || '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
         elem.data('font-weight',elem.data('font-weight')|| getStyle('.'+this.widgetname,'font')         || 'normal');
         elem.initData('unit'    ,'');
-        elem.addReading('get');
-    },
-    init_ui : function(elem) {
-       var base = this;
+        this.addReading(elem,'get');
+    };
+
+    function init_ui(elem) {
        var knob_elem =  jQuery('<input/>', {
            type:        'text',
            value:       elem.data('initvalue'),
@@ -95,23 +96,16 @@ var widget_knob = $.extend({}, widget_widget, {
           'unit':           elem.data('unit'),
           'setValue':       elem.data('set-value'),
           'touchPosition':  elem.data('touchposition') || 'left',
-          'draw' :          base.drawDial,
+          'draw' :          this.drawDial,
           'readOnly' :      elem.hasClass('readonly'),
-          'change' :        base.onChange,
-          'release' :       base.onRelease,
-          'format' :        base.onFormat,
+          'change' :        this.onChange,
+          'release' :       this.onRelease,
+          'format' :        this.onFormat,
        });
        return elem;
-    },
-    init: function () {
-       var base = this;
-       this.elements = $('div[data-type="'+this.widgetname+'"]');
-       this.elements.each(function(index) {
-           base.init_attr($(this));
-           base.init_ui($(this));
-       });
-    },
-    update: function (dev,par) {
+    };
+
+    function update (dev,par) {
         var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
         isUpdating=true;
         deviceElements.each(function(index) {
@@ -121,12 +115,22 @@ var widget_knob = $.extend({}, widget_widget, {
                 if (knob_elem && val){
                      if ( knob_elem.val() != val ){
                         knob_elem.val( val ).trigger('change');
-                        DEBUG && console.log( this.widgetname + ' dev:'+dev+' par:'+par+' change '+$(this).data('device')+':knob to ' +val );
+                        ftui.log( this.widgetname + ' dev:'+dev+' par:'+par+' change '+$(this).data('device')+':knob to ' +val );
                     }   
                     knob_elem.css({visibility:'visible'});
                 }
             }
         });
         isUpdating=false;
-    }
-});
+    };
+
+    // public
+    // inherit all public members from base class
+    return $.extend(new Modul_widget(), {
+        //override or own public members
+        widgetname: 'knob',
+        init_attr: init_attr,
+        init_ui:init_ui,
+        update: update,
+    });
+};
