@@ -1,28 +1,27 @@
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_famultibutton');
-}
-if (!$.fn.Switchery){
-    dynamicload('lib/switchery.min.js', null, null, false);
-    $('head').append('<link rel="stylesheet" href="'+ dir + '/../lib/switchery.min.css" type="text/css" />');
-}
-var widget_checkbox  = $.extend({}, widget_famultibutton, {
-  widgetname : 'checkbox',
-  clicked : function(elem,isClicked) {
+
+var Modul_checkbox = function () {
+
+    if (!$.fn.Switchery){
+        dynamicload('lib/switchery.min.js', null, null, false);
+        $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/switchery.min.css" type="text/css" />');
+    }
+
+  function clicked(elem,isClicked) {
       var value = isClicked ? elem.data('set-on') : elem.data('set-off');
-      var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('set'),value].join(' ');
-      setFhemStatus(cmdl);
-      TOAST && $.toast(cmdl);
-  },
-  init: function () {
-     var base = this;
-     this.elements = $('div[data-type="'+this.widgetname+'"]');
-     this.elements.each(function(index) {
+      elem.data('value', value);
+      elem.transmitCommand();
+  };
+
+  function init () {
+     var me = this;
+     me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
+     me.elements.each(function(index) {
          var elem = $(this);
          elem.data('off-color',            elem.data('off-color')           || getStyle('.checkbox.off','color')              || '#bfbfbf');
          elem.data('off-background-color', elem.data('off-background-color')|| getStyle('.checkbox.off','background-color')   || '#505050');
          elem.data('on-color',             elem.data('on-color')            || getStyle('.checkbox.on','color')               || '#bfbfbf');
          elem.data('on-background-color',  elem.data('on-background-color') || getClassColor($(this)) || getStyle('.checkbox.on','background-color')    || '#aa6900');
-         base.init_attr(elem);
+         me.init_attr(elem);
 
          // base element that becomes a Switchery
          var input =  jQuery('<input/>', {
@@ -48,14 +47,14 @@ var widget_checkbox  = $.extend({}, widget_famultibutton, {
          var touchIsAllowed = false;
          $switcherButton.on('click', function(event) {
              touchIsAllowed = false;
-             base.clicked(elem,input.is(":checked"));
+             me.clicked(elem,input.is(":checked"));
          });
 
          // touch handler
          $switcherButton.on('touchend', function(e) {
              if (touchIsAllowed){
                 switchery.setPosition(true);
-                base.clicked(elem,input.is(":checked"));
+                me.clicked(elem,input.is(":checked"));
              }
              touchIsAllowed = true;
          });
@@ -87,6 +86,13 @@ var widget_checkbox  = $.extend({}, widget_famultibutton, {
          // init state is off
          switchery.setState(false);
      });
-  },
-  update_cb : function(elem,val) {},
-});
+  };
+
+    // public
+    // inherit members from base class
+    return $.extend(new Modul_famultibutton(), {
+        //override members
+        widgetname: 'checkbox',
+        init:init,
+    });
+};
