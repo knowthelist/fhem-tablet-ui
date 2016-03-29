@@ -134,7 +134,7 @@ var Modul_famultibutton = function () {
             // blink=off    -> never reset state after 200ms
             // blink=undef  -> reset state after 200ms if device is not set
             if(blink == 'on' || (! elem.data('device') && blink !='off')) {
-                setInterval(function() {elem.setOff()}, 200);
+                setTimeout(function() {elem.setOff()}, 200);
             }
         }
     };
@@ -144,7 +144,7 @@ var Modul_famultibutton = function () {
             this.clicked(elem, 'off');
             var blink = elem.data('blink');
             if(blink == 'on' || (! elem.data('device') && blink !='off')) {
-                setInterval(function() {elem.setOn()}, 200);
+                setTimeout(function() {elem.setOn()}, 200);
             }
         }
     };
@@ -187,15 +187,6 @@ var Modul_famultibutton = function () {
         switch(type) {
             case 'url':
                 document.location.href = target;
-                var hashUrl=window.location.hash.replace('#','');
-                if ( hashUrl && elem.isValidData('load') ) {
-                    elem.closest('nav').trigger('changedSelection');
-                    var sel = elem.data('load');
-                    $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
-                        console.log('link: new content from $('+sel+') loaded');
-                        ftui.initPage(sel);
-                    });
-                }
                 break;
             case 'url-xhr':
                 if( device && typeof device != "undefined" && device !== " ") {

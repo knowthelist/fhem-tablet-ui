@@ -2,7 +2,7 @@
 /**
 * UI builder framework for FHEM
 *
-* Version: 2.1.0
+* Version: 2.1.1
 *
 * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -10,7 +10,7 @@
 */
 
 /* ToDo:
-
+    -
 */
 
 // -------- Widget Base---------
@@ -28,8 +28,8 @@ var Modul_widget = function () {
         });
     };
 
-    function init_attr() {};
-    function init_ui() {};
+    function init_attr(elem) {};
+    function init_ui(elem) {elem.text(this.widgetname);};
 
     function addReading(elem,key) {
             var data = elem.data(key);
@@ -97,17 +97,16 @@ var plugins = {
     }
   },
   load: function (area,name) {
-    console.log('1',name);
+    ftui.log(2,'Load widget : '+name);
     return loadplugin('widget_'+name, function () {
-        console.log('2',name);
-        var module = new window["Modul_"+name]();
+        ftui.log(2,'Create widget : '+name);
+        var module = (window["Modul_"+name]) ? new window["Modul_"+name]() : new window["Modul_widget"]();
         if (module){
             plugins.addModule(module);
             if (isValid(area))
                 module.area = area;
 
             module.init();
-            console.log('3',area,name,module.subscriptions);
 
             //update all what we have until now
             for (var key in module.subscriptions) {
@@ -150,7 +149,7 @@ var ftui = {
     timestampMap:{},
     subscriptions:{},
     subscriptionTs:{},
-    gridster:{instance:null,wx:0,wy:0,wm:5},
+    gridster:{instances:{},instance:null,wx:0,wy:0,wm:5,mincols:0},
 
     init: function() {
         ftui.paramIdMap={};
@@ -158,6 +157,7 @@ var ftui = {
         ftui.loadStyleSchema();
         ftui.gridster.wx = parseInt( $("meta[name='widget_base_width']").attr("content") || 74);
         ftui.gridster.wy = parseInt( $("meta[name='widget_base_height']").attr("content") || 71);
+        ftui.gridster.mincols = parseInt( $("meta[name='widget_min_cols']").attr("content") || $(window).width()/ftui.gridster.wx  );
         if ( $("meta[name='widget_margin']").attr("content") )
           ftui.gridster.wm = parseInt( $("meta[name='widget_margin']").attr("content") );
         ftui.config.doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
@@ -195,31 +195,47 @@ var ftui = {
         ftui.startShortPollInterval();
     },
 
-    initPage: function(area){
-        //init gridster
-        console.time('initPage');
+    initGridster: function(area){
         if ($.fn.gridster){
-            if (ftui.gridster.instance)
-                ftui.gridster.instance.destroy();
-            ftui.gridster.instance = $(".gridster > ul").gridster({
+            if (ftui.gridster.instances[area])
+                ftui.gridster.instances[area].destroy();
+            ftui.gridster.instances[area] = $(".gridster > ul",area).gridster({
               widget_base_dimensions: [ftui.gridster.wx, ftui.gridster.wy],
               widget_margins: [ftui.gridster.wm, ftui.gridster.wm],
               draggable: {
                 handle: '.gridster li > header'
-              }
+              },
+              min_cols:parseInt(ftui.gridster.mincols),
             }).data('gridster');
-            if($("meta[name='gridster_disable']").attr("content") == '1') {
-                ftui.gridster.instance.disable();
-            }
-            if($("meta[name='gridster_starthidden']").attr("content") == '1') {
-                $('.gridster').hide();
+            if (ftui.gridster.instances[area]){
+                if($("meta[name='gridster_disable']").attr("content") == '1') {
+                    ftui.gridster.instances[area].disable();
+                }
+                if($("meta[name='gridster_starthidden']").attr("content") == '1') {
+                    $('.gridster').hide();
+                }
             }
         }
+    },
+
+    initPage: function(area){
+
+        //init gridster
+        area = (isValid(area)) ? area : '';
+        console.time('initPage');
+        console.log('initPage area:',area);
+
+        // postpone shortpoll start
+        ftui.startShortPollInterval();
+
+        ftui.initGridster(area);
 
         //include extern html code
-        var total = $('[data-template]').length;
+        var total = $('[data-template]',area).length;
+        console.log('templates:',total);
+
         if (total>0){
-            $('[data-template]').each(function(index) {
+            $('[data-template]',area).each(function(index) {
                 var tempelem = $(this);
                 $.get(
                     tempelem.data('template'),
@@ -242,7 +258,6 @@ var ftui = {
            //continue immediately with initWidgets
           ftui.initWidgets(area);
         }
-        console.timeEnd('initPage');
     },
 
     initWidgets: function(area) {
@@ -271,6 +286,9 @@ var ftui = {
             setTimeout(function(){
                 plugins.updateParameters();
                 ftui.shortPoll();
+                ftui.log(1,'initWidgets - Done')
+                console.timeEnd('initPage');
+                $(document).trigger("initWidgetsDone");
             }, 50);
         });
     },
@@ -368,7 +386,7 @@ var ftui = {
 
             // import the whole fhemJSON
             var len = fhemJSON.Results.length;
-            ftui.log(1,'shortpoll: json-len=',len);
+            ftui.log(1,'shortpoll: json-len='+len);
             var results = fhemJSON.Results;
             for(var i = 0; i < len; i++){
               var res = results[i];

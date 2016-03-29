@@ -35,14 +35,14 @@ var Modul_pagetab = function () {
         } else {
           history.replaceState( history.state, history.title, '#'+goUrl )
         }
-        $('div.gridster').fadeTo(100,0);
+        $('div.gridster').fadeTo(200,0);
         $.get(goUrl, function (data_html) {
 
           $('div.gridster')
               .html($(data_html).closest('div.gridster').html())
               .fadeTo(600,1);
             ftui.initPage();
-            $('div.gridster').fadeTo(400,1);
+            $('div.gridster').fadeTo(600,1);
         });
     };
 

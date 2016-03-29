@@ -3,32 +3,29 @@
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 */
 
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
+var Modul_departure = function () {
 
-$('head').append('<link rel="stylesheet" href="'+ dir + '/../css/ftui_departure.css" type="text/css" />');
+    $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_departure.css" type="text/css" />');
 
-var widget_departure = $.extend({}, widget_widget, {
-    widgetname : 'departure',
-    startTimer: function(elem){
-        var base = this;
+    function startTimer (elem){
         var interval = elem.data('interval');
         if ($.isNumeric(interval) && interval>0 ){
             setTimeout(function () {
                 if (elem.isValidData('timer')){
-                    base.requestUpdate(elem);
-                    base.startTimer(elem);
+                    requestUpdate(elem);
+                    startTimer(elem);
                 }
             }, Number(interval)*1000);
         }
-    },
-    requestUpdate: function(elem) {
+    };
+
+    function requestUpdate (elem) {
         var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('get')].join(' ');
         setFhemStatus(cmdl);
         ftui.toast(cmdl);
-    },
-    init_attr : function(elem) {
+    };
+
+    function init_attr (elem) {
         elem.initData('get'                     ,'STATE');
         elem.initData('cmd'                     ,'get');
         elem.initData('color'                   ,getClassColor(elem) || getStyle('.'+this.widgetname,'color') || '#222');
@@ -39,10 +36,11 @@ var widget_departure = $.extend({}, widget_widget, {
         elem.initData('height'                  ,'250');
         elem.initData('interval'                ,'120');
 
-        elem.addReading('get');
-     },
-    init_ui : function(elem) {
-        var base = this;
+        this.addReading(elem,'get');
+    };
+
+    function init_ui (elem) {
+        var me = this;
         var icon = elem.data('icon');
 
 
@@ -91,7 +89,7 @@ var widget_departure = $.extend({}, widget_widget, {
         var text='&nbsp;<div class="header">';
         text+='<div class="line">Linie</div>';
         text+='<div class="destination">Richtung</div>';
-        text+=elem.hasClass('deptime')?'<div class="minutes">Uhrzeit</div></div>':'<div class="minutes">in Min</div></div>';
+        text+=elem.hasClass('deptime')?'<div class="minutes">Zeit</div></div>':'<div class="minutes">in Min</div></div>';
         elem.append(text);
 
         // prepare list text element
@@ -103,26 +101,19 @@ var widget_departure = $.extend({}, widget_widget, {
 
         // event handler
         elemRefresh.on('click',function(e) {
-            base.requestUpdate.call(base,elem);
+            requestUpdate(elem);
         });
 
         // init interval timer
         elem.data('timer',true);
-        base.startTimer.call(base,elem);
+        startTimer(elem);
 
         // first refresh
-        base.requestUpdate(elem);
-    },
-    init: function () {
-        var base = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            base.init_attr($(this));
-            base.init_ui($(this));
-        });
-    },
-    update: function (dev,par) {
-        var base = this;
+        requestUpdate(elem);
+    };
+
+    function update(dev,par) {
+        console.log(dev,par);
         // update from normal state reading
         this.elements.filterDeviceReading('get',dev,par)
         .each(function(index) {
@@ -151,5 +142,15 @@ var widget_departure = $.extend({}, widget_widget, {
             }
          });
 
-    },
-});
+    };
+
+    // public
+    // inherit members from base class
+    return $.extend(new Modul_widget(), {
+        //override members
+        widgetname: 'departure',
+        init_attr:init_attr,
+        init_ui:init_ui,
+        update:update,
+    });
+};

@@ -465,6 +465,10 @@ input {
     visibility:hidden;
 }
 
+.page:not(.active){
+    display: none;
+}
+
 .autohide.invalid{
     display: none;
 }

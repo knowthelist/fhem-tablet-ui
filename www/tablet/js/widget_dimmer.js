@@ -1,5 +1,8 @@
 var Modul_dimmer = function () {
 
+    if(typeof Module_famultibutton == 'undefined')
+        loadplugin('widget_famultibutton');
+
     function init() {
      var me = this;
      me.elements = $('div[data-type="'+this.widgetname+'"]',me.area);

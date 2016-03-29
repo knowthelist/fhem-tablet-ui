@@ -16,10 +16,13 @@ var Modul_link = function () {
           if ( hashUrl && elem.isValidData('load') ) {
               elem.closest('nav').trigger('changedSelection',[elem.text()]);
               var sel = elem.data('load');
-              $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
-                  ftui.log(1,'link: new content from $('+sel+') loaded');
-                  ftui.initPage(sel);
-              });
+              if ( sel ) {
+                  $(sel).siblings().removeClass('active');
+                  //load page if not done until now
+                  if ($(sel+" > *").children().length === 0 || elem.hasClass('nocache'))
+                      loadPage(elem);
+                  $(sel).addClass('active');
+              }
           }
       } else if( elem.isValidData('url-xhr') ) {
           ftui.toast(elem.data('url-xhr'));
@@ -31,7 +34,23 @@ var Modul_link = function () {
           elem.transmitCommand();
       };
 
-    }
+    };
+
+    function loadPage(elem){
+        console.time('fetch content');
+        var sel = elem.data('load');
+        var hashUrl=elem.data('url').replace('#','');
+        console.log(hashUrl +" "+sel+" > *");
+        $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
+            console.timeEnd('fetch content');
+            console.log(this.widgetname+': new content from $('+sel+') loaded');
+            ftui.initPage(sel);
+            if (elem.hasClass('default')){
+                $(sel).addClass('active');
+                elem.closest('nav').trigger('changedSelection');
+            }
+        });
+    };
 
     function colorize(elem) {
         var url = window.location.pathname + ((window.location.hash.length)?'#'+ window.location.hash:'');
@@ -54,7 +73,7 @@ var Modul_link = function () {
             elem.addClass('active');
         else
             elem.removeClass('active');
-    }
+    };
 
     function init_attr(elem) {
         elem.initData('cmd'                     ,'set');
@@ -70,7 +89,7 @@ var Modul_link = function () {
         elem.initData('active-color'            ,elem.data('color'));
         elem.initData('active-border-color'     ,elem.data('border-color'));
         elem.initData('active-background-color' ,elem.data('background-color'));
-    }
+    };
 
     function init_ui(elem) {
         var base = this;
@@ -153,16 +172,30 @@ var Modul_link = function () {
             colorize(elem);
         });
 
-        // activate element
-        if (elem.hasClass('default')){
+        // is-current-link detection
+        var url = window.location.pathname + ((window.location.hash.length)?'#'+ window.location.hash:'');
+        var isActive = url.match(new RegExp('^'+elem.data('active-pattern')+'$'));
+        if ( isActive || ftui.config.filename==='' && elem_url==='index.html') {
+           this.elements.each(function(index) {
+                   $(this).removeClass('default')
+           });
+           elem.addClass('default');
+        }
+
+        //prefetch page if necessary
+        if ( elem.isValidData('load') && elem.isValidData('url')
+             && (elem.hasClass('prefetch') || elem.hasClass('default'))) {
+
+            // pre fetch sub pages randomly delayed
             setTimeout(function(){
-                onClicked(elem);
-            }, 100);
+                loadPage(elem);
+            }, (elem.hasClass('default'))?10:5000*Math.random()+500);
         }
 
         return elem;
-    }
-    function update(dev,par) {}
+    };
+
+    function update(dev,par) {};
 
     // public
     // inherit all public members from base class
