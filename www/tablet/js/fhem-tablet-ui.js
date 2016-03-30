@@ -299,7 +299,7 @@ var ftui = {
             if ($.isNumeric(longpollDelay))
                 longpollDelay = longpollDelay * 1000;
             else
-                longpollDelay = (typeof wvcDevices != 'undefined')?ftui.config.shortpollInterval:100;
+                longpollDelay = (typeof wvcDevices != 'undefined')?ftui.config.shortpollInterval*1000:100;
             ftui.startLongPollInterval(longpollDelay);
         }
     },

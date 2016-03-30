@@ -110,6 +110,7 @@ var Modul_pagebutton = function () {
     return $.extend(new Modul_famultibutton(), {
         //override or own public members
         widgetname: 'pagebutton',
+        update_cb:update_cb,
         init:init,
     });
 };
