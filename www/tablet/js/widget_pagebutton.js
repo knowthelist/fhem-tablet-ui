@@ -3,23 +3,58 @@ var Modul_pagebutton = function () {
     if(typeof Module_famultibutton == 'undefined')
         loadplugin('widget_famultibutton');
 
+    var base = this;
+
     function loadPage(elem){
-        console.time('fetch content');
-        var sel = elem.data('load');
-        var hashUrl=elem.data('url').replace('#','');
-        $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
-            console.timeEnd('fetch content');
-            console.log(this.widgetname+': new content from $('+sel+') loaded');
-            ftui.initPage(sel);
-            if (elem.hasClass('default')){
-                $(sel).addClass('active');
-                elem.closest('nav').trigger('changedSelection');
-            }
-        });
+       console.time('fetch content');
+       var sel = elem.data('load');
+       var hashUrl=elem.data('url').replace('#','');
+       $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
+           console.timeEnd('fetch content');
+           console.log(this.widgetname+': new content from $('+sel+') loaded');
+           ftui.initPage(sel);
+           if (elem.hasClass('default')){
+               $(sel).addClass('active');
+               elem.closest('nav').trigger('changedSelection');
+           }
+       });
+    };
+
+    function startReturnTimer (elem){
+      var me = this;
+      var waitUntilReturn = elem.data('return-time');
+      var lastUrl = localStorage.getItem('pagebutton_lastUrl');
+      var returnTimer = localStorage.getItem('pagebutton_returnTimer');
+      clearTimeout(returnTimer);
+      if ( waitUntilReturn > 0 && lastUrl !== elem.data('url') ){
+          ftui.log(1,'Reload main page in : ' + waitUntilReturn + ' seconds');
+          returnTimer = setTimeout(function () {
+             // back to first page
+             localStorage.setItem('pagebutton_doload', 'initializing');
+             base.toggleOn(elem);
+          }, waitUntilReturn * 1000);
+          localStorage.setItem('pagebutton_returnTimer',returnTimer);
+      }
+    };
+
+    function changeState(elem,isOn){
+       if (isOn){
+          elem.data('famultibutton').setOn();
+          // overwrite default colors for showMultiStates
+          elem.data('on-colors',[elem.data('on-color')]);
+          elem.data('on-background-colors',[elem.data('on-background-color')]);
+       }
+       else{
+          elem.data('famultibutton').setOff();
+          // overwrite default colors for showMultiStates
+          elem.data('on-colors',[elem.data('off-color')]);
+          elem.data('on-background-colors',[elem.data('off-background-color')]);
+       }
     };
 
    function init() {
        var me = this;
+       base = this;
        this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
        this.elements.each(function(index) {
            var elem = $(this);
@@ -31,6 +66,7 @@ var Modul_pagebutton = function () {
            elem.initData('active-pattern'          ,'.*/'+$(this).data('url'));
            elem.initData('get-warn'                ,-1);
            elem.initData('blink'                   ,'off');
+           elem.initData('return-time'             , 0);
 
            me.init_attr(elem);
            me.init_ui(elem);
@@ -53,16 +89,16 @@ var Modul_pagebutton = function () {
                }
            });
 
-           // is-current-button detection
-           var url = window.location.pathname + ((window.location.hash.length)?'#'+ window.location.hash:'');
-           var isActive = url.match(new RegExp('^'+elem.data('active-pattern')+'$'));
-           if ( isActive || ftui.config.filename==='' && elem_url==='index.html') {
-              me.elements.each(function(index) {
-                      $(this).removeClass('default')
-              });
-              elem.setOn();
-              elem.addClass('default');
+          // is-current-button detection
+          var url = window.location.pathname + ((window.location.hash.length)?'#'+ window.location.hash:'');
+          var isActive = url.match(new RegExp('^'+elem.data('active-pattern')+'$'));
+          if ( isActive || ftui.config.filename==='' && elem_url==='index.html') {
+             //me.elements.each(function(index) {
+               //      $(this).removeClass('default')
+             //});
+             elem.addClass('default');
            }
+           changeState(elem,isActive);
 
            // multi state support
            var states=elem.data('states') || elem.data('get-on');
@@ -75,13 +111,7 @@ var Modul_pagebutton = function () {
            $(window).bind( 'hashchange', function(e) {
                var url = window.location.pathname + ((window.location.hash.length)?'#'+ window.location.hash:'');
                var isActive = url.match(new RegExp('^'+elem.data('active-pattern')+'$'));
-               var faelem = elem.data('famultibutton');
-               if (faelem){
-                   if (isActive)
-                     faelem.setOn();
-                   else
-                     faelem.setOff();
-               }
+               changeState(elem,isActive);
            });
 
            //prefetch page if necessary
@@ -94,9 +124,21 @@ var Modul_pagebutton = function () {
                }, (elem.hasClass('default'))?10:5000*Math.random()+500);
            }
 
+           // start return timer after last activity
+           if ( me.elements.eq(0).data('return-time') > 0 ){
+               var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
+                $('body').once(releaseEventType, function() {
+                       startReturnTimer(me.elements.eq(0));
+               });
+           }
+
            $(this).attr('title',$(this).data('url'));
        });
    }
+
+   function toggleOff (elem) {
+          setTimeout(function() {elem.setOn()}, 50);
+   };
 
    function update_cb(elem,state) {
        if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
@@ -111,6 +153,7 @@ var Modul_pagebutton = function () {
         //override or own public members
         widgetname: 'pagebutton',
         update_cb:update_cb,
+        toggleOff:toggleOff,
         init:init,
     });
 };

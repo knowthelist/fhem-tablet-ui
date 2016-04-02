@@ -6,7 +6,7 @@
      /*
      * UI builder framework for FHEM
      *
-     * Version: 2.1.1
+     * Version: 2.1.0
      * URL: https://github.com/knowthelist/fhem-tablet-ui
      *
      * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
@@ -52,17 +52,20 @@
 <body>
     <div class="gridster">
         <ul>
-            <li data-row="1" data-col="1" data-sizex="1" data-sizey="9">
-            <div class="cell">
-                <div data-type="pagebutton" data-url="#page_content1.html" data-load="#content1" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern="(.*index_page_demo.html|.*#page_content1.html)" data-icon="fa-home" class="prefetch top-space"></div>
-                <div data-type="pagebutton" data-url="#page_content2.html" data-load="#content2" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#page_content2.html" data-icon="fa-music" class="prefetch top-space"></div>
-                <div data-type="pagebutton" data-url="#page_content3.html" data-load="#content3" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#page_content3.html" data-icon="fa-sliders" class="prefetch top-space"></div>
-            </div>
+            <li data-row="1" data-col="1" data-sizex="1" data-sizey="8">
+                <div class="cell">
+                    <div data-type="pagebutton" data-url="#page_content1.html" data-load="#content1" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#page_content1.html" data-device="dummy1" data-return-time="10" data-states='["0","1"]' data-icons='["fa-home","fa-home warn"]' class="prefetch top-space"></div>
+                    <div data-type="pagebutton" data-url="#page_content2.html" data-load="#content2" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#page_content2.html" data-icon="fa-music" class="prefetch top-space"></div>
+                    <div data-type="pagebutton" data-url="#page_content3.html" data-load="#content3" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#page_content3.html" data-icon="fa-sliders" class="prefetch top-space"></div>
+                </div>
+            </li>
+            <li data-row="1" data-col="2" data-sizex="9" data-sizey="8">
+                <div class="page" id="content1"></div>
+                <div class="page" id="content2"></div>
+                <div class="page" id="content3"></div>
             </li>
         </ul>
     </div>
-    <div class="page" id="content1"></div>
-    <div class="page" id="content2"></div>
-    <div class="page" id="content3"></div>
+
 </body>
 </html>

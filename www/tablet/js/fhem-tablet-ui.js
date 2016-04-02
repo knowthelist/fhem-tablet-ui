@@ -16,11 +16,11 @@
 // -------- Widget Base---------
 var Modul_widget = function () {
 
-    var me = null;
+    var base = this;
 
     function init() {
+        var me = this;
         ftui.log(1,"init widget: "+this.widgetname);
-        me = this;
         this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
         this.elements.each(function(index) {
             me.init_attr($(this));
@@ -61,7 +61,7 @@ var Modul_widget = function () {
 
     return {
         widgetname: 'widget',
-        me:me,
+        base:base,
         area: '',
         init: init,
         init_attr:init_attr,
@@ -1092,8 +1092,9 @@ $.fn.getReading = function (key) {
 }
 $.fn.valOfData = function(key) {
     var data = $(this).data(key);
-    if (!data) return '';
-    return (data.match(/^[#\.\[].*/))?$(data).data('value'):data;
+    console.log(data);
+    if (!isValid(data)) return '';
+    return (data.toString().match(/^[#\.\[].*/))?$(data).data('value'):data;
 };
 $.fn.transmitCommand = function() {
     if ($(this).hasClass('notransmit')) return;

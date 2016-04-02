@@ -10,10 +10,9 @@ var Modul_departure = function () {
     function startTimer (elem){
         var interval = elem.data('interval');
         if ($.isNumeric(interval) && interval>0 ){
-            setTimeout(function () {
-                if (elem.isValidData('timer')){
+            setInterval(function () {
+                if (elem.is(':visible') || elem.hasClass('hiddenrefresh')){
                     requestUpdate(elem);
-                    startTimer(elem);
                 }
             }, Number(interval)*1000);
         }
@@ -105,7 +104,6 @@ var Modul_departure = function () {
         });
 
         // init interval timer
-        elem.data('timer',true);
         startTimer(elem);
 
         // first refresh

@@ -1,18 +1,13 @@
 /* FTUI Plugin
-* Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
+* Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 */
 
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
+$('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_range.css" type="text/css" />');
 
-$('head').append('<link rel="stylesheet" href="'+ dir + '/../css/ftui_range.css" type="text/css" />');
+var Modul_range = function () {
 
-
-var widget_range= $.extend({}, widget_widget, {
-    widgetname : 'range',
-    init_attr : function(elem) {
+    function init_attr (elem) {
         elem.initData('high'        ,'STATE');
         elem.initData('low'         ,'');
         elem.initData('width'       ,8);
@@ -25,10 +20,11 @@ var widget_range= $.extend({}, widget_widget, {
         elem.initData('color-low'   ,getStyle('.'+this.widgetname+'.low','color')    || '#337ab7');
         elem.initData('color-high'  ,getStyle('.'+this.widgetname+'.high','color')   || '#ad3333');
 
-        elem.addReading('low');
-        elem.addReading('high');
-    },
-    init_ui : function(elem) {
+        this.addReading(elem,'low');
+        this.addReading(elem,'high');
+    };
+
+    function init_ui (elem) {
         var base = this;
         var levelArea =  jQuery('<div/>', {
             class: 'levelArea',
@@ -71,16 +67,9 @@ var widget_range= $.extend({}, widget_widget, {
 
         elem.append(levelArea);
         return elem;
-    },
-    init: function () {
-        var base = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            base.init_attr($(this));
-            base.init_ui($(this));
-        });
-    },
-    update: function (dev,par) {
+    };
+
+    function update (dev,par) {
         var base = this;
         this.elements.filterDeviceReading('high',dev,par)
         .add( this.elements.filterDeviceReading('low',dev,par) )
@@ -140,5 +129,15 @@ var widget_range= $.extend({}, widget_widget, {
                 }
             }
         });
-    }
-});
+    };
+
+    // public
+    // inherit all public members from base class
+    return $.extend(new Modul_widget(), {
+        //override or own public members
+        widgetname: 'range',
+        init_attr: init_attr,
+        init_ui:init_ui,
+        update: update,
+    });
+};

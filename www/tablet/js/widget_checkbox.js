@@ -93,6 +93,7 @@ var Modul_checkbox = function () {
     return $.extend(new Modul_famultibutton(), {
         //override members
         widgetname: 'checkbox',
+        clicked:clicked,
         init:init,
     });
 };

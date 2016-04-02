@@ -1,11 +1,11 @@
-if(typeof widget_famultibutton == 'undefined') {
-    loadplugin('widget_famultibutton');
-}
+var Modul_progress = function () {
 
-var widget_progress = $.extend({}, widget_famultibutton, {
-    widgetname : 'progress',
-    init_attr: function(elem) {
+    if(typeof Module_famultibutton == 'undefined')
+        loadplugin('widget_famultibutton');
+
+    function init_attr (elem) {
         elem.initData('device'              , ' ');
+        elem.initData('get'                 ,'STATE');
         elem.initData('off-color'           , getStyle('.'+this.widgetname+'.off','color')              || '#505050');
         elem.initData('off-background-color', getStyle('.'+this.widgetname+'.off','background-color')   || '#404040');
         elem.initData('on-color'            , getClassColor(elem) || getStyle('.'+this.widgetname+'.on','color')               || '#aa6900');
@@ -18,28 +18,34 @@ var widget_progress = $.extend({}, widget_famultibutton, {
         elem.initData('progress-width'      , '15');
         elem.initData('unit'                , '' );
         elem.data('mode', 'symbol');
+
+        this.addReading(elem,'get');
         if (!$.isNumeric(elem.data('max')))
-            elem.addReading('max');
+            this.addReading(elem,'max');
         if (!elem.hasClass('novalue')){
             jQuery('<i/>', {
                  id: 'value',
                  class: 'fa fa-stack-1x value '+this.widgetname,
             }).appendTo(elem);
         }
-    },
-    update: function (dev,par) {
-     var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-     deviceElements.each(function(index) {
-         var elem = $(this);
-         if ( $(this).data('get')==par || $(this).data('max')==par){
-             var val = getDeviceValue( $(this), 'get' );
-             var max = ( $.isNumeric($(this).data('max')) ) ? $(this).data('max') : getDeviceValue( $(this), 'max' );
-             var faelem = $(this).data('famultibutton');
+    };
+
+    function update(dev,par) {
+        // update from normal state reading
+        this.elements.filterDeviceReading('get',dev,par)
+        .add( this.elements.filterDeviceReading('max',dev,par) )
+        .each(function(index) {
+            var elem = $(this);
+            var val = elem.getReading('get').val;
+            if (val) {
+
+             var max = ( $.isNumeric(elem.data('max')) ) ? elem.data('max') : elem.getReading('max').val;
+             var faelem = elem.data('famultibutton');
              faelem.setProgressValue(val/max);
              var $value = faelem.find('#value');
              var unit = elem.data('unit');
              if ($value){
-                 if ($(this).hasClass('percent')){
+                 if (elem.hasClass('percent')){
                      if (max>0 && val)
                         $value.html(Number(val/max*100).toFixed(0) + "<span class='label-unit'>"+unescape(unit)+"</span>");
                  }
@@ -48,5 +54,14 @@ var widget_progress = $.extend({}, widget_famultibutton, {
              }
          }
      });
-    }
- });
+    };
+
+    // public
+    // inherit members from base class
+    return $.extend(new Modul_famultibutton(), {
+        //override members
+        widgetname: 'progress',
+        init_attr:init_attr,
+        update:update,
+    });
+};
