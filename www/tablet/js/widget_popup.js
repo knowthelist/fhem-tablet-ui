@@ -61,6 +61,7 @@ var widget_popup= $.extend({}, widget_widget, {
         elem.initData('mode'        ,'animate');
         elem.initData('starter'     ,null);
         elem.initData('draggable'   ,true);
+        elem.initData('autoclose'        ,'off');
         elem.addReading('get');
     },
     init: function () {
@@ -126,7 +127,10 @@ var widget_popup= $.extend({}, widget_widget, {
                 starter.on('click',function(e) {
                     e.preventDefault();
                     base.show(dialog,elem.data('mode'));
-                    $(this).trigger('fadein');
+                    $(this).trigger('fadein');     
+                    if (elem.data('autoclose') != 'off') { 
+                        setTimeout(function(){ base.hide(dialog,elem.data('mode')); }, elem.data('autoclose')); 
+                     }
                   });
             }
         });
