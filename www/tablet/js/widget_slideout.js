@@ -8,12 +8,12 @@
    - fixed header demo and normal demo
 */
 
-if (!$.fn.Swiper){
-    dynamicload('lib/slideout.min.js', null, null, false);
-    $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_slideout.css" type="text/css" />');
-}
-
 var Modul_slideout = function () {
+
+    if (!$.fn.Swiper){
+        dynamicload('lib/slideout.min.js', null, null, false);
+        $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_slideout.css" type="text/css" />');
+    }
 
     function init_attr(elem) {
         elem.initData('panel'       ,'main#panel');

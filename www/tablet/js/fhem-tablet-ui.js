@@ -816,6 +816,7 @@ this.getPart = function (s,p) {
     }
 };
 
+// deprecated function; will be removed soon
 this.getDeviceValueByName = function (devname, paraname) {
     var param = getParameterByName(devname, paraname);
     return ( param ) ? param.val : null;
@@ -824,7 +825,7 @@ this.getDeviceValue = function (device, src) {
     var param = getParameter(device, src);
     return ( param ) ? param.val : null;
 }
-
+// deprecated function; will be removed soon
 this.getReadingDateByName = function (devname, paraname) {
     var param = getParameterByName(devname, paraname);
     return ( param ) ? param.date : null;
@@ -841,18 +842,8 @@ this.getParameterByName = function (devname, paraname) {
         devname = temp[0];
         paraname = temp[1];
     }
-    paraname = paraname || Object.keys(readings)[0];
     if (devname && devname.length>0){
         var params = ftui.deviceStates[devname];
-        return ( params && params[paraname] ) ? params[paraname] : null;
-    }
-    return null;
-}
-this.getParameter = function (elem, src) {
-    var device	= elem.data('device');
-    var paraname =	(src && src != '') ? elem.data(src) : Object.keys(readings)[0];
-    if (device && device.length>0){
-        var params = ftui.deviceStates[device];
         return ( params && params[paraname] ) ? params[paraname] : null;
     }
     return null;

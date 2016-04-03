@@ -1,30 +1,25 @@
-if(typeof widget_widget == 'undefined') {
-    dynamicload('js/widget_widget.js');
-}
+var Modul_level= function () {
+        if (!$.fn.Powerange){
+            dynamicload('lib/powerange.min.js', null, null, false);
+            $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/powerange.min.css" type="text/css" />');
+        }
 
-var widget_level= {
-  elements: null,
-  init: function () {
+        function init() {
+          var me=this;
+        me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
+        me.elements.each(function(index) {
 
-    if (!$.fn.Powerange){
-      dynamicload('lib/powerange.js', null, null, false);
-      $('head').append('<link rel="stylesheet" href="'+ dir + '/../lib/powerange.min.css" type="text/css" />');
-    }
-
-    this.elements = $('div[data-type="level"]');
-    this.elements.each(function(index) {
-
-        var elem = $(this);
+            var elem = $(this);
         elem.initData('get'             ,'STATE');
         elem.initData('on'              ,'on');
         elem.initData('off'             ,'off');
         elem.initData('part'            ,-1);
 
-        elem.addReading('get');
+        me.addReading(elem,'get');
 
         var input_elem =  jQuery('<input/>', {
 			type: 'text',
-		}).appendTo($(this));
+        }).appendTo(elem);
 
         var pwrng = new Powerange(input_elem[0], {
             vertical: !elem.hasClass('horizontal'),
@@ -71,8 +66,9 @@ var widget_level= {
         elem.addClass(pwrng.options.klass);
         elem.children().find('.range-handle').css({'visibility':'hidden','width':'0px','height':'0px'});
 	 });
-  },
-  update: function (dev,par) {
+  };
+
+  function update (dev,par) {
       var base = this;
       // update from normal state reading
       this.elements.filterDeviceReading('get',dev,par)
@@ -127,6 +123,14 @@ var widget_level= {
                 input_elem.css({visibility:'visible'});
             }
     });
-   }
+    };
 
+ // public
+ // inherit all public members from base class
+ return $.extend(new Modul_widget(), {
+     //override or own public members
+     widgetname: 'level',
+     init: init,
+     update: update,
+ });
 };
