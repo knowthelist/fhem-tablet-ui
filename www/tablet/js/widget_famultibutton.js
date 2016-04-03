@@ -198,7 +198,7 @@ var Modul_famultibutton = function () {
                 if( device && typeof device != "undefined" && device !== " ") {
                     ftui.toast(target);
                 }
-                setFhemStatus(target);
+                ftui.setFhemStatus(target);
                 break;
         }
     };

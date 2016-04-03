@@ -15,7 +15,7 @@ var Modul_knob = function () {
              if(typeof device!='undefined') {
                  var val = this.o.setValue.replace('$v',v.toString());
                  var cmdl = [this.o.cmd,device,this.o.set,val].join(' ');
-                 setFhemStatus(cmdl);
+                 ftui.setFhemStatus(cmdl);
                  ftui.toast(cmdl);
              }
        }

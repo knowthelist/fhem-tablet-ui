@@ -1,4 +1,5 @@
 var Modul_level= function () {
+
         if (!$.fn.Powerange){
             dynamicload('lib/powerange.min.js', null, null, false);
             $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/powerange.min.css" type="text/css" />');

@@ -777,6 +777,7 @@ $(window).on('online offline', function() {
 
 // deprecated function
 function setFhemStatus(cmdline) {
+    console.log('setFhemStatus is a deprecated function: use ftui.setFhemStatus instead')
      ftui.setFhemStatus(cmdline);
 }
 
@@ -1083,7 +1084,6 @@ $.fn.getReading = function (key) {
 }
 $.fn.valOfData = function(key) {
     var data = $(this).data(key);
-    console.log(data);
     if (!isValid(data)) return '';
     return (data.toString().match(/^[#\.\[].*/))?$(data).data('value'):data;
 };

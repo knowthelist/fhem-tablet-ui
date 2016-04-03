@@ -1,32 +1,29 @@
 /* FTUI Plugin
-* Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
+* Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 */
 
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
+var Modul_colorwheel = function () {
 
-if (!$.fn.farbtastic){
-    dynamicload('lib/farbtastic.js', null, null, false);
-}
+    if (!$.fn.farbtastic){
+        dynamicload('lib/farbtastic.js', null, null, false);
+    }
 
-$('head').append('<link rel="stylesheet" href="'+ dir + '/../css/ftui_colorwheel.css" type="text/css" />');
+    $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_colorwheel.css" type="text/css" />');
 
-var widget_colorwheel = $.extend({}, widget_widget, {
-    widgetname : 'colorwheel',
-    onChange : function(elem,color) {
+    function onChange (elem,color) {
         elem.find('.colorIndicator').css({
           backgroundColor: color,
         });
-    },
-    onRelease: function(elem,color) {
-        var val = color.replace('#','');
-        var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('set'),val].join(' ');
-        setFhemStatus(cmdl);
-        TOAST && $.toast(cmdl);
-    },
-    init_attr : function(elem) {
+    };
+
+    function onRelease (elem,color) {
+        var value = color.replace('#','');
+        elem.data('value', value);
+        elem.transmitCommand();
+    };
+
+    function init_attr (elem) {
         elem.initData('get'     ,'STATE');
         elem.initData('set'     , '');
         elem.initData('cmd'     ,'set');
@@ -35,10 +32,10 @@ var widget_colorwheel = $.extend({}, widget_widget, {
         if(elem.hasClass('large')) { elem.data('width', 150);}
         if(elem.hasClass('small')) { elem.data('width', 100);}
         if(elem.hasClass('mini')) { elem.data('width', 52);}
-        elem.addReading('get');
-    },
-    init_ui : function(elem) {
-        var base = this;
+        this.addReading(elem,'get');
+    };
+
+    function init_ui (elem) {
         var colorArea =  jQuery('<div/>', {
             class: 'colorArea',
         });
@@ -52,22 +49,15 @@ var widget_colorwheel = $.extend({}, widget_widget, {
         .appendTo(colorArea);
         var farbtastic = $.farbtastic(colorWheel,{
           width: elem.data('width'),
-          callback: function (color) {base.onChange(elem,color);},
-          release: function (color)  {base.onRelease(elem,color);},
+          callback: function (color) {onChange(elem,color);},
+          release: function (color)  {onRelease(elem,color);},
         });
         elem.append(colorArea);
 
         return elem;
-    },
-    init: function () {
-        var base = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            base.init_attr($(this));
-            base.init_ui($(this));
-        });
-    },
-    update: function (dev,par) {
+    };
+
+    function update (dev,par) {
         var base = this;
         this.elements.filterDeviceReading('get',dev,par)
         .each(function(index) {
@@ -86,5 +76,15 @@ var widget_colorwheel = $.extend({}, widget_widget, {
                 }
             }
         });
-    }
-});
+    };
+
+    // public
+    // inherit members from base class
+    return $.extend(new Modul_widget(), {
+        //override members
+        widgetname: 'colorwheel',
+        init_ui:init_ui,
+        init_attr:init_attr,
+        update:update,
+    });
+};
