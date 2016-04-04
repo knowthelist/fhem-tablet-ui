@@ -3,20 +3,16 @@
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 */
 
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
+var Modul_input = function () {
 
-var widget_input = $.extend({}, widget_widget, {
-    widgetname:"input",
-    updateExtReading: function(elem) {
+    function updateExtReading (elem) {
         elem.data('ext_get' ,elem.valOfData('device')+':'+elem.valOfData('get'));
         elem.find('.textinput').val(elem.getReading('ext_get').val);
         elem.addReading('ext_get');
         elem.requestReading('ext_get');
-    },
-    init_attr: function(elem) {
-        var base    = this;
+    };
+
+    function init_attr (elem) {
         elem.initData('get' ,'STATE');
         elem.initData('set' ,'');
         elem.initData('cmd' ,'set');
@@ -24,24 +20,24 @@ var widget_input = $.extend({}, widget_widget, {
 
         if (elem.isExternData('device')){
             $(elem.data('device')).once('changedValue', function (e) {
-                base.updateExtReading(elem);
+                updateExtReading(elem);
             });
             $(document).once('updateDone', function (e) {
-                base.updateExtReading(elem);
+                updateExtReading(elem);
             });
         }
         if (elem.isExternData('get')){
             $(elem.data('get')).once('changedValue', function (e) {
-                base.updateExtReading(elem);
+                updateExtReading(elem);
             });
             $(document).once('updateDone', function (e) {
-                base.updateExtReading(elem);
+                updateExtReading(elem);
             });
         } else
-            elem.addReading('get');
-    },
-    init_ui : function(elem) {
-        var base = this;
+            this.addReading(elem,'get');
+    };
+
+    function init_ui (elem) {
         // prepare input element
         var elemInput = jQuery('<input/>', {
             class: 'textinput',
@@ -60,9 +56,9 @@ var widget_input = $.extend({}, widget_widget, {
             if(e.keyCode === 13)
                 elem.trigger("enterKey");
         });
-    },
-    update: function (dev,par) {
-        var base = this;
+    };
+
+    function update (dev,par) {
         // update from normal state reading
         this.elements.filterDeviceReading('get',dev,par)
         .add( this.elements.filterDeviceReading('ext_get',dev,par) )
@@ -73,5 +69,15 @@ var widget_input = $.extend({}, widget_widget, {
                         :elem.getReading('get').val;
             elem.find('.textinput').val(value);
         });
-    }
-});
+    };
+
+    // public
+    // inherit all public members from base class
+    return $.extend(new Modul_widget(), {
+        //override or own public members
+        widgetname: 'input',
+        init_attr: init_attr,
+        init_ui:init_ui,
+        update: update,
+    });
+};

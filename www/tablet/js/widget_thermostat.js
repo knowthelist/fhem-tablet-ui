@@ -112,7 +112,7 @@ var Modul_thermostat = function () {
 
   function init () {
     var me = this;
-    me.elements=$('div[data-type="'+me.widgetname+'"]');
+    me.elements=$('div[data-type="'+me.widgetname+'"]',me.area);
     me.elements.each(function( index ) {
         var elem = $(this);
         elem.initData('get'     ,'desired-temp');
