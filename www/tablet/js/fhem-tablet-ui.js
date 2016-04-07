@@ -16,8 +16,6 @@
 // -------- Widget Base---------
 var Modul_widget = function () {
 
-    var base = this;
-
     function init() {
         var me = this;
         ftui.log(1,"init widget: "+this.widgetname);
@@ -33,7 +31,7 @@ var Modul_widget = function () {
 
     function addReading(elem,key) {
             var data = elem.data(key);
-            if (data && !data.match(/^[#\.\[].*/)){
+            if (data && $.isArray(data) || !data.match(/^[#\.\[].*/)){
                 var device = elem.data('device');
                 if(! $.isArray(data)) {
                     data = new Array(data);
@@ -61,7 +59,6 @@ var Modul_widget = function () {
 
     return {
         widgetname: 'widget',
-        base:base,
         area: '',
         init: init,
         init_attr:init_attr,
@@ -1045,8 +1042,11 @@ $.fn.filterData = function(key, value) {
 $.fn.filterDeviceReading = function(key, device, param) {
     return this.filter(function() {
         var elem = $(this);
-        return  ( elem.data(key) === param && elem.data('device') === device )
-                || (elem.data(key) === device + ':' + param);
+        var value = elem.data(key);
+        return  (  value === param && elem.data('device') === device )
+                || (value === device + ':' + param)
+                || ($.inArray(param,value)>-1 && elem.data('device') === device)
+                || ($.inArray(device + ':' + param,value)>-1 );
     });
 };
 $.fn.isValidData = function(key) {
@@ -1068,9 +1068,12 @@ $.fn.isExternData = function(key) {
     if (!data) return '';
     return (data.match(/^[#\.\[].*/));
 };
-$.fn.getReading = function (key) {
+$.fn.getReading = function (key,idx) {
     var devname = $(this).data('device'),
         paraname = $(this).data(key);
+    if ( $.isArray(paraname) )
+        paraname = paraname[idx];
+    console.log('paraname',paraname);
     if(paraname && paraname.match(/:/)) {
         var temp = paraname.split(':');
         devname = temp[0];

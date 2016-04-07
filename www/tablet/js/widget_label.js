@@ -1,7 +1,6 @@
 var Modul_label = function () {
 
     function init_attr(elem) {
-        var me = this;
         elem.initData('get'         , 'STATE');
         elem.initData('part'        , -1);
         elem.initData('unit'        , '' );
@@ -22,20 +21,20 @@ var Modul_label = function () {
 
         elem.data('fix',            ( $.isNumeric(elem.data('fix')) ) ?  Number(elem.data('fix'))           : -1);
 
-        me.addReading(elem,'get');
-        me.addReading(elem,'limits-get');
-        if ( elem.isDeviceReading('color') ) {me.addReading(elem,'color');}
+        this.addReading(elem,'get');
+        this.addReading(elem,'limits-get');
+        if ( elem.isDeviceReading('color') ) {this.addReading(elem,'color');}
 
-    }
+    };
 
-    function init_ui(elem) {}
+    function init_ui(elem) {};
 
     function update_fix(value, fix) {
         return ( $.isNumeric(value) && fix>=0 ) ? Number(value).toFixed(fix) : value;
-    }
+    };
 
     function update_substitution(value, substitution) {
-        ftui.log(3,me.widgetname+' - value:'+value+', substitution:'+substitution);
+        ftui.log(3,this.widgetname+' - value:'+value+', substitution:'+substitution);
         if(substitution){
             if ($.isArray(substitution)){
                 for(var i=0, len=substitution.length; i<len; i+=2) {
@@ -54,7 +53,7 @@ var Modul_label = function () {
                   return eval('value.'+substitution);
         }
         return value;
-    }
+    };
 
     function update_colorize(value, elem) {
         //set colors according matches for values
@@ -67,12 +66,13 @@ var Modul_label = function () {
                 elem.css( layer, getStyle('.'+colors[idx],'color') || colors[idx] );
             }
         }
-    }
+    };
 
-    function update_cb(elem) {}
+    function update_cb(elem) {};
 
     function update(dev,par) {
-        me = this;
+
+        var me = this;
         // update from normal state reading
         me.elements.filterDeviceReading('get',dev,par)
         .each(function(index) {
@@ -148,10 +148,11 @@ var Modul_label = function () {
                 update_colorize(v, elem);
             }
         });
-    }
+    };
 
     // public
     // inherit all public members from base class
+
     return $.extend(new Modul_widget(), {
         //override or own public members
         widgetname: 'label',
@@ -159,5 +160,8 @@ var Modul_label = function () {
         init_ui:init_ui,
         update: update,
         update_cb: update_cb,
+        update_substitution:update_substitution,
+        update_colorize:update_colorize,
+        update_fix:update_fix,
     });
 };
