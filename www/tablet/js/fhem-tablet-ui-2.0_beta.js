@@ -498,7 +498,7 @@ var ftui = {
 
     toast: function(text){
         if (ftui.config.TOAST)
-            ftui.toast(text);
+            $.toast(text);
     },
 
     log: function(level,text){
