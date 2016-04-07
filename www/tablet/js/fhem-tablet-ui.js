@@ -620,7 +620,7 @@ var ftui = {
         if ( ftui.config.doLongPoll ){
             ftui.toast("Retry to connect in 10 seconds");
             setTimeout(function(){
-                longPoll();
+                ftui.longPoll();
             }, 10000);
         }
     },
