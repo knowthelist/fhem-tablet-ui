@@ -37,7 +37,6 @@ var Modul_pagetab = function () {
         }
         $('div.gridster').fadeTo(200,0);
         $.get(goUrl, function (data_html) {
-
           $('div.gridster')
               .html($(data_html).closest('div.gridster').html())
               .fadeTo(600,1);
@@ -109,7 +108,7 @@ var Modul_pagetab = function () {
                 } else {
                   isCurrent = (window.location.hash.indexOf(elem_url,1)>-1);
                 }
-              } else if (elem_url.indexOf(ftui.config.filename)>-1) {
+              } else if (elem_url && elem_url.indexOf(ftui.config.filename)>-1) {
                 isCurrent = true;
               } else {
                 if (!window.location.hash ) {
@@ -203,6 +202,7 @@ var Modul_pagetab = function () {
         //override members
         widgetname: 'pagetab',
         init:init,
+        update:update,
         toggleOn:toggleOn,
         toggleOff:toggleOff,
     });

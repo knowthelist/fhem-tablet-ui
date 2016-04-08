@@ -112,8 +112,10 @@ var plugins = {
             ftui.log(1,'Loaded plugin: '+ name);
         }
         else
-          ftui.log(1,'Failed to load plugin: '+ name);
-    },null,true);
+          ftui.log(1,'Failed to create widget: '+ name);
+    },function () {
+        ftui.log(1,'Failed to load plugin : '+name+'  - add <script src="/fhem/tablet/js/widget_'+name+'.js" defer></script> do your page, to see more informations about this');
+    },true);
   },
   update: function (dev,par) {  
     $.each(this.modules, function (index, module) {
@@ -220,7 +222,7 @@ var ftui = {
         //init gridster
         area = (isValid(area)) ? area : '';
         console.time('initPage');
-        console.log('initPage area:',area);
+        console.log('initPage - area=',area);
 
         // postpone shortpoll start
         ftui.startShortPollInterval();
@@ -229,7 +231,7 @@ var ftui = {
 
         //include extern html code
         var total = $('[data-template]',area).length;
-        console.log('templates:',total);
+        ftui.log(2,'count of templates:',total);
 
         if (total>0){
             $('[data-template]',area).each(function(index) {
@@ -261,9 +263,9 @@ var ftui = {
 
         area = (isValid(area)) ? area : '';
         var types = [];
-        console.log(plugins);
+        ftui.log(3,plugins);
         plugins.removeArea(area);
-        console.log(plugins);
+        ftui.log(3,plugins);
 
         //collect required widgets types
         $('div[data-type]',area).each(function(index){
@@ -354,8 +356,8 @@ var ftui = {
 
                  // is there a subscription, then check and update widgets
                  if( ftui.subscriptions[paramid] ){
-                       var oldParam = getParameterByName(device,reading);
-                       isUpdated = (!oldParam || oldParam.val!=newParam.Value || oldParam.date!=newParam.Time);
+                       var oldParam = ftui.getParameters(device,reading);
+                       isUpdated = (!oldParam || oldParam.val!==newParam.Value || oldParam.date!==newParam.Time);
                  }
                  //write into internal cache object
                  var params = ftui.deviceStates[device] || {};
@@ -625,6 +627,14 @@ var ftui = {
         }
     },
 
+    getParameters: function (devname, paraname) {
+        if (devname && devname.length>0){
+            var params = ftui.deviceStates[devname];
+            return ( params && params[paraname] ) ? params[paraname] : null;
+        }
+        return null;
+    },
+
     FS20: {
         'dimmerArray':[0, 6, 12, 18, 25, 31, 37, 43, 50, 56, 62, 68, 75, 81, 87, 93, 100],
         'dimmerValue': function(value){
@@ -816,24 +826,29 @@ this.getPart = function (s,p) {
 
 // deprecated function; will be removed soon
 this.getDeviceValueByName = function (devname, paraname) {
+    console.log('Warning: usage of deprecated function > getDeviceValueByName');
     var param = getParameterByName(devname, paraname);
     return ( param ) ? param.val : null;
 }
 this.getDeviceValue = function (device, src) {
+    console.log('Warning: usage of deprecated function > getDeviceValue');
     var param = getParameter(device, src);
     return ( param ) ? param.val : null;
 }
 // deprecated function; will be removed soon
 this.getReadingDateByName = function (devname, paraname) {
+    console.log('Warning: usage of deprecated function > getReadingDateByName');
     var param = getParameterByName(devname, paraname);
     return ( param ) ? param.date : null;
 }
 this.getReadingDate = function (device, src) {
+    console.log('Warning: usage of deprecated function > getReadingDate');
     var param = getParameter(device, src);
     return ( param ) ? param.date : null;
 }
 
 this.getParameterByName = function (devname, paraname) {
+    console.log('Warning: usage of deprecated function > getParameterByName');
     // devname = DEVICE:READING; paraname is ignored
     if(devname.match(/:/)) {
         var temp = devname.split(':');
@@ -1073,7 +1088,6 @@ $.fn.getReading = function (key,idx) {
         paraname = $(this).data(key);
     if ( $.isArray(paraname) )
         paraname = paraname[idx];
-    console.log('paraname',paraname);
     if(paraname && paraname.match(/:/)) {
         var temp = paraname.split(':');
         devname = temp[0];

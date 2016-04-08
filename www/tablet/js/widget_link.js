@@ -38,12 +38,13 @@ var Modul_link = function () {
 
     function loadPage(elem){
         console.time('fetch content');
+        var me = this;
         var sel = elem.data('load');
         var hashUrl=elem.data('url').replace('#','');
         console.log(hashUrl +" "+sel+" > *");
         $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
             console.timeEnd('fetch content');
-            console.log(this.widgetname+': new content from $('+sel+') loaded');
+            console.log(me.widgetname+': new content from $('+sel+') loaded');
             ftui.initPage(sel);
             if (elem.hasClass('default')){
                 $(sel).addClass('active');
