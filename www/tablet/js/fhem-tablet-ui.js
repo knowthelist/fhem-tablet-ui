@@ -95,7 +95,7 @@ var plugins = {
   },
   load: function (area,name) {
     ftui.log(2,'Load widget : '+name);
-    return loadplugin('widget_'+name, function () {
+    return ftui.loadplugin('widget_'+name, function () {
         ftui.log(2,'Create widget : '+name);
         var module = (window["Modul_"+name]) ? new window["Modul_"+name]() : new window["Modul_widget"]();
         if (module){
@@ -184,14 +184,26 @@ var ftui = {
 
         ftui.readStatesLocal();
         ftui.initPage();
-        ftui.initLongpoll();
+        $(document).on("initWidgetsDone",function(){
+            // refresh every x secs
+           ftui.startShortPollInterval(1000);
+        });
+
+        $(document).one("updateDone",function(){
+           ftui.initLongpoll();
+        });
 
         $("*:not(select)").focus(function(){
             $(this).blur();
         });
 
-        // refresh every x secs
-        ftui.startShortPollInterval();
+        if (ftui.config.debuglevel>0){
+            setInterval(function () {
+                //get current values of readings every x seconds
+                ftui.healthCheck();
+             }, 60000);
+
+        }
     },
 
     initGridster: function(area){
@@ -284,7 +296,6 @@ var ftui = {
         $.when.apply(this, deferredArr).then(function() {
             setTimeout(function(){
                 plugins.updateParameters();
-                ftui.shortPoll();
                 ftui.log(1,'initWidgets - Done')
                 console.timeEnd('initPage');
                 $(document).trigger("initWidgetsDone");
@@ -295,25 +306,23 @@ var ftui = {
     initLongpoll: function(){
         if ( ftui.config.doLongPoll ){
             var longpollDelay = $("meta[name='longpoll-delay']").attr("content");
-            if ($.isNumeric(longpollDelay))
-                longpollDelay = longpollDelay * 1000;
-            else
-                longpollDelay = (typeof wvcDevices != 'undefined')?ftui.config.shortpollInterval*1000:100;
+            longpollDelay = ($.isNumeric(longpollDelay)) ? longpollDelay * 1000 : 100;
             ftui.startLongPollInterval(longpollDelay);
         }
     },
 
     startShortPollInterval: function(delay) {
+        ftui.log(1,'start shortpoll in (ms):'+ (delay || ftui.config.shortpollInterval*1000));
         clearInterval(ftui.shortPollTimer);
         ftui.shortPollTimer = setTimeout(function () {
             //get current values of readings every x seconds
             ftui.shortPoll();
             ftui.startShortPollInterval() ;
-         }, delay || ftui.config.shortpollInterval*1000);
+         }, (delay || ftui.config.shortpollInterval*1000));
     },
 
     startLongPollInterval: function(interval) {
-        if (ftui.config.DEBUG) ftui.toast("Start Longpoll in " + interval/1000 + "s");
+        if (ftui.config.DEBUG && interval>999) ftui.toast("Start Longpoll in " + interval/1000 + "s");
         clearInterval(ftui.longPollTimer);
         ftui.longPollTimer = setTimeout(function() {
             ftui.longPoll();
@@ -326,7 +335,6 @@ var ftui = {
         if ((ltime - ftui.states.lastShortpoll) < ftui.config.shortpollInterval)
             return;
         ftui.log(1,'start shortpoll');
-        ftui.states.lastShortpoll = ltime;
         var startTime = new Date();
 
         // invalidate all readings for detection of outdated ones
@@ -407,17 +415,23 @@ var ftui = {
             }
             ftui.log(1,'shortPoll - Done');
             ftui.onUpdateDone();
+            ftui.states.lastShortpoll = ltime;
             console.timeEnd('read jsonlist2');
         });
     },
 
     longPoll: function() {
         if (ftui.config.DEMO) {console.log('DEMO-Mode: no longpoll');return;}
-        ftui.log(1,(ftui.states.longPollRestart)?"Longpoll re-started":"Longpoll started");
-        if (ftui.xhr)
-            ftui.xhr.abort();
-        if (ftui.longPollRequest)
-            ftui.longPollRequest.abort();
+        if (ftui.xhr){
+            console.log('valid ftui.xhr found');
+            //ftui.xhr.abort();
+            return;
+        }
+        if (ftui.longPollRequest){
+            console.log('valid ftui.longPollRequest found');
+            //ftui.longPollRequest.abort();
+            return;
+        }
         ftui.poll.currLine=0;
         if (ftui.config.DEBUG) {
             if (ftui.states.longPollRestart)
@@ -425,7 +439,8 @@ var ftui = {
             else
                 ftui.toast("Longpoll started");
         }
-        ftui.states.longPollRestart=0;
+        ftui.log(1,(ftui.states.longPollRestart)?"Longpoll re-started":"Longpoll started");
+        ftui.states.longPollRestart=false;
         ftui.longPollRequest=$.ajax({
             url: ftui.config.fhem_dir,
             cache: false,
@@ -456,7 +471,7 @@ var ftui = {
 
                                 var pmap = ftui.paramIdMap[dataJSON[0]];
                                 var tmap = ftui.timestampMap[dataJSON[0]];
-
+                                // update for a paramter
                                 if ( pmap ) {
                                   if (isSTATE)
                                     pmap.reading = 'STATE';
@@ -466,17 +481,20 @@ var ftui = {
                                   param.valid = true;
                                   params[pmap.reading] = param;
                                   ftui.deviceStates[pmap.device]= params;
+                                  // dont wait for timestamp for STATE paramters
                                   if (isSTATE && ftui.subscriptions[dataJSON[0]])
                                      plugins.update(pmap.device,pmap.reading);
                                 }
-
+                                // update for a timestamp
+                                // STATE updates has no timestamp
                                 if ( tmap  && !isSTATE ) {
                                   params = ftui.deviceStates[tmap.device] || {};
                                   param = params[tmap.reading]  || {};
                                   param.date = dataJSON[1];
                                   params[tmap.reading] = param;
+                                  ftui.poll.timestamp = param.date;
                                   ftui.deviceStates[tmap.device]= params;
-                                  // update widgets
+                                  // paramter + timestamp update now completed -> update widgets
                                   if (ftui.subscriptionTs[dataJSON[0]])
                                      plugins.update(tmap.device,tmap.reading);
                                 }
@@ -493,6 +511,11 @@ var ftui = {
                 }
         })
         .done ( function( data ) {
+            if (ftui.xhr){
+                ftui.xhr.abort();
+                ftui.xhr = null;
+            }
+            ftui.longPollRequest = null;
             if (ftui.states.longPollRestart)
                 ftui.longPoll();
             else{
@@ -501,6 +524,11 @@ var ftui = {
             }
         })
         .fail (function(jqXHR, textStatus, errorThrown) {
+            if (ftui.xhr){
+                ftui.xhr.abort();
+                ftui.xhr = null;
+            }
+            ftui.longPollRequest = null;
             if (ftui.states.longPollRestart)
                 ftui.longPoll();
             else{
@@ -633,6 +661,39 @@ var ftui = {
             return ( params && params[paraname] ) ? params[paraname] : null;
         }
         return null;
+    },
+
+    loadplugin: function(plugin, success, error, async) {
+         return ftui.dynamicload('js/'+plugin+'.js', success, error, async);
+    },
+
+    dynamicload: function(file, success, error, async) {
+        var cache = (ftui.config.DEBUG) ? false : true;
+        return $.ajax({
+            url: ftui.config.dir + '/../' + file,
+            dataType: "script",
+            cache: cache,
+            async: async || false,
+            context:{name: name},
+            success: success||function(){ return true },
+            error: error||function(){ return false },
+        });
+    },
+
+    healthCheck: function(){
+        var d = new Date();
+        d.setTime(ftui.states.lastShortpoll*1000);
+        console.log('--------- start healthCheck --------------');
+        console.log('Longpoll:',ftui.config.doLongPoll);
+        console.log('Longpoll objects there:',(isValid(ftui.longPollRequest) && isValid(ftui.xhr)));
+        console.log('Longpoll curent line:',ftui.poll.currLine);
+        console.log('Longpoll last timestamp:',ftui.poll.timestamp);
+        console.log('Shortpoll interval:',ftui.config.shortpollInterval);
+        console.log('Shortpoll last run:',d.ago());
+        console.log('FHEM dev/par count:',Object.keys(ftui.paramIdMap).length);
+        console.log('Page length:',$('html').html().length);
+        console.log('Widgets count:',$('div[data-type]').length);
+        console.log('--------- end healthCheck ---------------');
     },
 
     FS20: {
@@ -789,20 +850,13 @@ function setFhemStatus(cmdline) {
 }
 
 function loadplugin(plugin, success, error, async) {
-    return dynamicload('js/'+plugin+'.js', success, error, async);
+    console.log('loadplugin is a deprecated function: use ftui.loadplugin instead')
+    return ftui.dynamicload('js/'+plugin+'.js', success, error, async);
 }
 
 function dynamicload(file, success, error, async) {
-    var cache = (ftui.config.DEBUG) ? false : true;
-    return $.ajax({
-        url: ftui.config.dir + '/../' + file,
-        dataType: "script",
-        cache: cache,
-        async: async || false,
-        context:{name: name},
-        success: success||function(){ return true },
-        error: error||function(){ return false },
-    });
+    console.log('dynamicload is a deprecated function: use ftui.dynamicload instead')
+    return ftui.dynamicload(file, success, error, async);
 }
 
 
@@ -951,7 +1005,7 @@ Date.prototype.ago = function() {
       x /= 24;
   var days = Math.round(x);
   var userLang = navigator.language || navigator.userLanguage;
-  var strUnits = (userLang.split('-')[0] === 'de')?['Tage','Stunden','Minuten','Sekunden']:['days','hours','minutes','seconds'];
+    var strUnits = (userLang.split('-')[0] === 'de')?['Tag(e)','Stunde(n)','Minute(n)','Sekunde(n)']:['day(s)','hour(s)','minute(s)','second(s)'];
   var ret = (days>0)?days +" "+strUnits[0]+ " ":"";
       ret += (hours>0)?hours +" "+strUnits[1]+ " ":"";
       ret += (minutes>0)?minutes +" "+strUnits[2]+ " ":"";

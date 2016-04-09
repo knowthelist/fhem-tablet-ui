@@ -1,6 +1,4 @@
 
-
-
 var Modul_knob = function () {
 
     if (!$.fn.knob){

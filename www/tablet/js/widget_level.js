@@ -10,7 +10,7 @@ var Modul_level= function () {
         me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
         me.elements.each(function(index) {
 
-            var elem = $(this);
+        var elem = $(this);
         elem.initData('get'             ,'STATE');
         elem.initData('on'              ,'on');
         elem.initData('off'             ,'off');

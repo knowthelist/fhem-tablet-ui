@@ -2,7 +2,7 @@
 var Modul_checkbox = function () {
 
     if (!$.fn.Switchery){
-        dynamicload('lib/switchery.min.js', null, null, false);
+        ftui.dynamicload('lib/switchery.min.js', null, null, false);
         $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/switchery.min.css" type="text/css" />');
     }
 

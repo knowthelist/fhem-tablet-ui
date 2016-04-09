@@ -6,7 +6,7 @@
 var Modul_colorwheel = function () {
 
     if (!$.fn.farbtastic){
-        dynamicload('lib/farbtastic.js', null, null, false);
+        ftui.dynamicload('lib/farbtastic.js', null, null, false);
     }
 
     $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_colorwheel.css" type="text/css" />');

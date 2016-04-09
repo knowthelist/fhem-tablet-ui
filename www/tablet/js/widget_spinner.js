@@ -3,10 +3,9 @@
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 */
 
-
-$('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_spinner.css" type="text/css" />');
-
 var Modul_spinner = function () {
+
+    $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_spinner.css" type="text/css" />');
 
     function getValueNumeric(elem){
         var value   = elem.data('value');

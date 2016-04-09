@@ -2,7 +2,7 @@
 var Modul_push = function () {
 
     if(typeof Module_famultibutton == 'undefined')
-        loadplugin('widget_famultibutton');
+        ftui.loadplugin('widget_famultibutton');
 
     function startTimer (elem){
         var id = elem.data('device')+"_"+elem.data('get');

@@ -7,7 +7,7 @@
 var Modul_swiper= function () {
 
 if (!$.fn.Swiper){
-    dynamicload('lib/swiper.jquery.min.js', null, null, false);
+    ftui.dynamicload('lib/swiper.jquery.min.js', null, null, false);
     $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/swiper.min.css" type="text/css" />');
 }
 

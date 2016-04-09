@@ -2,7 +2,7 @@
 var Modul_switch = function () {
 
     if(typeof Module_famultibutton == 'undefined')
-        loadplugin('widget_famultibutton');
+        ftui.loadplugin('widget_famultibutton');
 
     function init() {
         var me = this;

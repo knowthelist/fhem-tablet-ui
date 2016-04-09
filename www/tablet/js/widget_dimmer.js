@@ -1,7 +1,7 @@
 var Modul_dimmer = function () {
 
     if(typeof Module_famultibutton == 'undefined')
-        loadplugin('widget_famultibutton');
+        ftui.loadplugin('widget_famultibutton');
 
     function init() {
      var me = this;
@@ -53,8 +53,8 @@ var Modul_dimmer = function () {
             var valStr = elem.data('set-value').replace('$v',v.toString());
             var reading = (elem.data('dim') !== '') ? elem.data('dim') : elem.data('set');
             var cmd = [elem.data('cmd-value'), device, reading, valStr].join(' ');
-            setFhemStatus(cmd);
-            TOAST && $.toast(cmd);
+            ftui.setFhemStatus(cmd);
+            ftui.toast(cmd);
          }
      };
 

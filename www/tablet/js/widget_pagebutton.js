@@ -1,13 +1,10 @@
 var Modul_pagebutton = function () {
 
     if(typeof Module_famultibutton == 'undefined')
-        loadplugin('widget_famultibutton');
-
-    var base = this;
+        ftui.loadplugin('widget_famultibutton');
 
     function loadPage(elem){
        console.time('fetch content');
-       var me = this;
        var sel = elem.data('load');
        var hashUrl=elem.data('url').replace('#','');
        $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
@@ -22,7 +19,6 @@ var Modul_pagebutton = function () {
     };
 
     function startReturnTimer (elem){
-      var me = this;
       var waitUntilReturn = elem.data('return-time');
       var lastUrl = localStorage.getItem('pagebutton_lastUrl');
       var returnTimer = localStorage.getItem('pagebutton_returnTimer');
@@ -32,7 +28,7 @@ var Modul_pagebutton = function () {
           returnTimer = setTimeout(function () {
              // back to first page
              localStorage.setItem('pagebutton_doload', 'initializing');
-             base.toggleOn(elem);
+             me.toggleOn(elem);
           }, waitUntilReturn * 1000);
           localStorage.setItem('pagebutton_returnTimer',returnTimer);
       }
@@ -54,8 +50,7 @@ var Modul_pagebutton = function () {
     };
 
    function init() {
-       var me = this;
-       base = this;
+       me = this;
        this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
        this.elements.each(function(index) {
            var elem = $(this);
@@ -94,9 +89,6 @@ var Modul_pagebutton = function () {
           var url = window.location.pathname + ((window.location.hash.length)?'#'+ window.location.hash:'');
           var isActive = url.match(new RegExp('^'+elem.data('active-pattern')+'$'));
           if ( isActive || ftui.config.filename==='' && elem_url==='index.html') {
-             //me.elements.each(function(index) {
-               //      $(this).removeClass('default')
-             //});
              elem.addClass('default');
            }
            changeState(elem,isActive);
@@ -150,6 +142,7 @@ var Modul_pagebutton = function () {
 
     // public
     // inherit all public members from base class
+    var me = this;
     return $.extend(new Modul_famultibutton(), {
         //override or own public members
         widgetname: 'pagebutton',

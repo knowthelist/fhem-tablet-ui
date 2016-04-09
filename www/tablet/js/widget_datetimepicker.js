@@ -1,10 +1,10 @@
 var Modul_datetimepicker= function () {
 
     if(typeof Module_label == 'undefined')
-        loadplugin('widget_label');
+        ftui.loadplugin('widget_label');
 
     if (!$.fn.datetimepicker){
-        dynamicload('lib/jquery.datetimepicker.js', null, null, false);
+        ftui.dynamicload('lib/jquery.datetimepicker.js', null, null, false);
         $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/jquery.datetimepicker.css" type="text/css" />');
     }
 

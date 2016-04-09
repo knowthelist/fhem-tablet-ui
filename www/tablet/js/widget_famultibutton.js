@@ -2,7 +2,7 @@
 var Modul_famultibutton = function () {
 
     if (!$.fn.famultibutton)
-        dynamicload('lib/fa-multi-button.min.js', null, null, false);
+        ftui.dynamicload('lib/fa-multi-button.min.js', null, null, false);
 
     function doubleclicked(elem, onoff) {
         if(elem.data('doubleclick')*1>0) {

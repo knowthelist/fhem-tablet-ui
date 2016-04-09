@@ -2,7 +2,7 @@
 var Modul_thermostat = function () {
 
   if(typeof Modul_knob == 'undefined')
-        loadplugin('widget_knob');
+        ftui.loadplugin('widget_knob');
 
   var isUpdating=false;
 
