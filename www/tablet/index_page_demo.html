@@ -26,11 +26,8 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="gridster_disable" content="1">
-    <meta name="shortpoll-interval" content="900">
-    <meta name="shortpoll-only-interval" content="30">
-    <meta name="longpoll-delay" content="5"> <!-- 1=longpoll;0=shortpoll every 30sec -->
     <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
-    <meta name="debug" content="1"> <!-- 1=output to console;0=not output -->
+    <meta name="debug" content="1"> <!-- verbose level 1-6 = output to console;0 = not output -->
     <meta http-equiv="Cache-Control" content="no-store" />
 
     <link rel="stylesheet" href="/fhem/tablet_eval/lib/jquery.gridster.min.css" />
@@ -39,8 +36,8 @@
     <link rel="stylesheet" href="/fhem/tablet_eval/lib/jquery.toast.min.css" />
 
     <!-- define your personal style here, it wont be overwritten  -->
-    <!-- link rel="stylesheet" href="/fhem/tablet/css/fhem-green-ui.css" / -->
-    <!-- link rel="stylesheet" href="/fhem/tablet_dev/css/fhem-tablet-ui-user.css" / -->
+    <!-- link rel="stylesheet" href="/fhem/tablet_eval/css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="/fhem/tablet_eval/css/fhem-tablet-ui-user.css" / -->
 
     <script src="/fhem/pgm2/jquery.min.js" defer></script>
     <script src="/fhem/tablet_eval/lib/jquery.toast.min.js" defer></script>
@@ -52,20 +49,17 @@
 <body>
     <div class="gridster">
         <ul>
-            <li data-row="1" data-col="1" data-sizex="1" data-sizey="8">
-                <div class="cell">
-                    <div data-type="pagebutton" data-url="#page_content1.html" data-load="#content1" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#page_content1.html" data-device="dummy1" data-return-time="10" data-states='["0","1"]' data-icons='["fa-home","fa-home warn"]' class="prefetch top-space"></div>
-                    <div data-type="pagebutton" data-url="#page_content2.html" data-load="#content2" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#page_content2.html" data-icon="fa-music" class="prefetch top-space"></div>
-                    <div data-type="pagebutton" data-url="#page_content3.html" data-load="#content3" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#page_content3.html" data-icon="fa-sliders" class="prefetch top-space"></div>
-                </div>
+            <li data-row="1" data-col="1" data-sizex="9" data-sizey="1">
+                <div data-type="pagebutton" data-url="#page_content1.html" data-load="#content1" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#page_content1.html" data-device="dummy1" data-return-time="10" data-states='["0","1"]' data-icons='["fa-home","fa-home warn"]' class="default top-space"></div>
+                <div data-type="pagebutton" data-url="#page_content2.html" data-load="#content2" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#page_content2.html" data-icon="fa-music" class="prefetch top-space"></div>
+                <div data-type="pagebutton" data-url="#page_content3.html" data-load="#content3" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#page_content3.html" data-icon="fa-sliders" class="prefetch top-space"></div>
             </li>
-            <li data-row="1" data-col="2" data-sizex="9" data-sizey="8">
+            <li data-row="2" data-col="1" data-sizex="9" data-sizey="8">
                 <div class="page" id="content1"></div>
                 <div class="page" id="content2"></div>
                 <div class="page" id="content3"></div>
             </li>
         </ul>
     </div>
-
 </body>
 </html>
