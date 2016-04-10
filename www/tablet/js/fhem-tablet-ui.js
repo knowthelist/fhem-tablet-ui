@@ -2,7 +2,7 @@
 /**
 * UI builder framework for FHEM
 *
-* Version: 2.1.1
+* Version: 2.1.2
 *
 * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -129,6 +129,7 @@ var plugins = {
 // -------- FTUI ----------
 
 var ftui = {
+   version: '2.1.2',
    config: {
         DEBUG: false,
         DEMO:false,
@@ -609,6 +610,8 @@ var ftui = {
         if ((ltime - ftui.states.lastSetOnline) > 60){
             if (ftui.config.DEBUG) ftui.toast("Network connected");
             ftui.states.lastSetOnline = ltime;
+            // force shortpoll
+            ftui.states.lastShortpoll = 0;
             ftui.startShortPollInterval(100);
             if (!ftui.config.doLongPoll){
                 ftui.config.doLongPoll  = ($("meta[name='longpoll']").attr("content") == '1');
@@ -684,12 +687,14 @@ var ftui = {
         var d = new Date();
         d.setTime(ftui.states.lastShortpoll*1000);
         console.log('--------- start healthCheck --------------');
+        console.log('now:',new Date());
+        console.log('FTUI version:',ftui.version);
         console.log('Longpoll:',ftui.config.doLongPoll);
         console.log('Longpoll objects there:',(isValid(ftui.longPollRequest) && isValid(ftui.xhr)));
         console.log('Longpoll curent line:',ftui.poll.currLine);
-        console.log('Longpoll last timestamp:',ftui.poll.timestamp);
+        console.log('Longpoll last event before:',ftui.poll.timestamp.toDate().ago());
         console.log('Shortpoll interval:',ftui.config.shortpollInterval);
-        console.log('Shortpoll last run:',d.ago());
+        console.log('Shortpoll last run before:',d.ago());
         console.log('FHEM dev/par count:',Object.keys(ftui.paramIdMap).length);
         console.log('Page length:',$('html').html().length);
         console.log('Widgets count:',$('div[data-type]').length);
