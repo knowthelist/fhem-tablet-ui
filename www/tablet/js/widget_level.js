@@ -122,6 +122,7 @@ var Modul_level= function () {
                     }
                 }
                 input_elem.css({visibility:'visible'});
+                elem.attr('title',val);
             }
     });
     };
