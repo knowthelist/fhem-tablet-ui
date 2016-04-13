@@ -178,7 +178,8 @@ var Modul_volume = function () {
       var elem = $(this);
       var value = elem.getReading('get').val;
       if (value) {
-            var knob_elem = elem.find('input');
+          var knob_elem = elem.find('input');
+          if (knob_elem){
             var part = elem.data('get-value');
             var val = getPart(value,part);
             if ((parseInt(elem.data('mode'))>>6) % 2 != 0){
@@ -195,8 +196,9 @@ var Modul_volume = function () {
                 knob_elem.val( val ).trigger('change');
                 ftui.log(3, me.widgetname + ' dev:'+dev+' par:'+par+' change '+elem.data('device')+':knob to ' +val );
             }
-            }
-            knob_elem.css({visibility:'visible'});
+           knob_elem.css({visibility:'visible'});
+          }
+        }
      });
     isUpdating=false;
     };

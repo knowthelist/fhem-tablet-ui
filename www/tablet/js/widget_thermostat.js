@@ -161,10 +161,12 @@ var Modul_thermostat = function () {
               case elem.data('boost'): value=elem.data('max'); textdisplay=elem.data('boost'); break;
           }
           var knob_elem = elem.find('input');
-          knob_elem.val( value ).trigger('change');
-          if(textdisplay)
-              knob_elem.val(textdisplay);
-          knob_elem.css({visibility:'visible'});
+          if (knob_elem){
+              knob_elem.val( value ).trigger('change');
+              if(textdisplay)
+                  knob_elem.val(textdisplay);
+              knob_elem.css({visibility:'visible'});
+          }
       }
     });
 

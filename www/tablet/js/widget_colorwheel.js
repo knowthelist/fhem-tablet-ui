@@ -3,7 +3,7 @@
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 */
 
-function depends_famultibutton (){
+function depends_colorwheel (){
     if (!$.fn.farbtastic){
         $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_colorwheel.css" type="text/css" />');
         return ["lib/farbtastic.js"];
