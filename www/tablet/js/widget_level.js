@@ -1,12 +1,15 @@
+
+function depends_level (){
+    if (!$.fn.Powerange){
+        $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/powerange.min.css" type="text/css" />');
+        return ["lib/powerange.min.js"];
+    }
+};
+
 var Modul_level= function () {
 
-        if (!$.fn.Powerange){
-            dynamicload('lib/powerange.min.js', null, null, false);
-            $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/powerange.min.css" type="text/css" />');
-        }
-
-        function init() {
-          var me=this;
+      function init() {
+        var me=this;
         me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
         me.elements.each(function(index) {
 

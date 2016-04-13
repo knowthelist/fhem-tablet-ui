@@ -1,7 +1,10 @@
-var Modul_pagebutton = function () {
 
+function depends_pagebutton(){
     if(typeof Module_famultibutton == 'undefined')
-        ftui.loadplugin('widget_famultibutton');
+        return ["famultibutton"];
+};
+
+var Modul_pagebutton = function () {
 
     function loadPage(elem){
        console.time('fetch content');
@@ -89,6 +92,7 @@ var Modul_pagebutton = function () {
           var url = window.location.pathname + ((window.location.hash.length)?'#'+ window.location.hash:'');
           var isActive = url.match(new RegExp('^'+elem.data('active-pattern')+'$'));
           if ( isActive || ftui.config.filename==='' && elem_url==='index.html') {
+             elem.siblings().removeClass('default');
              elem.addClass('default');
            }
            changeState(elem,isActive);
@@ -138,7 +142,7 @@ var Modul_pagebutton = function () {
            this.showOverlay(elem,getPart(state,elem.data('get-warn')));
        else
            this.showOverlay(elem,"");
-   }
+   };
 
     // public
     // inherit all public members from base class

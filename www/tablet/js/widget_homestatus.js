@@ -1,7 +1,10 @@
-var Modul_homestatus = function () {
 
+function depends_homestatus(){
     if(typeof Modul_knob == 'undefined')
-          loadplugin('widget_knob');
+        return ["knob"];
+};
+
+var Modul_homestatus = function () {
 
     var isUpdating=false;
 

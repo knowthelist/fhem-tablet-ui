@@ -1,12 +1,17 @@
-var Modul_datetimepicker= function () {
 
-    if(typeof Module_label == 'undefined')
-        ftui.loadplugin('widget_label');
-
+function depends_datetimepicker (){
+    var deps = [];
     if (!$.fn.datetimepicker){
-        ftui.dynamicload('lib/jquery.datetimepicker.js', null, null, false);
         $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/jquery.datetimepicker.css" type="text/css" />');
+        deps.push("lib/jquery.datetimepicker.js");
     }
+    if(typeof Module_label == 'undefined'){
+        deps.push('label');
+    }
+    return deps;
+};
+
+var Modul_datetimepicker = function () {
 
   function init () {
      var me = this;

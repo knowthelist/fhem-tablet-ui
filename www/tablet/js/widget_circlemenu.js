@@ -1,9 +1,12 @@
+
+function depends_circlemenu (){
+    if (!$.fn.circleMenu)
+        return ["lib/jquery.circlemenu.js"];
+};
+
 var Modul_circlemenu = function () {
 
    function init () {
-
-    if (!$.fn.circleMenu)
-        ftui.dynamicload('lib/jquery.circlemenu.js', null, null, false);
 
     var me = this;
     me.elements = $('div[data-type="circlemenu"]>ul');

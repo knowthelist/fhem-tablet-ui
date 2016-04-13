@@ -1,4 +1,9 @@
 
+function depends_pagetab (){
+    if(typeof Module_famultibutton == 'undefined')
+        return ["famultibutton"];
+};
+
 var Modul_pagetab = function () {
 
     if(typeof Module_famultibutton == 'undefined') {

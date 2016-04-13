@@ -1,9 +1,10 @@
 
-var Modul_knob = function () {
+function depends_knob (){
+    if (!$.fn.knob)
+        return ["lib/jquery.knob.mod.js"];
+};
 
-    if (!$.fn.knob){
-        dynamicload('lib/jquery.knob.mod.js', null, null, false);
-    }
+var Modul_knob = function () {
 
     var isUpdating = false;
     var onChange = null;

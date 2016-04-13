@@ -1,10 +1,12 @@
 
-var Modul_checkbox = function () {
-
+function depends_checkbox (){
     if (!$.fn.Switchery){
-        ftui.dynamicload('lib/switchery.min.js', null, null, false);
         $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/switchery.min.css" type="text/css" />');
+        return ["lib/switchery.min.js"];
     }
+};
+
+var Modul_checkbox = function () {
 
   function clicked(elem,isClicked) {
       var value = isClicked ? elem.data('set-on') : elem.data('set-off');

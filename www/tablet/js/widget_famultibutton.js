@@ -1,8 +1,10 @@
 
-var Modul_famultibutton = function () {
-
+function depends_famultibutton (){
     if (!$.fn.famultibutton)
-        ftui.dynamicload('lib/fa-multi-button.min.js', null, null, false);
+        return ["lib/fa-multi-button.min.js"];
+};
+
+var Modul_famultibutton = function () {
 
     function doubleclicked(elem, onoff) {
         if(elem.data('doubleclick')*1>0) {

@@ -1,8 +1,10 @@
 
-var Modul_popup = function () {
-
+function depends_knob (){
     if (!$.fn.draggable)
-        dynamicload('../pgm2/jquery-ui.min.js', null, null, false);
+        return ["../pgm2/jquery-ui.min.js"];
+};
+
+var Modul_popup = function () {
 
     function hide (elem,mode) {
         switch(mode) {

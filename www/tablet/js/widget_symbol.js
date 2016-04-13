@@ -1,9 +1,10 @@
 
-var Modul_symbol = function () {
+function depends_symbol (){
+    if(typeof Module_famultibutton == 'undefined')
+        return ["famultibutton"];
+};
 
-    if(typeof Module_famultibutton == 'undefined') {
-        ftui.loadplugin('widget_famultibutton');
-    }
+var Modul_symbol = function () {
 
     function init() {
         var me = this;

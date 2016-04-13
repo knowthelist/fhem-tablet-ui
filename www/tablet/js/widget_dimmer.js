@@ -1,7 +1,11 @@
-var Modul_dimmer = function () {
 
+
+function depends_dimmer(){
     if(typeof Module_famultibutton == 'undefined')
-        ftui.loadplugin('widget_famultibutton');
+        return ["famultibutton"];
+};
+
+var Modul_dimmer = function () {
 
     function init() {
      var me = this;

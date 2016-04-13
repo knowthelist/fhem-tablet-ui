@@ -2,7 +2,7 @@
 /**
 * UI builder framework for FHEM
 *
-* Version: 2.1.2
+* Version: 2.2.0
 *
 * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -72,9 +72,11 @@ var Modul_widget = function () {
 // ------- Plugins --------
 var plugins = {
   modules: [],
+
   addModule: function (module) {
     this.modules.push(module);
   },
+
   removeArea: function (area) {
     for (var i = this.modules.length - 1; i >= 0; i -= 1) {
       if (this.modules[i].area === area) {
@@ -82,6 +84,7 @@ var plugins = {
       }
     }
   },
+
   updateParameters: function () {
     ftui.subscriptions={};
     ftui.subscriptionTs={};
@@ -93,43 +96,25 @@ var plugins = {
         }
     }
   },
-  load: function (area,name) {
-    ftui.log(2,'Load widget : '+name);
-    return ftui.loadplugin('widget_'+name, function () {
-        ftui.log(2,'Create widget : '+name);
-        var module = (window["Modul_"+name]) ? new window["Modul_"+name]() : new window["Modul_widget"]();
-        if (module){
-            plugins.addModule(module);
-            if (isValid(area))
-                module.area = area;
 
-            module.init();
-
-            //update all what we have until now
-            for (var key in module.subscriptions) {
-               module.update(module.subscriptions[key].device,module.subscriptions[key].reading);
-            }
-            ftui.log(1,'Loaded plugin: '+ name);
-        }
-        else
-          ftui.log(1,'Failed to create widget: '+ name);
-    },function () {
-        ftui.log(1,'Failed to load plugin : '+name+'  - add <script src="/fhem/tablet/js/widget_'+name+'.js" defer></script> do your page, to see more informations about this');
-    },true);
+  load: function (name,area) {
+    ftui.log(1,'Load widget : '+name);
+    return ftui.loadplugin(name,area);
   },
+
   update: function (dev,par) {  
     $.each(this.modules, function (index, module) {
       //Iterate each module and run update function
       module.update(dev,par);
     });
-      ftui.log(1,'update done for "'+dev+':'+par+'"');
+    ftui.log(1,'update done for "'+dev+':'+par+'"');
   }
 }
 
 // -------- FTUI ----------
 
 var ftui = {
-   version: '2.1.2',
+   version: '2.2.0',
    config: {
         DEBUG: false,
         DEMO:false,
@@ -142,8 +127,10 @@ var ftui = {
         styleCollection:{},
         stdColors:["green","orange","red","ligthblue","blue","gray"],
     },
-    poll: {currLine:0,xhr:null,longPollRequest:null,shortPollTimer:null,longPollTimer:null,},
-    states: {'lastSetOnline':0,'lastShortpoll':0,'longPollRestart':false},
+
+    poll: {currLine:0,xhr:null,longPollRequest:null,shortPollTimer:null,
+           longPollTimer:null,timestamp:'01.01.1970'},
+    states: {lastSetOnline:0,lastShortpoll:0,longPollRestart:false},
     deviceStates:{},
     paramIdMap:{},
     timestampMap:{},
@@ -185,9 +172,10 @@ var ftui = {
 
         ftui.readStatesLocal();
         ftui.initPage();
+
         $(document).on("initWidgetsDone",function(){
-            // refresh every x secs
-           ftui.startShortPollInterval(1000);
+            // start shortpoll delayed
+           ftui.startShortPollInterval(2500);
         });
 
         $(document).one("updateDone",function(){
@@ -200,7 +188,6 @@ var ftui = {
 
         if (ftui.config.debuglevel>0){
             setInterval(function () {
-                //get current values of readings every x seconds
                 ftui.healthCheck();
              }, 60000);
 
@@ -276,9 +263,7 @@ var ftui = {
 
         area = (isValid(area)) ? area : '';
         var types = [];
-        ftui.log(3,plugins);
         plugins.removeArea(area);
-        ftui.log(3,plugins);
 
         //collect required widgets types
         $('div[data-type]',area).each(function(index){
@@ -289,18 +274,16 @@ var ftui = {
         });
 
         //init widgets
-        var deferredArr = $.map(types, function(widget_type, i) {
-            return plugins.load(area,widget_type);
+        var deferredArr = $.map(types, function(type, i) {
+            return plugins.load(type,area);
         });
 
         //get current values of readings not before all widgets are loaded
         $.when.apply(this, deferredArr).then(function() {
-            setTimeout(function(){
-                plugins.updateParameters();
-                ftui.log(1,'initWidgets - Done')
-                console.timeEnd('initPage');
-                $(document).trigger("initWidgetsDone");
-            }, 50);
+            plugins.updateParameters();
+            ftui.log(1,'initWidgets - Done')
+            console.timeEnd('initPage');
+            $(document).trigger("initWidgetsDone");
         });
     },
 
@@ -350,7 +333,7 @@ var ftui = {
         $.getJSON(ftui.config.fhem_dir,
                   {cmd: 'jsonlist2',
                    XHR:1,
-                   timeout: 30000},  function (fhemJSON) {
+                   timeout: 60000},  function (fhemJSON) {
            console.timeEnd('get jsonlist2');
            console.time('read jsonlist2');
 
@@ -407,8 +390,8 @@ var ftui = {
             }
 
             // finished
+            var duration = diffSeconds(startTime,new Date());
             if (ftui.config.DEBUG) {
-                var duration = diffSeconds(startTime,new Date());
                 var paramCount = Object.keys(ftui.paramIdMap).length;
                 ftui.toast("Full refresh done in "
                        +duration+"s for "
@@ -417,6 +400,7 @@ var ftui = {
             ftui.log(1,'shortPoll - Done');
             ftui.onUpdateDone();
             ftui.states.lastShortpoll = ltime;
+            ftui.saveStatesLocal();
             console.timeEnd('read jsonlist2');
         });
     },
@@ -468,7 +452,7 @@ var ftui = {
                                 var param = null;
                                 var isSTATE = ( dataJSON[1] !== dataJSON[2] );
 
-                                ftui.log(2,dataJSON);
+                                ftui.log(4,dataJSON);
 
                                 var pmap = ftui.paramIdMap[dataJSON[0]];
                                 var tmap = ftui.timestampMap[dataJSON[0]];
@@ -646,6 +630,7 @@ var ftui = {
         //save deviceStates into localStorage
         var dataToStore = JSON.stringify(ftui.deviceStates);
         localStorage.setItem('deviceStates', dataToStore);
+        localStorage.setItem('shortPollDuration', ftui.poll.shortPollDuration);
     },
 
     restartLongPoll: function(){
@@ -666,20 +651,79 @@ var ftui = {
         return null;
     },
 
-    loadplugin: function(plugin, success, error, async) {
-         return ftui.dynamicload('js/'+plugin+'.js', success, error, async);
+    loadplugin: function (name,area) {
+
+        var deferredLoad = new $.Deferred();
+        ftui.log(2,'Create widget : '+name);
+
+        // get the plugin
+        ftui.dynamicload("js/widget_"+name+".js").done(function(){
+
+        // get all dependencies of this plugin
+        var depsPromises = [];
+        var getDependencies = window["depends_"+name];
+
+        if ($.isFunction(getDependencies)){
+
+            var deps = getDependencies();
+            if (deps){
+                deps = ($.isArray(deps)) ? deps : [deps];
+                $.map(deps, function(dep,i){
+                    if ( dep.indexOf(".js") < 0 )
+                        depsPromises.push(ftui.loadplugin(dep));
+                    else
+                        depsPromises.push(ftui.dynamicload(dep));
+                });
+            }
+         } else {
+            ftui.log(2,"function depends_"+name+" not found");
+         }
+
+         $.when.apply(this,depsPromises).then(function(){
+             var module = (window["Modul_"+name]) ? new window["Modul_"+name]() : new window["Modul_widget"]();
+             if (module){
+                 if (typeof area !== 'undefined'){
+
+                     // add only real widgets not dependencies
+                     plugins.addModule(module);
+                     if (isValid(area))
+                         module.area = area;
+
+                     module.init();
+
+                     //update all what we have until now
+                     for (var key in module.subscriptions) {
+                        module.update(module.subscriptions[key].device,module.subscriptions[key].reading);
+                     }
+                 }
+                 ftui.log(1,'Loaded plugin: '+ name);
+
+             } else {
+                 ftui.log(1,'Failed to create widget: '+ name);
+             }
+
+             deferredLoad.resolve();
+             });
+
+        })
+        .fail( function() {
+            ftui.toast('Failed to load plugin : '+name+'..');
+            ftui.log(1,'Failed to load plugin : '+name+'  - add <script src="/fhem/tablet/js/widget_'+name+'.js" defer></script> do your page, to see more informations about this failure');
+            deferredLoad.resolve();
+        });
+
+        // return with promise to deliver the plugin deferred
+        return deferredLoad.promise();
     },
 
-    dynamicload: function(file, success, error, async) {
+    dynamicload: function(file) {
         var cache = (ftui.config.DEBUG) ? false : true;
+
         return $.ajax({
             url: ftui.config.dir + '/../' + file,
             dataType: "script",
             cache: cache,
-            async: async || false,
             context:{name: name},
-            success: success||function(){ return true },
-            error: error||function(){ return false },
         });
     },
 
@@ -852,18 +896,7 @@ $(window).on('online offline', function() {
 function setFhemStatus(cmdline) {
     console.log('setFhemStatus is a deprecated function: use ftui.setFhemStatus instead')
      ftui.setFhemStatus(cmdline);
-}
-
-function loadplugin(plugin, success, error, async) {
-    console.log('loadplugin is a deprecated function: use ftui.loadplugin instead')
-    return ftui.dynamicload('js/'+plugin+'.js', success, error, async);
-}
-
-function dynamicload(file, success, error, async) {
-    console.log('dynamicload is a deprecated function: use ftui.dynamicload instead')
-    return ftui.dynamicload(file, success, error, async);
-}
-
+};
 
 this.getPart = function (s,p) {
     if ($.isNumeric(p)){

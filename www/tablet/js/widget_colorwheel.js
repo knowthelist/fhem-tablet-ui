@@ -3,13 +3,14 @@
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 */
 
-var Modul_colorwheel = function () {
-
+function depends_famultibutton (){
     if (!$.fn.farbtastic){
-        ftui.dynamicload('lib/farbtastic.js', null, null, false);
+        $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_colorwheel.css" type="text/css" />');
+        return ["lib/farbtastic.js"];
     }
+};
 
-    $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_colorwheel.css" type="text/css" />');
+var Modul_colorwheel = function () {
 
     function onChange (elem,color) {
         elem.find('.colorIndicator').css({

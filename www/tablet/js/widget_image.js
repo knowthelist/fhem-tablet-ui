@@ -1,4 +1,4 @@
-var Modul_image= function () {
+var Modul_image = function () {
 
     function init_attr (elem) {
         elem.initData('get'     , 'STATE');

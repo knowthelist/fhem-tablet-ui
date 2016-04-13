@@ -1,7 +1,10 @@
-var Modul_progress = function () {
 
+function depends_progress (){
     if(typeof Module_famultibutton == 'undefined')
-        loadplugin('widget_famultibutton');
+        return ["famultibutton"];
+};
+
+var Modul_progress = function () {
 
     function init_attr (elem) {
         elem.initData('device'              , ' ');

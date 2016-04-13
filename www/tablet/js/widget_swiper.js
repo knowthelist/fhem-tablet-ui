@@ -3,13 +3,14 @@
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 */
 
+function depends_swiper (){
+    if (!$.fn.Swiper){
+        $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/swiper.min.css" type="text/css" />');
+        return ["lib/swiper.jquery.min.js"];
+    }
+};
 
 var Modul_swiper= function () {
-
-if (!$.fn.Swiper){
-    ftui.dynamicload('lib/swiper.jquery.min.js', null, null, false);
-    $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/swiper.min.css" type="text/css" />');
-}
 
     function activateSlide (elem,states,state) {
         var idx=indexOfGeneric(states,state);

@@ -1,8 +1,10 @@
 
-var Modul_switch = function () {
-
+function depends_switch (){
     if(typeof Module_famultibutton == 'undefined')
-        ftui.loadplugin('widget_famultibutton');
+        return ["famultibutton"];
+};
+
+var Modul_switch = function () {
 
     function init() {
         var me = this;

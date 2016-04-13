@@ -1,8 +1,10 @@
 
-var Modul_volume = function () {
+function depends_volume (){
+    if(typeof Modul_knob == 'undefined')
+        return ["knob"];
+};
 
-  if(typeof Modul_knob == 'undefined')
-        ftui.loadplugin('widget_knob');
+var Modul_volume = function () {
 
   var isUpdating=false;
 

@@ -1,9 +1,13 @@
 
-var Modul_slider= function () {
+
+function depends_slider (){
     if (!$.fn.Powerange){
-        ftui.dynamicload('lib/powerange.min.js', null, null, false);
         $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/powerange.min.css" type="text/css" />');
+        return ["lib/powerange.min.js"];
     }
+};
+
+var Modul_slider= function () {
 
   function init() {
     var me=this;
