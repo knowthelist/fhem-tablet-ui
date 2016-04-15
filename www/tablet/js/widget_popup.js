@@ -1,5 +1,5 @@
 
-function depends_knob (){
+function depends_popup (){
     if (!$.fn.draggable)
         return ["../pgm2/jquery-ui.min.js"];
 };
@@ -27,7 +27,8 @@ var Modul_popup = function () {
     };
 
     function show (elem,mode) {
-        showModal(true);
+        if (elem.options.shade)
+            showModal(true);
         switch(mode) {
             case 'animate':
             elem.show();
@@ -100,6 +101,7 @@ var Modul_popup = function () {
                 starter.css({'cursor': 'pointer'});
                 elem.closest('.gridster>ul>li').css({overflow: 'visible'});
                 dialog.options={};
+                dialog.options.shade = !elem.hasClass('noshade');
 
                 $(window).resize(function() {
                     dialog.options.end_top = ($(window).height() - parseInt(elem.data('height'))) / 2;
