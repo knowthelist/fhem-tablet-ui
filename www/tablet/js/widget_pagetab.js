@@ -6,10 +6,6 @@ function depends_pagetab (){
 
 var Modul_pagetab = function () {
 
-    if(typeof Module_famultibutton == 'undefined') {
-        loadplugin('widget_famultibutton');
-    }
-
     function startReturnTimer (){
       var mainElem = me.elements.eq(0);
       var waitUntilReturn = mainElem.data('return-time');
