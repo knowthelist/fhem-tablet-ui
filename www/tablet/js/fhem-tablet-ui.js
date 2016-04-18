@@ -12,7 +12,7 @@
 /* ToDo:
     -
 */
-
+var c = 0,d=0;
 // -------- Widget Base---------
 var Modul_widget = function () {
 
@@ -99,7 +99,7 @@ var plugins = {
 
   load: function (name,area) {
     ftui.log(1,'Load widget : '+name);
-    return ftui.loadplugin(name,area);
+    return ftui.loadPlugin(name,area);
   },
 
   update: function (dev,par) {  
@@ -263,7 +263,9 @@ var ftui = {
 
         area = (isValid(area)) ? area : '';
         var types = [];
+        ftui.log(3,plugins);
         plugins.removeArea(area);
+        ftui.log(3,plugins);
 
         //collect required widgets types
         $('div[data-type]',area).each(function(index){
@@ -651,7 +653,7 @@ var ftui = {
         return null;
     },
 
-    loadplugin: function (name,area) {
+    loadPlugin: function (name,area) {
 
         var deferredLoad = new $.Deferred();
         ftui.log(2,'Create widget : '+name);
@@ -663,14 +665,16 @@ var ftui = {
         var depsPromises = [];
         var getDependencies = window["depends_"+name];
 
+        // load all dependencies recursive before
         if ($.isFunction(getDependencies)){
 
             var deps = getDependencies();
             if (deps){
                 deps = ($.isArray(deps)) ? deps : [deps];
+                //console.log('deps',deps);
                 $.map(deps, function(dep,i){
                     if ( dep.indexOf(".js") < 0 )
-                        depsPromises.push(ftui.loadplugin(dep));
+                        depsPromises.push(ftui.loadPlugin(dep));
                     else
                         depsPromises.push(ftui.dynamicload(dep));
                 });
@@ -679,7 +683,7 @@ var ftui = {
             ftui.log(2,"function depends_"+name+" not found");
          }
 
-         $.when.apply(this,depsPromises).then(function(){
+         $.when.apply(this,depsPromises).always(function(){
              var module = (window["Modul_"+name]) ? new window["Modul_"+name]() : new window["Modul_widget"]();
              if (module){
                  if (typeof area !== 'undefined'){
@@ -708,7 +712,7 @@ var ftui = {
         })
         .fail( function() {
             ftui.toast('Failed to load plugin : '+name+'..');
-            ftui.log(1,'Failed to load plugin : '+name+'  - add <script src="/fhem/tablet/js/widget_'+name+'.js" defer></script> do your page, to see more informations about this failure');
+            ftui.log(1,'Failed to load plugin : '+name+'  - add <script src="'+ftui.config.dir+'/widget_'+name+'.js" defer></script> do your page, to see more informations about this failure');
             deferredLoad.resolve();
         });
 
@@ -718,7 +722,7 @@ var ftui = {
 
     dynamicload: function(file) {
         var cache = (ftui.config.DEBUG) ? false : true;
-
+        ftui.log(2,'dynamic load file:'+file);
         return $.ajax({
             url: ftui.config.dir + '/../' + file,
             dataType: "script",
