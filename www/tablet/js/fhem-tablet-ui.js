@@ -659,7 +659,7 @@ var ftui = {
         ftui.log(2,'Create widget : '+name);
 
         // get the plugin
-        ftui.dynamicload("js/widget_"+name+".js").done(function(){
+        ftui.dynamicload("js/widget_"+name+".js",true).done(function(){
 
         // get all dependencies of this plugin
         var depsPromises = [];
@@ -676,7 +676,7 @@ var ftui = {
                     if ( dep.indexOf(".js") < 0 )
                         depsPromises.push(ftui.loadPlugin(dep));
                     else
-                        depsPromises.push(ftui.dynamicload(dep));
+                        depsPromises.push(ftui.dynamicload(dep,false));
                 });
             }
          } else {
@@ -711,7 +711,7 @@ var ftui = {
 
         })
         .fail( function() {
-            ftui.toast('Failed to load plugin : '+name+'..');
+            ftui.toast('Failed to load plugin : '+name);
             ftui.log(1,'Failed to load plugin : '+name+'  - add <script src="'+ftui.config.dir+'/widget_'+name+'.js" defer></script> do your page, to see more informations about this failure');
             deferredLoad.resolve();
         });
@@ -720,15 +720,23 @@ var ftui = {
         return deferredLoad.promise();
     },
 
-    dynamicload: function(file) {
+    dynamicload: function(url,async) {
         var cache = (ftui.config.DEBUG) ? false : true;
-        ftui.log(2,'dynamic load file:'+file);
-        return $.ajax({
-            url: ftui.config.dir + '/../' + file,
-            dataType: "script",
-            cache: cache,
-            context:{name: name},
-        });
+        ftui.log(3,'dynamic load file:'+url+' / async:'+async);
+
+        var deferred = new $.Deferred();
+
+        var script = document.createElement("script")
+        script.type = "text/javascript";
+        script.async = (async) ? true : false;
+        script.src = url;
+        script.onload = function(){
+            ftui.log(3,'dynamic load done:'+url);
+            deferred.resolve();
+        };
+
+        document.getElementsByTagName('head')[0].appendChild(script);
+        return deferred.promise();
     },
 
     healthCheck: function(){
