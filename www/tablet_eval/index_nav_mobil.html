@@ -6,7 +6,7 @@
      /*
      * UI builder framework for FHEM
      *
-     * Version: 2.1.1
+     * Version: 2.2.0
      * URL: https://github.com/knowthelist/fhem-tablet-ui
      *
      * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
@@ -21,33 +21,35 @@
      */
     -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="widget_base_width" content="74">
+    <meta name="widget_base_height" content="71">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="shortpoll-interval" content="900">
-    <meta name="shortpoll-only-interval" content="30">
-    <meta name="longpoll-delay" content="5"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="gridster_disable" content="1">
     <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
-    <meta name="debug" content="1"> <!-- 1=output to console;0=not output -->
+    <meta name="debug" content="2"> <!-- verbose level 1-6 = output to console;0 = not output -->
     <meta http-equiv="Cache-Control" content="no-store" />
 
-    <link rel="stylesheet" href="/fhem/tablet_eval/css/fhem-tablet-ui.css" />
-    <link rel="stylesheet" href="/fhem/tablet_eval/css/fhem-mobil-ui.css" />
-    <link rel="stylesheet" href="/fhem/tablet_eval/lib/font-awesome.min.css" />
-    <link rel="stylesheet" href="/fhem/tablet_eval/lib/jquery.toast.min.css" />
+    <link rel="stylesheet" href="lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="css/fhem-mobil-ui.css" />
+    <link rel="stylesheet" href="lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
 
     <!-- define your personal style here, it wont be overwritten  -->
-    <!-- link rel="stylesheet" href="/fhem/tablet/css/fhem-green-ui.css" / -->
-    <!-- link rel="stylesheet" href="/fhem/tablet_dev/css/fhem-tablet-ui-user.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
 
-    <script src="/fhem/pgm2/jquery.min.js" defer></script>
-    <script src="/fhem/tablet_eval/lib/jquery.toast.min.js" defer></script>
-    <script src="/fhem/tablet_eval/js/fhem-tablet-ui.js" defer></script>
+    <script src="../pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="lib/jquery.gridster.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
 
     <title>FHEM-Tablet-UI-mobil</title>
 </head>
 <body>
 
-    <!-- Demo FTUI 2.1 mobil page with slideout navigation and fixed header -->
+    <!-- Demo FTUI 2.1 mobil page with slideout navigation -->
 
     <nav id="menu">
         <div data-type="link" class="default large top-space-2x left-space-3x"
@@ -55,25 +57,25 @@
            data-icon-left="fa-dashboard"
            data-color="white"
            data-text-align="right"
-           data-load="div#content1"
+           data-load="#content1"
            data-url="#content_temps.html"
            data-active-color="green"
-           data-active-pattern="(.*index_nav_fixed_mobil.html|.*#content_temps.html)">Temps</div>
-        <div data-type="link" class="large top-space-2x left-space-3x"
+           data-active-pattern="(.*index_nav_mobil.html|.*#content_temps.html)">Temps</div>
+        <div data-type="link" class="prefetch large top-space-2x left-space-3x"
             data-width="150"
             data-icon-left="fa-lightbulb-o"
             data-color="white"
             data-text-align="right"
-            data-load="div#content2"
+            data-load="#content2"
             data-url="#content_lights.html"
             data-active-color="green"
             data-active-pattern=".*#content_lights.html">Lights</div>
-        <div data-type="link" class="large top-space-2x left-space-3x"
+        <div data-type="link" class="prefetch large top-space-2x left-space-3x"
             data-width="150"
             data-icon-left="ftui-window"
             data-color="white"
             data-text-align="right"
-            data-load="div#content3"
+            data-load="#content3"
             data-url="#content_windows.html"
             data-active-color="green"
             data-active-pattern=".*#content_windows.html">Windows</div>
@@ -82,21 +84,19 @@
             data-icon-left="fa-music"
             data-color="white"
             data-text-align="right"
-            data-load="div#content4"
+            data-load="#content4"
             data-url="#content_sounds.html"
             data-active-color="green"
             data-active-pattern=".*#content_sounds.html">Sounds</div>
     </nav>
 
-    <!-- the fixed header -->
-    <header id="header-nav" class="bg-lightgray fixed row">
-     <div data-type="slideout" class="col-1-8 big center-align notouch"></div>
-     <div id="linkname" class="col-3-6 large bold center-align middle"></div>
-     <div data-type="symbol" data-icon="fa-bell" data-device="dummy2" data-get-on="on.*" data-get-off="off" class="col-1-6 right-align big black"></div>
-     <div data-type="symbol" data-device="dummy1" data-icon="ftui-window" class="col-1-6 big warn"></div>
-    </header>
-
     <main id="panel" class="">
+        <header id="header-nav" class="bg-lightgray row">
+         <div data-type="slideout" class="col-1-8 big center-align notouch"></div>
+         <div id="linkname" class="col-3-6 large bold center-align middle"></div>
+         <div data-type="symbol" data-icon="fa-bell" data-device="dummy2" data-get-on="on.*" data-get-off="off" class="col-1-6 right-align big black"></div>
+         <div data-type="symbol" data-device="dummy1" data-icon="ftui-window" class="col-1-6 big warn"></div>
+        </header>
         <div class="page" id="content1"></div>
         <div class="page" id="content2"></div>
         <div class="page" id="content3"></div>
