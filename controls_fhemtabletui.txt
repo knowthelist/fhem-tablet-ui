@@ -21,6 +21,7 @@ UPD 2016-02-27_02:20:40 2577 www/tablet_eval/css/ftui_departure.css
 UPD 2015-12-03_07:04:10 429 www/tablet_eval/css/ftui_range.css
 UPD 2016-04-07_23:13:12 1036 www/tablet_eval/css/ftui_slideout.css
 UPD 2016-02-18_22:40:41 1234 www/tablet_eval/css/ftui_spinner.css
+UPD 2016-04-20_23:28:45 5166 www/tablet_eval/demo_ftui.html
 UPD 2015-11-24_23:53:37 127396 www/tablet_eval/fonts/fhemSVG.eot
 UPD 2015-11-24_23:53:37 528460 www/tablet_eval/fonts/fhemSVG.svg
 UPD 2015-11-24_23:53:37 127232 www/tablet_eval/fonts/fhemSVG.ttf
@@ -51,6 +52,7 @@ UPD 2015-11-24_23:53:37 74077 www/tablet_eval/fonts/Roboto-Thin-webfont.svg
 UPD 2015-11-24_23:53:37 47700 www/tablet_eval/fonts/Roboto-Thin-webfont.ttf
 UPD 2015-11-24_23:53:37 24944 www/tablet_eval/fonts/Roboto-Thin-webfont.woff
 UPD 2016-04-20_19:40:23 13934 www/tablet_eval/index-example.html
+UPD 2016-04-20_20:56:11 2947 www/tablet_eval/index_empty.html
 UPD 2016-04-20_01:22:27 4684 www/tablet_eval/index_nav_fixed_mobil.html
 UPD 2016-04-20_01:25:10 4654 www/tablet_eval/index_nav_mobil.html
 UPD 2016-04-20_01:16:37 3583 www/tablet_eval/index_page_demo.html
