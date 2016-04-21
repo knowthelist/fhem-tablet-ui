@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.0
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * !!!! Evaluation version - run only in a staging enviroment !!!!
+     *
+     * - create a new folder named 'tablet_eval' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet_eval
+     * - add 'define TABLETUIEVAL HTTPSRV ftui_eval ./www/tablet_eval Tablet-EVAL' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet_eval/
+     */
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="widget_base_width" content="74">
+    <meta name="widget_base_height" content="71">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="gridster_disable" content="1">
+    <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="debug" content="2"> <!-- verbose level 1-6 = output to console;0 = not output -->
+    <meta http-equiv="Cache-Control" content="no-store" />
+
+    <link rel="stylesheet" href="lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+
+    <script src="../pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="lib/jquery.gridster.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizex="9" data-sizey="1">
+             <div class="top-space large thin">
+                <div data-type="link" class="inline narrow"
+                     data-width="120" data-height="40"
+                     data-color="blue"
+                     data-background-color=""
+                     data-border-color="blue"
+                     data-active-color="white"
+                     data-active-background-color="blue"
+                     data-active-border-color="blue"
+                     data-active-pattern=".*content1.html"
+                     data-icon="fa-home"
+                     data-url="#page_content1.html"
+                     data-load="#content1">
+                    Room 1
+                </div>
+                <div data-type="link" class="inline narrow"
+                     data-width="120" data-height="40"
+                     data-color="blue"
+                     data-background-color=""
+                     data-border-color="blue"
+                     data-active-color="white"
+                     data-active-background-color="blue"
+                     data-active-border-color="blue"
+                     data-active-pattern=".*content2.html"
+                     data-icon="fa-gear"
+                     data-url="#page_content2.html"
+                     data-load="#content2">
+                    Room 2
+                </div>
+                <div data-type="link" class="inline narrow"
+                     data-width="120" data-height="40"
+                     data-color="blue"
+                     data-background-color=""
+                     data-border-color="blue"
+                     data-active-color="white"
+                     data-active-background-color="blue"
+                     data-active-border-color="blue"
+                     data-active-pattern=".*content3.html"
+                     data-icon="fa-music"
+                     data-url="#page_content3.html"
+                     data-load="#content3">
+                    Room 3
+                </div>
+                <div data-type="link" class="inline narrow"
+                     data-width="120" data-height="40"
+                     data-color="blue"
+                     data-background-color=""
+                     data-border-color="blue"
+                     data-active-color="white"
+                     data-active-background-color="blue"
+                     data-active-border-color="blue"
+                     data-active-pattern=".*content4.html"
+                     data-icon="fa-print"
+                     data-url="#page_content4.html"
+                     data-load="#content4">
+                    Room 4
+                </div>
+             </div>
+            </li>
+            <li data-row="2" data-col="1" data-sizex="9" data-sizey="8">
+                <div class="page" id="content1"></div>
+                <div class="page" id="content2"></div>
+                <div class="page" id="content3"></div>
+                <div class="page" id="content4"></div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

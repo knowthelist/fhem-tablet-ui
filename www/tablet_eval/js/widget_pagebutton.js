@@ -142,6 +142,18 @@ var Modul_pagebutton = function () {
            this.showOverlay(elem,getPart(state,elem.data('get-warn')));
        else
            this.showOverlay(elem,"");
+
+       var id = elem.data('device') + "_" + elem.data('get') + "_" + elem.data('url');
+
+       if (elem.children().filter('#fg').hasClass('activate')){
+           //only for the first occurance (Flipflop logic)
+           if ( localStorage.getItem(id)!=='true' ){
+               localStorage.setItem(id, 'true');
+               me.toggleOn(elem);
+           }
+       } else{
+           localStorage.setItem(id, 'false');
+       }
    };
 
     // public

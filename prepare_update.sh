@@ -1,14 +1,14 @@
 #!/bin/bash   
-rm controls_fhemtabletui.txt
+rm controls_fhemtabletui_eval.txt
 find ./www/tablet_eval -type d \( ! -iname ".*" \) -print0 | while IFS= read -r -d '' f; 
   do
    out="DIR $f"
-   echo ${out//.\//} >> controls_fhemtabletui.txt
+   echo ${out//.\//} >> controls_fhemtabletui_eval.txt
 done
 find ./www/tablet_eval -type f \( ! -iname ".*" \) -print0 | while IFS= read -r -d '' f; 
   do
    out="UPD "$(stat -f "%Sm" -t "%Y-%m-%d_%T" $f)" "$(stat -f%z $f)" ${f}"
-   echo ${out//.\//} >> controls_fhemtabletui.txt
+   echo ${out//.\//} >> controls_fhemtabletui_eval.txt
 done
 
 # CHANGED file

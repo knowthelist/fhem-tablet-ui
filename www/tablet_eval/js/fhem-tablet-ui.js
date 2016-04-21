@@ -12,7 +12,7 @@
 /* ToDo:
     -
 */
-var c = 0,d=0;
+
 // -------- Widget Base---------
 var Modul_widget = function () {
 
