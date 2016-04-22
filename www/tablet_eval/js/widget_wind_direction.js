@@ -1,15 +1,17 @@
 // idea by michiatlnx
 // http://forum.fhem.de/index.php/topic,34233.msg281124.html#msg281124
 
-function depends_direction (){
+function depends_wind_direction (){
     if(typeof Modul_volume == 'undefined')
         return ["volume"];
 };
 
 var Modul_wind_direction = function() {
 
-    var isUpdating=false;
+    var isUpdating = false;
     
+    function onRelease (v) {}
+
     function init () {
         var me = this;
         this.elements = $('div[data-type="'+this.widgetname+'"]', this.area);
@@ -26,6 +28,7 @@ var Modul_wind_direction = function() {
             elem.data('size', 12);
         }
 
+        elem.addClass('readonly');
         elem.initData('height'      ,elem.data('size'));
         elem.initData('width'       ,elem.data('size'));
         elem.initData('angleoffset' ,0);
@@ -138,5 +141,6 @@ var Modul_wind_direction = function() {
         widgetname: 'wind_direction',
         init:       init,
         update:     update,
+        onRelease: onRelease
     });
 };

@@ -8,6 +8,7 @@ var Modul_knob = function () {
 
     var isUpdating = false;
     var onChange = null;
+
     function onRelease (v) {
        if (!isUpdating){
              var device = this.$.data('device');
