@@ -1,5 +1,8 @@
-function depends_wind_direction (){
-    if(typeof Module_volume == 'undefined')
+// idea by michiatlnx
+// http://forum.fhem.de/index.php/topic,34233.msg281124.html#msg281124
+
+function depends_direction (){
+    if(typeof Modul_volume == 'undefined')
         return ["volume"];
 };
 
