@@ -123,6 +123,7 @@ var Modul_level= function () {
                             elem.children().find('.range-quantity').css( "background-color", colors[idx] );
                         }
                     }
+                    elem.attr('title',val);
                 }
                 input_elem.css({visibility:'visible'});
             }
