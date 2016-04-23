@@ -340,6 +340,7 @@ var ftui = {
            console.timeEnd('get jsonlist2');
            console.time('read jsonlist2');
 
+            ftui.log(3,'fhemJSON: 0='+Object.keys(fhemJSON)[0]+' 1='+Object.keys(fhemJSON)[1]);
             // function to import data
             function checkReading(device,section){
                for (var reading in section) {
@@ -380,7 +381,7 @@ var ftui = {
 
             // import the whole fhemJSON
             var len = fhemJSON.Results.length;
-            ftui.log(1,'shortpoll: json-len='+len);
+            ftui.log(2,'shortpoll: fhemJSON.Results.length='+len);
             var results = fhemJSON.Results;
             for(var i = 0; i < len; i++){
               var res = results[i];
