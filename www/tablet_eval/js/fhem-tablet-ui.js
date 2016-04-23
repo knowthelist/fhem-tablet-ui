@@ -335,7 +335,8 @@ var ftui = {
         $.getJSON(ftui.config.fhem_dir,
                   {cmd: 'jsonlist2',
                    XHR:1,
-                   timeout: 60000},  function (fhemJSON) {
+                   timeout: 60000})
+         .done( function (fhemJSON) {
            console.timeEnd('get jsonlist2');
            console.time('read jsonlist2');
 
@@ -404,7 +405,11 @@ var ftui = {
             ftui.states.lastShortpoll = ltime;
             ftui.saveStatesLocal();
             console.timeEnd('read jsonlist2');
-        });
+        })
+        .fail(function( jqxhr, textStatus, error ) {
+          var err = textStatus + ", " + error;
+          ftui.log(1, "shortPoll request failed: " + err );
+      });
     },
 
     longPoll: function() {
@@ -680,7 +685,7 @@ var ftui = {
                 });
             }
          } else {
-            ftui.log(2,"function depends_"+name+" not found");
+            ftui.log(2,"function depends_"+name+" not found (maybe ok)");
          }
 
          $.when.apply(this,depsPromises).always(function(){
