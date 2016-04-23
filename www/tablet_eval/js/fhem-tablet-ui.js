@@ -339,8 +339,8 @@ var ftui = {
          .done( function (fhemJSON) {
            console.timeEnd('get jsonlist2');
            console.time('read jsonlist2');
+           ftui.log(3,'fhemJSON: 0='+Object.keys(fhemJSON)[0]+' 1='+Object.keys(fhemJSON)[1]);
 
-            ftui.log(3,'fhemJSON: 0='+Object.keys(fhemJSON)[0]+' 1='+Object.keys(fhemJSON)[1]);
             // function to import data
             function checkReading(device,section){
                for (var reading in section) {
@@ -410,6 +410,7 @@ var ftui = {
         .fail(function( jqxhr, textStatus, error ) {
           var err = textStatus + ", " + error;
           ftui.log(1, "shortPoll request failed: " + err );
+          ftui.toast(err,'error');
       });
     },
 
@@ -546,7 +547,7 @@ var ftui = {
             }
         })
         .fail (function(jqXHR, textStatus, errorThrown) {
-                ftui.toast("Error: " + textStatus + ": " + errorThrown);
+            ftui.toast(textStatus + ": " + errorThrown,'error');
         })
         .done ( function( data ) {
             // really neccessary ?
@@ -879,9 +880,24 @@ var ftui = {
         return !d ? 0 : s.length - d;
     },
 
-    toast: function(text){
-        if (ftui.config.TOAST)
-            $.toast(text);
+    toast: function(text,error){
+        //https://github.com/kamranahmedse/jquery-toast-plugin
+        if (ftui.config.TOAST){
+            if (error && error === 'error')
+                $.toast({
+                    heading: 'Error',
+                    text: text,
+                    hideAfter: 10000,   // in milli seconds
+                    icon: 'error',
+                    loader: false
+                })
+            else
+                $.toast({
+                    text:text,
+                    loader: false
+                 });
+
+        }
     },
 
     log: function(level,text){
