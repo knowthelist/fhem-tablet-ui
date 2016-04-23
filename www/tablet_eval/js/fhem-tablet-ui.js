@@ -406,11 +406,11 @@ var ftui = {
             ftui.states.lastShortpoll = ltime;
             ftui.saveStatesLocal();
             console.timeEnd('read jsonlist2');
-        })
+       })
         .fail(function( jqxhr, textStatus, error ) {
           var err = textStatus + ", " + error;
           ftui.log(1, "shortPoll request failed: " + err );
-          ftui.toast(err,'error');
+          ftui.toast("<u>ShortPoll Request Failed</u><br>" + err,'error');
       });
     },
 
@@ -547,7 +547,7 @@ var ftui = {
             }
         })
         .fail (function(jqXHR, textStatus, errorThrown) {
-            ftui.toast(textStatus + ": " + errorThrown,'error');
+            ftui.toast("<u>FHEM Command Failed</u><br>"+textStatus + ": " + errorThrown,'error');
         })
         .done ( function( data ) {
             // really neccessary ?
