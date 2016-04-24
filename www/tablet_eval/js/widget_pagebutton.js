@@ -123,7 +123,7 @@ var Modul_pagebutton = function () {
            // remove all left locks
            var sel = elem.data('load');
            var hashUrl=elem.data('url').replace('#','');
-           var lockID = ['ftui','link',hashUrl,sel].join('_');
+           var lockID = ['ftui',me.widgetname,hashUrl,sel].join('_');
            localStorage.removeItem(lockID);
 
            //prefetch page if necessary
