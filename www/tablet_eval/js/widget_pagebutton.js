@@ -10,6 +10,12 @@ var Modul_pagebutton = function () {
        console.time('fetch content');
        var sel = elem.data('load');
        var hashUrl=elem.data('url').replace('#','');
+       var lockID = ['ftui',me.widgetname,hashUrl,sel].join('_');
+       if ( localStorage.getItem(lockID) ){
+           console.log('---------------pagebutton load locked',lockID);
+           return;
+       }
+       localStorage.setItem(lockID,'locked');
        $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
            console.timeEnd('fetch content');
            console.log(me.widgetname+': new content from $('+sel+') loaded');
@@ -18,6 +24,9 @@ var Modul_pagebutton = function () {
                $(sel).addClass('active');
                elem.closest('nav').trigger('changedSelection');
            }
+           $(document).on("initWidgetsDone",function(){
+               localStorage.removeItem(lockID);
+           });
        });
     };
 
@@ -110,6 +119,12 @@ var Modul_pagebutton = function () {
                var isActive = url.match(new RegExp('^'+elem.data('active-pattern')+'$'));
                changeState(elem,isActive);
            });
+
+           // remove all left locks
+           var sel = elem.data('load');
+           var hashUrl=elem.data('url').replace('#','');
+           var lockID = ['ftui','link',hashUrl,sel].join('_');
+           localStorage.removeItem(lockID);
 
            //prefetch page if necessary
            if ( elem.isValidData('load') && elem.isValidData('url')

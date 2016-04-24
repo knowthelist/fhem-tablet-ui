@@ -38,10 +38,15 @@ var Modul_link = function () {
 
     function loadPage(elem){
         console.time('fetch content');
-        var me = this;
         var sel = elem.data('load');
         var hashUrl=elem.data('url').replace('#','');
-        console.log(hashUrl +" "+sel+" > *");
+        var lockID = ['ftui','link',hashUrl,sel].join('_');
+        if ( localStorage.getItem(lockID) ){
+            console.log('---------------link load locked',lockID);
+            return;
+        }
+        localStorage.setItem(lockID,'locked');
+        console.log('link loadPage: hashUrl='+hashUrl +" sel="+sel+" > *");
         $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
             console.timeEnd('fetch content');
             console.log(me.widgetname+': new content from $('+sel+') loaded');
@@ -50,6 +55,9 @@ var Modul_link = function () {
                 $(sel).addClass('active');
                 elem.closest('nav').trigger('changedSelection');
             }
+            $(document).on("initWidgetsDone",function(){
+                localStorage.removeItem(lockID);
+            });
         });
     };
 
@@ -93,6 +101,7 @@ var Modul_link = function () {
     };
 
     function init_ui(elem) {
+        me = this;
         var base = this;
         var leftIcon = elem.data('icon-left');
         var rightIcon = elem.data('icon-right');
@@ -183,7 +192,13 @@ var Modul_link = function () {
            elem.addClass('default');
         }
 
-        //prefetch page if necessary
+        // remove all left locks
+        var sel = elem.data('load');
+        var hashUrl=elem.data('url').replace('#','');
+        var lockID = ['ftui',me.widgetname,hashUrl,sel].join('_');
+        localStorage.removeItem(lockID);
+
+        // prefetch page if necessary
         if ( elem.isValidData('load') && elem.isValidData('url')
              && (elem.hasClass('prefetch') || elem.hasClass('default'))) {
 
@@ -200,6 +215,7 @@ var Modul_link = function () {
 
     // public
     // inherit all public members from base class
+    var me = this;
     return $.extend(new Modul_widget(), {
         //override or own public members
         widgetname: 'link',

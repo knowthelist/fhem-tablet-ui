@@ -2,7 +2,7 @@
 /**
 * UI builder framework for FHEM
 *
-* Version: 2.2.0
+* Version: 2.2.1
 *
 * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -114,7 +114,7 @@ var plugins = {
 // -------- FTUI ----------
 
 var ftui = {
-   version: '2.2.0',
+   version: '2.2.1',
    config: {
         DEBUG: false,
         DEMO:false,
@@ -163,6 +163,15 @@ var ftui = {
         ftui.log(1,'Filename: '+ftui.config.filename);
         ftui.config.fhem_dir = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
         ftui.log(1,'FHEM dir: '+ftui.config.fhem_dir);
+
+        try {
+          // try to use localStorage
+          localStorage.setItem('ftui', ftui.version);
+          localStorage.removeItem('ftui');
+        } catch (e) {
+          // there was an error so...
+            ftui.toast('You are in Privacy Mode<br>Please deactivate Privacy Mode and then reload the page.','error');
+        }
 
         //add background for modal dialogs
         $("<div id='shade' />").prependTo('body').hide();
@@ -887,7 +896,7 @@ var ftui = {
                 $.toast({
                     heading: 'Error',
                     text: text,
-                    hideAfter: 10000,   // in milli seconds
+                    hideAfter: 20000,   // in milli seconds
                     icon: 'error',
                     loader: false
                 })
@@ -1175,11 +1184,16 @@ $.fn.once = function(a, b) {
 
 //for widget
 
+$.fn.widgetId = function() {
+    return [ 'ftui', $(this).data('type'), $(this).data('device'), $(this).data('get') ].join('_');
+};
+
 $.fn.filterData = function(key, value) {
     return this.filter(function() {
         return $(this).data(key) == value;
     });
 };
+
 $.fn.filterDeviceReading = function(key, device, param) {
     return this.filter(function() {
         var elem = $(this);
