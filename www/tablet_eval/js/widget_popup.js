@@ -16,7 +16,9 @@ var Modul_popup = function () {
                     left: elem.options.start_left,
                     opacity: 0
                 }, 500, "swing", function() {
-                  showModal(false);
+                	if( elem.data('only-autoclose') == false ) {
+                		showModal(false);
+                	}
                 });
             break;
         default:
@@ -61,8 +63,10 @@ var Modul_popup = function () {
         elem.initData('height'      ,'300px');
         elem.initData('width'       ,'400px');
         elem.initData('mode'        ,'animate');
+        elem.initData('only-autoclose',false);
         elem.initData('starter'     ,null);
         elem.initData('draggable'   ,true);
+        
         this.addReading(elem,'get');
     };
 
@@ -96,7 +100,11 @@ var Modul_popup = function () {
                         console.log('e.g.: <script type="text/javascript" src="../pgm2/jquery-ui.min.js"></script>');
                     }
                 }
-
+                
+                if( elem.data('only-autoclose') ) {
+                	$('.dialog-close').css({'display':'none'});
+                }
+                
                 dialog.css({'height':elem.data('height'),'width':elem.data('width')});
                 starter.css({'cursor': 'pointer'});
                 elem.closest('.gridster>ul>li').css({overflow: 'visible'});
@@ -124,13 +132,15 @@ var Modul_popup = function () {
                 });
 
                 $(document).on('shadeClicked', function() {
-                    hide(dialog,elem.data('mode'));
+                    if( elem.data('only-autoclose') == false ) {
+                    	hide(dialog,elem.data('mode'));
+                    }
                 });
 
                 starter.on('click',function(e) {
                     e.preventDefault();
                     show(dialog,elem.data('mode'));
-                    $(this).trigger('fadein');
+                    elem.trigger('fadein');
                   });
             }
         });
@@ -138,23 +148,30 @@ var Modul_popup = function () {
    };
 
    function update (dev,par) {
-       this.elements.filterDeviceReading('get',dev,par)
+	   var me = this;
+       me.elements.filterDeviceReading('get',dev,par)
        .each(function(index) {
            var elem = $(this);
            var state = elem.getReading('get').val;
            if (state) {
-               if ( state == $(this).data('get-on') )
+               if ( state == elem.data('get-on') )
                     elem.find('.dialog-starter').trigger('click');
-               else if ( state == $(this).data('get-off') )
-                    elem.find('.dialog-close').trigger('click');
-               else if ( state.match(new RegExp('^' + $(this).data('get-on') + '$')) )
+               else if ( state == elem.data('get-off') ) {
+            	    showModal(false);
+            	   	elem.find('.dialog-close').trigger('click');
+               }
+               else if ( state.match(new RegExp('^' + elem.data('get-on') + '$')) )
                     elem.find('.dialog-starter').trigger('click');
-               else if ( state.match(new RegExp('^' + $(this).data('get-off') + '$')) )
-                    elem.find('.dialog-close').trigger('click');
-               else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
+               else if ( state.match(new RegExp('^' + elem.data('get-off') + '$')) ){
+	           	    showModal(false);
+	        	   	elem.find('.dialog-close').trigger('click');
+	           }
+               else if ( elem.data('get-off')=='!on' && state != elem.data('get-on') )
                     elem.find('.dialog-starter').trigger('click');
-               else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
-                    elem.find('.dialog-close').trigger('click');
+               else if ( elem.data('get-on')=='!off' && state != elem.data('get-off') ) {
+            	    showModal(false);
+            	   	elem.find('.dialog-close').trigger('click');
+               }
            }
        });
    };
