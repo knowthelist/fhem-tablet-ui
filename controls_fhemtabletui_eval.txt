@@ -84,7 +84,7 @@ UPD 2016-04-22_14:03:57 2990 www/tablet_eval/js/widget_klimatrend.js
 UPD 2016-04-22_13:38:27 6337 www/tablet_eval/js/widget_knob.js
 UPD 2016-04-07_23:06:45 6217 www/tablet_eval/js/widget_label.js
 UPD 2016-04-23_11:07:36 5609 www/tablet_eval/js/widget_level.js
-UPD 2016-04-25_01:05:43 8500 www/tablet_eval/js/widget_link.js
+UPD 2016-04-25_16:16:48 8514 www/tablet_eval/js/widget_link.js
 UPD 2015-12-03_07:04:14 1857 www/tablet_eval/js/widget_meteogram.js
 UPD 2016-04-25_01:29:19 7463 www/tablet_eval/js/widget_pagebutton.js
 UPD 2016-04-17_12:40:59 8059 www/tablet_eval/js/widget_pagetab.js
@@ -97,14 +97,14 @@ UPD 2015-12-03_05:35:40 1667 www/tablet_eval/js/widget_readingsgroup.js
 UPD 2016-04-03_20:10:47 1281 www/tablet_eval/js/widget_rotor.js
 UPD 2016-04-07_23:13:13 3286 www/tablet_eval/js/widget_select.js
 UPD 2016-04-07_23:13:13 11520 www/tablet_eval/js/widget_simplechart.js
-UPD 2016-04-13_07:16:18 2220 www/tablet_eval/js/widget_slideout.js
+UPD 2016-04-26_05:47:50 2458 www/tablet_eval/js/widget_slideout.js
 UPD 2016-04-12_23:48:49 8562 www/tablet_eval/js/widget_slider.js
 UPD 2016-04-09_13:57:32 11300 www/tablet_eval/js/widget_spinner.js
 UPD 2016-04-12_23:47:54 4123 www/tablet_eval/js/widget_swiper.js
 UPD 2016-04-12_23:05:29 1275 www/tablet_eval/js/widget_switch.js
 UPD 2016-04-12_23:05:12 1829 www/tablet_eval/js/widget_symbol.js
 UPD 2016-04-14_00:51:48 6879 www/tablet_eval/js/widget_thermostat.js
-UPD 2016-04-14_00:54:37 7084 www/tablet_eval/js/widget_volume.js
+UPD 2016-04-26_05:04:27 7082 www/tablet_eval/js/widget_volume.js
 UPD 2016-04-07_23:13:13 22150 www/tablet_eval/js/widget_weather.js
 UPD 2016-04-22_13:40:48 6099 www/tablet_eval/js/widget_wind_direction.js
 UPD 2016-02-27_15:54:41 12061 www/tablet_eval/lib/fa-multi-button.js
