@@ -108,7 +108,7 @@ var Modul_volume = function () {
               if(typeof device!='undefined') {
                   var val = this.o.setValue.replace('$v',v.toString());
                   var cmdl = [this.o.cmd,device,this.o.set,val].join(' ');
-                  setFhemStatus(cmdl);
+                  ftui.setFhemStatus(cmdl);
                   ftui.toast(cmdl);
               }
               this.$.data('curval', v);
@@ -185,7 +185,7 @@ var Modul_volume = function () {
             if ((parseInt(elem.data('mode'))>>6) % 2 != 0){
                 //is hex rgb
 
-                val=widget_knob.rgbToHsl(val)[0];
+                val=ftui.rgbToHsl(val)[0];
                 val=val*elem.data('max');
             }
             else{

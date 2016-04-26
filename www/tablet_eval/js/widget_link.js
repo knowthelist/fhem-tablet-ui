@@ -53,7 +53,7 @@ var Modul_link = function () {
             ftui.initPage(sel);
             if (elem.hasClass('default')){
                 $(sel).addClass('active');
-                elem.closest('nav').trigger('changedSelection');
+                elem.closest('nav').trigger('changedSelection',[elem.text()]);
             }
             $(document).on("initWidgetsDone",function(){
                 localStorage.removeItem(lockID);

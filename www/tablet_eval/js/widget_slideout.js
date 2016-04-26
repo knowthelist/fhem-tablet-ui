@@ -52,8 +52,14 @@ var Modul_slideout = function () {
 
 
         $(elem.data('menu')).on('changedSelection',function(event,text) {
-            console.log('linkname',text);
-            elem.parent().find('#linkname').text(text);
+
+            var elemLinkName =
+                    elem.parent().find('#linkname') ||
+                    $(elem.data('panel')).find('#linkname') ||
+                    $(elem.data('menu')).find('#linkname');
+            console.log('linkname',text,elemLinkName);
+            if (elemLinkName)
+                elemLinkName.text(text);
             if (!elem.hasClass('keepopen')){
                 slideout.close();
             }
