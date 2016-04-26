@@ -52,12 +52,9 @@ var Modul_slideout = function () {
 
 
         $(elem.data('menu')).on('changedSelection',function(event,text) {
-
             var elemLinkName =
-                    elem.parent().find('#linkname') ||
                     $(elem.data('panel')).find('#linkname') ||
                     $(elem.data('menu')).find('#linkname');
-            console.log('linkname',text,elemLinkName);
             if (elemLinkName)
                 elemLinkName.text(text);
             if (!elem.hasClass('keepopen')){

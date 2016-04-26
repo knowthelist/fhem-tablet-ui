@@ -18,7 +18,7 @@ var Modul_pagebutton = function () {
        localStorage.setItem(lockID,'locked');
        $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
            console.timeEnd('fetch content');
-           console.log(me.widgetname+': new content from $('+sel+') loaded');
+           console.log(me.widgetname+': new content from $("'+sel+'") loaded');
            ftui.initPage(sel);
            if (elem.hasClass('default')){
                $(sel).addClass('active');

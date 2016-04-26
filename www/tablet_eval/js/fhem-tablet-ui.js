@@ -231,7 +231,7 @@ var ftui = {
         //init gridster
         area = (isValid(area)) ? area : '';
         console.time('initPage');
-        console.log('initPage - area=',area);
+        ftui.log(2,'initPage - area=',area);
 
         // postpone shortpoll start
         ftui.startShortPollInterval();
@@ -275,6 +275,7 @@ var ftui = {
         ftui.log(3,plugins);
         plugins.removeArea(area);
         ftui.log(3,plugins);
+        ftui.log(2,'initWidgets - area=',area);
 
         //collect required widgets types
         $('div[data-type]',area).each(function(index){
