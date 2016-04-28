@@ -107,6 +107,7 @@ var Modul_link = function () {
         var rightIcon = elem.data('icon-right');
         var text = elem.html();
         var iconWidth = 0;
+        var elem_url=elem.data('url');
 
         // prepare container element
         elem.html('')

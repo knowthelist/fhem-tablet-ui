@@ -34,7 +34,7 @@ var Modul_label = function () {
     };
 
     function update_substitution(value, substitution) {
-        ftui.log(3,this.widgetname+' - value:'+value+', substitution:'+substitution);
+        ftui.log(3,me.widgetname+' - value:'+value+', substitution:'+substitution);
         if(substitution){
             if ($.isArray(substitution)){
                 for(var i=0, len=substitution.length; i<len; i+=2) {
@@ -72,7 +72,7 @@ var Modul_label = function () {
 
     function update(dev,par) {
 
-        var me = this;
+        me = this;
         // update from normal state reading
         me.elements.filterDeviceReading('get',dev,par)
         .each(function(index) {
@@ -152,7 +152,7 @@ var Modul_label = function () {
 
     // public
     // inherit all public members from base class
-
+    var me = this;
     return $.extend(new Modul_widget(), {
         //override or own public members
         widgetname: 'label',

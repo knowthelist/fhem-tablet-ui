@@ -466,41 +466,45 @@ var ftui = {
 
                         for (var i=ftui.poll.currLine, len = lines.length; i < len; i++) {
                             if (isValid(lines[i])){
-                                var dataJSON = JSON.parse(lines[i]);
-                                var params = null;
-                                var param = null;
-                                var isSTATE = ( dataJSON[1] !== dataJSON[2] );
+                                try {
+                                    var dataJSON = JSON.parse(lines[i]);
+                                    var params = null;
+                                    var param = null;
+                                    var isSTATE = ( dataJSON[1] !== dataJSON[2] );
 
-                                ftui.log(4,dataJSON);
+                                    ftui.log(4,dataJSON);
 
-                                var pmap = ftui.paramIdMap[dataJSON[0]];
-                                var tmap = ftui.timestampMap[dataJSON[0]];
-                                // update for a paramter
-                                if ( pmap ) {
-                                  if (isSTATE)
-                                    pmap.reading = 'STATE';
-                                  params = ftui.deviceStates[pmap.device] || {};
-                                  param = params[pmap.reading]  || {};
-                                  param.val = dataJSON[1];
-                                  param.valid = true;
-                                  params[pmap.reading] = param;
-                                  ftui.deviceStates[pmap.device]= params;
-                                  // dont wait for timestamp for STATE paramters
-                                  if (isSTATE && ftui.subscriptions[dataJSON[0]])
-                                     plugins.update(pmap.device,pmap.reading);
-                                }
-                                // update for a timestamp
-                                // STATE updates has no timestamp
-                                if ( tmap  && !isSTATE ) {
-                                  params = ftui.deviceStates[tmap.device] || {};
-                                  param = params[tmap.reading]  || {};
-                                  param.date = dataJSON[1];
-                                  params[tmap.reading] = param;
-                                  ftui.poll.timestamp = param.date;
-                                  ftui.deviceStates[tmap.device]= params;
-                                  // paramter + timestamp update now completed -> update widgets
-                                  if (ftui.subscriptionTs[dataJSON[0]])
-                                     plugins.update(tmap.device,tmap.reading);
+                                    var pmap = ftui.paramIdMap[dataJSON[0]];
+                                    var tmap = ftui.timestampMap[dataJSON[0]];
+                                    // update for a paramter
+                                    if ( pmap ) {
+                                      if (isSTATE)
+                                        pmap.reading = 'STATE';
+                                      params = ftui.deviceStates[pmap.device] || {};
+                                      param = params[pmap.reading]  || {};
+                                      param.val = dataJSON[1];
+                                      param.valid = true;
+                                      params[pmap.reading] = param;
+                                      ftui.deviceStates[pmap.device]= params;
+                                      // dont wait for timestamp for STATE paramters
+                                      if (isSTATE && ftui.subscriptions[dataJSON[0]])
+                                         plugins.update(pmap.device,pmap.reading);
+                                    }
+                                    // update for a timestamp
+                                    // STATE updates has no timestamp
+                                    if ( tmap  && !isSTATE ) {
+                                      params = ftui.deviceStates[tmap.device] || {};
+                                      param = params[tmap.reading]  || {};
+                                      param.date = dataJSON[1];
+                                      params[tmap.reading] = param;
+                                      ftui.poll.timestamp = param.date;
+                                      ftui.deviceStates[tmap.device]= params;
+                                      // paramter + timestamp update now completed -> update widgets
+                                      if (ftui.subscriptionTs[dataJSON[0]])
+                                         plugins.update(tmap.device,tmap.reading);
+                                    }
+                            } catch(e) {
+                                ftui.log(1,"Error: (longpoll) "+e);
                                 }
                             }
                         }
