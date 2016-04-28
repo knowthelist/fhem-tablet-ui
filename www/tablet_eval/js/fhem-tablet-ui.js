@@ -465,6 +465,7 @@ var ftui = {
                         lines.pop(); //remove last empty line
 
                         for (var i=ftui.poll.currLine, len = lines.length; i < len; i++) {
+                            ftui.log(5,lines[i]);
                             if (isValid(lines[i])){
                                 try {
                                     var dataJSON = JSON.parse(lines[i]);
