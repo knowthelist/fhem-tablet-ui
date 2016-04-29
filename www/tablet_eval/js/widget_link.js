@@ -37,6 +37,7 @@ var Modul_link = function () {
     };
 
     function loadPage(elem){
+		$(document).trigger("loadPage");
         console.time('fetch content');
         var sel = elem.data('load');
         var hashUrl=elem.data('url').replace('#','');
