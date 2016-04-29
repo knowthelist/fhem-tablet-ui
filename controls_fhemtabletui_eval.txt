@@ -73,6 +73,7 @@ UPD 2015-12-03_07:04:14 3624 www/tablet_eval/js/widget_eventmonitor.js
 UPD 2016-04-07_23:13:12 2121 www/tablet_eval/js/widget_example.js
 UPD 2016-04-13_00:16:03 12949 www/tablet_eval/js/widget_famultibutton.js
 UPD 2016-04-22_11:48:58 8500 www/tablet_eval/js/widget_fullcalview.js
+UPD 2016-04-29_21:37:04 2246 www/tablet_eval/js/widget_gds.js
 UPD 2015-12-03_07:04:14 8792 www/tablet_eval/js/widget_highchart.js
 UPD 2015-12-03_07:04:14 8542 www/tablet_eval/js/widget_highchart3d.js
 UPD 2016-04-12_23:04:25 9911 www/tablet_eval/js/widget_homestatus.js
@@ -84,9 +85,10 @@ UPD 2016-04-22_14:03:57 2990 www/tablet_eval/js/widget_klimatrend.js
 UPD 2016-04-22_13:38:27 6337 www/tablet_eval/js/widget_knob.js
 UPD 2016-04-28_19:59:50 6229 www/tablet_eval/js/widget_label.js
 UPD 2016-04-23_11:07:36 5609 www/tablet_eval/js/widget_level.js
-UPD 2016-04-28_22:16:37 8553 www/tablet_eval/js/widget_link.js
+UPD 2016-04-29_21:37:04 8588 www/tablet_eval/js/widget_link.js
+UPD 2016-04-29_21:37:04 1493 www/tablet_eval/js/widget_loading.js
 UPD 2015-12-03_07:04:14 1857 www/tablet_eval/js/widget_meteogram.js
-UPD 2016-04-26_18:38:43 7465 www/tablet_eval/js/widget_pagebutton.js
+UPD 2016-04-29_21:37:04 7502 www/tablet_eval/js/widget_pagebutton.js
 UPD 2016-04-17_12:40:59 8059 www/tablet_eval/js/widget_pagetab.js
 UPD 2015-12-03_07:04:14 3226 www/tablet_eval/js/widget_playstream.js
 UPD 2016-04-15_22:27:13 6297 www/tablet_eval/js/widget_popup.js
