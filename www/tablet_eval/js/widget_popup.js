@@ -5,6 +5,8 @@ function depends_popup (){
 
 var Modul_popup = function () {
 
+	var reactOnShadeClick = false;
+	
     function hide (elem,mode) {
         switch(mode) {
             case 'animate':
@@ -60,11 +62,13 @@ var Modul_popup = function () {
         elem.initData('height'      ,'300px');
         elem.initData('width'       ,'400px');
         elem.initData('mode'        ,'animate');
-        elem.initData('only-autoclose',elem.hasClass('only-autoclose') ? true : false);
         elem.initData('starter'     ,null);
         elem.initData('draggable'   ,true);
         
         this.addReading(elem,'get');
+        
+        reactOnShadeClick = elem.hasClass('interlock') ? true : false;
+        
     };
 
     function init () {
@@ -98,7 +102,7 @@ var Modul_popup = function () {
                     }
                 }
                 
-                if( elem.data('only-autoclose') == true ) {
+                if( reactOnShadeClick == true ) {
                 	$('.dialog-close').css({'display':'none'});
                 }
                 
@@ -129,7 +133,7 @@ var Modul_popup = function () {
                 });
 
                 $(document).on('shadeClicked', function() {
-                	if( elem.data('only-autoclose') == false ) {
+                	if( reactOnShadeClick == false ) {
                 		hide(dialog,elem.data('mode'));
                     }
                 });
