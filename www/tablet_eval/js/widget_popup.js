@@ -5,7 +5,8 @@ function depends_popup (){
 
 var Modul_popup = function () {
 
-	var reactOnShadeClick = false;
+	var reactOnShadeClick = true;
+	var visible = false;
 	
     function hide (elem,mode) {
         switch(mode) {
@@ -18,11 +19,13 @@ var Modul_popup = function () {
                     opacity: 0
                 }, 500, "swing", function() {
                 	showModal(false);
+                	visible = false;
                 });
             break;
         default:
             elem.fadeOut(500, function() {
                 showModal(false);
+                visible = false;
             });
         }
     };
@@ -41,6 +44,7 @@ var Modul_popup = function () {
              opacity: 1
             }, 500, "swing", function() {
                   elem.trigger('fadein');
+                  visible = true;
                 });
             break;
         default:
@@ -52,6 +56,7 @@ var Modul_popup = function () {
             });
             elem.fadeIn(500);
             elem.trigger('fadein');
+            visible = true;
         }
     };
 
@@ -66,6 +71,7 @@ var Modul_popup = function () {
         elem.initData('draggable'   ,true);
         
         this.addReading(elem,'get');
+        
         
         reactOnShadeClick = elem.hasClass('interlock') ? true : false;
         
@@ -133,7 +139,7 @@ var Modul_popup = function () {
                 });
 
                 $(document).on('shadeClicked', function() {
-                	if( reactOnShadeClick == false ) {
+                	if( reactOnShadeClick == false && visible == true ) {
                 		hide(dialog,elem.data('mode'));
                     }
                 });
