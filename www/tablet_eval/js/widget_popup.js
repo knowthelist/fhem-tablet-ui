@@ -6,8 +6,7 @@ function depends_popup (){
 var Modul_popup = function () {
 
 	var reactOnShadeClick = true;
-	var visible = false;
-	
+
     function hide (elem,mode) {
         switch(mode) {
             case 'animate':
@@ -18,21 +17,26 @@ var Modul_popup = function () {
                     left: elem.options.start_left,
                     opacity: 0
                 }, 500, "swing", function() {
-                	showModal(false);
-                	visible = false;
+                    ftui.showModal(false);
+                    if ( elem.hasClass('interlock') ){
+                        reactOnShadeClick = true;
+                    }
                 });
             break;
         default:
             elem.fadeOut(500, function() {
-                showModal(false);
-                visible = false;
+                ftui.showModal(false);
+                if ( elem.hasClass('interlock') ){
+                    reactOnShadeClick = true;
+                }
             });
         }
     };
 
     function show (elem,mode) {
-        if (elem.options.shade)
-            showModal(true);
+        if (elem.options.shade) {
+            ftui.showModal(true);
+        }
         switch(mode) {
             case 'animate':
             elem.show();
@@ -44,7 +48,6 @@ var Modul_popup = function () {
              opacity: 1
             }, 500, "swing", function() {
                   elem.trigger('fadein');
-                  visible = true;
                 });
             break;
         default:
@@ -56,7 +59,9 @@ var Modul_popup = function () {
             });
             elem.fadeIn(500);
             elem.trigger('fadein');
-            visible = true;
+        }
+        if ( elem.hasClass('interlock') ){
+            reactOnShadeClick = false;
         }
     };
 
@@ -70,12 +75,9 @@ var Modul_popup = function () {
         elem.initData('starter'     ,null);
         elem.initData('draggable'   ,true);
         
-        this.addReading(elem,'get');
+        this.addReading(elem,'get');        
         
-        
-        reactOnShadeClick = elem.hasClass('interlock') ? true : false;
-        
-    };
+     };
 
     function init () {
         var me=this;
@@ -108,8 +110,8 @@ var Modul_popup = function () {
                     }
                 }
                 
-                if( reactOnShadeClick == true ) {
-                	$('.dialog-close').css({'display':'none'});
+                if( elem.hasClass('interlock') ) {
+                    close.hide();
                 }
                 
                 dialog.css({'height':elem.data('height'),'width':elem.data('width')});
@@ -139,7 +141,7 @@ var Modul_popup = function () {
                 });
 
                 $(document).on('shadeClicked', function() {
-                	if( reactOnShadeClick == false && visible == true ) {
+                    if( reactOnShadeClick ) {
                 		hide(dialog,elem.data('mode'));
                     }
                 });
@@ -165,21 +167,21 @@ var Modul_popup = function () {
                     elem.find('.dialog-starter').trigger('click');
                }
                else if ( state == elem.data('get-off') ) {
-            	    showModal(false);
+                    ftui.showModal(false);
             	   	elem.find('.dialog-close').trigger('click');
                }
                else if ( state.match(new RegExp('^' + elem.data('get-on') + '$')) ) {
                     elem.find('.dialog-starter').trigger('click');
                }
                else if ( state.match(new RegExp('^' + elem.data('get-off') + '$')) ){
-	           	    showModal(false);
+                    ftui.showModal(false);
 	        	   	elem.find('.dialog-close').trigger('click');
 	           }
                else if ( elem.data('get-off')=='!on' && state != elem.data('get-on') ) {
                     elem.find('.dialog-starter').trigger('click'); 
                }
                else if ( elem.data('get-on')=='!off' && state != elem.data('get-off') ) {
-            	    showModal(false);
+                    ftui.showModal(false);
             	   	elem.find('.dialog-close').trigger('click');
                }
            }

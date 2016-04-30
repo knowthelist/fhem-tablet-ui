@@ -889,6 +889,13 @@ var ftui = {
      return '#' + diff_red + diff_green + diff_blue;
     },
 
+    showModal: function (modal) {
+        if(modal)
+            $("#shade").fadeIn();
+        else
+           $("#shade").fadeOut();
+    },
+
     precision: function(a) {
         var s = a + "",
         d = s.indexOf('.') + 1;
@@ -1042,10 +1049,8 @@ this.isValid = function(v){
 }
 
 this.showModal = function (modal) {
-    if(modal)
-        $("#shade").fadeIn();
-    else
-       $("#shade").fadeOut();
+    console.log('Warning: usage of deprecated function > showModal');
+    ftui.showModal(modal);
 }
 
 // global date format functions
