@@ -57,7 +57,7 @@ UPD 2016-04-20_01:22:27 4684 www/tablet_eval/index_nav_fixed_mobil.html
 UPD 2016-04-20_01:25:10 4654 www/tablet_eval/index_nav_mobil.html
 UPD 2016-04-21_21:27:55 3570 www/tablet_eval/index_page_demo.html
 UPD 2016-04-21_21:14:03 5257 www/tablet_eval/index_tab_demo.html
-UPD 2016-04-28_22:59:02 44906 www/tablet_eval/js/fhem-tablet-ui.js
+UPD 2016-04-30_23:41:48 45061 www/tablet_eval/js/fhem-tablet-ui.js
 UPD 2015-12-03_07:04:13 20988 www/tablet_eval/js/highcharts-meteogram.js
 UPD 2016-04-22_19:55:43 1469 www/tablet_eval/js/widget_button.js
 UPD 2015-12-07_13:16:00 6415 www/tablet_eval/js/widget_calview.js
@@ -91,7 +91,7 @@ UPD 2015-12-03_07:04:14 1857 www/tablet_eval/js/widget_meteogram.js
 UPD 2016-04-29_21:37:04 7502 www/tablet_eval/js/widget_pagebutton.js
 UPD 2016-04-17_12:40:59 8059 www/tablet_eval/js/widget_pagetab.js
 UPD 2015-12-03_07:04:14 3226 www/tablet_eval/js/widget_playstream.js
-UPD 2016-04-15_22:27:13 6297 www/tablet_eval/js/widget_popup.js
+UPD 2016-04-30_23:43:55 7135 www/tablet_eval/js/widget_popup.js
 UPD 2016-04-13_23:39:16 2842 www/tablet_eval/js/widget_progress.js
 UPD 2016-04-12_23:50:40 3366 www/tablet_eval/js/widget_push.js
 UPD 2016-04-02_22:38:51 5604 www/tablet_eval/js/widget_range.js
