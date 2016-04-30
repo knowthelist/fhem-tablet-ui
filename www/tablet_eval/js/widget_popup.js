@@ -1,4 +1,3 @@
-
 function depends_popup (){
     if (!$.fn.draggable)
         return ["../pgm2/jquery-ui.min.js"];
@@ -16,9 +15,7 @@ var Modul_popup = function () {
                     left: elem.options.start_left,
                     opacity: 0
                 }, 500, "swing", function() {
-                	if( elem.data('only-autoclose') == false ) {
-                		showModal(false);
-                	}
+                	showModal(false);
                 });
             break;
         default:
@@ -63,7 +60,7 @@ var Modul_popup = function () {
         elem.initData('height'      ,'300px');
         elem.initData('width'       ,'400px');
         elem.initData('mode'        ,'animate');
-        elem.initData('only-autoclose',false);
+        elem.initData('only-autoclose',elem.hasClass('only-autoclose') ? true : false);
         elem.initData('starter'     ,null);
         elem.initData('draggable'   ,true);
         
@@ -101,7 +98,7 @@ var Modul_popup = function () {
                     }
                 }
                 
-                if( elem.data('only-autoclose') ) {
+                if( elem.data('only-autoclose') == true ) {
                 	$('.dialog-close').css({'display':'none'});
                 }
                 
@@ -128,12 +125,12 @@ var Modul_popup = function () {
 
                 //prepare events
                 close.on('click',function() {
-                    hide(dialog,elem.data('mode'));
+                	hide(dialog,elem.data('mode'));
                 });
 
                 $(document).on('shadeClicked', function() {
-                    if( elem.data('only-autoclose') == false ) {
-                    	hide(dialog,elem.data('mode'));
+                	if( elem.data('only-autoclose') == false ) {
+                		hide(dialog,elem.data('mode'));
                     }
                 });
 
@@ -154,20 +151,23 @@ var Modul_popup = function () {
            var elem = $(this);
            var state = elem.getReading('get').val;
            if (state) {
-               if ( state == elem.data('get-on') )
+               if ( state == elem.data('get-on') ) {
                     elem.find('.dialog-starter').trigger('click');
+               }
                else if ( state == elem.data('get-off') ) {
             	    showModal(false);
             	   	elem.find('.dialog-close').trigger('click');
                }
-               else if ( state.match(new RegExp('^' + elem.data('get-on') + '$')) )
+               else if ( state.match(new RegExp('^' + elem.data('get-on') + '$')) ) {
                     elem.find('.dialog-starter').trigger('click');
+               }
                else if ( state.match(new RegExp('^' + elem.data('get-off') + '$')) ){
 	           	    showModal(false);
 	        	   	elem.find('.dialog-close').trigger('click');
 	           }
-               else if ( elem.data('get-off')=='!on' && state != elem.data('get-on') )
-                    elem.find('.dialog-starter').trigger('click');
+               else if ( elem.data('get-off')=='!on' && state != elem.data('get-on') ) {
+                    elem.find('.dialog-starter').trigger('click'); 
+               }
                else if ( elem.data('get-on')=='!off' && state != elem.data('get-off') ) {
             	    showModal(false);
             	   	elem.find('.dialog-close').trigger('click');
