@@ -1,4 +1,3 @@
-
 function depends_popup (){
     if (!$.fn.draggable)
         return ["../pgm2/jquery-ui.min.js"];
@@ -6,6 +5,9 @@ function depends_popup (){
 
 var Modul_popup = function () {
 
+	var reactOnShadeClick = true;
+	var visible = false;
+	
     function hide (elem,mode) {
         switch(mode) {
             case 'animate':
@@ -16,12 +18,14 @@ var Modul_popup = function () {
                     left: elem.options.start_left,
                     opacity: 0
                 }, 500, "swing", function() {
-                  showModal(false);
+                	showModal(false);
+                	visible = false;
                 });
             break;
         default:
             elem.fadeOut(500, function() {
                 showModal(false);
+                visible = false;
             });
         }
     };
@@ -40,6 +44,7 @@ var Modul_popup = function () {
              opacity: 1
             }, 500, "swing", function() {
                   elem.trigger('fadein');
+                  visible = true;
                 });
             break;
         default:
@@ -51,6 +56,7 @@ var Modul_popup = function () {
             });
             elem.fadeIn(500);
             elem.trigger('fadein');
+            visible = true;
         }
     };
 
@@ -63,7 +69,12 @@ var Modul_popup = function () {
         elem.initData('mode'        ,'animate');
         elem.initData('starter'     ,null);
         elem.initData('draggable'   ,true);
+        
         this.addReading(elem,'get');
+        
+        
+        reactOnShadeClick = elem.hasClass('interlock') ? true : false;
+        
     };
 
     function init () {
@@ -96,7 +107,11 @@ var Modul_popup = function () {
                         console.log('e.g.: <script type="text/javascript" src="../pgm2/jquery-ui.min.js"></script>');
                     }
                 }
-
+                
+                if( reactOnShadeClick == true ) {
+                	$('.dialog-close').css({'display':'none'});
+                }
+                
                 dialog.css({'height':elem.data('height'),'width':elem.data('width')});
                 starter.css({'cursor': 'pointer'});
                 elem.closest('.gridster>ul>li').css({overflow: 'visible'});
@@ -120,17 +135,19 @@ var Modul_popup = function () {
 
                 //prepare events
                 close.on('click',function() {
-                    hide(dialog,elem.data('mode'));
+                	hide(dialog,elem.data('mode'));
                 });
 
                 $(document).on('shadeClicked', function() {
-                    hide(dialog,elem.data('mode'));
+                	if( reactOnShadeClick == false && visible == true ) {
+                		hide(dialog,elem.data('mode'));
+                    }
                 });
 
                 starter.on('click',function(e) {
                     e.preventDefault();
                     show(dialog,elem.data('mode'));
-                    $(this).trigger('fadein');
+                    elem.trigger('fadein');
                   });
             }
         });
@@ -138,23 +155,33 @@ var Modul_popup = function () {
    };
 
    function update (dev,par) {
-       this.elements.filterDeviceReading('get',dev,par)
+	   var me = this;
+       me.elements.filterDeviceReading('get',dev,par)
        .each(function(index) {
            var elem = $(this);
            var state = elem.getReading('get').val;
            if (state) {
-               if ( state == $(this).data('get-on') )
+               if ( state == elem.data('get-on') ) {
                     elem.find('.dialog-starter').trigger('click');
-               else if ( state == $(this).data('get-off') )
-                    elem.find('.dialog-close').trigger('click');
-               else if ( state.match(new RegExp('^' + $(this).data('get-on') + '$')) )
+               }
+               else if ( state == elem.data('get-off') ) {
+            	    showModal(false);
+            	   	elem.find('.dialog-close').trigger('click');
+               }
+               else if ( state.match(new RegExp('^' + elem.data('get-on') + '$')) ) {
                     elem.find('.dialog-starter').trigger('click');
-               else if ( state.match(new RegExp('^' + $(this).data('get-off') + '$')) )
-                    elem.find('.dialog-close').trigger('click');
-               else if ( $(this).data('get-off')=='!on' && state != $(this).data('get-on') )
-                    elem.find('.dialog-starter').trigger('click');
-               else if ( $(this).data('get-on')=='!off' && state != $(this).data('get-off') )
-                    elem.find('.dialog-close').trigger('click');
+               }
+               else if ( state.match(new RegExp('^' + elem.data('get-off') + '$')) ){
+	           	    showModal(false);
+	        	   	elem.find('.dialog-close').trigger('click');
+	           }
+               else if ( elem.data('get-off')=='!on' && state != elem.data('get-on') ) {
+                    elem.find('.dialog-starter').trigger('click'); 
+               }
+               else if ( elem.data('get-on')=='!off' && state != elem.data('get-off') ) {
+            	    showModal(false);
+            	   	elem.find('.dialog-close').trigger('click');
+               }
            }
        });
    };
