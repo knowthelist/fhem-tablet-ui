@@ -396,7 +396,7 @@ var ftui = {
             for(var i = 0; i < len; i++){
               var res = results[i];
               var devName = res.Name;
-              if (devName.indexOf('FHEMWEB') !== 0){
+              if (devName.indexOf('FHEMWEB') !== 0 && devName.indexOf('WEB_') !== 0 ){
                    checkReading(devName,res.Readings);
                    checkReading(devName,res.Internals);
                    checkReading(devName,res.Attributes);
@@ -1071,6 +1071,19 @@ this.diffMinutes = function(date1,date2){
 this.diffSeconds = function(date1,date2){
        var diff  = new Date(date2 - date1);
        return (diff/1000).toFixed(1);
+}
+
+this.durationFromSeconds = function(time){
+    var hrs = Math.floor(time / 3600);
+    var mins = Math.floor((time % 3600) / 60);
+    var secs = time % 60;
+    ret = "";
+    if (hrs > 0) {
+        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+    }
+    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+    ret += "" + secs;
+    return ret;
 }
 
 this.mapColor = function(value) {
