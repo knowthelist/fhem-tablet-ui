@@ -7,60 +7,60 @@ var Modul_popup = function () {
 
 	var reactOnShadeClick = true;
 
-    function hide (elem,mode) {
+    function hide (dialog,mode) {
         switch(mode) {
             case 'animate':
-                elem.animate({
+                dialog.animate({
                     height: 0,
                     width: 0,
-                    top: elem.options.start_top,
-                    left: elem.options.start_left,
+                    top: dialog.options.start_top,
+                    left: dialog.options.start_left,
                     opacity: 0
                 }, 500, "swing", function() {
                     ftui.showModal(false);
-                    if ( elem.hasClass('interlock') ){
+                    if ( dialog.options.interlock ){
                         reactOnShadeClick = true;
                     }
                 });
             break;
         default:
-            elem.fadeOut(500, function() {
+            dialog.fadeOut(500, function() {
                 ftui.showModal(false);
-                if ( elem.hasClass('interlock') ){
+                if ( dialog.options.interlock ){
                     reactOnShadeClick = true;
                 }
             });
         }
     };
 
-    function show (elem,mode) {
-        if (elem.options.shade) {
+    function show (dialog,mode) {
+        if (dialog.options.shade) {
             ftui.showModal(true);
         }
         switch(mode) {
             case 'animate':
-            elem.show();
-            elem.animate({
-             height: elem.options.height,
-             width: elem.options.width,
-               top: elem.options.end_top,
-               left: elem.options.end_left,
+            dialog.show();
+            dialog.animate({
+             height: dialog.options.height,
+             width: dialog.options.width,
+               top: dialog.options.end_top,
+               left: dialog.options.end_left,
              opacity: 1
             }, 500, "swing", function() {
-                  elem.trigger('fadein');
+                  dialog.trigger('fadein');
                 });
             break;
         default:
-            elem.css({
-               height:   elem.options.height,
-               width:    elem.options.width,
-               top:      elem.options.end_top,
-               left:     elem.options.end_left,
+            dialog.css({
+               height:   dialog.options.height,
+               width:    dialog.options.width,
+               top:      dialog.options.end_top,
+               left:     dialog.options.end_left,
             });
-            elem.fadeIn(500);
-            elem.trigger('fadein');
+            dialog.fadeIn(500);
+            dialog.trigger('fadein');
         }
-        if ( elem.hasClass('interlock') ){
+        if ( dialog.options.interlock ){
             reactOnShadeClick = false;
         }
     };
@@ -119,6 +119,7 @@ var Modul_popup = function () {
                 elem.closest('.gridster>ul>li').css({overflow: 'visible'});
                 dialog.options={};
                 dialog.options.shade = !elem.hasClass('noshade');
+                dialog.options.interlock = elem.hasClass('interlock');
 
                 $(window).resize(function() {
                     dialog.options.end_top = ($(window).height() - parseInt(elem.data('height'))) / 2;
@@ -141,7 +142,7 @@ var Modul_popup = function () {
                 });
 
                 $(document).on('shadeClicked', function() {
-                    if( reactOnShadeClick ) {
+                    if( reactOnShadeClick == true ) {
                 		hide(dialog,elem.data('mode'));
                     }
                 });
