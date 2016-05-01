@@ -261,6 +261,7 @@ header.fixed#header-nav + main#panel{
   right: 2%;
   text-decoration: none;
   color: #bbb;
+  z-index:10;
 }
 
 .dialog-close:hover {
