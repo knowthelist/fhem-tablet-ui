@@ -148,3 +148,4 @@ UPD 2015-12-03_07:04:17 24447 www/tablet_eval/lib/switchery.min.js
 UPD 2016-04-21_20:58:01 818 www/tablet_eval/page_content1.html
 UPD 2016-04-21_21:13:09 1521 www/tablet_eval/page_content2.html
 UPD 2016-04-21_21:13:21 1523 www/tablet_eval/page_content3.html
+UPD 2016-05-01_21:39:45 750 www/tablet_eval/repair.html
