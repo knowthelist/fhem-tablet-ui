@@ -152,6 +152,7 @@ var ftui = {
         ftui.config.debuglevel  = $("meta[name='debug']").attr("content") || 0;
         ftui.config.DEBUG = ( ftui.config.debuglevel>0 );
         ftui.config.TOAST  = ($("meta[name='toast']").attr("content") != '0');
+        ftui.config.TOAST_NOSTACK  = ($("meta[name='toast_nostack']").attr("content") == '1');
         ftui.config.shortpollInterval  = $("meta[name='shortpoll-only-interval']").attr("content") || 30;
         //self path
         ftui.config.dir = $('script[src*="fhem-tablet-ui"]').attr('src');
@@ -905,18 +906,23 @@ var ftui = {
     toast: function(text,error){
         //https://github.com/kamranahmedse/jquery-toast-plugin
         if (ftui.config.TOAST){
+            var tstack = 5;
+            if(ftui.config.TOAST_NOSTACK)
+                tstack = false;
             if (error && error === 'error')
                 $.toast({
                     heading: 'Error',
                     text: text,
                     hideAfter: 20000,   // in milli seconds
                     icon: 'error',
-                    loader: false
+                    loader: false,
+                    stack: tstack
                 })
             else
                 $.toast({
                     text:text,
                     loader: false
+                    stack: tstack
                  });
 
         }
