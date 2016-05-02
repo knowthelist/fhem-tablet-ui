@@ -921,7 +921,7 @@ var ftui = {
             else
                 $.toast({
                     text:text,
-                    loader: false
+                    loader: false,
                     stack: tstack
                  });
 
