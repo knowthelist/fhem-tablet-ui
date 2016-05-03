@@ -151,8 +151,7 @@ var ftui = {
         ftui.config.DEMO = ($("meta[name='demo']").attr("content") == '1');
         ftui.config.debuglevel  = $("meta[name='debug']").attr("content") || 0;
         ftui.config.DEBUG = ( ftui.config.debuglevel>0 );
-        ftui.config.TOAST  = ($("meta[name='toast']").attr("content") != '0');
-        ftui.config.TOAST_NOSTACK  = ($("meta[name='toast_nostack']").attr("content") == '1');
+        ftui.config.TOAST  = $("meta[name='toast']").attr("content") || 5; //1,2,3...= n Toast-Messages, 0: No Toast-Messages
         ftui.config.shortpollInterval  = $("meta[name='shortpoll-only-interval']").attr("content") || 30;
         //self path
         ftui.config.dir = $('script[src*="fhem-tablet-ui"]').attr('src');
@@ -905,9 +904,9 @@ var ftui = {
 
     toast: function(text,error){
         //https://github.com/kamranahmedse/jquery-toast-plugin
-        if (ftui.config.TOAST){
-            var tstack = 5;
-            if(ftui.config.TOAST_NOSTACK)
+        if (ftui.config.TOAST != 0){
+            var tstack = ftui.config.TOAST;
+            if(ftui.config.TOAST == 1)
                 tstack = false;
             if (error && error === 'error')
                 $.toast({
