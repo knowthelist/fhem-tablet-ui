@@ -59,11 +59,20 @@ var Modul_label = function () {
         //set colors according matches for values
         var limits = elem.data('limits');
         var colors = elem.data('colors');
-        if(limits && colors) {
+        var classes = elem.data('classes');
+        if(limits) {
             var idx=indexOfGeneric(limits,value);
             if (idx>-1) {
-                var layer = (elem.hasClass('bg-limit')?'background':'color');
-                elem.css( layer, getStyle('.'+colors[idx],'color') || colors[idx] );
+                if(colors) {
+                    var layer = (elem.hasClass('bg-limit')?'background':'color');
+                    elem.css( layer, getStyle('.'+colors[idx],'color') || colors[idx] );
+                }
+                if(classes) {
+                    for(var i=0,len=classes.length; i<len; i++) {
+                        elem.removeClass( classes[i] );
+                    }
+                    elem.addClass( classes[idx] );
+                }
             }
         }
     };
