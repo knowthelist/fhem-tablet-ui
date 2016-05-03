@@ -13,7 +13,7 @@ UPD 2016-04-07_23:13:12 1267 www/tablet_eval/content_windows.html
 UPD 2016-02-28_09:07:42 510 www/tablet_eval/css/fhem-blue-ui.css
 UPD 2016-02-28_09:07:48 510 www/tablet_eval/css/fhem-green-ui.css
 UPD 2016-04-07_23:13:12 2020 www/tablet_eval/css/fhem-mobil-ui.css
-UPD 2016-04-07_23:13:12 17980 www/tablet_eval/css/fhem-tablet-ui.css
+UPD 2016-05-03_21:27:36 22329 www/tablet_eval/css/fhem-tablet-ui.css
 UPD 2016-03-04_23:04:22 13563 www/tablet_eval/css/fhem-tablet-ui.min.css
 UPD 2016-02-12_21:23:24 5295 www/tablet_eval/css/ftui_chart.css
 UPD 2015-11-27_22:46:03 1023 www/tablet_eval/css/ftui_colorwheel.css
@@ -83,7 +83,7 @@ UPD 2016-04-13_00:12:58 8286 www/tablet_eval/js/widget_itunes_artwork.js
 UPD 2016-04-13_23:37:59 2751 www/tablet_eval/js/widget_joinedlabel.js
 UPD 2016-04-22_14:03:57 2990 www/tablet_eval/js/widget_klimatrend.js
 UPD 2016-04-22_13:38:27 6337 www/tablet_eval/js/widget_knob.js
-UPD 2016-04-28_19:59:50 6229 www/tablet_eval/js/widget_label.js
+UPD 2016-05-03_21:31:53 6561 www/tablet_eval/js/widget_label.js
 UPD 2016-04-23_11:07:36 5609 www/tablet_eval/js/widget_level.js
 UPD 2016-04-29_21:37:04 8588 www/tablet_eval/js/widget_link.js
 UPD 2016-04-29_21:37:04 1493 www/tablet_eval/js/widget_loading.js
