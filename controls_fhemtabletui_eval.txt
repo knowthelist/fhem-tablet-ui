@@ -13,7 +13,7 @@ UPD 2016-04-07_23:13:12 1267 www/tablet_eval/content_windows.html
 UPD 2016-02-28_09:07:42 510 www/tablet_eval/css/fhem-blue-ui.css
 UPD 2016-02-28_09:07:48 510 www/tablet_eval/css/fhem-green-ui.css
 UPD 2016-04-07_23:13:12 2020 www/tablet_eval/css/fhem-mobil-ui.css
-UPD 2016-05-03_21:27:36 22329 www/tablet_eval/css/fhem-tablet-ui.css
+UPD 2016-05-05_15:32:00 22454 www/tablet_eval/css/fhem-tablet-ui.css
 UPD 2016-03-04_23:04:22 13563 www/tablet_eval/css/fhem-tablet-ui.min.css
 UPD 2016-02-12_21:23:24 5295 www/tablet_eval/css/ftui_chart.css
 UPD 2015-11-27_22:46:03 1023 www/tablet_eval/css/ftui_colorwheel.css
@@ -85,13 +85,13 @@ UPD 2016-04-22_14:03:57 2990 www/tablet_eval/js/widget_klimatrend.js
 UPD 2016-04-22_13:38:27 6337 www/tablet_eval/js/widget_knob.js
 UPD 2016-05-03_21:31:53 6561 www/tablet_eval/js/widget_label.js
 UPD 2016-04-23_11:07:36 5609 www/tablet_eval/js/widget_level.js
-UPD 2016-04-29_21:37:04 8588 www/tablet_eval/js/widget_link.js
+UPD 2016-05-05_15:24:52 8588 www/tablet_eval/js/widget_link.js
 UPD 2016-04-29_21:37:04 1493 www/tablet_eval/js/widget_loading.js
 UPD 2015-12-03_07:04:14 1857 www/tablet_eval/js/widget_meteogram.js
 UPD 2016-04-29_21:37:04 7502 www/tablet_eval/js/widget_pagebutton.js
 UPD 2016-04-17_12:40:59 8059 www/tablet_eval/js/widget_pagetab.js
 UPD 2015-12-03_07:04:14 3226 www/tablet_eval/js/widget_playstream.js
-UPD 2016-05-01_09:25:04 7250 www/tablet_eval/js/widget_popup.js
+UPD 2016-05-05_15:35:34 7250 www/tablet_eval/js/widget_popup.js
 UPD 2016-04-13_23:39:16 2842 www/tablet_eval/js/widget_progress.js
 UPD 2016-04-12_23:50:40 3366 www/tablet_eval/js/widget_push.js
 UPD 2016-04-02_22:38:51 5604 www/tablet_eval/js/widget_range.js
@@ -149,3 +149,4 @@ UPD 2016-04-21_20:58:01 818 www/tablet_eval/page_content1.html
 UPD 2016-04-21_21:13:09 1521 www/tablet_eval/page_content2.html
 UPD 2016-04-21_21:13:21 1523 www/tablet_eval/page_content3.html
 UPD 2016-05-01_21:39:45 750 www/tablet_eval/repair.html
+UPD 2016-05-05_15:33:19 2781 www/tablet_eval/test-popup.html
