@@ -1468,10 +1468,13 @@ Powerange.prototype.setValue = function (offset, size) {
  */
 
 Powerange.prototype.step = function(sliderSize, handleSize) {
-  var dimension = sliderSize - handleSize
+
+    var dimension = sliderSize - handleSize
     , part = percentage.from(this.checkStep(this.options.step), this.options.max - this.options.min)
     , interval = percentage.of(part, dimension)
     , steps = [];
+
+    if (interval==0) interval=1;
 
   for (i = 0; i <= dimension; i += interval) {
     steps.push(i);
@@ -1628,6 +1631,7 @@ Horizontal.prototype.setStart = function(start) {
 
   this.setPosition(position);
   this.setValue(this.handle.style.left, this.slider.offsetWidth - this.handle.offsetWidth);
+  if (this.options.step) this.step(this.slider.offsetWidth, this.handle.offsetWidth);
 };
 
 /**
@@ -1656,10 +1660,12 @@ Horizontal.prototype.onmousedown = function(e) {
         if (!this.options.tap)
             return;
       var offset = 0;
-      var parent = this.handle;
-      while (parent == parent.offsetParent)
-        offset += parent.offsetLeft;
-      this.startX = offset - window.scrollX + this.handle.offsetLeft + this.handle.clientWidth / 2;
+      var elm = this.handle;
+      while (elm !== null){
+        offset += elm.offsetLeft;
+        elm = elm.offsetParent;
+      }
+      this.startX = offset - window.scrollX + this.handle.clientWidth / 2 ;
 
     } else
       this.startX = e.clientX;
@@ -1765,6 +1771,7 @@ Vertical.prototype.setStart = function(start) {
 
   this.setPosition(position);
   this.setValue(this.handle.style.bottom, this.slider.offsetHeight - this.handle.offsetHeight);
+  if (this.options.step) this.step(this.slider.offsetHeight, this.handle.offsetHeight);
 };
 
 /**
@@ -1792,11 +1799,13 @@ Vertical.prototype.onmousedown = function(e) {
    if (e.target.className !== 'range-handle') {
        if (!this.options.tap)
            return;
-      var offset = 0;
-      var parent = this.handle;
-      while (parent == parent.offsetParent)
-        offset += parent.offsetTop;
-      this.startY = offset - window.scrollY + this.handle.offsetTop + this.handle.clientHeight / 2;
+       var offset = 0;
+       var elm = this.handle;
+       while (elm !== null){
+         offset += elm.offsetTop;
+         elm = elm.offsetParent;
+       }
+       this.startY =  offset - window.scrollY + this.handle.clientHeight / 2;
     } else
       this.startY = e.clientY;
   this.handleOffsetY = this.slider.offsetHeight - this.handle.offsetHeight - this.handle.offsetTop;

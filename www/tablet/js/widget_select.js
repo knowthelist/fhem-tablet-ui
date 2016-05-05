@@ -1,79 +1,89 @@
+/* FTUI Plugin
+* Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+* Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+*/
+
 if(typeof widget_widget == 'undefined') {
     loadplugin('widget_widget');
 }
 
 var widget_select= $.extend({}, widget_widget, {
-  widgetname:"select",
+    widgetname:"select",
+    fillList: function(elem){
+        var select_elem = elem.find('select')
+        if (select_elem){
+            var items = elem.data('items')||'';
+            var alias = elem.data('alias')||elem.data('items');
+            select_elem.empty();
+            for (var i=0;i<items.length;i++) {
+                select_elem.append('<option value="'+items[i]+'">'+(alias && alias[i]||items[i])+'</option>');
+            }
+        }
+    },
+    setCurrentItem: function(elem){
+        var value = elem.getReading('get').val;
+        elem.find('select').val(value);
+        elem.data('value', value);
+    },
   init_attr: function(elem) {
-        elem.data('get', elem.data('get') || 'STATE');
-        elem.data('set', elem.data('set') || ((elem.data('get')!='STATE')?elem.attr('data-get'): ''));
-        elem.data('cmd', elem.data('cmd') || 'set');
-        elem.data('quote', elem.data('quote') || '');
-        elem.data('list', elem.data('list') || 'setList');
+      elem.initData('get'    ,'STATE');
+      elem.initData('set'    ,((elem.data('get')!=='STATE')?elem.attr('data-get'): ''));
+      elem.initData('cmd'    ,'set');
+      elem.initData('quote'  ,'');
+      elem.initData('list'   ,'setList');
 
-        readings[elem.data('get')] = true;
-        readings[elem.data('list')] = true;
+      elem.addReading('get');
+      elem.addReading('list');
   },
-  init: function () {
-      var base=this;
-      this.elements = $('div[data-type="'+this.widgetname+'"]');
-      this.elements.each(function(index) {
-        base.init_attr($(this));
-        $(this).addClass('select');
+  init_ui : function(elem) {
+    var base = this;
+    // prepare select element
+        elem.addClass('select');
         var select_elem = jQuery('<select/>', { })
         .on('change', function (e) {
             var parent = $(this).parent('div[data-type="select"]');
-            var optionSelected = parent.data('quote') + $("option:selected", this).val() + parent.data('quote');
+            parent.data('value', parent.data('quote') + $("option:selected", this).val() + parent.data('quote'));
             $(this).blur();
-            var cmdl = [parent.data('cmd'),parent.data('device'),parent.data('set'),optionSelected].join(' ');
-            setFhemStatus(cmdl);
-            $.toast(cmdl);
+            parent.transmitCommand();
+            elem.trigger('changedValue');
         })
-        .appendTo($(this));
-
-     });
+        .appendTo(elem);
+        base.fillList(elem);
+        elem.data('value', elem.data('quote') + $("option:selected", select_elem).val() + elem.data('quote'));
   },
   update: function (dev,par) {
+      var base = this;
+      // update from normal state reading
+      this.elements.filterDeviceReading('get',dev,par)
+      .each(function(index) {
+          base.setCurrentItem($(this));
+      });
 
-    var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-    deviceElements.each(function(index) {
-        if ( $(this).data('get')==par || $(this).data('list')==par){
-            var state = getDeviceValue( $(this), 'get' );
-            var items = $(this).data('items');
-            var alias = $(this).data('alias')||$(this).data('items');
-            if (!jQuery.isArray(items)){
-                items = getDeviceValue( $(this), 'list' );
-                if (items){
-                    if ($(this).data('list')=='setList'){
-                        var setreading = ($(this).data('set')=='')?'state':$(this).data('set');
-                        items = items.split(' ');
-                        var founditems = items;
-                        $.each( items, function( key, value ) {
-                            var tokens = value.split(':');
-                            if (tokens && tokens.length>1){
-                                if (tokens[0]==setreading)
-                                    founditems=tokens[1].split(',');
-                            }
-                          });
-                        items = founditems;
-                    }
-                    else
-                        items = items.split(':');
-                }
-            }
-            var select_elem = $(this).find('select')
-            if (items) {
-                if (select_elem){
-                    select_elem.empty();
-                    for (var i=0;i<items.length;i++) {
-                        select_elem.append('<option value="'+items[i]+'">'+(alias && alias[i]||items[i])+'</option>');
-                    }
-                }
-            }
-            if (state && select_elem)
-                select_elem.val(state);
-        }
-    });
+      //extra reading for list items
+      base.elements.filterDeviceReading('list',dev,par)
+      .each(function(idx) {
+          var elem = $(this);
+          var items = elem.getReading('list').val;
+          if (items){
+              if (elem.data('list')==='setList'){
+                  var setreading = (elem.data('set')==='')?'state':elem.data('set');
+                  items = items.split(' ');
+                  var founditems = items;
+                  $.each( items, function( key, value ) {
+                      var tokens = value.split(':');
+                      if (tokens && tokens.length>1){
+                          if (tokens[0]==setreading)
+                              founditems=tokens[1].split(',');
+                      }
+                    });
+                  items = founditems;
+              }
+              else
+                  items = items.split(':');
+          }
+          elem.data('items',items);
+          base.fillList.call(base,elem);
+          base.setCurrentItem.call(base,elem);
+      });
    }
-
 });

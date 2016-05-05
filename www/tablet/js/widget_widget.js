@@ -1,5 +1,12 @@
 var widget_widget = {
     widgetname : 'widget',
+    FS20: {
+        'dimmerArray':[0, 6, 12, 18, 25, 31, 37, 43, 50, 56, 62, 68, 75, 81, 87, 93, 100],
+        'dimmerValue': function(value){
+            var idx = indexOfNumeric(this.dimmerArray,value);
+            return (idx > -1) ? this.dimmerArray[idx] : 0;
+        }
+    },
     rgbToHsl: function(rgb){
         var r=parseInt(rgb.substring(0,2),16);
         var g=parseInt(rgb.substring(2,4),16);
@@ -48,12 +55,68 @@ var widget_widget = {
         return [hex(Math.round(r * 255)), hex(Math.round(g * 255)), hex(Math.round(b * 255))].join('');
     },
     rgbToHex: function(rgb){
-     if (!rgb) return null;
      var tokens = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
      return (tokens && tokens.length === 4) ? "#" +
       ("0" + parseInt(tokens[1],10).toString(16)).slice(-2) +
       ("0" + parseInt(tokens[2],10).toString(16)).slice(-2) +
-      ("0" + parseInt(tokens[3],10).toString(16)).slice(-2) : null;
+      ("0" + parseInt(tokens[3],10).toString(16)).slice(-2) : rgb;
+    },
+    getGradientColor: function(start_color, end_color, percent) {
+     // strip the leading # if it's there
+    start_color = this.rgbToHex(start_color).replace(/^\s*#|\s*$/g, '');
+    end_color   = this.rgbToHex(end_color).replace(/^\s*#|\s*$/g, '');
+
+     // convert 3 char codes --> 6, e.g. `E0F` --> `EE00FF`
+     if(start_color.length == 3){
+       start_color = start_color.replace(/(.)/g, '$1$1');
+     }
+
+     if(end_color.length == 3){
+       end_color = end_color.replace(/(.)/g, '$1$1');
+     }
+
+     // get colors
+     var start_red = parseInt(start_color.substr(0, 2), 16),
+         start_green = parseInt(start_color.substr(2, 2), 16),
+         start_blue = parseInt(start_color.substr(4, 2), 16);
+
+     var end_red = parseInt(end_color.substr(0, 2), 16),
+         end_green = parseInt(end_color.substr(2, 2), 16),
+         end_blue = parseInt(end_color.substr(4, 2), 16);
+
+     // calculate new color
+     var diff_red = end_red - start_red;
+     var diff_green = end_green - start_green;
+     var diff_blue = end_blue - start_blue;
+
+     diff_red = ( (diff_red * percent) + start_red ).toString(16).split('.')[0];
+     diff_green = ( (diff_green * percent) + start_green ).toString(16).split('.')[0];
+     diff_blue = ( (diff_blue * percent) + start_blue ).toString(16).split('.')[0];
+
+     // ensure 2 digits by color
+     if( diff_red.length == 1 )
+       diff_red = '0' + diff_red
+
+     if( diff_green.length == 1 )
+       diff_green = '0' + diff_green
+
+     if( diff_blue.length == 1 )
+       diff_blue = '0' + diff_blue
+
+     return '#' + diff_red + diff_green + diff_blue;
+    },
+    precision: function(a) {
+        var s = a + "",
+        d = s.indexOf('.') + 1;
+        return !d ? 0 : s.length - d;
+    },
+    init: function () {
+        var base = this;
+        this.elements = $('div[data-type="'+this.widgetname+'"]');
+        this.elements.each(function(index) {
+            base.init_attr.call(base,$(this));
+            base.init_ui.call(base,$(this));
+        });
     },
 }
 $.fn.filterData = function(key, value) {
@@ -78,10 +141,48 @@ $.fn.mappedColor = function(key) {
     return getStyle('.'+$(this).data(key),'color') || $(this).data(key);
 };
 $.fn.isDeviceReading = function(key) {
-    return $(this).data(key).match(/:/);
+    return !$.isNumeric($(this).data(key)) && $(this).data(key).match(/:/);
+};
+$.fn.isExternData = function(key) {
+    var data = $(this).data(key);
+    if (!data) return '';
+    return (data.match(/^[#\.\[].*/));
 };
 $.fn.addReading = function(key) {
-    initReadingsArray($(this).data(key));
+    var data = $(this).data(key);
+    if (!data.match(/^[#\.\[].*/)){
+        var device = $(this).data('device');
+        if(! $.isArray(data)) {
+            data = new Array(data);
+        }
+        for(var i=0; i<data.length; i++) {
+            var reading = data[i];
+            // fully qualified readings => DEVICE:READING
+            if(reading.match(/:/)) {
+                var fqreading = reading.split(':');
+                device = fqreading[0]
+                reading = fqreading[1];
+            }
+            // fill objects for mapping from ugly fhem ids to device + reading
+
+            if (isValid(device) && isValid(reading)){
+                var paramid = (reading==='STATE') ? device : [device,reading].join('-');
+                var paramidts = [device,reading,'ts'].join('-');
+                ftui.paramIdMap[paramid]={};
+                ftui.paramIdMap[paramid].device=device;
+                ftui.paramIdMap[paramid].reading=reading;
+                ftui.timestampMap[paramidts]={};
+                ftui.timestampMap[paramidts].device=device;
+                ftui.timestampMap[paramidts].reading=reading;
+            }
+            // deprecated
+            // fill separat device + reading objects
+            if(!devices[device] && isValid(device) )
+                devices[device] = true;
+            if(!readings[reading] && !reading.match(/^[#\.\[].*/))
+                readings[reading] = true;
+        }
+    }
 };
 $.fn.getReading = function (key) {
     var devname = $(this).data('device'),
@@ -97,3 +198,14 @@ $.fn.getReading = function (key) {
     }
     return {};
 }
+$.fn.valOfData = function(key) {
+    var data = $(this).data(key);
+    if (!data) return '';
+    return (data.match(/^[#\.\[].*/))?$(data).data('value'):data;
+};
+$.fn.transmitCommand = function() {
+    if ($(this).hasClass('notransmit')) return;
+    var cmdl = [$(this).valOfData('cmd'),$(this).valOfData('device'),$(this).valOfData('set'),$(this).valOfData('value')].join(' ');
+    setFhemStatus(cmdl);
+    ftui.toast(cmdl);
+};

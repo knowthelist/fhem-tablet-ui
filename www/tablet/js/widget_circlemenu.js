@@ -28,20 +28,24 @@ var widget_circlemenu= {
             open:function(){
                 var elem=this;
                 if (elem.options.close_event!=''){
-                    timeoutMenu=setTimeout(function(){
+                    parent.data('timeoutMenu',setTimeout(function(){
                         elem.close();
                         setTimeout(function(){showModal(false);},1000);
-                    },parent.data('close-after')||Math.max(4000, 1000*(parent.find('li').length-1)));
+                    },parent.data('close-after')||Math.max(4000, 1000*(parent.find('li').length-1))));
                 }
-               showModal(true);
+               if (!parent.hasClass("noshade"))
+                showModal(true);
             },
         })
         .addClass('menu')
+        parent.css({minWidth: parent.data('item-width')})
         .closest('.gridster>ul>li').css({overflow: 'visible'});
 
 
      });
         $('.menu li:not(:first-child)').on('click', function(){
+            var timeoutMenu = $(this).parent().data('timeoutMenu');
+            if (timeoutMenu)
                 clearTimeout(timeoutMenu);
         });
 

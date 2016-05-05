@@ -40,15 +40,22 @@ var widget_famultibutton = $.extend({}, widget_widget, {
          elem.children().filter('#warn').remove();
          if (value && value!=""){
              var val = ($.isNumeric(value)&&value<100)?Number(value).toFixed(0):'!';
-             jQuery('<i/>', {
+             var fgElem = jQuery('<i/>', {
                  id: 'warn-back',
                  class: 'fa fa-stack-1x fa-circle'
-             }).appendTo(elem);
+             })
+             .appendTo(elem);
 
-            jQuery('<i/>', {
+            var bgElem = jQuery('<i/>', {
                  id: 'warn',
                  class: 'fa fa-stack-1x '
-            }).html(val).appendTo(elem);
+            })
+
+             .html(val).appendTo(elem);
+             if (elem.hasClass('warnsamecolor')){
+                 bgElem.css({color:'#000' });
+                 fgElem.css({color:elem.data('on-color') });
+             }
          }
     },
     showMultiStates : function(elem,states,state,idxOn){
@@ -105,6 +112,8 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                  faelem.setOff();
               }
             }
+            var id = elem.data('device')+"_"+elem.data('get');
+            localStorage.setItem(this.widgetname+'_'+id+'_index',idx);
             elm.removeClass()
             .addClass('fa fa-stack-1x')
             .addClass(icons[idx])
@@ -154,7 +163,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             target = elem.attr('data-fhem-cmd');
             type = 'fhem-cmd';
         } else {
-            var sets = elem.data('set-'+onoff);
+            var sets = elem.data('set-states') || elem.data('set-'+onoff);
             // no value given means don't send it and keep current state
             if ( sets === ''){
                 if (onoff==='off')
@@ -166,10 +175,11 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             if(!$.isArray(sets)) {
                 sets = new Array(String(sets));
             }
-            var s = localStorage.getItem(this.widgetname+device+'index') || 0;
+            var id = elem.data('device')+"_"+elem.data('get');
+            var s = localStorage.getItem(this.widgetname+'_'+id+'_index') || 0;
             var set = typeof sets[s] != 'undefined' ? sets[s] : sets[0];
             s++; if (s >= sets.length) s=0;
-            localStorage.setItem(this.widgetname+device+'index',s);
+            localStorage.setItem(this.widgetname+'_'+id+'_index',s);
             target = [elem.data('cmd'), device, elem.data('set'), set ].join(' ');
             type = 'fhem-cmd';
         }
@@ -179,13 +189,13 @@ var widget_famultibutton = $.extend({}, widget_widget, {
                 break;
             case 'url-xhr':
                 if( device && typeof device != "undefined" && device !== " ") {
-                    TOAST && $.toast(target);
+                    ftui.toast(target);
                 }
                 $.get(target);
                 break;
             case 'fhem-cmd':
                 if( device && typeof device != "undefined" && device !== " ") {
-                    TOAST && $.toast(target);
+                    ftui.toast(target);
                 }
                 setFhemStatus(target);
                 break;
@@ -205,6 +215,7 @@ var widget_famultibutton = $.extend({}, widget_widget, {
         elem.initData('doubleclick' ,0);
         elem.initData('firstclick-background-color', '#6F4500');
         elem.initData('firstclick-color'           , null);
+        elem.initData('get-warn'                ,-1);
 
         elem.addReading('get');
 
@@ -228,14 +239,6 @@ var widget_famultibutton = $.extend({}, widget_widget, {
             valueChanged: function(v) { base.valueChanged(elem,v) },
         });
         return elem;
-    },
-    init: function () {
-        var base = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            base.init_attr($(this));
-            base.init_ui($(this));
-        });
     },
     update_cb : function(elem) {},
     update: function (dev,par) {

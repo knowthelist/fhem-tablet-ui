@@ -5,43 +5,42 @@ if(typeof widget_famultibutton == 'undefined') {
 var widget_dimmer = $.extend({}, widget_famultibutton, {
     widgetname : 'dimmer',
     init: function () {
-         var base = this;
-         this.elements = $('div[data-type="'+this.widgetname+'"]');
-         this.elements.each(function(index) {
-             $(this).data('off-color',               $(this).data('off-color')           || getStyle('.'+base.widgetname+'.off','color')              || '#2A2A2A');
-             $(this).data('off-background-color',    $(this).data('off-background-color')|| getStyle('.'+base.widgetname+'.off','background-color')   || '#505050');
-             $(this).data('on-color',                $(this).data('on-color')            || getStyle('.'+base.widgetname+'.on','color')               || '#2A2A2A');
-             $(this).data('on-background-color',     $(this).data('on-background-color') || getStyle('.'+base.widgetname+'.on','background-color')    || '#aa6900');
-             $(this).data('background-icon',         $(this).data('background-icon')     || 'fa-circle');
-             $(this).data('icon',                    $(this).data('icon')                || 'fa-lightbulb-o');
-             $(this).data('get-value',               $(this).data('get-value')           || $(this).data('part')         || '-1');
-             $(this).data('set-on',                  $(this).data('set-on')              || '$v');
-             $(this).data('set-value',               $(this).data('set-value')           || '$v');
-             $(this).data('dim',                     $(this).data('dim')                 || '');
-             $(this).data('cmd-value',               $(this).data('cmd-value')           || 'set');
-             $(this).data('mode','dimmer');
-             var elem=$(this);
-             base.init_attr(elem);
-             base.init_ui(elem);
+     var base = this;
+     this.elements = $('div[data-type="'+this.widgetname+'"]');
+     this.elements.each(function(index) {
+         var elem = $(this);
+         elem.initData('off-color'           , getStyle('.dimmer.off','color') || '#2A2A2A');
+         elem.initData('off-background-color', getStyle('.dimmer.off','background-color')   || '#505050');
+         elem.initData('on-color'            , getStyle('.dimmer.on','color')               || '#2A2A2A');
+         elem.initData('on-background-color' , getClassColor(elem) || getStyle('.dimmer.on','background-color')    || '#aa6900');
+         elem.initData('background-icon'     , 'fa-circle');
+         elem.initData('icon'                , 'fa-lightbulb-o');
+         elem.initData('get-value'           , elem.data('part') || '-1');
+         elem.initData('set-on'              , '$v');
+         elem.initData('set-value'           , '$v');
+         elem.initData('dim'                 , '');
+         elem.initData('cmd-value'           , 'set');
+         elem.initData('max'                 , 100);
+         elem.initData('min'                 , 0);
+         elem.initData('mode','dimmer');
 
-             if ( $(this).data('dim')  != '')
-                readings[$(this).data('dim')] = true;
-
-             var val = localStorage.getItem(base.widgetname+"_"+elem.data('device'));
-             if ( val && $.isNumeric(val))
-                 elem.setDimValue( parseInt(val));
-         });
-     },
+         if ( elem.data('dim')  != '')
+            elem.addReading('dim');
+         base.init_attr(elem);
+         base.init_ui(elem);
+         var val = localStorage.getItem(base.widgetname+"_"+elem.data('device'));
+         if ( val && $.isNumeric(val))
+          elem.setDimValue( parseInt(val));
+     });
+    },
      toggleOn : function(elem) {
          if(this._doubleclicked(elem, 'on')) {
-             var device = elem.data('device');
              var v = elem.getValue();
-             var seton = elem.data('set-on').replace('$v',v);
-             var cmd = [elem.data('cmd'), device, elem.data('set'), seton].join(' ');
-             setFhemStatus(cmd);
-             if( device && typeof device != "undefined" && device !== " ") {
-                 TOAST && $.toast(cmd);
-             }
+             if (elem.hasClass('FS20')){
+                  v = this.FS20.dimmerValue(v);
+              }
+             elem.data('value', elem.data('set-on').replace('$v',v.toString()));
+             elem.transmitCommand();
              elem.trigger("toggleOn");
          }
      },
@@ -49,9 +48,12 @@ var widget_dimmer = $.extend({}, widget_famultibutton, {
          var device = elem.data('device');
          localStorage.setItem(this.widgetname+"_"+device, v);
          if ( elem.data('famultibutton').getState() === true || elem.data('dim') !== '' ){
-            var val = elem.data('set-value').replace('$v',v.toString());
+             if (elem.hasClass('FS20')){
+                  v = this.FS20.dimmerValue(v);
+             }
+            var valStr = elem.data('set-value').replace('$v',v.toString());
             var reading = (elem.data('dim') !== '') ? elem.data('dim') : elem.data('set');
-            var cmd = [elem.data('cmd-value'), device, reading, val].join(' ');
+            var cmd = [elem.data('cmd-value'), device, reading, valStr].join(' ');
             setFhemStatus(cmd);
             TOAST && $.toast(cmd);
          }

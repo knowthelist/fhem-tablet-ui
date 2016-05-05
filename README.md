@@ -90,6 +90,10 @@ Currently there are more then 20 types of widgets in the base installation.
 - **highchart** : multistyle chart for multiple values
 - **checkbox** : Toggle any command to FHEM (e.g. on / off)
 - **range** : vertical bar graph to show a values range between min/max value and high/low limits with different colors
+- **colorwheel** : select a color from a wheel
+- **link** : link or button link element
+- **spinner** : is a control element to adjust a value by clicking on the up or down icon
+- **departure** : a pulic transport departure schedule widget
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -127,14 +131,14 @@ General attribute meaning
 ####Switch widgets
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
 - **data-set**      : name of the reading to set from FHEM (default '')
-- **data-set-on**   : value for ON status to set. (default: value of data-get-on)
-- **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
 - **data-cmd**      : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-doubleclick**: timeout to wait for x millisecondes click or touch. '0' disables the doubleclick feature. (default '0')
 
 dual state notation   
 - **data-get-on**   : value for ON status to get or an array of states (default 'on')
 - **data-get-off**  : value for OFF status to get. (default 'off')
+- **data-set-on**   : value for ON status to set. (default: value of data-get-on)
+- **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
 - **data-icon**     			: name of the font-awesome icon. (default: fa-lightbulb-o)
 - **data-background-icon** 		: name of the font-awesome icon for background (default 'fa-circle')
 - **data-on-background-color**          : color for ON state or DEVICE:READING for dynamic setting (default '#aa6900')
@@ -144,6 +148,7 @@ dual state notation
 
 multi state notation   
 - **data-states**   			: array of states 
+- **data-set-states**                   : array of states to set.
 - **data-icons**    			: array of icons related to the data-states array 
 - **data-background-icons**             : array of background icons related to the data-states array
 - **data-colors**                       : array of colors related to the data-states array
@@ -190,11 +195,49 @@ See [examples](#symbol) of Symbol
 - **data-limits** : a array of numeric or RegEx values for comparing with the current value
 - **data-limits-get**  : name of the DEVICE:Reading to retrieve the value for comparing with the limits array (default: data-device:data-get)
 - **data-limits-part**  : filter for the value. part number of the space separated value or an RegEx (default '-1' -> all)
-- **data-unit** : add a unit after a numeric value. use encoded strings e.g. "%B0C%0A"
-- **data-substitution**: regex-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
+- **data-unit** : add a unit after a numeric value.
+- **data-substitution**: multiple functions to replace the original value (see descriptions below)
+- **data-hide**   : string to compare with current value. hide element when it's value equals data-hide
+- **data-hideparents**: jquery selector to hide element's parents too
 - **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x, circleborder
+squareborder, bg-limit, icon, square, round, truncate
 
 Use data-color OR data-colors + data-limits, not both.
+
+With class="bg-limit" it changes the background color not the forecolor according data-limits
+
+class="icon square" or class="icon round" forces the label to a fix width and height in icon style
+
+Special layout can be achieved by overwriting of following classes in the fhem-tablet-ui-user.css:
+
+.label-precomma
+.label-comma
+.label-aftercomma
+.label-unit
+
+e.g.:
+.label-aftercomma{
+    font-size:40%;
+    left: 4px;
+    top: -25px;
+    position: relative;
+}
+
+Functions for data-substitution:
+
+1. Array of replacements
+2. RegEx-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
+3. data-substitution="weekdayshort"
+4. JS functions
+data-substitution="toDate().ddmm()"     -  convert to day:month
+
+data-substitution="toDate().hhmm()"     -  convert to hour:minutes
+
+data-substitution="toDate().hhmmss()"   -  convert to hour:minutes:secondes
+
+data-substitution="toDate().eeee()"     -  convert to name of the week day
+
+data-substitution="toDate().ago()"      -  convert to time span
 
 See [examples](#label) of Label
 
@@ -206,16 +249,28 @@ See [examples](#label) of Label
 - **data-alias**: a array of fix names to show only in the selection box as an alias to the real items
 - **data-cmd**  : name of the command to send to FHEM (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-quote** : characters to enclose the send value. (default '')
-- **class**     : wider, w1x, w2x, w3x, large, big
+- **class**     : wider, w1x, w2x, w3x, large, big, notransmit
+
+####Input widgets
+- **data-get**  : name of the reading that get the selected item of the list
+- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
+- **data-cmd**  : name of the command to send to FHEM (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-value**: default value
+- **class**     : wider, w1x, w2x, w3x, large, big, notransmit
+
+data-device, data-get can be references (jQuery seletor) to select-widgets to change the source dynamically
 
 ####Push widgets
 - **data-set**    : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-set-on** : value (or an array of values) to send when the the button get pressed. (default '')
-- **data-icon**   : name of the font-awesome icon. 
 - **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
 - **data-cmd**  : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-doubleclick**: timeout to wait for a second click or touch. '0' disables the doubleclick feature. (default '0')
 - **data-countdown**: secondes for the countdown progress control (default: autodetect from 'on-for-timer' command)
+- **data-icon**     			: name of the font-awesome icon.  (default 'ftui-window')
+- **data-background-icon** 		: name of the font-awesome icon for background (default '')
+- **data-off-background-color**         : fix color attribute for OFF state or DEVICE:READING for dynamic setting (default '#505050')
+- **data-off-color**			: fix color attribute for Off state or DEVICE:READING for dynamic setting (default '#505050')
 
 'data-set-on' can also be an array of values to toggle between this values
 
@@ -231,14 +286,14 @@ See [examples](#label) of Label
 - **data-step**  :  (default 1);
 - **data-angleoffset**  : (default -120);
 - **data-anglearc**  : (default 240);
-- **data-bgcolor**  : (default '#505050');
-- **data-fgcolor**  : (default '#aa6900');
-- **data-inputcolor**  :  (default '#ffffff');
-- **data-tkcolor**  :  (default '#666');
-- **data-hdcolor**  :  (default '#666');
+- **data-bgcolor**      : Color of background (default '#505050');
+- **data-fgcolor**      : Color of ticks (default '#666');
+- **data-inputcolor**   : Color of value  (default '#ffffff');
+- **data-hdcolor**      : Color of handle  (default '#666');
 - **data-displayInput**  : Show the value (default true);
 - **data-font**  :  (default '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
 - **data-font-weight**
+- **data-unit** : add a unit after the center value.
 - **class**		: mini, small, large, readonly
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/knob.png)
@@ -271,6 +326,7 @@ all parameters from knob widget plus following additional parameters
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
 - **data-tickstep** : distance between ticks (default 4|20)
+- **data-unit** : add a unit after the desired value.
 - **class**		: mini, small, big, bigger, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
 
 ####Homestatus widget
@@ -295,16 +351,22 @@ all parameters from knob widget plus following additional parameters
 - **data-cmd**  : name of the command (**\<command\>** \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 100)
+- **data-step** : step value (default 1)
 - **data-on**   : value or RegEx where the slider moves to max  (default 'on') 
 - **data-off**  : value or RegEx where the slider moves to min  (default 'off')
 - **data-get-value** : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
 - **data-set-value** : Format of the value to send to FHEM (default '$v': the value only)
-- **data-value**: show the value in a text box (default 'false')
 - **data-width**: width for horizontal sliders (default '120px', for mini '60px')
 - **data-height**: height for vertical sliders (default '120px', for mini '60px')
-- **class**     : mini, horizontal, negated, textvalue, tap,big,bigger,large
+- **data-color** : color for quantity range (default '#aa6900')
+- **data-background-color**         : color for range bar (default '#404040')
+-
+- **class**     : mini, horizontal, negated, value, textvalue, FS20, tap, big, bigger, large
 
-The slider supports tap to target only if the CSS class 'tap' is added. 
+The slider supports tap to target only if the CSS class 'tap' is added.
+$v is a placeholder for the numeric value, it will be replaced be the real value at runtime.
+class 'FS20' convert values 0-100 to values which are excepted by FS20 dimmers.
+class 'value' enables a text element which shows the value
 
 ####Level widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
@@ -320,6 +382,8 @@ The slider supports tap to target only if the CSS class 'tap' is added.
 ####Progress widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-max**  : maximal value to set or name of the reading which helds the max value (default 100)
+- **data-progress-width**: width of the circle line in percent (default 15)
+- **data-unit** : add a unit after the center value.
 - **class**		: novalue, percent
 
 ####Dimmer widgets
@@ -335,6 +399,10 @@ The slider supports tap to target only if the CSS class 'tap' is added.
 - **data-cmd-value** : name of the command for value changing via slider (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setreading) default: 'set'
 - **data-dim**       : name of the reading responsible for DIM  (\<command\> \<device\> **\<reading\>** \<value\>) (default: '')
 - **data-icon**      : name of the font-awesome icon. (default: fa-lightbulb-o)
+- **data-max**                     : numeric value for the maximal value to tune (default '100')
+- **data-min**                     : numeric value for the minimal value to tune (default '0')
+- **data-step**                    : numeric value for each increase/descrease (default '1')
+- **class**          : FS20
 
 To change the dim value: push the button and slide up or down.
 
@@ -343,6 +411,7 @@ In extented mode ('data-dim' parameter is given) the DIM value is send to /recei
 and the button is only used for ON / OFF.
 
 $v is a placeholder for the numeric value, it will be replaced be the real value at runtime
+class 'FS20' convert values 0-100 to values which are excepted by FS20 dimmers
 
 ####Image widgets
 - **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')
@@ -354,7 +423,8 @@ $v is a placeholder for the numeric value, it will be replaced be the real value
 - **data-opacity**  : opacity of the image 0-1 (default 0.8)
 - **data-height**   : height of the image (default 'auto')
 - **data-width**    : width of the image  (default 100%)
-- **class**			: nocache
+- **data-fhem-cmd** : on click FHEM command
+- **class**	    : nocache
 
 If 'data-url' is not set, then the URL for image src is built from: data-path + valueof data-get + data-suffix
 Use data-url + data-refresh or data-device + data-get, not both.
@@ -368,10 +438,10 @@ Use data-url + data-refresh or data-device + data-get, not both.
 - **data-item-diameter** : diameter of the circle (default 52)
 - **data-circle-radius** : radius of each item, in pixel (default 70)
 - **data-border**        : style of border - 'round','square' (default 'round')
-- **data-item-width**    : fixe size for width in px (default value of data-item-diameter)
-- **data-item-height**   : fixe size for height in px (default value of data-item-diameter)
+- **data-item-width**    : fixed size for width in px (default value of data-item-diameter)
+- **data-item-height**   : fixed size for height in px (default value of data-item-diameter)
 - **data-direction**     : position of the items in relation to the center (default full). Options are: top | right | bottom | left | top-right | top-left | bottom-right | bottom-left | top-half | right-half | bottom-half | left-half | full | vertical | horizontal
-- **class**		 : keepopen
+- **class**		 : keepopen, noshade
 
 ####Playstream widgets
 - **data-url**      : URL of the Radio stream
@@ -382,15 +452,19 @@ Use data-url + data-refresh or data-device + data-get, not both.
 
 ####Pagetab widgets
 - **data-url**		: URL of the new page to show
-- **data-icon**     : name of the font-awesome icon. (default 'fa-power-off')
+- **data-icon**         : name of the font-awesome icon. (default 'fa-power-off')
 - **data-background-icon** : name of the font-awesome icon for background (default '')
 - **data-on-background-color** : color of ON state (default '#aa6900')
 - **data-off-background-color** : color of OFF state (default '#505050')
-- **data-on-color** : color of ON state (default '#aa6900')
-- **data-off-color**: color of Off state (default '#505050')
-- **data-get-on**   : array of status to assign a special icon-list from data-icons
-- **data-icons**    : array of icons related to the a data-get-on array
-- **class**		    : warn, activate (as additionals for data-icons)
+- **data-on-color**     : color of ON state (default '#aa6900')
+- **data-off-color**    : color of Off state (default '#505050')
+- **data-get-on**       : array of status to assign a special icon-list from data-icons
+- **data-icons**        : array of icons related to the a data-get-on array
+- **data-return-time**  : time in secondes for the maximal remain time on secondary tabs (default 0 -> endless)
+- **data-text**		: text for label
+- **class**		: warn, activate (as additionals for data-icons), labelright
+
+data-return-time has to be placed on the main pagetab (the first one > index 0)
 
 ####Pagebutton widgets
 - **data-url**              : URL of the new page to show
@@ -402,11 +476,15 @@ all other parameters like switch widget
 - **class**         : fade, rotate  (default: '' means no animation)
 
 ####Swiper widgets
-- **data-width**        : fixe size for width (in % or px)
-- **data-height**       : fixe size for height (in % or px)
+- **data-get**          : name of the reading (default 'STATE')
+- **data-states**   	: array of states for reading to page assignment
+- **data-width**        : fixed size for width (in % or px)
+- **data-height**       : fixed size for height (in % or px)
 - **data-autoplay**     : delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
-- **class**             :
+- **data-tabclass**     : CSS class name of the dedicated tab elements (default 'swipertab')
+- **class**             : nopagination, navbuttons
 
+class="noswipe" on page elements prevents page from swiping
 
 ####Simplechart widgets
 - **data-logdevice**   : name of the logdevice (e.g. FileLog_WohnzimmerHeizung)
@@ -420,8 +498,8 @@ all other parameters like switch widget
 - **data-daysago**     : number of days back from now (default 0)
 - **data-caption**     : name of the chart to show as text
 - **data-yunit**       : unit of the value to show beside of each Y ticks
-- **data-width**       : fixe size for width (in % or px)
-- **data-height**      : fixe size for height (in % or px)
+- **data-width**       : fixed size for width (in % or px)
+- **data-height**      : fixed size for height (in % or px)
 - **class**		       : fullsize, noticks
 
 The chart gets updated every time the data-get reading is changed and after each shortpoll interval  (15 min).
@@ -451,8 +529,8 @@ The chart gets updated every time the data-get reading is changed and after each
 - **data-scrollgroup** 	number to define coupling of the scrolling (shift and zoom). All charts having the same number are scrolled (shifted and zoomed) together.
 - **data-showlegend**	switch to activate/deactivate the initial display of the legend window ('true' or 'false') 	(default 'false')
 - **data-yunit_sec** 	unit of the value to show beside of each Y ticks for secondary y axis.
-- **data-width** 	fixe size for width (in % or px)
-- **data-height** 	fixe size for height (in % or px)
+- **data-width** 	fixed size for width (in % or px)
+- **data-height** 	fixed size for height (in % or px)
 - **class**             fullsize, noticks, nobuttons
 
 data-logfile can be omitted in this case the default value "-" will be used. This means that the current logfile is going to be used.
@@ -467,8 +545,8 @@ The crosshair cursor currently only works dynamically on desktop browsers. On iO
 - **data-get**         : name of the reading where to get the alert value from (default 'STATE')
 - **data-get-on**      : value which trigger to open the dialog (default 'on')
 - **data-get-off**     : value which trigger to close the dialog (default 'off')
-- **data-width**       : fixe size for width (in % or px)
-- **data-height**      : fixe size for height (in % or px)
+- **data-width**       : fixed size for width (in % or px)
+- **data-height**      : fixed size for height (in % or px)
 - **data-draggable**   : allow moving of the dialog (default 'true')
 
 It's important that a ```<div class="dialog">``` inside the widget can be found. See the [basic structure](#dialog) of popup
@@ -489,8 +567,8 @@ All parameters like Label Widgets plus these:
   If the readingsgrouop uses css references, images or similar pieces, then the corresponding files / links need to be also reachable / included
 
 ####Eventmonitor widgets
-- **data-width**       : fixe size for width (default '750px')
-- **data-height**      : fixe size for height (default '450px')
+- **data-width**       : fixed size for width (default '750px')
+- **data-height**      : fixed size for height (default '450px')
 - **device-filter**    : (default '.*')
 - **reading-filter**   : (default '.*')
 - **max-items**        : (default '100')
@@ -517,8 +595,8 @@ All parameters like Switch widgets
 - **data-color**      : rgb value or color name for the normal range of the value bar (default 'orange')
 - **data-color-high** : rgb value or color name for the upper range of the value bar (default 'red')
 - **data-color-low**  : rgb value or color name for the lower range of the value bar (default 'blue')
-- **data-width**      : fixe size for width (default '8px')
-- **data-height**     : fixe size for height (default '220px')
+- **data-width**      : fixed size for width (default '8px')
+- **data-height**     : fixed size for height (default '220px')
 
 - **class**           : nolabels
 
@@ -539,11 +617,52 @@ See [examples](#range) of Range
 - **data-icon-right**              : name of the right icon  (default null)
 - **data-width**                   : width of the link  (default 'auto')
 - **data-height**                  : height of the link (default 'auto')
+- **data-url**                     : URL as a adress to jump to (default '')
+- **data-url-xhr**                 : URL as a adress to call in background (default '')
+- **data-fhem-cmd**                : a FHEM command to call (default '')
 - **data-text-align**              : alignment of text ['left','center','right']  (default 'center')
-- **data-active-pattern**          : RegEx to define active state  (default null)
+- **data-active-pattern**          : RegEx to define active state. Match check will be done against current document location  (default null)
 - **data-active-color**            : rgb value or color name for the text and icon in case active-pattern is matching (default same as data-color)
 - **data-active-background-color** : rgb value or color name for the back in case active-pattern is matching (default same as data-background-color)
 - **data-active-border-color**     : rgb value or color name for the border in case active-pattern is matching (default same as data-border-color)
+
+####Spinner widgets
+- **data-color**                   : rgb value or color name for the level bar (default 'orange')
+- **data-gradient-color**          :
+- **data-background-color**        :
+- **data-icon-left-color**         : rgb value or color name for the left icon (default '#aaa')
+- **data-icon-right-color**        : rgb value or color name for the right icon (default '#aaa')
+- **data-text-color**              : fix color attribute or DEVICE:READING for dynamic setting for the text element if shown (default '#ccc')
+- **data-icon-left**               : name of the left icon   (default '-')
+- **data-icon-right**              : name of the right icon  (default '+')
+- **data-width**                   : fixed size for width (in % or px)
+- **data-height**                  : fixed size for height (in % or px)
+- **data-max**                     : numeric value for the maximal value to tune (default '100')
+- **data-min**                     : numeric value for the minimal value to tune (default '0')
+- **data-step**                    : numeric value for each increase/descrease (default '1')
+- **data-unit**                    : string to attach after the numeric value for the text element if shown  (default '')
+- **data-get-value**               : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
+- **data-shortdelay**              : ms til repeat start if button is pressed (default '80')
+- **data-longdelay**               : ms until the command is send after button is released (default '500')
+- **data-off**                     : value which represents the OFF mode
+- **data-on**                      : value which represents the ON mode
+- **class**                        : valueonly,value,circulate,positiononly
+
+####Departure widgets
+- **data-color**                   :
+- **data-cmd**                     :  (default 'get')
+- **data-background-color**        : rgb value or color name for the widget background (default '#C0C0C0')
+- **data-icon-color**              : rgb value or color name for the left icon (default '#aa6900')
+- **data-text-color**              : fix color attribute (default '#ddd')
+- **data-icon**                    : name of the left icon   (default 'H')
+- **data-width**                   : fixed size for width (in % or px, default '200px')
+- **data-height**                  : fixed size for height (in % or px, default '250px')
+- **data-interval**                : auto refresh interval in secondes (default '120', 0 means no auto refresh)
+- **class**                        : DVB,VVO,DB,alternate,deptime
+
+deptime: show departure time insteat of minutes
+alternate: show background of every second line half transparent
+DVB,VVO,DB: fix style schemas
 
 Format
 -------
@@ -591,6 +710,9 @@ not all widgets support all classes
 - blink                 : blink animatation for label or symbol widget
 - rotate-90		: rotate (e.g an image) for 90 degres  
 - circleborder          : draws a round border around labels
+- autohide              : Hides an element in case of an invalid reading (not available for this device)
+- notransmit            : suppress send to FHEM after changes
+- truncate              : short a string if necessary and add ... instead
 
 Positioning:
 - row                   : new row
@@ -601,6 +723,8 @@ Positioning:
 - left-space	: 15px extra on left (left-space-2x -> 30px; left-space-3x -> 45px)
 - right-space  	: 15px extra on right (right-space-2x -> 30px; right-space-3x -> 45px)
 - top-narrow    : -15px closer on top  (top-narrow-2x -> -30px; top-narrow-10 -> -10px)
+- left-narrow	: 15px closer on left (left-narrow-2x -> 30px; left-narrow-3x -> 45px)
+- right-narrow  	: 15px closer on right (right-narrow-2x -> 30px; right-narrow-3x -> 45px)
 - centered		: horizontal centered
 - left-align	: align text left
 - right-align	: align text right
@@ -776,10 +900,10 @@ STATE	T: 20.0 H: 61
 ```html
 <div data-type="label" data-device="THSensorWZ" 
      data-part="2" data-unit="%B0C%0A" class="cell big"></div>
-<div data-type="label" class="cell">Temperatur</div>
+<div class="cell">Temperatur</div>
 <div data-type="label" data-device="THSensorWZ" data-part="4" 
      data-unit="%" class="cell big"></div>
-<div data-type="label" class="cell">Luftfeuchte</div>
+<div class="cell">Luftfeuchte</div>
 ```
 But the same result can reached by getting single readings:
 ```
@@ -902,21 +1026,21 @@ The countdown time is auto detected via the on-for-timer command. A other value 
 ```html
 <div class="cell left">
  <div data-type="switch" data-device="dummy1" 
-      data-get-off="((?!Wert1).)*" 
-      data-get-on="Wert1" class="cell" ></div>
- <div data-type="label" class="cell">Wert1</div>
+      data-get-off="!on" data-set-off="" data-icon="fa-home"
+      data-get-on="Home" class="cell" ></div>
+ <div class="cell">Home</div>
  <div data-type="switch" data-device="dummy1" 
-      data-get-off="((?!Wert2).)*" 
-      data-get-on="Wert2" class="cell" ></div>
- <div data-type="label" class="cell">Wert2</div>
+      data-get-off="!on" data-set-off="" data-icon="fa-bed"
+      data-get-on="Sleep" class="cell" ></div>
+ <div class="cell">Sleep</div>
  <div data-type="switch" data-device="dummy1" 
-      data-get-off="((?!Wert3).)*" 
-      data-get-on="Wert3" class="cell" ></div>
- <div data-type="label" class="cell">Wert3</div>
+      data-get-off="!on" data-set-off="" data-icon="fa-car"
+      data-get-on="Away" class="cell" ></div>
+ <div class="cell">Away</div>
  <div data-type="switch" data-device="dummy1" 
-      data-get-off="((?!Wert4).)*" 
-      data-get-on="Wert4" class="cell" ></div>
- <div data-type="label" class="cell">Wert4</div>
+      data-get-off="!on" data-set-off="" data-icon="fa-suitcase"
+      data-get-on="Holiday" class="cell" ></div>
+ <div class="cell">Holiday</div>
 </div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/group.png)
@@ -1390,6 +1514,27 @@ Create two comboboxes to select the inputs of a two zone AV receiver. List for Z
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/select_2x.png)    
 
+###Input
+
+```html
+<li data-row="1" data-col="4" data-sizex="2" data-sizey="2">
+    <header>SELECT</header>
+    <div data-type="select" data-items='["dummy1","dummy2","dummy3","dummy4"]' id="sendDev" class="notransmit w3x"></div>
+    <div data-type="select" data-items='["STATE","warn1","warn2","webCmd","room"]' id="sendParam" class="notransmit w3x"></div>
+    <div data-type="input" data-device="#sendDev" data-get="#sendParam" id="sendValue" data-value="127" class="notransmit w3x centered"></div>
+    <div data-type="link" class="round centered"
+         data-width="80" data-height="40"
+         data-color="white"
+         data-background-color="green"
+         data-icon="fa-feed"
+         data-device="#sendDev"
+         data-set="#sendParam"
+         data-value="#sendValue">
+        OK
+    </div>
+</li>
+``
+
 ###Dialog
 -------
 Basic structure for a popup:
@@ -1490,12 +1635,80 @@ Example of range widgets to visualize max and min temperature value as a range b
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/widget_range.png)
 
+###Link
+-------
+
+Example for a button-like link. Usable for a popup opener
+
+```html
+<div data-type="link" class="round"
+     data-color="grey"
+     data-border-color="grey"
+     data-icon="fa-server">Details</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/link_small.png)
+
+
+Example for a huge button-like link. Usable to trigger a fhem command
+
+```html
+<div data-type="link" class="round"
+     data-width="130" data-height="50"
+     data-color="white"
+     data-background-color="red"
+     data-icon="fa-lock"
+     data-fhem-cmd="set AllDoors locked">
+    Lock Doors
+</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/link_big.png)
+
+
+###Spinner
+-------
+
+Example for a value spinner. Per default the value is visualized as a level bar
+
+```html
+<div data-type="spinner"
+     data-device="dummy1">
+</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/ftui_spinner1.png)
+
+
+Example for a special value spinner. The value is visualized as a dual color level bar
+
+```html
+<div data-type="spinner"
+    data-device="dummy2"
+    data-min="10"
+    data-max="30"
+    data-gradient-color='["blue","red"]'>
+</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/ftui_spinner2.png)
+
+
+Example for a special value spinner. The value is visualized as numeric text with °-unit
+
+```html
+<div data-type="spinner"
+    data-device="dummy3"
+    data-min="10"
+    data-max="30"
+    data-unit="°"
+    class="valueonly">
+</div>
+```
+![](http://knowthelist.github.io/fhem-tablet-ui/ftui_spinner3.png)
+
 
 Specials
 -------
 **Example** to call a command directly to FHEM. This calls "set dummy1 off"
 ```html
-<div onclick="setFhemStatus('set dummy1 off')">All off!</div>
+<div onclick="setFhemStatus('set dummy1 off');">All off!</div>
 ```
 **Example** to call a Perl function directly to FHEM. This calls the myUtils_HeizungUpDown function located in 99_myUtils.pm:
 	myUtils_HeizungUpDown("WZ.Thermostat_Climate","up")
@@ -1558,7 +1771,7 @@ I'm unable to work now and I need to buy a new one.
 Update 2015-11-04: my old 2007 MacBook runs again with the previous HDD, but totaly slow and out of space.
 
 * Goal  : 13'' MacBook Pro 1445€ 
-* Status: 796€ (55% - 04.01.2016 -> many thanks to all donators :-)
+* Status: 1203€ (23.02.2016) -> many many thanks to all donators - 242€ still required  :-)
 
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PD4C2XM2VTD9A"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" alt="[paypal]" /></a>

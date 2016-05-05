@@ -61,6 +61,7 @@ var widget_weather = $.extend({}, widget_widget, {
         "Schnee":                       "U",
         'Schneefall':                   'U',
         'Schneeregen':                  'V',
+        'Schneeschauer':                '$',
         'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'Q',
         'Nebel':                        'F',
         'klar':                         'B',
@@ -141,6 +142,7 @@ var widget_weather = $.extend({}, widget_widget, {
         "Schnee":                       'snow.png',
         'Schneeregen':                  'rainsnow.png',
         'Schneefall':                   'snow.png',
+        'Schneeschauer':                'chance_of_snow.png',
         'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'scatteredshowers.png',
         'Nebel':                        'fog.png',
         'klar':                         'sunny_night.png',
@@ -210,6 +212,35 @@ var widget_weather = $.extend({}, widget_widget, {
         'vereinzelt Schneeschauer' :    ':scattered snow showers',
         'teilweise wolkig' :            ':partly cloudy',
         'Gewitterregen' :               ':thundershowers',
+        'leicht bew\u00f6lkt' :         ':partly cloudy',
+        'bedeckt'				:		':overcast',
+        'Spr\u00fchregen'		:		':drizzle',
+        'Regen'					:		':rain',
+        'Schnee'				:		':snow',
+        'Nebel mit Reifbildung'	:		':freezing rain',
+        'leichter Spr\u00fchregen'	:	':drizzle',
+        'starker Spr\u00fchregen'	:	':drizzle',
+        'leichter Spr\u00fchregen, gefrierend'	:	':drizzle',
+        'starker Spr\u00fchregen, gefrierend'	:	':freezing rain',
+        'leichter Regen'		:	':rain',
+        'm\u00e4\u00dfiger Regen'	:	':rain',
+        'starker Regen'			:	':thundershowers',
+        'leichter Regen, gefrierend'	:	':freezing rain',
+        'm\u00e4\u00dfiger oder starker Regen, gefrierend'	:	':freezing rain',
+        'leichter Schnee-Regen'	:	':mixed rain and snow',
+        'starker Schnee-Regen'	:	':mixed rain and snow',
+        'leichter Schneefall'	:	':light snow showers',
+        'm\u00e4\u00dfiger Schneefall'	:	':snow',
+        'starker Schneefall'	:	':snow flurries',
+        'leichter Regen - Schauer'	:	':scattered showers',
+        'Regen - Schauer'	:	':showers',
+        'starker Regen - Schauer'	:	':thundershowers',
+        'leichter Schnee / Regen - Schauer'	:	':mixed rain and snow',
+        'starker Schnee / Regen - Schauer'	:	':mixed rain and snow',
+        'leichter Schnee - Schauer'	:	':light snow showers',
+        'mäßiger oder starker Schnee - Schauer'	:	':snow',
+        'leichtes Gewitter'	:	':thunderstorms',
+        'starkes Gewitter'	:	':thunderstorms',
         'Schneeschauer' :               ':snow showers',
         'vereinzelt Gewitter' :         ':isolated thundershowers',
 
@@ -339,7 +370,7 @@ var widget_weather = $.extend({}, widget_widget, {
     init_attr: function(elem) {
         elem.data('get', elem.data('get') || 'STATE');
 
-        readings[elem.data('get')] = true;
+        elem.addReading('get');
 
         var fhem_path = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
         fhem_path = fhem_path.replace(/\/$/, '');

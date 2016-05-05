@@ -1,0 +1,59 @@
+.spinner{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    border-radius: 30px;
+    margin: 3px;
+    cursor: default !important;
+}
+.spinner > .lefticon {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 40px;
+    cursor: pointer;
+}
+.spinner > .righticon {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 40px;
+    cursor: pointer;
+}
+.spinner > .lefticon.fa,.spinner > .righticon.fa {
+    padding-bottom: 0px;
+    font-size: 20px;
+}
+
+.spinner > .levelArea {
+    position: relative;
+    margin-left:12px;
+    margin-right:12px;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #313131;
+    height: 7px;
+}
+.spinner .levelRange {
+    position: absolute;
+    border-radius: 5px;
+    height: 7px;
+}
+.spinner.valueonly > .levelArea {
+    visibility: hidden;
+}
+.spinner.value > .spinnerText {
+    position: absolute;
+    top: -24%;
+    left: 25%;
+}
+.spinner.valueonly > .spinnerText {
+    position: absolute;
+    top: 2px;
+    left: 23%;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: robotothin,sans-serif;
+}

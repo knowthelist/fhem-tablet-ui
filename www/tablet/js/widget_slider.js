@@ -16,16 +16,21 @@ var widget_slider= $.extend({}, widget_widget, {
 
         var elem = $(this);
 
-        elem.initData('get'         ,'STATE');
-        elem.initData('set'         ,'');
-        elem.initData('cmd'         ,'set');
-        elem.initData('on'          ,'on');
-        elem.initData('off'         ,'off');
-        elem.initData('width'       ,null);
-        elem.initData('height'      ,null);
-        elem.initData('value'       ,false);
-        elem.initData('set-value'   ,'$v');
-        elem.initData('get-value'   ,elem.data('part') || -1);
+        elem.initData('get'             ,'STATE');
+        elem.initData('set'             ,'');
+        elem.initData('cmd'             ,'set');
+        elem.initData('on'              ,'on');
+        elem.initData('off'             ,'off');
+        elem.initData('width'           ,null);
+        elem.initData('height'          ,null);
+        elem.initData('value'           ,0);
+        elem.initData('min'             ,0);
+        elem.initData('max'             ,100);
+        elem.initData('step'            ,null);
+        elem.initData('set-value'       ,'$v');
+        elem.initData('get-value'       ,elem.data('part') || -1);
+        elem.initData('color'           ,getClassColor(elem) || getStyle('.slider','color')    || '#aa6900');
+        elem.initData('background-color',getStyle('.slider','background-color')    || '#404040');
 
         elem.addReading('get');
 
@@ -35,21 +40,16 @@ var widget_slider= $.extend({}, widget_widget, {
         storeval = (storeval)?storeval:'5';
         var input_elem =  jQuery('<input/>', {
             type: 'text',
+            class: 'slider',
         }).appendTo(elem);
-
-        if ( elem.data('value') ) {
-          var lbl =  jQuery('<div/>', {
-              id : 'slidervalue',
-              class : 'slidertext normal',
-          }).appendTo(elem);
-        }
 
         elem.data('selection',0);
         var pwrng = new Powerange(input_elem[0], {
             vertical: !elem.hasClass('horizontal'),
-            'min': elem.data('min') || 0,
-            'max': elem.data('max') || 100,
-            'tap': elem.hasClass('tap') || false,
+            min: elem.data('min'),
+            max: elem.data('max'),
+            step: elem.data('step'),
+            tap: elem.hasClass('tap') || false,
             klass: elem.hasClass('horizontal')?'slider_horizontal':'slider_vertical',
             callback: (function() {
               var pwrng = elem.data('Powerange');
@@ -65,19 +65,20 @@ var widget_slider= $.extend({}, widget_widget, {
                 v = elem.hasClass('negated')? pwrng.options.max + pwrng.options.min - sliVal:sliVal;
               }
 
-              if ( elem.data('value') ) {
+              if ( elem.hasClass('value') ) {
                 elem.find( '#slidervalue' ).text( v );
               }
 
               // isunsel == false (0) means drag is over
               if ( ( ! isunsel ) && ( selMode ) ) {
-                v = elem.data('set-value').replace('$v',v.toString());
-                var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('set'),v].join(' ');
+                if (elem.hasClass('FS20')){
+                  v = base.FS20.dimmerValue(v);
+                }
+                elem.data('value', elem.data('set-value').replace('$v',v.toString()));
 
                 // write visible value (from pwrng) to local storage NOT the fhem exposed value)
                 localStorage.setItem("slider_"+id, sliVal);
-                setFhemStatus(cmdl);
-                TOAST && $.toast(cmdl);
+                elem.transmitCommand();
 
                 elem.data('selection',0);
 
@@ -85,10 +86,12 @@ var widget_slider= $.extend({}, widget_widget, {
               }).bind(this),
         });
         elem.data('Powerange',pwrng);
+        var rangeQuantity = elem.find('.range-quantity');
+        var rangeBar = elem.find('.range-bar');
+        rangeQuantity.css({'background-color':elem.data('color')});
+        rangeBar.css({'background-color':elem.data('background-color')});
 
         if (elem.hasClass('negated')){
-          var rangeQuantity = elem.find('.range-quantity');
-          var rangeBar = elem.find('.range-bar');
           var rangeBarColor = rangeBar.css('background-color');
           rangeBar.css({'background-color':rangeQuantity.css('background-color')});
           rangeQuantity.css({'background-color':rangeBarColor});
@@ -128,6 +131,13 @@ var widget_slider= $.extend({}, widget_widget, {
                                                           });
             }
         }
+
+        if ( elem.hasClass('value') ) {
+         var lbl =  jQuery('<div/>', {
+             id : 'slidervalue',
+             class : 'slidertext normal',
+         }).appendTo(elem.find('.range-container'));
+       }
 
        if (elem.hasClass('readonly'))
             elem.children().find('.range-handle').css({'visibility':'hidden'});
@@ -172,9 +182,9 @@ var widget_slider= $.extend({}, widget_widget, {
                       }, 250);
                     }
                     localStorage.setItem("slider_"+dev+"_"+par, v);
-                    DEBUG && console.log( 'slider dev:'+dev+' par:'+par+' changed to:'+v );
+                    ftui.log(1,'slider dev:'+dev+' par:'+par+' changed to:'+v );
                 }
-                if ( elem.data('value') ) {
+                if ( elem.hasClass('value') ) {
                     var slidervalue = elem.find( '#slidervalue' );
                     if (slidervalue){
                         if ( elem.hasClass('textvalue') ) {

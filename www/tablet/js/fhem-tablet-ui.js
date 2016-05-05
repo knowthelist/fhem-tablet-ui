@@ -2,7 +2,7 @@
 /**
 * Just another dashboard for FHEM
 *
-* Version: 1.4.4
+* Version: 1.5.1
 * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
 *
 * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
@@ -13,18 +13,18 @@ var deviceStates={};
 var readings = {"STATE":true};
 var devices = {};
 var types = [];
-var updateStatus = {};
+
 var DEBUG = false;
 var DEMO = false;
 var debuglevel;
 var TOAST = true;
 var doLongPoll = false;
 var longPollRequest;
-var timer;
+var shortPollTimer;
+var longPollTimer;
 var dir = '';
-var runningRequests = 0;
-var REQ_WAIT = 100;
-var REQ_MAX = 4;
+var fhem_dir = '';
+
 var filename = '';
 var shortpollInterval = 30 * 1000; // 30 seconds
 var devs = [];
@@ -41,7 +41,7 @@ var plugins = {
   load: function (name) {
     return loadplugin(name, function () {
 		var module = eval(name);
-		plugins.addModule(module);
+        plugins.addModule(module);
         module.init();
         //update all what we have until now
         for (var device in devices) {
@@ -70,9 +70,117 @@ var plugins = {
   }
 }
 
+// ToDo: switch step by step to encapsulation of FTUI as an object literal
+var ftui = {
+    requests: {'waiting':0,'running':0,'waitTime':100,'maxRunning':4},
+    states: {'lastSetOnline':0,'longPollRestart':false},
+    paramIdMap:{},
+    timestampMap:{},
+    init: function() {
+    },
+    initPage: function(){
+        initPage();
+    },
+    shortPoll: function() {
+        var reading = null;
+        ftui.log(1,'start shortpoll');
+        // invalidate all readings for detection of outdated ones
+        for (var device in devices) {
+            var params = deviceStates[device];
+            for (reading in params) {
+                params[reading].valid = false;
+            }
+        }
+        // request only the needed readings from FHEM
+        ftui.requests.waiting = Object.keys(readings).length;
+        ftui.requests.length = ftui.requests.waiting;
+        ftui.requests.startTime = new Date();
+        ftui.log(1,'shortPoll - waiting requests:'+ftui.requests.waiting);
+        for (reading in readings) {
+            requestFhem(reading);
+        }
+    },
+    decreaseRequests: function( settings ) {
+        ftui.requests.waiting--;
+        if (ftui.requests.waiting === 0){
+            var duration = diffSeconds(ftui.requests.startTime,new Date());
+            if (DEBUG) ftui.toast("Full refresh done in "
+                                  +duration+"s for "
+                                  +ftui.requests.length+" readings");
+            ftui.log(1,'shortPoll - Done');
+            ftui.onUpdateDone();
+        }
+    },
+    onUpdateDone: function(){
+        $(document).trigger("updateDone");
+        ftui.checkInvalidElements();
+    },
+    checkInvalidElements: function(){
+        $('div.autohide[data-get]').each(function(index){
+            var elem = $(this);
+            var valid = elem.getReading('get').valid;
+            if ( valid && valid===true )
+                elem.removeClass('invalid');
+            else
+                elem.addClass('invalid');
+        });
+    },
+    setOnline: function(){
+        var ltime = new Date().getTime() / 1000;
+        if ((ltime - ftui.states.lastSetOnline) > 60){
+            if (DEBUG) ftui.toast("Network connected");
+            ftui.states.lastSetOnline = ltime;
+            startShortPollInterval(500);
+            if (!doLongPoll){
+                doLongPoll  = ($("meta[name='longpoll']").attr("content") == '1');
+                if ( doLongPoll )
+                    startLongPollInterval(5000);
+            }
+            ftui.log(1,'FTUI is online');
+        }
+    },
+    setOffline: function(){
+        if (DEBUG) ftui.toast("Lost network connection");
+        doLongPoll = false;
+        clearInterval(shortPollTimer);
+        clearInterval(longPollTimer);
+        if (longPollRequest)
+            longPollRequest.abort();
+        ftui.saveStatesLocal();
+        ftui.log(1,'FTUI is offline');
+    },
+    saveStatesLocal: function(){
+        //save deviceStates into localStorage
+        var dataToStore = JSON.stringify(deviceStates);
+        localStorage.setItem('deviceStates', dataToStore);
+    },
+    restartLongPoll: function(){
+        ftui.toast("Disconnected from FHEM");
+        if ( doLongPoll ){
+            ftui.toast("Retry to connect in 10 seconds");
+            setTimeout(function(){
+                longPoll();
+            }, 10000);
+        }
+    },
+    toast: function(text){
+        if (TOAST)
+            $.toast(text);
+    },
+    log: function(level,text){
+        if (debuglevel >= level)
+            console.log(text);
+    },
+}
 
 // event page is loaded
 $(document).on('ready', function() {
+
+    //new encapsulated FTUI
+    ftui.init();
+    $(ftui).on('shortpollfinished', function(){
+        $.toast("shortpollfinished");
+    });
 
     //add background for modal dialogs
     $("<div id='shade' />").prependTo('body').hide();
@@ -84,12 +192,9 @@ $(document).on('ready', function() {
     initPage();
 
     if ( doLongPoll ){
-        var longpollDelay = $("meta[name='longpoll_delay']").attr("content")
-            || (typeof wvcDevices != 'undefined')?shortpollInterval:100;
-        setTimeout(function() {
-            longPoll();
-        }, longpollDelay);
-        shortpollInterval = 15 * 60 * 1000; // 15 minutes
+        var longpollDelay = $("meta[name='longpoll_delay']").attr("content");
+        if (!$.isNumeric(longpollDelay)) longpollDelay = (typeof wvcDevices != 'undefined')?shortpollInterval:100;
+        startLongPollInterval(longpollDelay);
     }
 
     $("*:not(select)").focus(function(){
@@ -97,7 +202,7 @@ $(document).on('ready', function() {
     });
 
     // refresh every x secs
-    startPollInterval();
+    startShortPollInterval();
 });
 
 function initPage() {
@@ -124,21 +229,26 @@ function initPage() {
     filename = url.substring(url.lastIndexOf('/')+1);
     DEBUG && console.log('Filename: '+filename);
 
+    fhem_dir = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
+    DEBUG && console.log('FHEM dir: '+fhem_dir);
+
     //init gridster
-    if (gridster)
-        gridster.destroy();
-    gridster = $(".gridster > ul").gridster({
-      widget_base_dimensions: [wx, wy],
-      widget_margins: [wm, wm],
-      draggable: {
-        handle: '.gridster li > header'
-      }
-    }).data('gridster');
-    if($("meta[name='gridster_disable']").attr("content") == '1') {
-        gridster.disable();
-    }
-    if($("meta[name='gridster_starthidden']").attr("content") == '1') {
-        $('.gridster').hide();
+    if ($.fn.gridster){
+        if (gridster)
+            gridster.destroy();
+        gridster = $(".gridster > ul").gridster({
+          widget_base_dimensions: [wx, wy],
+          widget_margins: [wm, wm],
+          draggable: {
+            handle: '.gridster li > header'
+          }
+        }).data('gridster');
+        if($("meta[name='gridster_disable']").attr("content") == '1') {
+            gridster.disable();
+        }
+        if($("meta[name='gridster_starthidden']").attr("content") == '1') {
+            $('.gridster').hide();
+        }
     }
 	
     //include extern html code
@@ -186,34 +296,33 @@ function initReadingsArray(get) {
             }
             reading = fqreading[1];
         }
-        if(!readings[reading]){
+        if(!readings[reading] && !reading.match(/^[#\.\[].*/)){
             readings[reading] = true;
             pars.push(reading);
         }
     }
 }
 
-function initWidgets() {
-
+function initWidgets(sel) {
+    
+    sel = (typeof sel !== 'undefined') ? sel : '';
     readings = {"STATE":true};
     devices = {};
     types = [];
-    updateStatus = {};
     devs = [];
     pars = [];
 
-    //restore divece states from storage
+    //restore device states from storage
     if (!DEMO)
         deviceStates=JSON.parse(localStorage.getItem('deviceStates')) || {};
     else {
         $.ajax({async: false,url: "/fhem/tablet/data/"+filename.replace(".html",".dat"),})
         .done ( function( data ) {deviceStates=JSON.parse(data) || {};});
     }
-
     showDeprecationMsg();
 
     //collect required widgets types
-    $('div[data-type]').each(function(index){
+    $(sel+' div[data-type]').each(function(index){
         var type = $(this).data("type");
         if (types.indexOf(type)<0){
               types.push(type);
@@ -221,32 +330,32 @@ function initWidgets() {
     });
 
     //collect required devices
-    $('div[data-device]').each(function(index){
+    $(sel+' div[data-device]').each(function(index){
         var device = $(this).data("device");
-        if(!devices[device] && typeof device != 'undefined' && device !== 'undefined' ){
-            devices[device] = true;
-            devs.push(device);
+        if (!device.match(/^[#\.\[].*/)){
+            if(!devices[device] && typeof device != 'undefined' && device !== 'undefined' ){
+                devices[device] = true;
+                devs.push(device);
+            }
         }
     });
 
     //collect required readings
     DEBUG && console.log('Collecting required readings');
-    $('[data-get]').each(function(index){
-        initReadingsArray($(this).data("get"));
+    $(sel+' [data-get]').each(function(index){
+        var param = $(this).data("get");
+        initReadingsArray(param);
     });
 
     //init widgets
     var deferredArr = $.map(types, function(widget_type, i) {
         return plugins.load('widget_'+widget_type);
     });
-    runningRequests = 0;
 
     //get current values of readings not before all widgets are loaded
     $.when.apply(this, deferredArr).then(function() {
         DEBUG && console.log('Request readings from FHEM');
-        for (var reading in readings) {
-            requestFhem(reading);
-        }
+        ftui.shortPoll();
     });
 }
 
@@ -255,26 +364,33 @@ function showDeprecationMsg() {
     //end **** (remove this after migration)
 }
 
-function startPollInterval() {
-     clearInterval(timer);
-     timer = setInterval(function () {
+function startShortPollInterval(delay) {
+    clearInterval(shortPollTimer);
+    shortPollTimer = setTimeout(function () {
         //get current values of readings every x seconds
-        updateStatus = {};
-		for (var reading in readings) {
-            requestFhem(reading);
-        }
-     }, shortpollInterval); 
+        ftui.shortPoll();
+        startShortPollInterval() ;
+     }, delay || shortpollInterval);
  }
+
+function startLongPollInterval(interval) {
+    if (DEBUG) ftui.toast("Start Longpoll in " + interval/1000 + "s");
+    clearInterval(longPollTimer);
+    longPollTimer = setTimeout(function() {
+        longPoll();
+    }, interval);
+    shortpollInterval = 15 * 60 * 1000; // 15 minutes
+}
 
 function setFhemStatus(cmdline) {
     if (DEMO) {console.log('DEMO-Mode: no setFhemStatus');return;}
-    startPollInterval();
+    startShortPollInterval();
     cmdline = cmdline.replace('  ',' ');
     DEBUG && console.log('send to FHEM: '+cmdline);
 	$.ajax({
 		async: true,
         cache:false,
-		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
+        url: fhem_dir,
 		data: {
 			cmd: cmdline,
 			XHR: "1"
@@ -286,9 +402,7 @@ function setFhemStatus(cmdline) {
   	.done ( function( data ) {
         if ( !doLongPoll ){
 			setTimeout(function(){
-                for (var reading in readings) {
-                     requestFhem(reading);
-				}
+                ftui.shortPoll();
 			}, 4000);
 		}
 	});
@@ -298,23 +412,22 @@ var xhr;
 var currLine=0;
 function longPoll(roomName) {
     if (DEMO) {console.log('DEMO-Mode: no longpoll');return;}
-    DEBUG && console.log('start longpoll');
-	
-	if (xhr)
-		xhr.abort();
-	currLine=0;
-	
+    ftui.log(1,(ftui.states.longPollRestart)?"Longpoll re-started":"Longpoll started");
+    if (xhr)
+        xhr.abort();
+    if (longPollRequest)
+        longPollRequest.abort();
+    currLine=0;
+    if (DEBUG) {
+        if (ftui.states.longPollRestart)
+            ftui.toast("Longpoll re-started");
+        else
+            ftui.toast("Longpoll started");
+    }
+    ftui.states.longPollRestart=0;
     longPollRequest=$.ajax({
-		url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
+        url: fhem_dir,
 		cache: false,
-		complete: function() {
-            if ( doLongPoll ){
-                setTimeout(function() {
-                    longPoll();
-                }, 100);
-            }
-		},
-        timeout: 60000,
 		async: true,
 		data: {
 			XHR:1,
@@ -345,9 +458,9 @@ function longPoll(roomName) {
 						if ( regDevice.test( line )) {
 							//Bad parse hack, but the JSON is not well formed
 							var room = $.trim( line.match( regDevice )[1] );
-							var key = $.trim( line.match( regDevice )[2] );
+                            var dev = $.trim( line.match( regDevice )[2] );
 							var parname_val = $.trim(line.match( regDevice )[3]);
-							var params = deviceStates[key] || {};
+                            var params = deviceStates[dev] || {};
 							var paraname;
 							var val;
 							if ( regParaname.test(parname_val) ){
@@ -358,28 +471,48 @@ function longPoll(roomName) {
 								var paraname = 'STATE';
 								var val = parname_val;
 							}
-//              console.log('TEST +key:' + key+ '+  para:'+paraname+'+   val:'+val+'+');
+//              console.log('TEST +dev:' + dev+ '+  para:'+paraname+'+   val:'+val+'+');
               // Special hack for readingsGroups (all params will be accepted)
-              if ( ( ( room == 'readingsGroup' ) && (key in devices) ) ||
-							     ( (paraname in readings) && (key in devices) ) ) {
+              if ( ( ( room == 'readingsGroup' ) && (dev in devices) ) ||
+                                 ( (paraname in readings) && (dev in devices) ) ) {
 								var value = {"date": date,
-											  "room": room,
-												"val": val
+                                             "room": room,
+                                              "val": val,
+                                              "valid": true
                                             };
 								params[paraname]=value;
-								deviceStates[key]=params;
-                                DEBUG && console.log(date + ' / ' + key+' / '+paraname+' / '+val);
-                                plugins.update(key,paraname);
+                                deviceStates[dev]=params;
+                                DEBUG && console.log(date + ' / ' + dev+' / '+paraname+' / '+val);
+                                plugins.update(dev,paraname);
 							}
-							//console.log(date + ' / ' + key+' / '+paraname+' / '+val);
+                            //console.log(date + ' / ' + dev+' / '+paraname+' / '+val);
 						}
 					}
-					currLine = lines.length;
+                    currLine = lines.length;
+                    if (currLine>1024){
+                        ftui.states.longPollRestart=true;
+                        longPollRequest.abort();
+                    }
 				}
- 
-    		}, false);
+     		}, false);
 			return xhr;
 			}
+    })
+    .done ( function( data ) {
+        if (ftui.states.longPollRestart)
+            longPoll(roomName);
+        else{
+            ftui.log(1,"Disconnected from FHEM - poll done - "+data);
+            ftui.restartLongPoll();
+        }
+    })
+    .fail (function(jqXHR, textStatus, errorThrown) {
+        if (ftui.states.longPollRestart)
+            longPoll(roomName);
+        else{
+            ftui.log(1,"Error while longpoll: " + textStatus + ": " + errorThrown);
+            ftui.restartLongPoll();
+        }
     });
 }
             
@@ -400,23 +533,24 @@ function requestFhem(paraname, devicename) {
         devicelist = $.map(devs, $.trim).join();
     }
 
-    if ( runningRequests > REQ_MAX ){
-        setTimeout(function() { requestFhem(paraname, devicename) }, REQ_WAIT);
+    // if too much requests are running in paralell, then delay next request
+    if ( ftui.requests.running > ftui.requests.maxRunning ){
+        setTimeout(function() { requestFhem(paraname, devicename) }, ftui.requests.waitTime);
     }
     else{
+        ftui.log(5,'starting new AJAX. still running:'+ftui.requests.running);
 
-     if (debuglevel>=5) console.log('starting new AJAX requests #'+runningRequests);
-
-    /* 'list' is still the fastest cmd to get all important data
-    */
-    if(typeof paraname != 'undefined' && paraname !== 'undefined') {
-        runningRequests++;
+        /* 'list' is still the fastest cmd to get all important data
+        */
+        if(typeof paraname != 'undefined' && paraname !== 'undefined' && paraname !== '' &&
+           typeof devicelist != 'undefined' && devicelist !== 'undefined' && devicelist !== '') {
+        ftui.requests.running++;
         $.ajax({
             async: true,
             timeout: 15000,
             cache: false,
             context:{paraname: paraname},
-            url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
+            url: fhem_dir,
             data: {
                 cmd: ["list",devicelist,paraname].join(' '),
                 XHR: "1"
@@ -429,63 +563,64 @@ function requestFhem(paraname, devicename) {
            }
         })
         .fail (function(jqXHR, textStatus, errorThrown) {
-            TOAST && $.toast("Error: " + textStatus + ": " + errorThrown  + ": " +  runningRequests);
-            runningRequests--;
+            if (DEBUG) ftui.toast("Error: " + textStatus + ": " + errorThrown  + ": " +  ftui.requests.running);
+            ftui.requests.running--;
+            ftui.decreaseRequests();
         })
         .done (function( data ) {
-            runningRequests--;
-            if (debuglevel>=5) console.log('finished AJAX requests #'+runningRequests);
-			var lines = data.replace(/\n\)/g,")\n").split(/\n/);
+            ftui.requests.running--;
+            if (debuglevel>=5) console.log('finished AJAX request. still running:'+ftui.requests.running);
+            var paraname = this.paraname;
+            var lines = data.replace(/\n\)/g,")\n").split(/\n/);
             var regCapture = /^(\S*)\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?\.?[0-9]{0,3}\s+(.*)$/;
             for (var i=0, len=lines.length; i < len; i++) {
                 var date="";
-                var key="";
+                var dev="";
                 var val="";
                 var line = $.trim( lines[i] );
                 if (debuglevel>=6) console.log('line: '+line);
                 if (regCapture.test(line) ) {
                     var groups = line.match( regCapture );
-                    var paraname = this.paraname;
-                    key = $.trim( line.match( regCapture )[1]);
-
-                    if (key in devices){
+                    dev = $.trim( line.match( regCapture )[1]);
+                    if (dev in devices){
                         if (groups.length>2){
                             date = $.trim( groups[2]);
                             val = $.trim( groups[3]);
                         }
-                        if (debuglevel>=5) console.log('requestFhem::done: Line parser result: key:'+key+' paraname:'+paraname+' date:'+date+' val:'+val);
+                        if (debuglevel>=5) console.log('requestFhem::done: Line parser result: dev:'+dev+' paraname:'+paraname+' date:'+date+' val:'+val);
+
+                        var oldParams = getParameterByName(dev,paraname);
+                        var params = deviceStates[dev] || {};
+                        var value = {"date": date, "val": val, "valid": true};
+                        params[paraname]=value;
+                        deviceStates[dev]=params;
 
                         //check if update is necessary
-                        var oldParams = getParameterByName(key,paraname);
                         if(!oldParams || oldParams.val!=val || oldParams.date!=date){
-                            var params = deviceStates[key] || {};
-                            var value = {"date": date, "val": val};
-                            params[paraname]=value;
-                            deviceStates[key]=params;
-                            plugins.update(key,paraname);
+                            plugins.update(dev,paraname);
                         }
 
                     }
                 }
             }
-            saveStatesLocal();
+            ftui.decreaseRequests();
         });
     }
     }
 }
 
 $(window).on('beforeunload', function(){
-    doLongPoll = false;
-    if (longPollRequest)
-        longPollRequest.abort();
-    saveStatesLocal();
+    ftui.log(5,'beforeunload');
+    ftui.setOffline();
 });
 
-function saveStatesLocal() {
-    //save deviceStates into localStorage
-    var dataToStore = JSON.stringify(deviceStates);
-    localStorage.setItem('deviceStates', dataToStore);
-}
+$(window).on('online offline', function() {
+    ftui.log(5,'online offline');
+    if (navigator.onLine)
+        ftui.setOnline();
+    else
+        ftui.setOffline();
+});
 
 function loadplugin(plugin, success, error, async) {
     return dynamicload('js/'+plugin+'.js', success, error, async);
@@ -506,6 +641,7 @@ function dynamicload(file, success, error, async) {
 
 function loadStyleSchema(){
     $.each($('link[href$="-ui.css"],link[href$="-ui.min.css"]') , function (index, thisSheet) {
+        if (!thisSheet || !thisSheet.sheet || !thisSheet.sheet.cssRules) return;
         var rules = thisSheet.sheet.cssRules;
         for (var r in rules){
             if (rules[r].style){
@@ -534,7 +670,7 @@ this.getPart = function (s,p) {
 	else {
 		if ((s && typeof s != "undefined") )
             var matches = s.match( new RegExp('^' + p + '$') );
-		var ret='';
+        var ret='';
 		if (matches) {
 			for (var i=1;i<matches.length;i++) {
 				ret+=matches[i];
@@ -647,6 +783,12 @@ this.getIconId = function(iconName){
 }
 
 // global helper functions
+this.isValid = function(v){
+    return (typeof v !== 'undefined' && v !== 'undefined'
+         && typeof v !== typeof notusedvar
+         && v !== '' && v !== ' ');
+}
+
 this.showModal = function (modal) {
     if(modal)
         $("#shade").fadeIn();
@@ -665,12 +807,25 @@ this.dateFromString = function (str) {
 }
 
 this.diffMinutes = function(date1,date2){
-       diff  = new Date(date2 - date1);
+       var diff  = new Date(date2 - date1);
        return (diff/1000/60).toFixed(0);
 }
 
+this.diffSeconds = function(date1,date2){
+       var diff  = new Date(date2 - date1);
+       return (diff/1000).toFixed(1);
+}
+
+this.mapColor = function(value) {
+    return getStyle('.'+value,'color') || value;
+};
+
 String.prototype.toDate = function() {
     return dateFromString(this);
+}
+
+Date.prototype.addMinutes = function(minutes) {
+    return new Date(this.getTime() + minutes*60000);
 }
 
 Date.prototype.ago = function() {
@@ -773,4 +928,10 @@ this.indexOfRegex = function(array,find){
       } catch(e) {}
   }
   return array.indexOf(find);
+};
+
+$.fn.once = function(a, b) {
+    return this.each(function() {
+        $(this).off(a).on(a,b);
+    });
 };

@@ -17,7 +17,7 @@ var widget_label = $.extend({}, widget_widget, {
 
         // fill up colors to limits.length
         // if an index s isn't set, use the value of s-1
-        for(var s=0; s<elem.data('limits').length; s++) {
+        for(var s=0, len=elem.data('limits').length; s<len; s++) {
             if(typeof elem.data('colors')[s] == 'undefined') {
                 elem.data('colors')[s]=elem.data('colors')[s>0?s-1:0];
             }
@@ -49,9 +49,15 @@ var widget_label = $.extend({}, widget_widget, {
         return ( suffix ? suffix + value : value );
     },
     update_substitution : function(value, substitution) {
-        DEBUG && console.log(this.widgetname,'value',value,'substitution',substitution);
+        ftui.log(3,this.widgetname+' - value:'+value+', substitution:'+substitution);
         if(substitution){
-            if (substitution.match(/^s/)) {
+            if ($.isArray(substitution)){
+                for(var i=0, len=substitution.length; i<len; i+=2) {
+                    if(value == substitution[i] && i+1<len)
+                        return substitution[i+1];
+                }
+            }
+            else if (substitution.match(/^s/)) {
                 var f = substitution.substr(1,1);
                 var subst = substitution.split(f);
                 return value.replace(new RegExp(subst[1],subst[3]), subst[2]);
@@ -70,7 +76,8 @@ var widget_label = $.extend({}, widget_widget, {
         if(limits && colors) {
             var idx=indexOfGeneric(limits,value);
             if (idx>-1) {
-                elem.css( "color", getStyle('.'+colors[idx],'color') || colors[idx] );
+                var layer = (elem.hasClass('bg-limit')?'background':'color');
+                elem.css( layer, getStyle('.'+colors[idx],'color') || colors[idx] );
             }
         }
     },
@@ -84,6 +91,25 @@ var widget_label = $.extend({}, widget_widget, {
             var value = (elem.hasClass('timestamp'))
                         ?elem.getReading('get').date
                         :elem.getReading('get').val;
+
+            // hide element when it's value equals data-hide
+            // if data-hideparents is set, it is interpreted als jquery selector to hide elements parents filtered by this selector
+            if(elem.data('hide')) {
+                if(value == elem.data('hide')) {
+                    if(elem.data('hideparents')) {
+                        elem.parents(elem.data('hideparents')).hide();
+                    } else {
+                        elem.hide();
+                    }
+                } else {
+                    if(elem.data('hideparents')) {
+                        elem.parents(elem.data('hideparents')).show();
+                    } else {
+                        elem.show();
+                    }
+                }
+            }
+
             if (value){
                 var part = elem.data('part');
                 var val = getPart(value,part);
@@ -94,6 +120,12 @@ var widget_label = $.extend({}, widget_widget, {
                 val = base.update_fix(val, elem.data('fix'));
                 val = base.update_suffix(val, elem.data('suffix'));
                 val = base.update_postfix(val, elem.data('postfix'));
+                if (!isNaN(parseFloat(val)) && isFinite(val) && val.indexOf('.')>-1){
+                    var vals = val.split('.');
+                    val = "<span class='label-precomma'>"+vals[0]+"</span>" +
+                          "<span class='label-comma'>.</span>" +
+                          "<span class='label-aftercomma'>"+vals[1]+"</span>";
+                }
 
                 if ( !elem.hasClass('fixedlabel') ) {
                   if ( unit )

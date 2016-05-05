@@ -47,7 +47,11 @@ $.fn.famultibutton = function(pOptions) {
 		mode: 'toggle',  //toggle, push, signal, dimmer
 		toggleOn: null,
 		toggleOff: null,
-		valueChanged: null
+        valueChanged: null,
+        progressWidth:15,
+        max:100,
+        min:0,
+        step:1,
 	};
 	
 	var options = $.extend({}, defaultOptions, pOptions);
@@ -99,18 +103,20 @@ return elem;
 
 	function setOn() {
 
-			state = true;
+        state = true;
 			
         elem.children().filter('#bg').css( "color", options['onBackgroundColor'] );
         elem.children().filter('#fg').css( "color", options['onColor'] );
+        elem.trigger('setOn');
 	};
 		
 	function setOff() {
 			
-			state = false;
+        state = false;
 
-            elem.children().filter('#bg').css( "color", options['offBackgroundColor'] );
-            elem.children().filter('#fg').css( "color", options['offColor'] );
+        elem.children().filter('#bg').css( "color", options['offBackgroundColor'] );
+        elem.children().filter('#fg').css( "color", options['offColor'] );
+        elem.trigger('setOff');
 	};
 	
 	function fadeOff() {
@@ -158,8 +164,8 @@ return elem;
                       var c = canvas.getContext('2d');
                       c.beginPath();
                       c.strokeStyle = options.onColor;
-                      c.arc(x, y, x*0.80, -0.5*Math.PI, (-0.5+value*2)*Math.PI, false);
-                      c.lineWidth = 4;
+                      c.arc(x, y, x * ((-0.4/90)*Number(options.progressWidth)+0.8), -0.5*Math.PI, (-0.5+value*2)*Math.PI, false);
+                      c.lineWidth = x*0.80*options.progressWidth/100;
                       c.stroke();
                   }
              }
@@ -230,10 +236,10 @@ return elem;
 
 function tickTimer() {
 	clearTimeout(objTimer);
-	currVal = (diff > 0) ? currVal-=1 : currVal+=1;
+    currVal = (diff > 0) ? currVal-=options['step'] : currVal+=options['step'];
 
-    if ( currVal>100) currVal=100;
-    if ( currVal<0) currVal=0;
+    if ( currVal>options['max']) currVal=options['max'];
+    if ( currVal<options['min']) currVal=options['min'];
     
     drawScale();
     var d = (resStepValues[Math.abs(diff)]);
@@ -250,7 +256,9 @@ function drawScale() {
 	 
 		var context = canvas.getContext('2d');
 		context.strokeStyle = options['offBackgroundColor'];
-		var valPosition = canvas.height-Math.round(canvas.height * currVal/100);
+        var max = options['max'];
+        var min = options['min'];
+        var valPosition = canvas.height-Math.round(canvas.height *(currVal-min)/(max-min));
 		
 		for (var i=0;i<canvas.height;i+=4){
 			context.lineWidth = 1;

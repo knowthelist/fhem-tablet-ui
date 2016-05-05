@@ -13,11 +13,13 @@ var widget_link= $.extend({}, widget_widget, {
       if( elem.isValidData('url') ) {
           document.location.href = elem.data('url');
       } else if( elem.isValidData('url-xhr') ) {
-          TOAST && $.toast(elem.data('url-xhr'));
+          ftui.toast(elem.data('url-xhr'));
           $.get(elem.data('url-xhr'));
       } else if( elem.isValidData('fhem-cmd') ) {
-          TOAST && $.toast(elem.data('fhem-cmd'));
+          ftui.toast(elem.data('fhem-cmd'));
           setFhemStatus(elem.data('fhem-cmd'));
+      } else if( elem.isValidData('device') ) {
+          elem.transmitCommand();
       };
     },
     colorize: function(elem) {
@@ -39,6 +41,7 @@ var widget_link= $.extend({}, widget_widget, {
         }
     },
     init_attr : function(elem) {
+        elem.initData('cmd'                     ,'set');
         elem.initData('color'                   ,getClassColor(elem) || getStyle('.'+this.widgetname,'color')  || '#aa6900');
         elem.initData('background-color'        ,getStyle('.'+this.widgetname,'background-color')    || null);
         elem.initData('icon-left'               ,elem.data('icon') || null);
@@ -134,14 +137,6 @@ var widget_link= $.extend({}, widget_widget, {
         });
 
         return elem;
-    },
-    init: function () {
-        var base = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            base.init_attr($(this));
-            base.init_ui($(this));
-        });
     },
     update: function (dev,par) {}
 });

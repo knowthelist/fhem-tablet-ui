@@ -1,3 +1,7 @@
+if(typeof widget_widget == 'undefined') {
+    dynamicload('js/widget_widget.js');
+}
+
 var widget_simplechart = {
   widgetname : 'simplechart',
   createElem: function(elem) {
@@ -17,12 +21,14 @@ var widget_simplechart = {
        return res.join(' ');
     },
     init_attr: function(elem) {
-        elem.data('minvalue', typeof elem.data('minvalue') != 'undefined' ? elem.data('minvalue')  : 10);
-        elem.data('maxvalue', typeof elem.data('maxvalue') != 'undefined' ? elem.data('maxvalue')  : 30);
-        elem.data('xticks'   ,elem.data('xticks')                                                 || 360);
-        elem.data('yticks'   ,elem.data('yticks')                                                 || 5);
-        elem.data('yunit',    unescape(elem.data('yunit')                                         || '' ));
-        elem.data('get',        elem.data('get')                                    || 'STATE');
+        elem.initData('minvalue'    , 10);
+        elem.initData('maxvalue'    , 30);
+        elem.initData('xticks'      , 360);
+        elem.initData('yticks'      , 5);
+        elem.initData('yunit'       , '');
+        elem.initData('get'         , 'STATE');
+
+        elem.addReading('get');
     },
   init: function () {
       var base=this;
