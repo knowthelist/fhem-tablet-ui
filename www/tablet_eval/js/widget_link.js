@@ -37,7 +37,6 @@ var Modul_link = function () {
     };
 
     function loadPage(elem){
-		$(document).trigger("loadPage");
         console.time('fetch content');
         var sel = elem.data('load');
         var hashUrl=elem.data('url').replace('#','');
@@ -149,7 +148,7 @@ var Modul_link = function () {
           verticalAlign: 'middle',
           whiteSpace: 'nowrap',
           padding: '3px',
-          lineHeight: '1.05em',
+          //lineHeight: '1.05em',
         })
         .html(text)
         .appendTo(elem);
@@ -196,7 +195,8 @@ var Modul_link = function () {
 
         // remove all left locks
         var sel = elem.data('load');
-        var hashUrl=elem.data('url').replace('#','');
+        var hashUrl=elem.data('url') || '';
+        hashUrl = hashUrl.replace('#','');
         var lockID = ['ftui',me.widgetname,hashUrl,sel].join('_');
         localStorage.removeItem(lockID);
 

@@ -4,6 +4,8 @@ body {
     -webkit-font-smoothing: antialiased;
     font-size: small;
     color: #eeeeee;
+    height: 100%;
+    width: 100%;
 }
 
 @font-face {
@@ -268,6 +270,9 @@ header.fixed#header-nav + main#panel{
   -webkit-transition: color 1s ease;
   -moz-transition: color 1s ease;
   transition: color 1s ease;
+}
+
+.dialog-starter {
 }
 
 .events {
@@ -595,6 +600,10 @@ ul,li {
     z-index:1001 !important;
 }
 
+div[data-type="link"] {
+    text-align: center;
+}
+
 div[data-type="label"].icon {
     padding-top: 16px;
     height: 50px;
@@ -755,12 +764,12 @@ select::-ms-expand {
 }
 
 .rotor li {
- position: absolute;
- left:0;
- right:0;
- margin-left:auto;
- margin-right:auto;
- display: inline-block;
+    position: absolute;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    display: inline-block;
 }
 
 .rotor li.is-visible {
