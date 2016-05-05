@@ -45,8 +45,8 @@ var widget_label = $.extend({}, widget_widget, {
     update_postfix : function(value, postfix) {
         return ( postfix ? value + postfix : value );
     },
-    update_suffix : function(value, suffix) {
-        return ( suffix ? suffix + value : value );
+    update_prefix : function(value, prefix) {
+        return ( prefix ? prefix + value : value );
     },
     update_substitution : function(value, substitution) {
         ftui.log(3,this.widgetname+' - value:'+value+', substitution:'+substitution);
@@ -118,7 +118,7 @@ var widget_label = $.extend({}, widget_widget, {
                 val = base.update_substitution(val, elem.data('substitution'));
                 val = base.update_factor(val, elem.data('factor'));
                 val = base.update_fix(val, elem.data('fix'));
-                val = base.update_suffix(val, elem.data('suffix'));
+                val = base.update_prefix(val, elem.data('prefix'));
                 val = base.update_postfix(val, elem.data('postfix'));
                 if (!isNaN(parseFloat(val)) && isFinite(val) && val.indexOf('.')>-1){
                     var vals = val.split('.');
