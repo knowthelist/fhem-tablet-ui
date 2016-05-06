@@ -5,8 +5,6 @@ function depends_popup (){
 
 var Modul_popup = function () {
 
-	var reactOnShadeClick = true;
-
     function hide (dialog,mode) {
         switch(mode) {
             case 'animate':
@@ -18,17 +16,11 @@ var Modul_popup = function () {
                     opacity: 0
                 }, 500, "swing", function() {
                     ftui.showModal(false);
-                    if ( dialog.options.interlock ){
-                        reactOnShadeClick = true;
-                    }
                 });
             break;
         default:
             dialog.fadeOut(500, function() {
                 ftui.showModal(false);
-                if ( dialog.options.interlock ){
-                    reactOnShadeClick = true;
-                }
             });
         }
     };
@@ -60,9 +52,6 @@ var Modul_popup = function () {
             dialog.fadeIn(500);
             dialog.trigger('fadein');
         }
-        if ( dialog.options.interlock ){
-            reactOnShadeClick = false;
-        }
     };
 
     function init_attr (elem) {
@@ -75,8 +64,7 @@ var Modul_popup = function () {
         elem.initData('starter'     ,null);
         elem.initData('draggable'   ,true);
         
-        this.addReading(elem,'get');        
-        
+        this.addReading(elem,'get');              
      };
 
     function init () {
@@ -112,6 +100,7 @@ var Modul_popup = function () {
                 
                 if( elem.hasClass('interlock') ) {
                     close.hide();
+                    dialog.addClass('interlock');
                 }
                 
                 dialog.css({'height':elem.data('height'),'width':elem.data('width')});
@@ -119,7 +108,6 @@ var Modul_popup = function () {
                 elem.closest('.gridster>ul>li').css({overflow: 'visible'});
                 dialog.options={};
                 dialog.options.shade = !elem.hasClass('noshade');
-                dialog.options.interlock = elem.hasClass('interlock');
 
                 $(window).resize(function() {
                     dialog.options.end_top = ($(window).height() - parseInt(elem.data('height'))) / 2;
@@ -142,7 +130,7 @@ var Modul_popup = function () {
                 });
 
                 $(document).on('shadeClicked', function() {
-                    if( reactOnShadeClick == true ) {
+                    if( $('.dialog.interlock:visible').length === 0 ) {
                 		hide(dialog,elem.data('mode'));
                     }
                 });
