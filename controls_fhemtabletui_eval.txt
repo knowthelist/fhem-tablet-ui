@@ -91,7 +91,7 @@ UPD 2015-12-03_07:04:14 1857 www/tablet_eval/js/widget_meteogram.js
 UPD 2016-04-29_21:37:04 7502 www/tablet_eval/js/widget_pagebutton.js
 UPD 2016-04-17_12:40:59 8059 www/tablet_eval/js/widget_pagetab.js
 UPD 2015-12-03_07:04:14 3226 www/tablet_eval/js/widget_playstream.js
-UPD 2016-05-06_20:25:16 6884 www/tablet_eval/js/widget_popup.js
+UPD 2016-05-08_09:16:55 7059 www/tablet_eval/js/widget_popup.js
 UPD 2016-04-13_23:39:16 2842 www/tablet_eval/js/widget_progress.js
 UPD 2016-04-12_23:50:40 3366 www/tablet_eval/js/widget_push.js
 UPD 2016-04-02_22:38:51 5604 www/tablet_eval/js/widget_range.js
