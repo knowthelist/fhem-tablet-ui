@@ -482,9 +482,17 @@ all other parameters like switch widget
 - **data-height**       : fixed size for height (in % or px)
 - **data-autoplay**     : delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
 - **data-tabclass**     : CSS class name of the dedicated tab elements (default 'swipertab')
-- **class**             : nopagination, navbuttons
 
+Parameter for page elements of the swiper <li>
+- **data-hash**         : reference value for URL hash on which the page get activated
+- **class**             : nopagination, navbuttons, hashnav
+
+class="nopagination" - do not show the page-change dots
+class="navbuttons" - do not show the navigation buttons left and right
+class="hashnav" - change the selected page via URL hash value
 class="noswipe" on page elements prevents page from swiping
+
+For navigation via hash value see demo_tabs_with_swiper.html
 
 ####Simplechart widgets
 - **data-logdevice**   : name of the logdevice (e.g. FileLog_WohnzimmerHeizung)
@@ -547,6 +555,8 @@ The crosshair cursor currently only works dynamically on desktop browsers. On iO
 - **data-get-off**     : value which trigger to close the dialog (default 'off')
 - **data-width**       : fixed size for width (in % or px)
 - **data-height**      : fixed size for height (in % or px)
+- **data-left**        : fixed position from left of the screen in % or px (default: middle of screen)
+- **data-top**         : fixed position from top of the screen in % or px (default: middle of screen)
 - **data-draggable**   : allow moving of the dialog (default 'true')
 
 class="interlock" on popup elements prevents popup from closing manually. Closing could only be triggered through data-get-off
@@ -1765,19 +1775,11 @@ The weather template file contains this
 
 ###Donation
 --------
-You can support the creator of this beautiful UI so that he can buy a new laptop.
-
-Update 2015-10-27: yesterday my old 2007 MacBook died. Total fail of HDD. 
-I'm unable to work now and I need to buy a new one.
-
-Update 2015-11-04: my old 2007 MacBook runs again with the previous HDD, but totaly slow and out of space.
-
-* Goal  : 13'' MacBook Pro 1445€ 
-* Status: 1203€ (23.02.2016) -> many many thanks to all donators - 242€ still required  :-)
-
+You can thank the creator of this versatile UI:
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PD4C2XM2VTD9A"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" alt="[paypal]" /></a>
 
+Many many thanks to all donators!
 
 License
 -------

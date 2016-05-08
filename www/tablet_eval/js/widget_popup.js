@@ -89,6 +89,8 @@ var Modul_popup = function () {
               }).html('x').appendTo(dialog);
 
             if (dialog && close && starter){
+                dialog.detach();
+                $('body').append(dialog);
                 if(elem.data('draggable')) {
                     if ($.fn.draggable)
                         dialog.draggable();
@@ -110,8 +112,8 @@ var Modul_popup = function () {
                 dialog.options.shade = !elem.hasClass('noshade');
 
                 $(window).resize(function() {
-                    dialog.options.end_top = ($(window).height() - parseInt(elem.data('height'))) / 2;
-                    dialog.options.end_left = ($(window).width() - parseInt(elem.data('width'))) / 2;
+                    dialog.options.end_top = ( elem.isValidData('top') ) ? elem.data('top') : ($(window).height() - parseInt(elem.data('height'))) / 2;
+                    dialog.options.end_left = ( elem.isValidData('left') ) ? elem.data('left') : ($(window).width() - parseInt(elem.data('width'))) / 2;
                     dialog.options.start_top = starter.offset().top;
                     dialog.options.start_left = starter.offset().left;
                     dialog.options.height = elem.data('height');
