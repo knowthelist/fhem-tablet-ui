@@ -412,9 +412,9 @@ var ftui = {
                        +paramCount+" parameter(s)");
             }
             ftui.log(1,'shortPoll - Done');
-            ftui.onUpdateDone();
             ftui.states.lastShortpoll = ltime;
             ftui.saveStatesLocal();
+            ftui.onUpdateDone();
             console.timeEnd('read jsonlist2');
        })
         .fail(function( jqxhr, textStatus, error ) {
@@ -505,13 +505,13 @@ var ftui = {
                                          plugins.update(tmap.device,tmap.reading);
                                     }
                             } catch(e) {
-                                ftui.log(1,"Error: (longpoll) "+e);
+                                ftui.log(1, "Error: (longpoll) " + e);
                                 }
                             }
                         }
                         ftui.poll.currLine = lines.length;
-                        if (ftui.poll.currLine>1024){
-                            ftui.states.longPollRestart=true;
+                        if (ftui.poll.currLine > 9999) {
+                            ftui.states.longPollRestart = true;
                             ftui.longPollRequest.abort();
                         }
                     }
@@ -774,6 +774,7 @@ var ftui = {
         console.log('Shortpoll interval:',ftui.config.shortpollInterval);
         console.log('Shortpoll last run before:',d.ago());
         console.log('FHEM dev/par count:',Object.keys(ftui.paramIdMap).length);
+        console.log('FTUI known devices count:',Object.keys(ftui.deviceStates).length);
         console.log('Page length:',$('html').html().length);
         console.log('Widgets count:',$('div[data-type]').length);
         console.log('--------- end healthCheck ---------------');

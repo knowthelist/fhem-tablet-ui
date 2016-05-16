@@ -26,6 +26,8 @@ var Modul_popup = function () {
     };
 
     function show (dialog,mode) {
+        dialog.detach();
+        $('body').append(dialog);
         if (dialog.options.shade) {
             ftui.showModal(true);
         }
@@ -89,8 +91,6 @@ var Modul_popup = function () {
               }).html('x').appendTo(dialog);
 
             if (dialog && close && starter){
-                dialog.detach();
-                $('body').append(dialog);
                 if(elem.data('draggable')) {
                     if ($.fn.draggable)
                         dialog.draggable();
