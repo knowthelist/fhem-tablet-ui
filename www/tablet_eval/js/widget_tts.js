@@ -38,10 +38,12 @@ var Modul_tts = function () {
             var elem = $(this);
 
             var updateTime = elem.getReading('get').date;
+            var text = elem.getReading('get').val;
 
             // do not playback
             // if it is the first time update was called (initialization)?
-            if( !me.lastUpdateTime ) {
+            if (!me.lastUpdateTime) {
+                ftui.log(2, 'tts: initial update. setting timestamp to ' + updateTime);
                 me.lastUpdateTime = updateTime;
                 return;
             }
@@ -49,17 +51,20 @@ var Modul_tts = function () {
             // do not playback
             // if timestamp did not change
             if (me.lastUpdateTime == updateTime) {
+                ftui.log(2, 'tts: update called but timestamp did not change (' + me.lastUpdateTime + ' = ' + updateTime + ')');
                 return;
             }
 
             // now lets start tts synthesis
 
             // remember time
+            ftui.log(2, 'tts: update called with new timestamp (' + me.lastUpdateTime + ' != ' + updateTime + '). Speak: ' + text + ')');
+
             me.lastUpdateTime = updateTime;
 
             // start playback
             responsiveVoice.speak(
-                  elem.getReading('get').val
+                  text
                 , elem.data('voice')
                 , {
                       pitch: parseFloat(elem.data('pitch'))
