@@ -174,14 +174,7 @@ var Modul_slider= function () {
                     var v = elem.hasClass('negated')
                             ? pwrng.options.max + pwrng.options.min - parseInt(nstate)
                             : parseInt(nstate);
-                    if ( elem.hasClass('nodelay') ) {
-                        pwrng.setStart(parseInt(v));
-                    } else {
-                      // hack for this.slider.offsetHeight=0 issue
-                      setTimeout(function(){
-                          pwrng.setStart(parseInt(v));
-                      }, 250);
-                    }
+                    pwrng.setStart(parseInt(v));
                     localStorage.setItem("slider_"+dev+"_"+par, v);
                     ftui.log(1,'slider dev:'+dev+' par:'+par+' changed to:'+v );
                 }
