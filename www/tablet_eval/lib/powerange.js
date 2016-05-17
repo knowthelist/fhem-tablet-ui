@@ -1606,7 +1606,7 @@ module.exports = Horizontal;
 
 function Horizontal() {
   Powerange.apply(this, arguments);
-  if (this.options.step) this.step(this.slider.offsetWidth, this.handle.offsetWidth);
+    if (this.options.step) this.step($(this.slider).width(), $(this.handle).width());
   this.setStart(this.options.start);
 }
 
@@ -1626,12 +1626,12 @@ inherits(Horizontal, Powerange);
 Horizontal.prototype.setStart = function(start) {
   var begin = (start === null) ? this.options.min : start
     , part = percentage.from(begin - this.options.min, this.options.max - this.options.min) || 0
-    , offset = percentage.of(part, this.slider.offsetWidth - this.handle.offsetWidth)
+    , offset = percentage.of(part, $(this.slider).width() - $(this.handle).width())
     , position = (this.options.step) ? closest.find(offset, this.steps) : offset;
 
   this.setPosition(position);
-  this.setValue(this.handle.style.left, this.slider.offsetWidth - this.handle.offsetWidth);
-  if (this.options.step) this.step(this.slider.offsetWidth, this.handle.offsetWidth);
+    this.setValue(this.handle.style.left, $(this.slider).width() - $(this.handle).width());
+  if (this.options.step) this.step($(this.slider).width(), $(this.handle).width());
 };
 
 /**
@@ -1670,7 +1670,7 @@ Horizontal.prototype.onmousedown = function(e) {
     } else
       this.startX = e.clientX;
   this.handleOffsetX = this.handle.offsetLeft;
-  this.restrictHandleX = this.slider.offsetWidth - this.handle.offsetWidth;
+    this.restrictHandleX = $(this.slider).width() - $(this.handle).width();
   this.unselectable(this.slider, true);
     this.onmousemove(e);
 };
@@ -1699,7 +1699,7 @@ Horizontal.prototype.onmousemove = function(e) {
     this.setPosition(position);
   }
 
-  this.setValue(this.handle.style.left, this.slider.offsetWidth - this.handle.offsetWidth);
+  this.setValue(this.handle.style.left,  $(this.slider).width() - $(this.handle).width);
 };
 
 /**
@@ -1711,7 +1711,7 @@ Horizontal.prototype.onmousemove = function(e) {
 
 Horizontal.prototype.onmouseup = function(e) {
   this.unselectable(this.slider, false);
-  this.setValue(this.handle.style.left, this.slider.offsetWidth - this.handle.offsetWidth);
+  this.setValue(this.handle.style.left,  $(this.slider).width() - $(this.handle).width());
 };
 });
 require.register("powerange/lib/vertical.js", function(exports, require, module){
@@ -1746,7 +1746,7 @@ module.exports = Vertical;
 function Vertical() {
   Powerange.apply(this, arguments);
   classes(this.slider).add('vertical');
-  if (this.options.step) this.step(this.slider.offsetHeight, this.handle.offsetHeight);
+  if (this.options.step) this.step($(this.slider).height(), $(this.handle).height());
   this.setStart(this.options.start);
 }
 
@@ -1766,12 +1766,12 @@ inherits(Vertical, Powerange);
 Vertical.prototype.setStart = function(start) {
   var begin = (start === null) ? this.options.min : start
     , part = percentage.from(begin - this.options.min, this.options.max - this.options.min) || 0
-    , offset = percentage.of(part, this.slider.offsetHeight - this.handle.offsetHeight)
+    , offset = percentage.of(part, $(this.slider).height() - $(this.handle).height())
     , position = (this.options.step) ? closest.find(offset, this.steps) : offset;
 
   this.setPosition(position);
-  this.setValue(this.handle.style.bottom, this.slider.offsetHeight - this.handle.offsetHeight);
-  if (this.options.step) this.step(this.slider.offsetHeight, this.handle.offsetHeight);
+  this.setValue(this.handle.style.bottom, $(this.slider).height() - $(this.handle).height());
+  if (this.options.step) this.step($(this.slider).height(), $(this.handle).height());
 };
 
 /**
@@ -1808,8 +1808,8 @@ Vertical.prototype.onmousedown = function(e) {
        this.startY =  offset - window.scrollY + this.handle.clientHeight / 2;
     } else
       this.startY = e.clientY;
-  this.handleOffsetY = this.slider.offsetHeight - this.handle.offsetHeight - this.handle.offsetTop;
-  this.restrictHandleY = this.slider.offsetHeight - this.handle.offsetHeight;
+  this.handleOffsetY = $(this.slider).height() - $(this.handle).height() - this.handle.offsetTop;
+  this.restrictHandleY = $(this.slider).height() - $(this.handle).height();
   this.unselectable(this.slider, true);
    this.onmousemove(e);
 };
@@ -1838,7 +1838,7 @@ Vertical.prototype.onmousemove = function(e) {
     this.setPosition(position);
   }
 
-  this.setValue(this.handle.style.bottom, this.slider.offsetHeight - this.handle.offsetHeight);
+  this.setValue(this.handle.style.bottom, $(this.slider).height() - $(this.handle).height());
 };
 
 /**
@@ -1850,7 +1850,7 @@ Vertical.prototype.onmousemove = function(e) {
 
 Vertical.prototype.onmouseup = function(e) {
   this.unselectable(this.slider, false);
-  this.setValue(this.handle.style.bottom, this.slider.offsetHeight - this.handle.offsetHeight);
+  this.setValue(this.handle.style.bottom, $(this.slider).height() - $(this.handle).height());
 };
 });
 
