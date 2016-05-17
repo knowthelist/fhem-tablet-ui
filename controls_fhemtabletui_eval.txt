@@ -100,7 +100,7 @@ UPD 2016-04-03_20:10:47 1281 www/tablet_eval/js/widget_rotor.js
 UPD 2016-04-07_23:13:13 3286 www/tablet_eval/js/widget_select.js
 UPD 2016-04-07_23:13:13 11520 www/tablet_eval/js/widget_simplechart.js
 UPD 2016-04-26_19:28:12 2347 www/tablet_eval/js/widget_slideout.js
-UPD 2016-05-17_21:44:02 8255 www/tablet_eval/js/widget_slider.js
+UPD 2016-05-17_22:09:55 8255 www/tablet_eval/js/widget_slider.js
 UPD 2016-04-09_13:57:32 11300 www/tablet_eval/js/widget_spinner.js
 UPD 2016-04-12_23:47:54 4123 www/tablet_eval/js/widget_swiper.js
 UPD 2016-04-12_23:05:29 1275 www/tablet_eval/js/widget_switch.js
@@ -137,9 +137,9 @@ UPD 2015-12-03_07:04:17 10878 www/tablet_eval/lib/jquery.knob.mod.min.js
 UPD 2016-03-05_06:13:24 4508 www/tablet_eval/lib/jquery.toast.min.css
 UPD 2016-03-05_06:13:24 6255 www/tablet_eval/lib/jquery.toast.min.js
 UPD 2015-12-03_07:04:17 23826 www/tablet_eval/lib/openautomation.css
-UPD 2016-02-28_15:47:12 41257 www/tablet_eval/lib/powerange.js
+UPD 2016-05-17_22:03:29 41233 www/tablet_eval/lib/powerange.js
 UPD 2016-04-07_23:13:13 1176 www/tablet_eval/lib/powerange.min.css
-UPD 2016-05-17_21:45:23 19221 www/tablet_eval/lib/powerange.min.js
+UPD 2016-05-17_22:09:19 19205 www/tablet_eval/lib/powerange.min.js
 UPD 2016-04-07_23:13:13 6927 www/tablet_eval/lib/slideout.min.js
 UPD 2015-12-01_07:04:30 62078 www/tablet_eval/lib/swiper.jquery.min.js
 UPD 2015-12-01_07:04:30 15163 www/tablet_eval/lib/swiper.min.css
