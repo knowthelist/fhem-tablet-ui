@@ -688,7 +688,7 @@ DVB,VVO,DB: fix style schemas
 - **data-background-color**      :
 - **data-color**       :
 - **data-text-color**  :
-- **class**            :
+- **class**            : autoscroll
 
 data-get JSON-Object:
 [
@@ -1703,6 +1703,20 @@ Example for a huge button-like link. Usable to trigger a fhem command
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/link_big.png)
 
+###Medialist
+-------
+
+Example for medialist usage
+
+```html
+<div data-type="medialist"
+     data-device="MPD1"
+     data-get="playlistinfo"
+     data-pos="Pos"
+     data-set="play"
+     class="autoscroll">
+</div>
+```
 
 ###Spinner
 -------
