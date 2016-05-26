@@ -1095,6 +1095,13 @@ String.prototype.toDate = function() {
     return dateFromString(this);
 }
 
+String.prototype.toMinFromSec = function() {
+    var x = Number(this);
+    var ss = (Math.floor(x % 60)).toString();
+    var mm = (Math.floor(x /= 60)).toString();
+    return mm + ":" + (ss[1] ? ss : "0" + ss[0]);
+}
+
 Date.prototype.addMinutes = function(minutes) {
     return new Date(this.getTime() + minutes*60000);
 }

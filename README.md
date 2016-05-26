@@ -94,6 +94,7 @@ Currently there are more then 20 types of widgets in the base installation.
 - **link** : link or button link element
 - **spinner** : is a control element to adjust a value by clicking on the up or down icon
 - **departure** : a pulic transport departure schedule widget
+- **medialist** : a list of media elements e.g. songs in a playlist
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -227,6 +228,7 @@ Functions for data-substitution:
 
 1. Array of replacements
 2. RegEx-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
+   e.g. data-substitution="s/no soundplayer active//g"
 3. data-substitution="weekdayshort"
 4. JS functions
 data-substitution="toDate().ddmm()"     -  convert to day:month
@@ -371,7 +373,7 @@ class 'value' enables a text element which shows the value
 ####Level widgets
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-min**  : minimal value to set (default 0)
-- **data-max**  : maximal value to set (default 100)
+- **data-max**  : maximal value to set or name of the reading which helds the max value (default 100)
 - **data-on**   : value where the slider moves to max  (default 'on')
 - **data-off**  : value where the slider moves to min  (default 'off')
 - **data-part** : part number of the space separated value to show or an RegEx
@@ -675,6 +677,32 @@ See [examples](#range) of Range
 deptime: show departure time insteat of minutes
 alternate: show background of every second line half transparent
 DVB,VVO,DB: fix style schemas
+
+####Medialist widgets
+- **data-get**         : name of the reading where to get the JSON object which contains the full list (default 'STATE')
+- **data-set**         : name of the reading to set after a click on an list item   (default 'play')
+- **data-cmd**         : (default 'set')
+- **data-pos**         : name of the reading to retrieve the current item position 0-n (default 'Pos')
+- **data-width**       : fixed size for width (in % or px, default '90%')
+- **data-height**      : fixed size for height (in % or px, default '80%')
+- **data-background-color**      :
+- **data-color**       :
+- **data-text-color**  :
+- **class**            :
+
+data-get JSON-Object:
+[
+ {"Artist":"abc",
+  "Title":"def",
+  "Album":"yxz",
+  "Time":"123",
+  "File":"spotify:track:123456",
+  "Track":"1",
+  "Cover":"https://...."
+  },
+  {"Artist":"abc",
+  ...
+ ]
 
 Format
 -------

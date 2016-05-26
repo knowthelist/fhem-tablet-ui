@@ -20,6 +20,9 @@ var Modul_level= function () {
         elem.initData('part'            ,-1);
 
         me.addReading(elem,'get');
+        // numeric value means fix value, others mean it is a reading
+        if (!$.isNumeric(elem.data('max')))
+            me.addReading(elem,'max');
 
         var input_elem =  jQuery('<input/>', {
 			type: 'text',
@@ -76,6 +79,7 @@ var Modul_level= function () {
       var base = this;
       // update from normal state reading
       this.elements.filterDeviceReading('get',dev,par)
+      .add( this.elements.filterDeviceReading('max',dev,par) )
       .each(function(index) {
           var elem = $(this);
           var state = elem.getReading('get').val;
@@ -84,6 +88,7 @@ var Modul_level= function () {
                 var input_elem = elem.find('input');
                 var part = elem.data('part');
                 var val = getPart(state, part);
+                pwrng.options.max = ( $.isNumeric(elem.data('max')) ) ? elem.data('max') : elem.getReading('max').val;
                 if (val==elem.data('off')) val=pwrng.options.min;
                 if (val==elem.data('on')) val=pwrng.options.max;
                 if ($.isNumeric(val) && pwrng) {

@@ -11,19 +11,23 @@ var Modul_medialist = function () {
         elem.find('.media').each(function(index) {
            $(this).removeClass('current')
         });
-        elem.find('.media').eq(pos).addClass("current");
+        var currentElem = elem.find('.media').eq(pos);
+        currentElem.addClass("current");
+        if ( elem.hasClass("autoscroll")) {
+            elem.scrollTop(currentElem.offset().top - elem.offset().top + elem.scrollTop());
+        }
     };
 
     function init_attr (elem) {
         elem.initData('get'                     ,'STATE');
         elem.initData('set'                     ,'play');
-        elem.initData('pos'                     ,'pos');
+        elem.initData('pos'                     ,'Pos');
         elem.initData('cmd'                     ,'set');
         elem.initData('color'                   ,getClassColor(elem) || getStyle('.'+this.widgetname,'color') || '#222');
         elem.initData('background-color'        ,getStyle('.'+this.widgetname,'background-color')    || 'transparent');
         elem.initData('text-color'              ,getStyle('.'+this.widgetname,'text-color')    || '#ddd');
-        elem.initData('width'                   ,'480');
-        elem.initData('height'                  ,'420');
+        elem.initData('width'                   ,'90%');
+        elem.initData('height'                  ,'80%');
 
         this.addReading(elem,'get');
         this.addReading(elem,'pos');
@@ -35,9 +39,9 @@ var Modul_medialist = function () {
         elem.html('')
             .addClass('media-list')
             .css({
-                width: elem.data('width')+'px',
-                maxWidth: elem.data('width')+'px',
-                height: elem.data('height')+'px',
+                width: elem.data('width'),
+                maxWidth: elem.data('width'),
+                height: elem.data('height'),
                 color: elem.mappedColor('text-color'),
                 backgroundColor: elem.mappedColor('background-color'),
         });
