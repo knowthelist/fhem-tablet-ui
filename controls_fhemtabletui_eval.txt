@@ -100,7 +100,7 @@ UPD 2016-04-12_23:50:40 3366 www/tablet_eval/js/widget_push.js
 UPD 2016-04-02_22:38:51 5604 www/tablet_eval/js/widget_range.js
 UPD 2015-12-03_05:35:40 1667 www/tablet_eval/js/widget_readingsgroup.js
 UPD 2016-04-03_20:10:47 1281 www/tablet_eval/js/widget_rotor.js
-UPD 2016-04-07_23:13:13 3286 www/tablet_eval/js/widget_select.js
+UPD 2016-05-28_13:53:29 3794 www/tablet_eval/js/widget_select.js
 UPD 2016-04-07_23:13:13 11520 www/tablet_eval/js/widget_simplechart.js
 UPD 2016-04-26_19:28:12 2347 www/tablet_eval/js/widget_slideout.js
 UPD 2016-05-17_22:09:55 8255 www/tablet_eval/js/widget_slider.js
