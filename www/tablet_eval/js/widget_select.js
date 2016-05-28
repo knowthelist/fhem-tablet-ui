@@ -33,6 +33,9 @@ var Modul_select = function () {
 
       this.addReading(elem,'get');
       this.addReading(elem,'list');
+      if ( elem.isValidData('alias')  && !$.isArray(elem.data('alias' ))) {
+        this.addReading(elem,'alias');
+      }
     };
 
     function init_ui(elem) {
@@ -52,11 +55,23 @@ var Modul_select = function () {
      }
 
      function update(dev,par) {
-      // update from normal state reading
-      this.elements.filterDeviceReading('get',dev,par)
-      .each(function(index) {
-          setCurrentItem($(this));
-      });
+        // update from normal state reading
+        this.elements.filterDeviceReading('get',dev,par)
+        .each(function(index) {
+           setCurrentItem($(this));
+        });
+
+        // update alias reading
+        this.elements.filterDeviceReading('alias',dev,par)
+        .each(function(index) {
+            var elem = $(this);
+            var items = elem.getReading('alias').val;
+            if (items){
+                items = items.split(':');
+                elem.data('alias',items);
+                fillList(elem);
+            }
+        });
 
       //extra reading for list items
       this.elements.filterDeviceReading('list',dev,par)
