@@ -1,9 +1,8 @@
 
 function depends_volume (){
-    // check for basic class "$.fn.knob" for case Modul_knob is loaded
-    // but not yet initialized
-    if(!$.fn.knob)
+    if(typeof Modul_knob == 'undefined' || !$.fn.knob) {
         return ["knob"];
+    }
 };
 
 var Modul_volume = function () {
