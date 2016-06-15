@@ -79,6 +79,7 @@ UPD 2016-04-29_21:37:04 2246 www/tablet_eval/js/widget_gds.js
 UPD 2016-05-19_23:52:45 8727 www/tablet_eval/js/widget_highchart.js
 UPD 2015-12-03_07:04:14 8542 www/tablet_eval/js/widget_highchart3d.js
 UPD 2016-04-12_23:04:25 9911 www/tablet_eval/js/widget_homestatus.js
+UPD 2016-06-15_23:37:02 3892 www/tablet_eval/js/widget_iframe.js
 UPD 2016-04-13_00:11:45 3524 www/tablet_eval/js/widget_image.js
 UPD 2016-04-04_22:40:23 2633 www/tablet_eval/js/widget_input.js
 UPD 2016-04-13_00:12:58 8286 www/tablet_eval/js/widget_itunes_artwork.js
