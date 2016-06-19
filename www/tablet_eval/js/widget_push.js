@@ -14,6 +14,7 @@ var Modul_push = function () {
         var count = (til-now) / 1000;
         var faelem = elem.data('famultibutton');
         if (faelem){
+          clearTimeout(elem.data('timer'));
           faelem.setProgressValue(1);
           elem.data('timer',setInterval(function(){
             if (count-- <= 0) {

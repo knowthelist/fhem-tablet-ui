@@ -940,7 +940,7 @@ STATE	T: 20.0 H: 61
 ```
 ```html
 <div data-type="label" data-device="THSensorWZ" 
-     data-part="2" data-unit="%B0C%0A" class="cell big"></div>
+     data-part="2" data-unit="&deg;C" class="cell big"></div>
 <div class="cell">Temperatur</div>
 <div data-type="label" data-device="THSensorWZ" data-part="4" 
      data-unit="%" class="cell big"></div>
@@ -953,7 +953,7 @@ temperature	20.1
 ```
 ```html
 <div data-type="label" data-device="THSensorWZ" 
-     data-get="temperature" data-unit="%B0C%0A" class="cell big"></div>
+     data-get="temperature" data-unit="&deg;C" class="cell big"></div>
 <div data-type="label" class="cell">Temperatur</div>
 <div data-type="label" data-device="THSensorWZ" 
      data-get="humidity" data-unit="%" class="cell big"></div>
@@ -966,7 +966,7 @@ temperature	20.1
      data-device="OutTemp" 
      data-limits='[-73,10,23]' 
      data-colors='["#6699FF","#AA6900","#FF0000"]' 
-     data-unit="%B0C%0A" 
+     data-unit="&deg;C"
      class="cell big">
 </div>
 ```
@@ -1372,13 +1372,13 @@ Multiple pagetabs in a template file: menu.html
 	<div data-type="label" class="darker">Heute</div>
 	<div data-type="weather" data-device="AgroWeather" data-get="fc0_weatherDay" class="big"></div>
 	<div data-type="label" data-device="AgroWeather" data-get="fc0_weatherDay" class=""></div>
-	<div data-type="label" data-device="AgroWeather" data-get="fc0_tempMax" data-unit="%B0C%0A" class="large"></div>
+        <div data-type="label" data-device="AgroWeather" data-get="fc0_tempMax" data-unit="" class="large"></div>
   </li>
   <li>
 	<div data-type="label" class="darker">Morgen</div>
 	<div data-type="weather" data-device="AgroWeather" data-get="fc1_weatherDay" class="big"></div>
 	<div data-type="label" data-device="AgroWeather" data-get="fc1_weatherDay" class=""></div>
-	<div data-type="label" data-device="AgroWeather" data-get="fc1_tempMax" data-unit="%B0C%0A" class="large"></div>
+        <div data-type="label" data-device="AgroWeather" data-get="fc1_tempMax" data-unit="" class="large"></div>
   </li>
  </ul>
 </div>
@@ -1596,7 +1596,7 @@ Create a Link in the UI which opens a dialog with sub widgets .
           <header>DIALOG</header>
           <div class="top-space">
                 <div class="inline">
-                  <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin"></div>
+                  <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="&deg;C" class="bigger thin"></div>
                   <div data-type="label" class="cell">Temperatur</div>
                 </div>
                 <div class="inline">
@@ -1805,7 +1805,7 @@ The weather template file contains this
        <div class="inline">
           <div data-type="label" data-device="AgroWeather" data-get="par02" class="large cell"></div>
           <div data-type="weather" data-device="AgroWeather" data-get="par02" class="bigplus thin"></div>
-          min:&nbsp;<div data-type="label" data-device="AgroWeather" data-get="par03" data-unit="%B0C%0A" class="inline medium"></div>
+          min:&nbsp;<div data-type="label" data-device="AgroWeather" data-get="par03" data-unit="&deg;C" class="inline medium"></div>
        </div>
     </div><div class="row"></div>
     <div class="left">
