@@ -34,6 +34,10 @@ Demos
 -------
 [Widgets](http://knowthelist.github.io/fhem/tablet/demo_widgets.html)
 
+Forum
+-------
+[FHEM Forum FTUI](https://forum.fhem.de/index.php/board,71.0.html)
+
 Configure
 -------
 Just configure the **index.html** to change the dashboard for your needs.
@@ -576,10 +580,13 @@ All parameters like Label Widgets plus these:
 - **data-set-value**   : Format of the value to send to FHEM (default '$v': the value only)
 
 ####Readingsgroup widgets
-- **data-max-update**         : Specify a minimum number of seconds between an update of the widget to avoid high load on the system
+- **data-get**         : name of the reading which should trigger the update (default 'STATE')
+- **data-max-update**  : Specify a minimum number of seconds between an update of the widget to avoid high load on the system
 
   Formatting will be taken from the corresponding readingsGroup formatting. 
   If the readingsgrouop uses css references, images or similar pieces, then the corresponding files / links need to be also reachable / included
+
+```html <div data-type="readingsgroup" data-device="battery" data-get="BadHeizung:batteryLevel"></div>```
 
 ####Eventmonitor widgets
 - **data-width**       : fixed size for width (default '750px')
