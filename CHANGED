@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2016-06-19
- - Bugfix for Push widget  for version 2.2 (avoid multiple running timer)
+2016-06-20
+ - Adopted readingsgroup widget for version 2.2
