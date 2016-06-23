@@ -13,7 +13,7 @@ var widget_label = $.extend({}, widget_widget, {
         elem.initData('colors'      , ['#505050']);
         elem.initData('limits-get'  , elem.data('device') + ':' + elem.data('get'));
         elem.initData('limits-part' , elem.data('part'));
-        elem.initData('substitution'    , '');
+        elem.initData('substitution', '');
 
         // fill up colors to limits.length
         // if an index s isn't set, use the value of s-1
@@ -38,6 +38,15 @@ var widget_label = $.extend({}, widget_widget, {
     },
     update_fix : function(value, fix) {
         return ( $.isNumeric(value) && fix>=0 ) ? Number(value).toFixed(fix) : value;
+    },
+    update_factor : function(value, factor) {
+        return ( $.isNumeric(value) && $.isNumeric(factor) ) ? Number(value) * Number(factor) : value;
+    },
+    update_postfix : function(value, postfix) {
+        return ( postfix ? value + postfix : value );
+    },
+    update_prefix : function(value, prefix) {
+        return ( prefix ? prefix + value : value );
     },
     update_substitution : function(value, substitution) {
         ftui.log(3,this.widgetname+' - value:'+value+', substitution:'+substitution);
@@ -107,7 +116,10 @@ var widget_label = $.extend({}, widget_widget, {
                 var unit = elem.data('unit');
 
                 val = base.update_substitution(val, elem.data('substitution'));
+                val = base.update_factor(val, elem.data('factor'));
                 val = base.update_fix(val, elem.data('fix'));
+                val = base.update_prefix(val, elem.data('prefix'));
+                val = base.update_postfix(val, elem.data('postfix'));
                 if (!isNaN(parseFloat(val)) && isFinite(val) && val.indexOf('.')>-1){
                     var vals = val.split('.');
                     val = "<span class='label-precomma'>"+vals[0]+"</span>" +
