@@ -87,7 +87,7 @@ UPD 2016-06-23_13:20:55 2751 www/tablet_eval/js/widget_joinedlabel.js
 UPD 2016-06-23_13:20:55 2990 www/tablet_eval/js/widget_klimatrend.js
 UPD 2016-06-23_13:20:55 6337 www/tablet_eval/js/widget_knob.js
 UPD 2016-06-23_13:20:55 6561 www/tablet_eval/js/widget_label.js
-UPD 2016-06-23_13:20:55 5944 www/tablet_eval/js/widget_level.js
+UPD 2016-06-30_21:39:26 6146 www/tablet_eval/js/widget_level.js
 UPD 2016-06-23_13:20:55 8588 www/tablet_eval/js/widget_link.js
 UPD 2016-06-23_13:20:55 1493 www/tablet_eval/js/widget_loading.js
 UPD 2016-06-23_13:20:55 4269 www/tablet_eval/js/widget_medialist.js
@@ -112,7 +112,7 @@ UPD 2016-06-23_13:20:56 1275 www/tablet_eval/js/widget_switch.js
 UPD 2016-06-23_13:20:56 1829 www/tablet_eval/js/widget_symbol.js
 UPD 2016-06-23_13:20:56 6879 www/tablet_eval/js/widget_thermostat.js
 UPD 2016-06-23_13:20:56 7104 www/tablet_eval/js/widget_volume.js
-UPD 2016-06-23_13:20:56 22150 www/tablet_eval/js/widget_weather.js
+UPD 2016-06-23_22:50:04 22207 www/tablet_eval/js/widget_weather.js
 UPD 2016-06-23_13:20:56 6099 www/tablet_eval/js/widget_wind_direction.js
 UPD 2016-06-23_13:20:56 12061 www/tablet_eval/lib/fa-multi-button.js
 UPD 2016-06-23_13:20:56 6054 www/tablet_eval/lib/fa-multi-button.min.js
