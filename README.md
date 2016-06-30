@@ -246,6 +246,8 @@ data-substitution="toDate().eeee()"     -  convert to name of the week day
 
 data-substitution="toDate().ago()"      -  convert to time span
 
+data-substitution="s/(:00)$//g"         -  20:15 instead of 20:15:00
+
 See [examples](#label) of Label
 
 ####Select widgets

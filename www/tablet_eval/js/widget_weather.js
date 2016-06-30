@@ -364,6 +364,8 @@ var Modul_weather = function () {
         'n14':                          ':rain',
     };
 
+    function init_ui (elem) {}
+
     function init_attr (elem) {
         var me=this;
         elem.data('get', elem.data('get') || 'STATE');
@@ -448,6 +450,7 @@ var Modul_weather = function () {
         //override members
         widgetname: 'weather',
         init_attr:init_attr,
+        init_ui:init_ui,
         update:update,
     });
 }

@@ -23,6 +23,8 @@ var Modul_level= function () {
         // numeric value means fix value, others mean it is a reading
         if (!$.isNumeric(elem.data('max')))
             me.addReading(elem,'max');
+        if (!$.isNumeric(elem.data('min')))
+            me.addReading(elem,'min');
 
         var input_elem =  jQuery('<input/>', {
 			type: 'text',
@@ -88,6 +90,7 @@ var Modul_level= function () {
                 var input_elem = elem.find('input');
                 var part = elem.data('part');
                 var val = getPart(state, part);
+                pwrng.options.min = ( $.isNumeric(elem.data('min')) ) ? elem.data('min') : elem.getReading('min').val;
                 pwrng.options.max = ( $.isNumeric(elem.data('max')) ) ? elem.data('max') : elem.getReading('max').val;
                 if (val==elem.data('off')) val=pwrng.options.min;
                 if (val==elem.data('on')) val=pwrng.options.max;
