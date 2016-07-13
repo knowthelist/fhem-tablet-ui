@@ -1,8 +1,9 @@
 
 
 function depends_dimmer(){
-    if(typeof Module_famultibutton == 'undefined')
+    if(typeof Module_famultibutton == 'undefined' || !$.fn.famultibutton) {
         return ["famultibutton"];
+    }
 };
 
 var Modul_dimmer = function () {

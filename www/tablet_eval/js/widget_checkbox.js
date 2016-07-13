@@ -1,9 +1,14 @@
 
 function depends_checkbox (){
+    var deps = [];
     if (!$.fn.Switchery){
         $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/switchery.min.css" type="text/css" />');
-        return ["lib/switchery.min.js"];
+        deps.push("lib/switchery.min.js");
     }
+    if(typeof Module_famultibutton == 'undefined' || !$.fn.famultibutton) {
+        deps.push('famultibutton');
+    }
+    return deps;
 };
 
 var Modul_checkbox = function () {
@@ -45,15 +50,15 @@ var Modul_checkbox = function () {
          $(switchery.jack).css( 'width',elem.hasClass('small')?'20px':elem.hasClass('large')?'40px':'30px');
 
          // click handler
-         var $switcherButton = elem.find('.switchery');
+         var switcherButton = elem.find('.switchery');
          var touchIsAllowed = false;
-         $switcherButton.on('click', function(event) {
+         switcherButton.on('click', function(event) {
              touchIsAllowed = false;
              me.clicked(elem,input.is(":checked"));
          });
 
          // touch handler
-         $switcherButton.on('touchend', function(e) {
+         switcherButton.on('touchend', function(e) {
              if (touchIsAllowed){
                 switchery.setPosition(true);
                 me.clicked(elem,input.is(":checked"));
@@ -61,7 +66,7 @@ var Modul_checkbox = function () {
              touchIsAllowed = true;
          });
 
-         $switcherButton.on('touchmove', function(e) {
+         switcherButton.on('touchmove', function(e) {
              e.preventDefault();
          });
 

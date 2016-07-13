@@ -1,7 +1,8 @@
 
 function depends_symbol (){
-    if(typeof Module_famultibutton == 'undefined')
+    if(typeof Module_famultibutton == 'undefined' || !$.fn.famultibutton) {
         return ["famultibutton"];
+    }
 };
 
 var Modul_symbol = function () {

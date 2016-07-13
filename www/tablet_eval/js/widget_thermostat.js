@@ -1,7 +1,8 @@
 
 function depends_thermostat (){
-    if(typeof Modul_knob == 'undefined')
+    if(typeof Modul_knob == 'undefined' || !$.fn.knob) {
         return ["knob"];
+    }
 };
 
 var Modul_thermostat = function () {

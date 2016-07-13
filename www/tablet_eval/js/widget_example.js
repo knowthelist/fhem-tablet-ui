@@ -1,8 +1,22 @@
 
 // widget implementation starts here
-// change 'Modul_example' to 'Modul_mywidgetname'
+// change 'Modul_example' to 'Modul_mywidgetname', 'depends_example' to 'depends_mywidgetname'
 // and 'widgetname:"example",' to 'widgetname:"mywidgetname",'
 // usage: <div data-type="example" data-device="dummy1" data-get="volume"></div>
+
+function depends_example (){
+    var deps = [];
+    /* e.g.
+    if (!$.fn.datetimepicker){
+        $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/jquery.datetimepicker.css" type="text/css" />');
+        deps.push("lib/jquery.datetimepicker.js");
+    }
+    if(typeof Module_label == 'undefined'){
+        deps.push('label');
+    }
+    */
+    return deps;
+};
 
 var Modul_example = function () {
 
@@ -35,7 +49,7 @@ var Modul_example = function () {
         });
     };
 
-    // mandatory function, get called after start up once and on every FHEM poll responce
+    // mandatory function, get called after start up once and on every FHEM poll response
     // here the widget get updated
     function update (dev,par) {
         // do updates from reading for content

@@ -31,7 +31,7 @@ var Modul_widget = function () {
 
     function addReading(elem,key) {
             var data = elem.data(key);
-            if (data && $.isArray(data) || !data.match(/^[#\.\[].*/)){
+            if (data && $.isArray(data) || data && !data.match(/^[#\.\[].*/)){
                 var device = elem.data('device');
                 if(! $.isArray(data)) {
                     data = new Array(data);
