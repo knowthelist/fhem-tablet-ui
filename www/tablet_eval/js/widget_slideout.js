@@ -18,6 +18,7 @@ function depends_slideout (){
 var Modul_slideout = function () {
 
     function init_attr(elem) {
+        elem.initData('label'       ,'#linkname');
         elem.initData('panel'       ,'main#panel');
         elem.initData('menu'        ,'nav#menu');
         elem.initData('icon'        ,'fa-bars');
@@ -52,9 +53,7 @@ var Modul_slideout = function () {
 
 
         $(elem.data('menu')).on('changedSelection',function(event,text) {
-            var elemLinkName =
-                    $(elem.data('panel')).find('#linkname') ||
-                    $(elem.data('menu')).find('#linkname');
+            var elemLinkName = $(elem.data('label'));
             if (elemLinkName)
                 elemLinkName.text(text);
             if (!elem.hasClass('keepopen')){

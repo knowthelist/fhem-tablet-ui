@@ -98,6 +98,7 @@ Currently there are more then 20 types of widgets in the base installation.
 - **link** : link or button link element
 - **spinner** : is a control element to adjust a value by clicking on the up or down icon
 - **departure** : a pulic transport departure schedule widget
+- **slideout** : a slide out menu plugin, usable for mobile phone pages.
 - **medialist** : a list of media elements e.g. songs in a playlist
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
@@ -687,6 +688,16 @@ See [examples](#range) of Range
 deptime: show departure time insteat of minutes
 alternate: show background of every second line half transparent
 DVB,VVO,DB: fix style schemas
+
+####Slideout widgets
+- **data-panel**                   : selector for the main content element (default 'main#panel')
+- **data-menu**                    : selector for the menu element (default 'nav#menu')
+- **data-label**                   : selector for the label element, which shows the name of the current sub menu (default '#linkname')
+- **data-icon**                    : name of the 'open-the-menu' icon   (default 'fa-bars')
+- **data-icon-color**              : rgb value or color name for the 'open-the-menu' icon (default '#222')
+- **class**
+
+see examples in index_nav_fixed_mobil.html or index_nav_mobil.html
 
 ####Medialist widgets
 - **data-get**         : name of the reading where to get the JSON object which contains the full list (default 'STATE')
