@@ -1699,7 +1699,7 @@ Horizontal.prototype.onmousemove = function(e) {
     this.setPosition(position);
   }
 
-  this.setValue(this.handle.style.left,  $(this.slider).width() - $(this.handle).width);
+  this.setValue(this.handle.style.left,  $(this.slider).width() - $(this.handle).width());
 };
 
 /**
