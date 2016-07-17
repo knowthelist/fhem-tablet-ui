@@ -18,14 +18,18 @@ var Modul_progress = function () {
         elem.initData('icon'                , '');
         elem.initData('set-on'              , '');
         elem.initData('set-off'             , '');
+        elem.initData('min'                 , '0');
         elem.initData('max'                 , '100');
         elem.initData('progress-width'      , '15');
         elem.initData('unit'                , '' );
+        elem.initData('part'                , '-1' );
         elem.data('mode', 'symbol');
 
         this.addReading(elem,'get');
         if (!$.isNumeric(elem.data('max')))
             this.addReading(elem,'max');
+        if (!$.isNumeric(elem.data('min')))
+            this.addReading(elem,'min');
         if (!elem.hasClass('novalue')){
             jQuery('<i/>', {
                  id: 'value',
@@ -37,25 +41,28 @@ var Modul_progress = function () {
     function update(dev,par) {
         // update from normal state reading
         this.elements.filterDeviceReading('get',dev,par)
+        .add( this.elements.filterDeviceReading('min',dev,par) )
         .add( this.elements.filterDeviceReading('max',dev,par) )
         .each(function(index) {
             var elem = $(this);
-            var val = elem.getReading('get').val;
-            if (val) {
-
-             var max = ( $.isNumeric(elem.data('max')) ) ? elem.data('max') : elem.getReading('max').val;
-             var faelem = elem.data('famultibutton');
-             faelem.setProgressValue(val/max);
-             var $value = faelem.find('#value');
-             var unit = elem.data('unit');
-             if ($value){
+            var state = elem.getReading('get').val;
+            if (state) {
+                var part = elem.data('part');
+                var val = ftui.getPart(state, part);
+                var min = ( $.isNumeric(elem.data('min')) ) ? elem.data('min') : elem.getReading('min').val;
+                var max = ( $.isNumeric(elem.data('max')) ) ? elem.data('max') : elem.getReading('max').val;
+                var faelem = elem.data('famultibutton');
+                faelem.setProgressValue((val-min)/(max-min));
+                var $value = faelem.find('#value');
+                var unit = elem.data('unit');
+                if ($value){
                  if (elem.hasClass('percent')){
                      if (max>0 && val)
-                        $value.html(Number(val/max*100).toFixed(0) + "<span class='label-unit'>"+unescape(unit)+"</span>");
+                        $value.html(Number((val-min)/(max-min)*100).toFixed(0) + "<span class='label-unit'>"+unescape(unit)+"</span>");
                  }
                  else
                     $value.html(val + "<span class='progress-unit'>"+unescape(unit)+"</span>");
-             }
+                }
          }
      });
     };

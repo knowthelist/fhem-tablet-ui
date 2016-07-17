@@ -974,10 +974,10 @@ temperature	20.1
 ```html
 <div data-type="label" data-device="THSensorWZ" 
      data-get="temperature" data-unit="&deg;C" class="cell big"></div>
-<div data-type="label" class="cell">Temperatur</div>
+<div class="cell">Temperatur</div>
 <div data-type="label" data-device="THSensorWZ" 
      data-get="humidity" data-unit="%" class="cell big"></div>
-<div data-type="label" class="cell">Luftfeuchte</div>
+<div class="cell">Luftfeuchte</div>
 ```
 
 **Example** for how to influence the color of the label according to value limits
@@ -1000,8 +1000,7 @@ temperature	20.1
      data-icon="fa-bars" 
      class="cell" >
 </div>
-<div data-type="label" 
-     class="cell">Rollo</div>
+<div class="cell">Rollo</div>
 ```
 
 **Example** for how to create a label for a time value in short format with usage of RegEx

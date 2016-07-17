@@ -223,6 +223,11 @@ var ftui = {
                     $('.gridster').hide();
                 }
             }
+            // corrections for gridster in gridster element
+            $('.gridster > ul > li:has(* .gridster)').css({
+                                      'background-color':'transparent',
+                                      'margin':'-'+ftui.gridster.wm+'px'
+                                 });
         }
     },
 
@@ -890,6 +895,24 @@ var ftui = {
      return '#' + diff_red + diff_green + diff_blue;
     },
 
+    getPart: function (s,p) {
+        if ($.isNumeric(p)){
+            var c = (s && isValid(s)) ? s.split(" ") : '';
+            return (c.length >= p && p>0 ) ? c[p-1] : s;
+        }
+        else {
+            if ((s && isValid(s)) )
+                var matches = s.match( new RegExp('^' + p + '$') );
+            var ret='';
+            if (matches) {
+                for (var i=1,len=matches.length;i<len;i++) {
+                    ret+=matches[i];
+                }
+            }
+            return ret;
+        }
+    },
+
     showModal: function (modal) {
         if(modal)
             $("#shade").fadeIn();
@@ -951,26 +974,13 @@ $(window).on('online offline', function() {
 
 // deprecated function
 function setFhemStatus(cmdline) {
-    console.log('setFhemStatus is a deprecated function: use ftui.setFhemStatus instead')
+    console.log('setFhemStatus is a deprecated function: use ftui.setFhemStatus instead');
      ftui.setFhemStatus(cmdline);
 };
 
 this.getPart = function (s,p) {
-    if ($.isNumeric(p)){
-        var c = (s && isValid(s)) ? s.split(" ") : '';
-        return (c.length >= p && p>0 ) ? c[p-1] : s;
-    }
-    else {
-        if ((s && isValid(s)) )
-            var matches = s.match( new RegExp('^' + p + '$') );
-        var ret='';
-        if (matches) {
-            for (var i=1,len=matches.length;i<len;i++) {
-                ret+=matches[i];
-            }
-        }
-        return ret;
-    }
+    console.log('getPart is a deprecated function: use ftui.getPart instead');
+    return ftui.getPart (s,p);
 };
 
 // deprecated function; will be removed soon

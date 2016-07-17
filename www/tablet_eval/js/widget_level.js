@@ -81,6 +81,7 @@ var Modul_level= function () {
       var base = this;
       // update from normal state reading
       this.elements.filterDeviceReading('get',dev,par)
+      .add( this.elements.filterDeviceReading('min',dev,par) )
       .add( this.elements.filterDeviceReading('max',dev,par) )
       .each(function(index) {
           var elem = $(this);
@@ -89,7 +90,7 @@ var Modul_level= function () {
                 var pwrng = elem.data('Powerange');
                 var input_elem = elem.find('input');
                 var part = elem.data('part');
-                var val = getPart(state, part);
+                var val = ftui.getPart(state, part);
                 pwrng.options.min = ( $.isNumeric(elem.data('min')) ) ? elem.data('min') : elem.getReading('min').val;
                 pwrng.options.max = ( $.isNumeric(elem.data('max')) ) ? elem.data('max') : elem.getReading('max').val;
                 if (val==elem.data('off')) val=pwrng.options.min;
