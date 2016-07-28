@@ -9,7 +9,7 @@ var Modul_symbol = function () {
 
     function init() {
         var me = this;
-        me.elements = $('div[data-type="'+me.widgetname+'"]');
+        me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
         me.elements.each(function(index) {
             var elem = $(this);
             elem.initData('off-color'               ,getStyle('.symbol.off','color') || '#505050');
