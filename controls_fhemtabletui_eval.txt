@@ -109,7 +109,7 @@ UPD 2016-07-14_17:22:20 8255 www/tablet_eval/js/widget_slider.js
 UPD 2016-06-23_13:20:56 11300 www/tablet_eval/js/widget_spinner.js
 UPD 2016-06-23_13:20:56 4123 www/tablet_eval/js/widget_swiper.js
 UPD 2016-07-12_10:51:33 1306 www/tablet_eval/js/widget_switch.js
-UPD 2016-07-12_10:51:43 1860 www/tablet_eval/js/widget_symbol.js
+UPD 2016-07-29_01:09:00 1868 www/tablet_eval/js/widget_symbol.js
 UPD 2016-07-12_10:51:50 6901 www/tablet_eval/js/widget_thermostat.js
 UPD 2016-06-23_13:20:56 7104 www/tablet_eval/js/widget_volume.js
 UPD 2016-06-23_22:50:04 22207 www/tablet_eval/js/widget_weather.js
