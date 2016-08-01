@@ -1,25 +1,44 @@
 var Modul_image = function () {
 
+    function update_classes(state, elem) {
+        //set colors according matches for values
+        var states = elem.data('states');
+        var classes = elem.data('classes');
+        if(states && classes) {
+            var idx = indexOfGeneric(states,state);
+            var elemImg = elem.find('img');
+            if (idx > -1) {
+                for(var i=0,len=classes.length; i<len; i++) {
+                    elemImg.removeClass( classes[i] );
+                }
+                elemImg.addClass( classes[idx] );
+            }
+        }
+    };
+
     function init_attr (elem) {
-        elem.initData('get'     , 'STATE');
+        elem.initData('state-get', '');
         elem.initData('opacity' ,  0.8);
         elem.initData('height'  ,  'auto');
         elem.initData('width'   ,  '100%');
-        elem.initData('size'    ,  '50%');
+        elem.initData('size'    ,  '100%');
+        elem.initData('part'    , -1);
         elem.initData('url'     ,  '');
+        elem.initData('get'     , (elem.data('url') === '') ? 'STATE' : '');
         elem.initData('path'    ,  '');
         elem.initData('suffix'  ,  '');
         elem.initData('refresh' ,  15*60);
         
         this.addReading(elem,'get');
+        this.addReading(elem,'state-get');
     };
 
     function init() {
-        var base=this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
-        this.elements.each(function(index) {
+        var me = this;
+        me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
+        me.elements.each(function(index) {
             var elem = $(this);
-            base.init_attr(elem);
+            me.init_attr(elem);
             var elemImg =  jQuery('<img/>', {
                 alt: 'img',
             }).appendTo(elem);
@@ -61,14 +80,26 @@ var Modul_image = function () {
     };
 
     function update (dev,par) {
-        var base = this;
-        this.elements.filterDeviceReading('get',dev,par)
+        var me = this;
+        me.elements.filterDeviceReading('get',dev,par)
         .each(function(index) {
             var elem = $(this);
             var value = elem.getReading('get').val;
             if (value) {
                     var src = [elem.data('path'), value, elem.data('suffix')].join('');
                     elem.find('img').attr('src', src );
+            }
+        });
+
+        //extra reading for extra classes
+        me.elements.filterDeviceReading('state-get',dev,par)
+        .each(function(idx) {
+            var elem = $(this);
+            var state = elem.getReading('state-get').val;
+            if(state) {
+                var part = elem.data('part');
+                var val = ftui.getPart(state,part);
+                update_classes(val, elem);
             }
         });
     };

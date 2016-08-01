@@ -498,7 +498,7 @@ Parameter for page elements of the swiper <li>
 - **class**             : nopagination, navbuttons, hashnav
 
 class="nopagination" - do not show the page-change dots
-class="navbuttons" - do not show the navigation buttons left and right
+class="navbuttons" - show the navigation buttons left and right
 class="hashnav" - change the selected page via URL hash value
 class="noswipe" on page elements prevents page from swiping
 
