@@ -63,7 +63,7 @@ UPD 2016-07-17_22:40:03 46271 www/tablet_eval/js/fhem-tablet-ui.js
 UPD 2016-06-23_13:20:54 20988 www/tablet_eval/js/highcharts-meteogram.js
 UPD 2016-06-23_13:20:54 1469 www/tablet_eval/js/widget_button.js
 UPD 2016-06-23_13:20:54 6415 www/tablet_eval/js/widget_calview.js
-UPD 2016-06-23_13:20:54 177816 www/tablet_eval/js/widget_chart.js
+UPD 2016-08-02_00:04:45 185300 www/tablet_eval/js/widget_chart.js
 UPD 2016-07-12_11:02:57 4005 www/tablet_eval/js/widget_checkbox.js
 UPD 2016-06-23_13:20:54 2273 www/tablet_eval/js/widget_circlemenu.js
 UPD 2016-06-23_13:20:54 5946 www/tablet_eval/js/widget_clock.js
@@ -80,7 +80,7 @@ UPD 2016-06-23_13:20:55 8727 www/tablet_eval/js/widget_highchart.js
 UPD 2016-06-23_13:20:55 8542 www/tablet_eval/js/widget_highchart3d.js
 UPD 2016-07-12_10:52:26 9933 www/tablet_eval/js/widget_homestatus.js
 UPD 2016-06-23_13:20:55 3892 www/tablet_eval/js/widget_iframe.js
-UPD 2016-06-23_13:20:55 3524 www/tablet_eval/js/widget_image.js
+UPD 2016-07-31_20:12:15 4633 www/tablet_eval/js/widget_image.js
 UPD 2016-06-23_13:20:55 2633 www/tablet_eval/js/widget_input.js
 UPD 2016-06-23_13:20:55 8286 www/tablet_eval/js/widget_itunes_artwork.js
 UPD 2016-06-23_13:20:55 2751 www/tablet_eval/js/widget_joinedlabel.js
@@ -94,7 +94,7 @@ UPD 2016-06-23_13:20:55 4269 www/tablet_eval/js/widget_medialist.js
 UPD 2016-06-23_13:20:55 1857 www/tablet_eval/js/widget_meteogram.js
 UPD 2016-07-12_10:50:48 7496 www/tablet_eval/js/widget_pagebutton.js
 UPD 2016-07-12_10:50:55 8090 www/tablet_eval/js/widget_pagetab.js
-UPD 2016-06-23_13:20:55 3226 www/tablet_eval/js/widget_playstream.js
+UPD 2016-08-01_23:56:16 5048 www/tablet_eval/js/widget_playstream.js
 UPD 2016-06-23_13:20:55 7043 www/tablet_eval/js/widget_popup.js
 UPD 2016-07-17_23:22:14 3385 www/tablet_eval/js/widget_progress.js
 UPD 2016-07-12_10:51:12 3441 www/tablet_eval/js/widget_push.js
