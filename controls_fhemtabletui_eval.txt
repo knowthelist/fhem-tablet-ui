@@ -38,6 +38,12 @@ UPD 2016-06-23_13:20:52 1344 www/tablet_eval/fonts/FTUI-icons.eot
 UPD 2016-06-23_13:20:52 937 www/tablet_eval/fonts/FTUI-icons.svg
 UPD 2016-06-23_13:20:52 1168 www/tablet_eval/fonts/FTUI-icons.ttf
 UPD 2016-06-23_13:20:52 1244 www/tablet_eval/fonts/FTUI-icons.woff
+UPD 2016-05-31_16:34:18 143258 www/tablet_eval/fonts/MaterialIcons-Regular.eot
+UPD 2016-05-31_16:34:18 28416 www/tablet_eval/fonts/MaterialIcons-Regular.ijmap
+UPD 2016-05-31_16:34:18 281658 www/tablet_eval/fonts/MaterialIcons-Regular.svg
+UPD 2016-05-31_16:34:18 128180 www/tablet_eval/fonts/MaterialIcons-Regular.ttf
+UPD 2016-05-31_16:34:18 57620 www/tablet_eval/fonts/MaterialIcons-Regular.woff
+UPD 2016-05-31_16:34:18 44300 www/tablet_eval/fonts/MaterialIcons-Regular.woff2
 UPD 2016-06-23_13:20:53 159 www/tablet_eval/fonts/meteocons-License.txt
 UPD 2016-06-23_13:20:53 10454 www/tablet_eval/fonts/meteocons-webfont.eot
 UPD 2016-06-23_13:20:53 33061 www/tablet_eval/fonts/meteocons-webfont.svg
@@ -59,7 +65,7 @@ UPD 2016-06-23_13:20:53 4684 www/tablet_eval/index_nav_fixed_mobil.html
 UPD 2016-06-23_13:20:53 4654 www/tablet_eval/index_nav_mobil.html
 UPD 2016-06-23_13:20:54 3570 www/tablet_eval/index_page_demo.html
 UPD 2016-06-23_13:20:54 5257 www/tablet_eval/index_tab_demo.html
-UPD 2016-07-17_22:40:03 46271 www/tablet_eval/js/fhem-tablet-ui.js
+UPD 2016-08-03_21:56:17 46605 www/tablet_eval/js/fhem-tablet-ui.js
 UPD 2016-06-23_13:20:54 20988 www/tablet_eval/js/highcharts-meteogram.js
 UPD 2016-06-23_13:20:54 1469 www/tablet_eval/js/widget_button.js
 UPD 2016-06-23_13:20:54 6415 www/tablet_eval/js/widget_calview.js
@@ -141,6 +147,8 @@ UPD 2016-06-23_13:20:56 27838 www/tablet_eval/lib/jquery.knob.mod.js
 UPD 2016-06-23_13:20:56 10878 www/tablet_eval/lib/jquery.knob.mod.min.js
 UPD 2016-06-23_13:20:56 4508 www/tablet_eval/lib/jquery.toast.min.css
 UPD 2016-06-23_13:20:56 6255 www/tablet_eval/lib/jquery.toast.min.js
+UPD 2016-07-31_22:26:00 81011 www/tablet_eval/lib/material-icons.css
+UPD 2016-08-02_00:46:22 71965 www/tablet_eval/lib/material-icons.min.css
 UPD 2016-06-23_13:20:56 23826 www/tablet_eval/lib/openautomation.css
 UPD 2016-07-14_10:55:10 41235 www/tablet_eval/lib/powerange.js
 UPD 2016-06-23_13:20:56 1176 www/tablet_eval/lib/powerange.min.css

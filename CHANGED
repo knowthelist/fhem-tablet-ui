@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2016-08-02
- - Updates for widgets chart,image,playstream
+2016-08-03
+ - Optimized shortpoll by adding devicelist
