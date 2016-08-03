@@ -2,7 +2,7 @@
 /**
 * UI builder framework for FHEM
 *
-* Version: 2.2.1
+* Version: 2.2.3
 *
 * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -18,7 +18,7 @@ var Modul_widget = function () {
 
     function init() {
         var me = this;
-        ftui.log(1,"init widget: "+this.widgetname);
+        ftui.log(1,"init widget: name="+this.widgetname+" area="+this.area);
         this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
         this.elements.each(function(index) {
             me.init_attr($(this));
@@ -88,11 +88,16 @@ var plugins = {
   updateParameters: function () {
     ftui.subscriptions={};
     ftui.subscriptionTs={};
+    ftui.devs=[];
     for (var i = this.modules.length - 1; i >= 0; i -= 1) {
         var module = this.modules[i];
         for (var key in module.subscriptions) {
-          ftui.subscriptions[key]=module.subscriptions[key];
-          ftui.subscriptionTs[key+'-ts']=module.subscriptions[key];
+          ftui.subscriptions[key] = module.subscriptions[key];
+          ftui.subscriptionTs[key+'-ts'] = module.subscriptions[key];
+          var d = ftui.subscriptions[key].device;
+          if (ftui.devs.indexOf(d) < 0){
+                ftui.devs.push(d);
+          }
         }
     }
   },
@@ -114,7 +119,7 @@ var plugins = {
 // -------- FTUI ----------
 
 var ftui = {
-   version: '2.2.1',
+   version: '2.2.3',
    config: {
         DEBUG: false,
         DEMO:false,
@@ -184,7 +189,7 @@ var ftui = {
 
         $(document).on("initWidgetsDone",function(){
             // start shortpoll delayed
-           ftui.startShortPollInterval(2500);
+           ftui.startShortPollInterval(500);
         });
 
         $(document).one("updateDone",function(){
@@ -236,7 +241,7 @@ var ftui = {
         //init gridster
         area = (isValid(area)) ? area : '';
         console.time('initPage');
-        ftui.log(2,'initPage - area=',area);
+        ftui.log(2,'initPage - area='+area);
 
         // postpone shortpoll start
         ftui.startShortPollInterval();
@@ -280,7 +285,7 @@ var ftui = {
         ftui.log(3,plugins);
         plugins.removeArea(area);
         ftui.log(3,plugins);
-        ftui.log(2,'initWidgets - area=',area);
+        ftui.log(2,'initWidgets - area='+area);
 
         //collect required widgets types
         $('div[data-type]',area).each(function(index){
@@ -345,10 +350,13 @@ var ftui = {
                 params[reading].valid = false;
             }
         }
-        //Request all devices from FHEM
         console.time('get jsonlist2');
+
+        //Request all devices from FHEM
+        var devicelist = $.map(ftui.devs, $.trim).join();
+
         $.getJSON(ftui.config.fhem_dir,
-                  {cmd: 'jsonlist2',
+                  {cmd: 'jsonlist2 ' + devicelist,
                    XHR:1,
                    timeout: 60000})
          .done( function (fhemJSON) {
@@ -955,6 +963,10 @@ var ftui = {
 // event "page is loaded" -> start FTUI
 $(document).on('ready', function() {
     ftui.init();
+});
+
+$('.menu').on('click', function() {
+    $('.menu').toggleClass('show');
 });
 
 $(window).on('beforeunload', function(){

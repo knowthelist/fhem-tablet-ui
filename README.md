@@ -804,11 +804,20 @@ Built in icons have the ftui- prefix. Currently available are: ftui-window, ftui
 Select one of over 500 icons from http://fortawesome.github.io/Font-Awesome/icons.
 Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data-icon="fa-volume-up"
 
+- Material Icons
+Select one of over 1000 icons from https://design.google.com/icons/.
+Just enter the icon name (with suffix "mi-"), all icons are available. e.g. data-icon="mi-local_gas_station"
+To enable these icons, just add following line to your index.html.
+
+```html
+<link rel="stylesheet" href="lib/material-icons.min.css" />
+```
+
 - FHEM and OpenAutomation
 Enable respectively add following lines to index.html to active FHEMWEB icons for FHEM Tablet ui
 ```html
-<link rel="stylesheet" href="/fhem/tablet/lib/openautomation.css" />
-<link rel="stylesheet" href="/fhem/tablet/lib/fhemSVG.css" />
+<link rel="stylesheet" href="lib/openautomation.css" />
+<link rel="stylesheet" href="lib/fhemSVG.css" />
 ```
 This font icons has the prefix 'fs-' and 'oa-'
 
