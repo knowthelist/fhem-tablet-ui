@@ -43,7 +43,7 @@ var Modul_dimmer = function () {
          if (elem.hasClass('FS20')){
               v = ftui.FS20.dimmerValue(v);
           }
-         elem.data('value', elem.data('set-on').replace('$v',v.toString()));
+         elem.data('value', elem.data('set-on').toString().replace('$v',v.toString()));
          elem.transmitCommand();
          elem.trigger("toggleOn");
      };
@@ -55,7 +55,7 @@ var Modul_dimmer = function () {
              if (elem.hasClass('FS20')){
                   v = this.FS20.dimmerValue(v);
              }
-            var valStr = elem.data('set-value').replace('$v',v.toString());
+            var valStr = elem.data('set-value').toString().replace('$v',v.toString());
             var reading = (elem.data('dim') !== '') ? elem.data('dim') : elem.data('set');
             var cmd = [elem.data('cmd-value'), device, reading, valStr].join(' ');
             ftui.setFhemStatus(cmd);

@@ -74,7 +74,7 @@ var Modul_slider= function () {
                 if (elem.hasClass('FS20')){
                   v = ftui.FS20.dimmerValue(v);
                 }
-                elem.data('value', elem.data('set-value').replace('$v',v.toString()));
+                elem.data('value', elem.data('set-value').toString().replace('$v',v.toString()));
 
                 // write visible value (from pwrng) to local storage NOT the fhem exposed value)
                 localStorage.setItem("slider_"+id, sliVal);
