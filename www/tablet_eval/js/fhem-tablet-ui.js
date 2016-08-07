@@ -100,6 +100,8 @@ var plugins = {
           }
         }
     }
+    // force shortpoll
+    ftui.states.lastShortpoll = 0;
   },
 
   load: function (name,area) {
