@@ -65,7 +65,7 @@ UPD 2016-06-23_13:20:53 4684 www/tablet_eval/index_nav_fixed_mobil.html
 UPD 2016-06-23_13:20:53 4654 www/tablet_eval/index_nav_mobil.html
 UPD 2016-06-23_13:20:54 3570 www/tablet_eval/index_page_demo.html
 UPD 2016-06-23_13:20:54 5257 www/tablet_eval/index_tab_demo.html
-UPD 2016-08-03_21:56:17 46605 www/tablet_eval/js/fhem-tablet-ui.js
+UPD 2016-08-07_21:39:57 46663 www/tablet_eval/js/fhem-tablet-ui.js
 UPD 2016-06-23_13:20:54 20988 www/tablet_eval/js/highcharts-meteogram.js
 UPD 2016-06-23_13:20:54 1469 www/tablet_eval/js/widget_button.js
 UPD 2016-06-23_13:20:54 6415 www/tablet_eval/js/widget_calview.js

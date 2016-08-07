@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2016-08-06
- - Bugfix for dimmer and slider for case data-set-on is numeric
+2016-08-07
+ - Force shortpoll after page changes
