@@ -13,7 +13,7 @@ UPD 2016-06-23_13:20:52 1267 www/tablet_eval/content_windows.html
 UPD 2016-06-23_13:20:52 510 www/tablet_eval/css/fhem-blue-ui.css
 UPD 2016-06-23_13:20:52 510 www/tablet_eval/css/fhem-green-ui.css
 UPD 2016-06-23_13:20:52 2020 www/tablet_eval/css/fhem-mobil-ui.css
-UPD 2016-07-14_21:33:59 22468 www/tablet_eval/css/fhem-tablet-ui.css
+UPD 2016-08-01_22:06:08 28503 www/tablet_eval/css/fhem-tablet-ui.css
 UPD 2016-06-23_13:20:52 13563 www/tablet_eval/css/fhem-tablet-ui.min.css
 UPD 2016-06-23_13:20:52 5295 www/tablet_eval/css/ftui_chart.css
 UPD 2016-06-23_13:20:52 1023 www/tablet_eval/css/ftui_colorwheel.css
@@ -60,6 +60,7 @@ UPD 2016-06-23_13:20:53 47700 www/tablet_eval/fonts/Roboto-Thin-webfont.ttf
 UPD 2016-06-23_13:20:53 24944 www/tablet_eval/fonts/Roboto-Thin-webfont.woff
 UPD 2016-06-23_13:20:53 13934 www/tablet_eval/index-example.html
 UPD 2016-06-23_13:20:53 2947 www/tablet_eval/index_empty.html
+UPD 2016-08-08_00:10:29 3680 www/tablet_eval/index_flex_demo_4x4_empty.html
 UPD 2016-06-23_13:20:53 7064 www/tablet_eval/index_music.html
 UPD 2016-06-23_13:20:53 4684 www/tablet_eval/index_nav_fixed_mobil.html
 UPD 2016-06-23_13:20:53 4654 www/tablet_eval/index_nav_mobil.html
