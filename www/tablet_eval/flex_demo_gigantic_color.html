@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.3
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * Example for a flexbox layout instead of gridster
+     */
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="debug" content="0"> <!-- verbose level 1-6 = output to console;0 = not output -->
+
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/material-icons.min.css" />
+    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+
+    <script src="../pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+<body>
+<main>
+<div class="hbox">
+    <div class="vbox phone-width full-height">
+      <div class="card bg-mint">
+        <div class="hbox">
+            <i class="mi-watch_later gigantic"></i>
+            <div data-type="label" data-device="server" data-get="uptime" class="big">3d 7h</div>
+        </div>
+      </div>
+      <div class="card bg-red">
+          <div class="hbox">
+              <i class="mi-security gigantic"></i>
+              <div data-type="label" data-device="alarm" data-get="STATE" class="big">activ</div>
+          </div>
+      </div>
+      <div class="card bg-orange">
+          <div class="hbox">
+              <i class="mi-radio gigantic"></i>
+              <div data-type="label" data-device="radio" data-get="STATE" class="big">on</div>
+          </div>
+      </div>
+    </div>
+    <div class="vbox phone-width full-height">
+        <div class="card bg-blue">
+            <div class="hbox">
+                <i class="mi-phone gigantic"></i>
+                <div data-type="label" data-device="fritz" data-get="calls" class="big">3</div>
+            </div>
+        </div>
+        <div class="card bg-gray">
+            <div class="hbox">
+                <i class="mi-wc gigantic"></i>
+                <div data-type="label" data-device="wc" data-get="STATE" class="big">free</div>
+            </div>
+        </div>
+        <div class="card bg-red">
+            <div class="hbox">
+                <i class="mi-signal_wifi_off gigantic"></i>
+                <div data-type="label" data-device="wifi" data-get="STATE" class="big">off</div>
+            </div>
+        </div>
+    </div>
+    <div class="vbox phone-width full-height">
+        <div class="card bg-gray">
+            <div class="hbox">
+                <i class="mi-local_gas_station gigantic"></i>
+                <div data-type="label" data-device="bezin" data-get="STATE" class="big">1,27€</div>
+            </div>
+        </div>
+        <div class="card bg-blue">
+            <div class="hbox">
+                <i class="mi-local_post_office gigantic"></i>
+                <div data-type="label" data-device="mail" data-get="count" class="big">21</div>
+            </div>
+        </div>
+        <div class="card bg-orange">
+            <div class="hbox">
+                <i class="mi-traffic gigantic"></i>
+                <div data-type="label" data-device="traffic" data-get="load" class="big">low</div>
+            </div>
+        </div>
+    </div>
+    <div class="vbox phone-width full-height">
+        <div class="card bg-red">
+            <div class="hbox">
+                <i class="mi-power gigantic"></i>
+                <div data-type="label" data-device="power" data-get="today" class="big">200kWh</div>
+            </div>
+        </div>
+        <div class="card bg-gray">
+            <div class="hbox">
+                <i class="mi-ac_unit gigantic"></i>
+                <div data-type="label" data-device="frost" data-get="temp" class="big">-23°C</div>
+            </div>
+        </div>
+        <div class="card bg-blue">
+            <div class="hbox">
+                <i class="mi-notifications gigantic"></i>
+                <div data-type="label" data-device="notifications" data-get="count" class="big">0</div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+</body>
+</html>
