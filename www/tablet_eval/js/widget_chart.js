@@ -934,15 +934,17 @@ var widget_chart = {
 		var scE = dataE.days_start - dataE.days_end;
 		var theDoc = (dataE.popup)?target.parent():$(document);
 		theDoc.find("[class^=basesvg]").each(function() {
-			var data = $(this).parent().data();
-			if ((data.cursorgroup == dataE.cursorgroup) && dataE.cursorgroup!=undefined && dataE.instance!=data.instance) {
-				var dShift = data.days_start-dataE.days_start;
-				var sc = data.days_start-data.days_end;
-				var scW = data.graphArea.width/dataE.graphArea.width;
-				e = $.Event(event.type);
-				e.pageX = data.graphArea.left + ((event.pageX-dataE.graphArea.left)*scE/sc + (dShift/sc)*dataE.graphArea.width)*scW;
-				e.delegateTarget = $(this).find("rect.chart-background, [id*='graph-']");
-				widget_chart.doEvent(e);
+			if ($(this).parent().is(':visible')) {
+				var data = $(this).parent().data();
+				if ((data.cursorgroup == dataE.cursorgroup) && dataE.cursorgroup!=undefined && dataE.instance!=data.instance) {
+					var dShift = data.days_start-dataE.days_start;
+					var sc = data.days_start-data.days_end;
+					var scW = data.graphArea.width/dataE.graphArea.width;
+					e = $.Event(event.type);
+					e.pageX = data.graphArea.left + ((event.pageX-dataE.graphArea.left)*scE/sc + (dShift/sc)*dataE.graphArea.width)*scW;
+					e.delegateTarget = $(this).find("rect.chart-background, [id*='graph-']");
+					widget_chart.doEvent(e);
+				}
 			}
 		});
 	},
@@ -1337,11 +1339,11 @@ var widget_chart = {
 			var max_prim = parseFloat( $.isArray(maxarray) ? maxarray[0] : (maxarray!="auto") ? maxarray : Number.NEGATIVE_INFINITY );
 			var min_sec = parseFloat( $.isArray(minarray_sec) ? minarray_sec[minarray_sec.length-1] : (minarray_sec!="auto") ? minarray_sec : Number.POSITIVE_INFINITY );
 			var max_sec = parseFloat( $.isArray(maxarray_sec) ? maxarray_sec[0] : (maxarray_sec!="auto") ? maxarray_sec : Number.NEGATIVE_INFINITY );
-		} else { // never used currently
+		} else {
 			min_prim = data.min_save;
-			max_prim = data.max_save;
+			max_prim = data.max_save/data.scaleY+data.min_save;
 			min_sec = data.min_save_sec;
-			max_sec = data.max_save_sec;
+			max_sec = data.max_save_sec/data.scaleY_sec+data.min_save_sec;
 		}
 		
 		var days_start = parseFloat(data.days_start);
@@ -1451,7 +1453,7 @@ var widget_chart = {
 							}
 						} else if (ptype.search('icons:')>=0) { // special treatment of icons feature (display icons coming from fhem readings)
 							if (columnspec.search('logProxy')<=-1) { // no logproxy, icons are coming from logfile
-								var val = getPart(value.replace('\r\n',''),4);
+								var val = ftui.getPart(value.replace('\r\n',''),4);
 								var minutes = diffMinutes(tstart,dateFromString(value));
 								var searchstr = columnspec.split(':')[1] || '';
 								if (value.search(searchstr) >= 0) {
@@ -1460,7 +1462,7 @@ var widget_chart = {
 									idx_icons++;
 								}								
 							} else { // logproxy, icons are calculated in logproxy function (e.g. proplanta2Plot)
-								var val = getPart(value.replace('\r\n',''),2);							
+								var val = ftui.getPart(value.replace('\r\n',''),2);							
 								var minutes = diffMinutes(tstart,dateFromString(value));
 								if (val[0] != '#') {
 									point=[parseFloat(minutes),ptype.split(':')[1],val];
@@ -1469,7 +1471,7 @@ var widget_chart = {
 								}
 							}
 						} else {
-							var val = getPart(value.replace('\r\n',''),2);
+							var val = ftui.getPart(value.replace('\r\n',''),2);
 							var minutes = diffMinutes(tstart,dateFromString(value));
 							if (parseFloat(minutes) < 0) minutes = "0";
 							if (val && minutes && $.isNumeric(val)){
@@ -3021,7 +3023,8 @@ function init_ui (elem) {
 function update (dev,par) {
 	var base = this;
 	var deviceElements= this.elements.filter("div[data-logdevice]");
-	
+	var prev_width = [];
+	prev_width[$(base).data('instance')] = $(base).find('svg.basesvg'+$(base).data('instance')).width();
 	widget_chart.doLog("Update triggered with: " + dev + par);
 
 	function waitForInitialization(base,instance,type,i) {
@@ -3029,7 +3032,8 @@ function update (dev,par) {
 		var svg_old = $(base).find('svg.basesvg'+data.instance);
 		var time = (data.initdelay)?data.initdelay:100;
 		setTimeout(function(){
-			if (!widget_chart.initialized[instance]||isNaN(svg_old.height())||isNaN(svg_old.width())) {
+			if (!widget_chart.initialized[instance]||isNaN(svg_old.height())||isNaN(svg_old.width())||prev_width[instance]!=svg_old.width()||(!svg_old.parent().is(':visible'))) {
+				prev_width[instance] = svg_old.width(); // we need to wait until the size does not change any more (e.g. when fading in)
 				waitForInitialization(base,instance,type,i);
 			} else {
 				widget_chart.refresh(base,type);
@@ -3041,13 +3045,12 @@ function update (dev,par) {
 		var elem = $(this);
 		var isLogdevice = ($.isArray(elem.data('logdevice')))?elem.data('logdevice').join(',').search(dev)>=0:(typeof elem.data('logdevice') == 'string')?elem.data('logdevice')==dev:false;
 		// if (isLogdevice) {console.log(elem.data('logdevice'), dev, isLogdevice, elem.data('get'), par);}
-		if ( elem.data('get')==par && isLogdevice) {
-			if (elem.parent().is(':visible')) {
+		if ( elem.data('get')==par && isLogdevice ) {
+			if (elem.closest('[data-type="popup"]').length==0) { // we need to find out if the chart is inside a popup for special care
 				waitForInitialization(elem,elem.data('instance'),'start'); // need to be sure that window is initialized (e.g. to get right width/height)
-			} else {
-				elem.off("fadein");
-				elem.on("fadein", function(event) {
-					var theObj = $(event.delegateTarget).find("[class^=basesvg]").parent();
+			} else { // inside popup, do "refresh" only when popup opens.
+				elem.closest('[data-type="popup"]').on("fadein", function(event) {
+					var theObj = $("html").find("[class^=basesvg"+elem.data('instance')+"]").parent();
 					theObj.each( function(index) {waitForInitialization($(this),$(this).data('instance'),'startpopup');});
 				});
 			}
