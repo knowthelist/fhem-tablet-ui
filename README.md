@@ -786,13 +786,31 @@ Positioning:
 - top-narrow    : -15px closer on top  (top-narrow-2x -> -30px; top-narrow-10 -> -10px)
 - left-narrow	: 15px closer on left (left-narrow-2x -> 30px; left-narrow-3x -> 45px)
 - right-narrow  	: 15px closer on right (right-narrow-2x -> 30px; right-narrow-3x -> 45px)
-- centered		: horizontal centered
+- centered		: horizontal centered (set this class to parent div)
 - left-align	: align text left
 - right-align	: align text right
 - bottom        : align text at the bottom of
 - wider			: 15px extra space for the widget all around 
 - narrow		: shorter distant to the widget above 
 - fullsize		: 100% in width and height
+
+Flexbox Layout:
+- vbox          : vertical box
+- hbox          : horizontal box
+- card          : a main box
+- phone-width   : do not shrink under phone width
+- full-height   : 100% viewport height
+- full-width    : 100% width
+- grow-0        : dont let the box grow
+- grow-1        : standard box grow
+- grow-2        : let the box grow twice
+- grow-3 ...9   : let the box grow 3 ...9 times
+- items-top     : how to align items in a hbox
+- items-center  : how to align items in a hbox
+- items-bottom  : how to align items in a hbox
+- items-space-between  : how to align items in a hbox
+
+
 
 Icon configuration
 -------
