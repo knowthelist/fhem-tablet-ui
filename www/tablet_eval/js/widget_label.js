@@ -109,7 +109,7 @@ var Modul_label = function () {
 
             if (value){
                 var part = elem.data('part');
-                var val = getPart(value,part);
+                var val = ftui.getPart(value,part);
                 var unit = elem.data('unit');
 
                 val = update_substitution(val, elem.data('substitution'));
@@ -153,7 +153,7 @@ var Modul_label = function () {
             var val = elem.getReading('limits-get').val;
             if(val) {
                 var part = elem.data('limits-part');
-                var v = getPart(val,part);
+                var v = ftui.getPart(val,part);
                 update_colorize(v, elem);
             }
         });
