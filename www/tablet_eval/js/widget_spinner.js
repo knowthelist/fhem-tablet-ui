@@ -258,7 +258,7 @@ var Modul_spinner = function () {
             var state = elem.getReading('get').val;
             if (state) {
                 var part = elem.data('get-value');
-                var val = getPart(state, part);
+                var val = ftui.getPart(state, part);
                 elem.data('value',val);
                 drawLevel(elem);
             }

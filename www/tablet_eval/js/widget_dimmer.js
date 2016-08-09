@@ -101,7 +101,7 @@ var Modul_dimmer = function () {
                var value = elem.getReading('dim').val;
                if(value) {
                    var part = $(this).data('get-value');
-                   var val = getPart(value, part);
+                   var val = ftui.getPart(value, part);
                    var elemDim = $(this).data('famultibutton');
                    if (elemDim && $.isNumeric(val))
                        elemDim.setDimValue( parseInt(val));

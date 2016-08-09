@@ -155,7 +155,7 @@ var Modul_pagebutton = function () {
 
    function update_cb(elem,state) {
        if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
-           this.showOverlay(elem,getPart(state,elem.data('get-warn')));
+           this.showOverlay(elem,ftui.getPart(state,elem.data('get-warn')));
        else
            this.showOverlay(elem,"");
 

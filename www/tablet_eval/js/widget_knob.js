@@ -32,6 +32,7 @@ var Modul_knob = function () {
         elem.data('set',        elem.data('set')        || '');
         elem.data('cmd',        elem.data('cmd')        || 'set');
         elem.data('set-value',  elem.data('set-value')  || '$v');
+        elem.data('get-value',   elem.data('get-value')   || elem.data('part')         || '-1');
         
         elem.data('min',    elem.isValidData('min')  ?  elem.data('min')    : 0);
         elem.data('max',    elem.isValidData('max')  ?  elem.data('max')    : 100);
@@ -50,7 +51,7 @@ var Modul_knob = function () {
         elem.data('anglearc',   elem.isValidData('anglearc')       ? elem.data('anglearc')         :   240);
 
         elem.data('bgcolor',    elem.data('bgcolor')    ||                           getStyle('.'+this.widgetname,'background-color')    || '#505050');
-        elem.data('fgcolor',    elem.data('fgcolor')    || getClassColor(elem) || getStyle('.'+this.widgetname,'color')               || '#666');
+        elem.data('fgcolor',    elem.data('fgcolor')    || getClassColor(elem) || getStyle('.'+this.widgetname,'color')                  || '#aa6900');
         elem.data('inputcolor', elem.data('inputcolor') ||                           getStyle('.'+this.widgetname+'.input','color')      || '#ffffff');
         elem.data('hdcolor',    elem.data('hdcolor')    ||                           getStyle('.'+this.widgetname+'.handle','color')     || '#666');
 
@@ -108,23 +109,29 @@ var Modul_knob = function () {
     };
 
     function update (dev,par) {
-        var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-        isUpdating=true;
-        deviceElements.each(function(index) {
-            if ( $(this).data('get')==par ){
-                var val = getDeviceValue( $(this), 'get' );
-                var knob_elem = $(this).find('input');
-                if (knob_elem && val){
-                     if ( knob_elem.val() != val ){
-                        knob_elem.val( val ).trigger('change');
-                        ftui.log( this.widgetname + ' dev:'+dev+' par:'+par+' change '+$(this).data('device')+':knob to ' +val );
-                    }   
-                    knob_elem.css({visibility:'visible'});
-                }
+      isUpdating=true;
+      var me = this;
+      // update from desired temp reading
+      me.elements.filterDeviceReading('get',dev,par)
+      .each(function(index) {
+        var elem = $(this);
+        var value = elem.getReading('get').val;
+        if (value) {
+            var knob_elem = elem.find('input');
+            if (knob_elem){
+              var part = elem.data('get-value');
+              var val = ftui.getPart(value,part);
+              if ( knob_elem.val() != val ){
+                  knob_elem.val( val ).trigger('change');
+                  ftui.log(3, me.widgetname + ' dev:'+dev+' par:'+par+' change '+elem.data('device')+':knob to ' +val );
+              }
+             knob_elem.css({visibility:'visible'});
             }
-        });
-        isUpdating=false;
-    };
+          }
+       });
+      isUpdating=false;
+      };
+
 
     // public
     // inherit all public members from base class

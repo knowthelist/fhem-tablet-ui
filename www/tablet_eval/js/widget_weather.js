@@ -390,7 +390,7 @@ var Modul_weather = function () {
             var state = elem.getReading('get').val;
               if (state) {
                     var part =  elem.data('part') || -1;
-                    var val = getPart(state,part);
+                    var val = ftui.getPart(state,part);
                     var _val = val;
 
                     //wheater icons

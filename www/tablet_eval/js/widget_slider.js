@@ -164,7 +164,7 @@ var Modul_slider= function () {
                 var pwrng = elem.data('Powerange');
                 var input_elem = elem.find('input');
                 var part = elem.data('get-value');
-                var nstate = getPart(state, part);
+                var nstate = ftui.getPart(state, part);
                 var tstate = nstate;
                 if ( new RegExp('^' + elem.data('on') + '$').test( nstate.toString() ) )
                     nstate=pwrng.options.max;

@@ -795,8 +795,8 @@ Positioning:
 - fullsize		: 100% in width and height
 
 Flexbox Layout:
-- vbox          : vertical box
-- hbox          : horizontal box
+- vbox          : vertical box - items  one above the other
+- hbox          : horizontal box - items side by side
 - card          : a main box
 - phone-width   : do not shrink under phone width
 - full-height   : 100% viewport height

@@ -182,7 +182,7 @@ var Modul_volume = function () {
           var knob_elem = elem.find('input');
           if (knob_elem){
             var part = elem.data('get-value');
-            var val = getPart(value,part);
+            var val = ftui.getPart(value,part);
             if ((parseInt(elem.data('mode'))>>6) % 2 != 0){
                 //is hex rgb
 
