@@ -112,7 +112,7 @@ var Modul_knob = function () {
         isUpdating=true;
         deviceElements.each(function(index) {
             if ( $(this).data('get')==par ){
-                var val = getDeviceValue( $(this), 'get' );
+                var val = $(this).getReading('get').val;
                 var knob_elem = $(this).find('input');
                 if (knob_elem && val){
                      if ( knob_elem.val() != val ){
