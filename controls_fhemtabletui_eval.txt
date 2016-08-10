@@ -93,7 +93,7 @@ UPD 2016-06-23_13:20:55 2633 www/tablet_eval/js/widget_input.js
 UPD 2016-06-23_13:20:55 8286 www/tablet_eval/js/widget_itunes_artwork.js
 UPD 2016-06-23_13:20:55 2751 www/tablet_eval/js/widget_joinedlabel.js
 UPD 2016-06-23_13:20:55 2990 www/tablet_eval/js/widget_klimatrend.js
-UPD 2016-08-09_23:27:12 6487 www/tablet_eval/js/widget_knob.js
+UPD 2016-08-10_07:47:03 6569 www/tablet_eval/js/widget_knob.js
 UPD 2016-07-29_00:37:26 6571 www/tablet_eval/js/widget_label.js
 UPD 2016-07-17_22:44:53 6214 www/tablet_eval/js/widget_level.js
 UPD 2016-06-23_13:20:55 8588 www/tablet_eval/js/widget_link.js
