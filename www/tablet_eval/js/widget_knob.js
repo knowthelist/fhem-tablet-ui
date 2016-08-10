@@ -141,5 +141,8 @@ var Modul_knob = function () {
         init_attr: init_attr,
         init_ui:init_ui,
         update: update,
+        onRelease:onRelease,
+        onChange:onChange,
+        onFormat:onFormat
     });
 };
