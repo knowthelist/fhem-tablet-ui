@@ -69,10 +69,10 @@ var Modul_pagebutton = function () {
            var elem = $(this);
            elem.initData('off-color'               ,getStyle('.button.off','color') || '#2A2A2A');
            elem.initData('off-background-color'    ,getStyle('.button.off','background-color')   || '#505050');
-           elem.initData('on-color'                ,getClassColor($(this)) || getStyle('.button.on','color')               || '#2A2A2A');
+           elem.initData('on-color'                ,getClassColor(elem) || getStyle('.button.on','color')               || '#2A2A2A');
            elem.initData('on-background-color'     ,getStyle('.button.on','background-color')    || '#aa6900');
            elem.initData('background-icon'         ,'fa-circle');
-           elem.initData('active-pattern'          ,'.*/'+$(this).data('url'));
+           elem.initData('active-pattern'          ,'.*/'+ elem.data('url'));
            elem.initData('get-warn'                ,-1);
            elem.initData('blink'                   ,'off');
            elem.initData('return-time'             , 0);

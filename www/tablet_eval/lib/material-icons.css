@@ -14,15 +14,12 @@
 .material-icons,
 .mi {
   font-family: 'Material Icons';
-  font-weight: normal;
+  speak: none;
+  font-size:100%;
   font-style: normal;
-  font-size: 24px;  /* Preferred icon size */
-  display: inline-block;
+  font-weight: normal;
+  font-variant: normal;
   text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
 
   /* Support for all WebKit browsers. */
   -webkit-font-smoothing: antialiased;

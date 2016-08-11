@@ -25,6 +25,33 @@
                  <div data-type="push" data-device="WebRadio" data-icon="fa-step-forward" data-set-on="Next" class="inline" ></div>
              </div>
          </section>
+         <section>
+             <div class="large col-1-3 left-align">Playerlist</div>
+             <div data-type="select" data-device="MPD1" data-list="playlistcollection" data-get="playlistname" data-set="playlist" class="col-2-3 right-align" ></div>
+         </section>
+         <section>
+            <div class="large col-1-3 left-align">Player</div>
+            <div class="col-2-3 right-align">
+             <div data-type="push" data-device="MPD1"
+                   data-icon="fa-step-backward" data-background-icon="-"
+                   data-set-on="previous" class="">
+             </div>
+             <div data-type="switch"
+                     data-device="MPD1"
+                     data-states='["play","pause","stop"]'
+                     data-set-states='["pause","play","play"]'
+                     data-background-icon="fa-circle-thin"
+                     data-background-colors='["gray","gray","gray"]'
+                     data-colors='["gray","gray","gray"]'
+                     data-icons='["fa-pause","fa-play","fa-play"]'
+                     class="">
+             </div>
+             <div data-type="push" data-device="MPD1"
+                   data-icon="fa-step-forward" data-background-icon="-"
+                   data-set-on="next" class="">
+                 </div>
+             </div>
+          </section>
     </div>
 </body>
 </html>
