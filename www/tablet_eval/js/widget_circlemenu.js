@@ -39,7 +39,7 @@ var Modul_circlemenu = function () {
                 showModal(true);
             },
         })
-        .addClass('menu')
+        .addClass('circlemenu')
         parent.css({minWidth: parent.data('item-width')})
         .closest('.gridster>ul>li').css({overflow: 'visible'});
 
