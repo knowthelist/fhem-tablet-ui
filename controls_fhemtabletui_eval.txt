@@ -70,7 +70,7 @@ UPD 2016-08-12_08:03:08 4654 www/tablet_eval/index_nav_mobil.html
 UPD 2016-08-12_00:22:51 5642 www/tablet_eval/index_page_left_demo.html
 UPD 2016-08-12_00:20:25 3615 www/tablet_eval/index_page_top_demo.html
 UPD 2016-08-12_08:03:14 5257 www/tablet_eval/index_tab_demo.html
-UPD 2016-08-12_08:03:14 46686 www/tablet_eval/js/fhem-tablet-ui.js
+UPD 2016-08-11_22:56:09 46795 www/tablet_eval/js/fhem-tablet-ui.js
 UPD 2016-08-12_08:03:08 20988 www/tablet_eval/js/highcharts-meteogram.js
 UPD 2016-08-12_08:03:08 1469 www/tablet_eval/js/widget_button.js
 UPD 2016-08-12_08:03:08 6415 www/tablet_eval/js/widget_calview.js
@@ -103,7 +103,7 @@ UPD 2016-08-12_08:03:08 8588 www/tablet_eval/js/widget_link.js
 UPD 2016-08-12_08:03:08 1493 www/tablet_eval/js/widget_loading.js
 UPD 2016-08-12_08:03:08 4269 www/tablet_eval/js/widget_medialist.js
 UPD 2016-08-12_08:03:08 1857 www/tablet_eval/js/widget_meteogram.js
-UPD 2016-08-12_08:03:14 7501 www/tablet_eval/js/widget_pagebutton.js
+UPD 2016-08-12_00:14:16 7496 www/tablet_eval/js/widget_pagebutton.js
 UPD 2016-08-12_08:03:08 8090 www/tablet_eval/js/widget_pagetab.js
 UPD 2016-08-12_08:03:08 5048 www/tablet_eval/js/widget_playstream.js
 UPD 2016-08-12_08:03:08 7043 www/tablet_eval/js/widget_popup.js
@@ -120,7 +120,7 @@ UPD 2016-08-12_08:03:08 8271 www/tablet_eval/js/widget_slider.js
 UPD 2016-08-12_08:03:08 11305 www/tablet_eval/js/widget_spinner.js
 UPD 2016-08-12_08:03:08 4123 www/tablet_eval/js/widget_swiper.js
 UPD 2016-08-12_08:03:08 1306 www/tablet_eval/js/widget_switch.js
-UPD 2016-08-12_08:03:14 1868 www/tablet_eval/js/widget_symbol.js
+UPD 2016-08-11_23:19:20 1866 www/tablet_eval/js/widget_symbol.js
 UPD 2016-08-12_08:03:08 6901 www/tablet_eval/js/widget_thermostat.js
 UPD 2016-08-12_08:03:08 7109 www/tablet_eval/js/widget_volume.js
 UPD 2016-08-12_08:03:08 22212 www/tablet_eval/js/widget_weather.js
