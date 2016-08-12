@@ -233,9 +233,7 @@ var ftui = {
             // corrections for gridster in gridster element
             $('.gridster > ul > li:has(* .gridster)').css({
                                       'background-color':'transparent',
-                                      'margin':'-'+ftui.gridster.wm+'px',
-                                      'width':'100%',
-                                      'height':'100%'
+                                      'margin':'-'+ftui.gridster.wm+'px'
                                  });
         }
     },
