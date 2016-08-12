@@ -647,6 +647,11 @@ div[data-type="circlemenu"] {
     width: auto;
     text-align: center;
 }
+.compressed{
+    width: 1em !important;
+    height: 1em !important;
+    line-height: 1em !important;
+}
 .wider{
     margin:15px 15px 15px 15px !important;
     width: auto;
