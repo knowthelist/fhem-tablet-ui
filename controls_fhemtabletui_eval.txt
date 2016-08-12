@@ -16,7 +16,7 @@ UPD 2016-08-12_08:03:08 1267 www/tablet_eval/content_windows.html
 UPD 2016-08-12_08:03:08 510 www/tablet_eval/css/fhem-blue-ui.css
 UPD 2016-08-12_08:03:08 510 www/tablet_eval/css/fhem-green-ui.css
 UPD 2016-08-12_08:03:14 2020 www/tablet_eval/css/fhem-mobil-ui.css
-UPD 2016-08-12_08:03:08 28677 www/tablet_eval/css/fhem-tablet-ui.css
+UPD 2016-08-12_22:53:20 28780 www/tablet_eval/css/fhem-tablet-ui.css
 UPD 2016-08-12_08:03:08 13563 www/tablet_eval/css/fhem-tablet-ui.min.css
 UPD 2016-08-12_08:03:08 5295 www/tablet_eval/css/ftui_chart.css
 UPD 2016-08-12_08:03:08 1023 www/tablet_eval/css/ftui_colorwheel.css
