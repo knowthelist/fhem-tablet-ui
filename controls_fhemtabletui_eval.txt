@@ -15,7 +15,7 @@ UPD 2016-08-12_07:28:13 4708 www/tablet_eval/content_vusolo.html
 UPD 2016-08-12_08:03:08 1267 www/tablet_eval/content_windows.html
 UPD 2016-08-12_08:03:08 510 www/tablet_eval/css/fhem-blue-ui.css
 UPD 2016-08-12_08:03:08 510 www/tablet_eval/css/fhem-green-ui.css
-UPD 2016-08-12_08:03:14 2020 www/tablet_eval/css/fhem-mobil-ui.css
+UPD 2016-08-02_00:36:37 2151 www/tablet_eval/css/fhem-mobil-ui.css
 UPD 2016-08-12_22:53:20 28780 www/tablet_eval/css/fhem-tablet-ui.css
 UPD 2016-08-12_08:03:08 13563 www/tablet_eval/css/fhem-tablet-ui.min.css
 UPD 2016-08-12_08:03:08 5295 www/tablet_eval/css/ftui_chart.css
@@ -76,7 +76,7 @@ UPD 2016-08-12_08:03:08 1469 www/tablet_eval/js/widget_button.js
 UPD 2016-08-12_08:03:08 6415 www/tablet_eval/js/widget_calview.js
 UPD 2016-08-12_08:03:08 185893 www/tablet_eval/js/widget_chart.js
 UPD 2016-08-12_08:03:08 4005 www/tablet_eval/js/widget_checkbox.js
-UPD 2016-08-12_08:03:08 2279 www/tablet_eval/js/widget_circlemenu.js
+UPD 2016-07-24_22:48:24 2279 www/tablet_eval/js/widget_circlemenu.js
 UPD 2016-08-12_08:03:08 5946 www/tablet_eval/js/widget_clock.js
 UPD 2016-08-12_08:03:08 2837 www/tablet_eval/js/widget_colorwheel.js
 UPD 2016-08-12_08:03:08 2366 www/tablet_eval/js/widget_datetimepicker.js
