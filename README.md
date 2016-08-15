@@ -1536,31 +1536,19 @@ Basic schema for a swiper widget, which switches between multiple DIVs
 Cover a lot of other button behind one single button 
 
 ```html
-<div class="left">
-<div data-type="circlemenu" class="cell circlemenu">
-	<ul class="menu">
-	  <li><div data-type="push" data-icon="fa-wrench"></div></li>
-	  <li><div data-type="push" data-device="AvReceiver" 
-	  		   data-set="remoteControl" data-set-on="subwoofer-temporary-level -6" 
-	  		   data-icon="">-6</div></li>
-	  <li><div data-type="push" data-device="AvReceiver" 
-	  		   data-set="remoteControl" data-set-on="subwoofer-temporary-level -2" 
-	  		   data-icon="">-2</div></li>
-	  <li><div data-type="push" data-device="AvReceiver" 
-	  		   data-set="remoteControl" data-set-on="subwoofer-temporary-level 0" 
-	  		   data-icon="">0</div></li>
-	  <li><div data-type="push" data-device="AvReceiver" 
-	  		   data-set="remoteControl" data-set-on="subwoofer-temporary-level +3" 
-	  		   data-icon="">2</div></li>
-	  <li><div data-type="push" data-device="AvReceiver" 
-	  		   data-set="remoteControl" data-set-on="subwoofer-temporary-level +9" 
-	  		   data-icon="">9</div></li>
-	  <li><div data-type="push" data-device="AvReceiver" 
-	  		   data-set="remoteControl" data-set-on="subwoofer-temporary-level +C" 
-	  		   data-icon="">12</div></li>
-	</ul>
-</div>
-<div data-type="label" class="cell">Woofer</div>
+<div class="col-1-2">
+    <div data-type="circlemenu" class="">
+        <ul>
+          <li><div data-type="push" data-icon="fa-wrench"></div></li>
+          <li><div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level -6" data-icon="">-6</div></li>
+          <li><div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level -2" data-icon="">-2</div></li>
+          <li><div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level 0" data-icon="">0</div></li>
+          <li><div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level 3" data-icon="">2</div></li>
+          <li><div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level 9" data-icon="">9</div></li>
+          <li><div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level 12" data-icon="">12</div></li>
+        </ul>
+    </div>
+    <div class="">Woofer</div>
 </div>
 ```
 
