@@ -199,7 +199,6 @@ section{
 
 .gridster > ul > li, .card{
     background-color:#2A2A2A;
-    overflow: hidden;
 }
 
 .gridster li header,
@@ -611,7 +610,8 @@ div[data-type="circlemenu"] {
   overflow: auto;
 }
 
-[data-type]:not([data-type="label"]):not(.readonly):not([data-type="symbol"]):not([data-type="spinner"]){
+[data-type]:not([data-type="label"]):not(.readonly):not([data-type="symbol"]):not([data-type="spinner"]),
+[onclick] {
     cursor: pointer;
 }
 
@@ -647,7 +647,8 @@ div[data-type="circlemenu"] {
     width: auto;
     text-align: center;
 }
-.compressed{
+.compressed,
+.compress{
     width: 1em !important;
     height: 1em !important;
     line-height: 1em !important;

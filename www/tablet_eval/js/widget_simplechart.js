@@ -112,7 +112,7 @@ var Modul_simplechart = function () {
           var tstart = dateFromString(mindate);
           $.each( lines, function( index, value ) {
               if (value){
-                  var val = getPart(value.replace('\r\n',''),2);
+                  var val = ftui.getPart(value.replace('\r\n',''),2);
                   var minutes = diffMinutes(tstart,dateFromString(value));
                   if (val && minutes && $.isNumeric(val) ){
                       point=[minutes,val];

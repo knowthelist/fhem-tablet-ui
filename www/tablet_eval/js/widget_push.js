@@ -53,8 +53,8 @@ var Modul_push = function () {
                 var seton=elem.data("set-on");
                 var secondes;
                 if (seton && !$.isNumeric(seton) &&!$.isArray(seton)
-                        && getPart(seton,1)=="on-for-timer")
-                    secondes = getPart(elem.data("set-on"),2);
+                        && ftui.getPart(seton,1)=="on-for-timer")
+                    secondes = ftui.getPart(elem.data("set-on"),2);
                 if (elem.data("countdown"))
                     secondes = elem.data("countdown");
                 if (secondes && $.isNumeric(secondes)){

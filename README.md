@@ -193,9 +193,9 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 See [examples](#symbol) of Symbol
 
 ####Label widgets
-- **data-get**  : name of the reading to get from FHEM
-- **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)						 
-- **data-part** : part number of the space separated value to show or an RegEx
+- **data-get**  : name of the reading containing label text
+- **data-part** : RegEx or number (which word) for filtering shown text
+- **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)
 - **data-color**  : fix color attribute or DEVICE:READING for dynamic setting of label color (default '')
 - **data-colors** : a array of color values. The used element for the label color defines the matching element of the limits array
 - **data-classes**: a array of class names. The used element class defines the matching element of the limits array
@@ -285,7 +285,7 @@ data-device, data-get can be references (jQuery seletor) to select-widgets to ch
 'data-set-on' can also be an array of values to toggle between this values
 
 ####Knob widgets
-- **data-get**  : name of the reading to get from FHEM (default 'STATE')
+- **data-get**  : name of the reading containing the status value (default 'STATE')
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-cmd**  : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-get-value** : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
@@ -310,7 +310,7 @@ data-device, data-get can be references (jQuery seletor) to select-widgets to ch
 
 ####Thermostat widgets
 all parameters from knob widget plus following additional parameters
-- **data-get**   : name of the reading to get from FHEM (default 'desired-temp')
+- **data-get**   : name of the reading containing the status value (default 'desired-temp')
 - **data-temp**  : name of the reading for measured temperature of thermostates (default 'measured-temp')
 - **data-set**   : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default 'desired-temp')
 - **data-valve** : name of the reading for valve position of thermostates
@@ -397,7 +397,7 @@ class 'value' enables a text element which shows the value
 - **class**		: novalue, percent
 
 ####Dimmer widgets
-- **data-get**       : name of the reading to get from FHEM (default 'STATE')
+- **data-get**       : name of the parameter that contains the status value (default 'STATE')
 - **data-get-on**    : value for ON status to get.  (default 'on')
 - **data-get-off**   : value for OFF status to get. (default 'off')
 - **data-get-value** : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
@@ -434,6 +434,9 @@ class 'FS20' convert values 0-100 to values which are excepted by FS20 dimmers
 - **data-height**   : height of the image (default 'auto')
 - **data-width**    : width of the image  (default 100%)
 - **data-fhem-cmd** : on click FHEM command
+- **data-state-get**: name of the parameter that contains the status value
+- **data-states**   : array of states
+- **data-classes**  : a array of class names. The additional added class is defined by the matching element of the states array compared to state-get value
 - **class**	    : nocache
 
 If 'data-url' is not set, then the URL for image src is built from: data-path + valueof data-get + data-suffix
@@ -480,6 +483,9 @@ data-return-time has to be placed on the main pagetab (the first one > index 0)
 - **data-url**              : URL of the new page to show
 - **data-active-pattern**   : RegEx to define active state  (default null)
 all other parameters like switch widget
+ -**class**                 : blank,
+
+class 'blank' force to open the given URL on a new window
 
 ####Rotor widgets
 - **data-delay**    : time in millisecondes to wait until next list item get shown. (default: 3500)
@@ -1797,7 +1803,7 @@ Specials
 -------
 **Example** to call a command directly to FHEM. This calls "set dummy1 off"
 ```html
-<div onclick="setFhemStatus('set dummy1 off');">All off!</div>
+<div onclick="ftui.setFhemStatus('set dummy1 off');">All off!</div>
 ```
 **Example** to call a Perl function directly to FHEM. This calls the myUtils_HeizungUpDown function located in 99_myUtils.pm:
 	myUtils_HeizungUpDown("WZ.Thermostat_Climate","up")

@@ -1,7 +1,8 @@
 
 function depends_famultibutton (){
-    if (!$.fn.famultibutton)
+    if (!$.fn.famultibutton) {
         return ["lib/fa-multi-button.min.js"];
+    }
 };
 
 var Modul_famultibutton = function () {
@@ -188,7 +189,11 @@ var Modul_famultibutton = function () {
         }
         switch(type) {
             case 'url':
-                document.location.href = target;
+                if ( elem.hasClass('blank') ){
+                    window.open(target, '_blank');
+                } else {
+                    document.location.href = target;
+                }
                 break;
             case 'url-xhr':
                 if( device && typeof device != "undefined" && device !== " ") {

@@ -698,7 +698,7 @@ var ftui = {
         ftui.log(2,'Create widget : '+name);
 
         // get the plugin
-        ftui.dynamicload("js/widget_"+name+".js",true).done(function(){
+        ftui.dynamicload(ftui.config.dir + "/widget_"+name+".js",true).done(function(){
 
         // get all dependencies of this plugin
         var depsPromises = [];
@@ -712,10 +712,11 @@ var ftui = {
                 deps = ($.isArray(deps)) ? deps : [deps];
                 //console.log('deps',deps);
                 $.map(deps, function(dep,i){
-                    if ( dep.indexOf(".js") < 0 )
+                    if ( dep.indexOf(".js") < 0 ) {
                         depsPromises.push(ftui.loadPlugin(dep));
-                    else
-                        depsPromises.push(ftui.dynamicload(dep,false));
+                    } else {
+                        depsPromises.push(ftui.dynamicload(ftui.config.dir + "/../" + dep,false));
+                    }
                 });
             }
          } else {

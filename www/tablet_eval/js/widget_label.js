@@ -91,15 +91,15 @@ var Modul_label = function () {
                         :elem.getReading('get').val;
             // hide element when it's value equals data-hide
             // if data-hideparents is set, it is interpreted als jquery selector to hide elements parents filtered by this selector
-            if(elem.data('hide')) {
+            if(isValid(elem.data('hide'))) {
                 if(value == elem.data('hide')) {
-                    if(elem.data('hideparents')) {
+                    if(isValid(elem.data('hideparents'))) {
                         elem.parents(elem.data('hideparents')).hide();
                     } else {
                         elem.hide();
                     }
                 } else {
-                    if(elem.data('hideparents')) {
+                    if(isValid(elem.data('hideparents'))) {
                         elem.parents(elem.data('hideparents')).show();
                     } else {
                         elem.show();
