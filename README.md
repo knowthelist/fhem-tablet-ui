@@ -699,6 +699,7 @@ DVB,VVO,DB: fix style schemas
 - **data-panel**                   : selector for the main content element (default 'main#panel')
 - **data-menu**                    : selector for the menu element (default 'nav#menu')
 - **data-label**                   : selector for the label element, which shows the name of the current sub menu (default '#linkname')
+- **data-position**                : position of the menu  (default 'left')
 - **data-icon**                    : name of the 'open-the-menu' icon   (default 'fa-bars')
 - **data-icon-color**              : rgb value or color name for the 'open-the-menu' icon (default '#222')
 - **class**

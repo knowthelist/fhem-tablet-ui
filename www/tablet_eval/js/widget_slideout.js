@@ -22,6 +22,7 @@ var Modul_slideout = function () {
         elem.initData('panel'       ,'main#panel');
         elem.initData('menu'        ,'nav#menu');
         elem.initData('icon'        ,'fa-bars');
+        elem.initData('position'    ,'left');
         elem.initData('icon-color'  ,getStyle('.'+this.widgetname,'icon-color')    || '#222');
     };
 
@@ -30,11 +31,15 @@ var Modul_slideout = function () {
         var slideout = new Slideout({
           'panel': $(elem.data('panel'))[0],
           'menu': $(elem.data('menu'))[0],
-          'padding': 256,
+          'padding': ( elem.data('position') === 'left' ) ? 256 : -256,
           'tolerance': 70,
-          'touch':elem.hasClass('notouch')?false:true,
+          'touch':elem.hasClass('notouch') ? false : true,
         });
         elem.addClass('fa-stack');
+
+        if ( elem.data('position') === 'right' ) {
+            $(elem.data('menu')).css({'left':'auto'});
+        }
 
         // prepare icon
         var icon = elem.data('icon');
@@ -62,11 +67,11 @@ var Modul_slideout = function () {
         });
 
         slideout.on('beforeopen', function() {
-            $('.fixed').addClass('open-left');
+            $('.fixed').addClass('open-' + elem.data('position'));
         });
 
         slideout.on('beforeclose', function() {
-            $('.fixed').removeClass('open-left');
+            $('.fixed').removeClass('open-' + elem.data('position'));
         });
 
 
