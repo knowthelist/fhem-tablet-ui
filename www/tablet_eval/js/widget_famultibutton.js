@@ -320,6 +320,7 @@ var Modul_famultibutton = function () {
         toggleOn:toggleOn,
         toggleOff:toggleOff,
         clicked:clicked,
+        doubleclicked:doubleclicked,
         update: update,
         update_cb: update_cb,
         showMultiStates:showMultiStates,

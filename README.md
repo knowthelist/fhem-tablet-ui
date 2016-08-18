@@ -369,7 +369,7 @@ all parameters from knob widget plus following additional parameters
 - **data-width**: width for horizontal sliders (default '120px', for mini '60px')
 - **data-height**: height for vertical sliders (default '120px', for mini '60px')
 - **data-color** : color for quantity range (default '#aa6900')
-- **data-background-color**         : color for range bar (default '#404040')
+- **data-background-color** : color for range bar (default '#404040')
 -
 - **class**     : mini, horizontal, negated, value, textvalue, FS20, tap, big, bigger, large
 
@@ -730,6 +730,14 @@ data-get JSON-Object:
   {"Artist":"abc",
   ...
  ]
+
+####Classchanger widgets
+- **data-get**      : name of the reading containing the status value (default 'STATE')
+- **data-get-on**   : value expected for ON  status. (default 'on')
+- **data-get-off**  : value expected for OFF status. (default 'off')
+- **data-on-class**   : name of the CSS class to add in case of ON  status. (default 'on')
+- **data-off-class**  : name of the CSS class to add in case of OFF status. (default 'off')
+- **class**
 
 Format
 -------
@@ -1756,6 +1764,28 @@ Example for medialist usage
      data-pos="Pos"
      data-set="play"
      class="autoscroll">
+</div>
+```
+
+###Classchanger
+-------
+
+Example for classchanger usage
+
+```html
+<div data-type="classchanger"
+     data-device="dummyDevice"
+     data-get="myReading"
+     data-get-on="yes"
+     data-on-class="border-red"
+     class="container bg-gray">
+
+  <div data-type="symbol"
+       data-device="myDummy1"></div>
+
+  <div data-type="symbol"
+       data-device="myDummy2"></div>
+
 </div>
 ```
 
