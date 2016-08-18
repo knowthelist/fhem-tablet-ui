@@ -67,6 +67,7 @@ UPD 2016-08-12_08:03:14 13934 www/tablet_eval/index-example.html
 UPD 2016-08-12_08:03:14 2947 www/tablet_eval/index_empty.html
 UPD 2016-08-12_08:03:08 4684 www/tablet_eval/index_nav_fixed_mobil.html
 UPD 2016-08-12_08:03:08 4654 www/tablet_eval/index_nav_mobil.html
+UPD 2016-08-19_01:45:34 4675 www/tablet_eval/index_nav_right_fixed_mobil.html
 UPD 2016-08-12_00:22:51 5642 www/tablet_eval/index_page_left_demo.html
 UPD 2016-08-12_00:20:25 3615 www/tablet_eval/index_page_top_demo.html
 UPD 2016-08-12_08:03:14 5257 www/tablet_eval/index_tab_demo.html
@@ -117,7 +118,7 @@ UPD 2016-08-12_08:03:08 1281 www/tablet_eval/js/widget_rotor.js
 UPD 2016-08-12_08:03:08 3794 www/tablet_eval/js/widget_select.js
 UPD 2016-08-12_08:03:08 9327 www/tablet_eval/js/widget_settimer.js
 UPD 2016-08-16_21:54:37 11525 www/tablet_eval/js/widget_simplechart.js
-UPD 2016-08-12_08:03:08 2298 www/tablet_eval/js/widget_slideout.js
+UPD 2016-08-19_01:42:23 2551 www/tablet_eval/js/widget_slideout.js
 UPD 2016-08-12_08:03:08 8271 www/tablet_eval/js/widget_slider.js
 UPD 2016-08-12_08:03:08 11305 www/tablet_eval/js/widget_spinner.js
 UPD 2016-08-12_08:03:08 4123 www/tablet_eval/js/widget_swiper.js
