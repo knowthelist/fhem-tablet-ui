@@ -72,11 +72,12 @@ UPD 2016-08-12_00:20:25 3615 www/tablet_eval/index_page_top_demo.html
 UPD 2016-08-12_08:03:14 5257 www/tablet_eval/index_tab_demo.html
 UPD 2016-08-16_22:09:33 46866 www/tablet_eval/js/fhem-tablet-ui.js
 UPD 2016-08-12_08:03:08 20988 www/tablet_eval/js/highcharts-meteogram.js
-UPD 2016-08-12_08:03:08 1469 www/tablet_eval/js/widget_button.js
+UPD 2016-08-17_07:37:53 1474 www/tablet_eval/js/widget_button.js
 UPD 2016-08-12_08:03:08 6415 www/tablet_eval/js/widget_calview.js
 UPD 2016-08-12_08:03:08 185893 www/tablet_eval/js/widget_chart.js
 UPD 2016-08-12_08:03:08 4005 www/tablet_eval/js/widget_checkbox.js
 UPD 2016-07-24_22:48:24 2279 www/tablet_eval/js/widget_circlemenu.js
+UPD 2016-08-19_00:40:19 1295 www/tablet_eval/js/widget_classchanger.js
 UPD 2016-08-12_08:03:08 5946 www/tablet_eval/js/widget_clock.js
 UPD 2016-08-12_08:03:08 2837 www/tablet_eval/js/widget_colorwheel.js
 UPD 2016-08-12_08:03:08 2366 www/tablet_eval/js/widget_datetimepicker.js
@@ -84,7 +85,7 @@ UPD 2016-08-12_08:03:08 5235 www/tablet_eval/js/widget_departure.js
 UPD 2016-08-12_08:03:08 5244 www/tablet_eval/js/widget_dimmer.js
 UPD 2016-08-12_08:03:08 3624 www/tablet_eval/js/widget_eventmonitor.js
 UPD 2016-08-12_08:03:08 2554 www/tablet_eval/js/widget_example.js
-UPD 2016-08-16_21:45:38 13102 www/tablet_eval/js/widget_famultibutton.js
+UPD 2016-08-19_00:51:11 13139 www/tablet_eval/js/widget_famultibutton.js
 UPD 2016-08-12_08:03:08 9328 www/tablet_eval/js/widget_fullcalview.js
 UPD 2016-08-12_08:03:08 2246 www/tablet_eval/js/widget_gds.js
 UPD 2016-08-12_08:03:08 8727 www/tablet_eval/js/widget_highchart.js
@@ -103,6 +104,7 @@ UPD 2016-08-12_08:03:08 8588 www/tablet_eval/js/widget_link.js
 UPD 2016-08-12_08:03:08 1493 www/tablet_eval/js/widget_loading.js
 UPD 2016-08-12_08:03:08 4269 www/tablet_eval/js/widget_medialist.js
 UPD 2016-08-12_08:03:08 1857 www/tablet_eval/js/widget_meteogram.js
+UPD 2016-08-19_00:10:22 3390 www/tablet_eval/js/widget_multistatebutton.js
 UPD 2016-08-12_00:14:16 7496 www/tablet_eval/js/widget_pagebutton.js
 UPD 2016-08-12_08:03:08 8090 www/tablet_eval/js/widget_pagetab.js
 UPD 2016-08-12_08:03:08 5048 www/tablet_eval/js/widget_playstream.js

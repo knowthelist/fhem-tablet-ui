@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2016-08-16
- - Small improvementes, bugfixes
+2016-08-19
+ - Added widget_classchanger and widget_multistatebutton
