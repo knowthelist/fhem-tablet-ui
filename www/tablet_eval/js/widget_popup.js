@@ -19,6 +19,7 @@ var Modul_popup = function () {
                 });
             break;
         default:
+
             dialog.fadeOut(500, function() {
                 ftui.showModal(false);
             });
@@ -76,6 +77,7 @@ var Modul_popup = function () {
             var elem = $(this);
             me.init_attr(elem);
 
+            var id = [me.widgetname, me.area, index].join('_');
             var dialog = elem.find('.dialog');
             var starter = (elem.data('starter')) ? $(document).find( elem.data('starter') ) : elem.children(":first");
             if (starter.hasClass('dialog')){
@@ -90,7 +92,13 @@ var Modul_popup = function () {
                  class: 'dialog-close'
               }).html('x').appendTo(dialog);
 
-            if (dialog && close && starter){
+            if (dialog && close && starter)
+            {
+                elem.attr('data-id',id);
+                dialog.attr('data-id',id);
+                starter.attr('data-id',id);
+                close.attr('data-id',id);
+
                 if(elem.data('draggable')) {
                     if ($.fn.draggable)
                         dialog.draggable();
@@ -111,6 +119,7 @@ var Modul_popup = function () {
                 dialog.options={};
                 dialog.options.shade = !elem.hasClass('noshade');
 
+                //prepare events
                 $(window).resize(function() {
                     dialog.options.end_top = ( elem.isValidData('top') ) ? elem.data('top') : ($(window).height() - parseInt(elem.data('height'))) / 2;
                     dialog.options.end_left = ( elem.isValidData('left') ) ? elem.data('left') : ($(window).width() - parseInt(elem.data('width'))) / 2;
@@ -126,7 +135,6 @@ var Modul_popup = function () {
                   });
                 });
 
-                //prepare events
                 close.on('click',function() {
                 	hide(dialog,elem.data('mode'));
                 });
@@ -154,26 +162,27 @@ var Modul_popup = function () {
            var elem = $(this);
            var state = elem.getReading('get').val;
            if (state) {
+               var id = elem.data('id');
                if ( state == elem.data('get-on') ) {
-                    elem.find('.dialog-starter').trigger('click');
+                    $('div[data-id="'+id+'"].dialog-starter').trigger('click');
                }
                else if ( state == elem.data('get-off') ) {
                     ftui.showModal(false);
-            	   	elem.find('.dialog-close').trigger('click');
+                    $('div[data-id="'+id+'"].dialog-close').trigger('click');
                }
                else if ( state.match(new RegExp('^' + elem.data('get-on') + '$')) ) {
-                    elem.find('.dialog-starter').trigger('click');
+                    $('.dialog-starter.div[data-id="'+id+'"]').trigger('click');
                }
                else if ( state.match(new RegExp('^' + elem.data('get-off') + '$')) ){
                     ftui.showModal(false);
-	        	   	elem.find('.dialog-close').trigger('click');
-	           }
+                    $('.dialog-close.div[data-id="'+id+'"]').trigger('click');
+               }
                else if ( elem.data('get-off')=='!on' && state != elem.data('get-on') ) {
-                    elem.find('.dialog-starter').trigger('click'); 
+                    $('.dialog-starter.div[data-id="'+id+'"]').trigger('click');
                }
                else if ( elem.data('get-on')=='!off' && state != elem.data('get-off') ) {
                     ftui.showModal(false);
-            	   	elem.find('.dialog-close').trigger('click');
+                    $('.dialog-close.div[data-id="'+id+'"]').trigger('click');
                }
            }
        });
