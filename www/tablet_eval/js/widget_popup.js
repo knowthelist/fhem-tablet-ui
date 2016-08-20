@@ -171,18 +171,18 @@ var Modul_popup = function () {
                     $('div[data-id="'+id+'"].dialog-close').trigger('click');
                }
                else if ( state.match(new RegExp('^' + elem.data('get-on') + '$')) ) {
-                    $('.dialog-starter.div[data-id="'+id+'"]').trigger('click');
+                    $('div[data-id="'+id+'"].dialog-starter').trigger('click');
                }
                else if ( state.match(new RegExp('^' + elem.data('get-off') + '$')) ){
                     ftui.showModal(false);
-                    $('.dialog-close.div[data-id="'+id+'"]').trigger('click');
+                    $('div[data-id="'+id+'"].dialog-close').trigger('click');
                }
                else if ( elem.data('get-off')=='!on' && state != elem.data('get-on') ) {
-                    $('.dialog-starter.div[data-id="'+id+'"]').trigger('click');
+                    $('div[data-id="'+id+'"].dialog-starter').trigger('click');
                }
                else if ( elem.data('get-on')=='!off' && state != elem.data('get-off') ) {
                     ftui.showModal(false);
-                    $('.dialog-close.div[data-id="'+id+'"]').trigger('click');
+                    $('div[data-id="'+id+'"].dialog-close').trigger('click');
                }
            }
        });
