@@ -233,6 +233,7 @@ e.g.:
 Functions for data-substitution:
 
 1. Array of replacements
+    e.g.: data-substitution='["on","Lampe ist an","off","Lampe ist aus"]'
 2. RegEx-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
    e.g. data-substitution="s/no soundplayer active//g"
 3. data-substitution="weekdayshort"

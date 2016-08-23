@@ -231,12 +231,15 @@ var ftui = {
                 }
             }
             // corrections for gridster in gridster element
-            $('.gridster > ul > li:has(* .gridster)').css({
-                                      'background-color':'transparent',
-                                      'margin':'-'+ftui.gridster.wm+'px',
-                                      'width':'100%',
-                                      'height':'100%'
-                                 });
+            var gridgrid = $('.gridster > ul > li:has(* .gridster)');
+            if ( gridgrid.length > 0 ) {
+                gridgrid.css({
+                          'background-color':'transparent',
+                          'margin':'-'+ftui.gridster.wm+'px',
+                          'width':gridgrid.parent().width() - gridgrid.position().left,
+                          'height':'100%'
+                     });
+            }
         }
     },
 
@@ -437,7 +440,10 @@ var ftui = {
         .fail(function( jqxhr, textStatus, error ) {
           var err = textStatus + ", " + error;
           ftui.log(1, "shortPoll request failed: " + err );
-          ftui.toast("<u>ShortPoll Request Failed</u><br>" + err,'error');
+          ftui.toast("<u>ShortPoll Request Failed, will retry in 3s</u><br>" + err,'error');
+          ftui.states.lastSetOnline = 0;
+          ftui.states.lastShortpoll = 0;
+          ftui.startShortPollInterval(3000);
       });
     },
 
@@ -637,7 +643,7 @@ var ftui = {
             ftui.states.lastSetOnline = ltime;
             // force shortpoll
             ftui.states.lastShortpoll = 0;
-            ftui.startShortPollInterval(100);
+            ftui.startShortPollInterval(1000);
             if (!ftui.config.doLongPoll){
                 ftui.config.doLongPoll  = ($("meta[name='longpoll']").attr("content") == '1');
                 if ( ftui.config.doLongPoll )

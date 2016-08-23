@@ -38,11 +38,9 @@ body {
 
 @font-face {
         font-family: 'FTUI-icons';
-        src:url('../fonts/FTUI-icons.eot');
-        src:url('../fonts/FTUI-icons.eot') format('embedded-opentype'),
-                url('../fonts/FTUI-icons.woff') format('woff'),
-                url('../fonts/FTUI-icons.ttf') format('truetype'),
-                url('../fonts/FTUI-icons.svg') format('svg');
+        src:url('../fonts/FTUI-icons.woff') format('woff'),
+            url('../fonts/FTUI-icons.ttf') format('truetype'),
+            url('../fonts/FTUI-icons.svg') format('svg');
         font-weight: normal;
         font-style: normal;
 }
@@ -67,9 +65,11 @@ body {
 .ftui-door:before {
         content: "\ea00";
 }
-
 .ftui-window:before {
         content: "\ea01";
+}
+.ftui-thermo:before {
+  content: "\e900";
 }
 
 a:link {
@@ -176,13 +176,14 @@ section{
   display: inline-block;
 }
 
-.fullsize{
+.fullsize,
+.gridster > ul {
     width: 100% !important;
     height: 100% !important;
 }
 
 .gridster {
-    width: auto;
+    width: 100%;
 }
 
 .gridster > * {
@@ -251,7 +252,10 @@ section{
 
 /* Flexbox layout */
 
-.hbox, .vbox, .box, .card {
+.hbox,
+.vbox,
+.box,
+.card {
     display: flex;
     justify-content: center;
 }
@@ -293,6 +297,7 @@ main > .box.horizontal
 .card > .box.horizontal,
 .card > .hbox {
     margin-top: 1em;
+    margin-bottom: 1em;
     margin-left: .5em;
     margin-right: .5em;
 }
@@ -336,7 +341,7 @@ main > .box.horizontal
 
 .box.horizontal.items-right,
 .hbox.items-right {
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .card {
@@ -358,6 +363,10 @@ main > .box.horizontal
 @media screen and (max-width: 480px) {
   .hbox, .vbox, .box, .card {
       flex-wrap: wrap;
+  }
+  .v100, .full-height, .height-100  {
+      height: auto;
+      min-height: 100vh;
   }
 }
 @media screen and (min-width: 320px) and (max-width: 480px) {
@@ -387,7 +396,8 @@ main > .box.horizontal
   padding-left: 180px;
   width: auto;
 }
-.menu {
+
+:not([data-type="circlemenu"]) > .menu {
   background: #1D1F20;
   height: 100vh;
   width: 180px;
@@ -647,6 +657,25 @@ div[data-type="circlemenu"] {
     width: auto;
     text-align: center;
 }
+
+[data-type="symbol"].width-narrow,
+[data-type="multistatebutton"].width-narrow,
+[data-type="switch"].width-narrow,
+[data-type="button"].width-narrow,
+[data-type="push"].width-narrow,
+[data-type="pagebutton"].width-narrow {
+    width: 1.5em;
+}
+
+[data-type="symbol"].height-narrow,
+[data-type="multistatebutton"].height-narrow,
+[data-type="switch"].height-narrow,
+[data-type="button"].height-narrow,
+[data-type="push"].height-narrow,
+[data-type="pagebutton"].height-narrow {
+    height: 1.5em;
+}
+
 .compressed,
 .compress{
     width: 1em !important;
@@ -738,7 +767,7 @@ div[data-type="circlemenu"] {
 
 [data-type="pagetab"] .label {
     font-size: 50% !important;
-    whiteSpace: 'nowrap';
+    whiteSpace: nowrap;
     padding-top: 30px;
     color: #8C8C8C;
 }
@@ -815,7 +844,8 @@ input {
     display: none;
 }
 
-.autohide.invalid{
+.autohide.invalid,
+div.hide {
     display: none;
 }
 
