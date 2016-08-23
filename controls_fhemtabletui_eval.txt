@@ -16,7 +16,7 @@ UPD 2016-08-12_08:03:08 1267 www/tablet_eval/content_windows.html
 UPD 2016-08-12_08:03:08 510 www/tablet_eval/css/fhem-blue-ui.css
 UPD 2016-08-12_08:03:08 510 www/tablet_eval/css/fhem-green-ui.css
 UPD 2016-08-02_00:36:37 2151 www/tablet_eval/css/fhem-mobil-ui.css
-UPD 2016-08-16_00:37:13 28781 www/tablet_eval/css/fhem-tablet-ui.css
+UPD 2016-08-23_21:21:52 29368 www/tablet_eval/css/fhem-tablet-ui.css
 UPD 2016-08-12_08:03:08 13563 www/tablet_eval/css/fhem-tablet-ui.min.css
 UPD 2016-08-12_08:03:08 5295 www/tablet_eval/css/ftui_chart.css
 UPD 2016-08-12_08:03:08 1023 www/tablet_eval/css/ftui_colorwheel.css
@@ -39,10 +39,9 @@ UPD 2016-08-12_08:03:08 142072 www/tablet_eval/fonts/fontawesome-webfont.ttf
 UPD 2016-08-12_08:03:08 83588 www/tablet_eval/fonts/fontawesome-webfont.woff
 UPD 2016-08-12_08:03:08 66624 www/tablet_eval/fonts/fontawesome-webfont.woff2
 UPD 2016-08-12_08:03:08 109688 www/tablet_eval/fonts/FontAwesome.otf
-UPD 2016-08-12_08:03:08 1344 www/tablet_eval/fonts/FTUI-icons.eot
-UPD 2016-08-12_08:03:08 937 www/tablet_eval/fonts/FTUI-icons.svg
-UPD 2016-08-12_08:03:08 1168 www/tablet_eval/fonts/FTUI-icons.ttf
-UPD 2016-08-12_08:03:08 1244 www/tablet_eval/fonts/FTUI-icons.woff
+UPD 2016-08-19_22:54:04 3165 www/tablet_eval/fonts/FTUI-icons.svg
+UPD 2016-08-19_22:54:04 1688 www/tablet_eval/fonts/FTUI-icons.ttf
+UPD 2016-08-19_22:54:04 1764 www/tablet_eval/fonts/FTUI-icons.woff
 UPD 2016-08-12_08:03:08 143258 www/tablet_eval/fonts/MaterialIcons-Regular.eot
 UPD 2016-08-12_08:03:08 28416 www/tablet_eval/fonts/MaterialIcons-Regular.ijmap
 UPD 2016-08-12_08:03:08 281658 www/tablet_eval/fonts/MaterialIcons-Regular.svg
@@ -71,7 +70,7 @@ UPD 2016-08-19_01:45:34 4675 www/tablet_eval/index_nav_right_fixed_mobil.html
 UPD 2016-08-12_00:22:51 5642 www/tablet_eval/index_page_left_demo.html
 UPD 2016-08-12_00:20:25 3615 www/tablet_eval/index_page_top_demo.html
 UPD 2016-08-12_08:03:14 5257 www/tablet_eval/index_tab_demo.html
-UPD 2016-08-16_22:09:33 46866 www/tablet_eval/js/fhem-tablet-ui.js
+UPD 2016-08-23_20:57:07 47094 www/tablet_eval/js/fhem-tablet-ui.js
 UPD 2016-08-12_08:03:08 20988 www/tablet_eval/js/highcharts-meteogram.js
 UPD 2016-08-17_07:37:53 1474 www/tablet_eval/js/widget_button.js
 UPD 2016-08-12_08:03:08 6415 www/tablet_eval/js/widget_calview.js
