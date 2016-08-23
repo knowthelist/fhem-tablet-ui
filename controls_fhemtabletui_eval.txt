@@ -97,7 +97,7 @@ UPD 2016-08-12_08:03:08 2633 www/tablet_eval/js/widget_input.js
 UPD 2016-08-12_08:03:08 8286 www/tablet_eval/js/widget_itunes_artwork.js
 UPD 2016-08-12_08:03:08 2751 www/tablet_eval/js/widget_joinedlabel.js
 UPD 2016-08-12_08:03:08 2990 www/tablet_eval/js/widget_klimatrend.js
-UPD 2016-08-12_08:03:08 6569 www/tablet_eval/js/widget_knob.js
+UPD 2016-08-23_23:04:28 7224 www/tablet_eval/js/widget_knob.js
 UPD 2016-08-16_00:49:17 6598 www/tablet_eval/js/widget_label.js
 UPD 2016-08-12_08:03:08 6214 www/tablet_eval/js/widget_level.js
 UPD 2016-08-12_08:03:08 8588 www/tablet_eval/js/widget_link.js
@@ -145,13 +145,13 @@ UPD 2016-08-12_08:03:08 1211 www/tablet_eval/lib/highcharts/themes/grid-light.js
 UPD 2016-08-12_08:03:08 1794 www/tablet_eval/lib/highcharts/themes/grid.js
 UPD 2016-08-12_08:03:08 1684 www/tablet_eval/lib/highcharts/themes/sand-signika.js
 UPD 2016-08-12_08:03:08 1764 www/tablet_eval/lib/highcharts/themes/skies.js
-UPD 2016-08-12_08:03:08 10651 www/tablet_eval/lib/jquery.circlemenu.js
+UPD 2016-08-15_23:41:24 10684 www/tablet_eval/lib/jquery.circlemenu.js
 UPD 2016-08-12_08:03:08 18412 www/tablet_eval/lib/jquery.datetimepicker.css
 UPD 2016-08-12_08:03:08 80573 www/tablet_eval/lib/jquery.datetimepicker.js
 UPD 2016-08-12_08:03:08 3021 www/tablet_eval/lib/jquery.gridster.min.css
 UPD 2016-08-12_08:03:08 44235 www/tablet_eval/lib/jquery.gridster.min.js
-UPD 2016-08-12_08:03:08 27838 www/tablet_eval/lib/jquery.knob.mod.js
-UPD 2016-08-12_08:03:08 10878 www/tablet_eval/lib/jquery.knob.mod.min.js
+UPD 2016-08-23_22:38:43 27962 www/tablet_eval/lib/jquery.knob.mod.js
+UPD 2016-08-23_23:04:05 11611 www/tablet_eval/lib/jquery.knob.mod.min.js
 UPD 2016-08-12_08:03:08 4508 www/tablet_eval/lib/jquery.toast.min.css
 UPD 2016-08-12_08:03:08 6255 www/tablet_eval/lib/jquery.toast.min.js
 UPD 2016-08-02_01:47:23 80909 www/tablet_eval/lib/material-icons.css
@@ -169,4 +169,5 @@ UPD 2016-08-11_23:02:06 1696 www/tablet_eval/page_content1.html
 UPD 2016-08-11_23:01:57 1696 www/tablet_eval/page_content2.html
 UPD 2016-08-11_23:01:42 1698 www/tablet_eval/page_content3.html
 UPD 2016-08-12_08:03:09 750 www/tablet_eval/repair.html
-UPD 2016-08-19_21:35:48 3286 www/tablet_eval/test-popup.html
+UPD 2016-08-23_23:05:27 3576 www/tablet_eval/test_knob.html
+UPD 2016-08-19_21:35:48 3286 www/tablet_eval/test_popup.html
