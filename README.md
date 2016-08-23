@@ -305,6 +305,7 @@ data-device, data-get can be references (jQuery seletor) to select-widgets to ch
 - **data-font**  :  (default '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
 - **data-font-weight**
 - **data-unit** : add a unit after the center value.
+- **data-readonly-get**  : name of the reading containing the boolean value for the readonly parameter (default <null>)
 - **class**		: mini, small, large, readonly
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/knob.png)

@@ -189,7 +189,7 @@
 
                 self._timeouts.push(setTimeout(function(){
                     $item.css({top:0,left:0});
-                    vendorPrefixes($item,'transform','scale(.5)');
+                    vendorPrefixes($item,'transform','scale(0)');
                 }, start + Math.abs(self.options.step_in) * index));
             });
             self._timeouts.push(setTimeout(function(){
@@ -218,7 +218,7 @@
             selected = self.element.children('li:nth-child('+index+')');
             self.trigger('select',selected);
             vendorPrefixes(selected.add(set_other), 'transition', 'all 500ms ease-out');
-            vendorPrefixes(selected, 'transform', 'scale(2)');
+            vendorPrefixes(selected, 'transform', 'scale(0)');
             vendorPrefixes(set_other, 'transform', 'scale(0)');
             selected.css('opacity','0');
             set_other.css('opacity','0');
@@ -257,7 +257,7 @@
             'z-index': 1,
             'opacity': ''
         });
-        self.element.children('li:first-child').css({'z-index': 1000-self.options.depth});
+        self.element.children('li:first-child').css({'z-index': 1000-self.options.depth, 'background-color':'transparent' });
         self.menu_items.css({
             top:0,
             left:0
@@ -266,7 +266,7 @@
             vendorPrefixes($items, 'border-radius', self.options.item_diameter/5+'px');
         else
             vendorPrefixes($items, 'border-radius', self.options.item_diameter+'px');
-        vendorPrefixes(self.menu_items, 'transform', 'scale(.5)');
+        vendorPrefixes(self.menu_items, 'transform', 'scale(0)');
         setTimeout(function(){
             vendorPrefixes($items, 'transition', 'all '+self.options.speed+'ms '+self.options.transition_function);
         },0);

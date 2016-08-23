@@ -1,7 +1,7 @@
 
 function depends_knob (){
     if (!$.fn.knob)
-        return ["lib/jquery.knob.mod.js"];
+        return ["lib/jquery.knob.mod.min.js"];
 };
 
 var Modul_knob = function () {
@@ -28,11 +28,11 @@ var Modul_knob = function () {
     };
 
     function init_attr(elem) {
-        elem.data('get', elem.data('get') || 'STATE');
+        elem.data('get',        elem.data('get')        || 'STATE');
         elem.data('set',        elem.data('set')        || '');
         elem.data('cmd',        elem.data('cmd')        || 'set');
         elem.data('set-value',  elem.data('set-value')  || '$v');
-        elem.data('get-value',   elem.data('get-value')   || elem.data('part')         || '-1');
+        elem.data('get-value',  elem.data('get-value')   || elem.data('part')         || '-1');
         
         elem.data('min',    elem.isValidData('min')  ?  elem.data('min')    : 0);
         elem.data('max',    elem.isValidData('max')  ?  elem.data('max')    : 100);
@@ -59,6 +59,7 @@ var Modul_knob = function () {
         elem.data('font-weight',elem.data('font-weight')|| getStyle('.'+this.widgetname,'font')         || 'normal');
         elem.initData('unit'    ,'');
         this.addReading(elem,'get');
+        this.addReading(elem,'readonly-get');
     };
 
     function init_ui(elem) {
@@ -129,6 +130,21 @@ var Modul_knob = function () {
             }
           }
        });
+
+        //extra reading for readOnly
+        me.elements.filterDeviceReading('readonly-get',dev,par)
+        .each(function(idx) {
+            var elem = $(this);
+            var val = elem.getReading('readonly-get').val;
+            if(val) {
+                var knob_elem = elem.find('input');
+                if ( knob_elem ){
+                    ftui.log(3, me.widgetname + ' dev:'+dev+' par:'+par+' change '+elem.data('device')+':readOnly to ' +val );
+                    knob_elem.trigger( 'configure', { 'readOnly': (val === 'true')  } );
+                }
+            }
+        });
+
       isUpdating=false;
       };
 
