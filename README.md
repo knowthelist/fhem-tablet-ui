@@ -260,6 +260,7 @@ See [examples](#label) of Label
 - **data-alias**: a array of fix names or a reading name which delivers such an array to show only in the selection box as an alias to the real items
 - **data-cmd**  : name of the command to send to FHEM (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-quote** : characters to enclose the send value. (default '')
+- **data-delimiter** : character which delimites list item. (default ':')
 - **class**     : wider, w1x, w2x, w3x, large, big, notransmit
 
 ####Input widgets

@@ -25,11 +25,12 @@ var Modul_select = function () {
     };
 
     function init_attr(elem) {
-      elem.initData('get'    ,'STATE');
-      elem.initData('set'    ,((elem.data('get')!=='STATE')?elem.attr('data-get'): ''));
-      elem.initData('cmd'    ,'set');
-      elem.initData('quote'  ,'');
-      elem.initData('list'   ,'setList');
+      elem.initData('get'           , 'STATE');
+      elem.initData('set'           , ((elem.data('get')!=='STATE')?elem.attr('data-get'): ''));
+      elem.initData('cmd'           , 'set');
+      elem.initData('quote'         , '');
+      elem.initData('list'          , 'setList');
+      elem.initData('delimiter'     , ':');
 
       this.addReading(elem,'get');
       this.addReading(elem,'list');
@@ -77,6 +78,7 @@ var Modul_select = function () {
       this.elements.filterDeviceReading('list',dev,par)
       .each(function(idx) {
           var elem = $(this);
+          var delimiter = elem.data('delimiter');
           var items = elem.getReading('list').val;
           if (items){
               if (elem.data('list')==='setList'){
@@ -84,7 +86,7 @@ var Modul_select = function () {
                   items = items.split(' ');
                   var founditems = items;
                   $.each( items, function( key, value ) {
-                      var tokens = value.split(':');
+                      var tokens = value.split(delimiter);
                       if (tokens && tokens.length>1){
                           if (tokens[0]==setreading)
                               founditems=tokens[1].split(',');
@@ -93,7 +95,7 @@ var Modul_select = function () {
                   items = founditems;
               }
               else
-                  items = items.split(':');
+                  items = items.split(delimiter);
           }
           elem.data('items',items);
           fillList(elem);
