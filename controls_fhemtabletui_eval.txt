@@ -22,7 +22,7 @@ UPD 2016-08-12_08:03:08 5295 www/tablet_eval/css/ftui_chart.css
 UPD 2016-08-12_08:03:08 1023 www/tablet_eval/css/ftui_colorwheel.css
 UPD 2016-08-12_08:03:08 2577 www/tablet_eval/css/ftui_departure.css
 UPD 2016-08-12_08:03:08 1079 www/tablet_eval/css/ftui_medialist.css
-UPD 2016-08-12_08:03:08 429 www/tablet_eval/css/ftui_range.css
+UPD 2016-09-02_23:22:55 442 www/tablet_eval/css/ftui_range.css
 UPD 2016-08-12_08:03:08 1036 www/tablet_eval/css/ftui_slideout.css
 UPD 2016-08-12_08:03:08 1234 www/tablet_eval/css/ftui_spinner.css
 UPD 2016-08-12_08:03:08 5166 www/tablet_eval/demo_ftui.html
