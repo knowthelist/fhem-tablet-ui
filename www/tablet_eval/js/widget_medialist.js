@@ -12,9 +12,11 @@ var Modul_medialist = function () {
            $(this).removeClass('current')
         });
         var currentElem = elem.find('.media').eq(pos);
-        currentElem.addClass("current");
-        if ( elem.hasClass("autoscroll")) {
-            elem.scrollTop(currentElem.offset().top - elem.offset().top + elem.scrollTop());
+        if ( currentElem.length > 0 ){
+            currentElem.addClass("current");
+            if ( elem.hasClass("autoscroll")) {
+                elem.scrollTop(currentElem.offset().top - elem.offset().top + elem.scrollTop());
+            }
         }
     };
 

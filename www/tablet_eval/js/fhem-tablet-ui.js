@@ -240,6 +240,8 @@ var ftui = {
                           'height':'100%'
                      });
             }
+            // max height for inner boxes
+            $('.gridster > ul > li:has(.vbox)').addClass('vbox');
         }
     },
 
@@ -382,7 +384,7 @@ var ftui = {
 
                  // is there a subscription, then check and update widgets
                  if( ftui.subscriptions[paramid] ){
-                       var oldParam = ftui.getParameters(device,reading);
+                       var oldParam = ftui.getDeviceParameter(device,reading);
                        isUpdated = (!oldParam || oldParam.val!==newParam.Value || oldParam.date!==newParam.Time);
                  }
                  //write into internal cache object
@@ -690,7 +692,7 @@ var ftui = {
         }
     },
 
-    getParameters: function (devname, paraname) {
+    getDeviceParameter: function (devname, paraname) {
         if (devname && devname.length>0){
             var params = ftui.deviceStates[devname];
             return ( params && params[paraname] ) ? params[paraname] : null;
@@ -1006,43 +1008,6 @@ this.getPart = function (s,p) {
     return ftui.getPart (s,p);
 };
 
-// deprecated function; will be removed soon
-this.getDeviceValueByName = function (devname, paraname) {
-    console.log('Warning: usage of deprecated function > getDeviceValueByName');
-    var param = getParameterByName(devname, paraname);
-    return ( param ) ? param.val : null;
-}
-this.getDeviceValue = function (device, src) {
-    console.log('Warning: usage of deprecated function > getDeviceValue');
-    var param = getParameter(device, src);
-    return ( param ) ? param.val : null;
-}
-// deprecated function; will be removed soon
-this.getReadingDateByName = function (devname, paraname) {
-    console.log('Warning: usage of deprecated function > getReadingDateByName');
-    var param = getParameterByName(devname, paraname);
-    return ( param ) ? param.date : null;
-}
-this.getReadingDate = function (device, src) {
-    console.log('Warning: usage of deprecated function > getReadingDate');
-    var param = getParameter(device, src);
-    return ( param ) ? param.date : null;
-}
-
-this.getParameterByName = function (devname, paraname) {
-    console.log('Warning: usage of deprecated function > getParameterByName');
-    // devname = DEVICE:READING; paraname is ignored
-    if(devname.match(/:/)) {
-        var temp = devname.split(':');
-        devname = temp[0];
-        paraname = temp[1];
-    }
-    if (devname && devname.length>0){
-        var params = ftui.deviceStates[devname];
-        return ( params && params[paraname] ) ? params[paraname] : null;
-    }
-    return null;
-}
 
 this.getStyle = function (selector, prop) {
     var props = ftui.config.styleCollection[selector];

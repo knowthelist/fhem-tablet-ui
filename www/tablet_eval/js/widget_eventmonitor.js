@@ -1,22 +1,15 @@
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
 
-var widget_eventmonitor = $.extend({}, widget_widget, {
-   widgetname : 'eventmonitor',
-   init_attr: function(elem) {
-       elem.data('height',              elem.data('height')                         || '450px');
-       elem.data('width',               elem.data('width')                          || '750px');
-       elem.data('device-filter',       elem.data('device-filter')                  || '.*');
-       elem.data('reading-filter',      elem.data('reading-filter')                 || '.*');
-       elem.data('max-items',           elem.data('max-items')                      || 100);
-   },
-   init: function () {
-       var base=this;
-       this.elements = $('div[data-type="'+this.widgetname+'"]');
-       this.elements.each(function(index) {
-           var elem = $(this);
-           base.init_attr(elem);
+var Modul_eventmonitor  = function () {
+
+       function init_attr (elem) {
+           elem.initData('height', '450px');
+           elem.initData('width',  '750px');
+           elem.initData('device-filter',  '.*');
+           elem.initData('reading-filter', '.*');
+           elem.initData('max-items',      100);
+       };
+
+       function init_ui(elem) {
 
            var content=elem.html();
            elem.html('');
@@ -37,7 +30,7 @@ var widget_eventmonitor = $.extend({}, widget_widget, {
                }).html('x').appendTo(dialog);
 
             events.append("<div class='event'>"
-                   +(doLongPoll)?"longpoll is on":"longpoll is off"
+                   +(ftui.doLongPoll)?"longpoll is on":"longpoll is off"
                    +"</div>");
             dialog.css({'height':elem.data('height'),'width':elem.data('width')});
             elem.css({'cursor': 'pointer'});
@@ -64,10 +57,10 @@ var widget_eventmonitor = $.extend({}, widget_widget, {
                     showModal(true);
                     dialog.fadeIn(500);
                 });
-        });
        $(window).resize();
-    },
-    update: function (dev,par) {
+    };
+
+    function update (dev,par) {
         this.elements.each(function(index) {
             if ( dev.match(new RegExp('^' + $(this).data('device-filter') + '$'))
                     && par.match(new RegExp('^' + $(this).data('reading-filter') + '$'))) {
@@ -77,10 +70,20 @@ var widget_eventmonitor = $.extend({}, widget_widget, {
                 if ( events.children().length>max )
                     events.find('.event:first').remove();
                 events.last().append("<div class='event'>"
-                        +[now.toLocaleDateString(),now.toLocaleTimeString(),dev,par,getDeviceValueByName(dev,par)].join(' ')
+                        +[now.toLocaleDateString(),now.toLocaleTimeString(),dev,par,ftui.getDeviceParameter(dev,par).val].join(' ')
                         +"</div>")
                 .scrollTop(events.last()[0].scrollHeight);
-        }
-        });
-    },
-});
+            }
+            });
+    };
+
+    // public
+    // inherit members from base class
+    return $.extend(new Modul_widget(), {
+        //override members
+        widgetname: 'eventmonitor',
+        init_attr:init_attr,
+        init_ui:init_ui,
+        update:update,
+    });
+};
