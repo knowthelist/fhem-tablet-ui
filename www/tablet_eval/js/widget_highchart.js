@@ -135,13 +135,13 @@ var Modul_highchart = function() {
 
                     var eventTime = dateFromString(value).getTime();
 
-                    if ( val && eventTime && $.isNumeric(val) ) {
+                    if ( eventTime && $.isNumeric(val) ) {
 
                         point = [eventTime*1,val*1];
                         lineData[dataCount++] = point;
 
                         if ( val > max ) {
-		            if ( $.isArray(maxarray) ) {
+                            if ( $.isArray(maxarray) ) {
                                 for(var j=0; j<maxarray.length; j++) {
                                     if ( maxarray[j] > val ) {
                                         max = maxarray[j];
