@@ -38,8 +38,8 @@ var Modul_klimatrend = function () {
 						}
 					}
 
-					var timespan = getPart(value,part-1);
-					var text = getPart(value,part).replace(/[\r\n]+$/, '');
+					var timespan = ftui.getPart(value,part-1);
+					var text = ftui.getPart(value,part).replace(/[\r\n]+$/, '');
 					var number = 1*text.replace(/[^0-9.]/g, '');
 					var sign = text.replace(/^([+-]).*/, '$1');
 					var reading = $(this).data('get');
