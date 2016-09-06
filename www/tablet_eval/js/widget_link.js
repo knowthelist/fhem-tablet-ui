@@ -42,21 +42,23 @@ var Modul_link = function () {
         var hashUrl=elem.data('url').replace('#','');
         var lockID = ['ftui','link',hashUrl,sel].join('_');
         if ( localStorage.getItem(lockID) ){
-            console.log('---------------link load locked',lockID);
+            ftui.log(1, 'link load locked. lockId=' +lockID);
             return;
         }
         localStorage.setItem(lockID,'locked');
-        console.log('link loadPage: hashUrl='+hashUrl +" sel="+sel+" > *");
+        ftui.log(1, 'link loadPage: hashUrl='+hashUrl +" sel="+sel+" > *");
         $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
             console.timeEnd('fetch content');
-            console.log(me.widgetname+': new content from $('+sel+') loaded');
+            ftui.log(1, me.widgetname+': new content from $('+sel+') loaded');
             ftui.initPage(sel);
             if (elem.hasClass('default')){
                 $(sel).addClass('active');
                 elem.closest('nav').trigger('changedSelection',[elem.text()]);
             }
-            $(document).on("initWidgetsDone",function(){
-                localStorage.removeItem(lockID);
+            $(document).on("initWidgetsDone",function(e, area){
+                if ( area == sel ) {
+                    localStorage.removeItem(lockID);
+                }
             });
         });
     };
@@ -202,12 +204,19 @@ var Modul_link = function () {
 
         // prefetch page if necessary
         if ( elem.isValidData('load') && elem.isValidData('url')
-             && (elem.hasClass('prefetch') || elem.hasClass('default'))) {
+             && (elem.hasClass('prefetch') )) {
 
             // pre fetch sub pages randomly delayed
             setTimeout(function(){
                 loadPage(elem);
-            }, (elem.hasClass('default'))?10:5000*Math.random()+500);
+            }, 5000*Math.random()+500);
+        }
+
+        // load area content but wait until main page is loaded
+        if ( elem.hasClass('default') ) {
+            $(document).one("initWidgetsDone",function(e, area){
+                loadPage(elem);
+            });
         }
 
         return elem;

@@ -25,8 +25,10 @@ var Modul_pagebutton = function () {
                $(sel).addClass('active');
                elem.closest('nav').trigger('changedSelection');
            }
-           $(document).on("initWidgetsDone",function(){
-               localStorage.removeItem(lockID);
+           $(document).on("initWidgetsDone",function(e, area){
+               if ( area == sel ) {
+                   localStorage.removeItem(lockID);
+               }
            });
        });
     };
@@ -127,14 +129,21 @@ var Modul_pagebutton = function () {
            var lockID = ['ftui',me.widgetname,hashUrl,sel].join('_');
            localStorage.removeItem(lockID);
 
-           //prefetch page if necessary
+           // prefetch page if necessary
            if ( elem.isValidData('load') && elem.isValidData('url')
-                && (elem.hasClass('prefetch') || elem.hasClass('default'))) {
+                && (elem.hasClass('prefetch') )) {
 
                // pre fetch sub pages randomly delayed
                setTimeout(function(){
-                   loadPage.call(me,elem);
-               }, (elem.hasClass('default'))?10:5000*Math.random()+500);
+                   loadPage(elem);
+               }, 5000*Math.random()+500);
+           }
+
+           // load area content but wait until main page is loaded
+           if ( elem.hasClass('default') ) {
+               $(document).one("initWidgetsDone",function(e, area){
+                   loadPage(elem);
+               });
            }
 
            // start return timer after last activity

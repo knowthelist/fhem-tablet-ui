@@ -314,7 +314,7 @@ var ftui = {
             plugins.updateParameters();
             ftui.log(1,'initWidgets - Done')
             console.timeEnd('initPage');
-            $(document).trigger("initWidgetsDone");
+            $(document).trigger("initWidgetsDone",[area]);
         });
     },
 
