@@ -1,0 +1,141 @@
+.departure{
+    position: relative;
+    border-radius: 10px;
+    margin: 3px;
+    cursor: default !important;
+}
+.departure .icon {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 28px;
+    padding-top: 0px;
+    color: #3F862A;
+    background-color: 'transparent';
+    border-width: 4px;
+    border-radius: 50%;
+    border-color: #3F862A;
+    border-style: solid;
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.departure.big .icon {
+    top: 8px;
+    left: 16px;
+    width: 45px;
+    height: 45px;
+    font-size: 28px;
+    border-width: 5px;
+}
+.departure  .icon.fa{
+    padding-bottom: 0px;
+    border-width: 0px;
+    font-size: 20px;
+    top: 13px;
+}
+.departure .time{
+    color: #222;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+}
+.departure .refresh{
+    color: #222;
+    position: absolute;
+    left: 10px;
+    bottom: 5px;
+    cursor: pointer;
+}
+.departure .station{
+    color: #222;
+    position: absolute;
+    left: 33px;
+    top: 10px;
+    width: 80%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+.departure.big .station{
+    font-size: 31px;
+ }
+.departure .header{
+    color: #222;
+    margin-top: 20px;
+}
+.departure.big .header{
+    font-size: 23px;
+    margin-top: 24px;
+}
+.departure .header .destination{
+    width: 52%;
+}
+.departure .header .minutes{
+    width: 20%;
+}
+.departure .minutes{
+    display: inline-block;
+    width: 17%;
+    text-align: end;
+}
+.departure .connection{
+}
+.departure .connection.even{
+    background: rgba(0, 0, 0, 0.5);
+}
+.departure  .line{
+    display: inline-block;
+    width: 15%;
+    text-align: end;
+    padding-right: 3px;
+}
+.departure .destination{
+    display: inline-block;
+    width: 64%;
+    text-align: initial;
+    padding-left: 3px;
+}
+.departure .minutes{
+    display: inline-block;
+    width: 17%;
+    text-align: end;
+}
+.departure .listText {
+    position: absolute;
+    top: 54px;
+    left: 8px;
+    width: 92%;
+    height: 69%;
+    background-color: #484848;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    overflow: hidden;
+}
+.departure.big .listText {
+    top: 17%;
+    left: 4%;
+    height: 74%
+}
+.DVB.departure{
+    color: #EFC822 !important;
+    background-color: #CCAE20 !important;
+}
+.DVB.departure .icon {
+    color: #3F862A !important;
+}
+.DVB.departure .listText {
+    background-color: #222;
+    color: #EFC822;
+}
+
+.VVO.departure {
+    background-color: #1765BF !important;
+}
+.VVO.departure .icon {
+    color: #3F862A !important;
+    background-color: #CCAE20 !important;
+}
+.VVO.departure .listText {
+    background-color: #2A2A5C;
+}

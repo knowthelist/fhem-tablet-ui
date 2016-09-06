@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.3
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * !!!! Evaluation version - run only in a staging enviroment !!!!
+     *
+     * - create a new folder named 'tablet_eval' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet_eval
+     * - add 'define TABLETUIEVAL HTTPSRV ftui_eval ./www/tablet_eval Tablet-EVAL' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet_eval/
+     */
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="widget_base_width" content="74">
+    <meta name="widget_base_height" content="71">
+    <meta name="widget_min_cols" content="13">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="gridster_disable" content="1">
+    <meta name="widget_margin" content="4">
+    <meta name="longpoll" content="1">
+    <meta name="debug" content="2">
+
+    <link rel="stylesheet" href="lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/material-icons.min.css" />
+    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+
+    <script src="../pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="lib/jquery.gridster.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI-eval</title>
+</head>
+<body>
+    <div class="gridster">
+        <ul>
+        <li data-row="1" data-col="1" data-sizex="1" data-sizey="9">
+            <div class="cell">
+                <div data-type="pagebutton" data-url="#content_main.html"     data-load="#content1" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern="(.*/||.*index_page_left_demo.html||.*#content_main.html)" data-icon="fa-home" class="default top-space"></div>
+                <div data-type="pagebutton" data-url="#content_music.html"    data-load="#content2" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#content_music.html" data-icon="fa-music" class="prefetch top-space"></div>
+                <div data-type="pagebutton" data-url="#content_settings.html" data-load="#content3" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#content_settings.html" data-icon="fa-sliders" class="top-space"></div>
+                <div data-type="pagebutton" data-url="#content_set.html"      data-load="#content4" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#content_set.html" data-icon="fa-lightbulb-o" class="top-space"></div>
+                <div data-type="pagebutton" data-url="#contentcharts.html"    data-load="#content5" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#content_charts.html" data-icon="fa-line-chart" class="top-space"></div>
+                <div data-type="pagebutton" data-url="#content_vusolo.html"   data-load="#content6" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#content_vusolo.html" data-icon="fa-tv" class="top-space"></div>
+                <div data-type="pagebutton" data-url="#content_tram.html"     data-load="#content7" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#content_tram.html" data-icon="fa-train" class="top-space"></div>
+                <div data-type="pagebutton" data-url="#content_trafic.html"   data-load="#content8" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern=".*#content_traffic.html" data-icon="fa-car" class="top-space"></div>
+                <div class="absolute bottom bottom-space-2x">
+                   <div data-type="clock" data-format="H:i" class="large"></div>
+                   <div data-type="clock" data-format="d.n.Y" class="small"></div>
+                </div>
+            </div>
+        </li>
+        <li data-row="1" data-col="2" data-sizex="11" data-sizey="9">
+            <div class="page" id="content1"></div>
+            <div class="page" id="content2"></div>
+            <div class="page" id="content3"></div>
+            <div class="page" id="content4"></div>
+            <div class="page" id="content5"></div>
+            <div class="page" id="content6"></div>
+            <div class="page" id="content7"></div>
+            <div class="page" id="content8"></div>
+         </li>
+        </ul>
+            </div>
+</body>
+</html>

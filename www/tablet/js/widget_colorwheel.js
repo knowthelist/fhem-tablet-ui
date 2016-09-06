@@ -1,0 +1,91 @@
+/* FTUI Plugin
+* Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+* Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+*/
+
+function depends_colorwheel (){
+    if (!$.fn.farbtastic){
+        $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_colorwheel.css" type="text/css" />');
+        return ["lib/farbtastic.js"];
+    }
+};
+
+var Modul_colorwheel = function () {
+
+    function onChange (elem,color) {
+        elem.find('.colorIndicator').css({
+          backgroundColor: color,
+        });
+    };
+
+    function onRelease (elem,color) {
+        var value = color.replace('#','');
+        elem.data('value', value);
+        elem.transmitCommand();
+    };
+
+    function init_attr (elem) {
+        elem.initData('get'     ,'STATE');
+        elem.initData('set'     , '');
+        elem.initData('cmd'     ,'set');
+        elem.initData('width'   ,150);
+        if(elem.hasClass('big')) { elem.data('width', 210);}
+        if(elem.hasClass('large')) { elem.data('width', 150);}
+        if(elem.hasClass('small')) { elem.data('width', 100);}
+        if(elem.hasClass('mini')) { elem.data('width', 52);}
+        this.addReading(elem,'get');
+    };
+
+    function init_ui (elem) {
+        var colorArea =  jQuery('<div/>', {
+            class: 'colorArea',
+        });
+        var colorIndicator =  jQuery('<div/>', {
+            class: 'colorIndicator',
+        }).appendTo(colorArea);
+        var colorWheel =  jQuery('<div/>', {
+            class: 'colorWheel',
+        })
+        .css({width: elem.data('width'),})
+        .appendTo(colorArea);
+        var farbtastic = $.farbtastic(colorWheel,{
+          width: elem.data('width'),
+          callback: function (color) {onChange(elem,color);},
+          release: function (color)  {onRelease(elem,color);},
+        });
+        elem.append(colorArea);
+
+        return elem;
+    };
+
+    function update (dev,par) {
+        var base = this;
+        this.elements.filterDeviceReading('get',dev,par)
+        .each(function(index) {
+            var elem = $(this);
+            var value = elem.getReading('get').val;
+            var color = elem.find('.colorWheel');
+            if (value && color) {
+                if ( elem.data('isInit') ){
+                    $.farbtastic(color).setColor('#'+value);
+                }
+                else{
+                    setTimeout(function(){
+                        elem.data('isInit',true);
+                        $.farbtastic(color).setColor('#'+value);
+                    }, 2000);
+                }
+            }
+        });
+    };
+
+    // public
+    // inherit members from base class
+    return $.extend(new Modul_widget(), {
+        //override members
+        widgetname: 'colorwheel',
+        init_ui:init_ui,
+        init_attr:init_attr,
+        update:update,
+    });
+};
