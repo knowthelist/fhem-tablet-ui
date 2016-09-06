@@ -1112,15 +1112,14 @@ temperature	20.1
 **Example** for a push button to switch a lamp on for 5 minutes. The control shows a progress circle while countdown is running.
 The countdown time is auto detected via the on-for-timer command. A other value can be set with the parameter data-countdown
 ```html
-<div data-type="push" data-device="MyLamp" data-set-on="on-for-timer 300"  
-	 class="cell" ></div>
+<div data-type="push" data-device="MyLamp" data-set-on="on-for-timer 300" ></div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/push_on-for-timer.png)
 
 ###Switch
 **Example** for how to create a widget for MILIGHT via toggle button. Usage of RegEx pattern for state request:
 ```html
-<div data-type="switch" class="cell" 
+<div data-type="switch"
             data-device="MILIGHT_Zone1_Wohnzimmer" 
             data-get-on="on.*"
             data-get-off="off"></div>
