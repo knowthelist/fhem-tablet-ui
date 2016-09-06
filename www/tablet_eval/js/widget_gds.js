@@ -7,7 +7,7 @@ var Modul_gds = function () {
 			var elem = $(this);
 			elem.initData('max', 10);
 			elem.data('a_count',		'a_count');
-			elem.data('gdsUseAlerts',	'gdsUseAlerts')
+			elem.data('gdsUseAlerts',	'gdsUseAlerts');
 			
 			me.addReading(elem,'a_count');
 		});
@@ -35,18 +35,19 @@ var Modul_gds = function () {
 						elem.data('expires', 'a_'+i+'_expires_local')
 						
 						text += "<div class=\"cell top-space\">";
-						text += "<div data-type=\"label\" class=\"cell\" style=\"display:inline-block;padding:4px;color:#222222;border-radius:4px;background-color:#"+elem.getReading('eventCode').val+";\">Warnung vor "+elem.getReading('event').val+":</div>";
+						text += "<div class=\"cell\" style=\"min-width:150px;display:inline-block;padding:4px;font-weight:bold;color:#222222;border-radius:4px;background-color:#"+elem.getReading('eventCode').val+";\">"+elem.getReading('event').val+"</div>";
 						text += "<div class=\"cell\">"+elem.getReading('description').val+"</div>";
+						
 						text += "<div class=\"cell\">Von: "+elem.getReading('onSet').val+" bis: "+elem.getReading('expires').val+"</div>";
 						text += "</div>";
 					}
 				}
 				else {
-					text += "<div class=\"cell top-space\">Aktuell keine Warnmeldungen vorhanden.</div>";
+					text += "<div class=\"cell top-space\" style=\"min-width:150px;display:inline-block;padding:3px;color:#DDDDDD;border-radius:4px;background-color:#32A054;\">Aktuell keine Warnmeldungen vorhanden.</div>";
 				}
 			}
 			else {
-				text += "<div class=\"cell top-space\" style=\"display:inline-block;padding:3px;color:#DDDDDD;border-radius:4px;background-color:firebrick;\">Attribut \"gdsUseAlerts\" nicht gesetzt!<br />Siehe auch: FHEM commandRef</div>";
+				text += "<div class=\"cell top-space\" style=\"min-width:150px;display:inline-block;padding:3px;color:#DDDDDD;border-radius:4px;background-color:firebrick;\">Attribut \"gdsUseAlerts\" nicht gesetzt!<br />Siehe auch: FHEM commandRef</div>";
 			}
 			elem.html(text);
 		});
