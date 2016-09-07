@@ -48,20 +48,20 @@ Change the wiget container according your rooms
 	<header>KUECHE</header>
 	<div class="container">
 	  <div class="left">
-		<div data-type="thermostat" data-device='KuecheHeizung_Clima' class="cell"></div>
-		<div data-type="thermostat" data-device='KuecheHeizung2_Clima' class="cell"></div>
+                <div data-type="thermostat" data-device="KuecheHeizung_Clima"></div>
+                <div data-type="thermostat" data-device="KuecheHeizung2_Clima"></div>
 	  </div>
 	  <div class="right">
-		<div data-type="switch" data-device="HerdLicht_Sw" class="cell"></div>
-		<div data-type="label" class="cell">HerdLicht</div>
-		<div data-type="symbol" data-device="KuechenFenster" class="cell"></div>
+                <div data-type="switch" data-device="HerdLicht_Sw"></div>
+                <div>HerdLicht</div>
+                <div data-type="symbol" data-device="KuechenFenster"></div>
 	  </div>
 	</div>
 </li>
 ```
 Change the widgets you have and want to see on the dashboard
 ```html
-<div data-type="thermostat" data-device='WohnzimmerHeizung_Clima' class="cell"></div>
+<div data-type="thermostat" data-device='WohnzimmerHeizung_Clima'></div>
 ```
 Widgets
 -------
@@ -963,15 +963,14 @@ data-get="desired-temp" data-temp="measured-temp" data-set="desired-temp"
 ```
 Therefor for HomaMatic HM-CC-RT-DN this is sufficient.
 ```html
-<div data-type="thermostat" data-device='KH_Clima' class="cell"></div>
+<div data-type="thermostat" data-device="KH_Clima"></div>
 ```
 The long format looks like this:
 ```html
 <div data-type="thermostat" 
      data-device="KH_Clima" 
      data-get="desired-temp" 
-     data-temp="measured-temp" 
-     class="cell">
+     data-temp="measured-temp">
 </div>
 ```
 
@@ -981,8 +980,7 @@ Example for MAX!:
 	data-valve="valveposition" 
 	data-get="desiredTemperature" 
 	data-temp="temperature" 
-	data-set="desiredTemperature" 
-	class="cell">
+        data-set="desiredTemperature">
 </div>
 ```
 Example to realize a thermostat off and boost function. It sends 'off' if the dial is set to min value 
@@ -1005,11 +1003,11 @@ STATE	T: 20.0 H: 61
 ```
 ```html
 <div data-type="label" data-device="THSensorWZ" 
-     data-part="2" data-unit="&deg;C" class="cell big"></div>
-<div class="cell">Temperatur</div>
+     data-part="2" data-unit="&deg;C" class="big"></div>
+<div>Temperatur</div>
 <div data-type="label" data-device="THSensorWZ" data-part="4" 
-     data-unit="%" class="cell big"></div>
-<div class="cell">Luftfeuchte</div>
+     data-unit="%" class="big"></div>
+<div>Luftfeuchte</div>
 ```
 But the same result can reached by getting single readings:
 ```
@@ -1018,11 +1016,11 @@ temperature	20.1
 ```
 ```html
 <div data-type="label" data-device="THSensorWZ" 
-     data-get="temperature" data-unit="&deg;C" class="cell big"></div>
-<div class="cell">Temperatur</div>
+     data-get="temperature" data-unit="&deg;C" class="big"></div>
+<div>Temperatur</div>
 <div data-type="label" data-device="THSensorWZ" 
-     data-get="humidity" data-unit="%" class="cell big"></div>
-<div class="cell">Luftfeuchte</div>
+     data-get="humidity" data-unit="%" class="big"></div>
+<div>Luftfeuchte</div>
 ```
 
 **Example** for how to influence the color of the label according to value limits
@@ -1032,7 +1030,7 @@ temperature	20.1
      data-limits='[-73,10,23]' 
      data-colors='["#6699FF","#AA6900","#FF0000"]' 
      data-unit="&deg;C"
-     class="cell big">
+     class="big">
 </div>
 ```
 
@@ -1042,18 +1040,15 @@ temperature	20.1
      data-device="wzRollo" 
      data-get-on="up" 
      data-get-off="down" 
-     data-icon="fa-bars" 
-     class="cell" >
+     data-icon="fa-bars" >
 </div>
-<div class="cell">Rollo</div>
 ```
 
 **Example** for how to create a label for a time value in short format with usage of RegEx
 ```html
 <div data-type="label" 
      data-device="dummy1" 
-     data-part="(\d\d\.\d\d\.).*" 
-     class="cell">
+     data-part="(\d\d\.\d\d\.).*">
 </div>
 ```
 
@@ -1071,13 +1066,12 @@ temperature	20.1
 <div data-type="push" 
      data-device="LightAll" 
      data-cmd="trigger" 
-     data-set-on="on" 
-     class="cell">
+     data-set-on="on">
 </div>
 ```
 **Example** two square buttons horizontal
 ```html
-<div class="cell">
+<div>
     <div class="doublebox-h">
         <div data-type="push" data-device="Rollo" 
         	 data-icon="fa-angle-up" data-background-icon="fa-square-o" 
@@ -1094,7 +1088,7 @@ temperature	20.1
 
 **Example** two square buttons vertical
 ```html
-<div class="cell">
+<div>
     <div class="doublebox-v">
         <div data-type="push" data-device="Rollo" 
              data-icon="fa-chevron-up" data-background-icon="fa-square-o" 
@@ -1128,23 +1122,23 @@ The countdown time is auto detected via the on-for-timer command. A other value 
 
 **Example** for a button group to toggle between 4 different values for one device
 ```html
-<div class="cell left">
+<div>
  <div data-type="switch" data-device="dummy1" 
       data-get-off="!on" data-set-off="" data-icon="fa-home"
-      data-get-on="Home" class="cell" ></div>
- <div class="cell">Home</div>
+      data-get-on="Home"></div>
+ <div>Home</div>
  <div data-type="switch" data-device="dummy1" 
       data-get-off="!on" data-set-off="" data-icon="fa-bed"
-      data-get-on="Sleep" class="cell" ></div>
- <div class="cell">Sleep</div>
+      data-get-on="Sleep"></div>
+ <div>Sleep</div>
  <div data-type="switch" data-device="dummy1" 
       data-get-off="!on" data-set-off="" data-icon="fa-car"
-      data-get-on="Away" class="cell" ></div>
- <div class="cell">Away</div>
+      data-get-on="Away"></div>
+ <div>Away</div>
  <div data-type="switch" data-device="dummy1" 
       data-get-off="!on" data-set-off="" data-icon="fa-suitcase"
-      data-get-on="Holiday" class="cell" ></div>
- <div class="cell">Holiday</div>
+      data-get-on="Holiday"></div>
+ <div>Holiday</div>
 </div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/group.png)
@@ -1179,7 +1173,7 @@ The countdown time is auto detected via the on-for-timer command. A other value 
  data-states='["wert1","wert2","wert3"]' 
  data-icons='["fa-arrow-up","fa-user","fa-arrow-down"]' 
  data-colors='["SeaGreen","SlateBlue","IndianRed"]' 
- class="cell big">
+ class="big">
 </div>
 ```
 
@@ -1227,7 +1221,7 @@ The countdown time is auto detected via the on-for-timer command. A other value 
 <div data-type="weather" 
      data-device="Weather" 
      data-get="fc0_weatherDay" 
-     class="cell big">
+     class="big">
 </div>
 ```
 The weather literal could be delivered by a FHEM module like PROPLANTA, OPENWEATHER, Weather.
@@ -1242,17 +1236,15 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 <div data-type="slider" 
      data-device='Dummy1' 
      data-min="10" 
-     data-max="90" 
-     class="cell" >
+     data-max="90">
 </div>
-<div data-type="label" class="cell">Light1</div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/slider.png)
 
 ###Level
 **Example** for how to create a widget for a double level control with additional labels
 ```html
-<div class="cell">
+<div>
 	<div data-type="level" data-device='Tablet'  data-get='powerLevel'
 		data-limits='["[12]*[0-9]","[3456][0-9]","([789][0-9]|100)"]'
 		data-colors='["#dd3366","#ffcc00","#55aa44"]'
@@ -1262,7 +1254,7 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 		 data-get='powerLevel'
 		 data-unit="%" class="top-space left"></div>
 </div>
-<div class="cell">
+<div>
 	<div data-type="level" data-device='dummy1'
 		data-limits='["20","70","95"]'
 		data-colors='["#dd3366","#ffcc00","#55aa44"]'
@@ -1290,22 +1282,21 @@ Add 'big' or 'bigger' to CSS class to get a bigger weather icon.
 	data-tickstep='4' 
 	data-get='hue' 
 	data-set='hue' 
-	class="cell small hue-tick" ></div>
-<div data-type="label" class="cell">Light2</div>
+        class="small hue-tick" ></div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/volume_hue.png)
 
 Following CSS classes are available to influence the look:
 hue-tick|hue-front|hue-back or dim-tick|dim-front|dim-back|rgb
-This classes can be combined (e.g. class="cell small hue-tick hue-front")
+This classes can be combined (e.g. class="small hue-tick hue-front")
 
 ###Dimmer
 **Example** for how to create a widget for a dimmer via toggle button incl. dimmer. Usage of RegEx pattern get all values for state on:
 ```html
-<div data-type="dimmer" data-device="MyDimmer1" 
-			data-get-on="[0-9]{1,3}|on" 
-                        data-get-off="off"
-			class="cell">
+<div data-type="dimmer"
+     data-device="MyDimmer1"
+     data-get-on="[0-9]{1,3}|on"
+     data-get-off="off">
 </div>
 ```
 To change the dim value: push the button and slide up or down   
@@ -1315,9 +1306,9 @@ To change the dim value: push the button and slide up or down
 **Example** for how to create a widget for a HUEDevice for on/off, percent and hue adjustment:
 ```html
 <div data-type="volume" data-device="HUEDevice1" data-min="0" data-max="65353" data-get="hue" data-set="hue" class="hue-tick mini wider" ></div>
-<div data-type="label" class="cell">Color</div>
-<div data-type="dimmer" data-device="HUEDevice1" data-get-on="!off" data-get-off="off" data-set="pct" class="cell" ></div>
-<div data-type="label" class="cell">Hell</div>
+<div>Color</div>
+<div data-type="dimmer" data-device="HUEDevice1" data-get-on="!off" data-get-off="off" data-set="pct"></div>
+<div>Brightness</div>
 ```
 
 **Example** for the same HUEDevice but with separat reading for dim
@@ -1327,9 +1318,8 @@ To change the dim value: push the button and slide up or down
      data-get-on="1" data-get-off="0"
      data-set=""
      data-set-on="on" data-set-off="off"
-     data-dim="pct"
-     class="top-space-2x" ></div>
-<div data-type="label" class="cell">Philips</div>
+     data-dim="pct">
+</div>
 ```  
   
 ![](http://knowthelist.github.io/fhem-tablet-ui/hue_pct.png)
@@ -1349,8 +1339,7 @@ To change the dim value: push the button and slide up or down
 ```html
 <div data-type="image" data-device="Wetter1" 
 	 data-get="fc0_weatherDayIcon" 
-	 data-size="40px" 
-	 class="cell">
+         data-size="40px">
 </div>
 ```
 
@@ -1392,14 +1381,14 @@ Multiple pagetabs in a template file: menu.html
 <html>
 <body>
     <header>MENU</header>
-    <div class="cell">
-        <div data-type="pagetab" data-url="index.html"  data-icon="fa-home" class="cell"></div>
-        <div data-type="pagetab" data-url="index_2.html" data-icon="fa-sliders" class="cell"></div>
-        <div data-type="pagetab" data-url="index_3.html" data-icon="fa-music" class="cell"></div>
-        <div data-type="pagetab" data-url="index_4.html" data-icon="fa-hotel" class="cell"></div>
-        <div data-type="pagetab" data-url="index_5.html" data-icon="fa-music" class="cell"></div>
-        <div data-type="pagetab" data-url="index_6.html" data-icon="fa-database" class="cell"></div>
-        <div data-type="pagetab" data-url="index_7.html" data-icon="fa-fax" class="cell"></div>
+    <div>
+        <div data-type="pagetab" data-url="index.html"  data-icon="fa-home" ></div>
+        <div data-type="pagetab" data-url="index_2.html" data-icon="fa-sliders"></div>
+        <div data-type="pagetab" data-url="index_3.html" data-icon="fa-music" ></div>
+        <div data-type="pagetab" data-url="index_4.html" data-icon="fa-hotel" ></div>
+        <div data-type="pagetab" data-url="index_5.html" data-icon="fa-music" ></div>
+        <div data-type="pagetab" data-url="index_6.html" data-icon="fa-database"></div>
+        <div data-type="pagetab" data-url="index_7.html" data-icon="fa-fax" ></div>
     </div>
 </body>
 </html>
@@ -1410,7 +1399,7 @@ Multiple pagetabs in a template file: menu.html
 <div data-type="pagetab" data-device="MyFaxDevice"
 		data-get-on='["0","1"]'
 		data-icons='["fa-fax","fa-fax warn"]'
-		data-url="index_fax.html" class="cell"></div>
+                data-url="index_fax.html"></div>
 </div>
 ```
 
@@ -1419,7 +1408,7 @@ Multiple pagetabs in a template file: menu.html
 <div data-type="pagetab" data-device="myDoorBell"
 		data-get-on='["0","(?:[1-9][0-9]*)","on"]'
 		data-icons='["fa-fax","fa-fax warn","fa-fax warn activate"]'
-		data-url="index_door.html" class="cell"></div>
+                data-url="index_door.html"></div>
 </div>
 ```
     
@@ -1476,7 +1465,7 @@ Basic schema for a swiper widget, which switches between multiple DIVs
         data-height="120px"
 		data-yticks="4"
 		data-daysago="0"
-		data-caption="Wohnzimmer" class="inline cell">
+                data-caption="Wohnzimmer" class="inline">
     </div>
     <div data-type="simplechart"
 	    data-device="KuecheHeizung"
@@ -1488,7 +1477,7 @@ Basic schema for a swiper widget, which switches between multiple DIVs
         data-height="120px"
 		data-yticks="6"
 		data-daysago="2"
-		data-caption="Küche" class="inline cell">
+                data-caption="Küche" class="inline">
     </div>
 </li>
 ```
@@ -1596,12 +1585,12 @@ Use a FHEM dummy device to start/stop stream and set volume
 Create two comboboxes to select the inputs of a two zone AV receiver. List for Zone2 is fix, list for Zone1 will be received from FHEM.
 
 ```html
-<div class="cell wider">
+<div class="wider">
           <div data-type="label" class="inline wider">Zone2</div>
-          <div data-type="select" data-device="AvReceiverZ2" data-items='["Airplay","Webradio","BD/DVD","PHONO"]' data-get="input" data-set="input" class="cell w2x" ></div>
+          <div data-type="select" data-device="AvReceiverZ2" data-items='["Airplay","Webradio","BD/DVD","PHONO"]' data-get="input" data-set="input" class="w2x" ></div>
           <div></div>
           <div data-type="label" class="inline">Zone1</div>
-          <div data-type="select" data-device="AvReceiver" data-list="inputs" data-get="input" data-set="input" class="cell w2x" ></div>
+          <div data-type="select" data-device="AvReceiver" data-list="inputs" data-get="input" data-set="input" class="w2x" ></div>
 </div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/select_2x.png)    
@@ -1648,11 +1637,11 @@ Create a Link in the UI which opens a dialog with sub widgets .
           <div class="top-space">
                 <div class="inline">
                   <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="&deg;C" class="bigger thin"></div>
-                  <div data-type="label" class="cell">Temperatur</div>
+                  <div>Temperatur</div>
                 </div>
                 <div class="inline">
                   <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="bigger thin"></div>
-                  <div data-type="label" class="cell">Luftfeuchte</div>
+                  <div>Luftfeuchte</div>
                 </div>
           </div>
   </div>
@@ -1669,8 +1658,7 @@ Create a mini chart in the UI which opens a dialog with the full size of the cha
 		  data-minvalue="-25"
 		  data-maxvalue="35"
 		  data-height="50"
-		  data-width="100"
-		  class="cell">
+		  data-width="100">
 	</div>
 	<div class="dialog">
 		<header>BIG-CHART</header>
@@ -1681,8 +1669,7 @@ Create a mini chart in the UI which opens a dialog with the full size of the cha
 			  data-minvalue="-25"
 			  data-maxvalue="35"
 			  data-yticks="5"
-			  data-height="150"
-			  class="cell">
+			  data-height="150">
 		</div>
 	</div>
 </div>
@@ -1693,7 +1680,7 @@ Create a mini chart in the UI which opens a dialog with the full size of the cha
 Create a Label in the UI which opens a datetime picker.
 
 ```html
-<div class="cell left" >
+<div class="left" >
     <div data-type="label" class="inline thin" >Start:</div>
     <div data-type="datetimepicker" data-device="dummy1" class="inline large thin orange"></div>
 </div>    
@@ -1702,7 +1689,7 @@ Create a Label in the UI which opens a datetime picker.
 Create a Label in the UI which opens a time picker.
 
 ```html
-<div class="cell left" >
+<div class="cleft" >
     <div data-type="label" class="inline thin" >Bad:</div>
     <div data-type="datetimepicker" data-device="dummy1"
          data-datepicker="false" data-format="H:i"
@@ -1842,7 +1829,7 @@ Specials
 	myUtils_HeizungUpDown("WZ.Thermostat_Climate","up")
 ```html
 <div onclick="setFhemStatus('{myUtils_HeizungUpDown(&quot;WZ.Thermostat_Climate&quot;,&quot;up&quot;)}')"
-	class="cell big">+</div>
+        class="big">+</div>
 ```
 
 Templates
@@ -1855,7 +1842,7 @@ Load a whole extern gridster element
 ```
 Load a re-usable widget group
 ```html
-<div data-template="template_div.html" class="cell"></div>
+<div data-template="template_div.html"></div>
 ```
 Load a re-usable weather slide for swipe widget with parameters
 ```html
@@ -1876,14 +1863,14 @@ The weather template file contains this
     <div class="left">
        <div data-type="label" data-device="AgroWeather" data-get="par01" data-unit="°C&nbsp;" class="bottom gigantic inline verticalLine"></div>
        <div class="inline">
-          <div data-type="label" data-device="AgroWeather" data-get="par02" class="large cell"></div>
+          <div data-type="label" data-device="AgroWeather" data-get="par02" class="large"></div>
           <div data-type="weather" data-device="AgroWeather" data-get="par02" class="bigplus thin"></div>
           min:&nbsp;<div data-type="label" data-device="AgroWeather" data-get="par03" data-unit="&deg;C" class="inline medium"></div>
        </div>
     </div><div class="row"></div>
     <div class="left">
-        <div data-type="label" data-device="AgroWeather" data-get="par04" data-substitution="toDate().eeee()+','" class="left large cell darker"></div>
-        <div data-type="label" data-device="AgroWeather" data-get="par04" data-substitution="toDate().ddmm()" class="left large cell darker"></div>
+        <div data-type="label" data-device="AgroWeather" data-get="par04" data-substitution="toDate().eeee()+','" class="left large darker"></div>
+        <div data-type="label" data-device="AgroWeather" data-get="par04" data-substitution="toDate().ddmm()" class="left large darker"></div>
     </div>
 </body>
 </html>
