@@ -104,7 +104,7 @@ var Modul_thermostat = function () {
             } else if(v == this.o.max && this.$.data('boost') != -1) {
                 v=this.$.data('boost');
             }
-            var mode = getDeviceValueByName( device, this.o.modes );
+            var mode = this.$.getReading(this.o.mode).val;
             if (mode === 'auto')
                 v = mode + ' ' + v;
             var cmdl = this.o.cmd+' '+device+' '+this.o.set+' '+v;
