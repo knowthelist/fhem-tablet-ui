@@ -22,21 +22,22 @@ var Modul_circlemenu = function () {
             border          : parent.data('border') || 'round',
             close_event     : ($(this).hasClass("keepopen")||parent.hasClass("keepopen"))?'':'click',
             close           : function() {
-                setTimeout(function(){showModal(false);},50);
+                setTimeout(function(){ftui.showModal(false);},50);
             },
             select          : function() {
-               setTimeout(function(){showModal(false);},50);
+               setTimeout(function(){ftui.showModal(false);},50);
             },
             open:function(){
                 var elem=this;
                 if (elem.options.close_event!=''){
                     parent.data('timeoutMenu',setTimeout(function(){
                         elem.close();
-                        setTimeout(function(){showModal(false);},1000);
+                        setTimeout(function(){ftui.showModal(false);},1000);
                     },parent.data('close-after')||Math.max(4000, 1000*(parent.find('li').length-1))));
                 }
-               if (!parent.hasClass("noshade"))
-                showModal(true);
+               if (!parent.hasClass("noshade")) {
+                ftui.showModal(true);
+               }
             },
         })
         .addClass('circlemenu')

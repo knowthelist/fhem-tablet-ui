@@ -7,8 +7,31 @@ function depends_push (){
 
 var Modul_push = function () {
 
-    function startTimer (elem){
-        var id = elem.data('device')+"_"+elem.data('get');
+    function checkForTimer(elem) {
+        var id = elem.data("device") + "_" + elem.data('get');
+        var secondes = getSecondes(elem);
+        if ( localStorage.getItem("ftui_timer_til_" + id) &&
+             (localStorage.getItem("ftui_timer_sec_" + id) == secondes
+              || !secondes)) {
+            startTimer(elem);
+        }
+    }
+
+    function getSecondes(elem) {
+        var seton=elem.data("set-on");
+        var secondes;
+        if (seton && !$.isNumeric(seton) &&!$.isArray(seton)
+                && ftui.getPart(seton,1)==="on-for-timer") {
+            secondes = ftui.getPart(elem.data("set-on"),2);
+        }
+        if (elem.data("countdown")) {
+            secondes = elem.data("countdown");
+        }
+        return secondes;
+    }
+
+    function startTimer (elem) {
+        var id = elem.data("device") + "_" + elem.data('get');
         var now = new Date();
         var til = new Date(localStorage.getItem("ftui_timer_til_" + id));
         var secondes = localStorage.getItem("ftui_timer_sec_" + id );
@@ -46,30 +69,32 @@ var Modul_push = function () {
             me.init_attr(elem);
             me.init_ui(elem);
 
-            var id = elem.data("device")+"_"+elem.data('get');
+            var id = elem.data("device") + "_" + elem.data('get');
 
             // check for on-for-timer
             elem.bind("toggleOn", function( event ){
-                var seton=elem.data("set-on");
-                var secondes;
-                if (seton && !$.isNumeric(seton) &&!$.isArray(seton)
-                        && ftui.getPart(seton,1)=="on-for-timer")
-                    secondes = ftui.getPart(elem.data("set-on"),2);
-                if (elem.data("countdown"))
-                    secondes = elem.data("countdown");
+
+                var secondes = getSecondes(elem);
                 if (secondes && $.isNumeric(secondes)){
                     var now = new Date();
                     var til = new Date();
                     til.setTime(now.getTime() + (parseInt(secondes)*1000));
                     localStorage.setItem("ftui_timer_sec_" + id, secondes);
                     localStorage.setItem("ftui_timer_til_" + id, til);
-                    startTimer(elem,id);
+                    startTimer(elem);
+
+                    //inform other push widgets to check their timer
+                    $(document).trigger('pushTimerStarted');
                 }
             });
 
+            // Notification from other push widgets
+            $(document).bind("pushTimerStarted", function( event ){
+                checkForTimer(elem);
+            });
+
             // any old on-for-timer still active ?
-            if ( localStorage.getItem("ftui_timer_til_" + id) )
-                startTimer(elem,id);
+            checkForTimer(elem);
         });
     };
 

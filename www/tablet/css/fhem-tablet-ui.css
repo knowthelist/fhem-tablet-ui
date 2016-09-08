@@ -630,7 +630,9 @@ div[data-type="circlemenu"] {
     font-size:50%;
 }
 
-.truncate {
+
+.truncate,
+.nowrap {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -823,6 +825,7 @@ i#warn-back {
     margin-top:-4px;
     margin-bottom:-4px;
 }
+
 .fa-square-o + .fa-chevron-up {
     top: -5px;
 }
@@ -919,7 +922,6 @@ div[data-type="circlemenu"] > .circlemenu > li {
 }
 div[data-type="circlemenu"] > .circlemenu li div[data-type="push"]{
     color: #555;
-    height: 80px;
 }
 div[data-type="circlemenu"] > .circlemenu, .absolute{
     position:absolute;
