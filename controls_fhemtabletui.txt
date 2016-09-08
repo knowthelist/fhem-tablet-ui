@@ -16,7 +16,7 @@ UPD 2016-09-06_21:34:52 1267 www/tablet/content_windows.html
 UPD 2016-09-06_21:34:52 510 www/tablet/css/fhem-blue-ui.css
 UPD 2016-09-06_21:34:52 510 www/tablet/css/fhem-green-ui.css
 UPD 2016-09-06_21:34:52 2151 www/tablet/css/fhem-mobil-ui.css
-UPD 2016-09-06_21:34:52 29368 www/tablet/css/fhem-tablet-ui.css
+UPD 2016-09-08_21:44:52 29361 www/tablet/css/fhem-tablet-ui.css
 UPD 2016-09-06_21:34:52 13563 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2016-09-06_21:34:52 5295 www/tablet/css/ftui_chart.css
 UPD 2016-09-06_21:34:52 1023 www/tablet/css/ftui_colorwheel.css
@@ -76,7 +76,7 @@ UPD 2016-09-06_21:34:52 1474 www/tablet/js/widget_button.js
 UPD 2016-09-06_21:34:52 6415 www/tablet/js/widget_calview.js
 UPD 2016-09-06_21:34:52 185893 www/tablet/js/widget_chart.js
 UPD 2016-09-06_21:34:52 4005 www/tablet/js/widget_checkbox.js
-UPD 2016-09-06_21:34:52 2279 www/tablet/js/widget_circlemenu.js
+UPD 2016-09-07_23:45:30 2318 www/tablet/js/widget_circlemenu.js
 UPD 2016-09-06_21:34:52 1295 www/tablet/js/widget_classchanger.js
 UPD 2016-09-06_21:34:52 5946 www/tablet/js/widget_clock.js
 UPD 2016-09-06_21:34:52 2837 www/tablet/js/widget_colorwheel.js
@@ -110,7 +110,7 @@ UPD 2016-09-06_21:34:53 8090 www/tablet/js/widget_pagetab.js
 UPD 2016-09-06_21:34:53 5048 www/tablet/js/widget_playstream.js
 UPD 2016-09-06_21:34:53 7425 www/tablet/js/widget_popup.js
 UPD 2016-09-06_21:34:53 3385 www/tablet/js/widget_progress.js
-UPD 2016-09-06_21:34:53 3451 www/tablet/js/widget_push.js
+UPD 2016-09-08_21:47:26 4129 www/tablet/js/widget_push.js
 UPD 2016-09-06_21:34:53 5604 www/tablet/js/widget_range.js
 UPD 2016-09-06_21:34:53 2374 www/tablet/js/widget_readingsgroup.js
 UPD 2016-09-06_21:34:53 1281 www/tablet/js/widget_rotor.js
