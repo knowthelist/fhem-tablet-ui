@@ -123,7 +123,7 @@ UPD 2016-09-06_21:34:53 11305 www/tablet/js/widget_spinner.js
 UPD 2016-09-06_21:34:53 4123 www/tablet/js/widget_swiper.js
 UPD 2016-09-06_21:34:53 1306 www/tablet/js/widget_switch.js
 UPD 2016-09-06_21:34:53 1871 www/tablet/js/widget_symbol.js
-UPD 2016-09-06_21:34:53 6901 www/tablet/js/widget_thermostat.js
+UPD 2016-09-08_20:20:49 6891 www/tablet/js/widget_thermostat.js
 UPD 2016-09-06_21:34:53 2587 www/tablet/js/widget_tts.js
 UPD 2016-09-06_21:34:53 7109 www/tablet/js/widget_volume.js
 UPD 2016-09-06_21:34:53 22212 www/tablet/js/widget_weather.js
