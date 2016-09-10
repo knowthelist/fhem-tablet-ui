@@ -249,7 +249,7 @@
         $items.attr('style','');
         $items.css({
             'display': 'block',
-            'width': (self.options.item_width) ? self.options.item_width : self.options.item_diameter+'px',
+            'width': (self.options.item_width) ? self.options.item_width : 'auto',
             'height': (self.options.item_height) ? self.options.item_height : self.options.item_diameter+'px',
             'text-align': 'center',
             'line-height': self.options.item_diameter+'px',
