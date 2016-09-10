@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2016-09-08
- - Enhanced push widget regarding on-for-timer in an array of multiple push widgets
+2016-09-10
+ - Changed default for Circlemenu width to 'auto'
