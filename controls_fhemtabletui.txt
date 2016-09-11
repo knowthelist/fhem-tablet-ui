@@ -16,8 +16,9 @@ UPD 2016-09-06_21:34:52 1267 www/tablet/content_windows.html
 UPD 2016-09-06_21:34:52 510 www/tablet/css/fhem-blue-ui.css
 UPD 2016-09-06_21:34:52 510 www/tablet/css/fhem-green-ui.css
 UPD 2016-09-06_21:34:52 2151 www/tablet/css/fhem-mobil-ui.css
-UPD 2016-09-08_21:44:52 29361 www/tablet/css/fhem-tablet-ui.css
+UPD 2016-09-11_10:09:37 32859 www/tablet/css/fhem-tablet-ui.css
 UPD 2016-09-06_21:34:52 13563 www/tablet/css/fhem-tablet-ui.min.css
+UPD 2016-08-21_22:12:06 1947 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2016-09-06_21:34:52 5295 www/tablet/css/ftui_chart.css
 UPD 2016-09-06_21:34:52 1023 www/tablet/css/ftui_colorwheel.css
 UPD 2016-09-06_21:34:52 2577 www/tablet/css/ftui_departure.css
@@ -85,7 +86,7 @@ UPD 2016-09-06_21:34:52 5235 www/tablet/js/widget_departure.js
 UPD 2016-09-06_21:34:52 5244 www/tablet/js/widget_dimmer.js
 UPD 2016-09-06_21:34:52 3337 www/tablet/js/widget_eventmonitor.js
 UPD 2016-09-06_21:34:52 2554 www/tablet/js/widget_example.js
-UPD 2016-09-06_21:34:52 13139 www/tablet/js/widget_famultibutton.js
+UPD 2016-09-11_11:01:48 16448 www/tablet/js/widget_famultibutton.js
 UPD 2016-09-06_21:34:52 9328 www/tablet/js/widget_fullcalview.js
 UPD 2016-09-06_21:34:52 2387 www/tablet/js/widget_gds.js
 UPD 2016-09-06_21:34:52 8734 www/tablet/js/widget_highchart.js
@@ -110,7 +111,7 @@ UPD 2016-09-06_21:34:53 8090 www/tablet/js/widget_pagetab.js
 UPD 2016-09-06_21:34:53 5048 www/tablet/js/widget_playstream.js
 UPD 2016-09-06_21:34:53 7425 www/tablet/js/widget_popup.js
 UPD 2016-09-06_21:34:53 3385 www/tablet/js/widget_progress.js
-UPD 2016-09-08_21:47:26 4129 www/tablet/js/widget_push.js
+UPD 2016-09-10_23:37:50 1508 www/tablet/js/widget_push.js
 UPD 2016-09-06_21:34:53 5604 www/tablet/js/widget_range.js
 UPD 2016-09-06_21:34:53 2374 www/tablet/js/widget_readingsgroup.js
 UPD 2016-09-06_21:34:53 1281 www/tablet/js/widget_rotor.js
@@ -121,7 +122,7 @@ UPD 2016-09-06_21:34:53 2551 www/tablet/js/widget_slideout.js
 UPD 2016-09-06_21:34:53 8271 www/tablet/js/widget_slider.js
 UPD 2016-09-06_21:34:53 11305 www/tablet/js/widget_spinner.js
 UPD 2016-09-06_21:34:53 4123 www/tablet/js/widget_swiper.js
-UPD 2016-09-06_21:34:53 1306 www/tablet/js/widget_switch.js
+UPD 2016-09-10_23:54:03 1308 www/tablet/js/widget_switch.js
 UPD 2016-09-06_21:34:53 1871 www/tablet/js/widget_symbol.js
 UPD 2016-09-08_20:20:49 6891 www/tablet/js/widget_thermostat.js
 UPD 2016-09-06_21:34:53 2587 www/tablet/js/widget_tts.js

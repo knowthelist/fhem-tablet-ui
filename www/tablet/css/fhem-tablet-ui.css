@@ -3,6 +3,10 @@ html, body, main, .page{
     width: 100%;
 }
 
+main {
+    overflow: auto;
+}
+
 body {
     background-color: #000000;
     font-family: "Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif;
@@ -62,14 +66,29 @@ body {
         -moz-osx-font-smoothing: grayscale;
 }
 
-.ftui-door:before {
-        content: "\ea00";
+.ftui-mail-thin:before {
+  content: "\e901";
 }
-.ftui-window:before {
-        content: "\ea01";
+.ftui-download-thin:before {
+  content: "\e902";
+}
+.ftui-search-thin:before {
+  content: "\e903";
+}
+.ftui-cloud-thin:before {
+  content: "\e904";
+}
+.ftui-thermo-thin:before {
+  content: "\e905";
 }
 .ftui-thermo:before {
   content: "\e900";
+}
+.ftui-door:before {
+  content: "\ea00";
+}
+.ftui-window:before {
+  content: "\ea01";
 }
 
 a:link {
@@ -235,9 +254,14 @@ section{
 .col-1-1 { width: 99.6% !important; }
 .col-5-6 { width: 83% !important; }
 .col-2-3,.col-4-6  { width: 65% !important; }
-.col-1-3,.col-2-6 { width: 32% !important; }
+.col-1-3,
+.col-2-6,
+.col-33 { width: 32% !important; }
 .col-3-4 { width: 74% !important; }
-.col-1-2,.col-2-4,.col-3-6 { width: 48.4% !important; }
+.col-1-2,
+.col-2-4,
+.col-3-6,
+.col-50 { width: 48.4% !important; }
 .col-1-4 { width: 24% !important; }
 .col-1-6 { width: 16.67% !important; }
 .col-1-8 { width: 12.5% !important; }
@@ -268,9 +292,16 @@ section{
     height: 100vh;
 }
 
+.v100, .full-height2, .height-100  {
+    height: auto;
+    min-height:100vh
+}
+
 .box,
-.hbox {
+.hbox,
+.box.horizontal{
      flex-direction: row;
+     flex:0 1 auto;
 }
 
 main > .box,
@@ -288,6 +319,11 @@ main > .box.horizontal
     flex:1;
 }
 
+.vbox > :not(.vbox):not(.hbox):not(.card) {
+    align-self: center;
+}
+
+
 .card > .box.horizontal:only-of-type,
 .card > .hbox:only-of-type {
     flex-grow: 1;
@@ -296,8 +332,8 @@ main > .box.horizontal
 
 .card > .box.horizontal,
 .card > .hbox {
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: .5em;
+    margin-bottom: .5em;
     margin-left: .5em;
     margin-right: .5em;
 }
@@ -360,6 +396,7 @@ main > .box.horizontal
     max-width: 104px;
   }
 }
+
 @media screen and (max-width: 480px) {
   .hbox, .vbox, .box, .card {
       flex-wrap: wrap;
@@ -367,6 +404,11 @@ main > .box.horizontal
   .v100, .full-height, .height-100  {
       height: auto;
       min-height: 100vh;
+  }
+  .card > .box.horizontal,
+  .card > .hbox {
+      margin-top: 1em;
+      margin-bottom: 1em;
   }
 }
 @media screen and (min-width: 320px) and (max-width: 480px) {
@@ -376,6 +418,10 @@ main > .box.horizontal
   .icon-width {
     min-width: 52px;
     max-width: 52px;
+  }
+  [data-type="image"].icon-width > img{
+    width: 45px !important;
+    height: 45px !important;
   }
 }
 
@@ -515,6 +561,8 @@ main > .box.horizontal
   }
 }
 
+/* End responsive menu */
+
 .bg-gray,.btn-gray               { background-color:#393939;}
 .bg-lightgray,.btn-lightgray     { background-color:#777777;}
 .bg-orange,.btn-orange           { background-color:#aa6900; }
@@ -524,7 +572,150 @@ main > .box.horizontal
 .bg-ligthblue,.btn-ligthblue     { background-color:#6699FF; }
 .bg-blue,.btn-blue               { background-color:#337ab7; }
 
-/* End responsive menu */
+
+/* Toolbar */
+
+.toolbar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: #f7f7f8;
+    height: 67px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 17px;
+    margin: 0;
+    z-index: 500;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.toolbar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: auto;
+    right: auto;
+    height: 1px;
+    width: 100%;
+    background-color: #c4c4c4;
+    display: block;
+    z-index: 15;
+    -webkit-transform-origin: 50% 0;
+    transform-origin: 50% 0;
+}
+
+
+
+footer {
+bottom: 0px;
+position: absolute;
+height: 5%;
+width: 100%;
+background-color: #14529a;
+color: white;
+height:65px;
+z-index: 5000;
+}
+
+.toolbar-inner {
+position: absolute;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+padding: 0 8px;
+box-sizing: border-box;
+display: -webkit-box;
+display: -ms-flexbox;
+display: -webkit-flex;
+display: flex;
+-webkit-box-pack: justify;
+-ms-flex-pack: justify;
+-webkit-justify-content: space-between;
+justify-content: space-between;
+-webkit-box-align: center;
+-ms-flex-align: center;
+-webkit-align-items: center;
+align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+    .toolbar-inner {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .tab-bar .tab-link {
+        width: auto;
+        min-width: 105px;
+    }
+}
+
+.tab-link {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    overflow: visible;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+
+
+.tabbar-labels,
+span.tabbar-label {
+    line-height: 1;
+    display: block;
+    margin: 0;
+    letter-spacing: .01em;
+    font-size: 11px;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media screen and (min-width: 768px) {
+    .tabbar-labels,
+    span.tabbar-label {
+        font-size: 14px;
+    }
+}
+
+.tab-link > .fa-stack {
+    width: 1em !important;
+    height: 1em !important;
+    line-height: 1em !important;
+}
+
+div[data-type="link"] .fa {
+    font-size: 2em;
+    line-height: 1em;
+    vertical-align: 0px;
+}
+
+/*end toolbar */
 
 .left {
     float: left;
@@ -1086,6 +1277,16 @@ select::-ms-expand {
 
 .half-transparent {
     opacity:.5  !important;
+}
+
+.transparent {
+    opacity: 0;
+}
+
+img.faded {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    opacity:.2  !important;
 }
 
 .shake {
