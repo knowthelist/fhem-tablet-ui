@@ -7,6 +7,76 @@ function depends_famultibutton (){
 
 var Modul_famultibutton = function () {
 
+    function getSecondes(elem) {
+        var seton = elem.data("set-on");
+        var secondes;
+        if (seton && !$.isNumeric(seton) && !$.isArray(seton)
+                && ftui.getPart(seton,1)==="on-for-timer") {
+            secondes = ftui.getPart(elem.data("set-on"),2);
+        }
+        if (elem.data("countdown")) {
+            secondes = elem.data("countdown");
+        }
+        return secondes;
+    }
+
+    function startTimer (elem) {
+        var id = elem.data("device") + "_" + elem.data('get');
+        var now = new Date();
+        var til = new Date(localStorage.getItem("ftui_timer_til_" + id));
+        var secondes = localStorage.getItem("ftui_timer_sec_" + id );
+        var count = (til-now) / 1000;
+
+        var faelem = elem.data('famultibutton');
+        if (faelem){
+          clearTimeout(elem.data('timer'));
+          faelem.setProgressValue(1);
+          elem.data('timer',setInterval(function(){
+            if (count-- <= 0) {
+              clearInterval(elem.data('timer'));
+              localStorage.removeItem("ftui_timer_sec_" + id );
+              localStorage.removeItem("ftui_timer_til_" + id );
+            }
+            faelem.setProgressValue(count/secondes);
+          }, 1000));
+        }
+    };
+
+    function checkForTimer(elem) {
+        var secondes = getSecondes(elem);
+        if (secondes && $.isNumeric(secondes)){
+            var now = new Date();
+            var til = new Date();
+            var id = elem.data("device") + "_" + elem.data('get');
+            til.setTime(now.getTime() + (parseInt(secondes)*1000));
+            localStorage.setItem("ftui_timer_sec_" + id, secondes);
+            localStorage.setItem("ftui_timer_til_" + id, til);
+            startTimer(elem);
+
+            //inform other widgets to check their timer
+            $(document).trigger('onforTimerStarted', [id]);
+        }
+    }
+
+    function checkForRunningTimer(elem, id) {
+        var secondes = getSecondes(elem);
+        if ( localStorage.getItem("ftui_timer_til_" + id) ){
+           if (localStorage.getItem("ftui_timer_sec_" + id) == secondes || !secondes) {
+                 startTimer(elem);
+           } else {
+                stopRunningTimer(elem);
+           }
+        }
+    }
+
+    function stopRunningTimer(elem) {
+        var faelem = elem.data('famultibutton');
+        if (faelem){
+          faelem.setProgressValue(0);
+        }
+        clearInterval(elem.data('timer'));
+    }
+
     function doubleclicked(elem, onoff) {
         if(elem.data('doubleclick')*1>0) {
             if(! elem.data('_firstclick')) {
@@ -132,6 +202,7 @@ var Modul_famultibutton = function () {
         if(doubleclicked(elem, 'on')) {
             this.clicked(elem, 'on');
             elem.trigger("toggleOn");
+            checkForTimer(elem);
             var blink = elem.data('blink');
             // blink=on     -> always reset state after 200ms
             // blink=off    -> never reset state after 200ms
@@ -145,6 +216,14 @@ var Modul_famultibutton = function () {
     function toggleOff(elem) {
         if(doubleclicked(elem, 'off')) {
             this.clicked(elem, 'off');
+            var id = elem.data("device") + "_" + elem.data('get');
+            stopRunningTimer(elem);
+            localStorage.removeItem("ftui_timer_sec_" + id );
+            localStorage.removeItem("ftui_timer_til_" + id );
+
+            //inform other widgets to check their timer
+            $(document).trigger('onforTimerStopped', [id]);
+
             var blink = elem.data('blink');
             if(blink == 'on' || (! elem.data('device') && blink !='off')) {
                 setTimeout(function() {elem.setOn()}, 200);
@@ -221,6 +300,23 @@ var Modul_famultibutton = function () {
             toggleOff: function() { me.toggleOff(elem) },
             valueChanged: function(v) { me.valueChanged(elem,v) },
         });
+
+        var id = elem.data("device") + "_" + elem.data('get');
+
+        // Notification from other widgets
+        $(document).bind("onforTimerStarted", function( event, wgtId ){
+            checkForRunningTimer(elem,id);
+        });
+
+        $(document).bind("onforTimerStopped", function( event, wgtId ){
+            if ( wgtId == id ) {
+                stopRunningTimer(elem);
+            }
+        });
+
+        // any old on-for-timer still active ?
+        checkForRunningTimer(elem, id);
+
         return elem;
     };
 

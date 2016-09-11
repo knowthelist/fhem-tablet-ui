@@ -18,9 +18,11 @@ var Modul_switch = function () {
             elem.initData('on-background-color' , getClassColor(elem) || getStyle('.switch.on','background-color')    || '#aa6900');
             elem.initData('background-icon'     , 'fa-circle');
             elem.initData('icon'                , 'fa-lightbulb-o');
+
             elem.data('mode', (elem.hasClass('readonly')?'signal':'toggle'));
             me.init_attr(elem);
             me.init_ui(elem);
+
         });
     };
 
