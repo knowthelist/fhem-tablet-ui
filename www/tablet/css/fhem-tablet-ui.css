@@ -292,11 +292,6 @@ section{
     height: 100vh;
 }
 
-.v100, .full-height2, .height-100  {
-    height: auto;
-    min-height:100vh
-}
-
 .box,
 .hbox,
 .box.horizontal{
@@ -575,7 +570,7 @@ main > .box.horizontal
 
 /* Toolbar */
 
-.toolbar {
+footer {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -583,14 +578,13 @@ main > .box.horizontal
     height: 67px;
     width: 100%;
     box-sizing: border-box;
-    font-size: 17px;
     margin: 0;
     z-index: 500;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
 
-.toolbar::before {
+footer::before {
     content: '';
     position: absolute;
     left: 0;
@@ -606,20 +600,7 @@ main > .box.horizontal
     transform-origin: 50% 0;
 }
 
-
-
-footer {
-bottom: 0px;
-position: absolute;
-height: 5%;
-width: 100%;
-background-color: #14529a;
-color: white;
-height:65px;
-z-index: 5000;
-}
-
-.toolbar-inner {
+.tab-bar {
 position: absolute;
 left: 0;
 top: 0;
@@ -642,7 +623,7 @@ align-items: center;
 }
 
 @media screen and (min-width: 768px) {
-    .toolbar-inner {
+    .tab-bar {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     -webkit-justify-content: center;
@@ -684,22 +665,22 @@ align-items: center;
 }
 
 
-.tabbar-labels,
-span.tabbar-label {
-    line-height: 1;
+.tab-labels,
+span.tab-label {
+    line-height: 1.7em;
     display: block;
     margin: 0;
     letter-spacing: .01em;
-    font-size: 11px;
+    font-size: 85%;
     position: relative;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 @media screen and (min-width: 768px) {
-    .tabbar-labels,
-    span.tabbar-label {
-        font-size: 14px;
+    .tab-labels,
+    span.tab-label {
+        font-size: 100%;
     }
 }
 

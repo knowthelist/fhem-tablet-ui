@@ -1282,6 +1282,6 @@ $.fn.valOfData = function(key) {
 $.fn.transmitCommand = function() {
     if ($(this).hasClass('notransmit')) return;
     var cmdl = [$(this).valOfData('cmd'),$(this).valOfData('device'),$(this).valOfData('set'),$(this).valOfData('value')].join(' ');
-    setFhemStatus(cmdl);
+    ftui.setFhemStatus(cmdl);
     ftui.toast(cmdl);
 };
