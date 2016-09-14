@@ -130,6 +130,7 @@ var Modul_image = function () {
     return $.extend(new Modul_widget(), {
         //override or own public members
         widgetname: 'image',
+        addurlparam: addurlparam,
         init: init,
         init_attr: init_attr,
         update: update,
