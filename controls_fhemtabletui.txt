@@ -95,7 +95,7 @@ UPD 2016-09-06_21:34:52 8734 www/tablet/js/widget_highchart.js
 UPD 2016-09-06_21:34:52 8542 www/tablet/js/widget_highchart3d.js
 UPD 2016-09-06_21:34:52 9933 www/tablet/js/widget_homestatus.js
 UPD 2016-09-06_21:34:52 3892 www/tablet/js/widget_iframe.js
-UPD 2016-09-06_21:34:52 4633 www/tablet/js/widget_image.js
+UPD 2016-09-14_21:36:32 4667 www/tablet/js/widget_image.js
 UPD 2016-09-06_21:34:52 2633 www/tablet/js/widget_input.js
 UPD 2016-09-06_21:34:52 8286 www/tablet/js/widget_itunes_artwork.js
 UPD 2016-09-06_21:34:52 2751 www/tablet/js/widget_joinedlabel.js
@@ -123,6 +123,7 @@ UPD 2016-09-06_21:34:53 11525 www/tablet/js/widget_simplechart.js
 UPD 2016-09-06_21:34:53 2551 www/tablet/js/widget_slideout.js
 UPD 2016-09-06_21:34:53 8271 www/tablet/js/widget_slider.js
 UPD 2016-09-06_21:34:53 11305 www/tablet/js/widget_spinner.js
+UPD 2016-09-14_22:19:05 2865 www/tablet/js/widget_svgplot.js
 UPD 2016-09-06_21:34:53 4123 www/tablet/js/widget_swiper.js
 UPD 2016-09-10_23:54:03 1308 www/tablet/js/widget_switch.js
 UPD 2016-09-06_21:34:53 1871 www/tablet/js/widget_symbol.js
