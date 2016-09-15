@@ -74,6 +74,7 @@ UPD 2016-09-06_21:34:52 5642 www/tablet/index_page_left_demo.html
 UPD 2016-09-06_21:34:52 3615 www/tablet/index_page_top_demo.html
 UPD 2016-09-06_21:34:52 5257 www/tablet/index_tab_demo.html
 UPD 2016-09-11_11:32:35 45973 www/tablet/js/fhem-tablet-ui.js
+UPD 2016-09-15_18:42:55 24826 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-09-06_21:34:52 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-09-06_21:34:52 1474 www/tablet/js/widget_button.js
 UPD 2016-09-06_21:34:52 6415 www/tablet/js/widget_calview.js
