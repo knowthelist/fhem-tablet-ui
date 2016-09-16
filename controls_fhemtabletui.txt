@@ -6,20 +6,12 @@ DIR www/tablet/lib
 DIR www/tablet/lib/highcharts
 DIR www/tablet/lib/highcharts/graphics
 DIR www/tablet/lib/highcharts/themes
-UPD 2016-09-06_21:34:52 1017 www/tablet/content_lights.html
-UPD 2016-09-06_21:34:52 17760 www/tablet/content_main.html
-UPD 2016-09-06_21:34:52 7068 www/tablet/content_music.html
-UPD 2016-09-02_23:11:14 2329 www/tablet/content_range.html
-UPD 2016-08-14_21:35:37 1637 www/tablet/content_sounds.html
-UPD 2016-09-06_21:34:52 1939 www/tablet/content_temps.html
-UPD 2016-09-06_21:34:52 4708 www/tablet/content_vusolo.html
-UPD 2016-09-06_21:34:52 1267 www/tablet/content_windows.html
 UPD 2016-09-06_21:34:52 510 www/tablet/css/fhem-blue-ui.css
 UPD 2016-09-06_21:34:52 510 www/tablet/css/fhem-green-ui.css
 UPD 2016-09-06_21:34:52 2151 www/tablet/css/fhem-mobil-ui.css
-UPD 2016-09-16_08:02:06 32745 www/tablet/css/fhem-tablet-ui.css
+UPD 2016-09-16_19:47:07 32744 www/tablet/css/fhem-tablet-ui.css
 UPD 2016-09-06_21:34:52 13563 www/tablet/css/fhem-tablet-ui.min.css
-UPD 2016-08-21_22:12:06 1947 www/tablet/css/ftui-bright-mint-ui.css
+UPD 2016-09-16_21:06:16 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2016-09-06_21:34:52 5295 www/tablet/css/ftui_chart.css
 UPD 2016-09-06_21:34:52 1023 www/tablet/css/ftui_colorwheel.css
 UPD 2016-09-06_21:34:52 2577 www/tablet/css/ftui_departure.css
@@ -28,8 +20,6 @@ UPD 2016-09-06_21:34:52 442 www/tablet/css/ftui_range.css
 UPD 2016-09-06_21:34:52 1036 www/tablet/css/ftui_slideout.css
 UPD 2016-09-06_21:34:52 1234 www/tablet/css/ftui_spinner.css
 UPD 2016-09-06_21:34:52 5166 www/tablet/demo_ftui.html
-UPD 2016-09-06_21:34:52 3680 www/tablet/flex_demo_4x4_empty.html
-UPD 2016-09-06_21:34:52 4732 www/tablet/flex_demo_gigantic_color.html
 UPD 2016-09-06_21:34:52 127396 www/tablet/fonts/fhemSVG.eot
 UPD 2016-09-06_21:34:52 528460 www/tablet/fonts/fhemSVG.svg
 UPD 2016-09-06_21:34:52 127232 www/tablet/fonts/fhemSVG.ttf
@@ -66,13 +56,6 @@ UPD 2016-09-06_21:34:52 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2016-09-06_21:34:52 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2016-09-06_21:34:52 13934 www/tablet/index-example.html
 UPD 2016-09-06_21:34:52 2947 www/tablet/index_empty.html
-UPD 2016-09-06_21:34:52 4684 www/tablet/index_nav_fixed_mobil.html
-UPD 2016-09-11_13:29:15 6083 www/tablet/index_nav_footer.html
-UPD 2016-09-06_21:34:52 4654 www/tablet/index_nav_mobil.html
-UPD 2016-09-06_21:34:52 4675 www/tablet/index_nav_right_fixed_mobil.html
-UPD 2016-09-06_21:34:52 5642 www/tablet/index_page_left_demo.html
-UPD 2016-09-06_21:34:52 3615 www/tablet/index_page_top_demo.html
-UPD 2016-09-06_21:34:52 5257 www/tablet/index_tab_demo.html
 UPD 2016-09-11_11:32:35 45973 www/tablet/js/fhem-tablet-ui.js
 UPD 2016-09-15_18:42:55 24826 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-09-06_21:34:52 20988 www/tablet/js/highcharts-meteogram.js
@@ -172,9 +155,6 @@ UPD 2016-09-06_21:34:53 62078 www/tablet/lib/swiper.jquery.min.js
 UPD 2016-09-06_21:34:53 15163 www/tablet/lib/swiper.min.css
 UPD 2016-09-06_21:34:53 683 www/tablet/lib/switchery.min.css
 UPD 2016-09-06_21:34:53 24447 www/tablet/lib/switchery.min.js
-UPD 2016-09-06_21:34:53 1696 www/tablet/page_content1.html
-UPD 2016-09-06_21:34:53 1696 www/tablet/page_content2.html
-UPD 2016-09-06_21:34:53 1698 www/tablet/page_content3.html
 UPD 2016-09-06_21:34:53 750 www/tablet/repair.html
 UPD 2016-09-06_21:34:53 3576 www/tablet/test_knob.html
 UPD 2016-09-06_21:34:53 3286 www/tablet/test_popup.html
