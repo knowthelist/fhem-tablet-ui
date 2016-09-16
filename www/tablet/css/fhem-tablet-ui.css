@@ -127,7 +127,7 @@ a:active {
 .orange         { color:#aa6900 !important; }
 .red            { color:#ad3333 !important; }
 .green          { color:#32a054 !important; }
-.mint           { color:#11d597 !important; }
+.mint           { color:#1D1F20 !important; }
 .ligthblue      { color:#6699FF !important; }
 .blue           { color:#337ab7 !important; }
 .gray           { color:#8C8C8C !important; }
@@ -138,7 +138,7 @@ a:active {
 .border-orange         { border: 3px solid #aa6900; }
 .border-red            { border: 3px solid #ad3333; }
 .border-green          { border: 3px solid #32a054; }
-.border-mint           { border: 3px solid #11d597; }
+.border-mint           { border: 3px solid #5bc995; }
 .border-ligthblue      { border: 3px solid #6699FF; }
 .border-blue           { border: 3px solid #337ab7; }
 .border-gray           { border: 3px solid #8C8C8C; }
@@ -159,6 +159,16 @@ a:active {
   -webkit-box-shadow: 0px 3px 5px rgba(150, 150, 150, 0.49);
   -moz-box-shadow:    0px 3px 5px rgba(150, 150, 150, 0.49);
   box-shadow:         0px 3px 5px rgba(150, 150, 150, 0.49);
+}
+
+#header-nav ~ .page {
+    height: calc(100% - 55px);
+}
+
+@media screen and (max-width: 480px) {
+    #header-nav ~ .page {
+        height: 100%;
+    }
 }
 
 .fixed {
@@ -563,7 +573,7 @@ main > .box.horizontal
 .bg-orange,.btn-orange           { background-color:#aa6900; }
 .bg-red,.btn-red                 { background-color:#ad3333; }
 .bg-green,.btn-green             { background-color:#32a054; }
-.bg-mint,.btn-mint               { background-color:#11d597; }
+.bg-mint,.btn-mint               { background-color:#5bc995; }
 .bg-ligthblue,.btn-ligthblue     { background-color:#6699FF; }
 .bg-blue,.btn-blue               { background-color:#337ab7; }
 
