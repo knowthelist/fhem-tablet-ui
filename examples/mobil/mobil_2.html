@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <!--
+         /* FHEM tablet ui */
+         /*
+         * Versin for mobil phones
+         *
+         * Version: 1.4.2
+         * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
+         * URL: https://github.com/knowthelist/fhem-tablet-ui
+         *
+         * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
+         * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+         *
+         * - create a new folder named 'tablet' in /<fhem-path>/www
+         * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+         * - add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
+         * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+         */
+        -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="widget_base_width" content="120">
+        <meta name="widget_base_height" content="131">
+        <meta name="widget_margin" content="1">
+        <meta name='gridster_disable' content='1'>
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+        <meta name="longpoll_delay" content="1000">
+        <meta name="debug" content="0"> <!-- 1=output to console;0=not output -->
+        <meta http-equiv="Cache-Control" content="no-store" />
+
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/css/fhem-mobil-ui.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
+
+    <script src="/fhem/pgm2/jquery.min.js" defer></script>
+    <script src="/fhem/tablet/lib/jquery.toast.min.js" defer></script>
+    <script src="/fhem/tablet/lib/jquery.gridster.min.js" defer></script>
+    <script src="/fhem/tablet/js/fhem-tablet-ui.min.js" defer></script>
+
+    <title>FHEM-Mobil-UI</title>
+</head>
+<body>
+
+<!-- available class: container,left,right,cell,narrow,darker,big,bigger,small,thin,large,wider -->
+<!-- available data-type: symbol,dimmer,homestatus,label,push,slider,switch,thermostat,volume,weather -->
+
+<div class="gridster">
+<ul>
+<li data-row="1" data-col="1" data-sizex="1" data-sizey="2">
+    <header>BAD</header>
+    <div data-type="thermostat" data-device="BadHeizung_Clima" data-valve="ValvePosition" class="cell"></div>
+    <div data-type="switch" data-device="GalerieLicht" class="cell"></div>
+    <div data-type="label" class="">Licht</div>
+</li>
+<li data-row="1" data-col="2" data-sizex="1" data-sizey="2">
+    <header>Wohnzimmer</header>
+    <div data-type="thermostat" data-device="WohnzimmerHeizung_Clima" data-valve="ValvePosition" class="cell"></div>
+    <div data-type="switch" data-device="PowerAV_Sw" class="cell"></div>
+    <div data-type="label" class="">SchrankLicht</div>
+   </li>
+<li data-row="1" data-col="3" data-sizex="1" data-sizey="1">
+    <header>Kinderzimmer</header>
+    <div data-type="thermostat" data-device="KinderzimmerHeizung_Clima" data-valve="ValvePosition" class="cell"></div>
+
+</li>
+<li data-row="2" data-col="3" data-sizex="1" data-sizey="1">
+    <header>Schlafzimmer</header>
+    <div data-type="thermostat" data-device="SchlafzimmerHeizung_Clima" data-valve="ValvePosition" class="cell"></div>
+
+</li>
+<li data-row="3" data-col="1" data-sizex="3" data-sizey="4">
+    <header>Radio</header>
+    <div class="centered">
+        <div data-type="slider" data-device='RadioVolumeOnTablet' data-max="60" data-width="240" class="cell horizontal" ></div>
+        <div data-type="label" class="cell top-space-2x">Volume</div>
+    </div>
+    <div class="inline">
+        <div data-type="circlemenu" class="cell circlemenu">
+            <ul>
+              <li><div data-type="push" data-icon="fa-wrench"></div></li>
+              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level -6" data-icon="">-6</div></li>
+              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level -2" data-icon="">-2</div></li>
+              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level 0" data-icon="">0</div></li>
+              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level +3" data-icon="">2</div></li>
+              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level +9" data-icon="">9</div></li>
+              <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level +C" data-icon="">12</div></li>
+            </ul>
+            </div>
+            <div data-type="label" class="">Subwoofer</div>
+
+        </div>
+
+        <div class="inline">
+          <div data-type="push" data-device="WebRadio" data-icon="fa-step-backward" data-set-on="Prev" class="cell" ></div>
+          <div data-type="push" data-device="WebRadio" data-icon="fa-step-forward" data-set-on="Next" class="cell" ></div>
+          <div data-type="label" data-device="WebRadio" class="">radio</div>
+        </div>
+
+    <div class="top-space-2x">
+       <div data-type="label" class="inline w2x">Badradio</div>
+       <div data-type="switch" data-device="BadRadio" data-icon="fa-music"></div>
+       <div data-type="select" data-device="AvReceiverZ2" data-items='["Airplay","Webradio","BD/DVD","PHONO"]' data-get="input" data-set="input" class="cell w2x" ></div>
+       <div></div>
+       <div data-type="label" class="inline w2x">Radio</div>
+       <div data-type="switch" data-device="RadioAtTablet" data-icon="fa-music"></div>
+       <div data-type="select" data-device="AvReceiver" data-list="inputs" data-get="input" data-set="input" class="cell w2x" ></div>
+       <div></div>
+    </div>
+        <div class="cell">
+        <div data-type="label" class="inline w2x">Playlists</div>
+
+    <div data-type="select" data-device="MPD1" data-list="playlistcollection" data-get="playlistname" data-set="playlist" class="inline w3x" ></div>
+    </div>
+    <div class="cell top-space-2x">
+    <div data-type="label" data-device="MPD1" data-get="artist" class="inline bold"></div>
+    <div data-type="label" data-device="MPD1" data-get="title" class="inline"></div>
+    <div class="cell">
+        <div data-type="push" data-device="MPD1"
+             data-icon="fa-step-backward" data-background-icon="-"
+             data-set-on="previous" class="inline">
+        </div>
+        <div data-type="push" data-device="MPD1"
+             data-icon="fa-play" data-background-icon="-"
+             data-set-on="play" class="inline big">
+        </div>
+        <div data-type="push" data-device="MPD1"
+             data-icon="fa-stop" data-background-icon="-"
+             data-set-on="stop" class="inline big">
+        </div>
+        <div data-type="push" data-device="MPD1"
+             data-icon="fa-step-forward" data-background-icon="-"
+             data-set-on="next" class="inline">
+        </div>
+    </div>
+    </div>
+   </li>
+</ul>
+</div>
+</body>
+</html>

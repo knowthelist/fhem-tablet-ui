@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * main page
+     *
+     load this page via widget pagebutton
+
+     <div data-type="pagebutton" data-url="#content_main.html"     data-load="#content1" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#606060" data-on-color="#222222" data-active-pattern="(.*/||.*#content_main.html)" data-icon="fa-home" class="default top-space"></div>
+    -->
+
+</head>
+<body>
+  <div class="page" id="content1">
+    <div class="gridster">
+    <ul>
+    <li data-row="1" data-col="1" data-sizex="3" data-sizey="2">
+            <header>BAD</header>
+            <div data-type="thermostat" data-device="BadHeizung_Clima" data-valve="ValvePosition" class="cell left left-space"></div>
+            <div class="cell right">
+                    <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+                    <div class="narrow darker small">Fenster</div>
+            </div>
+    </li>
+    <li data-row="1" data-col="4" data-sizex="3" data-sizey="2">
+            <header>SCHLAFZIMMER</header>
+            <div data-type="thermostat" data-device="SchlafzimmerHeizung_Clima" data-valve="ValvePosition" class="cell left left-space"></div>
+            <div class="cell right">
+                    <div data-type="symbol" data-device="SchlafzimmerFenster" class="narrow big"></div>
+                    <div class="narrow darker small">Fenster</div>
+            </div>
+    </li>
+    <li data-row="1" data-col="7" data-sizex="3" data-sizey="2">
+            <header>KINDERZIMMER</header>
+            <div data-type="thermostat" data-device="KinderzimmerHeizung_Clima" data-valve="ValvePosition" class="cell left left-space"></div>
+            <div class="cell right">
+                    <div data-type="symbol" data-device="KinderzimmerFenster" class="narrow big"></div>
+                    <div class="narrow darker small">Fenster</div>
+            </div>
+    </li>
+    <li data-row="1" data-col="10" data-sizex="2" data-sizey="2">
+        <header>LICHT</header>
+        <div class="container round gray margin">
+            <div class="top-space inline">
+                <div data-type="switch" data-device="GalerieLicht" class=""></div>
+                <div class="cell">Galerie</div>
+            </div>
+            <div class="top-space inline">
+                <div data-type="switch" data-device="GartenLicht" class="" ></div>
+                <div class="cell">Garten</div>
+            </div>
+        </div>
+    </li>
+    <li data-row="3" data-col="1" data-sizex="3" data-sizey="3">
+            <header>KUECHE</header>
+            <div class="container">
+              <div class="left left-space">
+                    <div data-type="thermostat" data-device="KuecheHeizung_Clima" data-valve="ValvePosition" class="cell"></div>
+                    <div data-type="thermostat" data-device="KuecheHeizung2_Clima" data-valve="ValvePosition" class="top-narrow"></div>
+              </div>
+              <div class="right right-space">
+                    <div data-type="switch" data-device="HerdLicht_Sw" class="cell"></div>
+                    <div class="cell">HerdLicht</div>
+                    <div data-type="symbol" data-device="KuechenFenster" class="top-space narrow big"></div>
+                    <div class="narrow darker small">Fenster</div>
+              </div>
+            </div>
+    </li>
+    <li data-row="7" data-col="1" data-sizex="3" data-sizey="4">
+            <header>HOMESTATUS</header>
+            <div data-type="homestatus" data-device='HomeStatus' class="" ></div>
+            <div class="cell inline">
+                <div data-type="symbol" data-device="TerrassenTuer" data-icon="ftui-door" class="narrow big"></div>
+                <div class="narrow darker small">Terassent&#252;r</div>
+            </div>
+            <div class="cell inline">
+                <div data-type="symbol" data-device="Eingangstuer" data-icon="ftui-door" class="cell narrow big"></div>
+                <div class="cell narrow darker">T&#252;r</div>
+            </div>
+            <div class="cell inline top-space">
+                <div data-type="symbol" data-icon="fa-rss"
+                data-device='isAutoHomeStatus' data-get-on="1" data-get-off="0" class="inline green small"></div>
+                <div class="cell narrow darker">auto</div>
+            </div>
+
+            <!-- div data-type="eventmonitor">EM</div -->
+    </li>
+    <li data-row="3" data-col="1" data-sizex="6" data-sizey="3">
+            <header>WOHNZIMMER</header>
+            <div class="container">
+              <div class="left">
+                    <div data-type="thermostat" data-device="WohnzimmerHeizung_Clima" data-valve="ValvePosition" data-get="desired-temp" data-temp="measured-temp" class="cell left-space"></div>
+                    <div data-type="thermostat" data-device="WohnzimmerHeizung2_Clima" data-valve="ValvePosition" data-get="desired-temp" data-temp="measured-temp" class="top-narrow left-space"></div>
+              </div>
+              <div class="right right-space">
+                    <div data-type="switch" data-device="PowerAV_Sw" class="cell"></div>
+                    <div class="">Schrank</div>
+                    <div data-type="dimmer" data-device="HUEDevice1" data-get-on="!off" data-get-off="off" data-set="pct" class="top-space-2x" ></div>
+                    <div class="cell">Philips</div>
+              </div>
+              <div class="right top-space right-space">
+               <div class="inline">
+                      <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#ad3333"]' data-unit="&deg;C" class="bigger thin top-narrow"></div>
+                      <div class="cell">Temperatur</div>
+                </div>
+               <div class="inline">
+                      <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#ad3333"]' data-unit="%" class="bigger thin top-narrow"></div>
+                      <div class="cell">Luftfeuchte</div>
+                </div>
+                <div class="cell">
+                <div data-type="popup" data-width="450px" class="inline">
+                     <div data-type="simplechart"
+                        data-device="THSensorWZ"
+                        data-logdevice="FileLog_THSensorWZ"
+                        data-columnspec="4:temperature"
+                        data-minvalue="17"
+                        data-maxvalue="23"
+                        data-height="60"
+                        data-width="90"
+                        data-yticks="2"
+                        class="">
+                      </div>
+                      <div class="dialog">
+                        <header>TEMPERATURE</header>
+                        <div data-type="simplechart"
+                             data-device="THSensorWZ"
+                             data-logdevice="FileLog_THSensorWZ"
+                             data-columnspec="4:temperature"
+                             data-minvalue="[21,20,16]"
+                             data-maxvalue="[35,30,25]"
+                             data-yticks="2"
+                             data-caption="$min°C - $max°C"
+                             data-height="250">
+                        </div>
+                      </div>
+                </div>
+                <div data-type="popup" data-width="450px" class="inline">
+                     <div data-type="simplechart"
+                        data-device="THSensorWZ"
+                        data-logdevice="FileLog_THSensorWZ"
+                        data-columnspec="4:humidity"
+                        data-minvalue="50"
+                        data-maxvalue="80"
+                        data-height="60"
+                        data-width="90"
+                        class="noticks">
+                      </div>
+                      <div class="dialog">
+                        <header>HUMIDITY</header>
+                        <div data-type="simplechart"
+                             data-device="THSensorWZ"
+                             data-logdevice="FileLog_THSensorWZ"
+                             data-columnspec="4:humidity"
+                             data-minvalue="50"
+                             data-maxvalue="80"
+                             data-yticks="20"
+                             data-height="250"
+                             data-caption="$min% - $max%"
+                             class="cell">
+                        </div>
+                      </div>
+                </div>
+                </div>
+              </div>
+            </div>
+    </li>
+    <li data-row="7" data-col="4" data-sizex="6" data-sizey="4">
+        <header>MULTIMEDIA</header>
+        <div class="row">
+            <div class="col-3-5">
+                <div class="row">
+                  <div class="col-1-4">Badradio</div>
+                  <div data-type="switch" data-device="BadRadio" data-icon="fa-music" class="col-1-4"></div>
+                  <div data-type="select" data-device="AvReceiverZ2" data-list="inputs" data-alias="AvReceiver:Alias" data-get="input" data-set="input" class="col-1-2" ></div>
+                </div>
+                <div class="row top-space">
+                   <div class="col-1-4">Radio</div>
+                   <div data-type="switch" data-device="RadioAtTablet" data-icon="fa-music" class="col-1-4"></div>
+                   <div data-type="select" data-device="AvReceiver" data-list="inputs" data-alias="Alias" data-get="input" data-set="input" class="col-1-2"></div>
+                </div>
+                <div class="container round gray margin top-space-2x">
+                <div data-type="swiper"  data-height="110px" data-width="300px"
+                     data-device="AvReceiver" data-get="input"
+                     data-states='["Spotify","Webradio","Sat"]'
+                     class="top-space nopagination">
+                     <ul>
+                        <li>
+                            <div class="">
+                                <div data-type="push" data-device="MPD1"
+                                     data-icon="fa-step-backward" data-background-icon="-"
+                                     data-set-on="previous" class="inline">
+                                </div>
+                                <div data-type="switch"
+                                       data-device="MPD1"
+                                       data-states='["play","pause","stop"]'
+                                       data-set-states='["pause","play","play"]'
+                                       data-background-icon="fa-circle-thin"
+                                       data-background-colors='["#555","#555","#555"]'
+                                       data-colors='["#555","#555","#555"]'
+                                       data-icons='["fa-pause","fa-play","fa-play"]'
+                                       class="big">
+                                </div>
+                                <div data-type="push" data-device="MPD1"
+                                     data-icon="fa-step-forward" data-background-icon="-"
+                                     data-set-on="next" class="inline">
+                                </div>
+                                <div class="container bg-gray margin padding round top-space truncate">
+                                    <div data-type="label" data-device="MPD1" data-get="Artist" class="bold inline"></div>
+                                    <div data-type="label" data-device="MPD1" data-get="Title" class="inline"></div>
+                                </div>
+                            </div>
+
+                         </li>
+                         <li>
+                             <div class="col-1-1">
+                                 <div data-type="push" data-device="WebRadio" data-icon="fa-step-backward" data-set-on="Prev" class="inline" ></div>
+                                 <div data-type="label" data-device="WebRadio" class="inline white">radio</div>
+                                 <div data-type="push" data-device="WebRadio" data-icon="fa-step-forward" data-set-on="Next" class="inline" ></div>
+                             </div>
+                             <div class="container bg-gray margin padding round top-space">
+                                 <div data-type="label" data-device="RadioEinsInfo" data-get="Artist" class="bold inline"></div>
+                                 <div data-type="label" data-device="RadioEinsInfo" data-get="Title" class="inline"></div>
+                             </div>
+                          </li>
+                        <li>
+                        <div class="col-1-1">
+                            <div data-type="push" data-device="SatReceiver" data-icon="fa-step-backward" data-set-on="channelDown" class="inline" ></div>
+                            <div data-type="label" data-device="SatReceiver" data-get="channel" class="inline white"></div>
+                            <div data-type="push" data-device="SatReceiver" data-icon="fa-step-forward" data-set-on="channelUp" class="inline" ></div>
+                        </div>
+                        <div class="container bg-gray margin padding round top-space">
+                            <div data-type="label" data-device="SatReceiver" data-get="eventstart_hr" class="bold inline"></div>
+                            <div data-type="label" data-device="SatReceiver" data-get="currentTitle" class="inline"></div>
+                        </div>
+                        </li>
+                     </ul>
+                 </div>
+
+                </div>
+            </div>
+            <div class="col-2-5">
+                <div data-type="volume" data-device='AvReceiver' data-get='volume' data-set='volume' class="large" ></div>
+                <div class="top-narrow-2x">Volume</div>
+                <div class="col-1-2 top-space-2x">
+                    <div data-type="switch" data-device="Fernsehen" data-icon="fa-tv" class="" ></div>
+                    <div class="">TV</div>
+                </div>
+                <div class="col-1-2">
+                    <div data-type="circlemenu" class="">
+                        <ul>
+                          <li><div data-type="push" data-icon="fa-wrench"></div></li>
+                          <li><div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level -6" data-icon="">-6</div></li>
+                          <li><div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level -2" data-icon="">-2</div></li>
+                          <li><div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level 0" data-icon="">0</div></li>
+                          <li><div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level 3" data-icon="">2</div></li>
+                          <li><div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level 9" data-icon="">9</div></li>
+                          <li><div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level 12" data-icon="">12</div></li>
+                        </ul>
+                    </div>
+                    <div class="">Woofer</div>
+                </div>
+          </div>
+       </div>
+    </li>
+    <li data-row="3" data-col="10" data-sizex="2" data-sizey="7">
+            <header>WETTER</header>
+            <div data-type="label" data-device="OutTemp" data-part="2" data-limits='[-73,10,23]' data-colors='["#6699FF","#aa6900","#ad3333"]' data-unit="&deg;C" data-fix="1" class="bigger thin"></div>
+            <div class="cell">Außentemperatur</div>
+            <div class="cell darker top-space">Heute</div>
+            <div data-type="weather" data-device="AgroWeather" data-get="fc0_weatherDay" class="cell big"></div>
+            <div data-type="label" data-device="AgroWeather" data-get="fc0_weatherDay" class="cell top-narrow"></div>
+            <div data-type="label" data-device="AgroWeather" data-get="fc0_tempMin" data-unit="&deg;C" class="inline large darker top-narrow-10"></div>
+            <div data-type="label" data-device="AgroWeather" data-get="fc0_tempMax" data-unit="&deg;C" class="inline large top-narrow-10"></div>
+            <div class="cell darker top-space">Morgen</div>
+            <div data-type="weather" data-device="AgroWeather" data-get="fc1_weatherDay" class="cell big"></div>
+            <div data-type="label" data-device="AgroWeather" data-get="fc1_weatherDay" class="cell top-narrow"></div>
+            <div data-type="label" data-device="AgroWeather" data-get="fc1_tempMin" data-unit="&deg;C" class="inline large darker ‎top-narrow-10"></div>
+            <div data-type="label" data-device="AgroWeather" data-get="fc1_tempMax" data-unit="&deg;C" class="inline large top-narrow-10"></div>
+            <div data-type="label" data-device="AgroWeather" data-get="fc2_date" data-substitution="toDate().eeee()" class="cell darker top-space"></div>
+            <div data-type="weather" data-device="AgroWeather" data-get="fc2_weatherDay" class="cell big"></div>
+            <div data-type="label" data-device="AgroWeather" data-get="fc2_weatherDay" class="cell top-narrow"></div>
+            <div data-type="label" data-device="AgroWeather" data-get="fc2_tempMin" data-unit="&deg;C" class="inline large darker top-narrow-10"></div>
+            <div data-type="label" data-device="AgroWeather" data-get="fc2_tempMax" data-unit="&deg;C" class="inline large top-narrow-10"></div>
+    </li>
+    </ul>
+    </div>
+  </div>
+</body>
+</html>

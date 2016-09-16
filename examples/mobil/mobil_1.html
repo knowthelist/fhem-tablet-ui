@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <!--
+         /* FHEM tablet ui */
+         /*
+         * Just another dashboard for FHEM
+         *
+         * Version: 1.3.4
+         * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
+         * URL: https://github.com/knowthelist/fhem-tablet-ui
+         *
+         * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
+         * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+         *
+         * - create a new folder named 'tablet' in /<fhem-path>/www
+         * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+         * - add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
+         * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+         * #####
+         * Example originally from jemu75
+         * http://forum.fhem.de/index.php/topic,34233.msg282186.html#msg282186
+         */
+        -->
+        <title>JA-Team Home</title>
+        <link rel="shortcut icon" href="/fhem/tablet/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="widget_base_width" content="116">
+        <meta name="widget_base_height" content="131">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="longpoll" content="0"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+        <meta name="debug" content="0"> <!-- 1=output to console;0=not output -->
+
+        <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
+        <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
+        <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
+        <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
+        <link rel="stylesheet" href="/fhem/tablet/lib/powerange.min.css" />
+
+
+        <script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
+        <script type="text/javascript" src="/fhem/tablet/lib/jquery.knob.mod.js"></script>
+        <script type="text/javascript" src="/fhem/tablet/lib/jquery.toast.min.js"></script>
+        <script type="text/javascript" src="/fhem/tablet/lib/jquery.circlemenu.js"></script>
+        <script type="text/javascript" src="/fhem/tablet/lib/powerange.min.js"></script>
+        <script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
+        <script type="text/javascript" src="/fhem/tablet/lib/fa-multi-button.min.js"></script>
+        <script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.js"></script>
+
+</head>
+<body>
+
+<!-- available class: container,left,right,cell,narrow,darker,big,bigger,small,thin,large,wider -->
+<!-- available data-type: symbol,dimmer,homestatus,label,push,slider,switch,thermostat,volume,weather -->
+
+<div class="gridster">
+<ul>
+<li data-row="1" data-col="1" data-sizex="1" data-sizey="4">
+        <header>Wetter</header>
+        <div data-type="label" data-device="WZ_HM_WDS10_TH_O" data-get="temperature" data-limits='[-73,10,25]' data-colors='["#6699FF","#AA6900","#FF0000"]' data-unit="%B0C%0A" class="cell bigger thin"></div>
+                <div data-type="label" class="cell">Temperatur</div>
+        <div data-type="label" data-device="WZ_HM_WDS10_TH_O" data-get="humidity" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="cell bigger thin"></div>
+        <div data-type="label" class="cell">Luftfeuchte</div>
+                <div data-type="label" class="cell darker wider">Heute</div>
+        <div data-type="weather" data-device="Wetter" data-get="fc1_condition" class="cell big"></div>
+        <div data-type="label" data-device="Wetter" data-get="fc1_condition" class="cell narrow"></div>
+        <div data-type="label" data-device="Wetter" data-get="fc1_high_c" data-unit="%B0C%0A" class="cell large"></div>
+        <div data-type="label" class="cell darker wider">Morgen</div>
+        <div data-type="weather" data-device="Wetter" data-get="fc2_condition" class="cell big"></div>
+        <div data-type="label" data-device="Wetter" data-get="fc2_condition" class="cell narrow"></div>
+        <div data-type="label" data-device="Wetter" data-get="fc2_high_c" data-unit="%B0C%0A" class="cell large"></div>
+</li>
+<li data-row="1" data-col="2" data-sizex="1" data-sizey="4">
+    <header>Wohnzimmer</header>
+                <div data-type="thermostat" data-device="CUL_HM_HM_CC_TC_1A3FE7" data-valve="actuator" data-step="0.5" class="cell left"></div>
+                <div data-type="label" data-device="CUL_HM_HM_CC_TC_1A3FE7" data-get="controlMode" class="cell big thin"></div>
+                <div data-type="button" data-fhem-cmd="set+CUL_HM_HM_CC_TC_1A3FE7+desired-temp+20.5" data-icon="fa-sun-o" class="cell"></div>
+                <div data-type="button" data-fhem-cmd="set+CUL_HM_HM_CC_TC_1A3FE7+desired-temp+19.0" data-icon="fa-moon-o" data-color="hsl(0,0%,50%)" class="cell"></div>
+                <div data-type="label" data-device="CUL_HM_HM_CC_TC_1A3FE7_Weather" data-get="measured-temp" data-limits='[-73,18,22]' data-colors='["#6699FF","#AA6900","#FF0000"]' data-unit="%B0C%0A" class="cell bigger thin"></div>
+                <div data-type="label" class="cell">Temperatur</div>
+        <div data-type="label" data-device="CUL_HM_HM_CC_TC_1A3FE7_Weather" data-get="humidity" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="cell bigger thin"></div>
+        <div data-type="label" class="cell">Luftfeuchte</div>
+</li>
+<li data-row="1" data-col="3" data-sizex="1" data-sizey="4">
+    <header>Kinderzimmer</header>
+        <div data-type="thermostat" data-device="CUL_HM_HM_CC_RT_DN_21FD96_Clima" data-valve="ValvePosition" class="cell left"></div>
+                <div data-type="label" data-device="CUL_HM_HM_CC_RT_DN_21FD96_Clima" data-get="controlMode" class="cell big thin"></div>
+                <div data-type="button" data-fhem-cmd="set+CUL_HM_HM_CC_RT_DN_21FD96_Clima+controlMode+boost" data-icon="fa-fire" class="cell"></div>
+                <div data-type="button" data-fhem-cmd="set+CUL_HM_HM_CC_RT_DN_21FD96_Clima+desired-temp+16.0" data-icon="fa-moon-o" data-color="hsl(0,0%,50%)" class="cell"></div>
+        <div data-type="label" data-device="CUL_HM_HM_CC_RT_DN_21FD96_Weather" data-get="measured-temp" data-limits='[-73,18,22]' data-colors='["#6699FF","#AA6900","#FF0000"]' data-unit="%B0C%0A" class="cell bigger thin"></div>
+                <div data-type="label" class="cell">Temperatur</div>
+</li>
+</ul>
+</div>
+</body>
+</html>
