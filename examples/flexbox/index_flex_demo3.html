@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.2
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * Example for a flexbox layout instead of gridster
+     */
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="debug" content="2"> <!-- verbose level 1-6 = output to console;0 = not output -->
+
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/material-icons.min.css" />
+    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+    <link rel="stylesheet" href="css/fhem-mobil-ui.css" />
+
+    <script src="../pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+<body>
+<main id="content3">
+  <div class="hbox full-height">
+
+   <!-- +++ column 1 +++ -->
+   <div class="vbox phone-width ">
+
+      <!-- +++ HomeStatus +++ -->
+      <div class="card lift ">
+        <header class="bold large">HomeStatus</header>
+        <!-- place your widget here -->
+        <div class="hbox items-space-between">
+            <div class="grow-4">
+                <div data-type="label" data-device="homestatus" data-get="count" class="bold bigger main-color">3</div>
+                <div class="">Homies</div>
+            </div>
+            <div class="round grow-1" data-type="image" data-device="ftuitest" data-state-get="homie1" data-states='["anwesend","abwesend"]' data-classes='["","faded"]' data-width="60" data-height="60" data-url="http://lorempixel.com/150/150/people/1"></div>
+            <div class="round grow-1" data-type="image" data-device="ftuitest" data-state-get="homie2" data-states='["anwesend","abwesend"]' data-classes='["","faded"]' data-width="60" data-height="60" data-url="http://lorempixel.com/150/150/people/8"></div>
+            <div class="round grow-1" data-type="image" data-device="ftuitest" data-state-get="homie3" data-states='["anwesend","abwesend"]' data-classes='["","faded"]' data-width="60" data-height="60" data-url="http://lorempixel.com/150/150/people/9"></div>
+            <div class="round grow-1" data-type="image" data-device="ftuitest" data-state-get="homie4" data-states='["anwesend","abwesend"]' data-classes='["","faded"]' data-width="60" data-height="60" data-url="http://lorempixel.com/150/150/people/3"></div>
+
+        </div>
+      </div>
+
+      <!-- +++ Media +++ -->
+      <div class="card lift">
+        <header class="bold large">Media</header>
+        <div class="hbox">
+            <div class="round icon-width"
+                 data-type="image"  data-device="MPD1"  data-get="cover" data-width="60" data-height="60"></div>
+            <div class="grow-2  left-align">
+                <div data-type="label" data-device="MPD1" data-get="Title" data-substitution="s/Or//g" class="bold medium"></div>
+                <div data-type="label" data-device="MPD1" data-get="Artist" data-substitution="s/Or//g" class=""></div>
+            </div>
+            <div class="hbox grow-3">
+                <div class=""
+                      data-type="push" data-device="MPD1" data-set-on="previous"
+                      data-icon="fa-step-backward" data-background-icon="-">
+                </div>
+                <div class=""
+                     data-type="switch"
+                     data-device="MPD1"
+                     data-states='["play","pause","stop"]'
+                     data-set-states='["pause","play","play"]'
+                     data-background-icon="fa-circle-thin"
+                     data-background-colors='["gray","gray","gray"]'
+                     data-colors='["gray","gray","gray"]'
+                     data-icons='["fa-pause","fa-play","fa-play"]'>
+                </div>
+                <div class=""
+                     data-type="push" data-device="MPD1"
+                     data-icon="fa-step-forward" data-background-icon="-"
+                     data-set-on="next" >
+                </div>
+              </div>
+        </div>
+        <!-- Volume -->
+        <div class="hbox items-space-between">
+            <i class="mi mi-volume_down bigger icon-width main-color"></i>
+            <div class="grow-7 left-align">
+                <div class="bold medium">Volume</div>
+                <div data-type="label" data-device="ftuitest" data-get="progress" data-substitution="toDate().hhmm()" class="timestamp left-align"></div>
+            </div>
+            <div data-type="slider" data-device='AvReceiver' data-get='volume' data-set='volume' data-icon="fa-angle-down" data-background-icon="fa-square-o" data-set-on="down" class="horizontal"></div>
+        </div>
+      </div>
+    </div>
+
+  <!-- +++ column 2 +++ -->
+  <div class="vbox phone-width ">
+
+    <!-- +++ Schlafzimmer +++ -->
+    <div class="card lift">
+      <header class="bold large">Schlafzimmer</header>
+      <!-- Tisch links -->
+      <div class="hbox items-space-between">
+          <i class="fa fa-lightbulb-o bigger icon-width main-color"></i>
+          <div class="grow-7 left-align">
+              <div class="bold medium">Tisch links</div>
+              <div data-type="label" data-device="ftuitest" data-get="state" data-substitution="toDate().hhmm()" class="timestamp left-align"></div>
+          </div>
+          <div data-type="checkbox" data-device="ftuitest" class="grow-2"></div>
+      </div>
+      <!-- Deckenlampe -->
+      <div class="hbox items-space-between">
+          <i class="fa fa-lightbulb-o bigger icon-width main-color"></i>
+          <div class="grow-7 left-align">
+              <div class="bold medium">Deckenlampe</div>
+              <div data-type="label" data-device="bananlight" data-get="state" data-substitution="toDate().hhmm()" class="timestamp left-align"></div>
+          </div>
+          <div data-type="checkbox" data-device="bananlight" class="grow-2"></div>
+      </div>
+      <!-- Rolladen1 -->
+      <div class="hbox items-space-between">
+          <i class="mi mi-line_weight bigger icon-width main-color"></i>
+          <div class="grow-7 left-align">
+              <div class="bold medium">Rolladen links</div>
+              <div data-type="label" data-device="ftuitest" data-get="progress" data-substitution="toDate().hhmm()" class="timestamp left-align"></div>
+          </div>
+          <div class="grow-2">
+              <div class="width-narrow" data-type="push" data-device="Rollo" data-icon="fa-angle-down" data-background-icon="fa-square-o" data-set-on="down" ></div>
+              <div class="width-narrow" data-type="push" data-device="Rollo" data-icon="fa-angle-up" data-background-icon="fa-square-o" data-set-on="up" ></div>
+          </div>
+      </div>
+      <!-- Temperatur -->
+      <div class="hbox items-space-between">
+          <i class="fa ftui-thermo bigger icon-width main-color"></i>
+          <div class="grow-7 left-align">
+              <div class="bold medium">Temperatur</div>
+              <div data-type="label" data-device="SchlafzimmerHeizung_Clima" data-get="measured-temp" data-substitution="toDate().hhmm()" class="timestamp left-align"></div>
+          </div>
+          <div data-type="label" data-device="SchlafzimmerHeizung_Clima" data-get="measured-temp" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#ad3333"]' data-unit="&deg;C" class="bigger robotothin"></div>
+      </div>
+    </div>
+
+      <!-- +++ Wohnzimmer +++ -->
+      <div class="card lift">
+        <header class="bold large">Wohnzimmer</header>
+        <!-- Schranklampe -->
+        <div class="hbox items-space-between">
+            <i class="fa fa-lightbulb-o bigger icon-width main-color"></i>
+            <div class="grow-7 left-align">
+                <div class="bold medium">Schranklampe</div>
+                <div data-type="label" data-device="PowerAV_Sw" data-get="state" data-substitution="toDate().hhmm()" class="timestamp left-align"></div>
+            </div>
+            <div data-type="checkbox" data-device="PowerAV_Sw" class="grow-2"></div>
+        </div>
+        <!-- Deckenlampe -->
+        <div class="hbox items-space-between">
+            <i class="fa fa-lightbulb-o bigger icon-width main-color"></i>
+            <div class="grow-7 left-align">
+                <div class="bold medium">Deckenlampe</div>
+                <div data-type="label" data-device="bananlight" data-get="state" data-substitution="toDate().hhmm()" class="timestamp left-align"></div>
+            </div>
+            <div data-type="checkbox" data-device="bananlight" class="grow-2"></div>
+        </div>
+        <!-- Rolladen1 -->
+        <div class="hbox items-space-between">
+            <i class="mi mi-line_weight bigger icon-width main-color"></i>
+            <div class="grow-7 left-align">
+                <div class="bold medium">Rolladen links</div>
+                <div data-type="label" data-device="ftuitest" data-get="progress" data-substitution="toDate().hhmm()" class="timestamp left-align"></div>
+            </div>
+            <div class="hbox">
+                <div data-type="push" data-device="Rollo" data-icon="fa-angle-down" data-background-icon="fa-square-o" data-set-on="down" class=""></div>
+                <div data-type="push" data-device="Rollo" data-icon="fa-angle-up" data-background-icon="fa-square-o" data-set-on="up" class=""></div>
+            </div>
+        </div>
+        <!-- Rolladen2 -->
+        <div class="hbox items-space-between">
+            <i class="mi mi-line_weight bigger icon-width main-color"></i>
+            <div class="grow-7 left-align">
+                <div class="bold medium">Rolladen rechts</div>
+                <div data-type="label" data-device="ftuitest" data-get="progress" data-substitution="toDate().hhmm()" class="timestamp left-align"></div>
+            </div>
+            <div class="hbox">
+                <div data-type="push" data-device="Rollo" data-icon="fa-angle-down" data-background-icon="fa-square-o" data-set-on="down" class=""></div>
+                <div data-type="push" data-device="Rollo" data-icon="fa-angle-up" data-background-icon="fa-square-o" data-set-on="up" class=""></div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+</body>
+</html>

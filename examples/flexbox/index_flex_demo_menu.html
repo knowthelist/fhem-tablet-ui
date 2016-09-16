@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.2
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * Example for a flexbox layout instead of gridster
+     */
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="debug" content="2"> <!-- verbose level 1-6 = output to console;0 = not output -->
+
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
+    <link rel="stylesheet" href="lib/material-icons.min.css" />
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+        <link rel="stylesheet" href="css/ftui-bright-mint-ui.css" />
+        <!--link rel="stylesheet" href="css/fhem-mobil-ui.css" /-->
+
+    <script src="../pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+<body>
+<nav class="menu">
+        <div class="menu-trigger"></div>
+  <header class="">Menu</header>
+        <ul>
+    <li>
+        <div data-type="link" data-url="#index_flex_demo.html"
+        data-color="white"
+        data-width="115"
+        data-load="#content1"
+        data-text-align="left"
+        data-active-pattern="(.*/||.*#index_flex_demo.html)"
+        data-icon="fa-home" class=" large"><span>Dashboard</span></div>
+    </li>
+    <li>
+        <div data-type="link" data-url="#index_flex_demo2.html"
+        data-color="white"
+        data-width="115"
+        data-load="#content2"
+        data-text-align="left"
+        data-active-pattern=".*#index_flex_demo2.html"
+        data-icon="fa-music" class=" large"><span>Customers</span></div>
+
+    </li>
+    <li>
+        <div data-type="link" data-url="#flex_demo_footer.html"
+        data-load="#demo-footer"
+        data-color="white"
+        data-width="115"
+        data-text-align="left"
+        data-active-pattern=".*#flex_demo_footer.html"
+        data-icon="fa-sliders" class="large"><span>Users</span></div>
+
+    </li>
+    <li>
+        <div data-type="link" data-url="#index_flex_demo3.html"
+        data-load="#content3"
+        data-color="white"
+        data-width="115"
+        data-text-align="left"
+        data-active-pattern=".*#index_flex_demo3.html" data-icon="fa-lightbulb-o" class="large">
+        <span>Settings</span>
+        </div>
+    </li>
+  </ul>
+</nav>
+<main>
+    <div class="page" id="content1"></div>
+    <div class="page" id="content2"></div>
+    <div class="page" id="demo-footer"></div>
+    <div class="page" id="content3"></div>
+</main>
+
+</body>
+</html>
