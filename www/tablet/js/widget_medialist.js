@@ -49,7 +49,7 @@ var Modul_medialist = function () {
         });
 
         elem.on('click','.media', function(index) {
-            elem.data('value', $(this).index());
+            elem.data('value', elem.hasClass('index1') ? $(this).index() + 1 : $(this).index());
             elem.transmitCommand();
         });
     };

@@ -719,7 +719,9 @@ see examples in index_nav_fixed_mobil.html or index_nav_mobil.html
 - **data-background-color**      :
 - **data-color**       :
 - **data-text-color**  :
-- **class**            : autoscroll
+- **class**            : autoscroll, index1
+
+class="index1" force to provide index 1 based values for data-pos. 1,2,3,4 instead of 0,1,2,3
 
 data-get JSON-Object:
 [
