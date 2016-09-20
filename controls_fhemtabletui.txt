@@ -89,7 +89,7 @@ UPD 2016-09-06_21:34:53 6598 www/tablet/js/widget_label.js
 UPD 2016-09-06_21:34:53 6214 www/tablet/js/widget_level.js
 UPD 2016-09-06_21:34:53 8822 www/tablet/js/widget_link.js
 UPD 2016-09-06_21:34:53 1493 www/tablet/js/widget_loading.js
-UPD 2016-09-18_22:41:27 4382 www/tablet/js/widget_medialist.js
+UPD 2016-09-20_07:07:05 4439 www/tablet/js/widget_medialist.js
 UPD 2016-09-06_21:34:53 1857 www/tablet/js/widget_meteogram.js
 UPD 2016-09-06_21:34:53 3390 www/tablet/js/widget_multistatebutton.js
 UPD 2016-09-06_21:34:53 7744 www/tablet/js/widget_pagebutton.js
