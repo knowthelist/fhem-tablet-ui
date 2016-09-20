@@ -159,7 +159,8 @@ multi state notation
 - **data-background-icons**             : array of background icons related to the data-states array
 - **data-colors**                       : array of colors related to the data-states array
 - **data-background-colors**            : array of background colors related to the data-states array
-- **class**     			: readonly, 
+
+- **class**     			: readonly, compressed
 
 data-get-on and data-get-off accept also RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
 data-get-off="!on" means accept all but the data-get-on value (negation)
@@ -186,6 +187,10 @@ multi state notation
 - **data-background-icons**             : array of icons related to the data-states array
 - **data-colors**                       : array of colors related to the data-states array
 - **data-background-colors**            : array of colors related to the data-states array
+
+- **class**     			: compressed
+
+The CSS class 'compressed' forces the switch or symbol to a height and width of 1em instead of 2em. This saves space around the switch/symbol
 
 data-get-on,data-get-off and data-states accept also RegEx values.
 The value for one icon can also contain an additional animatation CSS name, e.g. "fa-exclamation-triangle fa-blink" for a blinking symbol
@@ -813,6 +818,7 @@ Positioning:
 - wider			: 15px extra space for the widget all around 
 - narrow		: shorter distant to the widget above 
 - fullsize		: 100% in width and height
+- compressed            : forces switches/symbols to a height and width of 1em instead of 2em to have less space around the icon
 
 Flexbox Layout:
 - vbox          : vertical box - items  one above the other

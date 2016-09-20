@@ -11,7 +11,8 @@ var Modul_medialist = function () {
         elem.find('.media').each(function(index) {
            $(this).removeClass('current')
         });
-        var currentElem = elem.find('.media').eq(pos);
+        var idx = elem.hasClass('index1') ? pos-1 : pos;
+        var currentElem = elem.find('.media').eq(idx);
         if ( currentElem.length > 0 ){
             currentElem.addClass("current");
             if ( elem.hasClass("autoscroll")) {
