@@ -198,8 +198,23 @@ var Modul_famultibutton = function () {
         }
     };
 
+    function isReadOnly(elem) {
+        var lock = elem.data('readonly');
+        return (lock == 'true' || lock == '1' || lock == 'on' );
+    }
+
     function toggleOn(elem) {
-        if(doubleclicked(elem, 'on')) {
+
+        if ( isReadOnly(elem) ) {
+            elem.addClass('fail-shake');
+            setTimeout(function() {
+                var faelem = elem.data('famultibutton');
+                if( faelem ) { faelem.setOff(); }
+                elem.removeClass('fail-shake');
+            }, 500);
+            return;
+        }
+        if(doubleclicked(elem, 'on') ) {
             this.clicked(elem, 'on');
             elem.trigger("toggleOn");
             checkForTimer(elem);
@@ -207,14 +222,27 @@ var Modul_famultibutton = function () {
             // blink=on     -> always reset state after 200ms
             // blink=off    -> never reset state after 200ms
             // blink=undef  -> reset state after 200ms if device is not set
-            if(blink == 'on' || (! elem.data('device') && blink !='off')) {
-                setTimeout(function() {elem.setOff()}, 200);
+            if(blink == 'on' || (! elem.data('device') && blink !='off') ) {
+                setTimeout(function() {
+                    var faelem = elem.data('famultibutton');
+                    if( faelem ) { faelem.setOff(); }
+                }, 200);
             }
         }
     };
 
     function toggleOff(elem) {
-        if(doubleclicked(elem, 'off')) {
+
+        if ( isReadOnly(elem) ) {
+            elem.addClass('fail-shake');
+            setTimeout(function() {
+                var faelem = elem.data('famultibutton');
+                if( faelem ) { faelem.setOn(); }
+                elem.removeClass('fail-shake');
+            }, 500);
+            return;
+        }
+        if( doubleclicked(elem, 'off') ) {
             this.clicked(elem, 'off');
             var id = elem.data("device") + "_" + elem.data('get');
             stopRunningTimer(elem);
@@ -225,7 +253,7 @@ var Modul_famultibutton = function () {
             $(document).trigger('onforTimerStopped', [id]);
 
             var blink = elem.data('blink');
-            if(blink == 'on' || (! elem.data('device') && blink !='off')) {
+            if ( blink == 'on' || (! elem.data('device') && blink !='off') ) {
                 setTimeout(function() {elem.setOn()}, 200);
             }
         }
@@ -335,6 +363,7 @@ var Modul_famultibutton = function () {
         elem.initData('get-warn'                ,-1);
 
         this.addReading(elem,'get');
+        this.addReading(elem,'warn');
 
         elem.initData('off-color'           , getStyle('.'+this.widgetname+'.off','color')              || '#505050');
         elem.initData('off-background-color', getStyle('.'+this.widgetname+'.off','background-color')   || '#505050');
@@ -345,7 +374,7 @@ var Modul_famultibutton = function () {
         if ( elem.isDeviceReading('on-background-color') ) {this.addReading(elem,'on-background-color');}
         if ( elem.isDeviceReading('off-color') ) {this.addReading(elem,'off-color');}
         if ( elem.isDeviceReading('off-background-color') ) {this.addReading(elem,'off-background-color');}
-
+        if ( elem.isDeviceReading('lock') ) {this.addReading(elem,'lock');}
     };
 
     function update_cb(elem) {};
@@ -404,7 +433,26 @@ var Modul_famultibutton = function () {
                     }
                 });
             });
-        };
+
+        //extra reading for lock
+        me.elements.filterDeviceReading('lock',dev,par)
+        .each(function(idx) {
+            var elem = $(this);
+            elem.data('readonly' ,elem.getReading('lock').val);
+        });
+
+        //extra reading for warn
+        me.elements.filterDeviceReading('warn',dev,par)
+        .each(function(idx) {
+            var elem = $(this);
+            var warn = elem.getReading('warn').val;
+            if ( warn  > 0 || warn == 'true' || warn == 'on' ) {
+                showOverlay(elem,ftui.getPart(warn,elem.data('get-warn')));
+            } else {
+                showOverlay(elem, "" );
+            }
+        });
+    };
 
     // public
     // inherit all public members from base class

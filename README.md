@@ -139,6 +139,8 @@ General attribute meaning
 - **data-set**      : name of the reading to set from FHEM (default '')
 - **data-cmd**      : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-doubleclick**: timeout to wait for x millisecondes click or touch. '0' disables the doubleclick feature. (default '0')
+- **data-lock**  : name of the reading containing a boolean value for the lock (readonly) parameter (default <null>)
+- **data-warn**  : name of the reading containing a integer value to be shown as a red warn overlay (default <null>)
 
 dual state notation   
 - **data-get-on**   : value for ON status to get or an array of states (default 'on')
@@ -170,6 +172,7 @@ See [examples](#switch) of Switch
 
 ####Symbol widgets
 - **data-get**      			: name of the reading to get from FHEM (default 'STATE')
+- **data-warn**  : name of the reading containing a integer value to be shown as a red warn overlay (default <null>)
 
 dual state notation
 - **data-get-on**   			: value for ON status to get or an array of states (default 'open')
@@ -311,7 +314,7 @@ data-device, data-get can be references (jQuery seletor) to select-widgets to ch
 - **data-font**  :  (default '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
 - **data-font-weight**
 - **data-unit** : add a unit after the center value.
-- **data-readonly-get**  : name of the reading containing the boolean value for the readonly parameter (default <null>)
+- **data-lock**  : name of the reading containing the boolean value for the lock (readonly) parameter (default <null>)
 - **class**		: mini, small, large, readonly
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/knob.png)
