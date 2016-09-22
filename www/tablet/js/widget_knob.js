@@ -57,9 +57,12 @@ var Modul_knob = function () {
 
         elem.data('font',       elem.data('font')       || getStyle('.'+this.widgetname,'font-family')  || '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
         elem.data('font-weight',elem.data('font-weight')|| getStyle('.'+this.widgetname,'font')         || 'normal');
+
         elem.initData('unit'    ,'');
+        elem.initData('lock'    ,elem.data('readonly-get') );
+
         this.addReading(elem,'get');
-        this.addReading(elem,'readonly-get');
+        this.addReading(elem,'lock');
     };
 
     function init_ui(elem) {
@@ -89,7 +92,6 @@ var Modul_knob = function () {
               'tickdistance': elem.data('tickstep'),
               'lastvalue':  0,
               'displayInput':   elem.data('displayinput'),
-              'readOnly' :      elem.hasClass('readonly'),
               'angleOffset':    elem.data('angleoffset'),
               'angleArc':       elem.data('anglearc'),
               'cmd':            elem.data('cmd'),
@@ -132,15 +134,15 @@ var Modul_knob = function () {
        });
 
         //extra reading for readOnly
-        me.elements.filterDeviceReading('readonly-get',dev,par)
+        me.elements.filterDeviceReading('lock',dev,par)
         .each(function(idx) {
             var elem = $(this);
-            var val = elem.getReading('readonly-get').val;
+            var val = elem.getReading('lock').val;
             if(val) {
                 var knob_elem = elem.find('input');
                 if ( knob_elem ){
                     ftui.log(3, me.widgetname + ' dev:'+dev+' par:'+par+' change '+elem.data('device')+':readOnly to ' +val );
-                    knob_elem.trigger( 'configure', { 'readOnly': (val === 'true')  } );
+                    knob_elem.trigger( 'configure', { 'readOnly': (val === 'true' || val === '1' || val === 'on' )  } );
                 }
             }
         });

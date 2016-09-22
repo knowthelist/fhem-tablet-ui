@@ -918,7 +918,7 @@ var ftui = {
 
     getPart: function (s,p) {
         if ($.isNumeric(p)){
-            var c = (s && isValid(s)) ? s.split(" ") : '';
+            var c = (s && isValid(s)) ? s.toString().split(" ") : '';
             return (c.length >= p && p>0 ) ? c[p-1] : s;
         }
         else {
@@ -1251,7 +1251,8 @@ $.fn.mappedColor = function(key) {
     return getStyle('.'+$(this).data(key),'color') || $(this).data(key);
 };
 $.fn.isDeviceReading = function(key) {
-    return !$.isNumeric($(this).data(key)) && $(this).data(key).match(/:/);
+    var reading = $(this).data(key);
+    return reading && !$.isNumeric(reading) && reading.match(/:/);
 };
 $.fn.isExternData = function(key) {
     var data = $(this).data(key);
