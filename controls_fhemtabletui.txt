@@ -56,8 +56,8 @@ UPD 2016-09-06_21:34:52 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2016-09-06_21:34:52 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2016-09-06_21:34:52 13934 www/tablet/index-example.html
 UPD 2016-09-06_21:34:52 2947 www/tablet/index_empty.html
-UPD 2016-09-11_11:32:35 45973 www/tablet/js/fhem-tablet-ui.js
-UPD 2016-09-15_18:42:55 24826 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2016-09-22_21:38:51 46012 www/tablet/js/fhem-tablet-ui.js
+UPD 2016-09-22_21:45:38 24834 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-09-06_21:34:52 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-09-06_21:34:52 1474 www/tablet/js/widget_button.js
 UPD 2016-09-06_21:34:52 6415 www/tablet/js/widget_calview.js
@@ -84,7 +84,7 @@ UPD 2016-09-06_21:34:52 2633 www/tablet/js/widget_input.js
 UPD 2016-09-06_21:34:52 8286 www/tablet/js/widget_itunes_artwork.js
 UPD 2016-09-06_21:34:52 2751 www/tablet/js/widget_joinedlabel.js
 UPD 2016-09-06_21:34:52 3001 www/tablet/js/widget_klimatrend.js
-UPD 2016-09-06_21:34:52 7224 www/tablet/js/widget_knob.js
+UPD 2016-09-22_21:15:50 7237 www/tablet/js/widget_knob.js
 UPD 2016-09-06_21:34:53 6598 www/tablet/js/widget_label.js
 UPD 2016-09-06_21:34:53 6214 www/tablet/js/widget_level.js
 UPD 2016-09-06_21:34:53 8822 www/tablet/js/widget_link.js
@@ -158,5 +158,5 @@ UPD 2016-09-06_21:34:53 15163 www/tablet/lib/swiper.min.css
 UPD 2016-09-06_21:34:53 683 www/tablet/lib/switchery.min.css
 UPD 2016-09-06_21:34:53 24447 www/tablet/lib/switchery.min.js
 UPD 2016-09-06_21:34:53 750 www/tablet/repair.html
-UPD 2016-09-06_21:34:53 3576 www/tablet/test_knob.html
+UPD 2016-09-22_21:42:06 3568 www/tablet/test_knob.html
 UPD 2016-09-06_21:34:53 3286 www/tablet/test_popup.html
