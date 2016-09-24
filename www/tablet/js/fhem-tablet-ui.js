@@ -1098,6 +1098,14 @@ String.prototype.toDate = function() {
     return dateFromString(this);
 }
 
+String.prototype.parseJson = function() {
+    return parseJsonFromString(this);
+}
+
+this.parseJsonFromString = function (str) {
+    return JSON.parse(str);
+}
+
 String.prototype.toMinFromSec = function() {
     var x = Number(this);
     var ss = (Math.floor(x % 60)).toString();
