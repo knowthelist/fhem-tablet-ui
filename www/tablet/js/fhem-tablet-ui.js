@@ -240,6 +240,7 @@ var ftui = {
                           'height':'100%'
                      });
             }
+            $('.gridster > ul > li:has(.center)').addClass('vbox');
             // max height for inner boxes
             $('.gridster > ul > li:has(.vbox)').addClass('vbox');
         }

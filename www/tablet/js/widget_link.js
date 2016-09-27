@@ -10,8 +10,14 @@
 var Modul_link = function () {
 
     function onClicked(elem) {
-      if( elem.isValidData('url') ) {
-          document.location.href = elem.data('url');
+
+        if( elem.isValidData('url') ) {
+          var target = elem.data('url');
+          if ( elem.hasClass('blank') ){
+              window.open(target, '_blank');
+          } else {
+              document.location.href = target;
+          }
           var hashUrl=window.location.hash.replace('#','');
           if ( hashUrl && elem.isValidData('load') ) {
               elem.closest('nav').trigger('changedSelection',[elem.text()]);
@@ -29,7 +35,7 @@ var Modul_link = function () {
           $.get(elem.data('url-xhr'));
       } else if( elem.isValidData('fhem-cmd') ) {
           ftui.toast(elem.data('fhem-cmd'));
-          setFhemStatus(elem.data('fhem-cmd'));
+          ftui.setFhemStatus(elem.data('fhem-cmd'));
       } else if( elem.isValidData('device') ) {
           elem.transmitCommand();
       };
@@ -100,6 +106,7 @@ var Modul_link = function () {
         elem.initData('active-color'            ,elem.data('color'));
         elem.initData('active-border-color'     ,elem.data('border-color'));
         elem.initData('active-background-color' ,elem.data('background-color'));
+        this.addReading(elem,'get');
     };
 
     function init_ui(elem) {
@@ -200,6 +207,7 @@ var Modul_link = function () {
         var hashUrl=elem.data('url') || '';
         hashUrl = hashUrl.replace('#','');
         var lockID = ['ftui',me.widgetname,hashUrl,sel].join('_');
+
         localStorage.removeItem(lockID);
 
         // prefetch page if necessary
@@ -222,7 +230,15 @@ var Modul_link = function () {
         return elem;
     };
 
-    function update(dev,par) {};
+    function update(dev,par) {
+        this.elements.filterDeviceReading('get',dev,par)
+        .each(function(index) {
+            var elem = $(this);
+            var val = elem.getReading('get').val;
+            elem.data('url',val);
+            elem.attr('title',val);
+        });
+     };
 
     // public
     // inherit all public members from base class

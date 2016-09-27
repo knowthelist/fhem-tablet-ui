@@ -660,6 +660,7 @@ See [examples](#range) of Range
 - **data-width**                   : width of the link  (default 'auto')
 - **data-height**                  : height of the link (default 'auto')
 - **data-url**                     : URL as a adress to jump to (default '')
+- **data-get**                     : name of the reading where to get the url from (default null)
 - **data-url-xhr**                 : URL as a adress to call in background (default '')
 - **data-fhem-cmd**                : a FHEM command to call (default '')
 - **data-text-align**              : alignment of text ['left','center','right']  (default 'center')
@@ -667,6 +668,9 @@ See [examples](#range) of Range
 - **data-active-color**            : rgb value or color name for the text and icon in case active-pattern is matching (default same as data-color)
 - **data-active-background-color** : rgb value or color name for the back in case active-pattern is matching (default same as data-background-color)
 - **data-active-border-color**     : rgb value or color name for the border in case active-pattern is matching (default same as data-border-color)
+- **class**                         : blank,
+
+class 'blank' force to open the given URL on a new window
 
 ####Spinner widgets
 - **data-color**                   : rgb value or color name for the level bar (default 'orange')
@@ -838,7 +842,6 @@ Flexbox Layout:
 - items-center  : how to align items in a hbox
 - items-bottom  : how to align items in a hbox
 - items-space-between  : how to align items in a hbox
-
 
 
 Icon configuration

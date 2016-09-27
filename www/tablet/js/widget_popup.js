@@ -16,12 +16,14 @@ var Modul_popup = function () {
                     opacity: 0
                 }, 500, "swing", function() {
                     ftui.showModal(false);
+                    dialog.trigger('fadeout');
                 });
             break;
         default:
 
             dialog.fadeOut(500, function() {
                 ftui.showModal(false);
+                dialog.trigger('fadeout');
             });
         }
     };
