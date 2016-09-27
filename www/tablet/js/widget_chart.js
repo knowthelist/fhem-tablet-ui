@@ -558,7 +558,7 @@ var widget_chart = {
 			case 'histeps':
 				if (arg.length > 1) {
 					res.push("M" + Math.max(arg[0][0],(3*arg[0][0]-arg[1][0])/2) + "," + (closed?min:arg[0][1]) + " L");
-					res.push(Math.max(arg[0][0],(3*arg[0][0])-arg[1][0]/2) + "," + (arg[0][1]));
+					res.push(Math.max(arg[0][0],(3*arg[0][0]-arg[1][0])/2) + "," + (arg[0][1]));
 					res.push((arg[0][0]+arg[1][0])/2 + "," + (arg[0][1]));
 					for (var i=1,l=arg.length-1;i<l;i++) {
 						if(arg[i]) {
@@ -855,17 +855,50 @@ var widget_chart = {
 		aret[iarr] = strRet;
 		return aret;
 	},
+	moveto(elem,x,y,duration) {
+		var xact = elem.attr("x");
+		var yact = elem.attr("y");
+		if (xact == undefined) {xact = x; elem.attr({'x':y});}
+		if (yact == undefined) {yact = y; elem.attr({'y':y});}
+		
+		elem.attr({'x':x});
+		elem.attr({'y':y});
+		//console.log('in Values: ',xact,yact,x,y);
+		if (Math.abs(xact-x)>10 || Math.abs(yact-y)>10) {
+			animateMovement(elem,parseFloat(xact),parseFloat(yact),parseFloat(x),parseFloat(y),duration/10);
+		}
+		
+		function animateMovement(sel, cx, cy, mx, my, steps) { // recursively called function for animating position change for SVG
+			if(steps > 0) {
+				sel.attr("x", cx+(mx-cx)/steps);
+				sel.attr("y", cy+(my-cy)/steps);
+			
+				steps--;
+				setTimeout(function(){ animateMovement(sel,cx,cy,mx,my,steps)},10);
+			}
+		}
+	},
 	getDaysAgo: function (inStr, data) {	// helper function to check date strings
 		var dStr = inStr;
 		var doRounding = false;
 		data.xclassifier = '';
 		if ($.isNumeric(dStr)) return (!data.nofulldays)?parseInt(dStr):parseFloat(dStr);
 		var classifier = ($.isNumeric(dStr))?'':dStr.charAt(dStr.length-1);	// check if last character of input string for 'd','D','w','W','m','M','y','Y'
-		if (new RegExp("[dDwWmMyY]").test(classifier) && dStr!='now') {dStr=dStr.slice(0,dStr.length-1);}
-		if (new RegExp("[DWMY]").test(classifier)) {classifier = classifier.toLowerCase(); doRounding = true;} // check if capital letter and set rounding flag
+		if (new RegExp("[hHdDwWmMyY]").test(classifier) && dStr!='now') {dStr=dStr.slice(0,dStr.length-1);}
+		if (new RegExp("[HDWMY]").test(classifier)) {classifier = classifier.toLowerCase(); doRounding = true;} // check if capital letter and set rounding flag
 		data.xclassifier = classifier;
 		if ($.isNumeric(dStr)) { // check if string is a number and not a date string
 			switch(classifier) {
+				case 'h': // number counts in hours
+					if (!doRounding) {
+						var now = new Date();
+						var ddiff = widget_chart.dateDiff(new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours(),now.getMinutes(),0,0), new Date(now.getFullYear(),now.getMonth(),now.getDate(),parseFloat(dStr),0,0,0), 'd');
+					} else {
+						ddiff = parseFloat(dStr)/24;
+						if (!data.nofulldays) ddiff = parseInt(ddiff);
+					}
+					return ddiff;
+					break;
 				case 'd': // number counts in days
 					ddiff = parseFloat(dStr);
 					if (!data.nofulldays) ddiff = parseInt(ddiff);
@@ -985,7 +1018,8 @@ var widget_chart = {
 							if (values[i] && lastV[i] && (values[i][0] != lastV[i][0])) {
 								if (data.logProxy) {
 									var p = data.transD2W([values[i][0],values[i][1]],'primary');
-									crh_text[i].attr({'x':p[0], 'y':p[1]});
+									//crh_text[i].attr({'x':p[0], 'y':p[1]});
+									widget_chart.moveto(crh_text[i],p[0],p[1],200);
 									var prefix = (data.legend!=undefined)?((data.legend[i]!='')?data.legend[i] + ": ":''):'';
 									data.graphsshown[i]?
 										crh_text[i].text(prefix + values[i][2] + " " + data.yunit):
@@ -997,12 +1031,41 @@ var widget_chart = {
 									var mx = (uxis!='secondary')?data.max_save:data.max_save_sec;
 									var mn = (uxis!='secondary')?data.min_save:data.min_save_sec;
 									var legendY=(((mx-values[i][1]))/(mx-mn)*data.graphHeight/100*target.height()+data.topOffset);
-									crh_text[i].attr({'x':values[i][0], 'y':legendY+''});
+									//crh_text[i].attr({'x':values[i][0], 'y':legendY+''});
+									widget_chart.moveto(crh_text[i],values[i][0],legendY,50);
 									var prefix = (data.legend!=undefined)?((data.legend[i]!='')?data.legend[i] + ": ":''):'';
 									var valtxt = values[i][2]?values[i][2]:(parseInt((values[i][1]+yshift)/yscale*100+0.5))/100 + " " + (uxis!='secondary'?data.yunit:data.yunit_sec);
 									data.graphsshown[i]?crh_text[i].text(prefix + valtxt):crh_text[i].text("");
 								}
 							}
+						}
+
+						if (!data.logProxy) { // draw time value below x axis
+							i=crh_text.length-1;
+							legendY = data.graphHeight/100*target.height()+data.topOffset+widget_chart.getTextSizePixels(crh_text[i].parents("[class^=basesvg]"),'O','crosshair').height;
+							var posX = data.graphWidth*x/xrange*data.basewidth/100 + data.textWidth_prim;
+							var xminutes = (x-data.textWidth_prim)*100/data.basewidth*data.xrange/data.graphWidth;
+							var tstart = dateFromString(data.mindate);
+							var tx = new Date(tstart);
+							tx.setMinutes(tstart.getMinutes() + xminutes);
+							if (data.timeformat!=undefined && data.timeformat!='') {
+								var tarr = widget_chart.getDateTimeString(tx,data.timeformat);
+								var textX2Value = tarr[0];
+								for (var i=1, il=tarr.length; i<il; i++) {
+									textX2Value+= ' ' + tarr[i];
+								}
+							} else {
+								var textX2Value = (tx.hhmm()=="00:00"||data.xticks>1440) ? tx.ddmm() : tx.ddmm() + tx.hhmm() ; // if we are at exactly 00:00 of if difference between ticks is larger than a day don't display hours.
+							}
+							crh_text[i].text(textX2Value);
+							var rw = widget_chart.getTextSizePixels(target,textX2Value,'text crosshair').width;
+							var rh = widget_chart.getTextSizePixels(target,textX2Value,'text crosshair').height;
+							if (!crh_text[i].parent().find('rect').length) {
+								crh_text[i].parent().prepend(widget_chart.createElem('rect').attr({'x':x-rw/2,'y':legendY-rh/2,'width':rw+'px','height':rh+'px','style':'fill:black'}));
+								crh_text[i].attr({'text-anchor':'middle'});
+							}
+							crh_text[i].parent().find('rect').attr({'x':x-rw/2, 'y':legendY-rh/2});
+							crh_text[i].attr({'x':x,'y':legendY+3});
 						}
 						data.lastV = values;
 						//console.log(values);
@@ -1472,6 +1535,12 @@ var widget_chart = {
 							}
 						} else {
 							var val = ftui.getPart(value.replace('\r\n',''),2);
+							if (data.ymapping) {
+								if ($.isArray(data.ymapping)) {
+									var tval = data.ymapping[val]?data.ymapping[val][1]:val;
+									val = tval;
+								}
+							}
 							var minutes = diffMinutes(tstart,dateFromString(value));
 							if (parseFloat(minutes) < 0) minutes = "0";
 							if (val && minutes && $.isNumeric(val)){
@@ -1636,17 +1705,6 @@ var widget_chart = {
 			//console.log(data.instance, data, data.basewidth, data.baseheight);
 		}
 		
-		// generate crosshair container for cursor
-		var crosshair = widget_chart.createElem('g').attr({'class':'crosshair','pointer-events':'none','style':'overflow: inherit'});
-		crosshair.append(widget_chart.createElem('line').attr({'class':'crosshair','style':data.DDD.String.Rot+'; '+data.DDD.String.Trans(0,0,data.DDD.Distance,data.xStrTO,data.yStrTO)}));
-		if (data.DDD.Active) crosshair.append(widget_chart.createElem('line').attr({'class':'crosshair','style':data.DDD.String.Rot+'; '+data.DDD.String.Trans(parseFloat(data.DDD.Width),data.nGraphs-1,data.DDD.Distance,data.xStrTO,data.yStrTO)}));
-
-		for (var k=0; k<data.nGraphs; k++) { // prepare crosshair text elements for each graph
-			var g = widget_chart.createElem('g').attr({'class':'crosshair', 'style':data.DDD.String.Rot+'; '+data.DDD.String.Trans(0,k,data.DDD.Distance,data.xStrTO,data.yStrTO)})
-			crosshair.append(g);
-			g.append(widget_chart.createElem('text').attr({'class':'crosshair', 'filter':'url(#filterbackground)', 'style':'stroke-width:0px', 'text-anchor':'end', 'text-anchor':'end'}));
-		}
-	
 		//calculate xticks automatically
 		if (xticks == -1) {
 			var lFs = tstart.isLeapYear()?1:0;
@@ -1800,8 +1858,6 @@ var widget_chart = {
 			svg_new.prepend(widget_chart.createElem('text').attr({'class':'caption','x':'50%','y':fszT+'px','text-anchor':'middle'}).text(headstr));
 		}
 
-		svg_new.find('[id="baseforDDD"]').append(crosshair); // add crosshair
-		
 		// hack for wrong behaviour of Firefox
 		var attrval = {};
 		var stV = widget_chart.getStyleRuleValue(classesContainer, 'fill', ".chart-background");
@@ -1868,24 +1924,6 @@ var widget_chart = {
 			var caption_text = widget_chart.createElem('text').attr({'class':'caption'+(data.showlegend?' active':' inactive'),'x':'49%','y':nobuttons?fszC/2+fszT:Math.max(fszC,fszB)/2+fszT,'dy':'0.4em','style':'text-anchor:end'});
 			caption_text.text("Legend");
 			legend_menu.append(caption_text);
-		}
-
-		// text element for show/hide of crosshair cursor
-		if (!nobuttons) {
-			var cursor_text = widget_chart.createElem('text').attr({'class':'caption'+((data.crosshair)?' active':' inactive'),'x':'51%','y':nobuttons?fszC/2+fszT:Math.max(fszC,fszB)/2+fszT,'dy':'0.4em','text-anchor':'begin'});
-			cursor_text.text("Cursor");
-			cursor_text.on('click', function(event) {
-				if ($(event.delegateTarget).parents("[class^=basesvg]").parent().data('crosshair')) {
-					$(event.delegateTarget).parents("[class^=basesvg]").parent().data('crosshair',false);
-					$(event.delegateTarget).parents("[class^=basesvg]").find('g.crosshair').hide();
-					$(event.delegateTarget).attr({'class':'caption inactive'});
-				} else {
-					$(event.delegateTarget).parents("[class^=basesvg]").parent().data('crosshair',true);
-					$(event.delegateTarget).parents("[class^=basesvg]").find('g.crosshair').show();
-					$(event.delegateTarget).attr({'class':'caption active'});
-				}
-			});
-			legend_menu.append(cursor_text);
 		}
 
 		// generate container, content and dynamics (events) for legend container
@@ -2730,6 +2768,37 @@ var widget_chart = {
 
 		svg_new.find("[class*=scaleyinvert]").each(function(index) {$(this).attr({'transform':'scale(1 -1)'});});
 
+		// generate crosshair container for cursor
+		var crosshair = widget_chart.createElem('g').attr({'class':'crosshair','pointer-events':'none','style':'overflow: inherit'});
+		crosshair.append(widget_chart.createElem('line').attr({'class':'crosshair','style':data.DDD.String.Rot+'; '+data.DDD.String.Trans(0,0,data.DDD.Distance,data.xStrTO,data.yStrTO)}));
+		if (data.DDD.Active) crosshair.append(widget_chart.createElem('line').attr({'class':'crosshair','style':data.DDD.String.Rot+'; '+data.DDD.String.Trans(parseFloat(data.DDD.Width),data.nGraphs-1,data.DDD.Distance,data.xStrTO,data.yStrTO)}));
+
+		for (var k=0, lk=data.logProxy?data.nGraphs:data.nGraphs+1; k<lk; k++) { // prepare crosshair text elements for each graph
+			var g = widget_chart.createElem('g').attr({'class':'crosshair', 'style':data.DDD.String.Rot+'; '+data.DDD.String.Trans(0,k<data.nGraphs?k:0,data.DDD.Distance,data.xStrTO,data.yStrTO)})
+			crosshair.append(g);
+			g.append(widget_chart.createElem('text').attr({'class':'crosshair', 'filter':'url(#filterbackground)', 'style':'stroke-width:0px', 'text-anchor':'end', 'text-anchor':'end'}));
+		}
+	
+		svg_new.find('[id="baseforDDD"]').append(crosshair); // add crosshair
+		
+		// text element for show/hide of crosshair cursor
+		if (!nobuttons) {
+			var cursor_text = widget_chart.createElem('text').attr({'class':'caption'+((data.crosshair)?' active':' inactive'),'x':'51%','y':nobuttons?fszC/2+fszT:Math.max(fszC,fszB)/2+fszT,'dy':'0.4em','text-anchor':'begin'});
+			cursor_text.text("Cursor");
+			cursor_text.on('click', function(event) {
+				if ($(event.delegateTarget).parents("[class^=basesvg]").parent().data('crosshair')) {
+					$(event.delegateTarget).parents("[class^=basesvg]").parent().data('crosshair',false);
+					$(event.delegateTarget).parents("[class^=basesvg]").find('g.crosshair').hide();
+					$(event.delegateTarget).attr({'class':'caption inactive'});
+				} else {
+					$(event.delegateTarget).parents("[class^=basesvg]").parent().data('crosshair',true);
+					$(event.delegateTarget).parents("[class^=basesvg]").find('g.crosshair').show();
+					$(event.delegateTarget).attr({'class':'caption active'});
+				}
+			});
+			legend_menu.append(cursor_text);
+		}
+
 		// register events for crosshair cursor
 		svg_new.find("rect.chart-background, [id*='graph-']").on("mouseenter touchstart",function(event) {
 			widget_chart.doEvent(event);
@@ -3025,7 +3094,7 @@ function update (dev,par) {
 	var deviceElements= this.elements.filter("div[data-logdevice]");
 	var prev_width = [];
 	prev_width[$(base).data('instance')] = $(base).find('svg.basesvg'+$(base).data('instance')).width();
-	widget_chart.doLog("Update triggered with: " + dev + par);
+	widget_chart.doLog("Update triggered with: " + dev + ":" + par);
 
 	function waitForInitialization(base,instance,type,i) {
 		data=$(base).data();
@@ -3044,6 +3113,10 @@ function update (dev,par) {
 	deviceElements.each(function(index) {
 		var elem = $(this);
 		var isLogdevice = ($.isArray(elem.data('logdevice')))?elem.data('logdevice').join(',').search(dev)>=0:(typeof elem.data('logdevice') == 'string')?elem.data('logdevice')==dev:false;
+		if (elem.data('device')) {
+			var isDevice = ($.isArray(elem.data('device')))?elem.data('device').join(',').search(dev)>=0:(typeof elem.data('device') == 'string')?elem.data('device')==dev:false;
+			isLogdevice = isLogdevice || isDevice;
+		}
 		// if (isLogdevice) {console.log(elem.data('logdevice'), dev, isLogdevice, elem.data('get'), par);}
 		if ( elem.data('get')==par && isLogdevice ) {
 			if (elem.closest('[data-type="popup"]').length==0) { // we need to find out if the chart is inside a popup for special care
