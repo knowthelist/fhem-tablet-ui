@@ -56,12 +56,12 @@ UPD 2016-09-06_21:34:52 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2016-09-06_21:34:52 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2016-09-06_21:34:52 13934 www/tablet/index-example.html
 UPD 2016-09-06_21:34:52 2947 www/tablet/index_empty.html
-UPD 2016-09-24_13:08:25 46170 www/tablet/js/fhem-tablet-ui.js
-UPD 2016-09-24_13:10:13 24965 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2016-09-26_23:53:34 46238 www/tablet/js/fhem-tablet-ui.js
+UPD 2016-09-27_20:56:06 25020 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-09-06_21:34:52 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-09-06_21:34:52 1474 www/tablet/js/widget_button.js
 UPD 2016-09-06_21:34:52 6415 www/tablet/js/widget_calview.js
-UPD 2016-09-06_21:34:52 185893 www/tablet/js/widget_chart.js
+UPD 2016-09-27_17:39:03 189506 www/tablet/js/widget_chart.js
 UPD 2016-09-06_21:34:52 4005 www/tablet/js/widget_checkbox.js
 UPD 2016-09-10_02:36:33 2318 www/tablet/js/widget_circlemenu.js
 UPD 2016-09-06_21:34:52 1295 www/tablet/js/widget_classchanger.js
@@ -87,7 +87,7 @@ UPD 2016-09-06_21:34:52 3001 www/tablet/js/widget_klimatrend.js
 UPD 2016-09-22_21:15:50 7237 www/tablet/js/widget_knob.js
 UPD 2016-09-06_21:34:53 6598 www/tablet/js/widget_label.js
 UPD 2016-09-06_21:34:53 6214 www/tablet/js/widget_level.js
-UPD 2016-09-06_21:34:53 8822 www/tablet/js/widget_link.js
+UPD 2016-09-27_20:53:39 9279 www/tablet/js/widget_link.js
 UPD 2016-09-06_21:34:53 1493 www/tablet/js/widget_loading.js
 UPD 2016-09-20_07:07:05 4439 www/tablet/js/widget_medialist.js
 UPD 2016-09-06_21:34:53 1857 www/tablet/js/widget_meteogram.js
@@ -95,7 +95,7 @@ UPD 2016-09-06_21:34:53 3390 www/tablet/js/widget_multistatebutton.js
 UPD 2016-09-06_21:34:53 7744 www/tablet/js/widget_pagebutton.js
 UPD 2016-09-06_21:34:53 8090 www/tablet/js/widget_pagetab.js
 UPD 2016-09-06_21:34:53 5048 www/tablet/js/widget_playstream.js
-UPD 2016-09-06_21:34:53 7425 www/tablet/js/widget_popup.js
+UPD 2016-09-27_17:54:49 7515 www/tablet/js/widget_popup.js
 UPD 2016-09-06_21:34:53 3385 www/tablet/js/widget_progress.js
 UPD 2016-09-10_23:37:50 1508 www/tablet/js/widget_push.js
 UPD 2016-09-06_21:34:53 5604 www/tablet/js/widget_range.js

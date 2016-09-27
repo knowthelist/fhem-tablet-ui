@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2016-09-24
- - parseJson for data-substituion
+2016-09-27
+ - Added data-get to link-widget to change url via reading
