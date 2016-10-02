@@ -84,7 +84,7 @@ UPD 2016-09-06_21:34:52 2633 www/tablet/js/widget_input.js
 UPD 2016-09-06_21:34:52 8286 www/tablet/js/widget_itunes_artwork.js
 UPD 2016-09-06_21:34:52 2751 www/tablet/js/widget_joinedlabel.js
 UPD 2016-09-06_21:34:52 3001 www/tablet/js/widget_klimatrend.js
-UPD 2016-09-22_21:15:50 7237 www/tablet/js/widget_knob.js
+UPD 2016-10-02_13:54:41 7237 www/tablet/js/widget_knob.js
 UPD 2016-09-06_21:34:53 6598 www/tablet/js/widget_label.js
 UPD 2016-09-06_21:34:53 6214 www/tablet/js/widget_level.js
 UPD 2016-09-27_20:53:39 9279 www/tablet/js/widget_link.js
@@ -111,7 +111,7 @@ UPD 2016-09-14_22:19:05 2865 www/tablet/js/widget_svgplot.js
 UPD 2016-09-06_21:34:53 4123 www/tablet/js/widget_swiper.js
 UPD 2016-09-10_23:54:03 1308 www/tablet/js/widget_switch.js
 UPD 2016-09-06_21:34:53 1871 www/tablet/js/widget_symbol.js
-UPD 2016-09-08_20:20:49 6891 www/tablet/js/widget_thermostat.js
+UPD 2016-10-02_13:57:34 7536 www/tablet/js/widget_thermostat.js
 UPD 2016-09-06_21:34:53 2587 www/tablet/js/widget_tts.js
 UPD 2016-09-06_21:34:53 7109 www/tablet/js/widget_volume.js
 UPD 2016-09-22_20:44:25 754 www/tablet/js/widget_wakeup.js
@@ -140,8 +140,8 @@ UPD 2016-09-06_21:34:53 18412 www/tablet/lib/jquery.datetimepicker.css
 UPD 2016-09-06_21:34:53 80573 www/tablet/lib/jquery.datetimepicker.js
 UPD 2016-09-06_21:34:53 3021 www/tablet/lib/jquery.gridster.min.css
 UPD 2016-09-06_21:34:53 44235 www/tablet/lib/jquery.gridster.min.js
-UPD 2016-09-06_21:34:53 27962 www/tablet/lib/jquery.knob.mod.js
-UPD 2016-09-06_21:34:53 11611 www/tablet/lib/jquery.knob.mod.min.js
+UPD 2016-10-02_13:51:44 28001 www/tablet/lib/jquery.knob.mod.js
+UPD 2016-10-02_13:58:46 11636 www/tablet/lib/jquery.knob.mod.min.js
 UPD 2016-09-06_21:34:53 4508 www/tablet/lib/jquery.toast.min.css
 UPD 2016-09-06_21:34:53 6255 www/tablet/lib/jquery.toast.min.js
 UPD 2013-08-03_09:56:54 2396 www/tablet/lib/jquery.wakeup.js
