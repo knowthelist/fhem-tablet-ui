@@ -260,6 +260,8 @@
             this.$.val(this.o.format(this.v));
             this._draw();
 
+            this.$.data('knob',this);
+
             return this;
         };
 
