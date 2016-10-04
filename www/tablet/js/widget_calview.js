@@ -1,172 +1,121 @@
-// Version Chris1284 25-11-2015 18:15 V1.0
-var widget_calview = {
-	_calview: null,
-	elements: null,
-	init: function () {
-		console.log("calview");	
-		_calview=this;
-		_calview.elements = $('div[data-type="calview"]');
-		_calview.elements.each(function(index) {
+// Initial Version from Chris1284
+// Modifications for 2.2 klausw	4.7.2016
+// data-get			all|today|tomorrow 
+// data-start		none|notoday|notomorrow		(only for data-get="all" -> dont show Entrys from today or today and tomorrow)
+// data-max			number how much Entries are maximal listed
+// data-color		Text color
+// data-detail		Array of details that should be shown default: ["bdate", "btime", "summary", "location"]
+// data-showempty	show Text for "no Date" default: true
+var Modul_calview = function () {
+	var base = this;
+	var readings = new Array();
+	function init () {
+		var me = this;
+		this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
+		this.elements.each(function(index) {
+			var elem = $(this);
+			// Standardwerte fuer Parameter
+			elem.initData('max'				, 10);
+			elem.initData('get'				, 'STATE');
+			elem.initData('start'			, 'all');
+			elem.initData('color'       	, '');
+			elem.initData('detail'       	, ["bdate", "btime", "summary", "location"]);
+			elem.initData('prefix'       	, 'no');
+			elem.initData('showempty'      	, 'true');
+			
 			var device = $(this).data('device');
-			console.log("device: " + device);
-			console.log("get: " + $(this).data('get'));	
-			console.log("max: " + $(this).data('max'));	
+			console.log("device: " + device + " get: " + $(this).data('get') + " max: " + $(this).data('max'));	
 			var num;
 			var value;
-			$(this).data('get', $(this).data('get') || 'STATE');
-			$(this).data('max', $(this).data('max') || 100);
-			if ($(this).data('get') == 'today') {
+			elem.initData('c-term', 'c-term');
+			elem.initData('c-today', 'c-today');
+			elem.initData('c-tomorrow', 'c-tomorrow');
+			if ($(this).data('get') == 'today' || $(this).data('get')  == 'tomorrow' || $(this).data('get')  == 'all') {
 				value = $(this).data('max');
-				$(this).data('c-today', 'c-today');
-				readings['c-today'] = true;
+				wann = $(this).data('get');
+				//elem.initData('c-'+wann, 'c-'+wann);
+				if ( wann == "all" ) { wann = "term"; }
+				me.addReading(elem,'c-'+wann);
+				console.log("c-"+wann+": "+elem.getReading('c-'+wann).val);
+				if ( wann == "term" ) { wann = "t"; }
 				for (i = 1; i <= value; i++) {
-					num = "00";
-					num = num+i;
+					num = "00"+i;
 					num = num.slice(-3);
-					$(this).data('today_'+num+'_summary', 'today_'+num+'_summary');
-					readings['today_'+num+'_summary'] = true;
-					$(this).data('today_'+num+'_btime', 'today_'+num+'_btime');
-					readings['today_'+num+'_btime'] = true;
-				}
-			}
-			else if ($(this).data('get')  == 'tomorrow') {
-				value = $(this).data('max');
-				$(this).data('c-tomorrow', 'c-tomorrow');
-				readings['c-tomorrow'] = true;
-				for (i = 1; i <= value; i++) {
-					num = "00";
-					num = num+i;
-					num = num.slice(-3);
-					$(this).data('tomorrow_'+num+'_summary', 'tomorrow_'+num+'_summary');
-					console.log('tomorow_' + num + '_summary'+$(this).data('tomorrow_'+num+'_summary', 'tomorrow_'+num+'_summary'));
-					readings['tomorrow_'+num+'_summary'] = true;
-					$(this).data('tomorrow_'+num+'_btime', 'tomorrow_'+num+'_btime');
-					readings['tomorrow_'+num+'_btime'] = true;
-				}
-			}
-			else if ($(this).data('get')  == 'all') {
-				value = $(this).data('max');
-				$(this).data('c-term', 'c-term');
-				readings['c-term'] = true;
-				for (i = 1; i <= value; i++) {
-					num = "00";
-					num = num+i;
-					num = num.slice(-3);
-					$(this).data('t_'+num+'_summary', 't_'+num+'_summary');
-					readings['t_'+num+'_summary'] = true;
-					$(this).data('t_'+num+'_bdate', 't_'+num+'_bdate');
-					readings['t_'+num+'_bdate'] = true;
-					$(this).data('t_'+num+'_location', 't_'+num+'_location');
-					readings['t_'+num+'_location'] = true;
+					elem.data('detail').forEach(function(wert) {
+						elem.initData(wann+'_'+num+'_'+wert, wann+'_'+num+'_'+wert);
+						me.addReading(elem,wann+'_'+num+'_'+wert);
+						console.log(wann+'_'+num+'_'+wert+': '+elem.getReading(wann+'_'+num+'_'+wert).val);
+					});
 				}
 			}
 		});
-	},
-	update: function (dev,par) {
+	};
+	function update (dev,par) {
 		var deviceElements;
-		var nullmeldungen;
-		var termcounter;
 		var text;
 		var num;
-		var ctoday;
-		var ctommorow;
-		var cterm;
-		if ( dev == '*' ) {deviceElements= _calview.elements;}
-		else { deviceElements= _calview.elements.filter('div[data-device="'+dev+'"]');}
+		var ct;
+		if ( dev == '*' ) {deviceElements= this.elements;}
+		else { deviceElements= this.elements.filter('div[data-device="'+dev+'"]');}
 
 		deviceElements.each(function(index) {
-				var get = $(this).data('get');
-				if ($(this).data('get') == 'STATE') {if (getDeviceValue( $(this), 'get' )) {$(this).html( "<div class=\"cell\" data-type=\"label\">"+value+"</div>" );}}
-				else if ($(this).data('get') == 'today') {
-					nullmeldungen = 0;
-					termcounter = 0;
-					text =  "";
-					ctoday = getDeviceValue($(this), 'c-today');
-					if 	(ctoday == 0){text += "<div data-type=\"label\">Heute keine Termine</div>";}
-					else if (ctoday > $(this).data('max')) {
-						for (i = 1; i <= $(this).data('max'); i++) {
-							num = "00";
-							num = "00"+i;
-							num = num.slice(-3);
-							text += "<div class=\"cell\">";
-							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'today_'+num+'_btime') + "</div>";
-							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'today_'+num+'_summary')+ "</div>";
-							text += "</div>";
-						}
-					}
-					else if ( ctoday <= $(this).data('max') && ctoday != 0 ) {
-						for (i = 1; i <= ctoday; i++) {
-							num = "00";
-							num = "00"+i;
-							num = num.slice(-3);
-							text += "<div class=\"cell\">";
-							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'today_'+num+'_btime') + "</div>";
-							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'today_'+num+'_summary')+ "</div>";
-							text += "</div>";
-						}
-					}
-					$(this).html( text );
+			var elem = $(this);
+			var get = elem.data('get');
+			var color = elem.data('color');
+			elem.css( "color", getStyle('.'+color,'color') || color );
+			if (elem.data('get') == 'STATE') {
+				if (getDeviceValue( elem, 'get' )) {
+					elem.html( "<div class=\"cell\" data-type=\"label\">"+value+"</div>" );
 				}
-				else if ($(this).data('get') == 'tomorrow') {
-					nullmeldungen = 0;
-					termcounter = 0;
-					text =  "";
-					ctommorow = getDeviceValue($(this), 'c-tomorrow');
-					if 	(ctommorow == 0){text += "<div data-type=\"label\">Morgen keine Termine</div>";}
-					else if (ctommorow > $(this).data('max')) {
-						for (i = 1; i <= $(this).data('max'); i++) {
-							num = "00";
-							num = "00"+i;
-							num = num.slice(-3);
-							text += "<div class=\"cell\">";
-							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'tomorrow_'+num+'_btime') + "</div>";
-							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'tomorrow_'+num+'_summary')+ "</div>";
-							text += "</div>";
-						}
+			}
+			else if (elem.data('get') == 'today' || elem.data('get')  == 'tomorrow' || elem.data('get') == 'all') {
+				text =  "";
+				beginn = 1;
+				var zeitrahmen = { "today": "heute ", "tomorrow": "morgen ", "all": "" }
+				wann = elem.data('get');
+				ct = elem.getReading('c-'+wann).val;
+				
+				if ( elem.data('get') == 'all' ) {
+					wann = "t";
+					ct = elem.getReading('c-term').val;
+					if ( elem.data('start') == "notoday" ) {
+						beginn = 1 + parseInt(elem.getReading('c-today').val);
+					} else if ( elem.data('start') == "notomorrow" ) {
+						beginn = 1 + parseInt(elem.getReading('c-today').val) + parseInt(elem.getReading('c-tomorrow').val);
 					}
-					else if ( ctommorow <= $(this).data('max') && ctommorow != 0 ) {
-						for (i = 1; i <= ctommorow; i++) {
-							num = "00";
-							num = "00"+i;
-							num = num.slice(-3);
-							text += "<div class=\"cell\">";
-							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'tomorrow_'+num+'_btime') + "</div>";
-							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 'tomorrow_'+num+'_summary')+ "</div>";
-							text += "</div>";
-						}
+				} 
+				if 	(ct == 0){ 
+					if (elem.data('showempty') == "true" ) {	
+						text += "<div class=\"col-1-2\">";
+						text += "<div data-type=\"label\" class=\"left-align\">" +zeitrahmen[wann]+ "</div>";
+						text += "</div>";
+						text += "<div class=\"col-1-2\">";
+						text += "<div data-type=\"label\" class=\"left-align\">keine Termine</div>";
+				text += "</div>";}}
+				else {
+					if ( ct > elem.data('max') ) { ct = elem.data('max'); }
+					for (i = beginn; i <= ct; i++) {
+						num = "00"+i;
+						num = num.slice(-3);
+						//text += "<div class=\"row\">";
+						colcounter = elem.data('detail').length;
+						elem.data('detail').forEach(function(spalte) {
+							if ( typeof elem.getReading(wann+'_'+num+'_'+spalte).val != "undefined" ) {
+								text += "<div class=\"col-1-"+colcounter+"\" >";
+								text += "<div data-type=\"label\" class=\"left-align\">" + elem.getReading(wann+'_'+num+'_'+spalte).val + "</div>";
+								text += "</div>";
+							}
+						});
+						//text += "</div>";
 					}
-					$(this).html( text );
 				}
-				else if ($(this).data('get') == 'all') {
-					nullmeldungen = 0;
-					termcounter = 0;
-					text =  "";
-					cterm = getDeviceValue($(this), 'c-term');
-					if 	(cterm == 0){text += "<div data-type=\"label\">Morgen keine Termine</div>";}
-					else if (cterm > $(this).data('max')) {
-						for (i = 1; i <= $(this).data('max'); i++) {
-							num = "00";
-							num = "00"+i;
-							num = num.slice(-3);
-							text += "<div class=\"cell\">";
-							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 't_'+num+'_bdate') + "</div>";
-							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 't_'+num+'_summary')+ "</div>";
-							text += "</div>";
-						}
-					}
-					else if ( cterm <= $(this).data('max') && cterm != 0 ) {
-						for (i = 1; i <= cterm; i++) {
-							num = "00";
-							num = "00"+i;
-							num = num.slice(-3);
-							text += "<div class=\"cell\">";
-							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 't_'+num+'_bdate') + "</div>";
-							text += "<div class=\"cell inline\" >" + getDeviceValue($(this), 't_'+num+'_summary')+ "</div>";
-							text += "</div>";
-						}
-					}
-					$(this).html( text );
-				}
+				elem.html( text );					
+			}
 		});
-	}
+	};
+	return $.extend(new Modul_widget(), {
+        widgetname: 'calview',
+        init: init,
+        update: update,
+    });
 };
