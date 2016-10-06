@@ -21,9 +21,8 @@ var Modul_iframe = function () {
 
     function init_ui(elem) {
         console.log('check',elem.data('check'));
-        console.log('get',elem.data('get'));
-        console.log('src',elem.data('src'));
-        console.log('value',elem.data('value'));
+//        console.log('src',elem.data('src'));
+//        console.log('value',elem.data('value'));
         if(elem.data('check')) {
             elem.empty();
             var spinner = $('<div />').appendTo(elem);
