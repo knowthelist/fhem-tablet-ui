@@ -5,7 +5,7 @@ var Modul_label = function () {
         elem.initData('part'        , -1);
         elem.initData('unit'        , '' );
         elem.initData('color'       , '');
-        elem.initData('limits'      , []);
+        elem.initData('limits'      , elem.data('states') || []);
         elem.initData('colors'      , ['#505050']);
         elem.initData('limits-get'  , elem.data('device') + ':' + elem.data('get'));
         elem.initData('limits-part' , elem.data('part'));
