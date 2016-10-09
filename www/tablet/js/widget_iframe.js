@@ -13,12 +13,16 @@ var Modul_iframe = function () {
         elem.initData('color-error',    '#505050');
         elem.initData('get',            'STATE');
         elem.initData('check',          true);
-
+        // allow readings to contain the url for the iframe
+        elem.initData('value-url',      elem.data('value-url') || false);
+ 
         this.addReading(elem,'get');
     }
 
     function init_ui(elem) {
         console.log('check',elem.data('check'));
+//        console.log('src',elem.data('src'));
+//        console.log('value',elem.data('value'));
         if(elem.data('check')) {
             elem.empty();
             var spinner = $('<div />').appendTo(elem);
@@ -76,6 +80,11 @@ var Modul_iframe = function () {
             var elem = $(this);
             var value = elem.getReading('get').val;
             if (value) {
+                    if (  elem.data('value-url') ) {
+                       elem.data('src', value);
+                       console.log('Got URL on update',value);
+                    }
+
                     if ( value == elem.data('get-refresh') )
                         base.init_ui(elem)
                     else if ( value.match(RegExp('^' + elem.data('get-refresh') + '$')) )
