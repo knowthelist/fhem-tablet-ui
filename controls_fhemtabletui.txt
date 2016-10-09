@@ -78,14 +78,15 @@ UPD 2016-09-06_21:34:52 2387 www/tablet/js/widget_gds.js
 UPD 2016-09-06_21:34:52 8734 www/tablet/js/widget_highchart.js
 UPD 2016-09-06_21:34:52 8542 www/tablet/js/widget_highchart3d.js
 UPD 2016-09-06_21:34:52 9933 www/tablet/js/widget_homestatus.js
-UPD 2016-09-06_21:34:52 3892 www/tablet/js/widget_iframe.js
+UPD 2016-10-09_23:35:55 7709 www/tablet/js/widget_html.js
+UPD 2016-10-09_23:42:21 4312 www/tablet/js/widget_iframe.js
 UPD 2016-09-14_21:36:32 4667 www/tablet/js/widget_image.js
 UPD 2016-09-06_21:34:52 2633 www/tablet/js/widget_input.js
 UPD 2016-09-06_21:34:52 8286 www/tablet/js/widget_itunes_artwork.js
 UPD 2016-09-06_21:34:52 2751 www/tablet/js/widget_joinedlabel.js
 UPD 2016-09-06_21:34:52 3001 www/tablet/js/widget_klimatrend.js
 UPD 2016-10-02_13:54:41 7237 www/tablet/js/widget_knob.js
-UPD 2016-09-06_21:34:53 6598 www/tablet/js/widget_label.js
+UPD 2016-10-09_22:13:39 6621 www/tablet/js/widget_label.js
 UPD 2016-09-06_21:34:53 6214 www/tablet/js/widget_level.js
 UPD 2016-09-27_20:53:39 9279 www/tablet/js/widget_link.js
 UPD 2016-09-06_21:34:53 1493 www/tablet/js/widget_loading.js
