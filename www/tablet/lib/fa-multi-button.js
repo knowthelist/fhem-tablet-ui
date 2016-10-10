@@ -62,7 +62,7 @@ $.fn.famultibutton = function(pOptions) {
 		options = $.extend({}, options, elem.data());
 		
 		elem.addClass('fa-stack');
-		
+
 		jQuery('<i/>', {
             'id': 'bg',
             'class': 'fa fa-stack-2x'
@@ -309,49 +309,91 @@ function moveScale() {
     var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
     var leaveEventType=((document.ontouchleave!==null)?'mouseout':'touchleave');
 
-	if (options['mode'] == 'push'){ 
-        this.bind(clickEventType, function(e) {
-          touch_pos_y = $(window).scrollTop();
-          touch_pos_x = $(window).scrollLeft();
-        }).bind(releaseEventType, function(e) {
-          if(Math.abs(touch_pos_y-$(window).scrollTop())>3
-                  || (Math.abs(touch_pos_x-$(window).scrollLeft())>3)) return;
-          setOn();
 
-          if(typeof options['toggleOn'] === 'function'){
-              options['toggleOn'].call(this);
-          }
-          //e.preventDefault();
-          setTimeout( function() {
-              fadeOff();
-              }, 200);
+
+
+
+	if (options['mode'] == 'push'){ 
+
+        function onPointerStart(e) {
+            touch_pos_y = $(window).scrollTop();
+            touch_pos_x = $(window).scrollLeft();
+        }
+
+        function onPointerRelease(e) {
+            if(Math.abs(touch_pos_y-$(window).scrollTop())>3
+                    || (Math.abs(touch_pos_x-$(window).scrollLeft())>3)) return;
+            setOn();
+
+            if(typeof options['toggleOn'] === 'function'){
+                options['toggleOn'].call(this);
+            }
+
+            setTimeout( function() {
+                fadeOff();
+                }, 200);
+        }
+
+        this.bind('touchstart', function(e) {
+            e.preventDefault();
+            onPointerStart();
+        })
+        this.bind('mousedown', function(e) {
+            onPointerStart();
+        })
+
+        this.bind('touchend', function(e) {
+            e.preventDefault();
+            onPointerRelease(e);
+        });
+        this.bind('mouseup', function(e) {
+            onPointerRelease(e);
         });
 	}
 	else if (options['mode'] == 'toggle'){ 
-        this.bind(clickEventType, function(e) {
+
+        function onPointerStart(e) {
             touch_pos_y = $(window).scrollTop();
             touch_pos_x = $(window).scrollLeft();
-          }).bind(releaseEventType, function(e) {
+        }
+
+        function onPointerRelease(e) {
             if(Math.abs(touch_pos_y-$(window).scrollTop())>3
-                    || (Math.abs(touch_pos_x-$(window).scrollLeft())>3)) return;
-          if(state){
+                      || (Math.abs(touch_pos_x-$(window).scrollLeft())>3)) return;
+            if(state){
 
-              setOff();
-              if(typeof options['toggleOff'] === 'function'){
-                  options['toggleOff'].call(this);
-              }
-          }else{
+                setOff();
+                if(typeof options['toggleOff'] === 'function'){
+                    options['toggleOff'].call(this);
+                }
+            }else{
 
-              setOn();
-              if(typeof options['toggleOn'] === 'function'){
-                  options['toggleOn'].call(this);
-              }
-          }
-          //e.preventDefault();
+                setOn();
+                if(typeof options['toggleOn'] === 'function'){
+                    options['toggleOn'].call(this);
+                }
+            }
+        }
+
+        this.bind('touchstart', function(e) {
+            e.preventDefault();
+            onPointerStart();
+        })
+        this.bind('mousedown', function(e) {
+            onPointerStart();
+        })
+
+        this.bind('touchend', function(e) {
+            e.preventDefault();
+            onPointerRelease(e);
+        });
+        this.bind('mouseup', function(e) {
+            onPointerRelease(e);
         });
 	}
 	else if (options['mode'] == 'dimmer'){ 
-		this.bind(clickEventType, function(e) {
+
+        this.bind('touchstart mousedown', function(e) {
 
 			var event = e.originalEvent;
 			dragy =  event.touches ? event.touches[0].clientY :e.pageY;
@@ -360,7 +402,7 @@ function moveScale() {
 
 			e.preventDefault();
 		});
-		this.bind(leaveEventType, function(e) {
+        this.bind('touchleave mouseout', function(e) {
 	
 			if (isDrag){
 				isDrag = false;
@@ -372,7 +414,7 @@ function moveScale() {
 			isDown = false;
 			e.preventDefault();
 		});
-		this.bind(releaseEventType, function(e) {
+        this.bind('touchend mouseup', function(e) {
 			
 			if (isDrag){
 				isDrag = false;
@@ -402,7 +444,7 @@ function moveScale() {
 				drawScale();
 			e.preventDefault();
 		});
-		this.bind(moveEventType, function(e) {
+        this.bind('touchmove mousemove', function(e) {
 			
 			if (isDown)
 				isDrag = true;

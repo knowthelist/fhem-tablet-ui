@@ -175,19 +175,22 @@ var Modul_link = function () {
         elemText.css({width: elem.innerWidth()-iconWidth-15 +'px',})
 
         // event handler
-        var clickEventType=((document.ontouchstart!==null)?'mousedown':'touchstart');
-        var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
-        var leaveEventType=((document.ontouchleave!==null)?'mouseout':'touchleave');
-        elem.on(releaseEventType,function() {
+       elem.on('touchend mouseup',function(e) {
             elem.fadeTo( "fast" , 1);
             onClicked(elem);
+            e.preventDefault();
         });
-        elem.on(clickEventType,function() {
+
+        elem.on('touchstart mousedown',function(e) {
             elem.fadeTo( "fast" , 0.5);
+            e.preventDefault();
         });
-        elem.on(leaveEventType,function() {
+
+        elem.on('touchleave mouseout',function(e) {
             elem.fadeTo( "fast" , 1);
+            e.preventDefault();
         });
+
         $(window).bind( 'hashchange', function(e) {
             colorize(elem);
         });

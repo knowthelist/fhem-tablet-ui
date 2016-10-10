@@ -45,10 +45,6 @@ var Modul_checkbox = function () {
              jackSecondaryColor:    elem.data('off-color') ,
          });
 
-         // hack for with() is 0 issue at start
-         $(switchery.switcher).css( 'width',elem.hasClass('small')?'33px':elem.hasClass('large')?'66px':'50px');
-         $(switchery.jack).css( 'width',elem.hasClass('small')?'20px':elem.hasClass('large')?'40px':'30px');
-
          // click handler
          var switcherButton = elem.find('.switchery');
          var touchIsAllowed = false;

@@ -218,17 +218,13 @@ var Modul_spinner = function () {
         }
 
         // event handler
-        var clickEventType=((document.ontouchstart!==null)?'mousedown':'touchstart');
-        var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
-        var leaveEventType=((document.ontouchleave!==null)?'mouseout':'touchleave');
-
         // UP button
-        elemRightIcon.on(clickEventType,function(e) {
+        elemRightIcon.on('touchstart mousedown',function(e) {
             elemRightIcon.fadeTo( "fast" , 0.5);
             onClicked(elem,1);
             e.preventDefault();
         });
-        elemRightIcon.on(releaseEventType + ' ' + leaveEventType,function(e) {
+        elemRightIcon.on('touchend touchleave mouseup mouseout',function(e) {
             elemRightIcon.fadeTo( "fast" , 1);
             if (elem.delayTimer)
                 onReleased(elem);
@@ -236,12 +232,12 @@ var Modul_spinner = function () {
         });
 
         // DOWN button
-        elemLeftIcon.on(clickEventType,function(e) {
+        elemLeftIcon.on('touchstart mousedown',function(e) {
             elemLeftIcon.fadeTo( "fast" , 0.5);
             onClicked(elem,-1);
             e.preventDefault();
         });
-        elemLeftIcon.on(releaseEventType + ' ' + leaveEventType,function(e) {
+        elemLeftIcon.on('touchend touchleave mouseup mouseout',function(e) {
             elemLeftIcon.fadeTo( "fast" , 1);
             if (elem.delayTimer)
                 onReleased(elem);

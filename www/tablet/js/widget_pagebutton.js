@@ -148,9 +148,9 @@ var Modul_pagebutton = function () {
 
            // start return timer after last activity
            if ( me.elements.eq(0).data('return-time') > 0 ){
-               var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
-                $('body').once(releaseEventType, function() {
-                       startReturnTimer(me.elements.eq(0));
+               $('body').once('touchend mouseup', function(e) {
+                   startReturnTimer(me.elements.eq(0));
+                   e.preventDefault();
                });
            }
 

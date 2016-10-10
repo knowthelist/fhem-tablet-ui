@@ -155,9 +155,9 @@ var Modul_pagetab = function () {
 
            // start return timer after last activity
            if ( me.elements.eq(0).data('return-time') > 0 ){
-               var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
-                $('body').once(releaseEventType, function() {
-                       startReturnTimer();
+               $('body').once('touchend mouseup', function(e) {
+                   startReturnTimer();
+                   e.preventDefault();
                });
            }
 
