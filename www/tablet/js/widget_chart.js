@@ -855,7 +855,7 @@ var widget_chart = {
 		aret[iarr] = strRet;
 		return aret;
 	},
-	moveto(elem,x,y,duration) {
+	moveto: function(elem,x,y,duration) {
 		var xact = elem.attr("x");
 		var yact = elem.attr("y");
 		if (xact == undefined) {xact = x; elem.attr({'x':y});}
