@@ -118,8 +118,8 @@ UPD 2016-09-06_21:34:53 7109 www/tablet/js/widget_volume.js
 UPD 2016-09-22_20:44:25 754 www/tablet/js/widget_wakeup.js
 UPD 2016-10-04_22:40:27 22268 www/tablet/js/widget_weather.js
 UPD 2016-09-06_21:34:53 6099 www/tablet/js/widget_wind_direction.js
-UPD 2016-10-10_21:42:30 12906 www/tablet/lib/fa-multi-button.js
-UPD 2016-10-11_00:19:37 6490 www/tablet/lib/fa-multi-button.min.js
+UPD 2016-10-11_15:53:39 12486 www/tablet/lib/fa-multi-button.js
+UPD 2016-10-11_15:54:52 6238 www/tablet/lib/fa-multi-button.min.js
 UPD 2016-09-06_21:34:53 17041 www/tablet/lib/farbtastic.js
 UPD 2016-09-06_21:34:53 26586 www/tablet/lib/fhemSVG.css
 UPD 2016-09-06_21:34:53 27407 www/tablet/lib/font-awesome.min.css
