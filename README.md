@@ -162,11 +162,13 @@ multi state notation
 - **data-colors**                       : array of colors related to the data-states array
 - **data-background-colors**            : array of background colors related to the data-states array
 
-- **class**     			: readonly, compressed
+- **class**     			: readonly, compressed, invert
 
 data-get-on and data-get-off accept also RegEx values. e.g. data-get-on="[0-9]{1,3}|on" means set switch on if STATE is a numeric value or 'on'.
 data-get-off="!on" means accept all but the data-get-on value (negation)
 data-set-off="" suppress sending off
+
+class 'invert' inverts foreground and background color
 
 See [examples](#switch) of Switch
 
@@ -1125,6 +1127,24 @@ The countdown time is auto detected via the on-for-timer command. A other value 
 ![](http://knowthelist.github.io/fhem-tablet-ui/push_on-for-timer.png)
 
 ###Switch
+
+**Example** for a default switch widget to switch on/off to STATUS of MyDevice
+```html
+<div data-type="switch" data-device="MyDevice"></div>
+```
+
+The same switch but with inverted color
+```html
+<div data-type="switch" data-device="MyDevice" class="invert"></div>
+```
+
+**Example** for a switch to send 0/1 to a dummy device
+```html
+<div data-type="switch" data-icon="fa-rss" data-device='isAutoHomeStatus'
+     data-get-on="1" data-get-off="0" data-set-on="1" data-set-off="0"
+     class="green small invert"></div>
+```
+
 **Example** for how to create a widget for MILIGHT via toggle button. Usage of RegEx pattern for state request:
 ```html
 <div data-type="switch"

@@ -303,97 +303,69 @@ function moveScale() {
 	}	
 	
 }
+    function getAndroidVersion(ua) {
+        ua = (ua || navigator.userAgent).toLowerCase();
+        var match = ua.match(/android\s([0-9\.]*)/);
+        return match ? match[1] : false;
+    };
+
     var touch_pos_x,touch_pos_y;
-    var clickEventType=((document.ontouchstart!==null)?'mousedown':'touchstart');
-    var moveEventType=((document.ontouchmove!==null)?'mousemove':'touchmove');
-    var releaseEventType=((document.ontouchend!==null)?'mouseup':'touchend');
-    var leaveEventType=((document.ontouchleave!==null)?'mouseout':'touchleave');
+    var android = getAndroidVersion();
+    var onlyTouch = (android && parseFloat(android)<4.3);
+    var clickEventType=((onlyTouch)?'touchstart':'touchstart mousedown');
+    var moveEventType=((onlyTouch)?'touchmove':'touchmove mousemove');
+    var releaseEventType=((onlyTouch)?'touchend':'touchend mouseup');
+    var leaveEventType=((onlyTouch)?'touchleave':'touchleave mouseout');
 
+    if (options['mode'] == 'push'){
+        this.bind(clickEventType, function(e) {
+          touch_pos_y = $(window).scrollTop();
+          touch_pos_x = $(window).scrollLeft();
+        }).bind(releaseEventType, function(e) {
+          if(Math.abs(touch_pos_y-$(window).scrollTop())>3
+                  || (Math.abs(touch_pos_x-$(window).scrollLeft())>3)) return;
+          setOn();
 
-
-
-
-	if (options['mode'] == 'push'){ 
-
-        function onPointerStart(e) {
+          if(typeof options['toggleOn'] === 'function'){
+              options['toggleOn'].call(this);
+          }
+          //e.preventDefault();
+          setTimeout( function() {
+              fadeOff();
+              }, 200);
+        });
+	}
+    else if (options['mode'] == 'toggle'){
+        this.on(clickEventType, function(e) {
             touch_pos_y = $(window).scrollTop();
             touch_pos_x = $(window).scrollLeft();
-        }
+            e.preventDefault();
+          });
+        this.on(releaseEventType, function(e) {
 
-        function onPointerRelease(e) {
+            e.preventDefault();
+            e.stopPropagation();
             if(Math.abs(touch_pos_y-$(window).scrollTop())>3
                     || (Math.abs(touch_pos_x-$(window).scrollLeft())>3)) return;
-            setOn();
+          if(state){
 
-            if(typeof options['toggleOn'] === 'function'){
-                options['toggleOn'].call(this);
-            }
+              setOff();
+              if(typeof options['toggleOff'] === 'function'){
+                  options['toggleOff'].call(this);
+              }
+          }else{
 
-            setTimeout( function() {
-                fadeOff();
-                }, 200);
-        }
-
-        this.bind('touchstart', function(e) {
-            e.preventDefault();
-            onPointerStart();
-        })
-        this.bind('mousedown', function(e) {
-            onPointerStart();
-        })
-
-        this.bind('touchend', function(e) {
-            e.preventDefault();
-            onPointerRelease(e);
-        });
-        this.bind('mouseup', function(e) {
-            onPointerRelease(e);
+              setOn();
+              if(typeof options['toggleOn'] === 'function'){
+                  options['toggleOn'].call(this);
+              }
+          }
+          e.preventDefault();
+          e.stopPropagation();
         });
 	}
-	else if (options['mode'] == 'toggle'){ 
-
-        function onPointerStart(e) {
-            touch_pos_y = $(window).scrollTop();
-            touch_pos_x = $(window).scrollLeft();
-        }
-
-        function onPointerRelease(e) {
-            if(Math.abs(touch_pos_y-$(window).scrollTop())>3
-                      || (Math.abs(touch_pos_x-$(window).scrollLeft())>3)) return;
-            if(state){
-
-                setOff();
-                if(typeof options['toggleOff'] === 'function'){
-                    options['toggleOff'].call(this);
-                }
-            }else{
-
-                setOn();
-                if(typeof options['toggleOn'] === 'function'){
-                    options['toggleOn'].call(this);
-                }
-            }
-        }
-
-        this.bind('touchstart', function(e) {
-            e.preventDefault();
-            onPointerStart();
-        })
-        this.bind('mousedown', function(e) {
-            onPointerStart();
-        })
-
-        this.bind('touchend', function(e) {
-            e.preventDefault();
-            onPointerRelease(e);
-        });
-        this.bind('mouseup', function(e) {
-            onPointerRelease(e);
-        });
-	}
-	else if (options['mode'] == 'dimmer'){ 
-
-        this.bind('touchstart mousedown', function(e) {
+    else if (options['mode'] == 'dimmer'){
+        this.bind(clickEventType, function(e) {
 
 			var event = e.originalEvent;
 			dragy =  event.touches ? event.touches[0].clientY :e.pageY;
@@ -402,7 +374,7 @@ function moveScale() {
 
 			e.preventDefault();
 		});
-        this.bind('touchleave mouseout', function(e) {
+        this.bind(leaveEventType, function(e) {
 	
 			if (isDrag){
 				isDrag = false;
@@ -414,7 +386,7 @@ function moveScale() {
 			isDown = false;
 			e.preventDefault();
 		});
-        this.bind('touchend mouseup', function(e) {
+        this.bind(releaseEventType, function(e) {
 			
 			if (isDrag){
 				isDrag = false;
@@ -444,7 +416,7 @@ function moveScale() {
 				drawScale();
 			e.preventDefault();
 		});
-        this.bind('touchmove mousemove', function(e) {
+        this.bind(moveEventType, function(e) {
 			
 			if (isDown)
 				isDrag = true;
