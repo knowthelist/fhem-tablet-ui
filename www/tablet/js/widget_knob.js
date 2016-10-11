@@ -111,6 +111,22 @@ var Modul_knob = function () {
        return elem;
     };
 
+    function update_lock(dev,par){
+        var me = this;
+        me.elements.filterDeviceReading('lock',dev,par)
+        .each(function(idx) {
+            var elem = $(this);
+            var val = elem.getReading('lock').val;
+            if(val) {
+                var knob_elem = elem.find('input');
+                if ( knob_elem ){
+                    ftui.log(3, me.widgetname + ' dev:'+dev+' par:'+par+' change '+elem.data('device')+':readOnly to ' +val );
+                    knob_elem.trigger( 'configure', { 'readOnly': (val === 'true' || val === '1' || val === 'on' )  } );
+                }
+            }
+        });
+    }
+
     function update (dev,par) {
       isUpdating=true;
       var me = this;
@@ -133,19 +149,7 @@ var Modul_knob = function () {
           }
        });
 
-        //extra reading for readOnly
-        me.elements.filterDeviceReading('lock',dev,par)
-        .each(function(idx) {
-            var elem = $(this);
-            var val = elem.getReading('lock').val;
-            if(val) {
-                var knob_elem = elem.find('input');
-                if ( knob_elem ){
-                    ftui.log(3, me.widgetname + ' dev:'+dev+' par:'+par+' change '+elem.data('device')+':readOnly to ' +val );
-                    knob_elem.trigger( 'configure', { 'readOnly': (val === 'true' || val === '1' || val === 'on' )  } );
-                }
-            }
-        });
+      this.update_lock(dev,par);
 
       isUpdating=false;
       };
@@ -159,6 +163,7 @@ var Modul_knob = function () {
         init_attr: init_attr,
         init_ui:init_ui,
         update: update,
+        update_lock: update_lock,
         onRelease:onRelease,
         onChange:onChange,
         onFormat:onFormat

@@ -167,7 +167,7 @@ var Modul_thermostat = function () {
               }
               var knob_elem = elem.find('input');
               if (knob_elem){
-                  knob_elem.val( value ).trigger('change');
+                  knob_elem.val( parseFloat(value) ).trigger('change');
                   if(textdisplay)
                       knob_elem.val(textdisplay);
                   knob_elem.css({visibility:'visible'});
@@ -184,7 +184,7 @@ var Modul_thermostat = function () {
               var knob_elem = elem.find('input');
               var knob_obj = knob_elem.data('knob');
               if ( knob_obj ) {
-                  knob_obj.o.isValue = value;
+                  knob_obj.o.isValue = parseFloat(value);
                   knob_elem.trigger('change');
               } else {
                   ftui.log(1,'thermostat: Update isValue failed. No knob_obj found')
@@ -208,6 +208,9 @@ var Modul_thermostat = function () {
                 }
             }
         });
+
+        //extra reading for readOnly
+        this.update_lock(dev,par);
 
         isUpdating = false;
     };

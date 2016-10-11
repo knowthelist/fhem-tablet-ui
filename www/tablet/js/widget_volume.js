@@ -171,37 +171,41 @@ var Modul_volume = function () {
     };
 
   function update (dev,par) {
-    isUpdating=true;
-    var me = this;
-    // update from desired temp reading
-    me.elements.filterDeviceReading('get',dev,par)
-    .each(function(index) {
-      var elem = $(this);
-      var value = elem.getReading('get').val;
-      if (value) {
-          var knob_elem = elem.find('input');
-          if (knob_elem){
-            var part = elem.data('get-value');
-            var val = ftui.getPart(value,part);
-            if ((parseInt(elem.data('mode'))>>6) % 2 != 0){
-                //is hex rgb
+        isUpdating=true;
+        var me = this;
+        // update from desired temp reading
+        me.elements.filterDeviceReading('get',dev,par)
+        .each(function(index) {
+          var elem = $(this);
+          var value = elem.getReading('get').val;
+          if (value) {
+              var knob_elem = elem.find('input');
+              if (knob_elem){
+                var part = elem.data('get-value');
+                var val = ftui.getPart(value,part);
+                if ((parseInt(elem.data('mode'))>>6) % 2 != 0){
+                    //is hex rgb
 
-                val=ftui.rgbToHsl(val)[0];
-                val=val*elem.data('max');
+                    val=ftui.rgbToHsl(val)[0];
+                    val=val*elem.data('max');
+                }
+                else{
+                    //is decimal value
+                    val = (val * (elem.data('max')/elem.data('origmax'))).toFixed(0);
+                }
+                if ( knob_elem.val() != val ){
+                    knob_elem.val( val ).trigger('change');
+                    ftui.log(3, me.widgetname + ' dev:'+dev+' par:'+par+' change '+elem.data('device')+':knob to ' +val );
+                }
+               knob_elem.css({visibility:'visible'});
+              }
             }
-            else{
-                //is decimal value
-                val = (val * (elem.data('max')/elem.data('origmax'))).toFixed(0);
-            }
-            if ( knob_elem.val() != val ){
-                knob_elem.val( val ).trigger('change');
-                ftui.log(3, me.widgetname + ' dev:'+dev+' par:'+par+' change '+elem.data('device')+':knob to ' +val );
-            }
-           knob_elem.css({visibility:'visible'});
-          }
-        }
-     });
-    isUpdating=false;
+         });
+
+        //extra reading for readOnly
+        this.update_lock(dev,par);
+
+        isUpdating=false;
     };
 
   // public

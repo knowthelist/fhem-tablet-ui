@@ -434,16 +434,15 @@
 
         this._listen = function () {
             if (!this.o.readOnly) {
-                if(document.ontouchstart!==null){
-                this.$c.bind(
+                this.$c
+                .bind(
                         "mousedown",
                         function (e) {
                             e.preventDefault();
                             s._xy()._mouse(e);
                         }
-                    );}
-                else {
-                 this.$c.bind(
+                    )
+                .bind(
                         "touchstart",
                         function (e) {
                             e.preventDefault();
@@ -451,7 +450,6 @@
                             s._moveInput(true);
                         }
                     );
-                }
                 this.listen();
             } else {
                 this.$c.unbind("mousedown");
