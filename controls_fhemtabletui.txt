@@ -54,8 +54,8 @@ UPD 2016-09-06_21:34:52 21659 www/tablet/fonts/Roboto-Thin-webfont.eot
 UPD 2016-09-06_21:34:52 74077 www/tablet/fonts/Roboto-Thin-webfont.svg
 UPD 2016-09-06_21:34:52 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2016-09-06_21:34:52 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
-UPD 2016-09-06_21:34:52 13934 www/tablet/index-example.html
-UPD 2016-09-06_21:34:52 2947 www/tablet/index_empty.html
+UPD 2016-10-12_19:06:25 13817 www/tablet/index-example.html
+UPD 2016-10-12_19:06:05 2782 www/tablet/index_empty.html
 UPD 2016-09-26_23:53:34 46238 www/tablet/js/fhem-tablet-ui.js
 UPD 2016-09-27_20:56:06 25020 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-09-06_21:34:52 20988 www/tablet/js/highcharts-meteogram.js
@@ -88,12 +88,12 @@ UPD 2016-09-06_21:34:52 3001 www/tablet/js/widget_klimatrend.js
 UPD 2016-10-11_22:27:32 7332 www/tablet/js/widget_knob.js
 UPD 2016-10-09_22:13:39 6621 www/tablet/js/widget_label.js
 UPD 2016-09-06_21:34:53 6214 www/tablet/js/widget_level.js
-UPD 2016-10-10_23:01:45 9144 www/tablet/js/widget_link.js
+UPD 2016-10-13_00:14:28 10115 www/tablet/js/widget_link.js
 UPD 2016-09-06_21:34:53 1493 www/tablet/js/widget_loading.js
 UPD 2016-09-20_07:07:05 4439 www/tablet/js/widget_medialist.js
 UPD 2016-09-06_21:34:53 1857 www/tablet/js/widget_meteogram.js
 UPD 2016-09-06_21:34:53 3390 www/tablet/js/widget_multistatebutton.js
-UPD 2016-10-11_00:13:03 7692 www/tablet/js/widget_pagebutton.js
+UPD 2016-10-12_22:17:23 8021 www/tablet/js/widget_pagebutton.js
 UPD 2016-10-11_00:15:00 8038 www/tablet/js/widget_pagetab.js
 UPD 2016-09-06_21:34:53 5048 www/tablet/js/widget_playstream.js
 UPD 2016-09-27_17:54:49 7515 www/tablet/js/widget_popup.js
