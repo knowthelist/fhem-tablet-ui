@@ -9,7 +9,20 @@
 */
 var Modul_link = function () {
 
+    function isReadOnly(elem) {
+        var lock = elem.data('readonly');
+        return (lock == 'true' || lock == '1' || lock == 'on' );
+    }
+
     function onClicked(elem) {
+
+        if ( isReadOnly(elem) ) {
+            elem.addClass('fail-shake');
+            setTimeout(function() {
+                elem.removeClass('fail-shake');
+            }, 500);
+            return;
+        }
 
         if( elem.isValidData('url') ) {
           var target = elem.data('url');
@@ -107,6 +120,7 @@ var Modul_link = function () {
         elem.initData('active-border-color'     ,elem.data('border-color'));
         elem.initData('active-background-color' ,elem.data('background-color'));
         this.addReading(elem,'get');
+        if ( elem.isDeviceReading('lock') ) {this.addReading(elem,'lock');}
     };
 
     function init_ui(elem) {
@@ -226,7 +240,13 @@ var Modul_link = function () {
         // load area content but wait until main page is loaded
         if ( elem.hasClass('default') ) {
             $(document).one("initWidgetsDone",function(e, area){
-                loadPage(elem);
+                var sel = elem.data('load');
+                if ($(sel+" > *").children().length === 0 || elem.hasClass('nocache')){
+                    loadPage(elem);
+                } else {
+                    $(sel).addClass('active');
+                    elem.closest('nav').trigger('changedSelection',[elem.text()]);
+                }
             });
         }
 
@@ -240,6 +260,13 @@ var Modul_link = function () {
             var val = elem.getReading('get').val;
             elem.data('url',val);
             elem.attr('title',val);
+        });
+
+        //extra reading for lock
+        me.elements.filterDeviceReading('lock',dev,par)
+        .each(function(idx) {
+            var elem = $(this);
+            elem.data('readonly' ,elem.getReading('lock').val);
         });
      };
 

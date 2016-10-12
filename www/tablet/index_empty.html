@@ -12,12 +12,10 @@
      * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
      * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
      *
-     * !!!! Evaluation version - run only in a staging enviroment !!!!
-     *
-     * - create a new folder named 'tablet_eval' in /<fhem-path>/www
-     * - copy all files incl. sub folders into /<fhem-path>/www/tablet_eval
-     * - add 'define TABLETUIEVAL HTTPSRV ftui_eval ./www/tablet_eval Tablet-EVAL' in fhem.cfg
-     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet_eval/
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
      */
     -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -28,7 +26,6 @@
     <meta name="gridster_disable" content="1">
     <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
     <meta name="debug" content="2"> <!-- verbose level 1-6 = output to console;0 = not output -->
-    <meta http-equiv="Cache-Control" content="no-store" />
 
     <link rel="stylesheet" href="lib/jquery.gridster.min.css" />
     <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
@@ -44,7 +41,7 @@
     <script src="lib/jquery.gridster.min.js"></script>
     <script src="js/fhem-tablet-ui.js" defer></script>
 
-    <title>FTUI Dev</title>
+    <title>FHEM-Tablet-UI</title>
 </head>
 <body>
 <div class="gridster">

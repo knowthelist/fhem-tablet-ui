@@ -142,9 +142,16 @@ var Modul_pagebutton = function () {
            // load area content but wait until main page is loaded
            if ( elem.hasClass('default') ) {
                $(document).one("initWidgetsDone",function(e, area){
-                   loadPage(elem);
+                   var sel = elem.data('load');
+                   if ($(sel+" > *").children().length === 0 || elem.hasClass('nocache')){
+                       loadPage(elem);
+                   } else {
+                       $(sel).addClass('active');
+                       elem.closest('nav').trigger('changedSelection',[elem.text()]);
+                   }
                });
            }
+
 
            // start return timer after last activity
            if ( me.elements.eq(0).data('return-time') > 0 ){
