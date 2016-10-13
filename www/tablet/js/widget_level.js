@@ -18,6 +18,8 @@ var Modul_level= function () {
         elem.initData('on'              ,'on');
         elem.initData('off'             ,'off');
         elem.initData('part'            ,-1);
+        elem.initData('min'             ,0);
+        elem.initData('max'             ,100);
 
         me.addReading(elem,'get');
         // numeric value means fix value, others mean it is a reading

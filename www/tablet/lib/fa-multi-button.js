@@ -312,16 +312,18 @@ function moveScale() {
     var touch_pos_x,touch_pos_y;
     var android = getAndroidVersion();
     var onlyTouch = (android && parseFloat(android)<4.3);
-    var clickEventType=((onlyTouch)?'touchstart':'touchstart mousedown');
+    var clickEventType = (onlyTouch) ? 'touchstart' : 'touchstart mousedown';
     var moveEventType=((onlyTouch)?'touchmove':'touchmove mousemove');
     var releaseEventType=((onlyTouch)?'touchend':'touchend mouseup');
     var leaveEventType=((onlyTouch)?'touchleave':'touchleave mouseout');
 
     if (options['mode'] == 'push'){
-        this.bind(clickEventType, function(e) {
+        this.on(clickEventType, function(e) {
           touch_pos_y = $(window).scrollTop();
           touch_pos_x = $(window).scrollLeft();
-        }).bind(releaseEventType, function(e) {
+        });
+        this.on(releaseEventType, function(e) {
+          e.preventDefault();
           if(Math.abs(touch_pos_y-$(window).scrollTop())>3
                   || (Math.abs(touch_pos_x-$(window).scrollLeft())>3)) return;
           setOn();
@@ -329,7 +331,6 @@ function moveScale() {
           if(typeof options['toggleOn'] === 'function'){
               options['toggleOn'].call(this);
           }
-          //e.preventDefault();
           setTimeout( function() {
               fadeOff();
               }, 200);
@@ -339,33 +340,30 @@ function moveScale() {
         this.on(clickEventType, function(e) {
             touch_pos_y = $(window).scrollTop();
             touch_pos_x = $(window).scrollLeft();
-            e.preventDefault();
           });
         this.on(releaseEventType, function(e) {
-
             e.preventDefault();
-            e.stopPropagation();
+
             if(Math.abs(touch_pos_y-$(window).scrollTop())>3
                     || (Math.abs(touch_pos_x-$(window).scrollLeft())>3)) return;
-          if(state){
+            if(state){
 
               setOff();
               if(typeof options['toggleOff'] === 'function'){
                   options['toggleOff'].call(this);
               }
-          }else{
+            }else{
 
               setOn();
               if(typeof options['toggleOn'] === 'function'){
                   options['toggleOn'].call(this);
               }
-          }
-          e.preventDefault();
-          e.stopPropagation();
+            }
+
         });
 	}
     else if (options['mode'] == 'dimmer'){
-        this.bind(clickEventType, function(e) {
+        this.on(clickEventType, function(e) {
 
 			var event = e.originalEvent;
 			dragy =  event.touches ? event.touches[0].clientY :e.pageY;
@@ -374,7 +372,7 @@ function moveScale() {
 
 			e.preventDefault();
 		});
-        this.bind(leaveEventType, function(e) {
+        this.on(leaveEventType, function(e) {
 	
 			if (isDrag){
 				isDrag = false;
@@ -386,7 +384,7 @@ function moveScale() {
 			isDown = false;
 			e.preventDefault();
 		});
-        this.bind(releaseEventType, function(e) {
+        this.on(releaseEventType, function(e) {
 			
 			if (isDrag){
 				isDrag = false;
@@ -416,7 +414,7 @@ function moveScale() {
 				drawScale();
 			e.preventDefault();
 		});
-        this.bind(moveEventType, function(e) {
+        this.on(moveEventType, function(e) {
 			
 			if (isDown)
 				isDrag = true;

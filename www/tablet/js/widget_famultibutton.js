@@ -329,18 +329,21 @@ var Modul_famultibutton = function () {
             valueChanged: function(v) { me.valueChanged(elem,v) },
         });
 
-        var id = elem.data("device") + "_" + elem.data('get');
+        var id = elem.data('device') + "_" + elem.data('get');
 
-        // Notification from other widgets
-        $(document).bind("onforTimerStarted", function( event, wgtId ){
-            checkForRunningTimer(elem,id);
-        });
+        if ( id !== ' _STATE' ){
 
-        $(document).bind("onforTimerStopped", function( event, wgtId ){
-            if ( wgtId == id ) {
-                stopRunningTimer(elem);
-            }
-        });
+            // Notification from other widgets
+            $(document).on("onforTimerStarted", function( event, wgtId ){
+                checkForRunningTimer(elem,id);
+            });
+
+            $(document).on("onforTimerStopped", function( event, wgtId ){
+                if ( wgtId == id ) {
+                    stopRunningTimer(elem);
+                }
+            });
+        }
 
         // any old on-for-timer still active ?
         checkForRunningTimer(elem, id);
@@ -369,6 +372,15 @@ var Modul_famultibutton = function () {
         elem.initData('off-background-color', getStyle('.'+this.widgetname+'.off','background-color')   || '#505050');
         elem.initData('on-color'            , getStyle('.'+this.widgetname+'.on','color')               || '#aa6900');
         elem.initData('on-background-color' , getStyle('.'+this.widgetname+'.on','background-color')    || '#aa6900');
+
+        if ( elem.hasClass('invert') ){
+            var c1 = elem.data('off-background-color');
+            elem.data('off-background-color', elem.data('off-color'));
+            elem.data('off-color', c1);
+            var c2 = elem.data('on-background-color');
+            elem.data('on-background-color', elem.data('on-color'));
+            elem.data('on-color', c2);
+        }
 
         if ( elem.isDeviceReading('on-color') ) {this.addReading(elem,'on-color');}
         if ( elem.isDeviceReading('on-background-color') ) {this.addReading(elem,'on-background-color');}

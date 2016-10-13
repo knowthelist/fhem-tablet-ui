@@ -71,6 +71,7 @@ var Modul_swiper= function () {
             noSwipingClass: 'noswipe',
         });
 
+
         // navigation via hash value
         if (elem.hasClass('hashnav')){
             $(window).bind('hashchange', function() {
@@ -90,10 +91,11 @@ var Modul_swiper= function () {
              });
         }
 
-        elem.find('ul>li').click(function(event) {
-            event.preventDefault();
+        /*elem.find('ul>li>*').click(function(event) {
+            //console.log('click');
+            //event.preventDefault();
             //more functionality here
-        });
+        });*/
 
         // Refresh swiper after it became visible
         elem.closest('[data-type="popup"]').on("fadein", function(event) {
