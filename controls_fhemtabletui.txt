@@ -72,7 +72,7 @@ UPD 2016-09-06_21:34:52 5235 www/tablet/js/widget_departure.js
 UPD 2016-09-06_21:34:52 5244 www/tablet/js/widget_dimmer.js
 UPD 2016-09-06_21:34:52 3337 www/tablet/js/widget_eventmonitor.js
 UPD 2016-09-06_21:34:52 2554 www/tablet/js/widget_example.js
-UPD 2016-10-11_00:18:31 18124 www/tablet/js/widget_famultibutton.js
+UPD 2016-10-14_00:57:02 18581 www/tablet/js/widget_famultibutton.js
 UPD 2016-09-06_21:34:52 9328 www/tablet/js/widget_fullcalview.js
 UPD 2016-09-06_21:34:52 2387 www/tablet/js/widget_gds.js
 UPD 2016-09-06_21:34:52 8734 www/tablet/js/widget_highchart.js
@@ -87,7 +87,7 @@ UPD 2016-09-06_21:34:52 2751 www/tablet/js/widget_joinedlabel.js
 UPD 2016-09-06_21:34:52 3001 www/tablet/js/widget_klimatrend.js
 UPD 2016-10-11_22:27:32 7332 www/tablet/js/widget_knob.js
 UPD 2016-10-09_22:13:39 6621 www/tablet/js/widget_label.js
-UPD 2016-09-06_21:34:53 6214 www/tablet/js/widget_level.js
+UPD 2016-10-14_01:22:07 6306 www/tablet/js/widget_level.js
 UPD 2016-10-13_00:14:28 10115 www/tablet/js/widget_link.js
 UPD 2016-09-06_21:34:53 1493 www/tablet/js/widget_loading.js
 UPD 2016-09-20_07:07:05 4439 www/tablet/js/widget_medialist.js
@@ -109,7 +109,7 @@ UPD 2016-09-06_21:34:53 2551 www/tablet/js/widget_slideout.js
 UPD 2016-09-06_21:34:53 8271 www/tablet/js/widget_slider.js
 UPD 2016-10-10_22:59:25 11065 www/tablet/js/widget_spinner.js
 UPD 2016-09-14_22:19:05 2865 www/tablet/js/widget_svgplot.js
-UPD 2016-09-06_21:34:53 4123 www/tablet/js/widget_swiper.js
+UPD 2016-10-13_23:40:58 4168 www/tablet/js/widget_swiper.js
 UPD 2016-09-10_23:54:03 1308 www/tablet/js/widget_switch.js
 UPD 2016-09-06_21:34:53 1871 www/tablet/js/widget_symbol.js
 UPD 2016-10-11_22:32:39 7633 www/tablet/js/widget_thermostat.js
@@ -118,8 +118,8 @@ UPD 2016-10-11_22:32:47 7303 www/tablet/js/widget_volume.js
 UPD 2016-09-22_20:44:25 754 www/tablet/js/widget_wakeup.js
 UPD 2016-10-04_22:40:27 22268 www/tablet/js/widget_weather.js
 UPD 2016-09-06_21:34:53 6099 www/tablet/js/widget_wind_direction.js
-UPD 2016-10-11_15:53:39 12486 www/tablet/lib/fa-multi-button.js
-UPD 2016-10-11_15:54:52 6238 www/tablet/lib/fa-multi-button.min.js
+UPD 2016-10-13_23:20:30 12371 www/tablet/lib/fa-multi-button.js
+UPD 2016-10-13_23:36:04 6171 www/tablet/lib/fa-multi-button.min.js
 UPD 2016-09-06_21:34:53 17041 www/tablet/lib/farbtastic.js
 UPD 2016-09-06_21:34:53 26586 www/tablet/lib/fhemSVG.css
 UPD 2016-09-06_21:34:53 27407 www/tablet/lib/font-awesome.min.css
