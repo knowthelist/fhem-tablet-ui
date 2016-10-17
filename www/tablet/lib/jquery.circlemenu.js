@@ -123,15 +123,27 @@
                 self.close();
             });
         }else if(self.options.trigger === 'click'){
-            self.element.children('li:first-child').on('click',function(evt){
-                evt.preventDefault();
-                if(self._state === 'closed' || self._state === 'closing'){
-                    self.open();
-                }else{
-                    self.close(true);
-                }
-                return false;
-            });
+
+            function getAndroidVersion(ua) {
+                ua = (ua || navigator.userAgent).toLowerCase();
+                var match = ua.match(/android\s([0-9\.]*)/);
+                return match ? match[1] : false;
+            };
+
+            var android = getAndroidVersion();
+            var onlyTouch = (android && parseFloat(android)<4.3);
+            var clickEventType = (onlyTouch) ? 'touchstart' : 'touchstart mousedown';
+
+            self.element.children('li:first-child').children().addBack()
+                .on(clickEventType,function(evt){
+                    evt.preventDefault();
+                    if(self._state === 'closed' || self._state === 'closing'){
+                        self.open();
+                    }else{
+                        self.close(true);
+                    }
+                    return false;
+                });
         }else if(self.options.trigger === 'none'){
             // Do nothing
         }

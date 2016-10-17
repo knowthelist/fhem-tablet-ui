@@ -62,6 +62,7 @@ var Modul_weather = function () {
         'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'Q',
         'Nebel':                        'F',
         'klar':                         'B',
+        'Spruehregen':                  'R',
 
         // OPENWEATHER (Wetter.com) (incomplete)
         'leichter Schnee - Schauer' :   'U',
@@ -143,6 +144,7 @@ var Modul_weather = function () {
         'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'scatteredshowers.png',
         'Nebel':                        'fog.png',
         'klar':                         'sunny_night.png',
+        'Spruehregen':                  'mist.png',
 
         // OPENWEATHER (wetter.com) (incomplete)
         'leichter Schnee - Schauer' :   'chance_of_snow.png',

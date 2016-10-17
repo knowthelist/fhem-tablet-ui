@@ -334,6 +334,7 @@ function moveScale() {
           setTimeout( function() {
               fadeOff();
               }, 200);
+          return false;
         });
 	}
     else if (options['mode'] == 'toggle'){
@@ -359,7 +360,7 @@ function moveScale() {
                   options['toggleOn'].call(this);
               }
             }
-
+            return false;
         });
 	}
     else if (options['mode'] == 'dimmer'){
@@ -395,6 +396,7 @@ function moveScale() {
 					options['valueChanged'].call(this,currVal);
 				}
 			}else {
+                e.preventDefault();
 				if(state){
 				
 					setOff();	
@@ -412,7 +414,7 @@ function moveScale() {
 				isDown = false;
 				moveScale();
 				drawScale();
-			e.preventDefault();
+                return false;
 		});
         this.on(moveEventType, function(e) {
 			
