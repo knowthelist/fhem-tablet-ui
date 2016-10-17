@@ -72,7 +72,7 @@ UPD 2016-09-06_21:34:52 5235 www/tablet/js/widget_departure.js
 UPD 2016-09-06_21:34:52 5244 www/tablet/js/widget_dimmer.js
 UPD 2016-09-06_21:34:52 3337 www/tablet/js/widget_eventmonitor.js
 UPD 2016-09-06_21:34:52 2554 www/tablet/js/widget_example.js
-UPD 2016-10-14_00:57:02 18581 www/tablet/js/widget_famultibutton.js
+UPD 2016-10-17_21:39:13 18581 www/tablet/js/widget_famultibutton.js
 UPD 2016-09-06_21:34:52 9328 www/tablet/js/widget_fullcalview.js
 UPD 2016-09-06_21:34:52 2387 www/tablet/js/widget_gds.js
 UPD 2016-09-06_21:34:52 8734 www/tablet/js/widget_highchart.js
@@ -116,9 +116,9 @@ UPD 2016-10-11_22:32:39 7633 www/tablet/js/widget_thermostat.js
 UPD 2016-09-06_21:34:53 2587 www/tablet/js/widget_tts.js
 UPD 2016-10-11_22:32:47 7303 www/tablet/js/widget_volume.js
 UPD 2016-09-22_20:44:25 754 www/tablet/js/widget_wakeup.js
-UPD 2016-10-04_22:40:27 22268 www/tablet/js/widget_weather.js
+UPD 2016-10-17_21:39:05 22365 www/tablet/js/widget_weather.js
 UPD 2016-09-06_21:34:53 6099 www/tablet/js/widget_wind_direction.js
-UPD 2016-10-13_23:20:30 12371 www/tablet/lib/fa-multi-button.js
+UPD 2016-10-17_07:24:26 12463 www/tablet/lib/fa-multi-button.js
 UPD 2016-10-13_23:36:04 6171 www/tablet/lib/fa-multi-button.min.js
 UPD 2016-09-06_21:34:53 17041 www/tablet/lib/farbtastic.js
 UPD 2016-09-06_21:34:53 26586 www/tablet/lib/fhemSVG.css
@@ -136,7 +136,7 @@ UPD 2016-09-06_21:34:53 1211 www/tablet/lib/highcharts/themes/grid-light.js
 UPD 2016-09-06_21:34:53 1794 www/tablet/lib/highcharts/themes/grid.js
 UPD 2016-09-06_21:34:53 1684 www/tablet/lib/highcharts/themes/sand-signika.js
 UPD 2016-09-06_21:34:53 1764 www/tablet/lib/highcharts/themes/skies.js
-UPD 2016-09-10_02:36:01 10659 www/tablet/lib/jquery.circlemenu.js
+UPD 2016-10-17_21:31:52 11172 www/tablet/lib/jquery.circlemenu.js
 UPD 2016-09-06_21:34:53 18412 www/tablet/lib/jquery.datetimepicker.css
 UPD 2016-09-06_21:34:53 80573 www/tablet/lib/jquery.datetimepicker.js
 UPD 2016-09-06_21:34:53 3021 www/tablet/lib/jquery.gridster.min.css
