@@ -334,6 +334,9 @@ function moveScale() {
           setTimeout( function() {
               fadeOff();
               }, 200);
+
+          elem.trigger('click');
+
           return false;
         });
 	}
@@ -360,6 +363,9 @@ function moveScale() {
                   options['toggleOn'].call(this);
               }
             }
+
+            elem.trigger('click');
+
             return false;
         });
 	}
@@ -414,6 +420,7 @@ function moveScale() {
 				isDown = false;
 				moveScale();
 				drawScale();
+                elem.trigger('click');
                 return false;
 		});
         this.on(moveEventType, function(e) {

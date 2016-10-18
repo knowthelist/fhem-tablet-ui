@@ -83,7 +83,7 @@ var Modul_pagebutton = function () {
            me.init_ui(elem);
            var elem_url=elem.data('url');
 
-           elem.bind("toggleOn", function( event ){
+           elem.on("toggleOn", function( event ){
               // only set this button to active just before switching page
               me.elements.each(function(index) {
                      $(this).data('famultibutton').setOff();

@@ -59,19 +59,105 @@
         </div>
       </li>
       <li data-row="1" data-col="4" data-sizex="3" data-sizey="3">
-            <header>Popup</header>
-            <div data-type="popup" data-device="ftuitest" data-get-on="on" data-get-off="off"
-                 data-height="240px" data-width="340px" class="noshade">
-              <div class="big top-space-2x">Open Popup</div>
-              <div class="dialog">
-                  <div data-type="label" data-device='ftuitest' data-get="warnText1" class="top-space-3x  centered red big"></div>
-                  <div data-type="link" class="round top-space-3x centered"
-                       data-width="130" data-height="50"
-                       data-color="white"
-                       data-background-color="red"
-                       data-icon="fa-check"
-                       onclick="$('.dialog-close').trigger('click');">OK</div>
+            <header>div Popup</header>
+            <div class="center">
+                <div data-type="popup" data-device="ftuitest" data-get-on="on" data-get-off="(off|aus)"
+                     data-height="240px" data-width="540px" class="noshade">
+                  <div class="big">Open Popup</div>
+                  <div class="dialog phone-width">
+                <div class="hbox">
+                    <div class="box vertical phone-width">
+                      <div class="card bg-green">
+                        <header>Card 21</header>
+                        <!-- place your widget here -->
+                        1
+                      </div>
+                      <div class="card bg-green">
+                        <header>Card 22</header>
+                        <!-- place your widget here -->
+                        2
+                      </div>
+                    </div>
+                    <div class="box vertical phone-width">
+                      <div class="card bg-red">
+                        <header>Card 31</header>
+                        <!-- place your widget here -->
+                        3
+                      </div>
+                      <div class="card bg-red">
+                        <header>Card 32</header>
+                        <!-- place your widget here -->
+                        4
+                      </div>
+                    </div>
+                </div>
               </div>
+                </div>
+            </div>
+      </li>
+      <li data-row="1" data-col="7" data-sizex="3" data-sizey="3">
+            <header>Button Popup</header>
+            <div class="center">
+                <div data-type="popup" data-device="ftuitest" data-get-on="on" data-get-off="(off|aus)"
+                     data-height="240px" data-width="540px" class="noshade">
+                     <div data-type="button" class=""></div>
+                  <div class="dialog phone-width">
+                <div class="hbox">
+                    <div class="box vertical phone-width">
+                      <div class="card bg-green">
+                        <header>Card 21</header>
+                        <!-- place your widget here -->
+                        1
+                      </div>
+                      <div class="card bg-green">
+                        <header>Card 22</header>
+                        <!-- place your widget here -->
+                        2
+                      </div>
+                    </div>
+                    <div class="box vertical phone-width">
+                      <div class="card bg-red">
+                        <header>Card 31</header>
+                        <!-- place your widget here -->
+                        3
+                      </div>
+                      <div class="card bg-red">
+                        <header>Card 32</header>
+                        <!-- place your widget here -->
+                        4
+                      </div>
+                    </div>
+                </div>
+              </div>
+                </div>
+            </div>
+      </li>
+      <li data-row="1" data-col="10" data-sizex="3" data-sizey="3">
+        <header>Link Popup</header>
+        <!-- place your widget here -->
+        <div class="center">
+            <div data-type="popup" data-height="400px" data-width="200px">
+            <div data-type="link" class="large thin">Show Temperatur</div>
+              <div class="dialog">
+              <header>DIALOG</header>
+              <div class="top-space">
+                    <div class="newline">
+                      <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin"></div>
+                      <div data-type="label" class="cell">Temperatur</div>
+                    </div>
+                    <div class="newline">
+                      <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="bigger thin"></div>
+                      <div data-type="label" class="cell">Luftfeuchte</div>
+                    </div>
+                    <div data-type="link" class="round top-space-3x left-space-2x"
+                         data-width="130" data-height="50"
+                         data-color="white"
+                         data-background-color="green"
+                         data-icon="fa-check"
+                         onclick="$('.dialog-close').trigger('click');">OK</div>
+              </div>
+              </div>
+            </div>
         </div>
       </li>
     </ul>

@@ -190,9 +190,10 @@ var Modul_link = function () {
 
         // event handler
        elem.on('touchend mouseup',function(e) {
+            e.preventDefault();
             elem.fadeTo( "fast" , 1);
             onClicked(elem);
-            e.preventDefault();
+            elem.trigger('click');
         });
 
         elem.on('touchstart mousedown',function(e) {

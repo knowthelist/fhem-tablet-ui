@@ -343,10 +343,10 @@ var Modul_famultibutton = function () {
                     stopRunningTimer(elem);
                 }
             });
-        }
 
-        // any old on-for-timer still active ?
-        checkForRunningTimer(elem, id);
+            // any old on-for-timer still active ?
+            checkForRunningTimer(elem, id);
+        }
 
         return elem;
     };
