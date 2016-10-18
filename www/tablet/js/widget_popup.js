@@ -147,7 +147,7 @@ var Modul_popup = function () {
                     }
                 });
 
-                starter.on('click',function(e) {
+                starter.on('clicked click',function(e) {
                     e.preventDefault();
                     show(dialog,elem.data('mode'));
                     elem.trigger('fadein');

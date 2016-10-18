@@ -326,6 +326,7 @@ function moveScale() {
           e.preventDefault();
           if(Math.abs(touch_pos_y-$(window).scrollTop())>3
                   || (Math.abs(touch_pos_x-$(window).scrollLeft())>3)) return;
+          elem.trigger('clicked');
           setOn();
 
           if(typeof options['toggleOn'] === 'function'){
@@ -335,7 +336,7 @@ function moveScale() {
               fadeOff();
               }, 200);
 
-          elem.trigger('click');
+
 
           return false;
         });
@@ -364,7 +365,7 @@ function moveScale() {
               }
             }
 
-            elem.trigger('click');
+            elem.trigger('clicked');
 
             return false;
         });
@@ -420,7 +421,7 @@ function moveScale() {
 				isDown = false;
 				moveScale();
 				drawScale();
-                elem.trigger('click');
+                elem.trigger('clicked');
                 return false;
 		});
         this.on(moveEventType, function(e) {
