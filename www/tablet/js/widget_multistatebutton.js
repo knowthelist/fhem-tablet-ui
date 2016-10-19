@@ -39,14 +39,13 @@ var Modul_multistatebutton = function () {
         me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
         me.elements.each(function(index) {
             var elem = $(this);
-            elem.data('get-on'                      , new Array('on', 'off'));
+            elem.initData('get-on'                      , new Array('on', 'off'));
             var set = elem.data('get-on').slice();
             set.push(set.shift());
-            elem.data('set'                         , set);
-            elem.data('set-default'                 , elem.data('set')[0]);
-            elem.data('icon'                        , 'fa-power-off');
-            elem.data('background-icon'             , 'fa-circle');
-            elem.data('set'                         , set);
+            elem.initData('set'                         , set);
+            elem.initData('set-default'                 , elem.data('set')[0]);
+            elem.initData('icon'                        , 'fa-power-off');
+            elem.initData('background-icon'             , 'fa-circle');
 
             elem.initData('on-color'                , elem.data('color') || getClassColor(elem) || getStyle('.multistatebutton.on','color')  || '#2A2A2A');
             elem.initData('off-color'               , elem.data('color') || getStyle('.multistatebutton.off','color') || elem.data('on-color'));
