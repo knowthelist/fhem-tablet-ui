@@ -53,7 +53,7 @@ var Modul_dimmer = function () {
          localStorage.setItem(this.widgetname+"_"+device, v);
          if ( elem.data('famultibutton').getState() === true || elem.data('dim') !== '' ){
              if (elem.hasClass('FS20')){
-                  v = this.FS20.dimmerValue(v);
+                  v = ftui.FS20.dimmerValue(v);
              }
             var valStr = elem.data('set-value').toString().replace('$v',v.toString());
             var reading = (elem.data('dim') !== '') ? elem.data('dim') : elem.data('set');
