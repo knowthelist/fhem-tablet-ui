@@ -69,7 +69,7 @@ UPD 2016-09-06_21:34:52 5946 www/tablet/js/widget_clock.js
 UPD 2016-09-06_21:34:52 2837 www/tablet/js/widget_colorwheel.js
 UPD 2016-09-06_21:34:52 2366 www/tablet/js/widget_datetimepicker.js
 UPD 2016-09-06_21:34:52 5235 www/tablet/js/widget_departure.js
-UPD 2016-09-06_21:34:52 5244 www/tablet/js/widget_dimmer.js
+UPD 2016-10-19_22:48:08 5244 www/tablet/js/widget_dimmer.js
 UPD 2016-09-06_21:34:52 3337 www/tablet/js/widget_eventmonitor.js
 UPD 2016-09-06_21:34:52 2554 www/tablet/js/widget_example.js
 UPD 2016-10-19_22:10:10 18589 www/tablet/js/widget_famultibutton.js
