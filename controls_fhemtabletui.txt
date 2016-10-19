@@ -92,7 +92,7 @@ UPD 2016-10-19_00:06:18 10150 www/tablet/js/widget_link.js
 UPD 2016-09-06_21:34:53 1493 www/tablet/js/widget_loading.js
 UPD 2016-09-20_07:07:05 4439 www/tablet/js/widget_medialist.js
 UPD 2016-09-06_21:34:53 1857 www/tablet/js/widget_meteogram.js
-UPD 2016-09-06_21:34:53 3390 www/tablet/js/widget_multistatebutton.js
+UPD 2016-10-19_23:05:02 3350 www/tablet/js/widget_multistatebutton.js
 UPD 2016-10-18_19:47:16 8019 www/tablet/js/widget_pagebutton.js
 UPD 2016-10-11_00:15:00 8038 www/tablet/js/widget_pagetab.js
 UPD 2016-09-06_21:34:53 5048 www/tablet/js/widget_playstream.js
