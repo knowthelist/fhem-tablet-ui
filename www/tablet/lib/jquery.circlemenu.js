@@ -56,6 +56,7 @@
             dir;
 
         self._state = 'closed';
+        self._locked = false;
         self.element.addClass(pluginName+'-closed');
 
         if(typeof self.options.direction === 'string'){
@@ -127,12 +128,16 @@
             self.element.children('li:first-child').children().addBack()
             .on('clicked click',function(evt){
                 evt.preventDefault();
-                if(self._state !== 'opening' && self._state !== 'closing'){
-                    if(self._state === 'closed'){
+                if(self._locked === false){
+                    self._locked = true;
+                    if(self._state === 'closed' || self._state === 'closing'){
                         self.open();
                     }else{
                         self.close(true);
                     }
+                    setTimeout( function() {
+                        self._locked = false;
+                    }, 350);
                 }
                 return false;
               });

@@ -182,8 +182,11 @@ var ftui = {
 
         //add background for modal dialogs
         $("<div id='shade' />").prependTo('body').hide();
-        $("#shade").on('click',function() {
-            $(document).trigger("shadeClicked");
+        var android = getAndroidVersion();
+        var onlyTouch = (android && parseFloat(android)<4.3);
+        var clickEventType = (onlyTouch) ? 'touchstart' : 'touchstart mousedown';
+        $('#shade').on(clickEventType,function(e) {
+                $(document).trigger("shadeClicked");
         });
 
         ftui.readStatesLocal();
@@ -1106,6 +1109,12 @@ String.prototype.parseJson = function() {
 this.parseJsonFromString = function (str) {
     return JSON.parse(str);
 }
+
+this.getAndroidVersion = function(ua) {
+    ua = (ua || navigator.userAgent).toLowerCase();
+    var match = ua.match(/android\s([0-9\.]*)/);
+    return match ? match[1] : false;
+};
 
 String.prototype.toMinFromSec = function() {
     var x = Number(this);

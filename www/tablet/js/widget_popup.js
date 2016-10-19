@@ -138,12 +138,12 @@ var Modul_popup = function () {
                 });
 
                 close.on('click',function() {
-                	hide(dialog,elem.data('mode'));
+                    hide(dialog,elem.data('mode'));
                 });
 
                 $(document).on('shadeClicked', function() {
                     if( $('.dialog.interlock:visible').length === 0 ) {
-                		hide(dialog,elem.data('mode'));
+                        hide(dialog,elem.data('mode'));
                     }
                 });
 
@@ -151,6 +151,7 @@ var Modul_popup = function () {
                     e.preventDefault();
                     show(dialog,elem.data('mode'));
                     elem.trigger('fadein');
+                    return false;
                   });
             }
         });

@@ -319,14 +319,16 @@ function moveScale() {
 
     if (options['mode'] == 'push'){
         this.on(clickEventType, function(e) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
           touch_pos_y = $(window).scrollTop();
           touch_pos_x = $(window).scrollLeft();
         });
         this.on(releaseEventType, function(e) {
           e.preventDefault();
+          e.stopImmediatePropagation();
           if(Math.abs(touch_pos_y-$(window).scrollTop())>3
                   || (Math.abs(touch_pos_x-$(window).scrollLeft())>3)) return;
-          elem.trigger('clicked');
           setOn();
 
           if(typeof options['toggleOn'] === 'function'){
@@ -336,18 +338,21 @@ function moveScale() {
               fadeOff();
               }, 200);
 
-
+          elem.trigger('clicked');
 
           return false;
         });
 	}
     else if (options['mode'] == 'toggle'){
         this.on(clickEventType, function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
             touch_pos_y = $(window).scrollTop();
             touch_pos_x = $(window).scrollLeft();
           });
         this.on(releaseEventType, function(e) {
             e.preventDefault();
+            e.stopImmediatePropagation();
 
             if(Math.abs(touch_pos_y-$(window).scrollTop())>3
                     || (Math.abs(touch_pos_x-$(window).scrollLeft())>3)) return;
@@ -378,7 +383,8 @@ function moveScale() {
 			diff = 0;
 			isDown = true;
 
-			e.preventDefault();
+            e.preventDefault();
+            e.stopImmediatePropagation();
 		});
         this.on(leaveEventType, function(e) {
 	
@@ -390,7 +396,8 @@ function moveScale() {
 				moveScale();
 			}
 			isDown = false;
-			e.preventDefault();
+            e.preventDefault();
+            e.stopImmediatePropagation();
 		});
         this.on(releaseEventType, function(e) {
 			
@@ -448,7 +455,8 @@ function moveScale() {
 					top: -diff+'px',
 				});
 			}
-			e.preventDefault();
+            e.preventDefault();
+            e.stopImmediatePropagation();
 		});
 	}
 	// public functions;
