@@ -33,6 +33,18 @@ var Modul_label = function () {
         return ( $.isNumeric(value) && fix>=0 ) ? Number(value).toFixed(fix) : value;
     };
 
+    function update_factor(value, factor) {
+        return ( $.isNumeric(value) && $.isNumeric(factor) ) ? (Number(value) * Number(factor)).toString() : value;
+    };
+
+    function update_postfix(value, postfix) {
+        return postfix ? value + postfix : value;
+    };
+
+    function update_prefix(value, prefix) {
+        return prefix ? prefix + value : value;
+    };
+
     function update_substitution(value, substitution) {
         ftui.log(3,me.widgetname+' - value:'+value+', substitution:'+substitution);
         if(substitution){
@@ -113,7 +125,10 @@ var Modul_label = function () {
                 var unit = elem.data('unit');
 
                 val = update_substitution(val, elem.data('substitution'));
+                val = update_factor(val, elem.data('factor'));
                 val = update_fix(val, elem.data('fix'));
+                val = update_prefix(val, elem.data('prefix'));
+                val = update_postfix(val, elem.data('postfix'));
                 if (!isNaN(parseFloat(val)) && isFinite(val) && val.indexOf('.')>-1){
                     var vals = val.split('.');
                     val = "<span class='label-precomma'>"+vals[0]+"</span>" +
