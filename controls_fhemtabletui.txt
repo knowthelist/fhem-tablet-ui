@@ -56,7 +56,7 @@ UPD 2016-10-24_02:35:12 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2016-10-24_02:35:12 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2016-10-24_02:35:12 13817 www/tablet/index-example.html
 UPD 2016-10-24_02:35:12 2782 www/tablet/index_empty.html
-UPD 2016-10-24_02:35:12 46619 www/tablet/js/fhem-tablet-ui.js
+UPD 2016-10-24_20:44:24 46885 www/tablet/js/fhem-tablet-ui.js
 UPD 2016-10-24_02:35:12 25020 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-10-24_02:35:12 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-10-24_02:35:12 1474 www/tablet/js/widget_button.js
@@ -69,10 +69,10 @@ UPD 2016-10-24_02:35:12 5946 www/tablet/js/widget_clock.js
 UPD 2016-10-24_02:35:12 2837 www/tablet/js/widget_colorwheel.js
 UPD 2016-10-24_02:35:12 2366 www/tablet/js/widget_datetimepicker.js
 UPD 2016-10-24_02:35:12 5235 www/tablet/js/widget_departure.js
-UPD 2016-10-24_02:35:12 5244 www/tablet/js/widget_dimmer.js
+UPD 2016-10-24_21:44:11 6463 www/tablet/js/widget_dimmer.js
 UPD 2016-10-24_02:35:12 3337 www/tablet/js/widget_eventmonitor.js
 UPD 2016-10-24_02:35:12 2554 www/tablet/js/widget_example.js
-UPD 2016-10-24_02:35:12 18589 www/tablet/js/widget_famultibutton.js
+UPD 2016-10-24_22:57:40 18453 www/tablet/js/widget_famultibutton.js
 UPD 2016-10-24_02:35:12 9328 www/tablet/js/widget_fullcalview.js
 UPD 2016-10-24_02:35:12 2387 www/tablet/js/widget_gds.js
 UPD 2016-10-24_02:35:12 8734 www/tablet/js/widget_highchart.js
@@ -118,8 +118,8 @@ UPD 2016-10-24_02:35:12 7303 www/tablet/js/widget_volume.js
 UPD 2016-10-24_02:35:12 754 www/tablet/js/widget_wakeup.js
 UPD 2016-10-24_02:35:12 22365 www/tablet/js/widget_weather.js
 UPD 2016-10-24_02:35:12 6099 www/tablet/js/widget_wind_direction.js
-UPD 2016-10-24_02:35:12 12959 www/tablet/lib/fa-multi-button.js
-UPD 2016-10-24_02:35:12 6513 www/tablet/lib/fa-multi-button.min.js
+UPD 2016-10-19_22:47:18 13034 www/tablet/lib/fa-multi-button.js
+UPD 2016-10-24_22:57:40 6543 www/tablet/lib/fa-multi-button.min.js
 UPD 2016-10-24_02:35:12 17041 www/tablet/lib/farbtastic.js
 UPD 2016-10-24_02:35:12 26586 www/tablet/lib/fhemSVG.css
 UPD 2016-10-24_02:35:12 27407 www/tablet/lib/font-awesome.min.css

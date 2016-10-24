@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
 2016-10-24
- - Upgrade of meteogram
+ - Added lock parameter for dimmer
