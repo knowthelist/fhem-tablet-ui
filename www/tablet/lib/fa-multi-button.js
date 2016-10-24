@@ -377,17 +377,16 @@ function moveScale() {
 	}
     else if (options['mode'] == 'dimmer'){
         this.on(clickEventType, function(e) {
-
+            e.preventDefault();
+            e.stopImmediatePropagation();
 			var event = e.originalEvent;
 			dragy =  event.touches ? event.touches[0].clientY :e.pageY;
 			diff = 0;
 			isDown = true;
-
-            e.preventDefault();
-            e.stopImmediatePropagation();
 		});
         this.on(leaveEventType, function(e) {
-	
+            e.preventDefault();
+            e.stopImmediatePropagation();
 			if (isDrag){
 				isDrag = false;
 				elem.animate({ top: 0 });
@@ -396,11 +395,10 @@ function moveScale() {
 				moveScale();
 			}
 			isDown = false;
-            e.preventDefault();
-            e.stopImmediatePropagation();
 		});
         this.on(releaseEventType, function(e) {
-			
+            e.preventDefault();
+            e.stopImmediatePropagation();
 			if (isDrag){
 				isDrag = false;
 				elem.animate({ top: 0 });
@@ -410,7 +408,6 @@ function moveScale() {
 					options['valueChanged'].call(this,currVal);
 				}
 			}else {
-                e.preventDefault();
 				if(state){
 				
 					setOff();	
@@ -423,16 +420,18 @@ function moveScale() {
 					if(typeof options['toggleOn'] === 'function'){
 						options['toggleOn'].call(this);
 					}
-				}}
-				isDrag = false;
-				isDown = false;
-				moveScale();
-				drawScale();
-                elem.trigger('clicked');
-                return false;
+                }
+            }
+            isDrag = false;
+            isDown = false;
+            moveScale();
+            drawScale();
+            elem.trigger('clicked');
+            return false;
 		});
         this.on(moveEventType, function(e) {
-			
+            e.preventDefault();
+            e.stopImmediatePropagation();
 			if (isDown)
 				isDrag = true;
 	
@@ -455,8 +454,6 @@ function moveScale() {
 					top: -diff+'px',
 				});
 			}
-            e.preventDefault();
-            e.stopImmediatePropagation();
 		});
 	}
 	// public functions;

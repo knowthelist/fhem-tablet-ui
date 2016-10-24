@@ -170,6 +170,8 @@ data-set-off="" suppress sending off
 
 class 'invert' inverts foreground and background color
 
+data-lock: the widget gets locked if the corresponding FHEM reading has the value 1, on or true.
+
 See [examples](#switch) of Switch
 
 ####Symbol widgets
@@ -425,6 +427,7 @@ class 'value' enables a text element which shows the value
 - **data-max**                     : numeric value for the maximal value to tune (default '100')
 - **data-min**                     : numeric value for the minimal value to tune (default '0')
 - **data-step**                    : numeric value for each increase/descrease (default '1')
+- **data-lock**  : name of the reading containing the boolean value for the lock (readonly) parameter (default <null>)
 - **class**          : FS20
 
 To change the dim value: push the button and slide up or down.
@@ -435,6 +438,8 @@ and the button is only used for ON / OFF.
 
 $v is a placeholder for the numeric value, it will be replaced be the real value at runtime
 class 'FS20' convert values 0-100 to values which are excepted by FS20 dimmers
+
+data-lock: the widget gets locked if the corresponding FHEM reading has the value 1, on or true.
 
 ####Image widgets
 - **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')

@@ -33,28 +33,51 @@ var Modul_dimmer = function () {
          me.init_attr(elem);
          me.init_ui(elem);
          var val = localStorage.getItem(me.widgetname+"_"+elem.data('device'));
-         if ( val && $.isNumeric(val))
-          elem.setDimValue( parseInt(val));
+         if ( val && $.isNumeric(val)) {
+            elem.data('num-value', val);
+            elem.setDimValue( parseInt(val));
+         }
+         if ( elem.isDeviceReading('lock') ) {me.addReading(elem,'lock');}
      });
     };
 
     function toggleOn (elem) {
-         var v = elem.getValue();
+        if ( this.isReadOnly(elem) ) {
+            elem.addClass('fail-shake');
+            setTimeout(function() {
+                var faelem = elem.data('famultibutton');
+                if( faelem ) { faelem.setOff(); }
+                elem.removeClass('fail-shake');
+            }, 500);
+            return;
+        }
+        var v = elem.getValue();
          if (elem.hasClass('FS20')){
               v = ftui.FS20.dimmerValue(v);
-          }
+         }
+         elem.data('num-value', v);
          elem.data('value', elem.data('set-on').toString().replace('$v',v.toString()));
          elem.transmitCommand();
          elem.trigger("toggleOn");
      };
 
      function valueChanged (elem,v) {
+         if ( this.isReadOnly(elem) ) {
+             elem.addClass('fail-shake');
+             setTimeout(function() {
+                 var faelem = elem.data('famultibutton');
+                 if( faelem ) { faelem.setDimValue(parseInt(elem.data('num-value'))); }
+                 elem.removeClass('fail-shake');
+             }, 500);
+             return;
+         }
          var device = elem.data('device');
          localStorage.setItem(this.widgetname+"_"+device, v);
          if ( elem.data('famultibutton').getState() === true || elem.data('dim') !== '' ){
              if (elem.hasClass('FS20')){
                   v = ftui.FS20.dimmerValue(v);
              }
+            elem.data('num-value', v);
             var valStr = elem.data('set-value').toString().replace('$v',v.toString());
             var reading = (elem.data('dim') !== '') ? elem.data('dim') : elem.data('set');
             var cmd = [elem.data('cmd-value'), device, reading, valStr].join(' ');
@@ -94,6 +117,15 @@ var Modul_dimmer = function () {
                  me.update_cb($(this),state);
              }
            });
+
+
+           //extra reading for lock
+           me.elements.filterDeviceReading('lock',dev,par)
+             .each(function(idx) {
+               var elem = $(this);
+               elem.data('readonly' ,elem.getReading('lock').val);
+           });
+
            //extra reading for colorize
            me.elements.filterDeviceReading('dim',dev,par)
            .each(function(idx) {
@@ -103,8 +135,10 @@ var Modul_dimmer = function () {
                    var part = $(this).data('get-value');
                    var val = ftui.getPart(value, part);
                    var elemDim = $(this).data('famultibutton');
-                   if (elemDim && $.isNumeric(val))
+                   if (elemDim && $.isNumeric(val)) {
+                       elem.data('num-value', val);
                        elemDim.setDimValue( parseInt(val));
+                   }
 
                 }
          });

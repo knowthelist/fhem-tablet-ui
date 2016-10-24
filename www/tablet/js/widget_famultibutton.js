@@ -198,14 +198,9 @@ var Modul_famultibutton = function () {
         }
     };
 
-    function isReadOnly(elem) {
-        var lock = elem.data('readonly');
-        return (lock == 'true' || lock == '1' || lock == 'on' );
-    }
-
     function toggleOn(elem) {
 
-        if ( isReadOnly(elem) ) {
+        if ( this.isReadOnly(elem) ) {
             elem.addClass('fail-shake');
             setTimeout(function() {
                 var faelem = elem.data('famultibutton');
@@ -233,7 +228,7 @@ var Modul_famultibutton = function () {
 
     function toggleOff(elem) {
 
-        if ( isReadOnly(elem) ) {
+        if ( this.isReadOnly(elem) ) {
             elem.addClass('fail-shake');
             setTimeout(function() {
                 var faelem = elem.data('famultibutton');

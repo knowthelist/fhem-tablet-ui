@@ -26,6 +26,11 @@ var Modul_widget = function () {
         });
     };
 
+    function isReadOnly(elem) {
+        var lock = elem.data('readonly');
+        return (lock === 'true' || lock === '1' || lock === 'on' || lock === 1 );
+    }
+
     function init_attr(elem) {};
     function init_ui(elem) {elem.text(this.widgetname);};
 
@@ -60,6 +65,7 @@ var Modul_widget = function () {
     return {
         widgetname: 'widget',
         area: '',
+        isReadOnly:isReadOnly,
         init: init,
         init_attr:init_attr,
         init_ui:init_ui,
@@ -474,13 +480,16 @@ var ftui = {
         }
         ftui.log(1,(ftui.states.longPollRestart)?"Longpoll re-started":"Longpoll started");
         ftui.states.longPollRestart=false;
+
+        var devicelist = $.map(ftui.devs, $.trim).join();
+
         ftui.longPollRequest=$.ajax({
             url: ftui.config.fhem_dir,
             cache: false,
             async: true,
             data: {
                 XHR:1,
-                inform: "type=status;filter=.*;fmt=JSON"
+                inform: "type=status;filter="+devicelist+";fmt=JSON"
             },
             xhr: function() {
                 ftui.xhr = new window.XMLHttpRequest();
