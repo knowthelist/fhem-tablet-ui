@@ -1,25 +1,35 @@
+/*
+
+  Das Widget benötigt "Highcharts",
+  diese kann hier => http://www.highcharts.com/download heruntergeladen werden.
+  Der in der ZIP-Datei enthaltene Ordner "js" muss Tabletui-Ordner/lib/highcharts entpackt werden.
+
+  */
+
 // load highcharts libs
-dynamicload('lib/highcharts/highcharts.js', null, null, false);
-dynamicload('lib/highcharts/themes/dark-unica.js', null, null, false);
-dynamicload('js/highcharts-meteogram.js', null, null, false);
+function depends_meteogram (){
+    if (!$.fn.highchart)
+    {
+        return [  'lib/highcharts/highcharts.js'
+                , 'lib/highcharts/themes/dark-unica.js'
+                , 'js/highcharts-meteogram.js'
+        ];
+    }
+};
 
-var widget_meteogram = {
-    widgetname: 'meteogram',
-    init_attr: function(elem) {
-        elem.data('get','STATE');
-        elem.data('location', elem.data('location') || 'Tyskland/Berlin/Berlin');
-    },
-    init: function () {
-        var base = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            widget_meteogram.init_attr($(this));
-        });
-    },
-    refresh: function () {
 
-        var title = $(this).data('title');
-        var place = $(this).data('location');
+var Modul_meteogram = function() {
+
+    function init_attr(elem) {
+        elem.initData('location'    , 'Tyskland/Berlin/Berlin');
+        elem.initData('get'         , 'STATE');
+
+        this.addReading(elem,'get');
+    }
+
+    function refresh(elem) {
+        var title = elem.data('title');
+        var place = elem.data('location');
 
         var locationURL = 'http://www.yr.no/place/' + place + '/forecast_hour_by_hour.xml';
 
@@ -37,20 +47,25 @@ var widget_meteogram = {
         $.getJSON(
             'http://www.highcharts.com/samples/data/jsonp.php?url=' + locationURL + '&callback=?',
             function (xml) {
-                var meteogram = new Meteogram(xml, 'container');
+                var meteogram = new Meteogram(xml, elem[0]);
             }
         );
+    }
 
-    },
-    update: function (dev, par) {
-        var base = this;
-        var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-        deviceElements.each(
-            function(index) {
-                if ( $(this).data('get') == par ) {
-                    base.refresh.apply(this);
-                }
-            }
-        );
-    },
+    function update(dev, par) {
+        me = this;
+        me.elements.filterDeviceReading('get', dev, par)
+        .each(function(index) {
+            refresh($(this));
+        });
+    };
+
+    // public
+    // inherit all public members from base clas
+    var me = this;
+    return $.extend(new Modul_widget(), {
+          widgetname: 'meteogram'
+        , init_attr: init_attr
+        , update: update
+    });
 };
