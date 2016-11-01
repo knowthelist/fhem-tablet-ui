@@ -86,11 +86,12 @@ var Modul_thermostat = function () {
 
 	//draw valve value as text
 	if ( this.o.valveValue ) {
+        var text = (~this.o.valveValue.indexOf("%")) ? this.o.valveValue : this.o.valveValue + "%";
         x = -5;
         y = this.radius*0.55;
         c.fillStyle = this.o.fgColor;
         c.font=cfont;
-		c.fillText(this.o.valveValue+'%',this.xy+x,this.xy+y+5);
+        c.fillText(text,this.xy+x,this.xy+y+5);
     }
   return false;
   };
