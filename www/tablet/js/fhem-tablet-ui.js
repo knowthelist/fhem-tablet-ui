@@ -1146,7 +1146,7 @@ Date.prototype.ago = function() {
       x /= 60;
   var hours = Math.round(x % 24);
       x /= 24;
-  var days = Math.round(x);
+  var days = Math.floor(x);
   var userLang = navigator.language || navigator.userLanguage;
     var strUnits = (userLang.split('-')[0] === 'de')?['Tag(e)','Stunde(n)','Minute(n)','Sekunde(n)']:['day(s)','hour(s)','minute(s)','second(s)'];
   var ret = (days>0)?days +" "+strUnits[0]+ " ":"";
