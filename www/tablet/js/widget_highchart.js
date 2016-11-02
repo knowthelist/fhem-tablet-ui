@@ -131,7 +131,7 @@ var Modul_highchart = function() {
 
             $.each( lines, function( index, value ) {
                 if ( value ) {
-                    var val = parseFloat(getPart(value.replace('\r\n',''),2));
+                    var val = parseFloat(ftui.getPart(value.replace('\r\n',''),2));
 
                     var eventTime = dateFromString(value).getTime();
 
