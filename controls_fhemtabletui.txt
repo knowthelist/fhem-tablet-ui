@@ -25,11 +25,11 @@ UPD 2016-10-24_02:35:12 528460 www/tablet/fonts/fhemSVG.svg
 UPD 2016-10-24_02:35:12 127232 www/tablet/fonts/fhemSVG.ttf
 UPD 2016-10-24_02:35:12 127308 www/tablet/fonts/fhemSVG.woff
 UPD 2016-10-24_02:35:12 103 www/tablet/fonts/fontawesome-License.txt
-UPD 2016-10-24_02:35:12 70807 www/tablet/fonts/fontawesome-webfont.eot
-UPD 2016-10-24_02:35:12 365616 www/tablet/fonts/fontawesome-webfont.svg
-UPD 2016-10-24_02:35:12 142072 www/tablet/fonts/fontawesome-webfont.ttf
-UPD 2016-10-24_02:35:12 83588 www/tablet/fonts/fontawesome-webfont.woff
-UPD 2016-10-24_02:35:12 66624 www/tablet/fonts/fontawesome-webfont.woff2
+UPD 2016-10-27_17:51:44 165742 www/tablet/fonts/fontawesome-webfont.eot
+UPD 2016-10-27_17:51:44 444379 www/tablet/fonts/fontawesome-webfont.svg
+UPD 2016-10-27_17:51:44 165548 www/tablet/fonts/fontawesome-webfont.ttf
+UPD 2016-10-27_17:51:44 98024 www/tablet/fonts/fontawesome-webfont.woff
+UPD 2016-10-27_17:51:44 77160 www/tablet/fonts/fontawesome-webfont.woff2
 UPD 2016-10-24_02:35:12 109688 www/tablet/fonts/FontAwesome.otf
 UPD 2016-10-24_02:35:12 3165 www/tablet/fonts/FTUI-icons.svg
 UPD 2016-10-24_02:35:12 1688 www/tablet/fonts/FTUI-icons.ttf
@@ -56,8 +56,8 @@ UPD 2016-10-24_02:35:12 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2016-10-24_02:35:12 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2016-10-24_02:35:12 13817 www/tablet/index-example.html
 UPD 2016-10-24_02:35:12 2782 www/tablet/index_empty.html
-UPD 2016-10-24_20:44:24 46885 www/tablet/js/fhem-tablet-ui.js
-UPD 2016-10-28_17:23:38 25387 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2016-11-02_00:59:37 46885 www/tablet/js/fhem-tablet-ui.js
+UPD 2016-11-01_23:15:37 25387 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-10-24_02:35:12 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-10-24_02:35:12 1474 www/tablet/js/widget_button.js
 UPD 2016-10-24_02:35:12 4571 www/tablet/js/widget_calview.js
@@ -75,7 +75,7 @@ UPD 2016-10-24_02:35:12 2554 www/tablet/js/widget_example.js
 UPD 2016-10-24_22:57:40 18453 www/tablet/js/widget_famultibutton.js
 UPD 2016-10-24_02:35:12 9328 www/tablet/js/widget_fullcalview.js
 UPD 2016-10-24_02:35:12 2387 www/tablet/js/widget_gds.js
-UPD 2016-10-24_02:35:12 8734 www/tablet/js/widget_highchart.js
+UPD 2016-11-02_01:00:35 8739 www/tablet/js/widget_highchart.js
 UPD 2016-10-24_02:35:12 8542 www/tablet/js/widget_highchart3d.js
 UPD 2016-10-24_02:35:12 9933 www/tablet/js/widget_homestatus.js
 UPD 2016-10-24_02:35:12 7709 www/tablet/js/widget_html.js
@@ -112,7 +112,7 @@ UPD 2016-10-24_02:35:12 2865 www/tablet/js/widget_svgplot.js
 UPD 2016-10-24_02:35:12 4168 www/tablet/js/widget_swiper.js
 UPD 2016-10-24_02:35:12 1308 www/tablet/js/widget_switch.js
 UPD 2016-10-24_02:35:12 1871 www/tablet/js/widget_symbol.js
-UPD 2016-10-24_02:35:12 7633 www/tablet/js/widget_thermostat.js
+UPD 2016-11-02_00:17:34 7722 www/tablet/js/widget_thermostat.js
 UPD 2016-10-24_02:35:12 2587 www/tablet/js/widget_tts.js
 UPD 2016-10-24_02:35:12 7303 www/tablet/js/widget_volume.js
 UPD 2016-10-24_02:35:12 754 www/tablet/js/widget_wakeup.js
@@ -122,7 +122,7 @@ UPD 2016-10-19_22:47:18 13034 www/tablet/lib/fa-multi-button.js
 UPD 2016-10-24_22:57:40 6543 www/tablet/lib/fa-multi-button.min.js
 UPD 2016-10-24_02:35:12 17041 www/tablet/lib/farbtastic.js
 UPD 2016-10-24_02:35:12 26586 www/tablet/lib/fhemSVG.css
-UPD 2016-10-24_02:35:12 27407 www/tablet/lib/font-awesome.min.css
+UPD 2016-11-02_00:54:13 30926 www/tablet/lib/font-awesome.min.css
 UPD 2016-10-24_02:35:12 40391 www/tablet/lib/highcharts/graphics/meteogram-symbols-30px.png
 UPD 2016-10-24_02:35:12 20437 www/tablet/lib/highcharts/highcharts-3d.js
 UPD 2016-10-24_02:35:12 24398 www/tablet/lib/highcharts/highcharts-more.js
