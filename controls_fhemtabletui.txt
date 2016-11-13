@@ -56,8 +56,9 @@ UPD 2016-10-24_02:35:12 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2016-10-24_02:35:12 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2016-10-24_02:35:12 13817 www/tablet/index-example.html
 UPD 2016-10-24_02:35:12 2782 www/tablet/index_empty.html
-UPD 2016-11-02_00:59:37 46885 www/tablet/js/fhem-tablet-ui.js
-UPD 2016-11-01_23:15:37 25387 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2016-11-10_20:56:48 3193 www/tablet/index_tonne.html
+UPD 2016-11-13_23:23:23 49584 www/tablet/js/fhem-tablet-ui.js
+UPD 2016-11-13_23:24:09 26929 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-10-24_02:35:12 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-10-24_02:35:12 1474 www/tablet/js/widget_button.js
 UPD 2016-10-24_02:35:12 4571 www/tablet/js/widget_calview.js
@@ -78,7 +79,7 @@ UPD 2016-10-24_02:35:12 2387 www/tablet/js/widget_gds.js
 UPD 2016-11-02_01:00:35 8739 www/tablet/js/widget_highchart.js
 UPD 2016-10-24_02:35:12 8542 www/tablet/js/widget_highchart3d.js
 UPD 2016-10-24_02:35:12 9933 www/tablet/js/widget_homestatus.js
-UPD 2016-10-24_02:35:12 7709 www/tablet/js/widget_html.js
+UPD 2016-11-13_22:39:50 8605 www/tablet/js/widget_html.js
 UPD 2016-10-24_02:35:12 4312 www/tablet/js/widget_iframe.js
 UPD 2016-10-24_02:35:12 4667 www/tablet/js/widget_image.js
 UPD 2016-10-24_02:35:12 2633 www/tablet/js/widget_input.js
@@ -86,13 +87,14 @@ UPD 2016-10-24_02:35:12 8286 www/tablet/js/widget_itunes_artwork.js
 UPD 2016-10-24_02:35:12 2751 www/tablet/js/widget_joinedlabel.js
 UPD 2016-10-24_02:35:12 3001 www/tablet/js/widget_klimatrend.js
 UPD 2016-10-24_02:35:12 7332 www/tablet/js/widget_knob.js
-UPD 2016-10-24_02:35:12 6621 www/tablet/js/widget_label.js
+UPD 2016-11-13_22:51:54 5772 www/tablet/js/widget_label.js
 UPD 2016-10-24_02:35:12 6306 www/tablet/js/widget_level.js
 UPD 2016-10-24_02:35:12 10150 www/tablet/js/widget_link.js
 UPD 2016-10-24_02:35:12 1493 www/tablet/js/widget_loading.js
 UPD 2016-10-24_02:35:12 4439 www/tablet/js/widget_medialist.js
 UPD 2016-10-24_01:22:01 1965 www/tablet/js/widget_meteogram.js
 UPD 2016-10-24_02:35:12 3350 www/tablet/js/widget_multistatebutton.js
+UPD 2016-11-13_22:02:13 2840 www/tablet/js/widget_notify.js
 UPD 2016-10-24_02:35:12 8019 www/tablet/js/widget_pagebutton.js
 UPD 2016-10-24_02:35:12 8038 www/tablet/js/widget_pagetab.js
 UPD 2016-10-24_02:35:12 5048 www/tablet/js/widget_playstream.js
