@@ -12,20 +12,6 @@ function depends_html (){
 
 var Modul_html = function () {
 
-    function mappedValue(map, readval) {
-
-        if( (typeof map === "object") && (map !== null) ){
-            var len = Object.keys(map).length;
-            for ( var i=0; i<len; i++) {
-                if ( readval == Object.keys(map)[i]
-                     || readval.match(new RegExp('^' + Object.keys(map)[i] + '$')) ) {
-                     return Object.values(map)[i];
-                }
-            };
-        }
-        return elem.data('value');
-    }
-
     function onClicked(elem) {
 
       console.log('onClicked',elem);
@@ -57,11 +43,11 @@ var Modul_html = function () {
 
           if( (typeof map === "object") && (map !== null) ){
               var len = Object.keys(map).length;
-              value = Object.values(map)[0];
+              value = map[Object.keys(map)[0]];
               for ( var i=0; i<len; i++) {
                   if ( elem.hasClass(Object.keys(map)[i]) ){
-                      if (i+1 == len){ value = Object.values(map)[0]; }
-                      else { value = Object.values(map)[i+1]; }
+                      if (i+1 == len){ value = map[Object.keys(map)[0]]; }
+                      else { value = map[Object.keys(map)[i+1]]; }
                       break;
                   }
               };
@@ -81,22 +67,24 @@ var Modul_html = function () {
 
         if( (typeof map === "object") && (map !== null) ){
             var len = Object.keys(map).length;
-            value = Object.values(map)[0];
-            for ( var i=0; i<len; i++) {
+            value = map[Object.keys(map)[0]];
+
+            for(key in map) {
                 if ( elem.attr('type') === 'checkbox' ) {
                     if (elem[0].checked.toString() === Object.keys(map)[i] ){
-                        value = Object.values(map)[i];
+                        value = map[key];
                         break;
                     }
                 }
-            };
+            }
+
         } else if ( elem.attr('type') === 'range'
                    || elem.attr('type') === 'radio'
                    || elem[0].nodeName === 'SELECT' ) {
             value = elem.val();
         }
         elem.data('value', value);
-        console.log('value',value);
+
         changed(elem);
     }
 
@@ -127,11 +115,15 @@ var Modul_html = function () {
         this.elements.each(function(index) {
 
             var elem = $(this);
-            elem.initData('val'     , elem.data('value'));
-            elem.initData('value'   , elem.val());
-            elem.initData('set'     , '');
-            elem.initData('cmd'     , 'set');
-            elem.initData('part'    , -1);
+            elem.initData('val'             , elem.data('value'));
+            elem.initData('value'           , elem.val());
+            elem.initData('set'             , '');
+            elem.initData('cmd'             , 'set');
+            elem.initData('part'            , -1);
+            elem.initData('unit'            , '' );
+            elem.initData('pre-text'        , '');
+            elem.initData('post-text'       , '');
+            elem.initData('substitution'    , '');
 
             if ( elem.isDeviceReading('val') ) {me.addReading(elem,'val');}
             if ( elem.isDeviceReading('content') ) {me.addReading(elem,'content');}
@@ -143,9 +135,11 @@ var Modul_html = function () {
                   || elem.attr('type') === 'radio'
                   || elem.attr('type') === 'range'
                   || elem[0].nodeName === 'SELECT' ) {
-                elem.on('change',function() {
-                    onChanged(elem);
-                });
+                if ( elem.isValidData('changed') ){
+                    elem.on('change',function() {
+                        onChanged(elem);
+                    })
+                };
             } else if ( elem.attr('type') === 'text' ){
                 elem.bind("enterKey",function(e){
                     elem.blur();
@@ -157,11 +151,12 @@ var Modul_html = function () {
                         elem.trigger("enterKey");
                 });
             } else {
-                elem.on('click',function() {
-                    onClicked(elem);
-                });
+                if ( elem.isValidData('clicked') ){
+                    elem.on('click',function() {
+                        onClicked(elem);
+                    });
+                }
             }
-
         });
     };
 
@@ -187,9 +182,26 @@ var Modul_html = function () {
             var elem = $(this);
             var content = elem.getReading('content').val;
             if(content) {
-                var part = elem.data('part');
-                var cont = ftui.getPart(content,part);
-                elem.html(cont);
+                var cont = ftui.getPart(content,elem.data('part'));
+                var unit = elem.data('unit');
+                cont = me.substitution(cont, elem.data('substitution'));
+                cont = me.map(elem.data('map-content'), cont, cont);
+                cont = me.fix(cont, elem.data('fix'));
+                cont = elem.data('pre-text') + cont + elem.data('post-text');
+                if (!isNaN(parseFloat(cont)) && isFinite(cont) && cont.indexOf('.')>-1){
+                    var vals = cont.split('.');
+                    val = "<span class='label-precomma'>"+vals[0]+"</span>" +
+                          "<span class='label-comma'>.</span>" +
+                          "<span class='label-aftercomma'>"+vals[1]+"</span>";
+                }
+
+                if ( unit )
+                    elem.html( cont + "<span class='label-unit'>"+unescape(unit)+"</span>" );
+                else
+                    elem.html(cont);
+                if (elem.children().length > 0){
+                   elem.trigger('domChanged');
+                }
             }
         });
 
@@ -205,7 +217,7 @@ var Modul_html = function () {
                         elem.removeClass(value);
                     });
                 }
-                elem.addClass( mappedValue(map, read) );
+                elem.addClass( mappedValue(map, read, elem.data('value')) );
             }
         });
 
@@ -216,7 +228,8 @@ var Modul_html = function () {
             var read = elem.getReading('checked').val;
             if(read) {
                 var map = elem.data('map-checked');
-                elem.prop('checked', mappedValue(map, read) === 'true');
+                var def = elem.data('value');
+                elem.prop('checked', mappedValue(map, read ,def) === 'true');
             }
         });
 

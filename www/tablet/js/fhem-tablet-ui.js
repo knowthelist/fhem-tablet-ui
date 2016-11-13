@@ -2,16 +2,33 @@
 /**
 * UI builder framework for FHEM
 *
-* Version: 2.2.3
+* Version: 2.3.0
 *
 * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
 * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
 *
 */
 
-/* ToDo:
-    -
-*/
+// -------- Framework7---------
+// https://framework7.io/docs/
+
+if ( typeof Framework7 === 'function' ){
+    var f7 = {
+      ftui : new Framework7({
+        animateNavBackIcon: true
+      }),
+      options : {
+        dynamicNavbar: true,
+        domCache: true
+      },
+      views : []
+    };
+    $('.view').each(function(index){
+        var view = f7.ftui.addView( '#' + $(this)[0].id,{dynamicNavbar:true} );
+        f7.ftui.views.push(view);
+
+    });
+}
 
 // -------- Widget Base---------
 var Modul_widget = function () {
@@ -19,7 +36,7 @@ var Modul_widget = function () {
     function init() {
         var me = this;
         ftui.log(1,"init widget: name="+this.widgetname+" area="+this.area);
-        this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
+        this.elements = $('[data-type="'+this.widgetname+'"]',this.area);
         this.elements.each(function(index) {
             me.init_attr($(this));
             me.init_ui($(this));
@@ -29,6 +46,44 @@ var Modul_widget = function () {
     function isReadOnly(elem) {
         var lock = elem.data('readonly');
         return (lock === 'true' || lock === '1' || lock === 'on' || lock === 1 );
+    }
+
+    function substitution(value, subst) {
+        if(isValid(subst)){
+            if ($.isArray(subst)){
+                for(var i=0, len=subst.length; i<len; i+=2) {
+                    if(value == subst[i] && i+1<len)
+                        return subst[i+1];
+                }
+            }
+            else if (subst.match(/^s/)) {
+                var f = subst.substr(1,1);
+                var sub = subst.split(f);
+                return value.replace(new RegExp(sub[1],sub[3]), sub[2]);
+            }
+            else if (subst.match(/weekdayshort/))
+                  return dateFromString(value).ee();
+            else if (subst.match(/.*\(\)/))
+                  return eval('value.'+subst);
+        }
+        return value;
+    }
+
+
+    function fix(value, fix) {
+        return ( $.isNumeric(value) && fix>=0 ) ? Number(value).toFixed(fix) : value;
+    }
+
+    function map(mapObj, readval, defaultVal) {
+        if( (typeof mapObj === "object") && (mapObj !== null) ){
+            for(key in mapObj) {
+                if ( readval === key
+                     || readval.match(new RegExp('^' + key + '$')) ) {
+                    return mapObj[key];
+                }
+            }
+        }
+        return defaultVal;
     }
 
     function init_attr(elem) {};
@@ -70,6 +125,9 @@ var Modul_widget = function () {
         init_attr:init_attr,
         init_ui:init_ui,
         update: update,
+        substitution: substitution,
+        fix: fix,
+        map: map,
         addReading:addReading,
         subscriptions: {},
     };
@@ -116,9 +174,12 @@ var plugins = {
   },
 
   update: function (dev,par) {  
+
     $.each(this.modules, function (index, module) {
-      //Iterate each module and run update function
-      module.update(dev,par);
+      //Iterate each module and run update function if module is available
+      if (typeof module === 'object'){
+        module.update(dev,par);
+      }
     });
     ftui.log(1,'update done for "'+dev+':'+par+'"');
   }
@@ -127,7 +188,7 @@ var plugins = {
 // -------- FTUI ----------
 
 var ftui = {
-   version: '2.2.3',
+   version: '2.3.0',
    config: {
         DEBUG: false,
         DEMO: false,
@@ -189,7 +250,7 @@ var ftui = {
         //add background for modal dialogs
         $("<div id='shade' />").prependTo('body').hide();
         var android = getAndroidVersion();
-        var onlyTouch = (android && parseFloat(android)<4.3);
+        var onlyTouch = (android && parseFloat(android)<5);
         var clickEventType = (onlyTouch) ? 'touchstart' : 'touchstart mousedown';
         $('#shade').on(clickEventType,function(e) {
                 $(document).trigger("shadeClicked");
@@ -207,9 +268,12 @@ var ftui = {
            ftui.initLongpoll();
         });
 
-        $("*:not(select)").focus(function(){
-            $(this).blur();
-        });
+        if ( !f7 ) {
+            // dont show focus frame
+            $("*:not(select)").focus(function(){
+                $(this).blur();
+            });
+        }
 
         if (ftui.config.debuglevel>0){
             setInterval(function () {
@@ -307,7 +371,7 @@ var ftui = {
         ftui.log(2,'initWidgets - area='+area);
 
         //collect required widgets types
-        $('div[data-type]',area).each(function(index){
+        $('[data-type]',area).each(function(index){
             var type = $(this).data("type");
             if (types.indexOf(type)<0){
                   types.push(type);
@@ -641,7 +705,7 @@ var ftui = {
     },
 
     checkInvalidElements: function(){
-        $('div.autohide[data-get]').each(function(index){
+        $('.autohide[data-get]').each(function(index){
             var elem = $(this);
             var valid = elem.getReading('get').valid;
             if ( valid && valid===true )
@@ -815,7 +879,7 @@ var ftui = {
         console.log('FHEM dev/par count:',Object.keys(ftui.paramIdMap).length);
         console.log('FTUI known devices count:',Object.keys(ftui.deviceStates).length);
         console.log('Page length:',$('html').html().length);
-        console.log('Widgets count:',$('div[data-type]').length);
+        console.log('Widgets count:',$('[data-type]').length);
         console.log('--------- end healthCheck ---------------');
     },
 
@@ -929,22 +993,25 @@ var ftui = {
      return '#' + diff_red + diff_green + diff_blue;
     },
 
-    getPart: function (s,p) {
-        if ($.isNumeric(p)){
-            var c = (s && isValid(s)) ? s.toString().split(" ") : '';
-            return (c.length >= p && p>0 ) ? c[p-1] : s;
-        }
-        else {
-            if ((s && isValid(s)) )
-                var matches = s.match( new RegExp('^' + p + '$') );
-            var ret='';
-            if (matches) {
-                for (var i=1,len=matches.length;i<len;i++) {
-                    ret+=matches[i];
-                }
+    getPart: function (value,part) {
+        if (isValid(part)) {
+            if ($.isNumeric(part)){
+                var tokens = (isValid(value)) ? value.toString().split(" ") : '';
+                return (tokens.length >= part && part>0 ) ? tokens[part-1] : value;
             }
-            return ret;
+            else {
+                if ((value && isValid(value)) )
+                    var matches = value.match( new RegExp('^' + part + '$') );
+                var ret='';
+                if (matches) {
+                    for (var i=1,len=matches.length;i<len;i++) {
+                        ret+=matches[i];
+                    }
+                }
+                return ret;
+            }
         }
+        return value;
     },
 
     showModal: function (modal) {
@@ -966,21 +1033,40 @@ var ftui = {
             var tstack = ftui.config.TOAST;
             if(ftui.config.TOAST == 1)
                 tstack = false;
-            if (error && error === 'error')
-                $.toast({
-                    heading: 'Error',
-                    text: text,
-                    hideAfter: 20000,   // in milli seconds
-                    icon: 'error',
-                    loader: false,
-                    stack: tstack
-                })
+            if (error && error === 'error') {
+                if ( f7 ) {
+                    f7.ftui.addNotification({
+                        title: 'FMUI',
+                        message: text,
+                        hold: 1500
+                    });
+                }
+                else if ($.toast) {
+                    $.toast({
+                        heading: 'Error',
+                        text: text,
+                        hideAfter: 20000,   // in milli seconds
+                        icon: 'error',
+                        loader: false,
+                        stack: tstack
+                    })
+                }
+            }
             else
-                $.toast({
-                    text:text,
-                    loader: false,
-                    stack: tstack
-                 });
+                if ( f7 ) {
+                    f7.ftui.addNotification({
+                        title: 'FMUI',
+                        message: text,
+                        hold: 1500
+                    });
+                }
+                else if ($.toast) {
+                    $.toast({
+                        text:text,
+                        loader: false,
+                        stack: tstack
+                     });
+                }
 
         }
     },
@@ -1140,11 +1226,11 @@ Date.prototype.ago = function() {
   var now = new Date();
   var ms = (now - this) ;
   var x = ms / 1000;
-  var seconds = Math.round(x % 60);
+  var seconds = Math.floor(x % 60);
       x /= 60;
-  var minutes = Math.round(x % 60);
+  var minutes = Math.floor(x % 60);
       x /= 60;
-  var hours = Math.round(x % 24);
+  var hours = Math.floor(x % 24);
       x /= 24;
   var days = Math.floor(x);
   var userLang = navigator.language || navigator.userLanguage;

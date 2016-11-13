@@ -10,6 +10,8 @@ var Modul_label = function () {
         elem.initData('limits-get'  , elem.data('device') + ':' + elem.data('get'));
         elem.initData('limits-part' , elem.data('part'));
         elem.initData('substitution'    , '');
+        elem.initData('pre-text'        , '');
+        elem.initData('post-text'       , '');
 
         // fill up colors to limits.length
         // if an index s isn't set, use the value of s-1
@@ -29,39 +31,13 @@ var Modul_label = function () {
 
     function init_ui(elem) {};
 
-    function update_fix(value, fix) {
-        return ( $.isNumeric(value) && fix>=0 ) ? Number(value).toFixed(fix) : value;
-    };
-
-    function update_substitution(value, substitution) {
-        ftui.log(3,me.widgetname+' - value:'+value+', substitution:'+substitution);
-        if(substitution){
-            if ($.isArray(substitution)){
-                for(var i=0, len=substitution.length; i<len; i+=2) {
-                    if(value == substitution[i] && i+1<len)
-                        return substitution[i+1];
-                }
-            }
-            else if (substitution.match(/^s/)) {
-                var f = substitution.substr(1,1);
-                var subst = substitution.split(f);
-                return value.replace(new RegExp(subst[1],subst[3]), subst[2]);
-            }
-            else if (substitution.match(/weekdayshort/))
-                  return dateFromString(value).ee();
-            else if (substitution.match(/.*\(\)/))
-                  return eval('value.'+substitution);
-        }
-        return value;
-    };
-
     function update_colorize(value, elem) {
         //set colors according matches for values
         var limits = elem.data('limits');
         var colors = elem.data('colors');
         var classes = elem.data('classes');
         if(limits) {
-            var idx=indexOfGeneric(limits,value);
+            var idx = indexOfGeneric(limits,value);
             if (idx>-1) {
                 if(colors) {
                     var layer = (elem.hasClass('bg-limit')?'background':'color');
@@ -108,12 +84,12 @@ var Modul_label = function () {
             }
 
             if (value){
-                var part = elem.data('part');
-                var val = ftui.getPart(value,part);
+                var val = ftui.getPart(value,elem.data('part'));
                 var unit = elem.data('unit');
-
-                val = update_substitution(val, elem.data('substitution'));
-                val = update_fix(val, elem.data('fix'));
+                val = me.substitution(val, elem.data('substitution'));
+                val = me.map(elem.data('map-get'), val, val);
+                val = me.fix(val, elem.data('fix'));
+                val = elem.data('pre-text') + val + elem.data('post-text');
                 if (!isNaN(parseFloat(val)) && isFinite(val) && val.indexOf('.')>-1){
                     var vals = val.split('.');
                     val = "<span class='label-precomma'>"+vals[0]+"</span>" +
@@ -126,6 +102,9 @@ var Modul_label = function () {
                     elem.html( val + "<span class='label-unit'>"+unescape(unit)+"</span>" );
                   else
                     elem.html(val);
+                  if (elem.children().length > 0){
+                       elem.trigger('domChanged');
+                  }
                 }
                 me.update_cb(elem,val);
             }
@@ -152,8 +131,7 @@ var Modul_label = function () {
             var elem = $(this);
             var val = elem.getReading('limits-get').val;
             if(val) {
-                var part = elem.data('limits-part');
-                var v = ftui.getPart(val,part);
+                var v = ftui.getPart(val,elem.data('limits-part'));
                 update_colorize(v, elem);
             }
         });
@@ -169,8 +147,6 @@ var Modul_label = function () {
         init_ui:init_ui,
         update: update,
         update_cb: update_cb,
-        update_substitution:update_substitution,
-        update_colorize:update_colorize,
-        update_fix:update_fix,
+        update_colorize:update_colorize
     });
 };

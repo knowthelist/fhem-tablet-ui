@@ -1,8 +1,8 @@
 fhem-tablet-ui
 ========
 
-Just another dashboard for FHEM  http://fhem.de/fhem.html  
-But with a clear intention: Keep it short and simple!
+UI builder framework for FHEM — http://fhem.de/fhem.html
+With a clear intention: Keep it short and simple!
 
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/fhem-tablet-ui-example_new.png)
@@ -100,6 +100,7 @@ Currently there are more then 20 types of widgets in the base installation.
 - **departure** : a pulic transport departure schedule widget
 - **slideout** : a slide out menu plugin, usable for mobile phone pages.
 - **medialist** : a list of media elements e.g. songs in a playlist
+- **notify** : popup browser notifications for reading changes
 
 More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
@@ -134,7 +135,7 @@ General attribute meaning
 - **data-device**    : FHEM device name (call FHEM's 'list' command to get all names)
 - **class**          : CSS classes for look and formatting of the widget
 
-####Switch widgets
+####Switch widget
 - **data-get**      : name of the reading to get from FHEM (default 'STATE')
 - **data-set**      : name of the reading to set from FHEM (default '')
 - **data-cmd**      : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
@@ -174,7 +175,7 @@ data-lock: the widget gets locked if the corresponding FHEM reading has the valu
 
 See [examples](#switch) of Switch
 
-####Symbol widgets
+####Symbol widget
 - **data-get**      			: name of the reading to get from FHEM (default 'STATE')
 - **data-warn**  : name of the reading containing a integer value to be shown as a red warn overlay (default <null>)
 
@@ -204,7 +205,7 @@ The value for one icon can also contain an additional animatation CSS name, e.g.
 
 See [examples](#symbol) of Symbol
 
-####Label widgets
+####Label widget
 - **data-get**  : name of the reading containing label text
 - **data-part** : RegEx or number (which word) for filtering shown text
 - **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)
@@ -216,6 +217,8 @@ See [examples](#symbol) of Symbol
 - **data-limits-part**  : filter for the value. part number of the space separated value or an RegEx (default '-1' -> all)
 - **data-unit** : add a unit after a numeric value.
 - **data-substitution**: multiple functions to replace the original value (see descriptions below)
+- **data-pre-text**: include this text before reading text
+- **data-post-text**: include this text after reading text
 - **data-hide**   : string to compare with current value. hide element when it's value equals data-hide
 - **data-hideparents**: jquery selector to hide element's parents too
 - **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x, circleborder
@@ -264,7 +267,7 @@ data-substitution="s/(:00)$//g"         -  20:15 instead of 20:15:00
 
 See [examples](#label) of Label
 
-####Select widgets
+####Select widget
 - **data-get**  : name of the reading that get the selected item of the list
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-list** : name of the reading to get a :-separated list from FHEM
@@ -275,7 +278,7 @@ See [examples](#label) of Label
 - **data-delimiter** : character which delimites list item. (default ':')
 - **class**     : wider, w1x, w2x, w3x, large, big, notransmit
 
-####Input widgets
+####Input widget
 - **data-get**  : name of the reading that get the selected item of the list
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-cmd**  : name of the command to send to FHEM (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
@@ -284,7 +287,7 @@ See [examples](#label) of Label
 
 data-device, data-get can be references (jQuery seletor) to select-widgets to change the source dynamically
 
-####Push widgets
+####Push widget
 - **data-set**    : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-set-on** : value (or an array of values) to send when the the button get pressed. (default '')
 - **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
@@ -298,7 +301,7 @@ data-device, data-get can be references (jQuery seletor) to select-widgets to ch
 
 'data-set-on' can also be an array of values to toggle between this values
 
-####Knob widgets
+####Knob widget
 - **data-get**  : name of the reading containing the status value (default 'STATE')
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-cmd**  : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
@@ -323,7 +326,7 @@ data-device, data-get can be references (jQuery seletor) to select-widgets to ch
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/knob.png)
 
-####Thermostat widgets
+####Thermostat widget
 all parameters from knob widget plus following additional parameters
 - **data-get**   : name of the reading containing the status value (default 'desired-temp')
 - **data-temp**  : name of the reading for measured temperature of thermostates (default 'measured-temp')
@@ -341,7 +344,7 @@ all parameters from knob widget plus following additional parameters
 date-mode: if the value, retrieved from this reading equals 'auto' then such a command is created "set wz_WandThermostat desiredTemperature **auto** <value>".
 Other values creates something like this "set wz_WandThermostat desiredTemperature <value>"
 
-####Volume widgets
+####Volume widget
 all parameters from knob widget plus following additional parameters
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
@@ -370,7 +373,7 @@ all parameters from knob widget plus following additional parameters
   data-version='residents' or 'roommate' or 'guest' has 5 states ('home','asleep','absent','gone','gotosleep')
   They have these aliases 'Home','Night','Away','Holiday','Retire'
 
-####Slider widgets
+####Slider widget
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-cmd**  : name of the command (**\<command\>** \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
@@ -393,7 +396,7 @@ $v is a placeholder for the numeric value, it will be replaced be the real value
 class 'FS20' convert values 0-100 to values which are excepted by FS20 dimmers.
 class 'value' enables a text element which shows the value
 
-####Level widgets
+####Level widget
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set or name of the reading which helds the max value (default 100)
@@ -404,14 +407,14 @@ class 'value' enables a text element which shows the value
 - **data-limits** : a array of numeric or RegEx values to affect the colour of the label
 - **class**	: mini, horizontal,big,bigger,large
 
-####Progress widgets
+####Progress widget
 - **data-get**  : name of the reading to get from FHEM (default 'STATE')
 - **data-max**  : maximal value to set or name of the reading which helds the max value (default 100)
 - **data-progress-width**: width of the circle line in percent (default 15)
 - **data-unit** : add a unit after the center value.
 - **class**		: novalue, percent
 
-####Dimmer widgets
+####Dimmer widget
 - **data-get**       : name of the parameter that contains the status value (default 'STATE')
 - **data-get-on**    : value for ON status to get.  (default 'on')
 - **data-get-off**   : value for OFF status to get. (default 'off')
@@ -441,7 +444,7 @@ class 'FS20' convert values 0-100 to values which are excepted by FS20 dimmers
 
 data-lock: the widget gets locked if the corresponding FHEM reading has the value 1, on or true.
 
-####Image widgets
+####Image widget
 - **data-get**      : name of the reading to get an URL from FHEM (default 'STATE')
 - **data-path**     : first part of the URL of the image to show  (default '')
 - **data-suffix**   : last part of the URL of the image to show (default '')
@@ -460,12 +463,12 @@ data-lock: the widget gets locked if the corresponding FHEM reading has the valu
 If 'data-url' is not set, then the URL for image src is built from: data-path + valueof data-get + data-suffix
 Use data-url + data-refresh or data-device + data-get, not both.
 
-####Weather widgets
+####Weather widget
 - **data-get**      : name of the reading to get the weather literal from FHEM (default 'STATE')
 - **data-imageset** : collection of images to display current weather situation. Possible values: 'meteocons', 'kleinklima' (Default: 'meteocons')
 - **data-image-path**: path to the images of the selected imageset (default: <fhem-dir>/images/weather/)
 
-####CircleMenu widgets
+####CircleMenu widget
 - **data-item-diameter** : diameter of the circle (default 52)
 - **data-circle-radius** : radius of each item, in pixel (default 70)
 - **data-border**        : style of border - 'round','square' (default 'round')
@@ -474,14 +477,14 @@ Use data-url + data-refresh or data-device + data-get, not both.
 - **data-direction**     : position of the items in relation to the center (default full). Options are: top | right | bottom | left | top-right | top-left | bottom-right | bottom-left | top-half | right-half | bottom-half | left-half | full | vertical | horizontal
 - **class**		 : keepopen, noshade
 
-####Playstream widgets
+####Playstream widget
 - **data-url**      : URL of the Radio stream
 - **data-get**      : name of the reading to get the control state from FHEM (default 'STATE')
 - **data-get-on**   : value for PLAY status to get. (default 'on')
 - **data-get-off**  : value for STOP status to get. (default 'off')
 - **data-volume**   : name of the reading to get the volume value (0-100) (default: volume)
 
-####Pagetab widgets
+####Pagetab widget
 - **data-url**		: URL of the new page to show
 - **data-icon**         : name of the font-awesome icon. (default 'fa-power-off')
 - **data-background-icon** : name of the font-awesome icon for background (default '')
@@ -497,7 +500,7 @@ Use data-url + data-refresh or data-device + data-get, not both.
 
 data-return-time has to be placed on the main pagetab (the first one > index 0)
 
-####Pagebutton widgets
+####Pagebutton widget
 - **data-url**              : URL of the new page to show
 - **data-active-pattern**   : RegEx to define active state  (default null)
 all other parameters like switch widget
@@ -505,11 +508,11 @@ all other parameters like switch widget
 
 class 'blank' force to open the given URL on a new window
 
-####Rotor widgets
+####Rotor widget
 - **data-delay**    : time in millisecondes to wait until next list item get shown. (default: 3500)
 - **class**         : fade, rotate  (default: '' means no animation)
 
-####Swiper widgets
+####Swiper widget
 - **data-get**          : name of the reading (default 'STATE')
 - **data-states**   	: array of states for reading to page assignment
 - **data-width**        : fixed size for width (in % or px)
@@ -528,7 +531,7 @@ class="noswipe" on page elements prevents page from swiping
 
 For navigation via hash value see demo_tabs_with_swiper.html
 
-####Simplechart widgets
+####Simplechart widget
 - **data-logdevice**   : name of the logdevice (e.g. FileLog_WohnzimmerHeizung)
 - **data-logfile**     : name of the logfile   (e.g. WohnzimmerHeizung-2015.log) (default '-' means current logfile)
 - **data-get**         : name of the reading which triggers the update (default 'STATE')
@@ -546,7 +549,7 @@ For navigation via hash value see demo_tabs_with_swiper.html
 
 The chart gets updated every time the data-get reading is changed and after each shortpoll interval  (15 min).
 
-####Chart widgets
+####Chart widget
 - **data-logdevice** 	name of the logdevice (e.g. FileLog_WohnzimmerHeizung) or array of names if more than one graph shall be displayed
 - **data-logfile** 	name of the logfile (e.g. WohnzimmerHeizung-2015.log) or or array of names if more than one graph shall be displayed 	(default '-' or omitting this data means current logfile)
 - **data-columnspec** 	definition for how to find the values (e.g. "4:meas.*:1:int") or or array of columnspecs if more than one graph shall be displayed
@@ -583,7 +586,7 @@ When the legend window is displayed, a click on the legend text shows/hides the 
 
 The crosshair cursor currently only works dynamically on desktop browsers. On iOS and Android you have to tap on the screen to set the cursor to a new position.
 
-####Popup widgets
+####Popup widget
 - **data-get**         : name of the reading where to get the alert value from (default 'STATE')
 - **data-get-on**      : value which trigger to open the dialog (default 'on')
 - **data-get-off**     : value which trigger to close the dialog (default 'off')
@@ -598,7 +601,7 @@ class="interlock" on popup elements prevents popup from closing manually. Closin
 
 It's important that a ```<div class="dialog">``` inside the widget can be found. See the [basic structure](#dialog) of popup
 
-####Datetimepicker widgets
+####Datetimepicker widget
 All parameters like Label Widgets plus these:
 - **data-format**      : date and time format of the output  (default 'Y-m-d H:i')
 - **data-theme**       : color scheme: normal, dark (default 'dark')
@@ -607,7 +610,7 @@ All parameters like Label Widgets plus these:
 - **data-step**        : step for time in minutes (default '60')
 - **data-set-value**   : Format of the value to send to FHEM (default '$v': the value only)
 
-####Readingsgroup widgets
+####Readingsgroup widget
 - **data-get**         : name of the reading which should trigger the update (default 'STATE')
 - **data-max-update**  : Specify a minimum number of seconds between an update of the widget to avoid high load on the system
 
@@ -616,7 +619,7 @@ All parameters like Label Widgets plus these:
 
 ```html <div data-type="readingsgroup" data-device="battery" data-get="BadHeizung:batteryLevel"></div>```
 
-####Eventmonitor widgets
+####Eventmonitor widget
 - **data-width**       : fixed size for width (default '750px')
 - **data-height**      : fixed size for height (default '450px')
 - **device-filter**    : (default '.*')
@@ -628,14 +631,14 @@ Place this widget for debugging purpose within a normal page and klick it to see
 <div data-type="eventmonitor">EM</div>
 ```
 
-####Checkbox widgets
+####Checkbox widget
 All parameters like Switch widgets
 
 - **class**             small, large
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/Checkboxes.png)
 
-####Range widgets
+####Range widget
 - **data-high**       : name of the reading to get the high value from FHEM (default 'STATE')
 - **data-low**        : name of the reading to get the low value from FHEM  (default '')
 - **data-max**        : value for the maximal value on the scale (default '30')
@@ -652,14 +655,14 @@ All parameters like Switch widgets
 
 See [examples](#range) of Range
   
-####Colorwheel widgets
+####Colorwheel widget
 - **data-get**         : name of the reading where to get the rgb color value from (default 'STATE')
 - **data-set**         : (default '')
 - **data-cmd**         : (default 'set')
 - **data-width**       : (default 150)
 - **class**            : roundIndicator,barIndicator,lineIndicator
 
-####Link widgets
+####Link widget
 - **data-color**                   : rgb value or color name for the text and icon (default 'orange')
 - **data-background-color**        : rgb value or color name for the back (default null)
 - **data-border-color**            : rgb value or color name for the border (default null)
@@ -680,7 +683,7 @@ See [examples](#range) of Range
 
 class 'blank' force to open the given URL on a new window
 
-####Spinner widgets
+####Spinner widget
 - **data-color**                   : rgb value or color name for the level bar (default 'orange')
 - **data-gradient-color**          :
 - **data-background-color**        :
@@ -702,7 +705,7 @@ class 'blank' force to open the given URL on a new window
 - **data-on**                      : value which represents the ON mode
 - **class**                        : valueonly,value,circulate,positiononly
 
-####Departure widgets
+####Departure widget
 - **data-color**                   :
 - **data-cmd**                     :  (default 'get')
 - **data-background-color**        : rgb value or color name for the widget background (default '#C0C0C0')
@@ -718,7 +721,7 @@ deptime: show departure time insteat of minutes
 alternate: show background of every second line half transparent
 DVB,VVO,DB: fix style schemas
 
-####Slideout widgets
+####Slideout widget
 - **data-panel**                   : selector for the main content element (default 'main#panel')
 - **data-menu**                    : selector for the menu element (default 'nav#menu')
 - **data-label**                   : selector for the label element, which shows the name of the current sub menu (default '#linkname')
@@ -729,7 +732,7 @@ DVB,VVO,DB: fix style schemas
 
 see examples in index_nav_fixed_mobil.html or index_nav_mobil.html
 
-####Medialist widgets
+####Medialist widget
 - **data-get**         : name of the reading where to get the JSON object which contains the full list (default 'STATE')
 - **data-set**         : name of the reading to set after a click on an list item   (default 'play')
 - **data-cmd**         : (default 'set')
@@ -757,13 +760,22 @@ data-get JSON-Object:
   ...
  ]
 
-####Classchanger widgets
+####Classchanger widget
 - **data-get**      : name of the reading containing the status value (default 'STATE')
 - **data-get-on**   : value expected for ON  status. (default 'on')
 - **data-get-off**  : value expected for OFF status. (default 'off')
 - **data-on-class**   : name of the CSS class to add in case of ON  status. (default 'on')
 - **data-off-class**  : name of the CSS class to add in case of OFF status. (default 'off')
 - **class**
+
+####notify widget
+- **data-get**      : name of the reading containing the notification text (default 'STATE')
+- **data-part** : RegEx or number (which word) for filtering shown text
+- **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)
+- **data-substitution**: multiple functions to replace the original value (see label widget)
+- **data-pre-text**: include this text before reading text
+- **data-post-text**: include this text after reading text
+- **data-mode**  : kind of notification - notification, toast-error, toast (default 'notification')
 
 Format
 -------
