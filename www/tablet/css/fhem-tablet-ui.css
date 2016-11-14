@@ -128,9 +128,10 @@ a:active {
 .red            { color:#ad3333 !important; }
 .green          { color:#32a054 !important; }
 .mint           { color:#1D1F20 !important; }
-.ligthblue      { color:#6699FF !important; }
+.lightblue      { color:#6699FF !important; }
 .blue           { color:#337ab7 !important; }
 .gray           { color:#8C8C8C !important; }
+.yellow         { color:#ffe066 !important; }
 .lightgray      { color:#cccccc !important; }
 
 .border-black          { border: 3px solid #111111; }
@@ -139,7 +140,7 @@ a:active {
 .border-red            { border: 3px solid #ad3333; }
 .border-green          { border: 3px solid #32a054; }
 .border-mint           { border: 3px solid #5bc995; }
-.border-ligthblue      { border: 3px solid #6699FF; }
+.border-lightblue      { border: 3px solid #6699FF; }
 .border-blue           { border: 3px solid #337ab7; }
 .border-gray           { border: 3px solid #8C8C8C; }
 .border-lightgray      { border: 3px solid #cccccc; }
@@ -922,6 +923,7 @@ div[data-type="circlemenu"] {
 .normal      { font-size: 100%; }
 .small       { font-size: 80%;  }
 .tiny        { font-size: 60%;  }
+.mini        { font-size: 50%;  }
 
 .top {
     vertical-align: super;

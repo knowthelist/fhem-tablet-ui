@@ -311,7 +311,7 @@ function moveScale() {
 
     var touch_pos_x,touch_pos_y;
     var android = getAndroidVersion();
-    var onlyTouch = (android && parseFloat(android)<4.3);
+    var onlyTouch = (android && parseFloat(android)<5);
     var clickEventType = (onlyTouch) ? 'touchstart' : 'touchstart mousedown';
     var moveEventType=((onlyTouch)?'touchmove':'touchmove mousemove');
     var releaseEventType=((onlyTouch)?'touchend':'touchend mouseup');

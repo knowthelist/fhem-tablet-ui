@@ -217,7 +217,7 @@ var Modul_html = function () {
                         elem.removeClass(value);
                     });
                 }
-                elem.addClass( mappedValue(map, read, elem.data('value')) );
+                elem.addClass( me.map(map, read, elem.data('value')) );
             }
         });
 
@@ -229,7 +229,7 @@ var Modul_html = function () {
             if(read) {
                 var map = elem.data('map-checked');
                 var def = elem.data('value');
-                elem.prop('checked', mappedValue(map, read ,def) === 'true');
+                elem.prop('checked', me.map(map, read ,def) === 'true');
             }
         });
 

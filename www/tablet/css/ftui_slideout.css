@@ -12,9 +12,7 @@
   }
 
   .slideout-panel {
-    position:relative;
-    z-index: 1;
-    will-change: transform;
+
   }
 
   .slideout-open,
