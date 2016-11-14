@@ -9,7 +9,7 @@ DIR www/tablet/lib/highcharts/themes
 UPD 2016-10-24_02:35:12 510 www/tablet/css/fhem-blue-ui.css
 UPD 2016-10-24_02:35:12 510 www/tablet/css/fhem-green-ui.css
 UPD 2016-10-24_02:35:12 2151 www/tablet/css/fhem-mobil-ui.css
-UPD 2016-10-24_02:35:12 32980 www/tablet/css/fhem-tablet-ui.css
+UPD 2016-11-01_23:51:39 33060 www/tablet/css/fhem-tablet-ui.css
 UPD 2016-10-24_02:35:12 13563 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2016-10-24_02:35:12 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2016-10-24_02:35:12 5295 www/tablet/css/ftui_chart.css
@@ -17,7 +17,7 @@ UPD 2016-10-24_02:35:12 1023 www/tablet/css/ftui_colorwheel.css
 UPD 2016-10-24_02:35:12 2577 www/tablet/css/ftui_departure.css
 UPD 2016-10-24_02:35:12 1079 www/tablet/css/ftui_medialist.css
 UPD 2016-10-24_02:35:12 442 www/tablet/css/ftui_range.css
-UPD 2016-10-24_02:35:12 1036 www/tablet/css/ftui_slideout.css
+UPD 2016-09-08_22:35:52 970 www/tablet/css/ftui_slideout.css
 UPD 2016-10-24_02:35:12 1234 www/tablet/css/ftui_spinner.css
 UPD 2016-10-24_02:35:12 5166 www/tablet/demo_ftui.html
 UPD 2016-10-24_02:35:12 127396 www/tablet/fonts/fhemSVG.eot
@@ -73,13 +73,13 @@ UPD 2016-10-24_02:35:12 5235 www/tablet/js/widget_departure.js
 UPD 2016-10-24_21:44:11 6463 www/tablet/js/widget_dimmer.js
 UPD 2016-10-24_02:35:12 3337 www/tablet/js/widget_eventmonitor.js
 UPD 2016-10-24_02:35:12 2554 www/tablet/js/widget_example.js
-UPD 2016-10-24_22:57:40 18453 www/tablet/js/widget_famultibutton.js
+UPD 2016-11-14_21:49:26 18453 www/tablet/js/widget_famultibutton.js
 UPD 2016-10-24_02:35:12 9328 www/tablet/js/widget_fullcalview.js
 UPD 2016-10-24_02:35:12 2387 www/tablet/js/widget_gds.js
 UPD 2016-11-02_01:00:35 8739 www/tablet/js/widget_highchart.js
 UPD 2016-10-24_02:35:12 8542 www/tablet/js/widget_highchart3d.js
 UPD 2016-10-24_02:35:12 9933 www/tablet/js/widget_homestatus.js
-UPD 2016-11-13_22:39:50 8605 www/tablet/js/widget_html.js
+UPD 2016-11-14_17:50:09 8595 www/tablet/js/widget_html.js
 UPD 2016-10-24_02:35:12 4312 www/tablet/js/widget_iframe.js
 UPD 2016-10-24_02:35:12 4667 www/tablet/js/widget_image.js
 UPD 2016-10-24_02:35:12 2633 www/tablet/js/widget_input.js
@@ -120,8 +120,8 @@ UPD 2016-10-24_02:35:12 7303 www/tablet/js/widget_volume.js
 UPD 2016-10-24_02:35:12 754 www/tablet/js/widget_wakeup.js
 UPD 2016-10-24_02:35:12 22365 www/tablet/js/widget_weather.js
 UPD 2016-10-24_02:35:12 6099 www/tablet/js/widget_wind_direction.js
-UPD 2016-10-19_22:47:18 13034 www/tablet/lib/fa-multi-button.js
-UPD 2016-10-24_22:57:40 6543 www/tablet/lib/fa-multi-button.min.js
+UPD 2016-10-28_22:22:03 13032 www/tablet/lib/fa-multi-button.js
+UPD 2016-10-28_22:22:25 6541 www/tablet/lib/fa-multi-button.min.js
 UPD 2016-10-24_02:35:12 17041 www/tablet/lib/farbtastic.js
 UPD 2016-10-24_02:35:12 26586 www/tablet/lib/fhemSVG.css
 UPD 2016-11-02_00:54:13 30926 www/tablet/lib/font-awesome.min.css
