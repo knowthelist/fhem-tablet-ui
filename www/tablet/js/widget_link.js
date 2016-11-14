@@ -171,7 +171,6 @@ var Modul_link = function () {
           verticalAlign: 'middle',
           whiteSpace: 'nowrap',
           padding: '3px',
-          //lineHeight: '1.05em',
         })
         .html(text)
         .appendTo(elem);
@@ -185,8 +184,10 @@ var Modul_link = function () {
             iconWidth += elemRightIcon.innerWidth();
         };
 
-        // recalculate width of text element
-        elemText.css({width: elem.innerWidth()-iconWidth-15 +'px',})
+        if ( !elem.hasClass('fixcontent') ) {
+            // recalculate width of text element
+            elemText.css({width: elem.innerWidth()-iconWidth-15 +'px',})
+        }
 
         // event handler
        elem.on('touchend mouseup',function(e) {

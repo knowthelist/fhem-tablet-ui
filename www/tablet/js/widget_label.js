@@ -97,7 +97,7 @@ var Modul_label = function () {
                           "<span class='label-aftercomma'>"+vals[1]+"</span>";
                 }
 
-                if ( !elem.hasClass('fixedlabel') ) {
+                if ( !elem.hasClass('fixedlabel') && !elem.hasClass('fixcontent')) {
                   if ( unit )
                     elem.html( val + "<span class='label-unit'>"+unescape(unit)+"</span>" );
                   else
