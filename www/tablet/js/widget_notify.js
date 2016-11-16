@@ -36,6 +36,7 @@ var Modul_notify= function () {
             elem.initData('get'             ,'STATE');
             elem.initData('pre-text'        , '');
             elem.initData('post-text'       , '');
+            elem.initData('filter'          , '.*');
             elem.initData('mode'            , 'notification');
 
             // subscripe my readings for updating
@@ -52,7 +53,7 @@ var Modul_notify= function () {
             var elem = $(this);
             var mode = elem.data('mode');
             var value = elem.getReading('get').val;
-            if (value && elem.data('initDone')){
+            if (value && elem.data('initDone') && value.match(new RegExp('^' + elem.data('filter') + '$')) ){
                 var text = ftui.getPart(value,elem.data('part'));
                 text = me.substitution(text, elem.data('substitution'));
                 text = me.map(elem.data('map-get'), text, text);
