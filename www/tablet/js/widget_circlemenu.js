@@ -13,7 +13,7 @@ var Modul_circlemenu = function () {
     me.elements.each(function(index){
         var parent = $(this).parent('div[data-type="circlemenu"]');
         $(this).circleMenu({
-            item_diameter   : parent.data('item-diameter') || 52,
+            item_diameter   : parent.data('item-diameter') || '4em',
             item_width      : parent.data('item-width'),
             item_height     : parent.data('item-height'),
             trigger         : 'click',
