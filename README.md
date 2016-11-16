@@ -769,7 +769,8 @@ data-get JSON-Object:
 - **class**
 
 ####notify widget
-- **data-get**      : name of the reading containing the notification text (default 'STATE')
+- **data-get**  : name of the reading containing the notification text (default 'STATE')
+- **data-filter**: RegEx for filtering events to notify
 - **data-part** : RegEx or number (which word) for filtering shown text
 - **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)
 - **data-substitution**: multiple functions to replace the original value (see label widget)

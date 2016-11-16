@@ -9,7 +9,7 @@ DIR www/tablet/lib/highcharts/themes
 UPD 2016-10-24_02:35:12 510 www/tablet/css/fhem-blue-ui.css
 UPD 2016-10-24_02:35:12 510 www/tablet/css/fhem-green-ui.css
 UPD 2016-10-24_02:35:12 2151 www/tablet/css/fhem-mobil-ui.css
-UPD 2016-11-01_23:51:39 33060 www/tablet/css/fhem-tablet-ui.css
+UPD 2016-11-16_23:41:36 33085 www/tablet/css/fhem-tablet-ui.css
 UPD 2016-10-24_02:35:12 13563 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2016-10-24_02:35:12 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2016-10-24_02:35:12 5295 www/tablet/css/ftui_chart.css
@@ -64,7 +64,7 @@ UPD 2016-10-24_02:35:12 1474 www/tablet/js/widget_button.js
 UPD 2016-10-24_02:35:12 4571 www/tablet/js/widget_calview.js
 UPD 2016-10-24_02:35:12 189516 www/tablet/js/widget_chart.js
 UPD 2016-10-24_02:35:12 3734 www/tablet/js/widget_checkbox.js
-UPD 2016-10-24_02:35:12 2318 www/tablet/js/widget_circlemenu.js
+UPD 2016-11-16_23:47:20 2321 www/tablet/js/widget_circlemenu.js
 UPD 2016-10-24_02:35:12 1295 www/tablet/js/widget_classchanger.js
 UPD 2016-10-24_02:35:12 5946 www/tablet/js/widget_clock.js
 UPD 2016-10-24_02:35:12 2837 www/tablet/js/widget_colorwheel.js
@@ -78,7 +78,7 @@ UPD 2016-10-24_02:35:12 9328 www/tablet/js/widget_fullcalview.js
 UPD 2016-10-24_02:35:12 2387 www/tablet/js/widget_gds.js
 UPD 2016-11-02_01:00:35 8739 www/tablet/js/widget_highchart.js
 UPD 2016-10-24_02:35:12 8542 www/tablet/js/widget_highchart3d.js
-UPD 2016-10-24_02:35:12 9933 www/tablet/js/widget_homestatus.js
+UPD 2016-10-25_17:57:34 9933 www/tablet/js/widget_homestatus.js
 UPD 2016-11-14_17:50:09 8595 www/tablet/js/widget_html.js
 UPD 2016-10-24_02:35:12 4312 www/tablet/js/widget_iframe.js
 UPD 2016-10-24_02:35:12 4667 www/tablet/js/widget_image.js
@@ -94,7 +94,7 @@ UPD 2016-10-24_02:35:12 1493 www/tablet/js/widget_loading.js
 UPD 2016-10-24_02:35:12 4439 www/tablet/js/widget_medialist.js
 UPD 2016-10-24_01:22:01 1965 www/tablet/js/widget_meteogram.js
 UPD 2016-10-24_02:35:12 3350 www/tablet/js/widget_multistatebutton.js
-UPD 2016-11-13_22:02:13 2840 www/tablet/js/widget_notify.js
+UPD 2016-11-17_00:17:23 2954 www/tablet/js/widget_notify.js
 UPD 2016-10-24_02:35:12 8019 www/tablet/js/widget_pagebutton.js
 UPD 2016-10-24_02:35:12 8038 www/tablet/js/widget_pagetab.js
 UPD 2016-10-24_02:35:12 5048 www/tablet/js/widget_playstream.js
@@ -138,7 +138,7 @@ UPD 2016-10-24_02:35:12 1211 www/tablet/lib/highcharts/themes/grid-light.js
 UPD 2016-10-24_02:35:12 1794 www/tablet/lib/highcharts/themes/grid.js
 UPD 2016-10-24_02:35:12 1684 www/tablet/lib/highcharts/themes/sand-signika.js
 UPD 2016-10-24_02:35:12 1764 www/tablet/lib/highcharts/themes/skies.js
-UPD 2016-10-24_02:35:12 10977 www/tablet/lib/jquery.circlemenu.js
+UPD 2016-11-16_22:45:49 11108 www/tablet/lib/jquery.circlemenu.js
 UPD 2016-10-24_02:35:12 18412 www/tablet/lib/jquery.datetimepicker.css
 UPD 2016-10-24_02:35:12 80573 www/tablet/lib/jquery.datetimepicker.js
 UPD 2016-10-24_02:35:12 3021 www/tablet/lib/jquery.gridster.min.css

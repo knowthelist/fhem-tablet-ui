@@ -755,10 +755,11 @@ div[data-type="link"] .fa {
 }
 
 div[data-type="circlemenu"] {
-    min-height: 52px;
-    min-width: 52px;
-    margin-bottom: -3px;
+    min-height: 4em;
+    min-width: 4em;
+    margin-bottom: 0px;
     display: inline-block;
+    vertical-align: middle;
 }
 
 .dialog {
