@@ -21,7 +21,9 @@ var Modul_departure = function () {
     function requestUpdate (elem) {
         var cmdl = [elem.data('cmd'),elem.data('device'),elem.data('get')].join(' ');
         setFhemStatus(cmdl);
-        ftui.toast(cmdl);
+        if (ftui.config.DEBUG) {
+            ftui.toast(cmdl);
+        }
     };
 
     function init_attr (elem) {
@@ -88,7 +90,7 @@ var Modul_departure = function () {
         var text='&nbsp;<div class="header">';
         text+='<div class="line">Linie</div>';
         text+='<div class="destination">Richtung</div>';
-        text+=elem.hasClass('deptime')?'<div class="minutes">Zeit</div></div>':'<div class="minutes">in Min</div></div>';
+        text+=elem.hasClass('deptime') ? '<div class="minutes">Zeit</div></div>' : '<div class="minutes">in Min</div></div>';
         elem.append(text);
 
         // prepare list text element
@@ -111,7 +113,6 @@ var Modul_departure = function () {
     };
 
     function update(dev,par) {
-        console.log(dev,par);
         // update from normal state reading
         this.elements.filterDeviceReading('get',dev,par)
         .each(function(index) {
@@ -130,7 +131,10 @@ var Modul_departure = function () {
                 for (var idx in collection) {
                     n++;
                     var line = collection[idx];
-                    var when = elem.hasClass('deptime')?ts.toDate().addMinutes(line[2]).hhmm():line[2];
+                    var when = line[2];
+                    if ( elem.hasClass('deptime') && !when.match(/:/) ){
+                        when = ts.toDate().addMinutes(when).hhmm();
+                    }
                     text+=(n % 2 == 0 && elem.hasClass('alternate'))?'<div class="connection even">':'<div class="connection">';
                     text+='<div class="line">'+line[0]+'</div>';
                     text+='<div class="destination">'+line[1]+'</div>';
