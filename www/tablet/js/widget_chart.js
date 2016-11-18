@@ -4,6 +4,42 @@ function depends_chart (){
 		return ["../pgm2/jquery-ui.min.js"]
 };
 
+(function ($) {
+    var defaults = {
+        callback: function () { },
+        runOnLoad: true,
+        frequency: 100,
+        previousVisibility : null
+    };
+
+    var methods = {};
+    methods.checkVisibility = function (element, options) {
+        if (jQuery.contains(document, element[0])) {
+            var previousVisibility = options.previousVisibility;
+            var isVisible = element.is(':visible');
+            options.previousVisibility = isVisible;
+            if (previousVisibility == null) {
+                if (options.runOnLoad) {
+                    options.callback(element, isVisible);
+                }
+            } else if (previousVisibility !== isVisible) {
+                options.callback(element, isVisible);
+            }
+
+            setTimeout(function() {
+                methods.checkVisibility(element, options);
+            }, options.frequency);
+        } 
+    };
+
+    $.fn.visibilityChanged = function (options) {
+        var settings = $.extend({}, defaults, options);
+        return this.each(function () {
+            methods.checkVisibility($(this), settings);
+        });
+    };
+})(jQuery);
+
 var widget_chart = {
 	instance : 0,
 	initialized : [],
@@ -855,7 +891,7 @@ var widget_chart = {
 		aret[iarr] = strRet;
 		return aret;
 	},
-	moveto: function(elem,x,y,duration) {
+	moveto: function(elem,x,y,duration,fonend) {
 		var xact = elem.attr("x");
 		var yact = elem.attr("y");
 		if (xact == undefined) {xact = x; elem.attr({'x':y});}
@@ -875,6 +911,8 @@ var widget_chart = {
 			
 				steps--;
 				setTimeout(function(){ animateMovement(sel,cx,cy,mx,my,steps)},10);
+			} else {
+				fonend(sel.attr('x'),sel.attr('y'));
 			}
 		}
 	},
@@ -974,6 +1012,7 @@ var widget_chart = {
 					var sc = data.days_start-data.days_end;
 					var scW = data.graphArea.width/dataE.graphArea.width;
 					e = $.Event(event.type);
+					if (event.originalEvent) e.originalEvent = event.originalEvent;
 					e.pageX = data.graphArea.left + ((event.pageX-dataE.graphArea.left)*scE/sc + (dShift/sc)*dataE.graphArea.width)*scW;
 					e.delegateTarget = $(this).find("rect.chart-background, [id*='graph-']");
 					widget_chart.doEvent(e);
@@ -991,14 +1030,20 @@ var widget_chart = {
 		crht.each(function(index) {crh_text[index] = $(this);});
 
 		switch (event.type) { // split into different activities for different events
-			case 'mouseenter': case 'mousemove':
+			case 'mouseenter': case 'mousemove': case 'touchmove':
+				if (event.type=='touchmove') {
+					if (!event.originalEvent) break;
+					var evt=event.originalEvent.touches[0];
+				} else {
+					var evt = event;
+				} 
 				//$(event.delegateTarget).append(widget_chart.createElem('text').attr({'class':'debug','x':'20','y':'20'}));
 				//event.preventDefault();
 				if(data.crosshair)	{
 					//console.log("Mouseenter Event",$(event.delegateTarget).parents("[class^=basesvg]").parent().data'crs_inactive'));
 					if (crosshair && !data.crs_inactive && data.pointsarrayCursor) {
-						var x = (event.pageX - data.chartArea.left);
-						var y = (event.pageY - data.chartArea.top);
+						var x = (evt.pageX - data.chartArea.left);
+						var y = (evt.pageY - data.chartArea.top);
 						noticks = ( data.width <=100 ) ? true : target.parent().hasClass('noticks');
 						if (data.logProxy) {
 							var pc = data.transD2W([-data.minx,-data.shiftY],'primary');
@@ -1019,7 +1064,7 @@ var widget_chart = {
 								if (data.logProxy) {
 									var p = data.transD2W([values[i][0],values[i][1]],'primary');
 									//crh_text[i].attr({'x':p[0], 'y':p[1]});
-									widget_chart.moveto(crh_text[i],p[0],p[1],200);
+									widget_chart.moveto(crh_text[i],p[0],p[1],200,function(xf,yf){});
 									var prefix = (data.legend!=undefined)?((data.legend[i]!='')?data.legend[i] + ": ":''):'';
 									data.graphsshown[i]?
 										crh_text[i].text(prefix + values[i][2] + " " + data.yunit):
@@ -1032,10 +1077,17 @@ var widget_chart = {
 									var mn = (uxis!='secondary')?data.min_save:data.min_save_sec;
 									var legendY=(((mx-values[i][1]))/(mx-mn)*data.graphHeight/100*target.height()+data.topOffset);
 									//crh_text[i].attr({'x':values[i][0], 'y':legendY+''});
-									widget_chart.moveto(crh_text[i],values[i][0],legendY,50);
 									var prefix = (data.legend!=undefined)?((data.legend[i]!='')?data.legend[i] + ": ":''):'';
 									var valtxt = values[i][2]?values[i][2]:(parseInt((values[i][1]+yshift)/yscale*100+0.5))/100 + " " + (uxis!='secondary'?data.yunit:data.yunit_sec);
 									data.graphsshown[i]?crh_text[i].text(prefix + valtxt):crh_text[i].text("");
+									widget_chart.moveto(crh_text[i],values[i][0],legendY,50,function(xf,yf){});
+								/*	var rw = widget_chart.getTextSizePixels(target,prefix + valtxt,'text crosshair').width;
+									var rh = widget_chart.getTextSizePixels(target,prefix + valtxt,'text crosshair').height;
+									if (!crh_text[i].parent().find('rect').length) {
+										crh_text[i].parent().prepend(widget_chart.createElem('rect').attr({'x':x-rw,'y':legendY-rh,'width':rw+'px','height':rh+'px','style':'z-index:10000; fill:black; opacity: 0.5'}));
+									}
+									var rec = crh_text[i].parent().find('rect');
+									rec.attr({'x':values[i][0]-rw, 'y':legendY-rh, 'width':rw+'px','height':rh+'px'}); */
 								}
 							}
 						}
@@ -1061,11 +1113,11 @@ var widget_chart = {
 							var rw = widget_chart.getTextSizePixels(target,textX2Value,'text crosshair').width;
 							var rh = widget_chart.getTextSizePixels(target,textX2Value,'text crosshair').height;
 							if (!crh_text[i].parent().find('rect').length) {
-								crh_text[i].parent().prepend(widget_chart.createElem('rect').attr({'x':x-rw/2,'y':legendY-rh/2,'width':rw+'px','height':rh+'px','style':'fill:black'}));
+								crh_text[i].parent().prepend(widget_chart.createElem('rect').attr({'class':'crosshair','x':x-rw/2,'y':legendY-rh/2,'width':rw+'px','height':rh+'px','style':'z-index:10000; fill:black'}));
 								crh_text[i].attr({'text-anchor':'middle'});
 							}
 							crh_text[i].parent().find('rect').attr({'x':x-rw/2, 'y':legendY-rh/2});
-							crh_text[i].attr({'x':x,'y':legendY+3});
+							crh_text[i].attr({'x':x,'y':legendY+3, 'filter':''});
 						}
 						data.lastV = values;
 						//console.log(values);
@@ -1082,10 +1134,17 @@ var widget_chart = {
 				//$(event.delegateTarget).find("text.debug").remove();
 				if($(event.delegateTarget).parents("[class^=basesvg]").parent().data('crosshair'))	{
 					//console.log("Mouseleave Event",$(event.delegateTarget).parents("[class^=basesvg]").parent().data'crs_inactive'));
-					if (crosshair) {crosshair.hide();}
+					//if (crosshair) {crosshair.hide();}
+					widget_chart.doHide(crosshair,'.crosshair',data);
 				}
 				break;
 		}
+	},
+	doHide: function(elem,cls,data) {
+		if (data.prefix && (data.prefix.search('webkit') >= 0))
+			if (elem) {crosshair.find(cls).attr({'x':'100000','x1':'100000','x2':'100000'});} // hack for chrome/webik problem with display:none
+		else
+			if (elem) {elem.hide();}		
 	},
 	correctLeapYear: function(ds,de,mode){ // helper function to correct leap year day numbers
 		var width = Math.abs(ds-de);
@@ -1156,6 +1215,7 @@ var widget_chart = {
 	},
 	shift: function(evt,elem,offset){ // calculate new start and end dates when user wants to shift graph
 		var dataE = elem.data();
+		dataE.shift += offset;
 		widget_chart.doCorrectShift(dataE, offset);
 		widget_chart.refresh(elem,'shift',-offset);
 		
@@ -1164,6 +1224,7 @@ var widget_chart = {
 		theDoc.find("[class^=basesvg]").each(function() {
 			var data = $(this).parent().data();
 			if ((data.scrollgroup == dataE.scrollgroup) && dataE.scrollgroup!=undefined && dataE.instance!=data.instance) {
+				data.shift += offset;
 				widget_chart.doCorrectShift(data, offset);
 				widget_chart.refresh($(this).parent(),'shift',-offset);
 			}
@@ -1214,6 +1275,7 @@ var widget_chart = {
 	},
 	scaleTime: function(evt,elem,scale){ // calculate new start and end dates when user wants to scale graph
 		var dataE = elem.data();
+		dataE.scale *= scale;
 		widget_chart.doCorrectScale(dataE,scale);
 		widget_chart.refresh(elem,'scale',0);
 
@@ -1222,6 +1284,7 @@ var widget_chart = {
 		theDoc.find("[class^=basesvg]").each(function() {
 			var data = $(this).parent().data();
 			if ((data.scrollgroup == dataE.scrollgroup) && dataE.scrollgroup!=undefined && dataE.instance!=data.instance) {
+				data.scale *= scale;
 				widget_chart.doCorrectScale(data,scale);
 				widget_chart.refresh($(this).parent(),'scale',0);
 			}
@@ -1357,6 +1420,14 @@ var widget_chart = {
 
 		data.noticks = noticks;
 
+		data.days_start = widget_chart.getDaysAgo(data.daysago_start,data);
+		if (data.days_start == 'NaN') data.days_start = 0;
+		data.days_end = widget_chart.getDaysAgo(data.daysago_end,data);
+		if (data.days_end == 'NaN') data.days_end = data.days_start-1;
+		if (data.days_start == data.days_end) data.daysago_start=='now'?data.days_start++:data.days_end--;
+		widget_chart.doCorrectScale(data,data.scale);
+		widget_chart.doCorrectShift(data,data.shift);
+
 		var DDD = {};
 		if (!data.DDD) data.DDD = DDD;
 		var browserCaps = widget_chart.getBrowserCaps();
@@ -1389,10 +1460,9 @@ var widget_chart = {
 		$(theObj).parent().parent().data()?data.popup = ($(theObj).parent().parent().data().type == 'popup'):data.popup = false;
 
 		var instance = data.instance;
-
 		var svg_old = $(theObj).find('svg.basesvg'+instance); // get previous graphics document (SVG, only skeleton at initial call)
 
-		if (!svg_old.parent().is(':visible')) return;
+		if (!svg_old.parent().is(':visible') || svg_old.width()<=0) return;
 
 		if (svg_old.height() <= 0) svg_old.height($(theObj).hasClass('fullsize') ? $(theObj)[0].getBoundingClientRect().height*0.85 : ''); //in case of popup the init function can not detect the right size of the window, so we have to do it here
 		var classesContainer = svg_old.find('#classesContainer');
@@ -1679,7 +1749,7 @@ var widget_chart = {
 		var styleV = widget_chart.getStyleRuleValue(classesContainer, 'font-size', '.buttons');
 		var fszB = (styleV)?parseFloat(styleV.split('px')):18;
 		var fszT = data.title?fszC+2:0;
-		data.topOffset = nobuttons?(data.textHeight)/2+2:(fszC>fszB)?fszC+fszT+2:fszB+fszT+2;
+		data.topOffset = nobuttons?(data.textHeight)/2+2+fszT:(fszC>fszB)?fszC+fszT+2:fszB+fszT+2;
 		// calculation of stroke width for stroke scaling
 		var strokeWidth = (document.documentElement.style.vectorEffect === undefined) ? (max_prim-min_prim)/150 : 1;
 
@@ -2776,7 +2846,8 @@ var widget_chart = {
 		for (var k=0, lk=data.logProxy?data.nGraphs:data.nGraphs+1; k<lk; k++) { // prepare crosshair text elements for each graph
 			var g = widget_chart.createElem('g').attr({'class':'crosshair', 'style':data.DDD.String.Rot+'; '+data.DDD.String.Trans(0,k<data.nGraphs?k:0,data.DDD.Distance,data.xStrTO,data.yStrTO)})
 			crosshair.append(g);
-			g.append(widget_chart.createElem('text').attr({'class':'crosshair', 'filter':'url(#filterbackground)', 'style':'stroke-width:0px', 'text-anchor':'end', 'text-anchor':'end'}));
+			g.append(widget_chart.createElem('text').attr({'class':'crosshair', 'filter':'url(#filterbackground)', 'style':'z-index:10001; stroke-width:0px', 'text-anchor':'end', 'text-anchor':'end'}));
+			//g.append(widget_chart.createElem('text').attr({'class':'crosshair', 'style':'z-index:10001; stroke-width:0px; filter: blur(10px)', 'text-anchor':'end', 'text-anchor':'end'}));
 		}
 	
 		svg_new.find('[id="baseforDDD"]').append(crosshair); // add crosshair
@@ -2788,7 +2859,8 @@ var widget_chart = {
 			cursor_text.on('click', function(event) {
 				if ($(event.delegateTarget).parents("[class^=basesvg]").parent().data('crosshair')) {
 					$(event.delegateTarget).parents("[class^=basesvg]").parent().data('crosshair',false);
-					$(event.delegateTarget).parents("[class^=basesvg]").find('g.crosshair').hide();
+					widget_chart.doHide($(event.delegateTarget).parents("[class^=basesvg]").find('g.crosshair'),'.crosshair',data);
+					//$(event.delegateTarget).parents("[class^=basesvg]").find('g.crosshair').hide();
 					$(event.delegateTarget).attr({'class':'caption inactive'});
 				} else {
 					$(event.delegateTarget).parents("[class^=basesvg]").parent().data('crosshair',true);
@@ -3042,6 +3114,8 @@ function init_attr(elem) { // initialize all attributes called from widget init 
 	data.days_end = widget_chart.getDaysAgo(data.daysago_end,data);
 	if (data.days_end == 'NaN') data.days_end = data.days_start-1;
 	if (data.days_start == data.days_end) data.daysago_start=='now'?data.days_start++:data.days_end--;
+	data.shift = 0;
+	data.scale = 1;
 	widget_chart.doLog("Attributes initialized with " + data.days_start + data.days_end);
 };
 function init () { // initialization of widget, run at widget creation/reload
@@ -3117,14 +3191,18 @@ function update (dev,par) {
 			var isDevice = ($.isArray(elem.data('device')))?elem.data('device').join(',').search(dev)>=0:(typeof elem.data('device') == 'string')?elem.data('device')==dev:false;
 			isLogdevice = isLogdevice || isDevice;
 		}
-		// if (isLogdevice) {console.log(elem.data('logdevice'), dev, isLogdevice, elem.data('get'), par);}
+
 		if ( elem.data('get')==par && isLogdevice ) {
-			if (elem.closest('[data-type="popup"]').length==0) { // we need to find out if the chart is inside a popup for special care
+			if (elem.is(':visible')) { // element is visible, we can refresh it right away
 				waitForInitialization(elem,elem.data('instance'),'start'); // need to be sure that window is initialized (e.g. to get right width/height)
-			} else { // inside popup, do "refresh" only when popup opens.
-				elem.closest('[data-type="popup"]').on("fadein", function(event) {
-					var theObj = $("html").find("[class^=basesvg"+elem.data('instance')+"]").parent();
-					theObj.each( function(index) {waitForInitialization($(this),$(this).data('instance'),'startpopup');});
+			} else { // element is not yet visible (e.g. inside popup), do "refresh" only when popup opens.
+				elem.visibilityChanged({callback: function(event) {
+						widget_chart.doLog('----> Visibility Changed for instance ' + elem.data('instance'));
+						var theObj = $("html").find("[class^=basesvg"+elem.data('instance')+"]").parent();
+						theObj.each( function(index) {waitForInitialization($(this),$(this).data('instance'),'startpopup');});
+					},
+					runOnLoad: false,
+					frequency: 500
 				});
 			}
 		}

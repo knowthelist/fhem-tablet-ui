@@ -703,6 +703,7 @@ class 'blank' force to open the given URL on a new window
 - **data-longdelay**               : ms until the command is send after button is released (default '500')
 - **data-off**                     : value which represents the OFF mode
 - **data-on**                      : value which represents the ON mode
+- **data-lock**                    : name of the reading containing the boolean value for the lock (readonly) parameter (default <null>)
 - **class**                        : valueonly,value,circulate,positiononly
 
 ####Departure widget

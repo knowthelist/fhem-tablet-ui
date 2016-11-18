@@ -77,6 +77,15 @@ var Modul_spinner = function () {
     };
 
     function onClicked(elem,factor) {
+
+        if ( me.isReadOnly(elem) ) {
+            elem.addClass('fail-shake');
+            setTimeout(function() {
+                elem.removeClass('fail-shake');
+            }, 500);
+            return;
+        }
+
         var step    = parseFloat(elem.data('step'));
         var min     = parseFloat(elem.data('min'));
         var max     = parseFloat(elem.data('max'));
@@ -136,6 +145,7 @@ var Modul_spinner = function () {
 
         this.addReading(elem,'get');
         if ( elem.isDeviceReading('text-color') ) {this.addReading(elem,'text-color');}
+        if ( elem.isDeviceReading('lock') ) {this.addReading(elem,'lock');}
     };
 
     function init_ui(elem) {
@@ -270,10 +280,18 @@ var Modul_spinner = function () {
                 elem.find('.spinnerText').css( "color", val );
             }
         });
+
+        //extra reading for lock
+        me.elements.filterDeviceReading('lock',dev,par)
+        .each(function(idx) {
+            var elem = $(this);
+            elem.data('readonly' ,elem.getReading('lock').val);
+        });
     };
 
     // public
     // inherit all public members from base class
+    var me = this;
     return $.extend(new Modul_widget(), {
         //override or own public members
         widgetname: 'spinner',
