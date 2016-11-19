@@ -703,7 +703,7 @@ span.tab-label {
     line-height: 1em !important;
 }
 
-div[data-type="link"] .fa {
+div[data-type="link"] > div.fa {
     font-size: 2em;
     line-height: 1em;
     vertical-align: 0px;
@@ -1280,6 +1280,13 @@ select::-ms-expand {
   padding: 5px !important;
   pointer-events: none;
 }
+
+[data-type="readingsgroup"] svg {
+    height: 2em;
+    width: 2em;
+}
+
+
 
 .blurry {
    color: transparent !important;
