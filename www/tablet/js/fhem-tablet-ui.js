@@ -270,7 +270,7 @@ var ftui = {
 
         if ( !f7 ) {
             // dont show focus frame
-            $("*:not(select)").focus(function(){
+            $("*:not(select):not(textarea)").focus(function(){
                 $(this).blur();
             });
         }
@@ -526,12 +526,12 @@ var ftui = {
     longPoll: function() {
         if (ftui.config.DEMO) {console.log('DEMO-Mode: no longpoll');return;}
         if (ftui.xhr){
-            console.log('valid ftui.xhr found');
+            ftui.log(3,'valid ftui.xhr found');
             //ftui.xhr.abort();
             return;
         }
         if (ftui.longPollRequest){
-            console.log('valid ftui.longPollRequest found');
+            ftui.log(3,'valid ftui.longPollRequest found');
             //ftui.longPollRequest.abort();
             return;
         }
@@ -546,6 +546,9 @@ var ftui = {
         ftui.states.longPollRestart=false;
 
         var devicelist = $.map(ftui.devs, $.trim).join();
+
+        ftui.log(5,"DeviceArray:" + ftui.devs);
+        ftui.log(4,"DeviceList:" + devicelist);
 
         ftui.longPollRequest=$.ajax({
             url: ftui.config.fhem_dir,
@@ -869,17 +872,17 @@ var ftui = {
         d.setTime(ftui.states.lastShortpoll*1000);
         console.log('--------- start healthCheck --------------');
         console.log('now:',new Date());
-        console.log('FTUI version:',ftui.version);
-        console.log('Longpoll:',ftui.config.doLongPoll);
-        console.log('Longpoll objects there:',(isValid(ftui.longPollRequest) && isValid(ftui.xhr)));
-        console.log('Longpoll curent line:',ftui.poll.currLine);
-        console.log('Longpoll last event before:',ftui.poll.timestamp.toDate().ago());
-        console.log('Shortpoll interval:',ftui.config.shortpollInterval);
-        console.log('Shortpoll last run before:',d.ago());
-        console.log('FHEM dev/par count:',Object.keys(ftui.paramIdMap).length);
-        console.log('FTUI known devices count:',Object.keys(ftui.deviceStates).length);
-        console.log('Page length:',$('html').html().length);
-        console.log('Widgets count:',$('[data-type]').length);
+        console.log('FTUI version: '+ftui.version);
+        console.log('Longpoll: '+ftui.config.doLongPoll);
+        console.log('Longpoll objects there: '+(isValid(ftui.longPollRequest) && isValid(ftui.xhr)));
+        console.log('Longpoll curent line: '+ftui.poll.currLine);
+        console.log('Longpoll last event before: '+ftui.poll.timestamp.toDate().ago());
+        console.log('Shortpoll interval: '+ftui.config.shortpollInterval);
+        console.log('Shortpoll last run before: '+d.ago());
+        console.log('FHEM dev/par count: '+Object.keys(ftui.paramIdMap).length);
+        console.log('FTUI known devices count: '+Object.keys(ftui.deviceStates).length);
+        console.log('Page length: '+$('html').html().length);
+        console.log('Widgets count: '+$('[data-type]').length);
         console.log('--------- end healthCheck ---------------');
     },
 
