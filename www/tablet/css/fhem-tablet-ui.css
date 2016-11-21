@@ -706,7 +706,6 @@ span.tab-label {
 div[data-type="link"] > div.fa {
     font-size: 2em;
     line-height: 1em;
-    vertical-align: 0px;
 }
 
 /*end toolbar */

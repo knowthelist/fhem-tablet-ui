@@ -168,7 +168,7 @@ var Modul_link = function () {
         }).css({
           display: 'inline-block',
           textAlign: elem.data('text-align'),
-          verticalAlign: 'middle',
+          verticalAlign: '5%',
           whiteSpace: 'nowrap',
           padding: '3px',
         })
