@@ -1156,6 +1156,12 @@ div[data-type="image"].round > img {
 .squareborder{
  border-radius: 10px !important;
  border: 2px solid #aaa;
+ width: -moz-min-content;
+ width: -webkit-min-content;
+ width: min-content;
+ height: -moz-min-content;
+ height: -webkit-min-content;
+ height: min-content;
 }
 .circleborder{
  border-radius: 50% !important;
