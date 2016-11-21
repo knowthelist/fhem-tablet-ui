@@ -9,7 +9,7 @@ DIR www/tablet/lib/highcharts/themes
 UPD 2016-10-24_02:35:12 510 www/tablet/css/fhem-blue-ui.css
 UPD 2016-10-24_02:35:12 510 www/tablet/css/fhem-green-ui.css
 UPD 2016-10-24_02:35:12 2151 www/tablet/css/fhem-mobil-ui.css
-UPD 2016-11-20_00:05:54 33187 www/tablet/css/fhem-tablet-ui.css
+UPD 2016-11-20_23:08:27 33342 www/tablet/css/fhem-tablet-ui.css
 UPD 2016-10-24_02:35:12 13563 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2016-10-24_02:35:12 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2016-10-24_02:35:12 5295 www/tablet/css/ftui_chart.css
@@ -54,9 +54,9 @@ UPD 2016-10-24_02:35:12 21659 www/tablet/fonts/Roboto-Thin-webfont.eot
 UPD 2016-10-24_02:35:12 74077 www/tablet/fonts/Roboto-Thin-webfont.svg
 UPD 2016-10-24_02:35:12 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2016-10-24_02:35:12 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
+UPD 2016-11-21_01:31:34 3265 www/tablet/ftui_snippet_tester.html
 UPD 2016-10-24_02:35:12 13817 www/tablet/index-example.html
 UPD 2016-10-24_02:35:12 2782 www/tablet/index_empty.html
-UPD 2016-11-10_20:56:48 3193 www/tablet/index_tonne.html
 UPD 2016-11-13_23:23:23 49584 www/tablet/js/fhem-tablet-ui.js
 UPD 2016-11-13_23:24:09 26929 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-10-24_02:35:12 20988 www/tablet/js/highcharts-meteogram.js
