@@ -83,7 +83,7 @@ var Modul_label = function () {
                 }
             }
 
-            if (value){
+            if (isValid(value) || value===''){
                 var val = ftui.getPart(value,elem.data('part'));
                 var unit = elem.data('unit');
                 val = me.substitution(val, elem.data('substitution'));
