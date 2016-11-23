@@ -9,7 +9,7 @@ DIR www/tablet/lib/highcharts/themes
 UPD 2016-10-24_02:35:12 510 www/tablet/css/fhem-blue-ui.css
 UPD 2016-10-24_02:35:12 510 www/tablet/css/fhem-green-ui.css
 UPD 2016-10-24_02:35:12 2151 www/tablet/css/fhem-mobil-ui.css
-UPD 2016-11-21_21:45:35 33317 www/tablet/css/fhem-tablet-ui.css
+UPD 2016-11-23_19:22:44 33340 www/tablet/css/fhem-tablet-ui.css
 UPD 2016-10-24_02:35:12 13563 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2016-10-24_02:35:12 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2016-10-24_02:35:12 5295 www/tablet/css/ftui_chart.css
@@ -57,7 +57,7 @@ UPD 2016-10-24_02:35:12 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2016-11-21_01:31:34 3265 www/tablet/ftui_snippet_tester.html
 UPD 2016-10-24_02:35:12 13817 www/tablet/index-example.html
 UPD 2016-10-24_02:35:12 2782 www/tablet/index_empty.html
-UPD 2016-11-21_00:54:00 49704 www/tablet/js/fhem-tablet-ui.js
+UPD 2016-11-23_07:03:59 49870 www/tablet/js/fhem-tablet-ui.js
 UPD 2016-11-13_23:24:09 26929 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-10-24_02:35:12 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-10-24_02:35:12 1474 www/tablet/js/widget_button.js
@@ -73,7 +73,7 @@ UPD 2016-11-19_00:12:10 5355 www/tablet/js/widget_departure.js
 UPD 2016-10-24_21:44:11 6463 www/tablet/js/widget_dimmer.js
 UPD 2016-10-24_02:35:12 3337 www/tablet/js/widget_eventmonitor.js
 UPD 2016-10-24_02:35:12 2554 www/tablet/js/widget_example.js
-UPD 2016-11-14_21:49:26 18453 www/tablet/js/widget_famultibutton.js
+UPD 2016-11-22_23:43:21 18484 www/tablet/js/widget_famultibutton.js
 UPD 2016-10-24_02:35:12 9328 www/tablet/js/widget_fullcalview.js
 UPD 2016-10-24_02:35:12 2387 www/tablet/js/widget_gds.js
 UPD 2016-11-02_01:00:35 8739 www/tablet/js/widget_highchart.js
@@ -95,8 +95,8 @@ UPD 2016-10-24_02:35:12 4439 www/tablet/js/widget_medialist.js
 UPD 2016-10-24_01:22:01 1965 www/tablet/js/widget_meteogram.js
 UPD 2016-10-24_02:35:12 3350 www/tablet/js/widget_multistatebutton.js
 UPD 2016-11-17_00:17:23 2954 www/tablet/js/widget_notify.js
-UPD 2016-10-24_02:35:12 8019 www/tablet/js/widget_pagebutton.js
-UPD 2016-10-24_02:35:12 8038 www/tablet/js/widget_pagetab.js
+UPD 2016-11-23_01:23:08 8154 www/tablet/js/widget_pagebutton.js
+UPD 2016-11-23_01:23:18 7999 www/tablet/js/widget_pagetab.js
 UPD 2016-10-24_02:35:12 5048 www/tablet/js/widget_playstream.js
 UPD 2016-10-24_02:35:12 7566 www/tablet/js/widget_popup.js
 UPD 2016-10-24_02:35:12 3385 www/tablet/js/widget_progress.js
