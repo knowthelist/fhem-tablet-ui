@@ -188,7 +188,7 @@ var plugins = {
 // -------- FTUI ----------
 
 var ftui = {
-   version: '2.3.0',
+   version: '2.3.1',
    config: {
         DEBUG: false,
         DEMO: false,
@@ -222,6 +222,7 @@ var ftui = {
         if ( $("meta[name='widget_margin']").attr("content") )
           ftui.gridster.wm = parseInt( $("meta[name='widget_margin']").attr("content") );
         ftui.config.doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
+        ftui.config.longPollFilter = $("meta[name='longpoll_filter']").attr("content") || '.*';
         ftui.config.DEMO = ($("meta[name='demo']").attr("content") == '1');
         ftui.config.debuglevel  = $("meta[name='debug']").attr("content") || 0;
         ftui.config.DEBUG = ( ftui.config.debuglevel>0 );
@@ -327,7 +328,7 @@ var ftui = {
         ftui.log(2,'initPage - area='+area);
 
         // postpone shortpoll start
-        ftui.startShortPollInterval();
+        //ftui.startShortPollInterval();
 
         ftui.initGridster(area);
 
@@ -453,13 +454,16 @@ var ftui = {
                  var isUpdated = false;
                  var paramid = (reading==='STATE') ? device : [device,reading].join('-');
                  var newParam = section[reading];
-                 if (typeof newParam!=='object')
-                       newParam={"Value": newParam,"Time": ''};
+                 if (typeof newParam!=='object'){
+                     //ftui.log(5,'newParam='+newParam);
+                     newParam={"Value": newParam,"Time": ''};
+                 }
 
                  // is there a subscription, then check and update widgets
                  if( ftui.subscriptions[paramid] ){
-                       var oldParam = ftui.getDeviceParameter(device,reading);
-                       isUpdated = (!oldParam || oldParam.val!==newParam.Value || oldParam.date!==newParam.Time);
+                     var oldParam = ftui.getDeviceParameter(device,reading);
+                     isUpdated = (!oldParam || oldParam.val!==newParam.Value || oldParam.date!==newParam.Time);
+                     //ftui.log(5,'isUpdated='+isUpdated);
                  }
                  //write into internal cache object
                  var params = ftui.deviceStates[device] || {};
@@ -468,7 +472,7 @@ var ftui = {
                  param.val = newParam.Value;
                  param.valid = true;
                  params[reading] = param;
-                 ftui.deviceStates[device]= params;
+                 ftui.deviceStates[device] = params;
 
                  ftui.paramIdMap[paramid]={};
                  ftui.paramIdMap[paramid].device=device;
@@ -479,6 +483,7 @@ var ftui = {
 
                  //update widgets only if necessary
                  if(isUpdated){
+                    ftui.log(5,'[shortPoll] do update for ' + device + ',' + reading);
                     plugins.update(device,reading);
                  }
                }
@@ -545,18 +550,13 @@ var ftui = {
         ftui.log(1,(ftui.states.longPollRestart)?"Longpoll re-started":"Longpoll started");
         ftui.states.longPollRestart=false;
 
-        var devicelist = $.map(ftui.devs, $.trim).join();
-
-        ftui.log(5,"DeviceArray:" + ftui.devs);
-        ftui.log(4,"DeviceList:" + devicelist);
-
         ftui.longPollRequest=$.ajax({
             url: ftui.config.fhem_dir,
             cache: false,
             async: true,
             data: {
                 XHR:1,
-                inform: "type=status;filter="+devicelist+";fmt=JSON"
+                inform: "type=status;filter=" + ftui.config.longPollFilter + ";fmt=JSON"
             },
             xhr: function() {
                 ftui.xhr = new window.XMLHttpRequest();
@@ -571,7 +571,7 @@ var ftui = {
 
                         for (var i=ftui.poll.currLine, len = lines.length; i < len; i++) {
                             ftui.log(5,lines[i]);
-                            if (isValid(lines[i])){
+                            if (isValid(lines[i]) && lines[i] !== '' ){
                                 try {
                                     var dataJSON = JSON.parse(lines[i]);
                                     var params = null;
@@ -1150,8 +1150,7 @@ this.getIconId = function(iconName){
 // global helper functions
 this.isValid = function(v){
     return (typeof v !== 'undefined' && v !== 'undefined'
-         && typeof v !== typeof notusedvar
-         && v !== '' && v !== ' ');
+         && typeof v !== typeof notusedvar);
 }
 
 this.showModal = function (modal) {

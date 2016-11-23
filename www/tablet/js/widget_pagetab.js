@@ -157,7 +157,6 @@ var Modul_pagetab = function () {
            if ( me.elements.eq(0).data('return-time') > 0 ){
                $('body').once('touchend mouseup', function(e) {
                    startReturnTimer();
-                   e.preventDefault();
                });
            }
 

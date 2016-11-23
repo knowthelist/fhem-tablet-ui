@@ -13,13 +13,14 @@ var Modul_pagebutton = function () {
        var hashUrl=elem.data('url').replace('#','');
        var lockID = ['ftui',me.widgetname,hashUrl,sel].join('_');
        if ( localStorage.getItem(lockID) ){
-           console.log('---------------pagebutton load locked',lockID);
+           ftui.log(1,'pagebutton load locked ID='+lockID);
            return;
        }
        localStorage.setItem(lockID,'locked');
+       ftui.log(1,me.widgetname+': start to load content from $("'+sel+'")');
        $(sel).load(hashUrl +" "+sel+" > *",function (data_html) {
            console.timeEnd('fetch content');
-           console.log(me.widgetname+': new content from $("'+sel+'") loaded');
+           ftui.log(1,me.widgetname+': new content from $("'+sel+'") loaded');
            ftui.initPage(sel);
            if (elem.hasClass('default')){
                $(sel).addClass('active');
@@ -28,21 +29,22 @@ var Modul_pagebutton = function () {
            $(document).on("initWidgetsDone",function(e, area){
                if ( area == sel ) {
                    localStorage.removeItem(lockID);
+                   startReturnTimer(me.elements.eq(0));
                }
            });
        });
     };
 
     function startReturnTimer (elem){
+
       var waitUntilReturn = elem.data('return-time');
-      var lastUrl = localStorage.getItem('pagebutton_lastUrl');
+      var lastUrl = localStorage.getItem('pagebutton_lastSel');
       var returnTimer = localStorage.getItem('pagebutton_returnTimer');
       clearTimeout(returnTimer);
-      if ( waitUntilReturn > 0 && lastUrl !== elem.data('url') ){
+      if ( waitUntilReturn > 0 && lastUrl !== elem.data('load') ){
           ftui.log(1,'Reload main page in : ' + waitUntilReturn + ' seconds');
           returnTimer = setTimeout(function () {
              // back to first page
-             localStorage.setItem('pagebutton_doload', 'initializing');
              me.toggleOn(elem);
           }, waitUntilReturn * 1000);
           localStorage.setItem('pagebutton_returnTimer',returnTimer);
@@ -97,6 +99,8 @@ var Modul_pagebutton = function () {
                    if ($(sel+" > *").children().length === 0 || elem.hasClass('nocache'))
                        loadPage.call(me,elem);
                    $(sel).addClass('active');
+                   localStorage.setItem('pagebutton_lastSel',sel);
+                   startReturnTimer(me.elements.eq(0));
                }
            });
 
@@ -157,7 +161,6 @@ var Modul_pagebutton = function () {
            if ( me.elements.eq(0).data('return-time') > 0 ){
                $('body').once('touchend mouseup', function(e) {
                    startReturnTimer(me.elements.eq(0));
-                   e.preventDefault();
                });
            }
 

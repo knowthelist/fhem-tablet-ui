@@ -760,6 +760,7 @@ div[data-type="circlemenu"] {
     margin-bottom: 0px;
     display: inline-block;
     vertical-align: middle;
+    position:relative;
 }
 
 .dialog {

@@ -108,7 +108,7 @@ var Modul_famultibutton = function () {
     function showOverlay(elem, value) {
          elem.children().filter('#warn-back').remove();
          elem.children().filter('#warn').remove();
-         if (value && value!=""){
+         if (isValid(value) && value !== ""){
              var val = ($.isNumeric(value)&&value<100)?Number(value).toFixed(0):'!';
              var fgElem = jQuery('<i/>', {
                  id: 'warn-back',
@@ -393,7 +393,7 @@ var Modul_famultibutton = function () {
         .each(function(index) {
             var elem = $(this);
             var state = elem.getReading('get').val;
-            if (state) {
+            if (isValid(state)) {
                 var states=elem.data('states') || elem.data('get-on');
                 if ( $.isArray(states)) {
                     me.showMultiStates(elem,states,state);
@@ -426,7 +426,7 @@ var Modul_famultibutton = function () {
                 .each(function(idx) {
                     var elem = $(this);
                     var val = elem.getReading(key).val;
-                    if(val) {
+                    if (isValid(val)) {
                         val = '#'+val.replace('#','');
                         var faelem = elem.data('famultibutton');
                         if (faelem){
