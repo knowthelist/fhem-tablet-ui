@@ -1,5 +1,5 @@
 
-function depends_thermostat (){
+function depends_thermostat() {
     if(typeof Modul_knob == 'undefined' || !$.fn.knob) {
         return ["knob"];
     }
@@ -120,22 +120,23 @@ var Modul_thermostat = function () {
     me.elements=$('div[data-type="'+me.widgetname+'"]',me.area);
     me.elements.each(function( index ) {
         var elem = $(this);
-        elem.initData('get'     ,'desired-temp');
-        elem.initData('set'     , elem.data('get'));
-        elem.initData('temp'    ,'measured-temp');
-        elem.initData('valve'   ,'');
-        elem.initData('mode'    ,'');
-        elem.initData('height'  ,100);
-        elem.initData('width'   ,100);
-        elem.initData('max'     ,30);
-        elem.initData('min'     ,10);
-        elem.initData('cursor'  ,6);
-        elem.initData('off'     ,-1);
-        elem.initData('boost'   ,-1);
-        elem.initData('fgcolor' , getStyle('.'+me.widgetname+'.fgcolor','color')  || '#666');
-        elem.initData('mincolor',getStyle('.'+me.widgetname+'.mincolor','color') || '#4477ff');
-        elem.initData('maxcolor',getStyle('.'+me.widgetname+'.maxcolor','color') || '#ff0000');
-        elem.initData('bgcolor' ,getStyle('.'+me.widgetname,'background-color')  || 'none');
+        elem.initData('get'      , 'desired-temp');
+        elem.initData('set'      , elem.data('get'));
+        elem.initData('temp'     , 'measured-temp');
+        elem.initData('valve'    , '');
+        elem.initData('mode'     , '');
+        elem.initData('height'   , 100);
+        elem.initData('width'    , 100);
+        elem.initData('max'      , 30);
+        elem.initData('min'      , 10);
+        elem.initData('cursor'   , 6);
+        elem.initData('off'      , -1);
+        elem.initData('boost'    , -1);
+        elem.initData('fgcolor'  , getStyle('.'+me.widgetname+'.fgcolor','color')  || '#666');
+        elem.initData('mincolor' , getStyle('.'+me.widgetname+'.mincolor','color') || '#4477ff');
+        elem.initData('maxcolor' , getStyle('.'+me.widgetname+'.maxcolor','color') || '#ff0000');
+        elem.initData('bgcolor'  , getStyle('.'+me.widgetname,'background-color')  || 'none');
+        elem.initData('get-value', elem.data('part') || '-1');
 
         me.addReading(elem,'get');
         me.addReading(elem,'temp');
@@ -158,17 +159,16 @@ var Modul_thermostat = function () {
         .each(function(index) {
           var elem = $(this);
           var value = elem.getReading('get').val;
-          if (value) {
-              //var state = deviceStates[dev].STATE;
-              //value = ( state && state.val && state.val.indexOf('set_') > -1 ) ? getPart(state.val,2) : value;
+          if ( isValid(value) ) {
+              var val = ftui.getPart(value,elem.data('get-value'));
               var textdisplay=false;
-              switch(value) {
+              switch(val) {
                   case elem.data('off'):   value=elem.data('min'); textdisplay=elem.data('off'); break;
                   case elem.data('boost'): value=elem.data('max'); textdisplay=elem.data('boost'); break;
               }
               var knob_elem = elem.find('input');
               if (knob_elem){
-                  knob_elem.val( parseFloat(value) ).trigger('change');
+                  knob_elem.val( parseFloat(val) ).trigger('change');
                   if(textdisplay)
                       knob_elem.val(textdisplay);
                   knob_elem.css({visibility:'visible'});
@@ -181,7 +181,7 @@ var Modul_thermostat = function () {
         .each(function(idx) {
           var elem = $(this);
           var value = elem.getReading('temp').val;
-          if(value) {
+          if (isValid(value )) {
               var knob_elem = elem.find('input');
               var knob_obj = knob_elem.data('knob');
               if ( knob_obj ) {
@@ -198,7 +198,7 @@ var Modul_thermostat = function () {
         .each(function(idx) {
             var elem = $(this);
             var value = elem.getReading('valve').val;
-            if(value) {
+            if (isValid(value )) {
                 var knob_elem = elem.find('input');
                 var knob_obj = knob_elem.data('knob');
                 if ( knob_obj ) {
