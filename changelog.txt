@@ -3,3 +3,7 @@
 
 2.3.1 (22.11.2016)
 - more usage of "isValid"
+
+2.4.0 (02.12.2016)
+- usage of "use strict" mode to make code saver and faster
+- code cleanup according jshint 

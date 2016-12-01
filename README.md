@@ -2,7 +2,7 @@ fhem-tablet-ui
 ========
 
 UI builder framework for FHEM — http://fhem.de/fhem.html
-With a clear intention: Keep it short and simple!
+with a clear intention: Keep it short and simple!
 
 
 ![](http://knowthelist.github.io/fhem-tablet-ui/fhem-tablet-ui-example_new.png)
@@ -332,6 +332,7 @@ all parameters from knob widget plus following additional parameters
 - **data-temp**  : name of the reading for measured temperature of thermostates (default 'measured-temp')
 - **data-set**   : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default 'desired-temp')
 - **data-valve** : name of the reading for valve position of thermostates
+- **data-get-value** : RegEx to retrieve the value or part number of the space separated input to get the value (default '-1': all of the input)
 - **data-mode**  : name of the reading for mode of thermostates
 - **data-min**   : minimal value to set (default 10)
 - **data-max**   : maximal value to set (default 30)
@@ -504,9 +505,14 @@ data-return-time has to be placed on the main pagetab (the first one > index 0)
 - **data-url**              : URL of the new page to show
 - **data-active-pattern**   : RegEx to define active state  (default null)
 all other parameters like switch widget
- -**class**                 : blank,
+ -**class**                 : blank,nocache,default,prefetch,
 
 class 'blank' force to open the given URL on a new window
+class 'nocache' force to reload the page every time 
+class 'default' buttons are activated by default
+class 'prefetch' force to load the page in background before first activation to save time
+
+Examples: https://github.com/knowthelist/fhem-tablet-ui/blob/master/examples/pagebutton/index_page_left_demo.html
 
 ####Rotor widget
 - **data-delay**    : time in millisecondes to wait until next list item get shown. (default: 3500)

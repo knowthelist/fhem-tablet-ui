@@ -1,29 +1,35 @@
+/* FTUI Plugin
+ * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+ * originally created by Thomas Nesges
+ * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+
+/* global ftui:true, Modul_widget:true */
+
+"use strict";
+
 var Modul_iframe = function () {
 
-    function init_attr (elem) {
-        elem.initData('check-src',      elem.data('src'));
-        elem.initData('timeout',        3000);
-        elem.initData('scrolling',      'no');
-        elem.initData('fill',           'no');
-        elem.initData('height',         100);
-        elem.initData('width',          100);
-        elem.initData('icon-spinner',   'fa-spinner fa-spin');
-        elem.initData('color-spinner',  '#aa6900');
-        elem.initData('icon-error',     'fa-frown-o');
-        elem.initData('color-error',    '#505050');
-        elem.initData('get',            'STATE');
-        elem.initData('check',          true);
-        // allow readings to contain the url for the iframe
-        elem.initData('value-url',      elem.data('value-url') || false);
- 
-        this.addReading(elem,'get');
+    function init_attr(elem) {
+        elem.initData('check-src', elem.data('src'));
+        elem.initData('timeout', 3000);
+        elem.initData('scrolling', 'no');
+        elem.initData('fill', 'no');
+        elem.initData('height', 100);
+        elem.initData('width', 100);
+        elem.initData('icon-spinner', 'fa-spinner fa-spin');
+        elem.initData('color-spinner', '#aa6900');
+        elem.initData('icon-error', 'fa-frown-o');
+        elem.initData('color-error', '#505050');
+        elem.initData('get', 'STATE');
+        elem.initData('check', true);
+
+        me.addReading(elem, 'get');
     }
 
     function init_ui(elem) {
-        console.log('check',elem.data('check'));
-//        console.log('src',elem.data('src'));
-//        console.log('value',elem.data('value'));
-        if(elem.data('check')) {
+        console.log('check', elem.data('check'));
+        if (elem.data('check')) {
             elem.empty();
             var spinner = $('<div />').appendTo(elem);
             spinner.famultibutton({
@@ -32,24 +38,24 @@ var Modul_iframe = function () {
                 backgroundIcon: null,
                 offColor: elem.data('color-spinner'),
             });
-        
+
             $.ajax({
                 type: 'HEAD',
                 url: elem.data('check-src'),
                 timeout: elem.data('timeout'),
-                success: function(){
+                success: function () {
                     elem.empty();
                     var style = '';
-                    if(elem.data('fill')=='yes') {
+                    if (elem.data('fill') == 'yes') {
                         style = 'position:absolute;left:0;top:0;height:100%;width:100%;';
                     } else {
-                        style = 'height:'+elem.data('height')+'px;width:'+elem.data('width')+'px;';
+                        style = 'height:' + elem.data('height') + 'px;width:' + elem.data('width') + 'px;';
                     }
-                    $("<iframe src='"+elem.data('src')+"' style='"+style+"border:none' scrolling='"+elem.data('scrolling')+"'/>").appendTo(elem);
+                    $("<iframe src='" + elem.data('src') + "' style='" + style + "border:none' scrolling='" + elem.data('scrolling') + "'/>").appendTo(elem);
                 },
-                error: function(x,t,m) {
+                error: function (x, t, m) {
                     elem.empty();
-                    console.log('Error trying to load '+elem.data('src')+':',t,'-',m);
+                    console.log('Error trying to load ' + elem.data('src') + ':', t, '-', m);
                     var spinner = $('<div />').appendTo(elem);
                     spinner.famultibutton({
                         mode: 'signal',
@@ -62,47 +68,44 @@ var Modul_iframe = function () {
         } else {
             elem.empty();
             var style = '';
-            if(elem.data('fill')=='yes') {
+            if (elem.data('fill') == 'yes') {
                 style = 'position:absolute;left:0;top:0;height:100%;width:100%;';
             } else {
-                style = 'height:'+elem.data('height')+'px;width:'+elem.data('width')+'px;';
+                style = 'height:' + elem.data('height') + 'px;width:' + elem.data('width') + 'px;';
             }
-            $("<iframe src='"+elem.data('src')+"' style='"+style+"border:none' scrolling='"+elem.data('scrolling')+"'/>").appendTo(elem);
+            $("<iframe src='" + elem.data('src') + "' style='" + style + "border:none' scrolling='" + elem.data('scrolling') + "'/>").appendTo(elem);
         }
     }
 
     //usage of "function init()" from Modul_widget()
 
-    function update (dev,par) {
-        var base = this;
-        this.elements.filterDeviceReading('get',dev,par)
-        .each(function(index) {
-            var elem = $(this);
-            var value = elem.getReading('get').val;
-            if (value) {
-                    if (  elem.data('value-url') ) {
-                       elem.data('src', value);
-                       console.log('Got URL on update',value);
-                    }
+    function update(dev, par) {
 
-                    if ( value == elem.data('get-refresh') )
-                        base.init_ui(elem)
-                    else if ( value.match(RegExp('^' + elem.data('get-refresh') + '$')) )
-                        base.init_ui($(this))
-                    else if (!elem.data('get-refresh') && elem.data('value') != value )
-                        base.init_ui(elem)
+        me.elements.filterDeviceReading('get', dev, par)
+            .each(function (index) {
+                var elem = $(this);
+                var value = elem.getReading('get').val;
+                if (value) {
+                    if (value == elem.data('get-refresh'))
+                        me.init_ui(elem);
+                    else if (value.match(RegExp('^' + elem.data('get-refresh') + '$')))
+                        me.init_ui($(this));
+                    else if (!elem.data('get-refresh') && elem.data('value') != value)
+                        me.init_ui(elem);
                 }
                 elem.data('value', value);
-        });
+            });
     }
 
     // public
     // inherit all public members from base class
-    return $.extend(new Modul_widget(), {
+    var me = $.extend(new Modul_widget(), {
         //override or own public members
         widgetname: 'iframe',
         init_ui: init_ui,
         init_attr: init_attr,
         update: update,
     });
-   };
+
+    return me;
+};
