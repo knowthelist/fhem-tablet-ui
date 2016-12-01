@@ -998,6 +998,21 @@ var widget_chart = {
 			return (dt.getTime() < df.getTime()) ? dy -1 : dy;
 		}
 	},
+	roundXticks: function(round, x, xstart) {
+		var xret = x;
+		switch(round) {
+			case 'h': // rounding to hours
+				xret = parseInt((x)/60+0.5)*60-xstart;
+				break;
+			case 'd': // rounding to days
+				xret = parseInt(x/60/24+0.5)*60*24-xstart;
+				break;
+			case 'w': // rounding to weeks
+				xret = parseInt(x/60/24/7+0.5)*60*24*7-xstart;
+				break;
+		}
+		return xret;
+	},
 	propagateEvent: function(event) {
 		// check if other charts are in same cursorgroup and eventually trigger mouse events
 		var target = $(event.delegateTarget).parents("[class^=basesvg]");
@@ -1543,7 +1558,7 @@ var widget_chart = {
 			columnspec = columnspec.replace(/\\x27/g, "'"); // unescape single quote
 			columnspec = columnspec.replace(/\\x22/g, '"'); // unescape double quote
 			if(! columnspec.match(/.+:.+/)) { // column spec for HTTP call seems to be not correct
-				console.log('columnspec '+columnspec+' is not ok in chart' + ($(theObj).attr('data-device')?' for device '+$(theObj).attr('data-device'):''));
+				widget_chart.doLog('columnspec '+columnspec+' is not ok in chart' + ($(theObj).attr('data-device')?' for device '+$(theObj).attr('data-device'):''));
 			}
 
 			var cmd =[
@@ -1571,7 +1586,8 @@ var widget_chart = {
 				var tstart = dateFromString(mindate);
 				var found_logproxy = false;
 				var idx_icons = 0;
-				$.each( lines, function( index, value ) {
+				var index = 0;
+				$.each( lines, function( ind, value ) {
 					if (value){
 						if (value.charAt(0) == ';') {	// special treatment for logproxy returns
 							found_logproxy = true;
@@ -1647,8 +1663,11 @@ var widget_chart = {
 								if (val<min && maxAry=="auto" && basescale) {
 									min = parseFloat(val);
 								}
+							} else {
+								index--;
 							}
 						}
+						index++; //count up index only if value was present
 					}
 				});
 
@@ -1895,8 +1914,9 @@ var widget_chart = {
 		p2 = widget_chart.getTransformedPoint(data,theObj,{x:data.graphWidth/100*data.basewidth,y:0,z:data.DDD.BackplaneZ(data.DDD,data.nGraphs)});
 		var clip_top = (Math.min(p1.y,p2.y)-data.DDD.shiftY)/data.DDD.scaleY;
 		// prepare skeleton of SVG part of page
+		if (!$(document).find('body').children('svg').children('defs').length) $(document).find('body').prepend($('<svg style="position: absolute; height: 0px"> ' + defsFHEM + defs + '</svg>'));
 		svg_new = $(
-			'<svg class="basesvg'+instance+'" style="overflow: visible">' + defsFHEM + defs +
+			'<svg class="basesvg'+instance+'" style="overflow: visible">' +
 			'<g id="classesContainer" stroke="grey"></g>' +
 			'<g id="baseforDDD" style="overflow: inherit; '+data.DDD.prefix+'transform: '+data.DDD.String.Scale+'">' + 
 			'<rect class="chart-background" x="'+data.xStr+'" width="'+data.yStr+'" preserveAspectRatio="none" '+'style="'+data.DDD.String.Rot+'; '+data.DDD.String.Trans(parseFloat(data.DDD.Width),data.nGraphs-1,data.DDD.Distance,data.xStrTO,data.yStrTO)+'"></rect>'+
@@ -2011,27 +2031,39 @@ var widget_chart = {
 			.bind('mouseover', function(event) {
 				event.target.setAttribute('style','cursor:move');
 			})
-			.bind('mousedown', function(event, ui){
+			.bind('mousedown touchstart', function(event, ui){
 				// keep initial mouse position relative to draggable object.
+				if (event.type == 'touchstart') {
+					if (!event.originalEvent) return;
+					var evt=event.originalEvent.touches[0];
+				} else {
+					var evt = event;
+				} 
 				var target = $(event.delegateTarget).parents("[class^=basesvg]");
-				xS = parseFloat($(event.target).attr('x')) - (event.pageX - target.offset().left);
-				yS = parseFloat($(event.target).attr('y')) - (event.pageY - target.offset().top);
+				xS = parseFloat($(evt.target).attr('x')) - (evt.pageX - target.offset().left);
+				yS = parseFloat($(evt.target).attr('y')) - (evt.pageY - target.offset().top);
 			})
-			.bind('drag', function(event, ui) {
+			.bind('drag touchmove', function(event, ui) {
+				if (event.type == 'touchmove') {
+					if (!event.originalEvent) return;
+					var evt=event.originalEvent.touches[0];
+				} else {
+					var evt = event;
+				} 
 				var target = $(event.delegateTarget).parents("[class^=basesvg]");
 				var data = target.parent().data();
-				var xOff = parseFloat($(event.target).attr('x')) - (event.pageX - target.offset().left) - xS;
-				var yOff = parseFloat($(event.target).attr('y')) - (event.pageY - target.offset().top) - yS;
-				event.target.setAttribute('x', parseFloat($(event.target).attr('x')) - xOff);
-				event.target.setAttribute('y', parseFloat($(event.target).attr('y')) - yOff);
+				var xOff = parseFloat($(evt.target).attr('x')) - (evt.pageX - target.offset().left) - xS;
+				var yOff = parseFloat($(evt.target).attr('y')) - (evt.pageY - target.offset().top) - yS;
+				evt.target.setAttribute('x', parseFloat($(evt.target).attr('x')) - xOff);
+				evt.target.setAttribute('y', parseFloat($(evt.target).attr('y')) - yOff);
 				target.find('text.legend').each(function(index) {
 					$(this).attr('x', parseFloat($(this).attr('x'))-xOff);
 					$(this).attr('y', parseFloat($(this).attr('y'))-yOff);
 				});
 				data.legend_pos = {
-					left:parseFloat($(event.target).attr('x')),
-					top:parseFloat($(event.target).attr('y')),
-					width:parseFloat($(event.target).attr('width'))
+					left:parseFloat($(evt.target).attr('x')),
+					top:parseFloat($(evt.target).attr('y')),
+					width:parseFloat($(evt.target).attr('width'))
 				};
 			});
 
@@ -2376,8 +2408,9 @@ var widget_chart = {
 									'dy':'0.4em',
 									'text-anchor':'middle',
 									'style':'font-family: FontAwesome',
-									'onclick':'widget_chart.scaleTime(evt, $("svg.basesvg'+instance+'").parent(), 2)',
+//									'onclick':'widget_chart.scaleTime(evt, $("svg.basesvg'+instance+'").parent(), 2)',
 								});
+								zoomMinus.click(function(evt) {widget_chart.scaleTime(evt, $("svg.basesvg"+instance).parent(), 2);});
 								zoomMinus.text(widget_chart.fontNameToUnicode('fa-minus-circle'));
 								buttons.append(zoomMinus);
 								
@@ -2388,8 +2421,9 @@ var widget_chart = {
 									'dy':'0.4em',
 									'text-anchor':'middle',
 									'style':'font-family: FontAwesome',
-									'onclick':'widget_chart.shift(evt, $("svg.basesvg'+instance+'").parent(), 1)',
+//									'onclick':'widget_chart.shift(evt, $("svg.basesvg'+instance+'").parent(), 1)',
 								});
+								shiftMinus.click(function(evt) {widget_chart.shift(evt, $("svg.basesvg"+instance).parent(), 1);});
 								shiftMinus.text(widget_chart.fontNameToUnicode('fa-arrow-circle-left'));
 								buttons.append(shiftMinus);
 								
@@ -2400,8 +2434,9 @@ var widget_chart = {
 									'dy':'0.4em',
 									'text-anchor':'middle',
 									'style':'font-family: FontAwesome',
-									'onclick':'widget_chart.shift(evt, $("svg.basesvg'+instance+'").parent(), -1)',
+//									'onclick':'widget_chart.shift(evt, $("svg.basesvg'+instance+'").parent(), -1)',
 								});
+								shiftPlus.click(function(evt) {widget_chart.shift(evt, $("svg.basesvg"+instance).parent(), -1);});
 								shiftPlus.text(widget_chart.fontNameToUnicode('fa-arrow-circle-right'));
 								buttons.append(shiftPlus);
 
@@ -2550,12 +2585,15 @@ var widget_chart = {
 								//x-axis
 								//leftmost text, show date
 								var textX1 = widget_chart.createElem('text');
+								var posX = (data.textWidth_prim);
+								var posY = (((max))/(max-min)*data.graphHeight/100*data.baseheight+data.topOffset+data.textHeight);
 								textX1.attr({
 									'class':'text axes xaxis',
-									'x':(data.textWidth_prim) + 'px',
-									'y':(((max))/(max-min)*data.graphHeight/100*data.baseheight+data.topOffset+data.textHeight),
+									'x':posX + 'px',
+									'y':posY,
 									'text-anchor':'middle',
 								});
+								if (data.xticks_angle != 0) textX1.attr({'transform':'rotate('+(-data.xticks_angle)+' '+(posX+2)+','+(posY+2)+')'});
 
 								if (timeformat!=undefined && timeformat!='') {
 									var tarr = widget_chart.getDateTimeString(tstart,timeformat);
@@ -2573,21 +2611,23 @@ var widget_chart = {
 								var moffset = tx.getMonth();
 								var x=0;
 
-								for ( var xl=xticks; xl<xrange; xl+=xticks ){	// counting up x values (in minutes)
+								for ( var xl=xticks; xl<=xrange; xl+=xticks ){	// counting up x values (in minutes)
 
 									var tx = new Date(tstart);
 									var mindex = (xl/xticks+moffset-1)%12;
 									x = $.isArray(xticksArray)?(x+(xticksArray[mindex])*60*24):xl;
-									if (x>=xrange*(1-data.dateWidth/data.basewidth)) break; // we have to care that nothing is written beyond end of chart
+									if (data.xticks_round != '') x = widget_chart.roundXticks(data.xticks_round,x,tstart.getMinutes());
+									if (x>=xrange || x<=0) continue; // we have to care that nothing is written beyond end of chart
 									var textX2 = widget_chart.createElem('text');
-									var posX = data.graphWidth*x/xrange*data.basewidth/100 + data.textWidth_prim;
-									var posY = (((max))/(max-min)*data.graphHeight/100*data.baseheight+data.topOffset);
+									posX = data.graphWidth*x/xrange*data.basewidth/100 + data.textWidth_prim;
+									posY = (((max))/(max-min)*data.graphHeight/100*data.baseheight+data.topOffset)+data.textHeight;
 									textX2.attr({
 										'class':'text axes xaxis',
 										'x':posX+'px',
-										'y':posY+data.textHeight,
+										'y':posY,
 										'text-anchor':'middle',
 									});
+									if (data.xticks_angle != 0) textX2.attr({'transform':'rotate('+-data.xticks_angle+' '+(posX+2)+','+(posY+2)+')'});
 									tx.setMinutes(tstart.getMinutes() + x);
 
 									if (timeformat!=undefined && timeformat!='') {
@@ -2595,7 +2635,7 @@ var widget_chart = {
 										var textX2Value = tarr[0];
 										textX2.text(textX2Value);
 										for (var i=1, il=tarr.length; i<il; i++) {
-											txaxis.append(textX2.clone().attr('y',posY+data.textHeight+i*data.textHeight).text(tarr[i]));
+											txaxis.append(textX2.clone().attr('y',posY+i*data.textHeight).text(tarr[i]));
 										}
 									} else {
 										var textX2Value = (tx.hhmm()=="00:00"||xticks>1440) ? tx.ddmm() : tx.hhmm() ; // if we are at exactly 00:00 of if difference between ticks is larger than a day don't display hours.
@@ -2631,13 +2671,15 @@ var widget_chart = {
 								
 								//rightmost text, show date
 								var textX1 = widget_chart.createElem('text');
-								var posX = data.graphWidth*data.basewidth/100 + data.textWidth_prim;
+								posX = data.graphWidth*data.basewidth/100 + data.textWidth_prim;
+								posY = (((max))/(max-min)*data.graphHeight/100*data.baseheight+data.topOffset+data.textHeight);
 								textX1.attr({
 									'class':'text axes xaxis',
 									'x':posX+'px',
-									'y':(((max))/(max-min)*data.graphHeight/100*data.baseheight+data.topOffset+data.textHeight),
+									'y':posY,
 									'text-anchor':"middle",
 								});
+								if (data.xticks_angle != 0) textX1.attr({'transform':'rotate('+(-data.xticks_angle)+' '+(posX+2)+','+(posY+2)+')'});
 								if (timeformat!=undefined && timeformat!='') {
 									var tarr = widget_chart.getDateTimeString(tend,timeformat);
 									var textX1Value=tarr[0];
@@ -3005,6 +3047,8 @@ function init_attr(elem) { // initialize all attributes called from widget init 
 	elem.data('daysago_start',typeof elem.data('daysago_start') != 'undefined' ? elem.data('daysago_start'): '0');
 	elem.data('daysago_end',  typeof elem.data('daysago_end') != 'undefined' ? elem.data('daysago_end')    : '-1');
 	elem.data('timeformat',   elem.data('timeformat')                                                     || '');
+	elem.data('xticks_round', elem.data('xticks_round')                                                   || '');
+	elem.data('xticks_angle', elem.data('xticks_angle')                                                   || 0);
 	elem.data('xticks',       elem.data('xticks')                                                         || 'auto');
 	elem.data('yticks',       elem.data('yticks')                                                         || 'auto');
 	elem.data('yticks_sec',   elem.data('yticks_sec')                                                     || 'auto');
@@ -3150,8 +3194,8 @@ function init () { // initialization of widget, run at widget creation/reload
 			.css("width",elem.data('width') || elem.data.defaultWidth)
 			.css("height",elem.data('height') || elem.data.defaultHeight);
 
-		function showDone(instance) {widget_chart.initialized[instance]=true;}; // set initialized value on return of show() function we have to wait for this before doing the refresh
-		svgElement.show(10,showDone(widget_chart.instance));
+		function showDone(e) {e.data('initialized',true);}; // set initialized value on return of show() function we have to wait for this before doing the refresh
+		svgElement.show(10,showDone(elem));
 
 		widget_chart.doLog("Module initialized with width: "+ (elem.data('width')||elem.data.defaultWidth) + " height: " + (elem.data('height')||elem.data.defaultHeight));
 
@@ -3174,8 +3218,9 @@ function update (dev,par) {
 		data=$(base).data();
 		var svg_old = $(base).find('svg.basesvg'+data.instance);
 		var time = (data.initdelay)?data.initdelay:100;
+		var initialized = data.initialized;
 		setTimeout(function(){
-			if (!widget_chart.initialized[instance]||isNaN(svg_old.height())||isNaN(svg_old.width())||prev_width[instance]!=svg_old.width()||(!svg_old.parent().is(':visible'))) {
+			if (!initialized||isNaN(svg_old.height())||isNaN(svg_old.width())||prev_width[instance]!=svg_old.width()||(!svg_old.parent().is(':visible'))) {
 				prev_width[instance] = svg_old.width(); // we need to wait until the size does not change any more (e.g. when fading in)
 				waitForInitialization(base,instance,type,i);
 			} else {
@@ -3197,7 +3242,7 @@ function update (dev,par) {
 				waitForInitialization(elem,elem.data('instance'),'start'); // need to be sure that window is initialized (e.g. to get right width/height)
 			} else { // element is not yet visible (e.g. inside popup), do "refresh" only when popup opens.
 				elem.visibilityChanged({callback: function(event) {
-						widget_chart.doLog('----> Visibility Changed for instance ' + elem.data('instance'));
+						widget_chart.doLog('----> Visibility Changed for instance ' + elem.data('instance') + " and visibility " + elem.is(':visible'));
 						var theObj = $("html").find("[class^=basesvg"+elem.data('instance')+"]").parent();
 						theObj.each( function(index) {waitForInitialization($(this),$(this).data('instance'),'startpopup');});
 					},
