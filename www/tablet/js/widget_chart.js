@@ -462,7 +462,7 @@ var widget_chart = {
 		var indexs = funcIn.match(/\d+/g); // check if there is a number at the end of the function (setting the index over all curve values)
 		var func = func.replace(/All/,''); // index is already correct for 'All' just replace the All by nothing
 		if (indexs == null) {index = -1;} else {index = indexs[0];}
-		var tstart = dateFromString(data.mindate);
+		var tstart = ftui.dateFromString(data.mindate);
 		var tx = new Date(tstart);
 
 		fVal = function(index, ary) {
@@ -979,8 +979,8 @@ var widget_chart = {
 		}
 	},
 	dateDiff: function (dfrom,dto,selector){ // helper function for calculation of date differences
-		//dfrom: Startdatum als String, "" für das aktuelle Datum/Zeit oder Date-Object
-		//dto:   Enddatum als String, "" für das aktuelle Datum/Zeit  oder Date-Object
+		//dfrom: Startdatum als String, "" fÂ¸r das aktuelle Datum/Zeit oder Date-Object
+		//dto:   Enddatum als String, "" fÂ¸r das aktuelle Datum/Zeit  oder Date-Object
 		//selctor: 'ms' Millisekunden, 's' Sekunden, 'm' Minuten, 'h' Stunden,
 		// 'd' tage, 'w' wochen, 'y' ganze Jahre
 		var r,dfy,dy;
@@ -1112,7 +1112,7 @@ var widget_chart = {
 							legendY = data.graphHeight/100*target.height()+data.topOffset+widget_chart.getTextSizePixels(crh_text[i].parents("[class^=basesvg]"),'O','crosshair').height;
 							var posX = data.graphWidth*x/xrange*data.basewidth/100 + data.textWidth_prim;
 							var xminutes = (x-data.textWidth_prim)*100/data.basewidth*data.xrange/data.graphWidth;
-							var tstart = dateFromString(data.mindate);
+							var tstart = ftui.dateFromString(data.mindate);
 							var tx = new Date(tstart);
 							tx.setMinutes(tstart.getMinutes() + xminutes);
 							if (data.timeformat!=undefined && data.timeformat!='') {
@@ -1510,7 +1510,7 @@ var widget_chart = {
 		tend.setTime(tend.getTime() - (tend.dst()-mindate.dst())*60*1000); // correct daytime savings
 		mindate = tstart.yyyymmdd() + '_' + (tstart.getHours()).pad() + ':' + tstart.getMinutes().pad() + ':' + tstart.getSeconds().pad();
 		maxdate = tend.yyyymmdd() + '_' + (tend.getHours()).pad() + ':' + tend.getMinutes().pad() + ':' + tend.getSeconds().pad();
-		var xrange  = parseInt(diffMinutes(dateFromString(mindate),dateFromString(maxdate)));
+		var xrange  = parseInt(ftui.diffMinutes(ftui.dateFromString(mindate),ftui.dateFromString(maxdate)));
 		data.xrange = xrange;
 		data.mindate = mindate;
 		var xrng = Number.NEGATIVE_INFINITY;
@@ -1583,7 +1583,7 @@ var widget_chart = {
 				var lines = dat.split('\n');
 				var point=[];
 				var i=0;
-				var tstart = dateFromString(mindate);
+				var tstart = ftui.dateFromString(mindate);
 				var found_logproxy = false;
 				var idx_icons = 0;
 				var index = 0;
@@ -1603,7 +1603,7 @@ var widget_chart = {
 						} else if (ptype.search('icons:')>=0) { // special treatment of icons feature (display icons coming from fhem readings)
 							if (columnspec.search('logProxy')<=-1) { // no logproxy, icons are coming from logfile
 								var val = ftui.getPart(value.replace('\r\n',''),4);
-								var minutes = diffMinutes(tstart,dateFromString(value));
+								var minutes = ftui.diffMinutes(tstart,ftui.dateFromString(value));
 								var searchstr = columnspec.split(':')[1] || '';
 								if (value.search(searchstr) >= 0) {
 									point=[parseFloat(minutes),ptype.split(':')[1],val];
@@ -1612,7 +1612,7 @@ var widget_chart = {
 								}								
 							} else { // logproxy, icons are calculated in logproxy function (e.g. proplanta2Plot)
 								var val = ftui.getPart(value.replace('\r\n',''),2);							
-								var minutes = diffMinutes(tstart,dateFromString(value));
+								var minutes = ftui.diffMinutes(tstart,ftui.dateFromString(value));
 								if (val[0] != '#') {
 									point=[parseFloat(minutes),ptype.split(':')[1],val];
 									points[idx_icons]=point;
@@ -1627,7 +1627,7 @@ var widget_chart = {
 									val = tval;
 								}
 							}
-							var minutes = diffMinutes(tstart,dateFromString(value));
+							var minutes = ftui.diffMinutes(tstart,ftui.dateFromString(value));
 							if (parseFloat(minutes) < 0) minutes = "0";
 							if (val && minutes && $.isNumeric(val)){
 								point=[parseFloat(minutes),parseFloat(val)];
@@ -1759,8 +1759,8 @@ var widget_chart = {
 		var styleV = widget_chart.getStyleRuleValue(classesContainer, 'font-size', '.text axes');
 		var fszA = (styleV)?parseFloat(styleV.split('px')):9;
 		data.textHeight = widget_chart.getTextSizePixels(svg_old,'O','text axes').height;
-		data.textWidth_prim = data.textWidth_prim+((noticks)?0:data.textHeight+2); // additional offset for axes descrption (text 90°)
-		data.textWidth_sec = data.textWidth_sec+((noticks)?0:data.textHeight+2); // additional offset for axes descrption (text 90°)
+		data.textWidth_prim = data.textWidth_prim+((noticks)?0:data.textHeight+2); // additional offset for axes descrption (text 90âˆž)
+		data.textWidth_sec = data.textWidth_sec+((noticks)?0:data.textHeight+2); // additional offset for axes descrption (text 90âˆž)
 		var nlines = (data.timeformat != undefined)?(data.timeformat.match(/LF/g)?data.timeformat.match(/LF/g).length+1:1):1;
 		data.bottomOffset = noticks?0:(data.textHeight*nlines);
 		var styleV = widget_chart.getStyleRuleValue(classesContainer, 'font-size', '.caption');
@@ -2127,7 +2127,7 @@ var widget_chart = {
 	
 		for (k=data.nGraphs-1; k>=0; k--) { // main loop for generation of page content (chart with graphs)
 		
-			var tstart = dateFromString(mindate);
+			var tstart = ftui.dateFromString(mindate);
 			style = widget_chart.getArrayValue(style_array,k,'');
 			ptype = widget_chart.getArrayValue(ptype_array,k,'lines');
 			uaxis = widget_chart.getArrayValue(uaxis_array,k,'primary');
@@ -3103,7 +3103,7 @@ function init_attr(elem) { // initialize all attributes called from widget init 
 		return yy;
 	}
 	Date.prototype.MMMM = function() {
-		var month_de = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+		var month_de = ['Januar','Februar','Mâ€°rz','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 		var month = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 		var userLang = navigator.language || navigator.userLanguage;
 		if(userLang.split('-')[0] === 'de')
