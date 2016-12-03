@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.4.0
+ * Version: 2.4.1
  *
  * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -75,6 +75,28 @@ var Modul_widget = function () {
         return value;
     }
 
+    function checkHide(elem, value) {
+
+        // hide element when it's value equals data-hide
+        // if data-hideparents is set, it is interpreted as jquery selector to hide elements parents filtered by this selector
+        if (ftui.isValid(elem.data('hide'))) {
+            console.log(elem, value);
+            if (value === elem.data('hide') || (elem.isDeviceReading('hide') && (value === 'true' || value === '1' || value === 'on' || value === 1))) {
+                console.log('hide');
+                if (ftui.isValid(elem.data('hideparents'))) {
+                    elem.parents(elem.data('hideparents')).hide();
+                } else {
+                    elem.hide();
+                }
+            } else {
+                if (ftui.isValid(elem.data('hideparents'))) {
+                    elem.parents(elem.data('hideparents')).show();
+                } else {
+                    elem.show();
+                }
+            }
+        }
+    }
 
     function fix(value, fix) {
         return ($.isNumeric(value) && fix >= 0) ? Number(value).toFixed(fix) : value;
@@ -136,6 +158,7 @@ var Modul_widget = function () {
         init_ui: init_ui,
         update: update,
         substitution: substitution,
+        checkHide: checkHide,
         fix: fix,
         map: map,
         addReading: addReading,
@@ -202,7 +225,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.4.0',
+    version: '2.4.1',
     config: {
         DEBUG: false,
         DEMO: false,

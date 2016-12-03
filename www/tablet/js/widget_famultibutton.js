@@ -423,6 +423,9 @@ var Modul_famultibutton = function () {
         if (elem.isDeviceReading('lock')) {
             me.addReading(elem, 'lock');
         }
+        if (elem.isDeviceReading('hide')) {
+            me.addReading(elem, 'hide');
+        }
     }
 
     function update_cb(elem) {}
@@ -456,6 +459,9 @@ var Modul_famultibutton = function () {
                         }
                     }
                     me.update_cb(elem, state);
+                    if (!elem.isDeviceReading('hide')) {
+                        me.checkHide(elem, state);
+                    }
                 }
             });
         // update from extra reading for colorize
@@ -487,6 +493,13 @@ var Modul_famultibutton = function () {
             .each(function (idx) {
                 var elem = $(this);
                 elem.data('readonly', elem.getReading('lock').val);
+            });
+
+        //extra reading for hide
+        me.elements.filterDeviceReading('hide', dev, par)
+            .each(function (idx) {
+                var elem = $(this);
+                me.checkHide(elem, elem.getReading('hide').val);
             });
 
         //extra reading for warn

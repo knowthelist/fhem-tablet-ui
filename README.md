@@ -178,6 +178,9 @@ See [examples](#switch) of Switch
 ####Symbol widget
 - **data-get**      			: name of the reading to get from FHEM (default 'STATE')
 - **data-warn**  : name of the reading containing a integer value to be shown as a red warn overlay (default <null>)
+- **data-hide**   : string to compare with current value. hide element when it's value equals data-hide. Or a DEVICE:READING to determine hiding from reading value  
+- **data-hideparents**: jquery selector to hide element's parents too
+
 
 dual state notation
 - **data-get-on**   			: value for ON status to get or an array of states (default 'open')
@@ -219,7 +222,7 @@ See [examples](#symbol) of Symbol
 - **data-substitution**: multiple functions to replace the original value (see descriptions below)
 - **data-pre-text**: include this text before reading text
 - **data-post-text**: include this text after reading text
-- **data-hide**   : string to compare with current value. hide element when it's value equals data-hide
+- **data-hide**   : string to compare with current value. hide element when it's value equals data-hide. Or a DEVICE:READING to determine hiding from reading value  
 - **data-hideparents**: jquery selector to hide element's parents too
 - **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x, circleborder
 squareborder, bg-limit, icon, square, round, truncate

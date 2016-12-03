@@ -38,7 +38,9 @@ var Modul_label = function () {
         if (elem.isDeviceReading('color')) {
             me.addReading(elem, 'color');
         }
-
+        if (elem.isDeviceReading('hide')) {
+            me.addReading(elem, 'hide');
+        }
     }
 
     function init_ui(elem) {}
@@ -74,23 +76,6 @@ var Modul_label = function () {
             .each(function (index) {
                 var elem = $(this);
                 var value = (elem.hasClass('timestamp')) ? elem.getReading('get').date : elem.getReading('get').val;
-                // hide element when it's value equals data-hide
-                // if data-hideparents is set, it is interpreted als jquery selector to hide elements parents filtered by this selector
-                if (ftui.isValid(elem.data('hide'))) {
-                    if (value == elem.data('hide')) {
-                        if (ftui.isValid(elem.data('hideparents'))) {
-                            elem.parents(elem.data('hideparents')).hide();
-                        } else {
-                            elem.hide();
-                        }
-                    } else {
-                        if (ftui.isValid(elem.data('hideparents'))) {
-                            elem.parents(elem.data('hideparents')).show();
-                        } else {
-                            elem.show();
-                        }
-                    }
-                }
 
                 if (ftui.isValid(value)) {
                     var val = ftui.getPart(value, elem.data('part'));
@@ -116,10 +101,14 @@ var Modul_label = function () {
                         }
                     }
                     me.update_cb(elem, val);
+                    if (!elem.isDeviceReading('hide')) {
+                        me.checkHide(elem, val);
+                    }
                 }
                 var color = elem.data('color');
-                if (color && !elem.isDeviceReading('color'))
+                if (color && !elem.isDeviceReading('color')) {
                     elem.css("color", ftui.getStyle('.' + color, 'color') || color);
+                }
 
             });
 
@@ -132,6 +121,13 @@ var Modul_label = function () {
                     val = '#' + val.replace('#', '');
                     elem.css("color", val);
                 }
+            });
+
+        //extra reading for hide
+        me.elements.filterDeviceReading('hide', dev, par)
+            .each(function (idx) {
+                var elem = $(this);
+                me.checkHide(elem, elem.getReading('hide').val);
             });
 
         //extra reading for colorize
