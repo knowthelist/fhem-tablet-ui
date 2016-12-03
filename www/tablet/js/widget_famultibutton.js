@@ -199,7 +199,7 @@ var Modul_famultibutton = function () {
 
             // Get color values from reading or from fix array
             var colorValue = (colors[idx].match(/:/)) ? elem.getReading(colors[idx]).val : colors[idx];
-            var bgColorValue = (bgcolors[idx].match(/:/)) ? elem.getReading('on-background-color').val : 'bgcolors[idx]';
+            var bgColorValue = (bgcolors[idx].match(/:/)) ? elem.getReading('on-background-color').val : bgcolors[idx];
 
             elm.removeClass()
                 .addClass('fa fa-stack-1x')
