@@ -40,6 +40,7 @@ var Modul_weather = function () {
         'cold': 'G',
         'cloudy': '5',
         'mostly cloudy': 'N',
+        'mostlycloudy': 'N',
         'clear': 'B',
         'sunny': 'B',
         'fair': 'B',
