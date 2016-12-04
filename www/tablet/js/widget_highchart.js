@@ -37,8 +37,7 @@ var Modul_highchart = function() {
         var min = parseFloat( $.isArray(minarray) ? minarray[0] : minarray );
         var max = parseFloat( $.isArray(maxarray) ? maxarray[0] : maxarray );
         var tickInterval = parseFloat( $(this).data('tickinterval')) || null;
-        var tickAmount = parseFloat( $(this).data('tickamount')) || null;
-        var fix = precision( $(this).data('yticks') );
+        var yTickAmount = parseInt( elem.data('yticks') || $(this).data('yticks'));
         var xunit = elem.data('xunit');
         var yunit = elem.data('yunit');
         var title = elem.data('title');
@@ -218,7 +217,7 @@ var Modul_highchart = function() {
                     },
                     min: min,
                     max: max,
-                    tickAmount: tickAmount,
+                    tickAmount: yTickAmount,
                     labels: {
                         formatter: function () {
                             return this.value;
