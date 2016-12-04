@@ -88,7 +88,7 @@ UPD 2016-11-30_22:15:52 2983 www/tablet/js/widget_joinedlabel.js
 UPD 2016-11-30_22:14:17 4496 www/tablet/js/widget_klimatrend.js
 UPD 2016-11-30_20:35:50 7776 www/tablet/js/widget_knob.js
 UPD 2016-12-03_02:21:59 5911 www/tablet/js/widget_label.js
-UPD 2016-11-30_22:17:55 7434 www/tablet/js/widget_level.js
+UPD 2016-12-04_19:08:20 877 www/tablet/js/widget_level.js
 UPD 2016-11-30_22:21:05 10246 www/tablet/js/widget_link.js
 UPD 2016-11-25_00:14:16 1493 www/tablet/js/widget_loading.js
 UPD 2016-11-30_22:24:59 4562 www/tablet/js/widget_medialist.js
@@ -108,7 +108,7 @@ UPD 2016-12-01_21:43:47 4264 www/tablet/js/widget_select.js
 UPD 2016-12-01_23:17:48 9745 www/tablet/js/widget_settimer.js
 UPD 2016-11-30_20:32:01 12520 www/tablet/js/widget_simplechart.js
 UPD 2016-12-01_23:18:05 2583 www/tablet/js/widget_slideout.js
-UPD 2016-12-01_23:56:41 9672 www/tablet/js/widget_slider.js
+UPD 2016-12-04_19:10:29 11121 www/tablet/js/widget_slider.js
 UPD 2016-12-01_23:28:15 11539 www/tablet/js/widget_spinner.js
 UPD 2016-11-30_23:24:47 3054 www/tablet/js/widget_svgplot.js
 UPD 2016-11-30_22:56:44 4241 www/tablet/js/widget_swiper.js
