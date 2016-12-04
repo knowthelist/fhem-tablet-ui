@@ -76,7 +76,7 @@ UPD 2016-11-30_20:52:39 2827 www/tablet/js/widget_example.js
 UPD 2016-12-03_09:57:19 20053 www/tablet/js/widget_famultibutton.js
 UPD 2016-12-02_21:17:23 5177 www/tablet/js/widget_fullcalview.js
 UPD 2016-11-25_00:14:16 2387 www/tablet/js/widget_gds.js
-UPD 2016-11-25_00:14:16 8739 www/tablet/js/widget_highchart.js
+UPD 2016-12-04_23:42:04 8975 www/tablet/js/widget_highchart.js
 UPD 2016-11-25_00:14:16 8542 www/tablet/js/widget_highchart3d.js
 UPD 2016-11-30_20:59:19 11287 www/tablet/js/widget_homestatus.js
 UPD 2016-11-30_22:05:23 9104 www/tablet/js/widget_html.js

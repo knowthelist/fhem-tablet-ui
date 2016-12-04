@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
 2016-12-04
- - Update of level and slider widget to provide the same parameter
+ - Upgrade for highchart widget for ftui 2.4
