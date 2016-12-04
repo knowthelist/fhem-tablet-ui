@@ -118,7 +118,7 @@ UPD 2016-11-30_20:38:47 9122 www/tablet/js/widget_thermostat.js
 UPD 2016-11-25_00:14:16 2587 www/tablet/js/widget_tts.js
 UPD 2016-11-30_22:53:21 8467 www/tablet/js/widget_volume.js
 UPD 2016-12-01_23:11:43 988 www/tablet/js/widget_wakeup.js
-UPD 2016-11-30_22:15:39 16807 www/tablet/js/widget_weather.js
+UPD 2016-12-04_23:49:35 16836 www/tablet/js/widget_weather.js
 UPD 2016-11-30_23:20:51 6409 www/tablet/js/widget_wind_direction.js
 UPD 2016-11-25_00:14:16 13032 www/tablet/lib/fa-multi-button.js
 UPD 2016-11-25_00:14:16 6541 www/tablet/lib/fa-multi-button.min.js
