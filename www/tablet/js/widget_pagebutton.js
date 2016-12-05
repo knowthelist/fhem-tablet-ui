@@ -135,7 +135,8 @@ var Modul_pagebutton = function () {
 
             // remove all left locks
             var sel = elem.data('load');
-            var hashUrl = elem.data('url').replace('#', '');
+            var dataUrl = elem.data('url');
+            var hashUrl = (ftui.isValid(dataUrl)) ? dataUrl.replace('#', '') : '';
             var lockID = ['ftui', me.widgetname, hashUrl, sel].join('_');
             localStorage.removeItem(lockID);
 

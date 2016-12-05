@@ -123,7 +123,7 @@ var Modul_departure = function () {
             .each(function (index) {
                 var elem = $(this);
                 var list = elem.getReading('get').val;
-                if (list) {
+                if (list && typeof list === Object) {
                     var elemText = elem.find('.listText');
                     elemText.fadeOut();
                     var ts = elem.getReading('get').date;

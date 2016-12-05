@@ -8,7 +8,7 @@
 "use strict";
 
 function depends_wakeup() {
-    if (!$.fn.wakeup) {
+    if (!$.fn.wakeUp) {
         return ["lib/jquery.wakeup.js"];
     }
 }

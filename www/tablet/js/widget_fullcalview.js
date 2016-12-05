@@ -60,8 +60,8 @@ var Modul_fullcalview = function () {
             eventcolors = elem.data('eventcolors');
             eventtextcolors = elem.data('eventtextcolors');
 
-            if ((eventsources.length > 0 && eventcolors.length > 0 && eventtextcolors.length > 0) &&
-                ((eventsources.length == eventcolors.length) && (eventsources.length == eventtextcolors.length))) {
+            if ((eventsources && eventsources.length > 0 && eventcolors.length > 0 && eventtextcolors.length > 0) &&
+                ((eventsources && eventsources.length == eventcolors.length) && (eventsources.length == eventtextcolors.length))) {
                 $(document).ready(function () {
                     $('#calendar').fullCalendar({
                         eventLimit: eventLimitVar, // allow "more" link when too many events

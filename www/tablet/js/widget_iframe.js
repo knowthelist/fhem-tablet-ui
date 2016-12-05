@@ -8,6 +8,12 @@
 
 "use strict";
 
+function depends_iframe() {
+    if (!$.fn.famultibutton) {
+        return ["lib/fa-multi-button.min.js"];
+    }
+}
+
 var Modul_iframe = function () {
 
     function init_attr(elem) {

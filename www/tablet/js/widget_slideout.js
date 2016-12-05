@@ -27,54 +27,62 @@ var Modul_slideout = function () {
 
     function init_ui(elem) {
 
-        var slideout = new Slideout({
-            'panel': $(elem.data('panel'))[0],
-            'menu': $(elem.data('menu'))[0],
-            'padding': (elem.data('position') === 'left') ? 256 : -256,
-            'tolerance': 70,
-            'touch': elem.hasClass('notouch') ? false : true,
-        });
-        elem.addClass('fa-stack');
+        var panel = $(elem.data('panel'))[0];
+        var menu = $(elem.data('menu'))[0];
 
-        if (elem.data('position') === 'right') {
-            $(elem.data('menu')).css({
-                'left': 'auto'
+        if (ftui.isValid(panel) && ftui.isValid(menu)) {
+
+            var slideout = new Slideout({
+                'panel': panel,
+                'menu': menu,
+                'padding': (elem.data('position') === 'left') ? 256 : -256,
+                'tolerance': 70,
+                'touch': elem.hasClass('notouch') ? false : true,
             });
-        }
+            elem.addClass('fa-stack');
 
-        // prepare icon
-        var icon = elem.data('icon');
-        var elemIcon = $('<div/>', {
-                class: 'icon',
-            })
-            .css({
-                color: elem.mappedColor('icon-color'),
-            })
-            .addClass('fa ' + icon + ' fa-lg fa-fw')
-            .appendTo(elem);
-
-        elem.click(function (event) {
-            slideout.toggle();
-        });
-
-
-        $(elem.data('menu')).on('changedSelection', function (event, text) {
-            var elemLinkName = $(elem.data('label'));
-            if (elemLinkName)
-                elemLinkName.text(text);
-            if (!elem.hasClass('keepopen')) {
-                slideout.close();
+            if (elem.data('position') === 'right') {
+                $(elem.data('menu')).css({
+                    'left': 'auto'
+                });
             }
-        });
 
-        slideout.on('beforeopen', function () {
-            $('.fixed').addClass('open-' + elem.data('position'));
-        });
+            // prepare icon
+            var icon = elem.data('icon');
+            var elemIcon = $('<div/>', {
+                    class: 'icon',
+                })
+                .css({
+                    color: elem.mappedColor('icon-color'),
+                })
+                .addClass('fa ' + icon + ' fa-lg fa-fw')
+                .appendTo(elem);
 
-        slideout.on('beforeclose', function () {
-            $('.fixed').removeClass('open-' + elem.data('position'));
-        });
+            elem.click(function (event) {
+                slideout.toggle();
+            });
 
+
+            $(elem.data('menu')).on('changedSelection', function (event, text) {
+                var elemLinkName = $(elem.data('label'));
+                if (elemLinkName)
+                    elemLinkName.text(text);
+                if (!elem.hasClass('keepopen')) {
+                    slideout.close();
+                }
+            });
+
+            slideout.on('beforeopen', function () {
+                $('.fixed').addClass('open-' + elem.data('position'));
+            });
+
+            slideout.on('beforeclose', function () {
+                $('.fixed').removeClass('open-' + elem.data('position'));
+            });
+
+        } else {
+            ftui.log(1, 'Slideout: Error - no panel element or menu element found');
+        }
 
         return elem;
     }

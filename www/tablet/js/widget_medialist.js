@@ -67,7 +67,7 @@ var Modul_medialist = function () {
                 var elem = $(this);
                 var list = elem.getReading('get').val;
                 var pos = elem.getReading('pos').val;
-                if (list) {
+                if (typeof list === Object) {
                     elem.html('');
                     var text = '';
                     try {

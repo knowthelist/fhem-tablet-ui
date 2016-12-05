@@ -139,8 +139,8 @@ var Modul_popup = function () {
                 $(window).resize(function () {
                     dialog.options.end_top = (elem.isValidData('top')) ? elem.data('top') : ($(window).height() - parseInt(elem.data('height'))) / 2;
                     dialog.options.end_left = (elem.isValidData('left')) ? elem.data('left') : ($(window).width() - parseInt(elem.data('width'))) / 2;
-                    dialog.options.start_top = starter.offset().top;
-                    dialog.options.start_left = starter.offset().left;
+                    dialog.options.start_top = (starter.hasOwnProperty('offset')) ? starter.offset().top : 0;
+                    dialog.options.start_left = (starter.hasOwnProperty('offset')) ? starter.offset().left :0;
                     dialog.options.height = elem.data('height');
                     dialog.options.width = elem.data('width');
                     dialog.css({
