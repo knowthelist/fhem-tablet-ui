@@ -1290,6 +1290,11 @@ $(window).on('online offline', function () {
         ftui.setOffline();
 });
 
+window.onerror = function (msg, url, lineNo, columnNo, error) {
+    var file = url.split('/').pop();
+    ftui.toast([file + ':' + lineNo, error].join('<br/>'), 'error');
+    return false;
+};
 
 // global helper functions
 
