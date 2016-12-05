@@ -394,6 +394,10 @@ var Modul_famultibutton = function () {
         me.addReading(elem, 'get');
         me.addReading(elem, 'warn');
 
+        if (ftui.isValid(elem.data('reachable'))) {
+            me.addReading(elem, 'reachable');
+        }
+
         elem.initData('off-color', ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#505050');
         elem.initData('off-background-color', ftui.getStyle('.' + me.widgetname + '.off', 'background-color') || '#505050');
         elem.initData('on-color', ftui.getStyle('.' + me.widgetname + '.on', 'color') || '#aa6900');
@@ -501,6 +505,17 @@ var Modul_famultibutton = function () {
                 var elem = $(this);
                 me.checkHide(elem, elem.getReading('hide').val);
             });
+
+        //extra reading for reachable
+        me.elements.filterDeviceReading('reachable', dev, par)
+            .each(function (idx) {
+                var elem = $(this);
+                elem.removeClass(function (index, css) {
+                    return (css.match(/(^|\s)reachable-\S+/g) || []).join(' ');
+                });
+                elem.addClass('reachable-' + elem.getReading('reachable').val);
+            });
+
 
         //extra reading for warn
         me.elements.filterDeviceReading('warn', dev, par)

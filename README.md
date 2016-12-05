@@ -142,6 +142,7 @@ General attribute meaning
 - **data-doubleclick**: timeout to wait for x millisecondes click or touch. '0' disables the doubleclick feature. (default '0')
 - **data-lock**  : name of the reading containing a boolean value for the lock (readonly) parameter (default <null>)
 - **data-warn**  : name of the reading containing a integer value to be shown as a red warn overlay (default <null>)
+- **data-reachable**  : name of the reading containing a integer value to indicate whether the device is reachable or not (default <null>)
 
 dual state notation   
 - **data-get-on**   : value for ON status to get or an array of states (default 'on')
