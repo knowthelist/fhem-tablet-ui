@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2016-12-04
- - Added mostlycloudy to weather
+2016-12-05
+ - Showing error as toast messages
