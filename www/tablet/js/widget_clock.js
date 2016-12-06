@@ -11,17 +11,17 @@
 var Modul_clock = function () {
 
     function init_attr(elem) {
-        elem.data('format', elem.data('format') || 'H:i:s');
-        elem.data('interval', elem.data('interval') || 1000);
-        elem.data('shortday-length', elem.data('shortday-length') || 3);
-        elem.data('days', elem.data('days') || new Array("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"));
-        elem.data('shortmonth-length', elem.data('shortmonth-length') || 3);
-        elem.data('months', elem.data('months') || new Array("Januar", "Februar", "M‰rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"));
+        elem.initData('format', 'H:i:s');
+        elem.initData('interval', 1000);
+        elem.initData('shortday-length', 3);
+        elem.initData('days', ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]);
+        elem.initData('shortmonth-length', 3);
+        elem.initData('months', ["Januar", "Februar", "M‰rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]);
 
 
         if (!$.isArray(elem.data('days'))) {
             if (elem.data('days').match(/englisc?h/)) {
-                elem.data('days', new Array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"));
+                elem.data('days', ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]);
             } else {
                 console.log(me.widgetname, 'init_attr', 'ERROR: data-days must be an array');
             }
@@ -30,7 +30,7 @@ var Modul_clock = function () {
 
         if (!$.isArray(elem.data('months'))) {
             if (elem.data('months').match(/englisc?h/)) {
-                elem.data('months', new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
+                elem.data('months', ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]);
             } else {
                 console.log(me.widgetname, 'init_attr', 'ERROR: data-months must be an array');
             }
@@ -121,24 +121,19 @@ var Modul_clock = function () {
         return datearr.join('');
     }
 
-    function init() {
+    function init_ui(elem) {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
-        me.elements.each(function (index) {
-            init_attr($(this));
-            var f = function () {
-                if (f.elem.data('days') === null) {
-                    return;
-                } // http://forum.fhem.de/index.php/topic,36122.msg299306.html#msg299306
+        var f = function () {
+            if (elem.data('days') === null) {
+                return;
+            } // http://forum.fhem.de/index.php/topic,36122.msg299306.html#msg299306
 
-                var d = init_datearray(f.elem);
-                var text = init_datetext(f.format, d);
-                f.elem.text(text);
-            };
-            f.elem = $(this);
-            f.format = $(this).data('format');
-            setInterval(f, $(this).data('interval'));
-        });
+            var d = init_datearray(elem);
+            var text = init_datetext(elem.data('format'), d);
+            elem.text(text);
+        };
+
+        setInterval(f, elem.data('interval'));
     }
 
     function update(dev, par) {}
@@ -148,7 +143,8 @@ var Modul_clock = function () {
     var me = $.extend(new Modul_widget(), {
         //override members
         widgetname: 'clock',
-        init: init,
+        init_ui: init_ui,
+        init_attr: init_attr,
         update: update,
     });
 
