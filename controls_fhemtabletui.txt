@@ -66,7 +66,7 @@ UPD 2016-12-02_19:50:01 195169 www/tablet/js/widget_chart.js
 UPD 2016-11-30_20:45:50 4076 www/tablet/js/widget_checkbox.js
 UPD 2016-11-30_21:03:12 3033 www/tablet/js/widget_circlemenu.js
 UPD 2016-12-01_23:59:51 1524 www/tablet/js/widget_classchanger.js
-UPD 2016-11-30_22:15:24 6267 www/tablet/js/widget_clock.js
+UPD 2016-12-06_22:42:25 5866 www/tablet/js/widget_clock.js
 UPD 2016-11-30_22:09:00 3111 www/tablet/js/widget_colorwheel.js
 UPD 2016-11-30_20:47:45 2608 www/tablet/js/widget_datetimepicker.js
 UPD 2016-12-05_20:43:01 5529 www/tablet/js/widget_departure.js
