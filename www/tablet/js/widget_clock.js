@@ -123,17 +123,17 @@ var Modul_clock = function () {
 
     function init_ui(elem) {
 
-        var f = function () {
-            if (elem.data('days') === null) {
-                return;
-            } // http://forum.fhem.de/index.php/topic,36122.msg299306.html#msg299306
+        var tid = setInterval(function () {
+            if (elem && elem.data('days')) {
 
-            var d = init_datearray(elem);
-            var text = init_datetext(elem.data('format'), d);
-            elem.text(text);
-        };
+                var d = init_datearray(elem);
+                var text = init_datetext(elem.data('format'), d);
+                elem.text(text);
 
-        setInterval(f, elem.data('interval'));
+            } else {
+                clearInterval(tid);
+            }
+        }, elem.data('interval'));
     }
 
     function update(dev, par) {}
