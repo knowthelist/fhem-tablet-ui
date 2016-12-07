@@ -374,6 +374,7 @@ var ftui = {
             $('.gridster > ul > li:has(.center)').addClass('vbox');
             // max height for inner boxes
             $('.gridster > ul > li:has(.vbox)').addClass('vbox');
+            $('.gridster > ul > li > .hbox').addClass('center');
         }
     },
 
@@ -882,7 +883,7 @@ var ftui = {
                 }
 
                 $.when.apply(this, depsPromises).always(function () {
-                    var module = (window["Modul_" + name]) ? new window["Modul_" + name]() : new window["Modul_12widget"]();
+                    var module = (window["Modul_" + name]) ? new window["Modul_" + name]() : null;
                     if (module) {
                         if (typeof area !== 'undefined') {
 

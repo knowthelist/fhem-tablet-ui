@@ -444,7 +444,6 @@ section [class*='col-'],
 .box,
 .card {
     display: flex;
-    justify-content: center;
 }
 
 .h100,
