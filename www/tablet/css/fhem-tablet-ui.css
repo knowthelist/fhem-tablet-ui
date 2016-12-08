@@ -1418,6 +1418,10 @@ i#warn-back {
     top: -5px;
 }
 
+.fa-square-o {
+    top: 0.03em;
+}
+
 * {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -1555,6 +1559,16 @@ div[data-type="image"].round > img {
 
 .icon.square {
     border-radius: 10px !important;
+}
+
+.bg-square {
+    border-radius: 10px !important;
+    width: -moz-min-content;
+    width: -webkit-min-content;
+    width: min-content;
+    height: -moz-min-content;
+    height: -webkit-min-content;
+    height: min-content;
 }
 
 .squareborder {

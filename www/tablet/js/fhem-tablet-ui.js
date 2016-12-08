@@ -375,6 +375,8 @@ var ftui = {
             // max height for inner boxes
             $('.gridster > ul > li:has(.vbox)').addClass('vbox');
             $('.gridster > ul > li > .hbox').addClass('center');
+            $('.gridster > ul > li > .vbox').addClass('center');
+
         }
     },
 
