@@ -786,42 +786,42 @@ main > .box.horizontal {
 
 .bg-gray,
 .btn-gray {
-    background-color: #393939;
+    background-color: #393939 !important;
 }
 
 .bg-lightgray,
 .btn-lightgray {
-    background-color: #777777;
+    background-color: #777777 !important;
 }
 
 .bg-orange,
 .btn-orange {
-    background-color: #aa6900;
+    background-color: #aa6900 !important;
 }
 
 .bg-red,
 .btn-red {
-    background-color: #ad3333;
+    background-color: #ad3333 !important;
 }
 
 .bg-green,
 .btn-green {
-    background-color: #32a054;
+    background-color: #32a054 !important;
 }
 
 .bg-mint,
 .btn-mint {
-    background-color: #5bc995;
+    background-color: #5bc995 !important;
 }
 
 .bg-ligthblue,
 .btn-ligthblue {
-    background-color: #6699FF;
+    background-color: #6699FF !important;
 }
 
 .bg-blue,
 .btn-blue {
-    background-color: #337ab7;
+    background-color: #337ab7 !important;
 }
 
 
