@@ -1320,7 +1320,7 @@ Date.prototype.addMinutes = function (minutes) {
     return new Date(this.getTime() + minutes * 60000);
 };
 
-Date.prototype.ago = function () {
+Date.prototype.ago = function (format) {
     var now = new Date();
     var ms = (now - this);
     var x = ms / 1000;
@@ -1333,10 +1333,22 @@ Date.prototype.ago = function () {
     var days = Math.floor(x);
     var userLang = navigator.language || navigator.userLanguage;
     var strUnits = (userLang.split('-')[0] === 'de') ? ['Tag(e)', 'Stunde(n)', 'Minute(n)', 'Sekunde(n)'] : ['day(s)', 'hour(s)', 'minute(s)', 'second(s)'];
-    var ret = (days > 0) ? days + " " + strUnits[0] + " " : "";
-    ret += (hours > 0) ? hours + " " + strUnits[1] + " " : "";
-    ret += (minutes > 0) ? minutes + " " + strUnits[2] + " " : "";
-    return ret + seconds + " " + strUnits[3];
+    var ret;
+    if (ftui.isValid(format)) {
+        ret = format.replace('dd', days);
+        ret = ret.replace('hh', (hours > 9) ? hours : '0' + hours);
+        ret = ret.replace('mm', (minutes > 9) ? minutes : '0' + minutes);
+        ret = ret.replace('ss', (seconds > 9) ? seconds : '0' + seconds);
+        ret = ret.replace('h', hours);
+        ret = ret.replace('m', minutes);
+        ret = ret.replace('s', seconds);
+    } else {
+        ret = (days > 0) ? days + " " + strUnits[0] + " " : "";
+        ret += (hours > 0) ? hours + " " + strUnits[1] + " " : "";
+        ret += (minutes > 0) ? minutes + " " + strUnits[2] + " " : "";
+        ret += seconds + " " + strUnits[3];
+    }
+    return ret;
 };
 
 Date.prototype.yyyymmdd = function () {
