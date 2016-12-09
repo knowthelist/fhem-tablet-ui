@@ -67,7 +67,8 @@ var Modul_medialist = function () {
                 var elem = $(this);
                 var list = elem.getReading('get').val;
                 var pos = elem.getReading('pos').val;
-                if (typeof list === Object) {
+
+                if (ftui.isValid(list)) {
                     elem.html('');
                     var text = '';
                     try {
