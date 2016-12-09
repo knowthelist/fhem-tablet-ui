@@ -62,7 +62,7 @@ UPD 2016-12-09_22:06:58 26383 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-11-25_00:14:16 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-11-30_20:37:28 1708 www/tablet/js/widget_button.js
 UPD 2016-12-02_21:13:57 5617 www/tablet/js/widget_calview.js
-UPD 2016-12-02_19:50:01 195169 www/tablet/js/widget_chart.js
+UPD 2016-12-09_22:10:18 197310 www/tablet/js/widget_chart.js
 UPD 2016-11-30_20:45:50 4076 www/tablet/js/widget_checkbox.js
 UPD 2016-11-30_21:03:12 3033 www/tablet/js/widget_circlemenu.js
 UPD 2016-12-01_23:59:51 1524 www/tablet/js/widget_classchanger.js
@@ -118,6 +118,7 @@ UPD 2016-11-30_20:38:47 9122 www/tablet/js/widget_thermostat.js
 UPD 2016-11-25_00:14:16 2587 www/tablet/js/widget_tts.js
 UPD 2016-11-30_22:53:21 8467 www/tablet/js/widget_volume.js
 UPD 2016-12-05_21:03:37 988 www/tablet/js/widget_wakeup.js
+UPD 2016-12-09_22:27:03 95024 www/tablet/js/widget_wdtimer.js
 UPD 2016-12-04_23:49:35 16836 www/tablet/js/widget_weather.js
 UPD 2016-12-05_21:07:37 25336 www/tablet/js/widget_weekprofile.js
 UPD 2016-12-05_20:50:01 6432 www/tablet/js/widget_wind_direction.js
