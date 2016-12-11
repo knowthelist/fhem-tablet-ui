@@ -69,7 +69,7 @@ UPD 2016-12-01_23:59:51 1524 www/tablet/js/widget_classchanger.js
 UPD 2016-12-07_19:26:51 5830 www/tablet/js/widget_clock.js
 UPD 2016-11-30_22:09:00 3111 www/tablet/js/widget_colorwheel.js
 UPD 2016-11-30_20:47:45 2608 www/tablet/js/widget_datetimepicker.js
-UPD 2016-12-05_20:43:01 5529 www/tablet/js/widget_departure.js
+UPD 2016-12-11_15:49:08 5517 www/tablet/js/widget_departure.js
 UPD 2016-12-01_23:54:32 6785 www/tablet/js/widget_dimmer.js
 UPD 2016-11-30_20:51:00 3298 www/tablet/js/widget_eventmonitor.js
 UPD 2016-11-30_20:52:39 2827 www/tablet/js/widget_example.js
