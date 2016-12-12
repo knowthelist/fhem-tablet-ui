@@ -250,6 +250,7 @@ var Modul_weather = function () {
         'nt_clear': 'clear_night.png',
         'nt_cloudy': 'cloudy_night.png',
         'nt_flurries': 'windy_night.png',
+        'nt_fog': 'fog_night.png',	
         'nt_hazy': 'haze_night.png',
         'nt_mostlycloudy': 'mostlycloudy_night.png',
         'nt_partlycloudy': 'partly_cloudy_night.png',
