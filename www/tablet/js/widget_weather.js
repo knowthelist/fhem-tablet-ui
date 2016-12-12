@@ -242,7 +242,6 @@ var Modul_weather = function () {
         'thunderstorm': 'storm.png',
         'tstorms': 'storm.png',
         'unknown': 'na.png',
-        'undefined': 'na.png',
         'nt_chanceflurries': 'chance_of_flurries_night.png',
         'nt_chancerain': 'chance_of_rain_night.png',
         'nt_chancesleet': 'chance_of_sleet_night.png',
