@@ -443,7 +443,7 @@ section [class*='col-'],
 .vbox,
 .box,
 .card {
-    display: flex;
+    display: flex !important;
 }
 
 .h100,
@@ -484,7 +484,9 @@ main > .box.horizontal {
 }
 
 .card > .box.horizontal:only-of-type,
-.card > .hbox:only-of-type {
+.card > .hbox:only-of-type,
+.card > .vbox:only-of-type,
+.card > .box.vertical:only-of-type{
     flex-grow: 1;
     margin-top: 0;
 }

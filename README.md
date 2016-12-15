@@ -181,6 +181,8 @@ See [examples](#switch) of Switch
 - **data-warn**  : name of the reading containing a integer value to be shown as a red warn overlay (default <null>)
 - **data-hide**   : string to compare with current value. hide element when it's value equals data-hide. Or a DEVICE:READING to determine hiding from reading value  
 - **data-hideparents**: jquery selector to hide element's parents too
+- **data-lock**  : name of the reading containing a boolean value for the lock (readonly) parameter (default <null>)
+- **data-reachable**  : name of the reading containing a integer value to indicate whether the device is reachable or not (default <null>)
 
 
 dual state notation
@@ -302,6 +304,12 @@ data-device, data-get can be references (jQuery seletor) to select-widgets to ch
 - **data-background-icon** 		: name of the font-awesome icon for background (default '')
 - **data-off-background-color**         : fix color attribute for OFF state or DEVICE:READING for dynamic setting (default '#505050')
 - **data-off-color**			: fix color attribute for Off state or DEVICE:READING for dynamic setting (default '#505050')
+- **data-warn**  : name of the reading containing a integer value to be shown as a red warn overlay (default <null>)
+- **data-hide**   : string to compare with current value. hide element when it's value equals data-hide. Or a DEVICE:READING to determine hiding from reading value  
+- **data-hideparents**: jquery selector to hide element's parents too
+- **data-lock**  : name of the reading containing a boolean value for the lock (readonly) parameter (default <null>)
+- **data-reachable**  : name of the reading containing a integer value to indicate whether the device is reachable or not (default <null>)
+
 
 'data-set-on' can also be an array of values to toggle between this values
 
