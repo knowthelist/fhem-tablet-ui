@@ -9,7 +9,7 @@ DIR www/tablet/lib/highcharts/themes
 UPD 2016-11-25_00:14:16 510 www/tablet/css/fhem-blue-ui.css
 UPD 2016-11-25_00:14:16 510 www/tablet/css/fhem-green-ui.css
 UPD 2016-11-25_00:14:16 2151 www/tablet/css/fhem-mobil-ui.css
-UPD 2016-12-09_00:14:16 35687 www/tablet/css/fhem-tablet-ui.css
+UPD 2016-12-15_15:22:19 35761 www/tablet/css/fhem-tablet-ui.css
 UPD 2016-11-25_00:14:16 13563 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2016-11-25_00:14:16 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2016-11-25_00:14:16 5295 www/tablet/css/ftui_chart.css
@@ -73,7 +73,7 @@ UPD 2016-12-11_15:49:08 5517 www/tablet/js/widget_departure.js
 UPD 2016-12-01_23:54:32 6785 www/tablet/js/widget_dimmer.js
 UPD 2016-11-30_20:51:00 3298 www/tablet/js/widget_eventmonitor.js
 UPD 2016-11-30_20:52:39 2827 www/tablet/js/widget_example.js
-UPD 2016-12-05_21:44:43 20589 www/tablet/js/widget_famultibutton.js
+UPD 2016-12-15_15:34:21 20661 www/tablet/js/widget_famultibutton.js
 UPD 2016-12-05_20:40:34 5209 www/tablet/js/widget_fullcalview.js
 UPD 2016-11-25_00:14:16 2387 www/tablet/js/widget_gds.js
 UPD 2016-12-04_23:42:04 8975 www/tablet/js/widget_highchart.js
@@ -100,7 +100,7 @@ UPD 2016-12-05_21:09:27 8514 www/tablet/js/widget_pagetab.js
 UPD 2016-11-30_22:36:45 5223 www/tablet/js/widget_playstream.js
 UPD 2016-12-05_20:59:29 7874 www/tablet/js/widget_popup.js
 UPD 2016-11-30_23:31:18 3593 www/tablet/js/widget_progress.js
-UPD 2016-11-30_20:36:42 1682 www/tablet/js/widget_push.js
+UPD 2016-12-15_15:37:16 3101 www/tablet/js/widget_push.js
 UPD 2016-11-30_23:08:56 6051 www/tablet/js/widget_range.js
 UPD 2016-11-30_23:23:09 2824 www/tablet/js/widget_readingsgroup.js
 UPD 2016-11-30_23:13:56 1551 www/tablet/js/widget_rotor.js
