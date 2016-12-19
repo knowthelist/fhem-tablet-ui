@@ -9,6 +9,45 @@
 
 var Modul_label = function () {
 
+    function update_value(elem) {
+
+        var value = (elem.hasClass('timestamp')) ? elem.getReading('get').date : elem.getReading('get').val;
+
+        if (ftui.isValid(value)) {
+            var val = ftui.getPart(value, elem.data('part'));
+            var unit = elem.data('unit');
+            val = me.substitution(val, elem.data('substitution'));
+            val = me.map(elem.data('map-get'), val, val);
+            val = me.fix(val, elem.data('fix'));
+            val = elem.data('pre-text') + val + elem.data('post-text');
+            if (!isNaN(parseFloat(val)) && isFinite(val) && val.indexOf('.') > -1) {
+                var vals = val.split('.');
+                val = "<span class='label-precomma'>" + vals[0] + "</span>" +
+                    "<span class='label-comma'>.</span>" +
+                    "<span class='label-aftercomma'>" + vals[1] + "</span>";
+            }
+
+            if (!elem.hasClass('fixedlabel') && !elem.hasClass('fixcontent')) {
+                if (unit)
+                    elem.html(val + "<span class='label-unit'>" + window.unescape(unit) + "</span>");
+                else
+                    elem.html(val);
+                if (elem.children().length > 0) {
+                    elem.trigger('domChanged');
+                }
+            }
+            me.update_cb(elem, val);
+            if (!elem.isDeviceReading('hide')) {
+                me.checkHide(elem, val);
+            }
+        }
+        var color = elem.data('color');
+        if (color && !elem.isDeviceReading('color')) {
+            elem.css("color", ftui.getStyle('.' + color, 'color') || color);
+        }
+
+    }
+
     function init_attr(elem) {
 
         elem.initData('get', 'STATE');
@@ -22,6 +61,7 @@ var Modul_label = function () {
         elem.initData('substitution', '');
         elem.initData('pre-text', '');
         elem.initData('post-text', '');
+        elem.initData('refresh', 0);
 
         // fill up colors to limits.length
         // if an index s isn't set, use the value of s-1
@@ -43,7 +83,21 @@ var Modul_label = function () {
         }
     }
 
-    function init_ui(elem) {}
+    function init_ui(elem) {
+        var interval = elem.data('refresh');
+        if ($.isNumeric(interval) && interval > 0) {
+            var tid = setInterval(function () {
+                if (elem && elem.data('get')) {
+
+                    update_value(elem);
+
+                } else {
+                    clearInterval(tid);
+                }
+            }, Number(interval) * 1000);
+        }
+
+    }
 
     function update_colorize(value, elem) {
         //set colors according matches for values
@@ -74,42 +128,7 @@ var Modul_label = function () {
         // update from normal state reading
         me.elements.filterDeviceReading('get', dev, par)
             .each(function (index) {
-                var elem = $(this);
-                var value = (elem.hasClass('timestamp')) ? elem.getReading('get').date : elem.getReading('get').val;
-
-                if (ftui.isValid(value)) {
-                    var val = ftui.getPart(value, elem.data('part'));
-                    var unit = elem.data('unit');
-                    val = me.substitution(val, elem.data('substitution'));
-                    val = me.map(elem.data('map-get'), val, val);
-                    val = me.fix(val, elem.data('fix'));
-                    val = elem.data('pre-text') + val + elem.data('post-text');
-                    if (!isNaN(parseFloat(val)) && isFinite(val) && val.indexOf('.') > -1) {
-                        var vals = val.split('.');
-                        val = "<span class='label-precomma'>" + vals[0] + "</span>" +
-                            "<span class='label-comma'>.</span>" +
-                            "<span class='label-aftercomma'>" + vals[1] + "</span>";
-                    }
-
-                    if (!elem.hasClass('fixedlabel') && !elem.hasClass('fixcontent')) {
-                        if (unit)
-                            elem.html(val + "<span class='label-unit'>" + window.unescape(unit) + "</span>");
-                        else
-                            elem.html(val);
-                        if (elem.children().length > 0) {
-                            elem.trigger('domChanged');
-                        }
-                    }
-                    me.update_cb(elem, val);
-                    if (!elem.isDeviceReading('hide')) {
-                        me.checkHide(elem, val);
-                    }
-                }
-                var color = elem.data('color');
-                if (color && !elem.isDeviceReading('color')) {
-                    elem.css("color", ftui.getStyle('.' + color, 'color') || color);
-                }
-
+                update_value($(this));
             });
 
         //extra reading for dynamic color

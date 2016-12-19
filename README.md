@@ -227,6 +227,7 @@ See [examples](#symbol) of Symbol
 - **data-post-text**: include this text after reading text
 - **data-hide**   : string to compare with current value. hide element when it's value equals data-hide. Or a DEVICE:READING to determine hiding from reading value  
 - **data-hideparents**: jquery selector to hide element's parents too
+- **data-refresh**  : auto refresh interval in secondes (default '0', 0 means no auto refresh)
 - **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x, circleborder
 squareborder, bg-limit, icon, square, round, truncate
 
@@ -733,7 +734,7 @@ class 'blank' force to open the given URL on a new window
 - **data-icon**                    : name of the left icon   (default 'H')
 - **data-width**                   : fixed size for width (in % or px, default '200px')
 - **data-height**                  : fixed size for height (in % or px, default '250px')
-- **data-interval**                : auto refresh interval in secondes (default '120', 0 means no auto refresh)
+- **data-refresh**                 : auto refresh interval in secondes (default '120', 0 means no auto refresh)
 - **class**                        : DVB,VVO,DB,alternate,deptime
 
 deptime: show departure time insteat of minutes
