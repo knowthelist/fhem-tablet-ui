@@ -442,7 +442,7 @@ var Modul_famultibutton = function () {
                 var elem = $(this);
                 var state = elem.getReading('get').val;
                 if (ftui.isValid(state)) {
-                    var states = elem.data('states') || elem.data('get-on');
+                    var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
                     if ($.isArray(states)) {
                         me.showMultiStates(elem, states, state);
                     } else {

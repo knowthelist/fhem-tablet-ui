@@ -108,16 +108,22 @@
                 <header>HORIZONTAL</header>
                 <!-- place your widget here -->
                 <div class="vbox">
-                    <div data-type="slider" data-device="dummy1" data-max="100" data-width="45%" class="horizontal right-align"></div>
-                    <div class="top-space">
-                        <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class="inline middle"></div>
-                        <div data-type="level" data-device="MPD1" data-get="elapsed" data-max="Time" data-width="280" class="horizontal inline middle"></div>
-                        <div data-type="label" data-device="MPD1" data-get="Time" data-substitution="toMinFromSec()" class="inline middle"></div>
+                    <div data-type="slider" data-device="dummy2" data-min="0" data-max="2000"  data-width="45%" data-margin="10" class="horizontal right-align"></div>
+                    <div data-type="slider" data-device="dummy3" data-min="0" data-max="2000"  data-width="45%" class="horizontal right-align"></div>
+                    <div class="top-space hbox">
+                        <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class="middle right-space"></div>
+                        <div data-type="level" data-device="MPD1" data-get="elapsed" data-max="Time" data-width="280" class="horizontal middle"></div>
+                        <div data-type="label" data-device="MPD1" data-get="Time" data-substitution="toMinFromSec()" class="middle left-space"></div>
                     </div>
-                    <div class="top-space">
-                        <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class="inline middle"></div>
-                        <div data-type="slider" data-device="MPD1" data-get="elapsed" data-max="Time" data-width="280" class="horizontal inline middle"></div>
-                        <div data-type="label" data-device="MPD1" data-get="Time" data-substitution="toMinFromSec()" class="inline middle"></div>
+                    <div class="top-space hbox">
+                        <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class="middle right-space"></div>
+                        <div data-type="slider" data-device="MPD1" data-get="elapsed" data-max="Time" data-width="280" class="horizontal middle"></div>
+                        <div data-type="label" data-device="MPD1" data-get="Time" data-substitution="toMinFromSec()" class="middle left-space"></div>
+                    </div>
+                    <div class="top-space hbox">
+                        <div data-type="label" data-device="dummy2" data-substitution="toMinFromSec()" class="middle right-space"></div>
+                        <div data-type="level" data-device="dummy2" data-min="0" data-max="dummy3:STATE" data-width="240" class="horizontal middle"></div>
+                        <div data-type="label" data-device="dummy3" data-substitution="toMinFromSec()" class="middle left-space"></div>
                     </div>
                 </div>
             </li>

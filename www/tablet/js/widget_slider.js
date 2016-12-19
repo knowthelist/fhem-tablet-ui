@@ -64,7 +64,7 @@ var Modul_slider = function () {
         elem.initData('off', 'off');
         elem.initData('width', null);
         elem.initData('height', null);
-        elem.initData('margin', '1px');
+        elem.initData('margin', '5px');
         elem.initData('value', 0);
         elem.initData('min', 0);
         elem.initData('max', 100);
@@ -251,9 +251,12 @@ var Modul_slider = function () {
                     var pwrng = elem.data('Powerange');
                     var input_elem = elem.find('input');
                     var part = elem.data('get-value') || elem.data('part');
-                    var val = ftui.getPart(state, part);
+                    var val = parseFloat(ftui.getPart(state, part));
                     pwrng.options.min = ($.isNumeric(elem.data('min'))) ? elem.data('min') : elem.getReading('min').val;
                     pwrng.options.max = ($.isNumeric(elem.data('max'))) ? elem.data('max') : elem.getReading('max').val;
+                    
+                    pwrng.options.min = parseFloat(pwrng.options.min);
+                    pwrng.options.max = parseFloat(pwrng.options.max);
 
                     if (val > pwrng.options.max) {
                         val = pwrng.options.max;
