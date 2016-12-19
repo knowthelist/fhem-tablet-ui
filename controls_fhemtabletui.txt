@@ -73,7 +73,7 @@ UPD 2016-12-11_15:49:08 5517 www/tablet/js/widget_departure.js
 UPD 2016-12-01_23:54:32 6785 www/tablet/js/widget_dimmer.js
 UPD 2016-11-30_20:51:00 3298 www/tablet/js/widget_eventmonitor.js
 UPD 2016-11-30_20:52:39 2827 www/tablet/js/widget_example.js
-UPD 2016-12-15_15:34:21 20661 www/tablet/js/widget_famultibutton.js
+UPD 2016-12-19_21:29:40 20684 www/tablet/js/widget_famultibutton.js
 UPD 2016-12-05_20:40:34 5209 www/tablet/js/widget_fullcalview.js
 UPD 2016-11-25_00:14:16 2387 www/tablet/js/widget_gds.js
 UPD 2016-12-04_23:42:04 8975 www/tablet/js/widget_highchart.js
@@ -87,7 +87,7 @@ UPD 2016-12-01_23:36:19 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2016-11-30_22:15:52 2983 www/tablet/js/widget_joinedlabel.js
 UPD 2016-11-30_22:14:17 4496 www/tablet/js/widget_klimatrend.js
 UPD 2016-11-30_20:35:50 7776 www/tablet/js/widget_knob.js
-UPD 2016-12-03_02:21:59 5911 www/tablet/js/widget_label.js
+UPD 2016-12-19_23:19:41 6113 www/tablet/js/widget_label.js
 UPD 2016-12-04_19:08:20 877 www/tablet/js/widget_level.js
 UPD 2016-11-30_22:21:05 10246 www/tablet/js/widget_link.js
 UPD 2016-11-25_00:14:16 1493 www/tablet/js/widget_loading.js
@@ -108,7 +108,7 @@ UPD 2016-12-01_21:43:47 4264 www/tablet/js/widget_select.js
 UPD 2016-12-01_23:17:48 9745 www/tablet/js/widget_settimer.js
 UPD 2016-11-30_20:32:01 12520 www/tablet/js/widget_simplechart.js
 UPD 2016-12-05_21:24:06 2966 www/tablet/js/widget_slideout.js
-UPD 2016-12-19_16:46:31 11831 www/tablet/js/widget_slider.js
+UPD 2016-12-19_23:02:30 12006 www/tablet/js/widget_slider.js
 UPD 2016-12-01_23:28:15 11539 www/tablet/js/widget_spinner.js
 UPD 2016-11-30_23:24:47 3054 www/tablet/js/widget_svgplot.js
 UPD 2016-11-30_22:56:44 4241 www/tablet/js/widget_swiper.js
