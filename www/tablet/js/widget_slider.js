@@ -64,6 +64,7 @@ var Modul_slider = function () {
         elem.initData('off', 'off');
         elem.initData('width', null);
         elem.initData('height', null);
+        elem.initData('margin', '1px');
         elem.initData('value', 0);
         elem.initData('min', 0);
         elem.initData('max', 100);
@@ -133,12 +134,23 @@ var Modul_slider = function () {
         }
 
         localStorage.setItem(id, storeval);
+        var width = elem.data('width');
+        var widthUnit = ($.isNumeric(width)) ? 'px' : '';
+        var height = elem.data('height');
+        var heightUnit = ($.isNumeric(height)) ? 'px' : '';
+        var margin = elem.data('margin');
+        var marginUnit = ($.isNumeric(margin)) ? 'px' : '';
 
         if (elem.hasClass('horizontal')) {
-            if (elem.data('width')) {
+            elem.css({
+                'margin-top': margin + marginUnit,
+                'margin-bottom': margin + marginUnit
+            });
+
+            if (width) {
                 rangeContainer.css({
-                    'width': elem.data('width') + 'px',
-                    'max-width': elem.data('width') + 'px',
+                    'width': width + widthUnit,
+                    'max-width': width + widthUnit,
                     'height': '0px'
                 });
             } else {
@@ -153,18 +165,23 @@ var Modul_slider = function () {
                         'max-width': '120px'
                     });
             }
-            if (elem.data('height')) {
+            if (height) {
                 rangeBar.css({
-                    'height': elem.data('height') + 'px',
-                    'max-height': elem.data('height') + 'px',
-                    'top': '-' + elem.data('height') / 2 + 'px',
+                    'height': height + heightUnit,
+                    'max-height': height + heightUnit,
+                    'top': '-' + height / 2 + heightUnit
+                });
+                elem.css({
+                    'height': height + heightUnit,
+                    'max-height': height + heightUnit,
+                    'top': '-' + height / 2 + heightUnit
                 });
             }
         } else {
-            if (elem.data('height')) {
+            if (height) {
                 rangeContainer.css({
-                    'height': elem.data('height') + 'px',
-                    'max-height': elem.data('height') + 'px'
+                    'height': height + heightUnit,
+                    'max-height': height + heightUnit
                 });
             } else {
                 if (elem.hasClass('mini'))
@@ -178,11 +195,11 @@ var Modul_slider = function () {
                         'max-height': '120px'
                     });
             }
-            if (elem.data('width')) {
+            if (width) {
                 rangeBar.css({
-                    'width': elem.data('width') + 'px',
-                    'max-width': elem.data('width') + 'px',
-                    'left': '-' + elem.data('width') / 4 + 'px',
+                    'width': width + widthUnit,
+                    'max-width': width + widthUnit,
+                    'left': '-' + width / 4 + widthUnit,
                 });
             }
         }
@@ -206,10 +223,19 @@ var Modul_slider = function () {
 
         pwrng.setStart(storeval);
 
-        // Refresh slider position after it became visible
-        elem.closest('[data-type="popup"]').on("fadein", function (event) {
+        function onResize() {
             var storeval = localStorage.getItem(id);
             pwrng.setStart(parseInt(storeval));
+
+        }
+
+        // Refresh slider position after it became visible
+        elem.closest('[data-type="popup"]').on("fadein", function (event) {
+            onResize();
+        });
+
+        $(window).resize(function () {
+            onResize();
         });
     }
 

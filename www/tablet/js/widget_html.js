@@ -84,7 +84,7 @@ var Modul_html = function () {
             for (var i = 0; i < len; i++) {
                 if (elem.attr('type') === 'checkbox') {
                     if (elem[0].checked.toString() === Object.keys(map)[i]) {
-                        value = map[i];
+                        value = map[Object.keys(map)[i]];
                         break;
                     }
                 }
@@ -125,7 +125,7 @@ var Modul_html = function () {
         me.elements.each(function (index) {
 
             var elem = $(this);
-            elem.initData('val', elem.data('value'));
+            elem.initData('val', elem.data('value')); // value is reserved for widget intern usage, therefore we switch to val
             elem.initData('value', elem.val());
             elem.initData('set', '');
             elem.initData('cmd', 'set');
@@ -141,11 +141,12 @@ var Modul_html = function () {
             if (elem.isDeviceReading('content')) {
                 me.addReading(elem, 'content');
             }
+            if (elem.isDeviceReading('checked')) {
+                me.addReading(elem, 'checked');
+            }
             if (elem.isDeviceReading('class')) {
                 me.addReading(elem, 'class');
             }
-
-            console.log('elem type:', elem, elem.attr('type'));
 
             if (elem.attr('type') === 'checkbox' || elem.attr('type') === 'radio' || elem.attr('type') === 'range' || elem[0].nodeName === 'SELECT') {
                 if (elem.isValidData('changed')) {
@@ -191,8 +192,8 @@ var Modul_html = function () {
         me.elements.filterDeviceReading('content', dev, par)
             .each(function (idx) {
                 var elem = $(this);
-                var content = elem.getReading('content').val;
-                if (content) {
+                var content = (elem.hasClass('timestamp')) ? elem.getReading('content').date : elem.getReading('content').val;
+                if (ftui.isValid(content)) {
                     var cont = ftui.getPart(content, elem.data('part'));
                     var unit = elem.data('unit');
                     cont = me.substitution(cont, elem.data('substitution'));
@@ -221,14 +222,14 @@ var Modul_html = function () {
             .each(function (idx) {
                 var elem = $(this);
                 var read = elem.getReading('class').val;
-                if (read) {
+                if (ftui.isValid(read)) {
                     var map = elem.data('map-class');
                     if ((typeof map === "object") && (map !== null)) {
                         $.each(map, function (key, value) {
                             elem.removeClass(value);
                         });
                     }
-                    elem.addClass(me.map(map, read, elem.data('value')));
+                    elem.addClass(me.map(map, read, read));
                 }
             });
 
@@ -237,7 +238,7 @@ var Modul_html = function () {
             .each(function (idx) {
                 var elem = $(this);
                 var read = elem.getReading('checked').val;
-                if (read) {
+                if (ftui.isValid(read)) {
                     var map = elem.data('map-checked');
                     var def = elem.data('value');
                     elem.prop('checked', me.map(map, read, def) === 'true');

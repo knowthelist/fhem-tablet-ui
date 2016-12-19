@@ -3,7 +3,7 @@
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-/* global ftui:true, Modul_widget:true */
+/* global ftui:true, plugins:true, Modul_widget:true */
 
 "use strict";
 
@@ -12,8 +12,8 @@ var Modul_input = function () {
     function updateExtReading(elem) {
         elem.data('ext_get', elem.valOfData('device') + ':' + elem.valOfData('get'));
         elem.find('.textinput').val(elem.getReading('ext_get').val);
-        elem.addReading('ext_get');
-        elem.requestReading('ext_get');
+        me.addReading(elem,'ext_get');
+        plugins.updateParameters();
     }
 
     function init_attr(elem) {
@@ -26,7 +26,7 @@ var Modul_input = function () {
             $(elem.data('device')).once('changedValue', function (e) {
                 updateExtReading(elem);
             });
-            $(document).once('updateDone', function (e) {
+            $(document).on('updateDone', function (e) {
                 updateExtReading(elem);
             });
         }
@@ -34,7 +34,7 @@ var Modul_input = function () {
             $(elem.data('get')).once('changedValue', function (e) {
                 updateExtReading(elem);
             });
-            $(document).once('updateDone', function (e) {
+            $(document).on('updateDone', function (e) {
                 updateExtReading(elem);
             });
         } else

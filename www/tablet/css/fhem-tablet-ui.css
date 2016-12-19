@@ -580,6 +580,12 @@ main > .box.horizontal {
     justify-content: space-between;
 }
 
+.box.horizontal.items-space-around,
+.hbox.items-space-around,
+.card.items-space-around {
+    justify-content: space-around;
+}
+
 .box.horizontal.items-right,
 .hbox.items-right {
     justify-content: flex-end;
@@ -977,7 +983,7 @@ div[data-type="link"] > div.fa {
 .centered {
     margin-left: auto !important;
     margin-right: auto !important;
-    display: table;
+    display: block;
 }
 
 .middle {
@@ -1446,10 +1452,26 @@ div.hide {
     display: none;
 }
 
+div[data-type="slider"].slider_horizontal,
+div[data-type="level"].level_horizontal {
+    width: 100%;
+}
+
+div[data-type="slider"].slider_vertical,
+div[data-type="level"].level_vertical {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .range-container.slider_vertical,
 .range-container.level_vertical {
-    margin: 20px auto 20px !important;
-    padding: 0px !important;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 .range-container.slider_vertical.narrow,
@@ -1459,7 +1481,31 @@ div.hide {
 
 .range-container.slider_horizontal,
 .range-container.level_horizontal {
-    padding-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: block;
+}
+
+.top-align > .range-container.slider_vertical,
+.top-align > .range-container.level_vertical {
+    margin-top: 0px;
+}
+
+.bottom-align > .range-container.slider_vertical,
+.bottom-align > .range-container.level_vertical {
+    margin-bottom: 0px;
+}
+
+.right-align > .range-container.slider_horizontal,
+.right-align > .range-container.level_horizontal {
+    margin-right: 0px;
+}
+
+.left-align > .range-container.slider_horizontal,
+.left-align > .range-container.level_horizontal {
+    margin-left: 0px;
 }
 
 .range-container.slider_horizontal.narrow,
@@ -1472,18 +1518,19 @@ div.hide {
     visibility: hidden;
 }
 
-.slider_vertical .slidertext {
+.slider_vertical .slidertext,
+.level_vertical .slidertext{
     margin-left: -18px;
     margin-top: 10px;
     width: 40px;
     text-align: center;
 }
 
-.slider_horizontal .slidertext {
-    margin-left: 110%;
-    margin-top: -11px;
-    width: 40px;
-    text-align: left;
+.slider_horizontal .slidertext,
+.level_horizontal .slidertext{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 .big > .vertical .range-bar {

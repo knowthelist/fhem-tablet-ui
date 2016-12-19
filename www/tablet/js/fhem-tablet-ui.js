@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.4.1
+ * Version: 2.4.2
  *
  * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -34,6 +34,10 @@ if (typeof Framework7 === 'function') {
         f7.ftui.views.push(view);
 
     });
+    f7.ftui.onPageInit('*', function (page) {
+        ftui.log(page.name + ' initialized'); 
+        ftui.initWidgets('[data-page="' + page.name +'"]');
+});
 }
 
 // -------- Widget Base---------
@@ -226,7 +230,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.4.1',
+    version: '2.4.2',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -323,6 +327,7 @@ var ftui = {
         });
 
         $(document).one("updateDone", function () {
+            ftui.log(2, 'document triggered updateDone');
             ftui.initLongpoll();
         });
 
@@ -371,12 +376,17 @@ var ftui = {
                     'height': '100%'
                 });
             }
+
             $('.gridster > ul > li:has(.center)').addClass('vbox');
             // max height for inner boxes
             $('.gridster > ul > li:has(.vbox)').addClass('vbox');
             $('.gridster > ul > li > .hbox').addClass('center');
             $('.gridster > ul > li > .vbox').addClass('center');
-
+            $('.gridster li > header ~ .hbox:only-of-type').each(function (index) {
+                $(this).css({
+                    'height': 'calc(100% - ' + $(this).siblings('header').outerHeight() + 'px)'
+                });
+            });
         }
     },
 
@@ -452,6 +462,7 @@ var ftui = {
     },
 
     initLongpoll: function () {
+        ftui.log(2, 'initLongpoll: ' + ftui.config.doLongPoll);
         if (ftui.config.doLongPoll) {
             var longpollDelay = $("meta[name='longpoll-delay']").attr("content");
             longpollDelay = ($.isNumeric(longpollDelay)) ? longpollDelay * 1000 : 100;
