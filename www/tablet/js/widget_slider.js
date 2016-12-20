@@ -68,7 +68,7 @@ var Modul_slider = function () {
         elem.initData('value', 0);
         elem.initData('min', 0);
         elem.initData('max', 100);
-        elem.initData('step', null);
+        elem.initData('step', 1);
         elem.initData('set-value', '$v');
         elem.initData('get-value', elem.data('part') || -1);
         elem.initData('color', ftui.getClassColor(elem) || ftui.getStyle('.slider', 'color') || '#aa6900');
@@ -104,6 +104,7 @@ var Modul_slider = function () {
             min: elem.data('min') || 0,
             max: elem.data('max') || 100,
             step: elem.data('step'),
+            decimal: true,
             tap: elem.hasClass('tap') || false,
             klass: elem.hasClass('horizontal') ? me.widgetname + '_horizontal' : me.widgetname + '_vertical',
             callback: function () {
@@ -251,7 +252,8 @@ var Modul_slider = function () {
                     var pwrng = elem.data('Powerange');
                     var input_elem = elem.find('input');
                     var part = elem.data('get-value') || elem.data('part');
-                    var val = parseFloat(ftui.getPart(state, part));
+                    var txtValue = ftui.getPart(state, part);
+                    var val = parseFloat(txtValue);
                     pwrng.options.min = ($.isNumeric(elem.data('min'))) ? elem.data('min') : elem.getReading('min').val;
                     pwrng.options.max = ($.isNumeric(elem.data('max'))) ? elem.data('max') : elem.getReading('max').val;
                     
@@ -265,7 +267,6 @@ var Modul_slider = function () {
                         val = pwrng.options.min;
                     }
 
-                    var txtValue = val.toString();
                     if (new RegExp('^' + elem.data('on') + '$').test(txtValue))
                         val = pwrng.options.max;
                     if (new RegExp('^' + elem.data('off') + '$').test(txtValue))
