@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
 2016-12-20
- - Added global ftui.config.lang && 'en' tranlation for wind_direction #181
+ - Added isNewNotificationSupported to notify widget
