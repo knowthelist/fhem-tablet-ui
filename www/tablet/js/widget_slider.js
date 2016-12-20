@@ -265,7 +265,7 @@ var Modul_slider = function () {
                         val = pwrng.options.min;
                     }
 
-                    var txtValue = val.toString();
+                    var txtValue = ftui.getPart(state, part);   // create txt value as original value from the device
                     if (new RegExp('^' + elem.data('on') + '$').test(txtValue))
                         val = pwrng.options.max;
                     if (new RegExp('^' + elem.data('off') + '$').test(txtValue))
