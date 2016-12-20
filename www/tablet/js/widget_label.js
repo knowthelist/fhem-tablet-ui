@@ -56,7 +56,7 @@ var Modul_label = function () {
         elem.initData('color', '');
         elem.initData('limits', elem.data('states') || []);
         elem.initData('colors', ['#505050']);
-        elem.initData('limits-get', elem.data('device') + ':' + elem.data('get'));
+        elem.initData('limits-get', (elem.data('device')) ? elem.data('device') + ':' + elem.data('get') : elem.data('get'));
         elem.initData('limits-part', elem.data('part'));
         elem.initData('substitution', '');
         elem.initData('pre-text', '');

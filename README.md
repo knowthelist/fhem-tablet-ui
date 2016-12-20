@@ -260,17 +260,22 @@ Functions for data-substitution:
    e.g. data-substitution="s/no soundplayer active//g"
 3. data-substitution="weekdayshort"
 4. JS functions
-data-substitution="toDate().ddmm()"     -  convert to day:month
+data-substitution="toDate().ddmm()"             -  convert to day:month
 
-data-substitution="toDate().hhmm()"     -  convert to hour:minutes
+data-substitution="toDate().hhmm()"             -  convert to hour:minutes
 
-data-substitution="toDate().hhmmss()"   -  convert to hour:minutes:secondes
+data-substitution="toDate().hhmmss()"           -  convert to hour:minutes:secondes
 
-data-substitution="toDate().eeee()"     -  convert to name of the week day
+data-substitution="toDate().eeee()"             -  convert to name of the week day
 
-data-substitution="toDate().ago()"      -  convert to time span
+data-substitution="toDate().ago()"              -  convert to time span (long format)
 
-data-substitution="s/(:00)$//g"         -  20:15 instead of 20:15:00
+data-substitution="toDate().ago('hh:mm:ss')"    -  convert to time span (short format)
+
+data-substitution="s/(:00)$//g"                 -  20:15 instead of 20:15:00
+
+If you use class="timestamp" together with data-substitution="toDate().ago()" it is recommended to define data-refresh="xx" in secondes to refresh the value
+from time to time, in case the reading timestamp refresh rate is low.
 
 See [examples](#label) of Label
 
