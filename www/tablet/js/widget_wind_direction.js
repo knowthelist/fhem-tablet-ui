@@ -42,6 +42,7 @@ var Modul_wind_direction = function () {
             elem.initData('width', elem.data('size'));
             elem.initData('angleoffset', 0);
             elem.initData('anglearc', 360);
+            elem.initData('lang', ftui.config.lang);
             elem.initData('tickstep', elem.hasClass('tiny') ? 90 : 45);
             elem.initData('thickness', elem.hasClass('tiny') ? 0.5 : 0.25);
             elem.initData('cursor', elem.hasClass('tiny') ? 18 : 6);
@@ -72,6 +73,26 @@ var Modul_wind_direction = function () {
                 "NNW": 337.5,
                 "N2": 360
             });
+            elem.data('compass_en', {
+                "N": 0, // 360/16 * 0
+                "NNE": 22.5, // 360/16 * 1
+                "NE": 45, // 360/16 * 2
+                "ENE": 67.5, // 360/16 * 3
+                "E": 90, // 360/16 * 4
+                "ESE": 112.5, // ...
+                "SE": 135,
+                "SSE": 157.5,
+                "S": 180,
+                "SSW": 202.5,
+                "SW": 225,
+                "WSW": 247.5,
+                "W": 270,
+                "WNW": 292.5,
+                "NW": 315,
+                "NNW": 337.5,
+                "N2": 360
+            });
+
 
             me.addReading(elem, 'direction');
             me.addReading(elem, 'speed');
@@ -90,21 +111,26 @@ var Modul_wind_direction = function () {
                 var value = elem.getReading('direction').val;
                 var part = elem.data('part') || elem.data('direction-part') || -1;
                 var val = ftui.getPart(value, part);
-
+                var lang = elem.attr('data-lang');
                 var speed = elem.getReading('speed').val;
                 var speed_part = elem.data('speed-part') || -1;
                 speed = ftui.getPart(speed, part);
 
                 var knob_elem = elem.find('input');
                 if (val) {
-                    var compass = elem.data('compass');
+                    var compass;
+                    if (lang == "en") {
+                        compass = elem.data('compass_en');
+                    } else {
+                        compass = elem.data('compass');
+                    }
 
                     if (!$.isNumeric(val)) {
                         // if the reading is something like 'NNO', fetch it's numerical representation from compass
                         val = (val in compass ? compass[val] : -1);
                     }
                     if (knob_elem.val() != val) {
-                        // set value and redraw 
+                        // set value and redraw
                         knob_elem.val(val).trigger('change');
                     }
                     if (elem.hasClass('tiny')) {

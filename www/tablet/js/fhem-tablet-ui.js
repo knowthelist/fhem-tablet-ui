@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.4.2
+ * Version: 2.4.3
  *
  * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -230,7 +230,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.4.2',
+    version: '2.4.3',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -239,6 +239,7 @@ var ftui = {
         fhem_dir: '',
         debuglevel: 0,
         doLongPoll: false,
+        lang: 'de',
         shortpollInterval: 0,
         styleCollection: {},
         stdColors: ["green", "orange", "red", "ligthblue", "blue", "gray", "white", "mint"]
@@ -299,6 +300,9 @@ var ftui = {
         ftui.log(1, 'Filename: ' + ftui.config.filename);
         ftui.config.fhem_dir = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
         ftui.log(1, 'FHEM dir: ' + ftui.config.fhem_dir);
+        // lang
+        var userLang = navigator.language || navigator.userLanguage;
+        ftui.config.lang = (ftui.isValid(userLang)) ? userLang.split('-')[0] : 'de';
 
         try {
             // try to use localStorage
@@ -1342,8 +1346,7 @@ Date.prototype.ago = function (format) {
     var hours = Math.floor(x % 24);
     x /= 24;
     var days = Math.floor(x);
-    var userLang = navigator.language || navigator.userLanguage;
-    var strUnits = (userLang.split('-')[0] === 'de') ? ['Tag(e)', 'Stunde(n)', 'Minute(n)', 'Sekunde(n)'] : ['day(s)', 'hour(s)', 'minute(s)', 'second(s)'];
+    var strUnits = (ftui.config.lang === 'de') ? ['Tag(e)', 'Stunde(n)', 'Minute(n)', 'Sekunde(n)'] : ['day(s)', 'hour(s)', 'minute(s)', 'second(s)'];
     var ret;
     if (ftui.isValid(format)) {
         ret = format.replace('dd', days);
@@ -1391,8 +1394,7 @@ Date.prototype.ddmm = function () {
 Date.prototype.eeee = function () {
     var weekday_de = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
     var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    var userLang = navigator.language || navigator.userLanguage;
-    if (userLang.split('-')[0] === 'de')
+    if (ftui.config.lang === 'de')
         return weekday_de[this.getDay()];
     return weekday[this.getDay()];
 };
@@ -1400,8 +1402,7 @@ Date.prototype.eeee = function () {
 Date.prototype.eee = function () {
     var weekday_de = ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'];
     var weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    var userLang = navigator.language || navigator.userLanguage;
-    if (userLang.split('-')[0] === 'de')
+    if (ftui.config.lang === 'de')
         return weekday_de[this.getDay()];
     return weekday[this.getDay()];
 };
@@ -1409,8 +1410,7 @@ Date.prototype.eee = function () {
 Date.prototype.ee = function () {
     var weekday_de = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
     var weekday = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-    var userLang = navigator.language || navigator.userLanguage;
-    if (userLang.split('-')[0] === 'de')
+    if (ftui.config.lang === 'de')
         return weekday_de[this.getDay()];
     return weekday[this.getDay()];
 };
