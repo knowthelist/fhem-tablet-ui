@@ -33,6 +33,17 @@ var Modul_notify = function () {
         }
     }
 
+    function isNewNotificationSupported() {
+        if (!window.Notification || !Notification.requestPermission)
+            return false;
+        try {
+            new Notification('');
+        } catch (e) {
+            if (e.name == 'TypeError')
+                return false;
+        }
+        return true;
+    }
 
     // mandatory function, get called on start up
     function init() {
@@ -68,7 +79,11 @@ var Modul_notify = function () {
                     text = me.fix(text, elem.data('fix'));
                     text = elem.data('pre-text') + text + elem.data('post-text');
                     if (mode === 'notification') {
-                        notify(text);
+                        if (isNewNotificationSupported()) {
+                            notify(text);
+                        } else {
+                            ftui.log(1, 'New Notification is not supported by browser');
+                        }
                     } else if (mode === 'toast-error') {
                         ftui.toast(text, 'error');
                     } else {
