@@ -108,7 +108,7 @@ UPD 2016-12-01_21:43:47 4264 www/tablet/js/widget_select.js
 UPD 2016-12-01_23:17:48 9745 www/tablet/js/widget_settimer.js
 UPD 2016-11-30_20:32:01 12520 www/tablet/js/widget_simplechart.js
 UPD 2016-12-05_21:24:06 2966 www/tablet/js/widget_slideout.js
-UPD 2016-12-19_23:02:30 12006 www/tablet/js/widget_slider.js
+UPD 2016-12-21_00:22:23 12024 www/tablet/js/widget_slider.js
 UPD 2016-12-01_23:28:15 11539 www/tablet/js/widget_spinner.js
 UPD 2016-11-30_23:24:47 3054 www/tablet/js/widget_svgplot.js
 UPD 2016-11-30_22:56:44 4241 www/tablet/js/widget_swiper.js
