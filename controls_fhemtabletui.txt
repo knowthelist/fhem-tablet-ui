@@ -57,7 +57,7 @@ UPD 2016-11-25_00:14:16 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2016-11-25_00:14:16 3265 www/tablet/ftui_snippet_tester.html
 UPD 2016-11-25_00:14:16 13817 www/tablet/index-example.html
 UPD 2016-11-25_00:14:16 2782 www/tablet/index_empty.html
-UPD 2016-12-19_15:10:08 55078 www/tablet/js/fhem-tablet-ui.js
+UPD 2016-12-20_08:54:35 54984 www/tablet/js/fhem-tablet-ui.js
 UPD 2016-12-19_15:42:19 26744 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-11-25_00:14:16 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-11-30_20:37:28 1708 www/tablet/js/widget_button.js
@@ -121,7 +121,7 @@ UPD 2016-12-05_21:03:37 988 www/tablet/js/widget_wakeup.js
 UPD 2016-12-09_22:27:03 95024 www/tablet/js/widget_wdtimer.js
 UPD 2016-12-12_22:17:26 20459 www/tablet/js/widget_weather.js
 UPD 2016-12-05_21:07:37 25336 www/tablet/js/widget_weekprofile.js
-UPD 2016-12-05_20:50:01 6432 www/tablet/js/widget_wind_direction.js
+UPD 2016-12-20_09:03:38 7163 www/tablet/js/widget_wind_direction.js
 UPD 2016-11-25_00:14:16 13032 www/tablet/lib/fa-multi-button.js
 UPD 2016-11-25_00:14:16 6541 www/tablet/lib/fa-multi-button.min.js
 UPD 2016-11-25_00:14:16 17041 www/tablet/lib/farbtastic.js
