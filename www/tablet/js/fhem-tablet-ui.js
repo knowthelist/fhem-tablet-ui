@@ -1475,9 +1475,11 @@ $.fn.isExternData = function (key) {
 
 $.fn.getReading = function (key, idx) {
     var devname = String($(this).data('device')),
-        paraname = String($(this).data(key));
-    if ($.isArray(paraname))
+        paraname = $(this).data(key);
+    if ($.isArray(paraname)){
         paraname = paraname[idx];
+    }
+    paraname = String(paraname);
     if (paraname && paraname.match(/:/)) {
         var temp = paraname.split(':');
         devname = temp[0];
