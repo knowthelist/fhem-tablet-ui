@@ -43,12 +43,17 @@ var Modul_medialist = function () {
     function init_ui(elem) {
 
         // prepare container element
+                var width = elem.data('width');
+        var widthUnit = ($.isNumeric(width)) ? 'px' : '';
+        var height = elem.data('height');
+        var heightUnit = ($.isNumeric(height)) ? 'px' : '';
+        
         elem.html('')
             .addClass('media-list')
             .css({
-                width: elem.data('width'),
-                maxWidth: elem.data('width'),
-                height: elem.data('height'),
+                width: width + widthUnit,
+                maxWidth: width + widthUnit,
+                height: height + heightUnit,
                 color: elem.mappedColor('text-color'),
                 backgroundColor: elem.mappedColor('background-color'),
             });
@@ -103,7 +108,7 @@ var Modul_medialist = function () {
             .each(function (idx) {
                 var elem = $(this);
                 var pos = elem.getReading('pos').val;
-                if (pos) {
+                if (ftui.isValid(pos)){
                     changedCurrent(elem, pos);
                 }
             });

@@ -35,9 +35,9 @@ if (typeof Framework7 === 'function') {
 
     });
     f7.ftui.onPageInit('*', function (page) {
-        ftui.log(page.name + ' initialized'); 
-        ftui.initWidgets('[data-page="' + page.name +'"]');
-});
+        ftui.log(page.name + ' initialized');
+        ftui.initWidgets('[data-page="' + page.name + '"]');
+    });
 }
 
 // -------- Widget Base---------
@@ -126,25 +126,29 @@ var Modul_widget = function () {
 
     function addReading(elem, key) {
         var data = elem.data(key);
-        if (data && $.isArray(data) || data && !data.match(/^[#\.\[].*/)) {
-            var device = elem.data('device');
-            if (!$.isArray(data)) {
-                data = new Array(data);
-            }
-            for (var i = 0, len = data.length; i < len; i++) {
-                var reading = data[i];
-                // fully qualified readings => DEVICE:READING
-                if (reading.match(/:/)) {
-                    var fqreading = reading.split(':');
-                    device = fqreading[0];
-                    reading = fqreading[1];
+        if (ftui.isValid(data)) {
+            data = data.toString();
+            if ($.isArray(data) || !data.match(/^[#\.\[].*/)) {
+                var device = elem.data('device');
+                if (!$.isArray(data)) {
+                    data = new Array(data);
                 }
-                // fill objects for mapping from FHEMWEB paramid to device + reading
-                if (ftui.isValid(device) && ftui.isValid(reading)) {
-                    var paramid = (reading === 'STATE') ? device : [device, reading].join('-');
-                    subscriptions[paramid] = {};
-                    subscriptions[paramid].device = device;
-                    subscriptions[paramid].reading = reading;
+                for (var i = 0, len = data.length; i < len; i++) {
+                    var reading = data[i];
+                    // fully qualified readings => DEVICE:READING
+                    if (reading.match(/:/)) {
+                        var fqreading = reading.split(':');
+                        device = fqreading[0];
+                        reading = fqreading[1];
+                    }
+                    // fill objects for mapping from FHEMWEB paramid to device + reading
+                    if (ftui.isValid(device) && ftui.isValid(reading)) {
+                        device = device.toString();
+                        var paramid = (reading === 'STATE') ? device : [device, reading].join('-');
+                        subscriptions[paramid] = {};
+                        subscriptions[paramid].device = device;
+                        subscriptions[paramid].reading = reading;
+                    }
                 }
             }
         }
@@ -1436,10 +1440,10 @@ $.fn.filterData = function (key, value) {
 $.fn.filterDeviceReading = function (key, device, param) {
     return this.filter(function () {
         var elem = $(this);
-        var value = elem.data(key);
-        return (value === param && elem.data('device') === device) ||
+        var value = String(elem.data(key));
+        return (value === param && String(elem.data('device')) === device) ||
             (value === device + ':' + param) ||
-            ($.inArray(param, value) > -1 && elem.data('device') === device) ||
+            ($.inArray(param, value) > -1 && String(elem.data('device')) === device) ||
             ($.inArray(device + ':' + param, value) > -1);
     });
 };
@@ -1470,8 +1474,8 @@ $.fn.isExternData = function (key) {
 };
 
 $.fn.getReading = function (key, idx) {
-    var devname = $(this).data('device'),
-        paraname = $(this).data(key);
+    var devname = String($(this).data('device')),
+        paraname = String($(this).data(key));
     if ($.isArray(paraname))
         paraname = paraname[idx];
     if (paraname && paraname.match(/:/)) {
