@@ -127,11 +127,10 @@ var Modul_widget = function () {
     function addReading(elem, key) {
         var data = elem.data(key);
         if (ftui.isValid(data)) {
-            data = data.toString();
-            if ($.isArray(data) || !data.match(/^[#\.\[].*/)) {
+            if ($.isArray(data) || !data.toString().match(/^[#\.\[].*/)) {
                 var device = elem.data('device');
                 if (!$.isArray(data)) {
-                    data = new Array(data);
+                    data = new Array(data.toString());
                 }
                 for (var i = 0, len = data.length; i < len; i++) {
                     var reading = data[i];
