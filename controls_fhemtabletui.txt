@@ -119,7 +119,7 @@ UPD 2016-11-25_00:14:16 2587 www/tablet/js/widget_tts.js
 UPD 2016-11-30_22:53:21 8467 www/tablet/js/widget_volume.js
 UPD 2016-12-05_21:03:37 988 www/tablet/js/widget_wakeup.js
 UPD 2016-12-09_22:27:03 95024 www/tablet/js/widget_wdtimer.js
-UPD 2016-12-12_22:17:26 20459 www/tablet/js/widget_weather.js
+UPD 2016-12-21_07:46:40 23020 www/tablet/js/widget_weather.js
 UPD 2016-12-05_21:07:37 25336 www/tablet/js/widget_weekprofile.js
 UPD 2016-12-20_09:03:38 7163 www/tablet/js/widget_wind_direction.js
 UPD 2016-11-25_00:14:16 13032 www/tablet/lib/fa-multi-button.js
