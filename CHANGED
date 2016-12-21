@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
 2016-12-21
- - Added widget agenda #168
+ - Bugfix to use numeric only device names (solves #176)
