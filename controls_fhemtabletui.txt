@@ -74,7 +74,7 @@ UPD 2016-12-01_23:54:32 6785 www/tablet/js/widget_dimmer.js
 UPD 2016-11-30_20:51:00 3298 www/tablet/js/widget_eventmonitor.js
 UPD 2016-11-30_20:52:39 2827 www/tablet/js/widget_example.js
 UPD 2016-12-19_21:29:40 20684 www/tablet/js/widget_famultibutton.js
-UPD 2016-12-05_20:40:34 5209 www/tablet/js/widget_fullcalview.js
+UPD 2016-12-21_01:05:46 8481 www/tablet/js/widget_fullcalview.js
 UPD 2016-11-25_00:14:16 2387 www/tablet/js/widget_gds.js
 UPD 2016-12-04_23:42:04 8975 www/tablet/js/widget_highchart.js
 UPD 2016-11-25_00:14:16 8542 www/tablet/js/widget_highchart3d.js
