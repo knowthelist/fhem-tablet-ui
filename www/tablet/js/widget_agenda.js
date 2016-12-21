@@ -1,3 +1,12 @@
+/* FTUI Plugin
+ * Copyright (c) 2016 hypetsch 
+ * https://github.com/knowthelist/fhem-tablet-ui/pull/168
+ */
+
+/* global ftui:true, Modul_widget:true */
+
+"use strict";
+
 var Modul_agenda = function () {
 
     function init_attr(elem) {
@@ -5,7 +14,7 @@ var Modul_agenda = function () {
         elem.initData('max'   , 100);
         elem.initData('c-term', 'c-term');
 
-        this.addReading(elem, 'c-term');
+        me.addReading(elem, 'c-term');
 
         for( var i = 1; i <= elem.data('max'); ++i) {
             var num = ("00" + i).slice(-3);
@@ -13,66 +22,66 @@ var Modul_agenda = function () {
 
             reading = 't_'+num+'_summary';
             elem.initData(reading, reading);
-            this.addReading(elem, reading);
+            me.addReading(elem, reading);
 
             reading = 't_' + num + '_bdate';
             elem.initData(reading, reading);
-            this.addReading(elem, reading);
+            me.addReading(elem, reading);
 
             reading = 't_' + num + '_btime';
             elem.initData(reading, reading);
-            this.addReading(elem, reading);
+            me.addReading(elem, reading);
 
             reading = 't_' + num + '_edate';
             elem.initData(reading, reading);
-            this.addReading(elem, reading);
+            me.addReading(elem, reading);
 
             reading = 't_' + num + '_etime';
             elem.initData(reading, reading);
-            this.addReading(elem, reading);
+            me.addReading(elem, reading);
 
             reading = 't_' + num + '_location';
             elem.initData(reading, reading);
-            this.addReading(elem, reading);
+            me.addReading(elem, reading);
 
             reading = 't_' + num + '_source';
             elem.initData(reading, reading);
-            this.addReading(elem, reading);
+            me.addReading(elem, reading);
         }
-    };
+    }
 
     function init_ui(elem) {
-    };
+    }
 
     function getDate(elem, datename, timename) {
         var d = elem.getReading(datename).val.split('.');
         var t = elem.getReading(timename).val.split(':');
         return new Date(d[2], d[1] - 1, d[0], t[0], t[1], t[2]);
-    };
+    }
 
     function diffDays(date1, date2) {
-        var diff = new Date(new Date(date2.getYear(), date2.getMonth(), date2.getDate())
-                   - new Date(date1.getYear(), date1.getMonth(), date1.getDate())
+        var diff = new Date(new Date(date2.getYear(), date2.getMonth(), date2.getDate()) -
+                   new Date(date1.getYear(), date1.getMonth(), date1.getDate())
                 );
         return Math.floor((diff / 1000 / 60 / 60 / 24));
-    };
+    }
 
     function prettyPrintDate(date) {
         var text = "";
         switch (diffDays(new Date(), date)) {
             case 0: text += "Heute" + ", "; break;
             case 1: text += "Morgen" + ", "; break;
-        };
+        }
 
         text += date.eeee() + ", " + date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
         return text;
-    };
+    }
 
     function readCalendarConfig(elem, source, setting, defaultValue) {
         try {
             var cfg = elem.data('config');
             var val = eval("cfg." + source + "." + setting);
-            if (val && val != "")
+            if (val && val !== "")
                 return val;
             else
                 return defaultValue;
@@ -81,14 +90,13 @@ var Modul_agenda = function () {
             console.log(e);
             return defaultValue;
         }
-    };
+    }
 
     function update_cb(elem) {
-    };
+    }
 
     function update(dev,par) {
 
-        me = this;
         // update from normal state reading
         me.elements.filterDeviceReading('c-term', dev, par)
         .each(function(index) {
@@ -100,7 +108,7 @@ var Modul_agenda = function () {
             // render container
             text += '<div class="container padding" style="overflow:hidden;">';
 
-            if( count == 0 )
+            if( count === 0 )
                 text += '<div data-type="label">Keine Termine</div>';
             else if (count > elem.data('max'))
                 count = elem.data('max');
@@ -115,7 +123,7 @@ var Modul_agenda = function () {
                 var source = elem.getReading('t_' + num + '_source').val;
 
                 // check if new day
-                if( diffDays(currentDate, bdate) != 0 ) {
+                if( diffDays(currentDate, bdate) !== 0 ) {
                     text += '<div class="center container padding inline top-narrow-10">';
                     text += '<div class="left-align small darker" style="width:100%; border-bottom:1px solid #393939">';
                     text += me.prettyPrintDate(bdate);
@@ -129,7 +137,7 @@ var Modul_agenda = function () {
                 var color = me.readCalendarConfig(elem, source, "color", "");
                 var abbr = me.readCalendarConfig(elem, source, "abbreviation", "");
 
-                if( icon != "" && icon.substr(0,3) == "fa-" ) {
+                if( icon !== "" && icon.substr(0,3) == "fa-" ) {
                     icon = "fa " + icon;
                     abbr = "";
                 }
@@ -143,9 +151,9 @@ var Modul_agenda = function () {
                 text += '<div class="left-align small darker">';
 
                 var durationDays = diffDays(bdate, edate);
-                if (durationDays == 1 && bdate.getHours() == 0 && bdate.getMinutes() == 0 && edate.getHours() == 0 && edate.getMinutes() == 0)
+                if (durationDays == 1 && bdate.getHours() === 0 && bdate.getMinutes() === 0 && edate.getHours() === 0 && edate.getMinutes() === 0)
                     text += 'Ganzer Tag';
-                else if (durationDays == 0)
+                else if (durationDays === 0)
                     text += bdate.hhmm() + ' - ' + edate.hhmm();
                 else
                     text += bdate.hhmm() + ' - ' + me.prettyPrintDate(edate);
@@ -164,8 +172,7 @@ var Modul_agenda = function () {
 
     // public
     // inherit all public members from base class
-    var me = this;
-    return $.extend(new Modul_widget(), {
+    var me = $.extend(new Modul_widget(), {
         // override or own public members
         widgetname: 'agenda',
         init_attr: init_attr,
@@ -177,5 +184,7 @@ var Modul_agenda = function () {
         readCalendarConfig: readCalendarConfig,
         diffDays: diffDays
     });
+    
+    return me;
 };
 
