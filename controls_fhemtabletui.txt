@@ -60,6 +60,7 @@ UPD 2016-11-25_00:14:16 2782 www/tablet/index_empty.html
 UPD 2016-12-20_08:54:35 54984 www/tablet/js/fhem-tablet-ui.js
 UPD 2016-12-19_15:42:19 26744 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-11-25_00:14:16 20988 www/tablet/js/highcharts-meteogram.js
+UPD 2016-12-21_08:04:04 6503 www/tablet/js/widget_agenda.js
 UPD 2016-11-30_20:37:28 1708 www/tablet/js/widget_button.js
 UPD 2016-12-02_21:13:57 5617 www/tablet/js/widget_calview.js
 UPD 2016-12-09_22:10:18 197310 www/tablet/js/widget_chart.js
