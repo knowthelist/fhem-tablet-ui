@@ -387,8 +387,8 @@ var ftui = {
             $('.gridster > ul > li:has(.center)').addClass('vbox');
             // max height for inner boxes
             $('.gridster > ul > li:has(.vbox)').addClass('vbox');
-            $('.gridster > ul > li > .hbox').addClass('center');
-            $('.gridster > ul > li > .vbox').addClass('center');
+            $('.gridster > ul > li .hbox').addClass('center');
+            $('.gridster > ul > li .vbox').addClass('center');
             $('.gridster li > header ~ .hbox:only-of-type').each(function (index) {
                 $(this).css({
                     'height': 'calc(100% - ' + $(this).siblings('header').outerHeight() + 'px)'
@@ -1439,8 +1439,8 @@ $.fn.filterData = function (key, value) {
 $.fn.filterDeviceReading = function (key, device, param) {
     return this.filter(function () {
         var elem = $(this);
-        var value = String(elem.data(key));
-        return (value === param && String(elem.data('device')) === device) ||
+        var value = elem.data(key);
+        return (String(value) === param && String(elem.data('device')) === device) ||
             (value === device + ':' + param) ||
             ($.inArray(param, value) > -1 && String(elem.data('device')) === device) ||
             ($.inArray(device + ':' + param, value) > -1);
