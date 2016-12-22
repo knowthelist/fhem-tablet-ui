@@ -33,6 +33,7 @@ var Modul_pagebutton = function () {
             if (elem.hasClass('default')) {
                 $(sel).addClass('active');
                 elem.closest('nav').trigger('changedSelection');
+                $(document).trigger('changedSelection');
             }
             $(document).on("initWidgetsDone", function (e, area) {
                 if (area == sel) {
@@ -60,13 +61,18 @@ var Modul_pagebutton = function () {
     }
 
     function changeState(elem, isOn) {
+        var faelem = elem.data('famultibutton');
         if (isOn) {
-            elem.data('famultibutton').setOn();
+            if (faelem) {
+                faelem.setOn();
+            }
             // overwrite default colors for showMultiStates
             elem.data('on-colors', [elem.data('on-color')]);
             elem.data('on-background-colors', [elem.data('on-background-color')]);
         } else {
-            elem.data('famultibutton').setOff();
+            if (faelem) {
+                faelem.setOff();
+            }
             // overwrite default colors for showMultiStates
             elem.data('on-colors', [elem.data('off-color')]);
             elem.data('on-background-colors', [elem.data('off-background-color')]);
@@ -78,9 +84,9 @@ var Modul_pagebutton = function () {
         me.elements.each(function (index) {
             var elem = $(this);
             elem.initData('off-color', ftui.getStyle('.button.off', 'color') || '#2A2A2A');
-            elem.initData('off-background-color', ftui.getStyle('.button.off', 'background-color') || '#505050');
+            elem.initData('off-background-color', elem.data('background-color') || ftui.getStyle('.button.off', 'background-color') || '#505050');
             elem.initData('on-color', ftui.getClassColor(elem) || ftui.getStyle('.button.on', 'color') || '#2A2A2A');
-            elem.initData('on-background-color', ftui.getStyle('.button.on', 'background-color') || '#aa6900');
+            elem.initData('on-background-color', elem.data('background-color') || ftui.getStyle('.button.on', 'background-color') || '#aa6900');
             elem.initData('background-icon', 'fa-circle');
             elem.initData('active-pattern', '.*/' + elem.data('url'));
             elem.initData('get-warn', -1);
@@ -107,6 +113,7 @@ var Modul_pagebutton = function () {
                     $(sel).addClass('active');
                     localStorage.setItem('pagebutton_lastSel', sel);
                     startReturnTimer(me.elements.eq(0));
+                    $(document).trigger('changedSelection');
                 }
             });
 
@@ -130,7 +137,9 @@ var Modul_pagebutton = function () {
             $(window).bind('hashchange', function (e) {
                 var url = window.location.pathname + ((window.location.hash.length) ? '#' + window.location.hash : '');
                 var isActive = url.match(new RegExp('^' + elem.data('active-pattern') + '$'));
-                changeState(elem, isActive);
+                if (elem){
+                    changeState(elem, isActive);
+                }
             });
 
             // remove all left locks
@@ -158,6 +167,7 @@ var Modul_pagebutton = function () {
                     } else {
                         $(sel).addClass('active');
                         elem.closest('nav').trigger('changedSelection', [elem.text()]);
+                        $(document).trigger('changedSelection');
                     }
                 });
             }
