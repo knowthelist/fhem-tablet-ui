@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
 2016-12-22
- - Bugfix (again) to use numeric only device names (solves #176)
+ - Enhanced pagebutton
