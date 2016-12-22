@@ -387,8 +387,6 @@ var ftui = {
             $('.gridster > ul > li:has(.center)').addClass('vbox');
             // max height for inner boxes
             $('.gridster > ul > li:has(.vbox)').addClass('vbox');
-            $('.gridster > ul > li .hbox').addClass('center');
-            $('.gridster > ul > li .vbox').addClass('center');
             $('.gridster li > header ~ .hbox:only-of-type').each(function (index) {
                 $(this).css({
                     'height': 'calc(100% - ' + $(this).siblings('header').outerHeight() + 'px)'

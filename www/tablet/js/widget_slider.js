@@ -64,7 +64,7 @@ var Modul_slider = function () {
         elem.initData('off', 'off');
         elem.initData('width', null);
         elem.initData('height', null);
-        elem.initData('margin', '5px');
+        elem.initData('margin', '3px');
         elem.initData('value', 0);
         elem.initData('min', 0);
         elem.initData('max', 100);
@@ -144,26 +144,22 @@ var Modul_slider = function () {
 
         if (elem.hasClass('horizontal')) {
             elem.css({
-                'margin-top': margin + marginUnit,
-                'margin-bottom': margin + marginUnit
+                'margin-bottom': margin + marginUnit,
+                'height': height + heightUnit
             });
 
             if (width) {
-                rangeContainer.css({
-                    'width': width + widthUnit,
-                    'max-width': width + widthUnit,
-                    'height': '0px'
+                elem.css({
+                    'width': width + widthUnit
                 });
             } else {
                 if (elem.hasClass('mini'))
-                    rangeContainer.css({
-                        'width': '60px',
-                        'max-width': '60px'
+                    elem.css({
+                        'width': '60px'
                     });
                 else
-                    rangeContainer.css({
-                        'width': '120px',
-                        'max-width': '120px'
+                    elem.css({
+                        'width': '120px'
                     });
             }
             if (height) {
@@ -180,20 +176,17 @@ var Modul_slider = function () {
             }
         } else {
             if (height) {
-                rangeContainer.css({
-                    'height': height + heightUnit,
-                    'max-height': height + heightUnit
+                elem.css({
+                    'height': height + heightUnit
                 });
             } else {
                 if (elem.hasClass('mini'))
-                    rangeContainer.css({
-                        'height': '60px',
-                        'max-height': '60px'
+                    elem.css({
+                        'height': '60px'
                     });
                 else
                     rangeContainer.css({
-                        'height': '120px',
-                        'max-height': '120px'
+                        'height': '120px'
                     });
             }
             if (width) {
@@ -227,11 +220,19 @@ var Modul_slider = function () {
         function onResize() {
             var storeval = localStorage.getItem(id);
             pwrng.setStart(parseInt(storeval));
-
+            // second call necessary
+            pwrng.setStart(parseInt(storeval));
         }
 
         // Refresh slider position after it became visible
         elem.closest('[data-type="popup"]').on("fadein", function (event) {
+            setTimeout(function() {
+              onResize();  
+                
+            },500);
+        });
+
+        $(document).on('changedSelection', function () {
             onResize();
         });
 
@@ -256,7 +257,7 @@ var Modul_slider = function () {
                     var val = parseFloat(txtValue);
                     pwrng.options.min = ($.isNumeric(elem.data('min'))) ? elem.data('min') : elem.getReading('min').val;
                     pwrng.options.max = ($.isNumeric(elem.data('max'))) ? elem.data('max') : elem.getReading('max').val;
-                    
+
                     pwrng.options.min = parseFloat(pwrng.options.min);
                     pwrng.options.max = parseFloat(pwrng.options.max);
 
