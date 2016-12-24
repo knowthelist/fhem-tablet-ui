@@ -57,33 +57,13 @@ var Modul_verkehrsinfo = function () {
 			console.log("device: " + device + " icon: " + $(this).data('icon') + " max a: " + $(this).data('max') + " count: " + $(this).initData('count'));	
 		});
 	};
-
-
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
-
-		
+	
 	function update(dev,par) {
 		var deviceElements;
 		var me = this;
 		var text = "";
-			console.log('wait... ' + new Date);
-			sleep(1000);
-			console.log('ok... ' + new Date);
-
-		 
-        if (dev == '*') {
-            deviceElements = me.elements;
-        } else {
+		
             deviceElements = me.elements.filter('div[data-device="' + dev + '"]');
-        }
-
 
 		var count = "";
 		var max = "";
