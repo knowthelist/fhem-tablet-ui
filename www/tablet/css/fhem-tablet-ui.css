@@ -214,6 +214,10 @@ a:active {
     border: 3px solid #8C8C8C;
 }
 
+.border-yellow {
+    border: 3px solid #ffe066;
+}
+
 .border-lightgray {
     border: 3px solid #cccccc;
 }
@@ -864,6 +868,21 @@ main > .box.horizontal {
 .bg-blue,
 .btn-blue {
     background-color: #337ab7 !important;
+}
+
+.bg-white,
+.btn-white {
+    background-color: #ffffff !important;
+}
+
+.bg-black,
+.btn-black {
+    background-color: #111111 !important;
+}
+
+.bg-yellow,
+.btn-yellow {
+    background-color: #ffe066 !important;
 }
 
 
