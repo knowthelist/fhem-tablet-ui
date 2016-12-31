@@ -29,7 +29,9 @@ var Modul_iframe = function () {
         elem.initData('color-error', '#505050');
         elem.initData('get', 'STATE');
         elem.initData('check', true);
-
+        // allow readings to contain the url for the iframe
+        elem.initData('value-url',      elem.data('value-url') || false); 
+        
         me.addReading(elem, 'get');
     }
 
@@ -92,6 +94,10 @@ var Modul_iframe = function () {
                 var elem = $(this);
                 var value = elem.getReading('get').val;
                 if (value) {
+                    if (  elem.data('value-url') ) {
+                       elem.data('src', value);
+//                       console.log('Got URL on update',value);
+                    } 
                     if (value == elem.data('get-refresh'))
                         me.init_ui(elem);
                     else if (value.match(RegExp('^' + elem.data('get-refresh') + '$')))
