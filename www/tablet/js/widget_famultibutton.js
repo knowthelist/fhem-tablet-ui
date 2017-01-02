@@ -406,13 +406,13 @@ var Modul_famultibutton = function () {
         me.addReading(elem, 'get');
         me.addReading(elem, 'warn');
 
-        if (ftui.isValid(elem.data('reachable'))) {
+        if (elem.isValidData(elem.data('reachable'))) {
             me.addReading(elem, 'reachable');
         }
-        if (elem.isValid('lock')) {
+        if (elem.isValidData('lock')) {
             me.addReading(elem, 'lock');
         }
-        if (elem.isValid('hide')) {
+        if (elem.isValidData('hide')) {
             me.addReading(elem, 'hide');
         }
 
