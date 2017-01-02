@@ -84,10 +84,10 @@ var Modul_widget = function () {
         // hide element when it's value equals data-hide
         // if data-hideparents is set, it is interpreted as jquery selector to hide elements parents filtered by this selector
         if (ftui.isValid(elem.data('hide'))) {
-            var valueFroHide = elem.data('hide');
-            if (value === valueFroHide ||
+            var valueForHide = elem.data('hide');
+            if (value === valueForHide ||
                 (elem.isDeviceReading('hide') && (value === 'true' || value === '1' || value === 'on' || value === 1)) ||
-                value.match(new RegExp('^' + valueFroHide + '$'))) {
+                value.match(new RegExp('^' + valueForHide + '$'))) {
                 if (ftui.isValid(elem.data('hideparents'))) {
                     elem.parents(elem.data('hideparents')).hide();
                 } else {

@@ -142,6 +142,8 @@ General attribute meaning
 - **data-doubleclick**: timeout to wait for x millisecondes click or touch. '0' disables the doubleclick feature. (default '0')
 - **data-lock**  : name of the reading containing a boolean value for the lock (readonly) parameter (default <null>)
 - **data-warn**  : name of the reading containing a integer value to be shown as a red warn overlay (default <null>)
+- **data-warn-color**  : forecolor for warn badge (default '#aaa')
+- **data-warn-background-color**  : background color for warn badge (default '#aa2200')
 - **data-reachable**  : name of the reading containing a integer value to indicate whether the device is reachable or not (default <null>)
 
 dual state notation   
@@ -179,6 +181,8 @@ See [examples](#switch) of Switch
 ####Symbol widget
 - **data-get**      			: name of the reading to get from FHEM (default 'STATE')
 - **data-warn**  : name of the reading containing a integer value to be shown as a red warn overlay (default <null>)
+- **data-warn-color**  : forecolor for warn badge (default '#aaa')
+- **data-warn-background-color**  : background color for warn badge (default '#aa2200')
 - **data-hide**   : string to compare with current value. hide element when it's value equals data-hide. Or a DEVICE:READING to determine hiding from reading value  
 - **data-hideparents**: jquery selector to hide element's parents too
 - **data-lock**  : name of the reading containing a boolean value for the lock (readonly) parameter (default <null>)

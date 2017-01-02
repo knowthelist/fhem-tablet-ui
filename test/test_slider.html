@@ -79,9 +79,9 @@
             <li data-row="1" data-col="4" data-sizex="6" data-sizey="4">
                 <header>LEVEL</header>
                 <!-- place your widget here -->
-                <div class="vbox">
-                    <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="90%" class="horizontal left-align"></div>
-                    <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="90%" class="horizontal left-align value"></div>
+                <div class="vbox items-left">
+                    <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="75%" class="horizontal "></div>
+                    <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="75%" class="horizontal value"></div>
                     <div data-type="label" data-device='dummy1' data-unit="%" class="top-space"></div>
                 </div>
                 <div class="vbox">
@@ -89,40 +89,52 @@
                     <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="90%" data-height="20" class="horizontal value"></div>
                     <div data-type="label" data-device='dummy1' data-unit="%" class="top-space"></div>
                 </div>
-                <div class="vbox">
-                    <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="90%" class="horizontal right-align"></div>
-                    <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="90%" class="horizontal right-align value"></div>
-                    <div data-type="label" data-device='dummy1' data-unit="%" class="top-space"></div>
+                <div class="vbox items-right">
+                    <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="75%" class="horizontal"></div>
+                    <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="75%" class="horizontal value "></div>
+                    <div data-type="label" data-device='dummy1' data-unit="%" class="top-space center-align"></div>
                 </div>
             </li>
             <li data-row="1" data-col="10" data-sizex="3" data-sizey="4">
-                <header>EXAMPLE4</header>
+                <header>VERTICAL</header>
                 <!-- place your widget here -->
+                <div class="vbox items-space-around">
+                    <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class=""></div>
+                    <div data-type="slider" data-device="dummy1" data-max="100" data-height="45%" class="vertical"></div>
+                    <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class=""></div>
+                </div>
             </li>
             <li data-row="5" data-col="10" data-sizex="3" data-sizey="3" class="vbox">
                 <header>VERTICAL Alone</header>
                 <!-- place your widget here -->
-                <div data-type="slider" data-device="dummy1" data-max="100" data-height="45%" class="vertical"></div>
+                <div class="vbox">
+                    <div data-type="slider" data-device="dummy1" data-max="100" data-height="45%" class="vertical"></div>
+                </div>
             </li>
             <li data-row="5" data-col="4" data-sizex="6" data-sizey="3">
                 <header>HORIZONTAL</header>
                 <!-- place your widget here -->
                 <div class="vbox">
-                    <div data-type="slider" data-device="dummy2" data-min="0" data-max="2000"  data-width="45%" data-margin="10" class="horizontal right-align"></div>
-                    <div data-type="slider" data-device="dummy3" data-min="0" data-max="2000"  data-width="45%" class="horizontal right-align"></div>
-                    <div class="top-space hbox">
-                        <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class="middle right-space"></div>
-                        <div data-type="level" data-device="MPD1" data-get="elapsed" data-max="Time" data-width="280" class="horizontal middle"></div>
-                        <div data-type="label" data-device="MPD1" data-get="Time" data-substitution="toMinFromSec()" class="middle left-space"></div>
+                    <div class="hbox bg-green">
+                        <div data-type="slider" data-device="dummy2" data-min="0" data-max="2000" data-width="45%" data-step="0.5" class="horizontal right-align"></div>
                     </div>
-                    <div class="top-space hbox">
+                    <div class="hbox bg-blue items-right">
+                        <div data-type="slider" data-device="dummy3" data-min="0" data-max="2000" data-width="45%" class="horizontal"></div>
+
+                    </div>
+                    <div class="hbox bg-red">
+                        <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class="right-space"></div>
+                        <div data-type="level" data-device="MPD1" data-get="elapsed" data-max="Time" data-width="280" class="horizontal"></div>
+                        <div data-type="label" data-device="MPD1" data-get="Time" data-substitution="toMinFromSec()" class="left-space"></div>
+                    </div>
+                    <div class="hbox">
                         <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class="middle right-space"></div>
                         <div data-type="slider" data-device="MPD1" data-get="elapsed" data-max="Time" data-width="280" class="horizontal middle"></div>
                         <div data-type="label" data-device="MPD1" data-get="Time" data-substitution="toMinFromSec()" class="middle left-space"></div>
                     </div>
-                    <div class="top-space hbox">
+                    <div class="hbox">
                         <div data-type="label" data-device="dummy2" data-substitution="toMinFromSec()" class="middle right-space"></div>
-                        <div data-type="level" data-device="dummy2" data-min="0" data-max="dummy3:STATE" data-width="240" class="horizontal middle"></div>
+                        <div data-type="level" data-device="dummy2" data-min="0" data-max="dummy3:STATE" data-width="240" class="horizontal middle value"></div>
                         <div data-type="label" data-device="dummy3" data-substitution="toMinFromSec()" class="middle left-space"></div>
                     </div>
                 </div>

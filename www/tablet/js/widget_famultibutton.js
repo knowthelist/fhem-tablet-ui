@@ -117,23 +117,33 @@ var Modul_famultibutton = function () {
         elem.children().filter('#warn').remove();
         if (ftui.isValid(value) && value !== "") {
             var val = ($.isNumeric(value) && value < 100) ? Number(value).toFixed(0) : '!';
-            var fgElem = $('<i/>', {
+            var bgElem = $('<i/>', {
                     id: 'warn-back',
                     class: 'fa fa-stack-1x fa-circle'
                 })
                 .appendTo(elem);
 
-            var bgElem = $('<i/>', {
+            var fgElem = $('<i/>', {
                 id: 'warn',
                 class: 'fa fa-stack-1x '
             })
 
             .html(val).appendTo(elem);
-            if (elem.hasClass('warnsamecolor')) {
+            if (elem.isValidData('warn-color')) {
+                fgElem.css({
+                    color: elem.data('warn-color')
+                });
+            }
+            if (elem.isValidData('warn-background-color')) {
                 bgElem.css({
+                    color: elem.data('warn-background-color')
+                });
+            }
+            if (elem.hasClass('warnsamecolor')) {
+                fgElem.css({
                     color: '#000'
                 });
-                fgElem.css({
+                bgElem.css({
                     color: elem.data('on-color')
                 });
             }
@@ -261,6 +271,7 @@ var Modul_famultibutton = function () {
         }
         if (doubleclicked(elem, 'off')) {
             me.clicked(elem, 'off');
+            elem.trigger("toggleOff");
             var id = elem.data("device") + "_" + elem.data('get');
             stopRunningTimer(elem);
             localStorage.removeItem("ftui_timer_sec_" + id);
@@ -335,6 +346,7 @@ var Modul_famultibutton = function () {
             ftui.setFhemStatus(target);
             break;
         }
+        elem.trigger("toggled");
     }
 
     function valueChanged(elem, v) {}

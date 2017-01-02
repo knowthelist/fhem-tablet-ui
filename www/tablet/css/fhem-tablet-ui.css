@@ -593,8 +593,16 @@ main > .box.horizontal {
 
 .box.horizontal.items-space-between,
 .hbox.items-space-between,
+.vbox.items-space-between,
 .card.items-space-between {
     justify-content: space-between;
+}
+
+.box.horizontal.items-center,
+.hbox.items-center,
+.vbox.items-center,
+.card.items-center {
+    justify-content: center;
 }
 
 .box.horizontal.items-space-around,
@@ -659,6 +667,11 @@ main > .box.horizontal {
     .card > .hbox {
         margin-top: 1em;
         margin-bottom: 1em;
+    }
+    .hbox.nowrap,
+    .box.nowrap,
+    .card.nowrap {
+        flex-wrap: nowrap;
     }
 }
 
@@ -1393,7 +1406,7 @@ div[data-type="circlemenu"] {
 
 [data-type="pagetab"] .label {
     font-size: 50% !important;
-    whiteSpace: nowrap;
+    white-space: nowrap;
     padding-top: 30px;
     color: #8C8C8C;
 }
@@ -1417,7 +1430,7 @@ i#warn-back {
     font-size: 80% !important;
     margin-left: 27%;
     margin-top: -31%;
-    color: #882200;
+    color: #aa2200;
 }
 
 .doublebox-v {

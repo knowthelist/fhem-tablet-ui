@@ -77,6 +77,13 @@ var Modul_pagebutton = function () {
             elem.data('on-colors', [elem.data('off-color')]);
             elem.data('on-background-colors', [elem.data('off-background-color')]);
         }
+        var state = elem.getReading('get').val;
+        if (ftui.isValid(state)) {
+            var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
+            if ($.isArray(states)) {
+                me.showMultiStates(elem, states, state);
+            }
+        }
     }
 
     function init() {
@@ -100,9 +107,9 @@ var Modul_pagebutton = function () {
             elem.on("toggleOn", function (event) {
                 // only set this button to active just before switching page
                 me.elements.each(function (index) {
-                    $(this).data('famultibutton').setOff();
+                    changeState($(this), false);
                 });
-                elem.data('famultibutton').setOn();
+                changeState(elem, true);
                 var sel = elem.data('load');
                 if (sel) {
                     elem.closest('nav').trigger('changedSelection');
@@ -137,7 +144,7 @@ var Modul_pagebutton = function () {
             $(window).bind('hashchange', function (e) {
                 var url = window.location.pathname + ((window.location.hash.length) ? '#' + window.location.hash : '');
                 var isActive = url.match(new RegExp('^' + elem.data('active-pattern') + '$'));
-                if (elem){
+                if (elem) {
                     changeState(elem, isActive);
                 }
             });
@@ -187,14 +194,17 @@ var Modul_pagebutton = function () {
     function toggleOff(elem) {
         setTimeout(function () {
             elem.setOn();
+            elem.trigger('toggleOn');
         }, 50);
     }
 
     function update_cb(elem, state) {
-        if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
-            me.showOverlay(elem, ftui.getPart(state, elem.data('get-warn')));
-        else
-            me.showOverlay(elem, "");
+        if (!elem.isValidData('warn')) {
+            if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
+                me.showOverlay(elem, ftui.getPart(state, elem.data('get-warn')));
+            else
+                me.showOverlay(elem, "");
+        }
 
         var id = elem.data('device') + "_" + elem.data('get') + "_" + elem.data('url');
 
