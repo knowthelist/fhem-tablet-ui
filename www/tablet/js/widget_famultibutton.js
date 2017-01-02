@@ -409,6 +409,12 @@ var Modul_famultibutton = function () {
         if (ftui.isValid(elem.data('reachable'))) {
             me.addReading(elem, 'reachable');
         }
+        if (elem.isValid('lock')) {
+            me.addReading(elem, 'lock');
+        }
+        if (elem.isValid('hide')) {
+            me.addReading(elem, 'hide');
+        }
 
         elem.initData('off-color', ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#505050');
         elem.initData('off-background-color', elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.off', 'background-color') || '#505050');
@@ -435,12 +441,6 @@ var Modul_famultibutton = function () {
         }
         if (elem.isDeviceReading('off-background-color')) {
             me.addReading(elem, 'off-background-color');
-        }
-        if (elem.isDeviceReading('lock')) {
-            me.addReading(elem, 'lock');
-        }
-        if (elem.isDeviceReading('hide')) {
-            me.addReading(elem, 'hide');
         }
     }
 
