@@ -74,6 +74,7 @@ var Modul_select = function () {
                     items = items.split(':');
                     elem.data('alias', items);
                     fillList(elem);
+                    setCurrentItem(elem);
                 }
             });
 
