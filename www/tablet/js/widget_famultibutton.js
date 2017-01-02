@@ -452,7 +452,8 @@ var Modul_famultibutton = function () {
         me.elements.filterDeviceReading('get', dev, par)
             .each(function (index) {
                 var elem = $(this);
-                var state = elem.getReading('get').val;
+                var value = elem.getReading('get').val;
+                var state = ftui.getPart(value, elem.data('part'));
                 if (ftui.isValid(state)) {
                     var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
                     if ($.isArray(states)) {

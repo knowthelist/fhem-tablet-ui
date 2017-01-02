@@ -214,6 +214,10 @@ a:active {
     border: 3px solid #8C8C8C;
 }
 
+.border-yellow {
+    border: 3px solid #ffe066;
+}
+
 .border-lightgray {
     border: 3px solid #cccccc;
 }
@@ -452,13 +456,13 @@ section [class*='col-'],
 .card {
     display: flex !important;
     width: 97%;
-        justify-content: initial;
+    justify-content: initial;
     align-items: initial;
 }
 
 .h100,
 .full-width,
- width-100 {
+width-100 {
     width: 100% !important;
 }
 
@@ -492,7 +496,7 @@ main > .box.horizontal {
 .card > .box.horizontal:only-of-type,
 .card > .hbox:only-of-type,
 .card > .vbox:only-of-type,
-.card > .box.vertical:only-of-type{
+.card > .box.vertical:only-of-type {
     flex-grow: 1;
     margin-top: 0;
 }
@@ -877,6 +881,21 @@ main > .box.horizontal {
 .bg-blue,
 .btn-blue {
     background-color: #337ab7 !important;
+}
+
+.bg-white,
+.btn-white {
+    background-color: #ffffff !important;
+}
+
+.bg-black,
+.btn-black {
+    background-color: #111111 !important;
+}
+
+.bg-yellow,
+.btn-yellow {
+    background-color: #ffe066 !important;
 }
 
 
@@ -1515,7 +1534,7 @@ div.hide {
 }
 
 .slider_vertical .slidertext,
-.level_vertical .slidertext{
+.level_vertical .slidertext {
     margin-left: -18px;
     margin-top: 10px;
     width: 40px;
