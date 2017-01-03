@@ -57,6 +57,10 @@ var Modul_widget = function () {
 
     function isReadOnly(elem) {
         var lock = elem.data('readonly');
+        var lockValue = elem.data('lock-value');
+        if (ftui.isValid(lockValue)){
+            return (lock === lockValue);
+        }
         return (lock === 'true' || lock === '1' || lock === 'on' || lock === 1);
     }
 
@@ -83,7 +87,7 @@ var Modul_widget = function () {
 
         // hide element when it's value equals data-hide
         // if data-hideparents is set, it is interpreted as jquery selector to hide elements parents filtered by this selector
-        if (ftui.isValid(elem.data('hide'))) {
+        if (ftui.isValid(elem.data('hide')) && ftui.isValid(value)) {
             var valueForHide = elem.data('hide');
             if (value === valueForHide ||
                 (elem.isDeviceReading('hide') && (value === 'true' || value === '1' || value === 'on' || value === 1)) ||
@@ -1160,7 +1164,7 @@ var ftui = {
     },
 
     isValid: function (v) {
-        return (typeof v !== 'undefined' && v !== 'undefined' && typeof v !== typeof notusedvar);
+        return (typeof v !== 'undefined' && v !== undefined && typeof v !== typeof notusedvar);
     },
 
     // global date format functions

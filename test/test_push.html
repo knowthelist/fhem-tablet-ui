@@ -1,0 +1,117 @@
+<html>
+<title>FHEM</title>
+
+<head>
+    <!--
+    /* FHEM tablet ui */
+    /*
+    * Just another dashboard for FHEM
+    *
+    * Version: 2.4.0
+    * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
+    * URL: https://github.com/knowthelist/fhem-tablet-ui
+    *
+    * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+    * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+    *
+    * - create a new folder named 'tablet' in /<fhem-path>/www
+    * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+    * - add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
+    * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+    */
+   -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="widget_base_width" content="74">
+    <meta name="widget_base_height" content="71">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="longpoll" content="1">
+    <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="debug" content="2">
+    <!-- 1=output to console;0=not output -->
+
+    <link rel="stylesheet" href="lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
+    <!--link rel="stylesheet" href="/fhem/tablet_dev/css/fhem-mobil-ui.css" /-->
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="/fhem/tablet/css/fhem-green-ui.css" / -->
+    <!--link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui-user.css" /-->
+
+    <script src="/fhem/pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="lib/jquery.gridster.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <link rel="stylesheet" href="lib/openautomation.css" />
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizex="3" data-sizey="2">
+                <header>warn value</header>
+                <div class="hbox">
+                    <div class="vbox">
+                        <div data-type="push" data-device="ftuitest" data-set-on="1"></div>
+                        <div>on</div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="push" data-device="ftuitest" data-set-on="0"></div>
+                        <div>off</div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="label" data-device="ftuitest" class="bigger"></div>
+                    </div>
+                </div>
+
+            </li>
+            <li data-row="1" data-col="3" data-sizex="3" data-sizey="2" data-type="html" data-class="dummy2:STATE" ddddata-map-class='{"on":"bg-green", "off":"bg-red"}'>
+                <header>HTML</header>
+                <div class="center">
+                    <div data-type="push" data-device="dummy1" data-warn="ftuitest:STATE" class="big">
+                    </div>
+                </div>
+
+            </li>
+
+            <li data-row="8" data-col="1" data-sizex="4" data-sizey="2">
+                <header>Get-Set other reading</header>
+                <div class="hbox">
+                    <div class="big" data-type="push" data-device="dummy3" data-get="state" data-get-on="0" data-get-off="1" data-cmd="setreading" data-set="myNotificationEnabled" data-set-on="1" data-on-color="white" data-off-color="#2a2a2a" data-on-background-color="firebrick" data-off-background-color="#505050" data-icon="ftui-window" data-background-icon="fa-circle">
+                    </div>
+                </div>
+            </li>
+            <li data-row="8" data-col="1" data-sizex="5" data-sizey="2">
+                <header>PUSH</header>
+                <div class="hbox">
+                    <div class="vbox">
+                        <div data-type="classchanger" data-device="dummy2" data-off-class="bg-red" data-on-class="bg-green" class="bg-square">
+                            <div data-type="push" data-icon="fa-angle-up" data-background-icon="fa-square-o" data-device="PB_RollAuf_WzLi" data-set="trigger" class="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="classchanger" data-device="dummy2" data-off-class="bg-red" data-on-class="bg-green" class="bg-square">
+                            <div data-type="push" data-icon="fa-angle-up" data-background-icon="fa-square-o" data-device="PB_RollAuf_WzLi" data-set="trigger" class="big">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="classchanger" data-device="dummy2" data-off-class="bg-red" data-on-class="bg-green" class="bg-square">
+                            <div data-type="push" data-icon="fa-angle-up" data-background-icon="fa-square-o" data-device="PB_RollAuf_WzLi" data-set="trigger" class="bigger">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+
+        </ul>
+    </div>
+</body>
+
+</html>

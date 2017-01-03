@@ -406,13 +406,13 @@ var Modul_famultibutton = function () {
         me.addReading(elem, 'get');
         me.addReading(elem, 'warn');
 
-        if (elem.isValidData(elem.data('reachable'))) {
+        if (elem.isDeviceReading('reachable')) {
             me.addReading(elem, 'reachable');
         }
         if (elem.isValidData('lock')) {
             me.addReading(elem, 'lock');
         }
-        if (elem.isValidData('hide')) {
+        if (elem.isDeviceReading('hide')) {
             me.addReading(elem, 'hide');
         }
 
