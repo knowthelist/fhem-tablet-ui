@@ -322,6 +322,12 @@ var Modul_famultibutton = function () {
             s++;
             if (s >= sets.length) s = 0;
             localStorage.setItem(me.widgetname + '_' + id + '_index', s);
+
+            // update widgets with multistate mode directly on click
+            var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
+            if ($.isArray(states)) {
+                me.showMultiStates(elem, states, set);
+            }
             target = [elem.data('cmd'), device, elem.data('set'), set].join(' ');
             type = 'fhem-cmd';
         }
