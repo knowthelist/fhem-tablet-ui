@@ -338,14 +338,23 @@
                 e.stopImmediatePropagation();
                 if (Math.abs(touch_pos_y - $(window).scrollTop()) > 3 ||
                     (Math.abs(touch_pos_x - $(window).scrollLeft()) > 3)) return;
+
+                var lastState = state;
                 setOn();
 
                 if (typeof options['toggleOn'] === 'function') {
                     options['toggleOn'].call(this);
                 }
+
                 setTimeout(function () {
                     fadeOff();
                 }, 200);
+
+                if (lastState === true) {
+                    setTimeout(function () {
+                        setOn();
+                    }, 1000);
+                }
 
                 elem.trigger('clicked');
 
