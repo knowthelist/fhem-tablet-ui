@@ -1,20 +1,19 @@
-
 /* 
-Version 0.4
+Version 0.5
 
-Ein Widget fÃ¼r Modul Verkehrsmeldungen 
+Ein Widget für Modul Verkehrsmeldungen 
 
-Paul79 23.12.2016
+Paul79 08.01.2017
 
 paul79@gmx.de
 
 ----------------------------------------------------------------------------
 HTML
- fÃ¼r maximale Attribute:
+ für maximale Attribute:
  
  <div data-type="verkehrsinfo"  data-device="name in FHEM" data-max="5"  data-color-msg="#CEBCB7" data-color-head="#FD6F3F" data-shadow="true" data-shadow-head="true" data-icon="2" ></div>
 				
- fÃ¼r minimale Attribute:
+ für minimale Attribute:
  
   <div data-type="verkehrsinfo"  data-device="name in FHEM" ></div>
 
@@ -28,7 +27,7 @@ ATTRIBUTE:
 	
     Attribute (Optional):
     -----------------
-    data-count: maximale Anzahl der EintrÃ¤ge (Default '5').
+    data-count: maximale Anzahl der Einträge (Default '5').
  	data-icon: '1' Icon links, 'No' kein icon , '2' 2 Icons links und rechts (Default '2')
 	date-shadow: 'true' Schatten unter Icons (Default 'true')
 	date-shadow-head: 'true' Schatten unter Headtext (Default 'false')	
@@ -37,6 +36,7 @@ ATTRIBUTE:
 */
 
 "use strict";
+
 var Modul_verkehrsinfo = function () {
 	
     function init () {
@@ -57,23 +57,17 @@ var Modul_verkehrsinfo = function () {
 			console.log("device: " + device + " icon: " + $(this).data('icon') + " max a: " + $(this).data('max') + " count: " + $(this).initData('count'));	
 		});
 	};
-	
+		
 	function update(dev,par) {
 		var deviceElements;
-		var me = this;
 		var text = "";
-		
-            deviceElements = me.elements.filter('div[data-device="' + dev + '"]');
 
-		var count = "";
-		var max = "";
-		var shadow = "";
-		var shadowinfo = "";
-		var shadowhead = "";				
+        deviceElements = me.elements.filter('div[data-device="' + dev + '"]');
+		
 		
         deviceElements.each(function (index) {
 			var elem = $(this);
-			elem.data('count', 'count');
+
 			var count = elem.getReading('count').val;
 			var max = elem.data('max');
 			var icon = elem.data('icon');
@@ -86,13 +80,11 @@ var Modul_verkehrsinfo = function () {
 			//		if (elem.data('shadow-head') == true) { var shadowhead = 'box-shadow:0 5px 10px rgba(0,0,0,0.5),inset 0 5px 5px rgba(255,255,255,0.2),inset 0 -5px 10px rgba(0,0,0,0.4);min-width:150px;-moz-transform: translate(-1px, -5px);-o-transform: translate(-1px, -5px);-ms-transform: translate(-1px, -5px);transform: translate(-1px, -5px);' } else { var shadowhead = 'min-width:150px;'};
 			if (elem.data('shadow-head') == true) { var shadowhead = 'text-shadow: 2px 0px 2px rgba(0,0,0,0.6), 0px 2px 2px rgba(255,255,255,0.4);min-width:150px;-moz-transform: translate(-1px, -5px);-o-transform: translate(-1px, -5px);-ms-transform: translate(-1px, -5px);transform: translate(-1px, -5px);' } else { var shadowhead = 'min-width:150px;'};
 						
-				if (count >= 1) {
-					if (count > max) {
-						count = max;
+				if (count > 0) {
+				if ( count >= elem.data('max') ) { count = elem.data('max'); } 
+				else { count = elem.getReading('count').val;}
 
-						}
-
-					for (var i = 1; i <= count - 0; i++) {
+					for (var i = 1; i <= count; i++) {
 						elem.data('head', 'e_'+i+'_head');
 						elem.data('msg', 'e_'+i+'_msg');
 						elem.data('road', 'e_'+i+'_road');
@@ -208,10 +200,9 @@ var Modul_verkehrsinfo = function () {
 		});
 		
 	};
-
     // public
     // inherit all public members from base class
-    return $.extend(new Modul_widget(), {
+    var me = $.extend(new Modul_widget(), {
         //override or own public members
         widgetname: 'verkehrsinfo',
         init: init,
@@ -220,4 +211,3 @@ var Modul_verkehrsinfo = function () {
     return me;	
 
 };
-1;
