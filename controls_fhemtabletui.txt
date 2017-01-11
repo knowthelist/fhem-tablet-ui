@@ -164,4 +164,4 @@ UPD 2016-11-25_00:14:16 15163 www/tablet/lib/swiper.min.css
 UPD 2016-11-25_00:14:16 50765 www/tablet/lib/switchery.js
 UPD 2016-11-25_00:14:16 683 www/tablet/lib/switchery.min.css
 UPD 2016-11-25_00:14:16 19088 www/tablet/lib/switchery.min.js
-UPD 2016-11-25_00:14:16 750 www/tablet/repair.html
+UPD 2016-11-25_00:14:16 750 www/tablet/repair.htmls
