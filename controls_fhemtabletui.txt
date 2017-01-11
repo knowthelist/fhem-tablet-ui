@@ -55,10 +55,10 @@ UPD 2016-11-25_00:14:16 74077 www/tablet/fonts/Roboto-Thin-webfont.svg
 UPD 2016-11-25_00:14:16 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2016-11-25_00:14:16 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2016-11-25_00:14:16 3265 www/tablet/ftui_snippet_tester.html
-UPD 2016-11-25_00:14:16 13817 www/tablet/index-example.html
+UPD 2017-01-10_00:16:44 14693 www/tablet/index-example.html
 UPD 2016-11-25_00:14:16 2782 www/tablet/index_empty.html
-UPD 2017-01-03_10:11:40 55279 www/tablet/js/fhem-tablet-ui.js
-UPD 2017-01-03_10:16:13 26729 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2017-01-05_00:04:49 56193 www/tablet/js/fhem-tablet-ui.js
+UPD 2017-01-05_20:39:48 27206 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-11-25_00:14:16 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-12-21_08:04:04 6503 www/tablet/js/widget_agenda.js
 UPD 2016-11-30_20:37:28 1708 www/tablet/js/widget_button.js
@@ -74,7 +74,7 @@ UPD 2016-12-11_15:49:08 5517 www/tablet/js/widget_departure.js
 UPD 2016-12-01_23:54:32 6785 www/tablet/js/widget_dimmer.js
 UPD 2016-11-30_20:51:00 3298 www/tablet/js/widget_eventmonitor.js
 UPD 2016-11-30_20:52:39 2827 www/tablet/js/widget_example.js
-UPD 2017-01-03_14:31:46 21435 www/tablet/js/widget_famultibutton.js
+UPD 2017-01-05_21:11:59 21034 www/tablet/js/widget_famultibutton.js
 UPD 2016-12-21_01:05:46 8481 www/tablet/js/widget_fullcalview.js
 UPD 2016-11-25_00:14:16 2387 www/tablet/js/widget_gds.js
 UPD 2016-12-04_23:42:04 8975 www/tablet/js/widget_highchart.js
@@ -99,7 +99,7 @@ UPD 2016-12-20_14:51:22 3770 www/tablet/js/widget_notify.js
 UPD 2017-01-02_13:37:48 9388 www/tablet/js/widget_pagebutton.js
 UPD 2016-12-05_21:09:27 8514 www/tablet/js/widget_pagetab.js
 UPD 2016-11-30_22:36:45 5223 www/tablet/js/widget_playstream.js
-UPD 2016-12-05_20:59:29 7874 www/tablet/js/widget_popup.js
+UPD 2017-01-04_07:21:39 7167 www/tablet/js/widget_popup.js
 UPD 2016-11-30_23:31:18 3593 www/tablet/js/widget_progress.js
 UPD 2017-01-02_20:54:32 1695 www/tablet/js/widget_push.js
 UPD 2016-11-30_23:08:56 6051 www/tablet/js/widget_range.js
@@ -154,9 +154,9 @@ UPD 2016-11-25_00:14:16 2396 www/tablet/lib/jquery.wakeup.js
 UPD 2016-11-25_00:14:16 80909 www/tablet/lib/material-icons.css
 UPD 2016-11-25_00:14:16 71950 www/tablet/lib/material-icons.min.css
 UPD 2016-12-05_22:13:38 25177 www/tablet/lib/openautomation.css
-UPD 2016-11-25_00:14:16 41235 www/tablet/lib/powerange.js
+UPD 2017-01-11_10:11:44 55030 www/tablet/lib/powerange.js
 UPD 2016-11-25_00:14:16 1176 www/tablet/lib/powerange.min.css
-UPD 2016-11-25_00:14:16 19207 www/tablet/lib/powerange.min.js
+UPD 2017-01-11_10:11:49 18666 www/tablet/lib/powerange.min.js
 UPD 2016-11-25_00:14:16 31889 www/tablet/lib/responsivevoice.js
 UPD 2016-11-25_00:14:16 6927 www/tablet/lib/slideout.min.js
 UPD 2016-11-25_00:14:16 62078 www/tablet/lib/swiper.jquery.min.js
