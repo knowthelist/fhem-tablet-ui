@@ -1,8 +1,22 @@
-// widget_uwz last changed 2017-01-09 07:15:00 by chris1284
+// widget_uwz last changed 2017-01-12 20:00:00 by chris1284
 //-------------------------------------------------------------------
 //-------------------------------------------------------------------
 
 "use strict";
+function depends_uwz() {
+    var deps = [];
+    /* e.g.
+    if (!$.fn.datetimepicker){
+        $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/jquery.datetimepicker.css" type="text/css" />');
+        deps.push("lib/jquery.datetimepicker.js");
+    }
+    if(typeof Module_label == 'undefined'){
+        deps.push('label');
+    }
+    */
+    return deps;
+};
+
 var Modul_uwz = function () {
 	
 	var colormap = {   
@@ -22,22 +36,25 @@ var Modul_uwz = function () {
     };
 	
     function init () {
-        var me = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
-        this.elements.each(function(index) {
-			var elem = $(this);
-			elem.initData('max'		, 10);
-			elem.initData('detail'	, ["WarnUWZLevel_Color", "uwzLevel", "IconURL", "ShortText", "LongText", "Start", "End", "WarnTime",]);
-			elem.data('WarnCount'	, 'WarnCount');
-			elem.initData('imgsize'	, 30);
+        me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
+        me.elements.each(function(index) {
 			
-			var device = $(this).data('device');
-			console.log("device: " + device + " max: " + $(this).data('max') + " head: " + $(this).data('detail'));	
+			var elem = $(this);
+			elem.initData('max'			, 10);
+			elem.initData('detail'		, ["WarnUWZLevel_Color", "uwzLevel", "IconURL", "ShortText", "LongText", "Start", "End", "WarnTime",]);
+			elem.initData('imgsize'		, 30);
+			elem.initData('lngtxtstyle'	, '');
+			elem.initData('shttxtstyle'	, '');
+			elem.initData('textdivider'	, ' ');
+			elem.initData('WarnCount'	, 'WarnCount');
 
-			var value;
-			value = $(this).data('max') - 1 ;
+			var device = elem.data('device');
+			//alert(device);
+			console.log("device: " + device + " max: " + $(me).data('max') + " head: " + $(me).data('detail'));	
+
+			var value = elem.data('max') - 1 ;
 		
-			me.addReading(elem,'WarnCount');
+			me.addReading(elem, 'WarnCount');
 			var i;
 			var colorneed = 0;
 			for (i = 0; i <= value; i++) {
@@ -73,28 +90,22 @@ var Modul_uwz = function () {
 						var tmpreadingname = 'WarnUWZLevel_Color';
 						elem.initData(tmpreadingname, tmpreadingname);
 						me.addReading(elem,tmpreadingname);
-						//console.log(tmpreadingname + ': '+elem.getReading(tmpreadingname).val);
 					}
 				}
 		});
 	};
 	
 	function update(dev,par) {
-		var deviceElements;
-		var mytext = "";
 		
-		if (dev == '*') { deviceElements = me.elements; } 
-		else { deviceElements = me.elements.filter('div[data-device="' + dev + '"]'); }
-		
-        deviceElements.each(function(index) {
+		me.elements.filter('div[data-device="' + dev + '"]')
+        .each(function(index) {
 			var elem = $(this);
+			var mytext ="";
 			var count = elem.getReading('WarnCount').val;
 			if (count > 0) {
 				var colortranslation;
 				colortranslation = colormap[elem.getReading('WarnUWZLevel_Color').val];
-				while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}
-				
-				
+				while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}				
 				if ( count >= elem.data('max') ) { count = elem.data('max') - 1; } 
 				else { count = elem.getReading('WarnCount').val - 1;}
 				
@@ -103,19 +114,19 @@ var Modul_uwz = function () {
 						var colortranslation;
 						colortranslation = colormap[elem.getReading('WarnUWZLevel_Color').val];
 						while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}
-						mytext += "<div class=\"\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:#222222;background-color:"+colortranslation +";\">"; }
+						mytext += "<div class=\"cell\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:#222222;background-color:"+colortranslation +";\">"; }
 					else if (typeof elem.getReading('Warn_'+i+'_uwzLevel').val != "undefined"){ 
 						var colortranslation;
 						colortranslation = colormap[elem.getReading('Warn_'+i+'_uwzLevel').val];
 						while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}				
-						mytext += "<div class=\"\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:#222222;background-color:"+colortranslation +";\">"; }
+						mytext += "<div class=\"cell\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:#222222;background-color:"+colortranslation +";\">"; }
 					else { mytext += "<div class=\"cell\">"; }
 									
 					elem.data('detail').forEach(function(spalte) {
-						if (spalte == 'IconURL'){ mytext += "<div class=\"col-1-5 inline cell left-align\"><img src=\"" + elem.getReading('Warn_'+i+'_'+spalte).val + "\" width=\""+elem.data('imgsize')+"\" height=\""+elem.data('imgsize')+"\ class=\"cell centered\"></div>"; }
-						if (spalte == 'ShortText'){ mytext += "<div class=\"col-3-4 inline cell\"><div class=\"cell centered  left-align\">" + elem.getReading('Warn_'+i+'_'+spalte).val ;}
-						if (spalte == 'LongText'){ mytext += "<div class=\"col-3-4 inline cell left-align\"><div class=\"cell centered  left-align\">" + elem.getReading('Warn_'+i+'_'+spalte).val;}
-						if (spalte == 'WarnTime'){ mytext += " Gültig vom " + elem.getReading('Warn_'+i+'_Start_Date').val + " " + elem.getReading('Warn_'+i+'_Start_Time').val + " Uhr bis "+ elem.getReading('Warn_'+i+'_End_Date').val + " " + elem.getReading('Warn_'+i+'_End_Time').val + " Uhr.";}				
+						if (spalte == 'IconURL'){ mytext += "<div class=\"col-1-5 inline cell\"><img src=\"" + elem.getReading('Warn_'+i+'_'+spalte).val + "\" width=\""+elem.data('imgsize')+"\" height=\""+elem.data('imgsize')+"\ class=\"cell centered\"></div>"; }
+						if (spalte == 'ShortText'){ mytext += "<div class=\"col-3-4 inline cell\"><div class=\"cell centered left-align " + elem.data('shttxtstyle') + "\">" + elem.getReading('Warn_'+i+'_'+spalte).val ;}
+						if (spalte == 'LongText'){ mytext += "<div class=\"col-3-4 inline cell\"><div class=\"cell centered left-align " + elem.data('lngtxtstyle') + "\">" + elem.getReading('Warn_'+i+'_'+spalte).val;}
+						if (spalte == 'WarnTime'){ mytext += elem.data('textdivider') + "Gültig vom " + elem.getReading('Warn_'+i+'_Start_Date').val + " " + elem.getReading('Warn_'+i+'_Start_Time').val + " Uhr bis "+ elem.getReading('Warn_'+i+'_End_Date').val + " " + elem.getReading('Warn_'+i+'_End_Time').val + " Uhr.";}				
 					});
 					mytext += "</div></div></div>";
 				}
@@ -132,8 +143,7 @@ var Modul_uwz = function () {
         widgetname: 'uwz',
         init: init,
         update: update,
-    });
-	
+    });	
 	return me;
 };
 //
