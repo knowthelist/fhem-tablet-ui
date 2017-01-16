@@ -55,14 +55,14 @@ UPD 2016-11-25_00:14:16 74077 www/tablet/fonts/Roboto-Thin-webfont.svg
 UPD 2016-11-25_00:14:16 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2016-11-25_00:14:16 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2016-11-25_00:14:16 3265 www/tablet/ftui_snippet_tester.html
-UPD 2017-01-11_13:12:22 13816 www/tablet/index-example.html
+UPD 2017-01-14_00:50:00 13042 www/tablet/index-example.html
 UPD 2016-11-25_00:14:16 2782 www/tablet/index_empty.html
 UPD 2017-01-11_13:20:22 55279 www/tablet/js/fhem-tablet-ui.js
 UPD 2017-01-11_13:20:22 26729 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-11-25_00:14:16 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-12-21_08:04:04 6503 www/tablet/js/widget_agenda.js
 UPD 2016-11-30_20:37:28 1708 www/tablet/js/widget_button.js
-UPD 2016-12-02_21:13:57 5617 www/tablet/js/widget_calview.js
+UPD 2017-01-16_18:17:36 5907 www/tablet/js/widget_calview.js
 UPD 2016-12-09_22:10:18 197310 www/tablet/js/widget_chart.js
 UPD 2016-11-30_20:45:50 4076 www/tablet/js/widget_checkbox.js
 UPD 2016-11-30_21:03:12 3033 www/tablet/js/widget_circlemenu.js
@@ -117,6 +117,7 @@ UPD 2016-11-30_20:36:18 1504 www/tablet/js/widget_switch.js
 UPD 2016-11-30_20:37:06 1995 www/tablet/js/widget_symbol.js
 UPD 2016-11-30_20:38:47 9122 www/tablet/js/widget_thermostat.js
 UPD 2016-11-25_00:14:16 2587 www/tablet/js/widget_tts.js
+UPD 2017-01-16_18:17:36 6477 www/tablet/js/widget_uwz.js
 UPD 2016-11-30_22:53:21 8467 www/tablet/js/widget_volume.js
 UPD 2016-12-05_21:03:37 988 www/tablet/js/widget_wakeup.js
 UPD 2016-12-09_22:27:03 95024 www/tablet/js/widget_wdtimer.js
