@@ -55,7 +55,7 @@ UPD 2016-11-25_00:14:16 74077 www/tablet/fonts/Roboto-Thin-webfont.svg
 UPD 2016-11-25_00:14:16 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2016-11-25_00:14:16 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
 UPD 2016-11-25_00:14:16 3265 www/tablet/ftui_snippet_tester.html
-UPD 2017-01-14_00:50:00 13042 www/tablet/index-example.html
+UPD 2017-01-16_22:12:50 13816 www/tablet/index-example.html
 UPD 2016-11-25_00:14:16 2782 www/tablet/index_empty.html
 UPD 2017-01-11_13:20:22 55279 www/tablet/js/fhem-tablet-ui.js
 UPD 2017-01-11_13:20:22 26729 www/tablet/js/fhem-tablet-ui.min.js
