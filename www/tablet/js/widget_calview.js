@@ -1,6 +1,8 @@
 // Initial Version from Chris1284
 // Modifications for 2.2 klausw	4.7.2016
 // Modifications for 2.4 mario stephan	2.12.2016
+// Modifications for 2.6 chris1284 08.12.2016 - Ursprüngliche Darstellung wieder hergestellt
+// Modifications for 2.8 chris1284 28.12.2016 - widget an aktuelle calview angepasst
 // data-get			all|today|tomorrow 
 // data-start		none|notoday|notomorrow		(only for data-get="all" -> dont show Entrys from today or today and tomorrow)
 // data-max			number how much Entries are maximal listed
@@ -25,7 +27,7 @@ var Modul_calview = function () {
             elem.initData('get', 'STATE');
             elem.initData('start', 'all');
             elem.initData('color', '');
-            elem.initData('detail', ["bdate", "btime", "summary", "location"]);
+            elem.initData('detail', ["bdate", "btime", "summary", "location","edate","etime","source","age","description"]);
             elem.initData('showempty', 'true');
 
             var device = $(this).data('device');
@@ -76,6 +78,11 @@ var Modul_calview = function () {
             var get = elem.data('get');
             var color = elem.data('color');
             elem.css("color", ftui.getStyle('.' + color, 'color') || color);
+			
+			elem.getReading('c-term').val;
+            elem.getReading('c-today').val;
+            elem.getReading('c-tomorrow').val;
+			
             if (elem.data('get') == 'STATE') {
                 var value = elem.getReading('get').val;
                 if (ftui.isValid(value)) {
@@ -85,7 +92,7 @@ var Modul_calview = function () {
                 text = "";
                 var beginn = 1;
                 var zeitrahmen = {
-                    "today": "Heute ",
+					"today": "Heute ",
                     "tomorrow": "Morgen ",
                     "all": ""
                 };
@@ -112,13 +119,14 @@ var Modul_calview = function () {
                     for (var i = beginn; i <= ct; i++) {
                         num = "00" + i;
                         num = num.slice(-3);
-                        text += "<div class=\"cell\">";
-                        elem.data('detail').forEach(function (spalte) {
-                            if (typeof elem.getReading(wann + '_' + num + '_' + spalte).val !== "undefined") {
-                                text += "<div class=\"cell inline\" >" + elem.getReading(wann + '_' + num + '_' + spalte).val + "</div>";
-                            }
-                        });
-                        text += "</div>";
+								colcounter = elem.data('detail').length;
+								elem.data('detail').forEach(function(spalte) {
+									if ( typeof elem.getReading(wann+'_'+num+'_'+spalte).val != "undefined" ) {
+										text += "<div class=\"col-1-"+colcounter+"\" >";
+										text += "<div data-type=\"label\" class=\"left-align\">" + elem.getReading(wann+'_'+num+'_'+spalte).val + "</div>";
+										text += "</div>";
+									}
+								});
                     }
                 }
                 elem.html(text);
