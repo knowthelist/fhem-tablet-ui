@@ -88,7 +88,7 @@ var Modul_spinner = function () {
 
     function onClicked(elem, factor) {
 
-        if (me.isReadOnly(elem)) {
+        if (elem.hasClass('lock')) {
             elem.addClass('fail-shake');
             setTimeout(function () {
                 elem.removeClass('fail-shake');
@@ -157,9 +157,31 @@ var Modul_spinner = function () {
         if (elem.isDeviceReading('text-color')) {
             me.addReading(elem, 'text-color');
         }
-        if (elem.isDeviceReading('lock')) {
-            me.addReading(elem, 'lock');
+
+        // reachable parameter
+        elem.initData('reachable-on', '!off');
+        elem.initData('reachable-off', 'false|0');
+        me.addReading(elem, 'reachable');
+
+        // if hide reading is defined, set defaults for comparison
+        if (elem.isValidData('hide')) {
+            elem.initData('hide-on', 'true|1|on');
         }
+        elem.initData('hide', 'STATE');
+        if (elem.isValidData('hide-on')) {
+            elem.initData('hide-off', '!on');
+        }
+        me.addReading(elem, 'hide');
+
+        // if lock reading is defined, set defaults for comparison
+        if (elem.isValidData('lock')) {
+            elem.initData('lock-on', 'true|1|on');
+        }
+        elem.initData('lock', elem.data('get'));
+        if (elem.isValidData('lock-on')) {
+            elem.initData('lock-off', '!on');
+        }
+        me.addReading(elem, 'lock');
     }
 
     function init_ui(elem) {
@@ -267,6 +289,11 @@ var Modul_spinner = function () {
                 onReleased(elem);
             e.preventDefault();
         });
+        
+        //Overlay
+        elem.append($('<div/>', {
+            class: 'overlay'
+        }));
     }
 
     function update(dev, par) {
@@ -296,11 +323,13 @@ var Modul_spinner = function () {
             });
 
         //extra reading for lock
-        me.elements.filterDeviceReading('lock', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
-                elem.data('readonly', elem.getReading('lock').val);
-            });
+        me.update_lock(dev, par);
+
+        //extra reading for hide
+        me.update_hide(dev, par);
+
+        //extra reading for reachable
+        me.update_reachable(dev, par);
     }
 
     // public

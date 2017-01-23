@@ -8,7 +8,7 @@
 - usage of "use strict" mode to make code saver and faster
 - code cleanup according jshint 
 
-2.5.0 (xx.01.2017)
+2.5.0 (23.01.2017)
 - dynamical load of main css and libs
 - dynamical calculation of gridster tiles according window width / height
 - stabilised load of templates 
