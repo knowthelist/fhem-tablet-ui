@@ -217,8 +217,11 @@ var Modul_volume = function () {
                 }
             });
 
-        //extra reading for readOnly
+        // update from lock reading
         me.update_lock(dev, par);
+
+        //extra reading for reachable
+        me.update_reachable(dev, par);
 
         isUpdating = false;
     }

@@ -52,11 +52,9 @@
 <body>
     <div class="gridster">
         <ul>
-
             <!-- top left -->
             <li data-row="1" data-col="1" data-sizex="3" data-sizey="4">
                 <header>Control</header>
-                <!-- place your widget here -->
                 <div class="hbox">
                     <div class="vbox">
                         <div data-type="switch" data-device="ftuitest" data-get="readonly" data-set="readonly" data-cmd="setreading" data-get-on="true" data-get-off="false" data-set-on="true" data-set-off="false"></div>
@@ -79,7 +77,7 @@
             <li data-row="5" data-col="1" data-sizex="3" data-sizey="3">
                 <header>Set ReadOnly</header>
                 <div class="center">
-                    <div data-type="knob" data-device="ftuitest" data-lock="readonly" class="green"></div>
+                    <div data-type="knob" data-device="ftuitest" data-lock="readonly"></div>
                 </div>
             </li>
 
@@ -90,22 +88,24 @@
                     <div data-type="knob" data-device="ftuitest" data-step="0.5"></div>
                 </div>
             </li>
-            <li data-row="5" data-col="4" data-sizex="6" data-sizey="3">
-                <header>Step 2 and blue</header>
-                <div class="center">
-                    <div data-type="knob" data-device="ftuitest" data-step="2" class="blue"></div>
-                </div>
-            </li>
+
             <li data-row="1" data-col="10" data-sizex="3" data-sizey="4">
                 <header>Reachable</header>
                 <!-- place your widget here -->
                 <div class="center">
-                    <div data-type="knob" data-device="ftuitest" data-step="2" class="red" data-reachable="reachable"></div>
+                    <div data-type="thermostat" data-device="ftuitest" data-cmd="setreading" data-valve="ValvePosition" data-reachable="reachable"></div>
                 </div>
             </li>
             <li data-row="5" data-col="10" data-sizex="3" data-sizey="3">
                 <header>EXAMPLE5</header>
                 <!-- place your widget here -->
+            </li>
+            <li data-row="5" data-col="4" data-sizex="6" data-sizey="3">
+                <header>EXAMPLE6</header>
+                <!-- place your widget here -->
+                <div class="center">
+                    <div data-type="thermostat" data-device="dummy1" data-get="volume" data-temp="volume" data-max="80" data-min="0" data-valve="volume" data-set="volume" data-cmd="setreading" class="cell"></div>
+                </div>
             </li>
         </ul>
     </div>

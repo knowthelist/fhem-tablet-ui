@@ -103,7 +103,17 @@ var Modul_thermostat = function () {
         return false;
     }
 
-    function onChange(v) {}
+    function onChange(v) {
+        /*jshint validthis: true */
+        var touchWidth = this.$.data('touch-width');
+        var touchHeight = this.$.data('touch-height');
+        if (this.$c.height() !== touchHeight) {
+            this.$c.height(touchHeight + 'px');
+        }
+        if (this.$c.width() !== touchWidth) {
+            this.$c.width(touchWidth + 'px');
+        }
+    }
 
     function onRelease(v) {
         /*jshint validthis: true */
@@ -114,6 +124,14 @@ var Modul_thermostat = function () {
             } else if (v == this.o.max && this.$.data('boost') != -1) {
                 v = this.$.data('boost');
             }
+            // if size has been changed on change then back to normal
+            if (this.$c.height() !== this.h) {
+                this.$c.height(this.h + 'px');
+            }
+            if (this.$c.width() !== this.w) {
+                this.$c.width(this.w + 'px');
+            }
+
             var mode = this.$.getReading(this.o.mode).val;
             if (mode === 'auto')
                 v = mode + ' ' + v;
@@ -135,6 +153,8 @@ var Modul_thermostat = function () {
             elem.initData('mode', '');
             elem.initData('height', 100);
             elem.initData('width', 100);
+            elem.initData('touch-height', elem.data('height'));
+            elem.initData('touch-width', elem.data('width'));
             elem.initData('max', 30);
             elem.initData('min', 10);
             elem.initData('cursor', 6);
@@ -227,6 +247,9 @@ var Modul_thermostat = function () {
 
         //extra reading for readOnly
         me.update_lock(dev, par);
+
+        //extra reading for reachable
+        me.update_reachable(dev, par);
 
         isUpdating = false;
     }

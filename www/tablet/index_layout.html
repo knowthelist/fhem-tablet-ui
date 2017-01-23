@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.5.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <!-- vbox hbox -->
+            <li data-row="1" data-col="1" data-sizey="2" data-sizex="2">
+                <header>vbox > hbox</header>
+                <div class="vbox">
+                    <div class="hbox">
+                        <div class="red" data-type="switch" data-device="dummy1"></div>
+                        <div class="green" data-type="switch" data-device="dummy2"></div>
+                    </div>
+                    <div class="hbox">
+                        <div class="blue" data-type="switch" data-device="dummy3"></div>
+                        <div class="orange" data-type="switch" data-device="dummy4"></div>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- Sheet > Row > Cell -->
+            <li data-row="1" data-col="3" data-sizey="2" data-sizex="2">
+                <header>Sheet > Row > Cell</header>
+                <div class="sheet">
+                    <div class="row">
+                        <div class="cell" data-type="symbol" data-device="dummy1"></div>
+                        <div class="cell" data-type="symbol" data-device="dummy2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="cell" data-type="symbol" data-device="dummy3"></div>
+                        <div class="cell" data-type="symbol" data-device="dummy4"></div>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- row > col-->
+            <li data-row="1" data-col="5" data-sizey="2" data-sizex="2">
+                <header>row > col</header>
+                <div class="row">
+                    <div class="col" data-type="symbol" data-device="dummy1"></div>
+                    <div class="col" data-type="symbol" data-device="dummy2"></div>
+                </div>
+                <div class="row">
+                    <div class="col" data-type="symbol" data-device="dummy3"></div>
+                    <div class="col" data-type="symbol" data-device="dummy4"></div>
+                </div>
+            </li>
+            
+            <!-- -->
+            <li data-row="1" data-col="7" data-sizey="2" data-sizex="2">
+                <header>???</header>
+                <div class="row">
+                    <div class="col" data-type="symbol" data-device="dummy1"></div>
+                    <div class="col" data-type="symbol" data-device="dummy2"></div>
+                </div>
+                <div class="row">
+                    <div class="col" data-type="symbol" data-device="dummy3"></div>
+                    <div class="col" data-type="symbol" data-device="dummy4"></div>
+                </div>
+            </li>
+            
+            <!-- vbox hbox -->
+            <li data-row="3" data-col="1" data-sizey="2" data-sizex="2">
+                <header>vbox > hbox items-space-*</header>
+                <div class="vbox">
+                    <div class="hbox items-space-between">
+                        <div class="" data-type="symbol" data-device="dummy1"></div>
+                        <div class="" data-type="symbol" data-device="dummy2"></div>
+                    </div>
+                    <div class="hbox items-space-around">
+                        <div class="" data-type="symbol" data-device="dummy3"></div>
+                        <div class="" data-type="symbol" data-device="dummy4"></div>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- Sheet > Row > Cell -->
+            <li data-row="3" data-col="3" data-sizey="2" data-sizex="2">
+                <header>Sheet > Row > Cell *-Align</header>
+                <div class="sheet">
+                    <div class="row">
+                        <div class="cell left-align" data-type="symbol" data-device="dummy1"></div>
+                        <div class="cell right-align" data-type="symbol" data-device="dummy2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="cell top-align" data-type="symbol" data-device="dummy3"></div>
+                        <div class="cell bottom-align" data-type="symbol" data-device="dummy4"></div>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- row > col-->
+            <li data-row="3" data-col="5" data-sizey="2" data-sizex="2">
+                <header>row > col-*-* </header>
+                <div class="row">
+                    <div class="col-1-3" data-type="symbol" data-device="dummy1"></div>
+                    <div class="col-2-3" data-type="symbol" data-device="dummy2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-4-5" data-type="symbol" data-device="dummy1"></div>
+                    <div class="col-1-5" data-type="symbol" data-device="dummy2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-1-2" data-type="symbol" data-device="dummy1"></div>
+                    <div class="col-1-2" data-type="symbol" data-device="dummy2"></div>
+                </div>
+            </li>
+                            
+            <!-- -->
+            <li data-row="3" data-col="7" data-sizey="2" data-sizex="2">
+                <header>???</header>
+                <div class="row">
+                    <div class="col" data-type="symbol" data-device="dummy1"></div>
+                    <div class="col" data-type="symbol" data-device="dummy2"></div>
+                </div>
+                <div class="row">
+                    <div class="col" data-type="symbol" data-device="dummy3"></div>
+                    <div class="col" data-type="symbol" data-device="dummy4"></div>
+                </div>
+            </li>
+            
+            <!-- vbox hbox -->
+            <li data-row="5" data-col="1" data-sizey="2" data-sizex="2">
+                <header>vbox > hbox items-space-*</header>
+                <div class="vbox">
+                    <div class="hbox items-space-between">
+                        <div class="" data-type="symbol" data-device="dummy1"></div>
+                        <div class="" data-type="symbol" data-device="dummy2"></div>
+                    </div>
+                    <div class="hbox items-space-around">
+                        <div class="" data-type="symbol" data-device="dummy3"></div>
+                        <div class="" data-type="symbol" data-device="dummy4"></div>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- Sheet > Row > Cell -->
+            <li data-row="5" data-col="3" data-sizey="2" data-sizex="2">
+                <header>Sheet > Row > Cell *-Align</header>
+                <div class="sheet">
+                    <div class="row">
+                        <div class="cell left-align" data-type="symbol" data-device="dummy1"></div>
+                        <div class="cell right-align" data-type="symbol" data-device="dummy2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="cell top-align" data-type="symbol" data-device="dummy3"></div>
+                        <div class="cell bottom-align" data-type="symbol" data-device="dummy4"></div>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- row > col-->
+            <li data-row="5" data-col="5" data-sizey="2" data-sizex="2">
+                <header>row > col-*-* </header>
+                <div class="row">
+                    <div class="col-1-3" data-type="symbol" data-device="dummy1"></div>
+                    <div class="col-2-3" data-type="symbol" data-device="dummy2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-4-5" data-type="symbol" data-device="dummy1"></div>
+                    <div class="col-1-5" data-type="symbol" data-device="dummy2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-1-2" data-type="symbol" data-device="dummy1"></div>
+                    <div class="col-1-2" data-type="symbol" data-device="dummy2"></div>
+                </div>
+            </li>
+            
+                        
+            <!-- -->
+            <li data-row="5" data-col="7" data-sizey="2" data-sizex="2">
+                <header>???</header>
+                <div class="row">
+                    <div class="col" data-type="symbol" data-device="dummy1"></div>
+                    <div class="col" data-type="symbol" data-device="dummy2"></div>
+                </div>
+                <div class="row">
+                    <div class="col" data-type="symbol" data-device="dummy3"></div>
+                    <div class="col" data-type="symbol" data-device="dummy4"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -23,12 +23,6 @@ ul, ol {
     list-style: none;
 }
 
-[data-type="symbol"].big, [data-type="multistatebutton"].big,
-[data-type="switch"].big, [data-type="button"].big,
-[data-type="push"].big, [data-type="pagebutton"].big {
-    font-size: 200% !important;
-}
-
 .uline{
     border-bottom: 1px solid #888;
 }
@@ -79,7 +73,7 @@ option {background-color: #ffffff;}
 .switch.on{color:#eee;background-color:#0088CC;}
 .switch.off{color:#eee;background-color:#aaa;}
 .push.on{color:#0088CC;background-color:#0088CC;}
-.push.off{color:#888;background-color:#888;}
+.push.off{color:#888888;background-color:#888888;}
 .thermostat.tkcolor{color:#888;}
 .thermostat.fgcolor{color:#555;}
 .thermostat.input{color:#444;}

@@ -549,7 +549,7 @@ var Modul_weather = function () {
 
     function init_attr(elem) {
 
-        elem.data('get', elem.data('get') || 'STATE');
+        elem.initData('get',  'STATE');
         elem.addClass('weather');
 
         me.addReading(elem, 'get');
@@ -557,7 +557,7 @@ var Modul_weather = function () {
         var fhem_path = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
         fhem_path = fhem_path.replace(/\/$/, '');
         var image_path = $("meta[name='weather_image_path']").attr("content") || fhem_path + '/images/default/weather/';
-        elem.data('image-path', elem.data('image-path') || image_path);
+        elem.initData('image-path', image_path);
         if (!elem.data('image-path').match(/\/$/)) {
             elem.data('image-path', elem.data('image-path') + '/');
         }

@@ -1243,6 +1243,8 @@
             klass: '',
             min: 0,
             max: 100,
+            handleDiameter: 20,
+            touchDiameter: 42,
             start: null,
             step: null,
             vertical: false
@@ -1450,6 +1452,7 @@
                 changed = false;
 
             value = (this.options.decimal) ? (Math.round(value * 100) / 100) : Math.round(value);
+
             changed = (this.element.value != value) ? true : false;
 
             this.element.value = value;
@@ -1605,6 +1608,9 @@
 
         function Horizontal() {
             Powerange.apply(this, arguments);
+            this.handle.style.width = this.options.handleDiameter + "px";
+            this.handle.style.height = this.options.handleDiameter + "px";
+            this.handle.style.top = - (this.options.handleDiameter)/2 + 2 + "px";
             if (this.options.step) this.step($(this.slider).width(), $(this.handle).width());
             this.setStart(this.options.start);
         }
@@ -1666,8 +1672,14 @@
                 }
                 this.startX = offset - window.scrollX + this.handle.clientWidth / 2;
 
-            } else
+            } else {
                 this.startX = e.clientX;
+                this.ht = $(this.handle).css("top");
+                this.handle.style.marginLeft = - (this.options.touchDiameter-this.options.handleDiameter)/4 + "px";
+                this.handle.style.width = this.options.touchDiameter + "px";
+                this.handle.style.height = this.options.touchDiameter + "px";
+                this.handle.style.top = parseInt(this.handle.style.top) - (this.options.touchDiameter-this.options.handleDiameter)/2  +'px';
+            }
             this.handleOffsetX = this.handle.offsetLeft;
             this.restrictHandleX = $(this.slider).width() - $(this.handle).width();
             this.unselectable(this.slider, true);
@@ -1700,7 +1712,7 @@
                 this.setPosition(position);
             }
 
-            this.setValue(this.handle.style.left, $(this.slider).width() - $(this.handle).width());
+            this.setValue(this.handle.style.left, $(this.slider).width() - this.options.handleDiameter);
         };
 
         /**
@@ -1712,7 +1724,12 @@
 
         Horizontal.prototype.onmouseup = function (e) {
             this.unselectable(this.slider, false);
+            this.handle.style.marginLeft = "0px";
+            this.handle.style.width = this.options.handleDiameter + "px";
+            this.handle.style.height = this.options.handleDiameter + "px";
+            this.handle.style.top = this.ht;
             this.setValue(this.handle.style.left, $(this.slider).width() - $(this.handle).width());
+
         };
     });
     require.register("powerange/lib/vertical.js", function (exports, require, module) {
@@ -1746,6 +1763,8 @@
 
         function Vertical() {
             Powerange.apply(this, arguments);
+            this.handle.style.width = this.options.handleDiameter + "px";
+            this.handle.style.height = this.options.handleDiameter + "px";
             classes(this.slider).add('vertical');
             if (this.options.step) this.step($(this.slider).height(), $(this.handle).height());
             this.setStart(this.options.start);
@@ -1807,8 +1826,12 @@
                     elm = elm.offsetParent;
                 }
                 this.startY = offset - window.scrollY + this.handle.clientHeight / 2;
-            } else
+            } else {
                 this.startY = e.clientY;
+                this.handle.style.marginLeft = - (this.options.touchDiameter-this.options.handleDiameter)/2 + "px";
+                this.handle.style.width = this.options.touchDiameter + "px";
+                this.handle.style.height = this.options.touchDiameter + "px";
+            }
             this.handleOffsetY = $(this.slider).height() - $(this.handle).height() - this.handle.offsetTop;
             this.restrictHandleY = $(this.slider).height() - $(this.handle).height();
             this.unselectable(this.slider, true);
@@ -1851,6 +1874,10 @@
 
         Vertical.prototype.onmouseup = function (e) {
             this.unselectable(this.slider, false);
+            this.handle.style.marginLeft = "0px";
+            this.handle.style.width = this.options.handleDiameter + "px";
+            this.handle.style.height = this.options.handleDiameter + "px";
+            //this.handle.style.top = this.ht;
             this.setValue(this.handle.style.bottom, $(this.slider).height() - $(this.handle).height());
         };
     });

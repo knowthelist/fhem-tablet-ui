@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * !!!! Evaluation version - run only in a staging enviroment !!!!
+     *
+     * - create a new folder named 'tablet_eval' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet_eval
+     * - add 'define TABLETUIEVAL HTTPSRV ftui_eval ./www/tablet_eval Tablet-EVAL' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet_eval/
+     */
+    -->
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FTUI Circlemenu</title>
+</head>
+<body>
+<div class="gridster">
+<ul>
+  <li data-row="1" data-col="1" data-sizex="3" data-sizey="4">
+    <header>vertical</header>
+    <!-- place your widget here -->
+    <div data-type="circlemenu" class="keepopen " data-border="square" data-direction="vertical" data-item-width="50" data-item-height="50" data-circle-radius="60">
+    <ul>
+      <li><div data-type="push" data-icon="fa-wrench"></div></li>
+      <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level -6" data-icon="">-6</div></li>
+      <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level -2" data-icon="">-2</div></li>
+      <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level 0" data-icon="">0</div></li>
+      <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level +3" data-icon="">2</div></li>
+      <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level +9" data-icon="">9</div></li>
+      <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level +C" data-icon="">12</div></li>
+    </ul>
+        </div>
+</li>
+<li data-row="5" data-col="1" data-sizex="3" data-sizey="3">
+  <header>MinMax-Fix</header>
+  <!-- place your widget here -->
+</li>
+<li data-row="1" data-col="4" data-sizex="6" data-sizey="4">
+<header>MinMax-Default</header>
+    <!-- place your widget here -->
+    <div class="center">
+    <div data-type="circlemenu" class="keepopen">
+        <ul>
+            <li><div data-type="symbol" data-icon="fa-lightbulb-o" data-background-icon="fa-circle-o" data-device="AlleLichterOGBad"
+                    data-get-on='on' data-get-off='off'></div></li>
+
+            <li><div data-type="push" data-device="aLs_OG_Bad_Spots"></div><div class="top-narrow">Spots</div></li>
+            <li><div data-type="switch" data-device="aLs_OG_Bad_Spiegellicht"></div><div class="top-narrow">Spiegel</div></li>
+            <li><div data-type="switch" data-device="aLs_OG_Bad_Lichtband"></div><div class="top-narrow">Fenster</div></li>
+            <li><div data-type="push" data-device="TestDimmer" data-set-on="5" data-icon="fa-rss">55</div></li>
+            <li><div data-type="push" data-device="TestDimmer" data-set-on="10" data-icon="fa-bed"></div><div class="">Fenster</div></li>
+        </ul>
+    </div>
+
+    </div>
+</li>
+<li data-row="1" data-col="10" data-sizex="3" data-sizey="4">
+<header>PART</header>
+    <!-- place your widget here -->
+</li>
+<li data-row="5" data-col="10" data-sizex="3" data-sizey="3">
+  <header>EXAMPLE5</header>
+  <!-- place your widget here -->
+</li>
+<li data-row="5" data-col="4" data-sizey="3" data-sizex="3">
+<header>Label in Label</header>
+    <div class="center">
+  <div data-type="circlemenu" class="keepopen">
+          <ul>
+                  <li><div data-type="symbol" data-device="TestDimmer"
+                          data-icon="fa-lightbulb-o"
+                          data-background-icon="fa-circle"
+                          data-on-color="#282828"
+                          data-off-color="#282828"
+                          data-get-on="[1-9][0-9]*"
+                          data-get-off="0"
+                          ></div></li>
+                  <li><div data-type="push" data-device="TestDimmer"
+                          data-set-on="off"
+                          data-icon=""><div>0</div></div></li>
+                  <li><div data-type="push" data-device="TestDimmer" data-set-on="5" data-icon="fa-rss"></div>5%</li>
+                  <li><div data-type="push" data-device="TestDimmer" data-set-on="10" data-icon=""><div class="mini">10%</div></div></li>
+                  <li><div data-type="push" data-device="TestDimmer" data-set-on="25" data-icon=""><div class="mini">25%</div></li>
+                  <li><div data-type="push" data-device="TestDimmer" data-set-on="50" data-icon=""><div class="mini">50%</div></div></li>
+                  <li><div data-type="push" data-device="TestDimmer" data-set-on="100" data-icon=""><div class="mini">100%</div></div></li>
+          </ul>
+      </div>
+      </div>
+</li>
+
+</ul>
+</div>
+</body>
+</html>

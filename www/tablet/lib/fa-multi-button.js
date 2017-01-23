@@ -28,6 +28,7 @@
 
         // private variables;
         var elem = this;
+        var faElem;
         var state = false;
         // private for dimmer
         var canvasScale;
@@ -68,41 +69,55 @@
 
             options = $.extend({}, options, elem.data());
 
-            elem.addClass('fa-stack');
+            var content = (elem.html() !== elem.text()) ? elem.find('*').detach() : jQuery('<div>', {}).text(elem.text());
+            content.attr('id', 'fg');
+            content.addClass('fa-stack-1x');
+
+            elem.html('');
+
+            faElem = $('<div/>', {
+                class: 'famultibutton'
+            }).appendTo(elem);
+
+
+            faElem.addClass('fa-stack');
 
             jQuery('<i/>', {
                     'id': 'bg',
                     'class': 'fa fa-stack-2x'
                 }).addClass(options['backgroundIcon'])
-                .appendTo(elem);
+                .appendTo(faElem);
 
             jQuery('<i/>', {
                 'id': 'fg',
                 'class': 'fa fa-stack-1x'
-            }).addClass(options['icon']).appendTo(elem);
+            }).addClass(options['icon']).appendTo(faElem);
+
+            content.appendTo(faElem);
 
             if (options['classes'] && options['classes'].length > 0) {
                 for (var i = 0; i < options['classes'].length; i++) {
-                    elem.addClass(options['classes'][i]);
+                    faElem.addClass(options['classes'][i]);
                 }
             }
+
+            elem.o = options;
 
             setOff();
 
             if (options['mode'] == 'dimmer') {
-                $('<canvas>').attr({
-                    id: 'scale'
-                }).appendTo(elem);
+                canvasScale = $('<canvas>').attr({
+                    id: 'scale',
+                    height: elem.height() + 'px',
+                    width: elem.width() + 'px'
+                }).appendTo(faElem);
 
-                canvasScale = elem.find('canvas#scale');
-                canvasScale.css({
-                    'height': elem.innerHeight() + 4,
-                });
-                baseTop = parseInt(canvasScale.offset().top) - parseInt(elem.offset().top);
+                baseTop = parseInt(canvasScale.offset().top) - parseInt(faElem.offset().top);
+
                 drawScale();
                 moveScale();
             }
-            elem.o = options;
+
             elem.data("famultibutton", elem);
 
             return elem;
@@ -112,17 +127,16 @@
 
             state = true;
 
-            elem.children().filter('#bg').css("color", options['onBackgroundColor']);
-            elem.children().filter('#fg').css("color", options['onColor']);
+            elem.find('#bg').css("color", options['onBackgroundColor']);
+            elem.find('#fg').css("color", options['onColor']);
             elem.trigger('setOn');
         }
 
         function setOff() {
 
             state = false;
-
-            elem.children().filter('#bg').css("color", options['offBackgroundColor']);
-            elem.children().filter('#fg').css("color", options['offColor']);
+            elem.find('#bg').css("color", options['offBackgroundColor']);
+            elem.find('#fg').css("color", options['offColor']);
             elem.trigger('setOff');
         }
 
@@ -140,11 +154,11 @@
                     // Fade the colors in the step function
                     step: function (now, fx) {
                         var completion = (now - fx.start) / (fx.end - fx.start);
-                        elem.children().filter('#bg').css('color', getGradientColor(
+                        elem.find('#bg').css('color', getGradientColor(
                             options['onBackgroundColor'],
                             options['offBackgroundColor'],
                             completion));
-                        elem.children().filter('#fg').css('color', getGradientColor(
+                        elem.find('#fg').css('color', getGradientColor(
                             options['onColor'],
                             options['offColor'],
                             completion));
@@ -217,12 +231,12 @@
 
                     $canvasProgress = $('<canvas>').attr({
                         id: 'progress'
-                    }).appendTo(elem);
+                    }).appendTo(faElem);
                 }
                 var canvas = $canvasProgress[0];
                 if (canvas) {
-                    canvas.height = elem.height();
-                    canvas.width = elem.width();
+                    canvas.height = faElem.height();
+                    canvas.width = faElem.width();
                     var x = canvas.width / 2;
                     var y = canvas.height / 2;
                     if (canvas.getContext) {
@@ -258,8 +272,8 @@
         function drawScale() {
 
             var canvas = canvasScale[0];
-            canvas.height = elem.innerHeight();
-            canvas.width = elem.innerWidth();
+            canvas.height = faElem.innerHeight();
+            canvas.width = faElem.innerWidth();
 
             if (canvas.getContext) {
 
@@ -301,12 +315,11 @@
 
             if (isDrag) {
                 canvasScale.animate({
-                    left: -elem.innerWidth() * 0.6 + 'px',
+                    left: -faElem.innerWidth() * 0.6 + 'px'
                 });
             } else {
                 canvasScale.animate({
-                    left: elem.innerWidth() / 5 + 'px',
-                    top: baseTop
+                    left: faElem.innerWidth() / 5 + 'px'
                 });
             }
 
@@ -325,6 +338,7 @@
         var moveEventType = ((onlyTouch) ? 'touchmove' : 'touchmove mousemove');
         var releaseEventType = ((onlyTouch) ? 'touchend' : 'touchend mouseup');
         var leaveEventType = ((onlyTouch) ? 'touchleave' : 'touchleave mouseout');
+        var lastState;
 
         if (options['mode'] == 'push') {
             this.on(clickEventType, function (e) {
@@ -339,7 +353,7 @@
                 if (Math.abs(touch_pos_y - $(window).scrollTop()) > 3 ||
                     (Math.abs(touch_pos_x - $(window).scrollLeft()) > 3)) return;
 
-                var lastState = state;
+                lastState = state;
                 setOn();
 
                 if (typeof options['toggleOn'] === 'function') {
@@ -355,6 +369,54 @@
                         setOn();
                     }, 1000);
                 }
+
+                setTimeout(function () {
+                    if (state === true) {
+                        setOn();
+                    }
+                }, 1200);
+
+                elem.trigger('clicked');
+
+                return false;
+            });
+        } else if (options['mode'] == 'updown') {
+            this.on(clickEventType, function (e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+
+                lastState = state;
+                setOn();
+
+                if (typeof options['toggleOn'] === 'function') {
+                    options['toggleOn'].call(this);
+                }
+
+            });
+            this.on(releaseEventType, function (e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+
+                if (typeof options['toggleOff'] === 'function') {
+                    options['toggleOff'].call(this);
+                }
+
+                setTimeout(function () {
+                    fadeOff();
+                }, 200);
+
+                if (lastState === true) {
+                    setTimeout(function () {
+                        setOn();
+                    }, 1000);
+                }
+
+                setTimeout(function () {
+                    if (state === true) {
+                        setOn();
+                    }
+                }, 1200);
+
 
                 elem.trigger('clicked');
 
@@ -414,6 +476,7 @@
                 }
                 isDown = false;
             });
+
             this.on(releaseEventType, function (e) {
                 e.preventDefault();
                 e.stopImmediatePropagation();
@@ -469,10 +532,6 @@
                         tickTimer();
                         isRunning = true;
                     }
-
-                    canvasScale.css({
-                        top: -diff + 'px',
-                    });
                 }
             });
         }

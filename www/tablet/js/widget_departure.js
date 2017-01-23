@@ -13,7 +13,7 @@ var Modul_departure = function () {
     $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../css/ftui_departure.css" type="text/css" />');
 
     function startTimer(elem) {
-        var interval = elem.data('interval');
+        var interval = elem.data('refresh');
         if ($.isNumeric(interval) && interval > 0) {
             setInterval(function () {
                 if (elem.is(':visible') || elem.hasClass('hiddenrefresh')) {
@@ -40,7 +40,7 @@ var Modul_departure = function () {
         elem.initData('text-color', ftui.getStyle('.' + me.widgetname, 'text-color') || '#ddd');
         elem.initData('width', '200');
         elem.initData('height', '250');
-        elem.initData('interval', '120');
+        elem.initData('refresh', elem.data('interval') || '120');
 
         me.addReading(elem, 'get');
     }
@@ -115,6 +115,15 @@ var Modul_departure = function () {
 
         // first refresh
         requestUpdate(elem);
+
+        // Refresh slider position after it became visible
+        elem.closest('[data-type="popup"]').on("fadein", function (event) {
+            requestUpdate(elem);
+        });
+
+        $(document).on('changedSelection', function () {
+            requestUpdate(elem);
+        });
     }
 
     function update(dev, par) {

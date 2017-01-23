@@ -45,15 +45,15 @@ var Modul_select = function () {
     function init_ui(elem) {
         // prepare select element
         elem.addClass('select');
+        var wrap_elem = $('<div/>', {}).addClass('select_wrapper').appendTo(elem);
         var select_elem = $('<select/>', {})
             .on('change', function (e) {
-                var parent = $(this).parent('div[data-type="select"]');
-                parent.data('value', parent.data('quote') + $("option:selected", this).val() + parent.data('quote'));
+                elem.data('value', elem.data('quote') + $("option:selected", this).val() + elem.data('quote'));
                 $(this).blur();
-                parent.transmitCommand();
+                elem.transmitCommand();
                 elem.trigger('changedValue');
             })
-            .appendTo(elem);
+            .appendTo(wrap_elem);
         fillList(elem);
         elem.data('value', elem.data('quote') + $("option:selected", select_elem).val() + elem.data('quote'));
     }

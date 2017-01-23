@@ -51,7 +51,7 @@ var Modul_dimmer = function () {
     }
 
     function toggleOn(elem) {
-        if (me.isReadOnly(elem)) {
+        if (elem.hasClass('lock')) {
             elem.addClass('fail-shake');
             setTimeout(function () {
                 var faelem = elem.data('famultibutton');
@@ -73,7 +73,7 @@ var Modul_dimmer = function () {
     }
 
     function valueChanged(elem, v) {
-        if (me.isReadOnly(elem)) {
+        if (elem.hasClass('lock')) {
             elem.addClass('fail-shake');
             setTimeout(function () {
                 var faelem = elem.data('famultibutton');
@@ -106,7 +106,7 @@ var Modul_dimmer = function () {
             .each(function (index) {
                 var elem = $(this);
                 var state = elem.getReading('get').val;
-                if (state) {
+                if (ftui.isValid(state)) {
                     var states = $(this).data('states') || $(this).data('get-on');
                     if ($.isArray(states)) {
                         me.showMultiStates($(this), states, state);

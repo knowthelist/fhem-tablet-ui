@@ -2,16 +2,17 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.4.3
+ * Version: 2.5.0
  *
- * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  *
  */
 
-/* global Framework7:true */
+/* global Framework7:true, jQuery:true */
 
 "use strict";
+
 
 // -------- Framework7---------
 // https://framework7.io/docs/
@@ -46,22 +47,55 @@ var Modul_widget = function () {
     var subscriptions = {};
     var elements;
 
-    function init() {
-        ftui.log(1, "init widget: name=" + me.widgetname + " area=" + me.area);
-        me.elements = $('[data-type="' + me.widgetname + '"]', me.area);
-        me.elements.each(function (index) {
-            me.init_attr($(this));
-            me.init_ui($(this));
-        });
+    function update_lock(dev, par) {
+        me.elements.filterDeviceReading('lock', dev, par)
+            .each(function (idx) {
+                var elem = $(this);
+                var value = elem.getReading('lock').val;
+                if (elem.matchingState('lock', value) === 'on') {
+                    elem.addClass('lock');
+                }
+                if (elem.matchingState('lock', value) === 'off') {
+                    elem.removeClass('lock');
+                }
+            });
     }
 
-    function isReadOnly(elem) {
-        var lock = elem.data('readonly');
-        var lockValue = elem.data('lock-value');
-        if (ftui.isValid(lockValue)){
-            return (lock === lockValue);
-        }
-        return (lock === 'true' || lock === '1' || lock === 'on' || lock === 1);
+    function update_hide(dev, par) {
+        me.elements.filterDeviceReading('hide', dev, par)
+            .each(function (idx) {
+                var elem = $(this);
+                var value = elem.getReading('hide').val;
+                if (elem.matchingState('hide', value) === 'on') {
+                    if (ftui.isValid(elem.data('hideparents'))) {
+                        elem.parents(elem.data('hideparents')).hide();
+                    } else {
+                        elem.hide();
+                    }
+                }
+                if (elem.matchingState('hide', value) === 'off') {
+                    if (ftui.isValid(elem.data('hideparents'))) {
+                        elem.parents(elem.data('hideparents')).show();
+                    } else {
+                        elem.show();
+                    }
+                }
+            });
+    }
+
+    function update_reachable(dev, par) {
+        me.elements.filterDeviceReading('reachable', dev, par)
+            .each(function (idx) {
+                var elem = $(this);
+                var value = elem.getReading('reachable').val;
+                if (elem.matchingState('reachable', value) === 'on') {
+                    elem.removeClass('unreachable');
+                }
+                if (elem.matchingState('reachable', value) === 'off') {
+                    elem.addClass('unreachable');
+                }
+            });
+
     }
 
     function substitution(value, subst) {
@@ -83,29 +117,6 @@ var Modul_widget = function () {
         return value;
     }
 
-    function checkHide(elem, value) {
-
-        // hide element when it's value equals data-hide
-        // if data-hideparents is set, it is interpreted as jquery selector to hide elements parents filtered by this selector
-        if (ftui.isValid(elem.data('hide')) && ftui.isValid(value)) {
-            var valueForHide = elem.data('hide');
-            if (value === valueForHide ||
-                (elem.isDeviceReading('hide') && (value === 'true' || value === '1' || value === 'on' || value === 1)) ||
-                value.match(new RegExp('^' + valueForHide + '$'))) {
-                if (ftui.isValid(elem.data('hideparents'))) {
-                    elem.parents(elem.data('hideparents')).hide();
-                } else {
-                    elem.hide();
-                }
-            } else {
-                if (ftui.isValid(elem.data('hideparents'))) {
-                    elem.parents(elem.data('hideparents')).show();
-                } else {
-                    elem.show();
-                }
-            }
-        }
-    }
 
     function fix(value, fix) {
         return ($.isNumeric(value) && fix >= 0) ? Number(value).toFixed(fix) : value;
@@ -126,6 +137,16 @@ var Modul_widget = function () {
 
     function init_ui(elem) {
         elem.text(me.widgetname);
+    }
+
+
+    function init() {
+        ftui.log(1, "init widget: name=" + me.widgetname + " area=" + me.area);
+        me.elements = $('[data-type="' + me.widgetname + '"]', me.area);
+        me.elements.each(function (index) {
+            me.init_attr($(this));
+            me.init_ui($(this));
+        });
     }
 
     function addReading(elem, key) {
@@ -158,19 +179,20 @@ var Modul_widget = function () {
     }
 
     function update(dev, par) {
-        ftui.log(1, 'warning: ' + me.widgetname + ' does not implement update function');
+        ftui.log(1, 'warning: ' + me.widgetname + ' has not implemented update function');
     }
 
     var me = {
         widgetname: 'widget',
         area: '',
-        isReadOnly: isReadOnly,
         init: init,
         init_attr: init_attr,
         init_ui: init_ui,
         update: update,
+        update_lock: update_lock,
+        update_reachable: update_reachable,
+        update_hide: update_hide,
         substitution: substitution,
-        checkHide: checkHide,
         fix: fix,
         map: map,
         addReading: addReading,
@@ -237,7 +259,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.4.3',
+    version: '2.5.0',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -245,7 +267,7 @@ var ftui = {
         filename: '',
         fhem_dir: '',
         debuglevel: 0,
-        doLongPoll: false,
+        doLongPoll: 1,
         lang: 'de',
         shortpollInterval: 0,
         styleCollection: {},
@@ -275,22 +297,19 @@ var ftui = {
     gridster: {
         instances: {},
         instance: null,
-        wx: 0,
-        wy: 0,
-        wm: 5,
-        mincols: 0
+        baseX: 0,
+        baseY: 0,
+        margins: 5,
+        mincols: 0,
+        cols: 0,
+        rows: 0
     },
 
     init: function () {
+
         ftui.paramIdMap = {};
         ftui.timestampMap = {};
-        ftui.loadStyleSchema();
-        ftui.gridster.wx = parseInt($("meta[name='widget_base_width']").attr("content") || 74);
-        ftui.gridster.wy = parseInt($("meta[name='widget_base_height']").attr("content") || 71);
-        ftui.gridster.mincols = parseInt($("meta[name='widget_min_cols']").attr("content") || $(window).width() / ftui.gridster.wx);
-        if ($("meta[name='widget_margin']").attr("content"))
-            ftui.gridster.wm = parseInt($("meta[name='widget_margin']").attr("content"));
-        ftui.config.doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
+        ftui.config.doLongPoll = $("meta[name='longpoll']").attr("content") || 1;
         ftui.config.longPollFilter = $("meta[name='longpoll_filter']").attr("content") || '.*';
         ftui.config.DEMO = ($("meta[name='demo']").attr("content") == '1');
         ftui.config.debuglevel = $("meta[name='debug']").attr("content") || 0;
@@ -309,7 +328,22 @@ var ftui = {
         ftui.log(1, 'FHEM dir: ' + ftui.config.fhem_dir);
         // lang
         var userLang = navigator.language || navigator.userLanguage;
-        ftui.config.lang = (ftui.isValid(userLang)) ? userLang.split('-')[0] : 'de';
+        ftui.config.lang = $("meta[name='lang']").attr("content") || (ftui.isValid(userLang)) ? userLang.split('-')[0] : 'de';
+
+
+        // init Toast
+        function configureToast() {
+            if ($.toast && !$('link[href="' + ftui.config.dir + '/../lib/jquery.toast.min.css"]').length)
+                $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/jquery.toast.min.css" type="text/css" />');
+        }
+
+        if (!$.fn.toast) {
+            ftui.dynamicload(ftui.config.dir + "/../lib/jquery.toast.min.js", false).done(function () {
+                configureToast();
+            });
+        } else {
+            configureToast();
+        }
 
         try {
             // try to use localStorage
@@ -330,11 +364,36 @@ var ftui = {
         });
 
         ftui.readStatesLocal();
-        ftui.initPage();
+
+
+        // init FTUI CSS if not already loaded
+        if ($('link[href*="fhem-tablet-ui.css"]').length === 0 &&
+            $('link[href*="fhem-tablet-ui.min.css"]').length === 0) {
+            var cssUrl = ftui.config.dir + '/../css/fhem-tablet-ui.css';
+            $.when($.get(cssUrl, function () {
+                $('<link>', {
+                    rel: 'stylesheet',
+                    type: 'text/css',
+                    'href': cssUrl
+                }).prependTo('head');
+            })).then(function () {
+                var cssListener = setInterval(function () {
+                    if ($("body").css("text-align") === "center") {
+                        clearInterval(cssListener);
+                        ftui.loadStyleSchema();
+                        ftui.initPage();
+                    }
+                }, 50);
+            });
+        } else {
+            ftui.loadStyleSchema();
+            ftui.initPage();
+        }
 
         $(document).on("initWidgetsDone", function () {
             // start shortpoll delayed
             ftui.startShortPollInterval(500);
+            ftui.initHeaderLinks();
         });
 
         $(document).one("updateDone", function () {
@@ -358,12 +417,48 @@ var ftui = {
     },
 
     initGridster: function (area) {
-        if ($.fn.gridster) {
+
+        function configureGridster() {
+
+            ftui.gridster.baseX = parseInt($("meta[name='widget_base_width']").attr("content") || 0);
+            ftui.gridster.baseY = parseInt($("meta[name='widget_base_height']").attr("content") || 0);
+            ftui.gridster.cols = parseInt($("meta[name='gridster_cols']").attr("content") || 0);
+            ftui.gridster.rows = parseInt($("meta[name='gridster_rows']").attr("content") || 0);
+            ftui.gridster.resize = parseInt($("meta[name='gridster_resize']").attr("content") || 1);
+            if ($("meta[name='widget_margin']").attr("content"))
+                ftui.gridster.margins = parseInt($("meta[name='widget_margin']").attr("content"));
+
+            var highestCol = -1;
+            var highestRow = -1;
+
+            $(".gridster > ul > li").each(function () {
+                var colVal = $(this).data("col") + $(this).data("sizex") - 1;
+                if (colVal > highestCol)
+                    highestCol = colVal;
+                var rowVal = $(this).data("row") + $(this).data("sizey") - 1;
+                if (rowVal > highestRow)
+                    highestRow = rowVal;
+            });
+
+            //console.log(ftui.gridster.cols, ftui.gridster.rows, ftui.gridster.baseX, ftui.gridster.baseY);
+
+            ftui.gridster.cols = (ftui.gridster.cols > 0) ? ftui.gridster.cols : highestCol;
+            ftui.gridster.rows = (ftui.gridster.rows > 0) ? ftui.gridster.rows : highestRow;
+
+            var colMargins = 2 * ftui.gridster.cols * ftui.gridster.margins;
+            var rowMargins = 2 * ftui.gridster.rows * ftui.gridster.margins;
+
+            ftui.gridster.baseX = (ftui.gridster.baseX > 0) ? ftui.gridster.baseX : (window.innerWidth - colMargins) / ftui.gridster.cols;
+            ftui.gridster.baseY = (ftui.gridster.baseY > 0) ? ftui.gridster.baseY : (window.innerHeight - rowMargins) / ftui.gridster.rows;
+
+            ftui.gridster.mincols = parseInt($("meta[name='widget_min_cols']").attr("content") || ftui.gridster.cols);
+
             if (ftui.gridster.instances[area])
                 ftui.gridster.instances[area].destroy();
+
             ftui.gridster.instances[area] = $(".gridster > ul", area).gridster({
-                widget_base_dimensions: [ftui.gridster.wx, ftui.gridster.wy],
-                widget_margins: [ftui.gridster.wm, ftui.gridster.wm],
+                widget_base_dimensions: [ftui.gridster.baseX, ftui.gridster.baseY],
+                widget_margins: [ftui.gridster.margins, ftui.gridster.margins],
                 draggable: {
                     handle: '.gridster li > header'
                 },
@@ -382,7 +477,7 @@ var ftui = {
             if (gridgrid.length > 0) {
                 gridgrid.css({
                     'background-color': 'transparent',
-                    'margin': '-' + ftui.gridster.wm + 'px',
+                    'margin': '-' + ftui.gridster.margins + 'px',
                     'width': gridgrid.parent().width() - gridgrid.position().left,
                     'height': '100%'
                 });
@@ -396,6 +491,27 @@ var ftui = {
                     'height': 'calc(100% - ' + $(this).siblings('header').outerHeight() + 'px)'
                 });
             });
+
+            if (ftui.gridster.resize) {
+                $(window).on('resize', function () {
+                    configureGridster();
+                });
+            }
+        }
+
+        if ($('.gridster').length > 0) {
+
+            if (!$('link[href="' + ftui.config.dir + '/../lib/jquery.gridster.min.css"]').length)
+                $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/jquery.gridster.min.css" type="text/css" />');
+
+            if (!$.fn.gridster) {
+                ftui.dynamicload(ftui.config.dir + "/../lib/jquery.gridster.min.js", false).done(function () {
+                    configureGridster();
+                });
+            } else {
+                configureGridster();
+            }
+
         }
     },
 
@@ -406,37 +522,30 @@ var ftui = {
         console.time('initPage');
         ftui.log(2, 'initPage - area=' + area);
 
-        // postpone shortpoll start
-        //ftui.startShortPollInterval();
-
         ftui.initGridster(area);
 
         //include extern html code
-        var total = $('[data-template]', area).length;
-        ftui.log(2, 'count of templates:', total);
-
-        if (total > 0) {
-            $('[data-template]', area).each(function (index) {
-                var tempelem = $(this);
-                $.get(
-                    tempelem.data('template'), {},
-                    function (data) {
-                        var parValues = tempelem.data('parameter');
-                        for (var key in parValues) {
-                            data = data.replace(new RegExp(key, 'g'), parValues[key]);
-                        }
-                        tempelem.html(data);
-                        if (index === total - 1) {
-                            //continue after loading the includes
-                            ftui.initWidgets(area);
-                        }
+        var deferredArr = $.map($('[data-template]', area), function (templ, i) {
+            var templElem = $(templ);
+            return $.get(
+                templElem.data('template'), {},
+                function (data) {
+                    var parValues = templElem.data('parameter');
+                    for (var key in parValues) {
+                        data = data.replace(new RegExp(key, 'g'), parValues[key]);
                     }
-                );
-            });
-        } else {
-            //continue immediately with initWidgets
+                    templElem.html(data);
+                }
+            );
+        });
+
+        //get current values of readings not before all widgets are loaded
+        $.when.apply(this, deferredArr).then(function () {
+            //continue after loading the includes
             ftui.initWidgets(area);
-        }
+            ftui.log(1, 'init templates - Done');
+        });
+
     },
 
     initWidgets: function (area) {
@@ -468,6 +577,18 @@ var ftui = {
             console.timeEnd('initPage');
             $(document).trigger("initWidgetsDone", [area]);
         });
+    },
+
+    initHeaderLinks: function () {
+
+        if ($('[class*=fa-]').length > 0 && !$('link[href="' + ftui.config.dir + '/../lib/font-awesome.min.css"]').length)
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/font-awesome.min.css" type="text/css" />');
+        if ($('[class*=oa-]').length > 0 && !$('link[href="' + ftui.config.dir + '/../lib/openautomation.css"]').length)
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/openautomation.css" type="text/css" />');
+        if ($('[class*=fs-]').length > 0 && !$('link[href="' + ftui.config.dir + '/../lib/fhemSVG.css"]').length)
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/fhemSVG.css" type="text/css" />');
+        if ($('[class*=mi-]').length > 0 && !$('link[href="' + ftui.config.dir + '/../lib/material-icons.min.css"]').length)
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/material-icons.min.css" type="text/css" />');
     },
 
     initLongpoll: function () {
@@ -768,9 +889,11 @@ var ftui = {
     },
 
     loadStyleSchema: function () {
+
         $.each($('link[href$="-ui.css"],link[href$="-ui.min.css"]'), function (index, thisSheet) {
             if (!thisSheet || !thisSheet.sheet || !thisSheet.sheet.cssRules) return;
             var rules = thisSheet.sheet.cssRules;
+
             for (var r in rules) {
                 if (rules[r].style) {
                     var styles = rules[r].style.cssText.split(';');
@@ -815,7 +938,7 @@ var ftui = {
             ftui.states.lastShortpoll = 0;
             ftui.startShortPollInterval(1000);
             if (!ftui.config.doLongPoll) {
-                ftui.config.doLongPoll = ($("meta[name='longpoll']").attr("content") == '1');
+                ftui.config.doLongPoll = $("meta[name='longpoll']").attr("content") || 1;
                 if (ftui.config.doLongPoll)
                     ftui.startLongPollInterval(100);
             }
@@ -825,7 +948,7 @@ var ftui = {
 
     setOffline: function () {
         if (ftui.config.DEBUG) ftui.toast("Lost network connection");
-        ftui.config.doLongPoll = false;
+        ftui.config.doLongPoll = 0;
         clearInterval(ftui.shortPollTimer);
         clearInterval(ftui.longPollTimer);
         if (ftui.longPollRequest)
@@ -1227,9 +1350,9 @@ var ftui = {
     },
 
     getIconId: function (iconName) {
-        if (!iconName || iconName === '')
+        if (!iconName || iconName === '' || !$('link[href="' + ftui.config.dir + '/../lib/font-awesome.min.css"]').length)
             return "?";
-        var rules = $('link[href$="font-awesome.min.css"]')[0].sheet.cssRules;
+        var rules = $('link[href="' + ftui.config.dir + '/../lib/font-awesome.min.css"]')[0].sheet.cssRules;
         for (var rule in rules) {
             if (rules[rule].selectorText && rules[rule].selectorText.match(new RegExp(iconName + ':'))) {
                 var id = rules[rule].style.content;
@@ -1289,35 +1412,8 @@ var ftui = {
     },
 };
 
-/*   EVENTS */
 
-// event "page is loaded" -> start FTUI
-$(document).on('ready', function () {
-    ftui.init();
-});
 
-$('.menu').on('click', function () {
-    $('.menu').toggleClass('show');
-});
-
-$(window).on('beforeunload', function () {
-    ftui.log(5, 'beforeunload');
-    ftui.setOffline();
-});
-
-$(window).on('online offline', function () {
-    ftui.log(5, 'online offline');
-    if (navigator.onLine)
-        ftui.setOnline();
-    else
-        ftui.setOffline();
-});
-
-window.onerror = function (msg, url, lineNo, columnNo, error) {
-    var file = url.split('/').pop();
-    ftui.toast([file + ':' + lineNo, error].join('<br/>'), 'error');
-    return false;
-};
 
 // global helper functions
 
@@ -1334,6 +1430,14 @@ String.prototype.toMinFromSec = function () {
     var ss = (Math.floor(x % 60)).toString();
     var mm = (Math.floor(x /= 60)).toString();
     return mm + ":" + (ss[1] ? ss : "0" + ss[0]);
+};
+
+String.prototype.toHoursFromSec = function () {
+    var x = Number(this);
+    var hh = (Math.floor(x / 3600)).toString();
+    var ss = (Math.floor(x % 60)).toString();
+    var mm = (Math.floor(x / 60) - (hh * 60)).toString();
+    return hh + ":" + (mm[1] ? mm : "0" + mm[0]) + ":" + (ss[1] ? ss : "0" + ss[0]);
 };
 
 Date.prototype.addMinutes = function (minutes) {
@@ -1420,88 +1524,176 @@ Date.prototype.ee = function () {
     return weekday[this.getDay()];
 };
 
-$.fn.once = function (a, b) {
-    return this.each(function () {
-        $(this).off(a).on(a, b);
+
+function onjQueryLoaded() {
+
+    /*   EVENTS */
+
+    // event "page is loaded" -> start FTUI
+
+    ftui.init();
+
+    $('.menu').on('click', function () {
+        $('.menu').toggleClass('show');
     });
-};
 
-//for widget
-
-$.fn.widgetId = function () {
-    return ['ftui', $(this).data('type'), $(this).data('device'), $(this).data('get')].join('_');
-};
-
-$.fn.filterData = function (key, value) {
-    return this.filter(function () {
-        return $(this).data(key) == value;
+    $(window).on('beforeunload', function () {
+        ftui.log(5, 'beforeunload');
+        ftui.setOffline();
     });
-};
 
-$.fn.filterDeviceReading = function (key, device, param) {
-    return this.filter(function () {
+    $(window).on('online offline', function () {
+        ftui.log(5, 'online offline');
+        if (navigator.onLine)
+            ftui.setOnline();
+        else
+            ftui.setOffline();
+    });
+
+    window.onerror = function (msg, url, lineNo, columnNo, error) {
+        var file = url.split('/').pop();
+        ftui.toast([file + ':' + lineNo, error].join('<br/>'), 'error');
+        return false;
+    };
+
+    $.fn.once = function (a, b) {
+        return this.each(function () {
+            $(this).off(a).on(a, b);
+        });
+    };
+
+    //for widget
+
+    $.fn.widgetId = function () {
+        return ['ftui', $(this).data('type'), $(this).data('device'), $(this).data('get')].join('_');
+    };
+
+    $.fn.filterData = function (key, value) {
+        return this.filter(function () {
+            return $(this).data(key) == value;
+        });
+    };
+
+    $.fn.filterDeviceReading = function (key, device, param) {
+        return this.filter(function () {
+            var elem = $(this);
+            var value = elem.data(key);
+            return (String(value) === param && String(elem.data('device')) === device) ||
+                (value === device + ':' + param) ||
+                ($.inArray(param, value) > -1 && String(elem.data('device')) === device) ||
+                ($.inArray(device + ':' + param, value) > -1);
+        });
+    };
+
+    $.fn.isValidData = function (key) {
+        return typeof $(this).data(key) != 'undefined';
+    };
+
+    $.fn.initData = function (key, value) {
         var elem = $(this);
-        var value = elem.data(key);
-        return (String(value) === param && String(elem.data('device')) === device) ||
-            (value === device + ':' + param) ||
-            ($.inArray(param, value) > -1 && String(elem.data('device')) === device) ||
-            ($.inArray(device + ':' + param, value) > -1);
+        elem.data(key, elem.isValidData(key) ? elem.data(key) : value);
+        return elem;
+    };
+
+    $.fn.mappedColor = function (key) {
+        return ftui.getStyle('.' + $(this).data(key), 'color') || $(this).data(key);
+    };
+
+    $.fn.matchingState = function (key, value) {
+
+        if (!ftui.isValid(value)) {
+            return '';
+        }
+        var state = String(ftui.getPart(value, $(this).data(key + '-part')));
+        var onData = $(this).data(key + '-on');
+        var offData = $(this).data(key + '-off');
+        var on = String(onData);
+        var off = String(offData);
+        if (ftui.isValid(onData)) {
+            if (state === on) {
+                return 'on';
+            } else if (state.match(new RegExp('^' + on + '$'))) {
+                return 'on';
+            }
+        }
+        if (ftui.isValid(offData)) {
+            if (state === off) {
+                return 'off';
+            } else if (state.match(new RegExp('^' + off + '$'))) {
+                return 'off';
+            }
+        }
+        if (ftui.isValid(onData) && ftui.isValid(offData)) {
+            if (on === '!off' && state !== off) {
+                return 'on';
+            } else if (off === '!on' && state !== on) {
+                return 'off';
+            }
+        }
+    };
+
+    $.fn.isDeviceReading = function (key) {
+        var reading = $(this).data(key);
+        return reading && !$.isNumeric(reading) && reading.match(/:/);
+    };
+
+    $.fn.isExternData = function (key) {
+        var data = $(this).data(key);
+        if (!data) return '';
+        return (data.match(/^[#\.\[].*/));
+    };
+
+    $.fn.getReading = function (key, idx) {
+        var devname = String($(this).data('device')),
+            paraname = $(this).data(key);
+        if ($.isArray(paraname)) {
+            paraname = paraname[idx];
+        }
+        paraname = String(paraname);
+        if (paraname && paraname.match(/:/)) {
+            var temp = paraname.split(':');
+            devname = temp[0];
+            paraname = temp[1];
+        }
+        if (devname && devname.length > 0) {
+            var params = ftui.deviceStates[devname];
+            return (params && params[paraname]) ? params[paraname] : {};
+        }
+        return {};
+    };
+
+    $.fn.valOfData = function (key) {
+        var data = $(this).data(key);
+        if (!ftui.isValid(data)) return '';
+        return (data.toString().match(/^[#\.\[].*/)) ? $(data).data('value') : data;
+    };
+
+    $.fn.transmitCommand = function () {
+        if ($(this).hasClass('notransmit')) return;
+        var cmdl = [$(this).valOfData('cmd'), $(this).valOfData('device'), $(this).valOfData('set'), $(this).valOfData('value')].join(' ');
+        ftui.setFhemStatus(cmdl);
+        ftui.toast(cmdl);
+    };
+
+}
+
+
+// load jQuery lib
+if (!ftui.isValid(window.jQuery)) {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.onload = function () {
+        (function ($) {
+            $(document).ready(function () {
+                onjQueryLoaded();
+            });
+        })(jQuery);
+
+    };
+    script.src = ftui.config.dir + "../pgm2/jquery.min.js";
+    document.getElementsByTagName('head')[0].appendChild(script);
+} else {
+    $(document).ready(function () {
+        onjQueryLoaded();
     });
-};
-
-$.fn.isValidData = function (key) {
-    return typeof $(this).data(key) != 'undefined';
-};
-
-$.fn.initData = function (key, value) {
-    var elem = $(this);
-    elem.data(key, elem.isValidData(key) ? elem.data(key) : value);
-    return elem;
-};
-
-$.fn.mappedColor = function (key) {
-    return ftui.getStyle('.' + $(this).data(key), 'color') || $(this).data(key);
-};
-
-$.fn.isDeviceReading = function (key) {
-    var reading = $(this).data(key);
-    return reading && !$.isNumeric(reading) && reading.match(/:/);
-};
-
-$.fn.isExternData = function (key) {
-    var data = $(this).data(key);
-    if (!data) return '';
-    return (data.match(/^[#\.\[].*/));
-};
-
-$.fn.getReading = function (key, idx) {
-    var devname = String($(this).data('device')),
-        paraname = $(this).data(key);
-    if ($.isArray(paraname)){
-        paraname = paraname[idx];
-    }
-    paraname = String(paraname);
-    if (paraname && paraname.match(/:/)) {
-        var temp = paraname.split(':');
-        devname = temp[0];
-        paraname = temp[1];
-    }
-    if (devname && devname.length > 0) {
-        var params = ftui.deviceStates[devname];
-        return (params && params[paraname]) ? params[paraname] : {};
-    }
-    return {};
-};
-
-$.fn.valOfData = function (key) {
-    var data = $(this).data(key);
-    if (!ftui.isValid(data)) return '';
-    return (data.toString().match(/^[#\.\[].*/)) ? $(data).data('value') : data;
-};
-
-$.fn.transmitCommand = function () {
-    if ($(this).hasClass('notransmit')) return;
-    var cmdl = [$(this).valOfData('cmd'), $(this).valOfData('device'), $(this).valOfData('set'), $(this).valOfData('value')].join(' ');
-    ftui.setFhemStatus(cmdl);
-    ftui.toast(cmdl);
-};
+}

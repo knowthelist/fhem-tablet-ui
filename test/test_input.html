@@ -7,10 +7,10 @@
      /*
      * UI builder framework for FHEM
      *
-     * Version: 2.2.*
+     * Version: 2.5.*
      * URL: https://github.com/knowthelist/fhem-tablet-ui
      *
-     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
      * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
      *
      * - create a new folder named 'tablet' in /<fhem-path>/www
@@ -19,29 +19,7 @@
      * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
      */
     -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="widget_base_width" content="74">
-    <meta name="widget_base_height" content="71">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="gridster_disable" content="1">
-    <meta name="longpoll" content="1">
-    <!-- 1=longpoll;0=shortpoll every 30sec -->
-    <meta name="debug" content="3">
-    <!-- verbose level 1-6 = output to console;0 = not output -->
 
-    <link rel="stylesheet" href="lib/jquery.gridster.min.css" />
-    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
-    <link rel="stylesheet" href="lib/font-awesome.min.css" />
-    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
-
-    <!-- define your personal style here, it wont be overwritten  -->
-    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
-    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
-
-    <script src="../pgm2/jquery.min.js"></script>
-    <script src="lib/jquery.toast.min.js"></script>
-    <script src="lib/jquery.gridster.min.js"></script>
     <script src="js/fhem-tablet-ui.js" defer></script>
 
     <title>FHEM-Tablet-UI</title>
@@ -75,18 +53,23 @@
                     <div data-type="select" data-items='["dummy1","dummy2","dummy3","dummy4"]' id="sendDev2" class="notransmit w3x"></div>
                     <div data-type="select" data-items='["STATE","warn1","warn2","webCmd","room"]' id="sendParam2" class="notransmit w3x"></div>
                     <div data-type="input" data-device="#sendDev2" data-get="#sendParam2" id="sendValue" data-value="127" class="notransmit w3x centered"></div>
-                    <div data-type="link" class="round centered" data-width="80" data-height="40" data-color="white" data-background-color="green" data-icon="fa-feed" data-device="#sendDev" data-set="#sendParam" data-value="#sendValue">
-                        OK
+                    <div data-type="link" class="round centered" data-height="40" data-color="white" data-background-color="green" data-icon="fa-feed" data-device="#sendDev" data-set="#sendParam" data-value="#sendValue">
+                    OK
                     </div>
                 </div>
             </li>
-            <li data-row="5" data-col="10" data-sizex="3" data-sizey="3">
-                <header>EXAMPLE5</header>
-                <!-- place your widget here -->
+            <li data-row="5" data-col="10" data-sizey="3" data-sizex="3">
+                <header>Inputbox</header>
+                <div class="hbox">
+                    <div data-type="input" data-device="Einkaufsliste" data-set="addTask"></div>
+                </div>
             </li>
-            <li data-row="5" data-col="4" data-sizex="6" data-sizey="3">
-                <header>EXAMPLE6</header>
-                <!-- place your widget here -->
+            <li data-row="5" data-col="4" data-sizey="3" data-sizex="6">
+                <header>Inputbox with button</header>
+                <div class="hbox">
+                    <div class="notransmit" data-type="input" id="sendTask"></div>
+                    <div class="round" data-type="link" data-width="80" data-height="40" data-color="white" data-background-color="green" data-icon="fa-feed" data-device="Einkaufsliste" data-set="addTask" data-value="#sendTask">OK</div>
+                </div>
             </li>
         </ul>
     </div>

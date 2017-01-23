@@ -27,10 +27,14 @@ var Modul_push = function () {
             elem.initData('on-background-color', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname + '.on', 'background-color') || '#aa6900');
             elem.initData('background-icon', 'fa-circle-thin');
             elem.initData('set-on', 'on');
-            elem.initData('set-off', 'off');
+            elem.initData('set-off', '');
             elem.initData('get', '');
+            elem.initData('get-on', '');
+            elem.initData('get-off', (elem.isValidData('get-on')?'!on':''));
+           
 
-            elem.data('mode', 'push');
+            elem.data('mode', (elem.data('set-off') !== '') ? 'updown' : 'push' );
+            console.log(elem.data('mode'));
             me.init_attr(elem);
             me.init_ui(elem);
         });

@@ -9,8 +9,9 @@
 
 function depends_slider() {
     if (!$.fn.Powerange) {
-        $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/powerange.min.css" type="text/css" />');
-        return ["lib/powerange.min.js"];
+        if (!$('link[href="' + ftui.config.dir + '/../lib/powerange.min.css"]').length)
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/powerange.min.css" type="text/css" />');
+        return ["lib/powerange.js"];
     }
 }
 
@@ -20,8 +21,39 @@ var Modul_slider = function () {
         return me.widgetname + "_" + elem.data("device") + "_" + elem.data('get');
     }
 
+    function setTimer(elem, state) {
+
+        if (state === 'on' && !elem.isValidData('timer-id')) {
+            var timerInterval = elem.data('timer-interval');
+            if (timerInterval > 0) {
+                var tid = setInterval(function () {
+                    if (elem && elem.data('timer-step')) {
+                        var id = elemID(elem);
+                        var storeval = parseInt(localStorage.getItem(id));
+                        var pwrng = elem.data('Powerange');
+                        storeval = storeval + parseInt(elem.data('timer-step'));
+                        if (storeval <= pwrng.options.max) {
+                            pwrng.setStart(storeval);
+                            localStorage.setItem(id, storeval);
+                        }
+                    } else {
+                        clearInterval(tid);
+                    }
+                }, timerInterval);
+                elem.data('timer-id', tid);
+            }
+        }
+        if (state === 'off' && elem.isValidData('timer-id')) {
+            clearInterval(elem.data('timer-id'));
+        }
+
+    }
+
     function onChange(elem) {
+
         var pwrng = elem.data('Powerange');
+        var id = elemID(elem);
+
         var selMode = elem.data('selection');
         var v = 0,
             sliVal = 0;
@@ -38,9 +70,21 @@ var Modul_slider = function () {
         if (elem.hasClass('value')) {
             elem.find('#slidervalue').text(v);
         }
+        var storeval = localStorage.getItem(id);
 
         // isunsel == false (0) means drag is over
-        if ((!isunsel) && (selMode)) {
+        if ((!isunsel) && (selMode) && (sliVal != storeval)) {
+
+            if (elem.hasClass('lock')) {
+                elem.addClass('fail-shake');
+                setTimeout(function () {
+
+                    pwrng.setStart(parseInt(storeval));
+                    elem.removeClass('fail-shake');
+                }, 500);
+                return;
+            }
+
             if (elem.hasClass('FS20')) {
                 v = ftui.FS20.dimmerValue(v);
             }
@@ -69,10 +113,17 @@ var Modul_slider = function () {
         elem.initData('min', 0);
         elem.initData('max', 100);
         elem.initData('step', 1);
+        elem.initData('handle-diameter', 20);
+        elem.initData('touch-diameter', elem.data('handle-diameter'));
         elem.initData('set-value', '$v');
         elem.initData('get-value', elem.data('part') || -1);
         elem.initData('color', ftui.getClassColor(elem) || ftui.getStyle('.slider', 'color') || '#aa6900');
         elem.initData('background-color', ftui.getStyle('.slider', 'background-color') || '#404040');
+        elem.initData('timer-state', '');
+        elem.initData('timer-step', '1');
+        elem.initData('timer-interval', '1000');
+        elem.initData('timer-state-on', 'on');
+        elem.initData('timer-state-off', 'off');
 
         me.addReading(elem, 'get');
         // numeric value means fix value, others mean it is a reading
@@ -81,6 +132,35 @@ var Modul_slider = function () {
         }
         if (!$.isNumeric(elem.data('min'))) {
             me.addReading(elem, 'min');
+        }
+
+        // reachable parameter
+        elem.initData('reachable-on', '!off');
+        elem.initData('reachable-off', 'false|0');
+        me.addReading(elem, 'reachable');
+
+        // if hide reading is defined, set defaults for comparison
+        if (elem.isValidData('hide')) {
+            elem.initData('hide-on', 'true|1|on');
+        }
+        elem.initData('hide', 'STATE');
+        if (elem.isValidData('hide-on')) {
+            elem.initData('hide-off', '!on');
+        }
+        me.addReading(elem, 'hide');
+
+        // if lock reading is defined, set defaults for comparison
+        if (elem.isValidData('lock')) {
+            elem.initData('lock-on', 'true|1|on');
+        }
+        elem.initData('lock', elem.data('get'));
+        if (elem.isValidData('lock-on')) {
+            elem.initData('lock-off', '!on');
+        }
+        me.addReading(elem, 'lock');
+
+        if (elem.isDeviceReading('timer-state')) {
+            me.addReading(elem, 'timer-state');
         }
 
     }
@@ -98,13 +178,16 @@ var Modul_slider = function () {
         }).appendTo(elem);
 
         elem.data('selection', 0);
+        var step = elem.data('step');
 
         var pwrng = new Powerange(input_elem[0], {
             vertical: !elem.hasClass('horizontal'),
-            min: elem.data('min') || 0,
-            max: elem.data('max') || 100,
-            step: elem.data('step'),
-            decimal: true,
+            handleDiameter: elem.data('handle-diameter'),
+            touchDiameter: elem.data('touch-diameter'),
+            min: elem.data('min'),
+            max: elem.data('max'),
+            step: step,
+            decimal: Number(step) === step && step % 1 !== 0,
             tap: elem.hasClass('tap') || false,
             klass: elem.hasClass('horizontal') ? me.widgetname + '_horizontal' : me.widgetname + '_vertical',
             callback: function () {
@@ -145,6 +228,7 @@ var Modul_slider = function () {
         if (elem.hasClass('horizontal')) {
             elem.css({
                 'margin-bottom': margin + marginUnit,
+                'margin-top': margin + marginUnit,
                 'height': height + heightUnit
             });
 
@@ -175,6 +259,10 @@ var Modul_slider = function () {
                 });
             }
         } else {
+            elem.css({
+                'margin-left': margin + marginUnit,
+                'margin-right': margin + marginUnit
+            });
             if (height) {
                 elem.css({
                     'height': height + heightUnit
@@ -226,10 +314,10 @@ var Modul_slider = function () {
 
         // Refresh slider position after it became visible
         elem.closest('[data-type="popup"]').on("fadein", function (event) {
-            setTimeout(function() {
-              onResize();  
-                
-            },500);
+            setTimeout(function () {
+                onResize();
+
+            }, 500);
         });
 
         $(document).on('changedSelection', function () {
@@ -239,6 +327,10 @@ var Modul_slider = function () {
         $(window).resize(function () {
             onResize();
         });
+
+        if (elem.data('timer-state') === 'on') {
+            setTimer(elem, 'on');
+        }
     }
 
     function update(dev, par) {
@@ -318,6 +410,30 @@ var Modul_slider = function () {
                     });
                 }
             });
+
+
+        //extra reading for timer
+        var reading = 'timer-state';
+        me.elements.filterDeviceReading(reading, dev, par)
+            .each(function (idx) {
+                var elem = $(this);
+                var val = elem.getReading(reading).val;
+            console.log('sliderVal:',val);
+                if (ftui.isValid(val)) {
+                    var state = elem.matchingState(reading, val);
+                    console.log(state);
+                    setTimer(elem, state);
+                }
+            });
+
+        //extra reading for lock
+        me.update_lock(dev, par);
+
+        //extra reading for hide
+        me.update_hide(dev, par);
+
+        //extra reading for reachable
+        me.update_reachable(dev, par);
     }
 
     // public

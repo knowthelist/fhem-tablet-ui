@@ -39,9 +39,8 @@ var Modul_progress = function () {
         if (!$.isNumeric(elem.data('min')))
             me.addReading(elem, 'min');
         if (!elem.hasClass('novalue')) {
-            $('<i/>', {
-                id: 'value',
-                class: 'fa fa-stack-1x value ' + me.widgetname,
+            $('<div/>', {
+                class: 'value ' + me.widgetname,
             }).appendTo(elem);
         }
     }
@@ -61,7 +60,7 @@ var Modul_progress = function () {
                     var max = ($.isNumeric(elem.data('max'))) ? elem.data('max') : elem.getReading('max').val;
                     var faelem = elem.data('famultibutton');
                     faelem.setProgressValue((val - min) / (max - min));
-                    var $value = faelem.find('#value');
+                    var $value = faelem.find('#fg.value');
                     var unit = elem.data('unit');
                     if ($value) {
                         if (elem.hasClass('percent')) {

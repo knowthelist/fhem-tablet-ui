@@ -21,14 +21,20 @@
     -->
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
 
     <!-- define your personal style here, it wont be overwritten  -->
     <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
     <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
 
+    <script src="../pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="lib/jquery.gridster.min.js"></script>
     <script src="js/fhem-tablet-ui.js" defer></script>
 
-    <title>FHEM-Tablet-UI</title>
+    <title>FTUI settimer</title>
+    
+    <style> .widget_settimer_off {display: none !important;}</style>
 </head>
 
 <body>
@@ -41,6 +47,7 @@
             <li data-row="1" data-col="4" data-sizey="4" data-sizex="6">
                 <header>EXAMPLE2</header>
                 <!-- place your widget here -->
+                <div data-type="settimer" data-device="ftuitest" data-get="time" data-cmd="setreading" data-set="time"></div>
             </li>
             <li data-row="1" data-col="10" data-sizey="4" data-sizex="3">
                 <header>EXAMPLE3</header>

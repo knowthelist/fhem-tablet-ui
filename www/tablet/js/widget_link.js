@@ -36,11 +36,17 @@ var Modul_link = function () {
                 elem.closest('nav').trigger('changedSelection', [elem.text()]);
                 var sel = elem.data('load');
                 if (sel) {
-                    $(sel).siblings().removeClass('active');
+                    console.log($(sel).siblings().filter('.page'));
+                    $(sel).siblings().filter('.page').fadeOut(elem.data('fade-duration'), function () {
+                        $(sel).siblings().filter('.page').removeClass("active");
+                    });
                     //load page if not done until now
                     if ($(sel + " > *").children().length === 0 || elem.hasClass('nocache'))
                         loadPage(elem);
-                    $(sel).addClass('active');
+                    $(sel).fadeIn(elem.data('fade-duration'), function () {
+                        $(sel).addClass('active');
+                    });
+
                 }
             }
         } else if (elem.isValidData('url-xhr')) {
@@ -191,7 +197,7 @@ var Modul_link = function () {
         if (!elem.hasClass('fixcontent')) {
             // recalculate width of text element
             elemText.css({
-                width: elem.innerWidth() - iconWidth - 15 + 'px',
+                //width: elem.innerWidth() - iconWidth - 15 + 'px',
             });
         }
 

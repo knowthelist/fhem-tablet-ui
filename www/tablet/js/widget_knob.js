@@ -85,10 +85,23 @@ var Modul_knob = function () {
         elem.data('font-weight', elem.data('font-weight') || ftui.getStyle('.' + me.widgetname, 'font') || 'normal');
 
         elem.initData('unit', '');
-        elem.initData('lock', elem.data('readonly-get'));
 
         me.addReading(elem, 'get');
+
+        // if lock reading is defined, set defaults for comparison
+        if (elem.isValidData('lock')) {
+            elem.initData('lock-on', 'true|1|on');
+        }
+        elem.initData('lock', elem.data('get'));
+        if (elem.isValidData('lock-on')) {
+            elem.initData('lock-off', '!on');
+        }
         me.addReading(elem, 'lock');
+
+        // reachable parameter
+        elem.initData('reachable-on', '!off');
+        elem.initData('reachable-off', 'false|0');
+        me.addReading(elem, 'reachable');
     }
 
     function init_ui(elem) {
@@ -133,6 +146,9 @@ var Modul_knob = function () {
                 'release': me.onRelease,
                 'format': me.onFormat,
             });
+            elem.append($('<div/>', {
+                class: 'overlay'
+            }));
         }
         return elem;
     }
@@ -141,21 +157,27 @@ var Modul_knob = function () {
         me.elements.filterDeviceReading('lock', dev, par)
             .each(function (idx) {
                 var elem = $(this);
-                var val = elem.getReading('lock').val;
-                if (val) {
-                    var knob_elem = elem.find('input');
-                    if (knob_elem) {
-                        ftui.log(3, me.widgetname + ' dev:' + dev + ' par:' + par + ' change ' + elem.data('device') + ':readOnly to ' + val);
+                var value = elem.getReading('lock').val;
+                var knob_elem = elem.find('input');
+                if (knob_elem) {
+                    if (elem.matchingState('lock', value) === 'on') {
                         knob_elem.trigger('configure', {
-                            'readOnly': (val === 'true' || val === '1' || val === 'on')
+                            'readOnly': true
+                        });
+                    }
+                    if (elem.matchingState('lock', value) === 'off') {
+                        knob_elem.trigger('configure', {
+                            'readOnly': false
                         });
                     }
                 }
             });
     }
 
+
     function update(dev, par) {
         isUpdating = true;
+
         // update from desired temp reading
         me.elements.filterDeviceReading('get', dev, par)
             .each(function (index) {
@@ -177,7 +199,11 @@ var Modul_knob = function () {
                 }
             });
 
+        // update from lock reading
         me.update_lock(dev, par);
+
+        //extra reading for reachable
+        me.update_reachable(dev, par);
 
         isUpdating = false;
     }

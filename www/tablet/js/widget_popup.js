@@ -140,7 +140,7 @@ var Modul_popup = function () {
                     dialog.options.end_top = (elem.isValidData('top')) ? elem.data('top') : ($(window).height() - parseInt(elem.data('height'))) / 2;
                     dialog.options.end_left = (elem.isValidData('left')) ? elem.data('left') : ($(window).width() - parseInt(elem.data('width'))) / 2;
                     dialog.options.start_top = (starter.hasOwnProperty('offset')) ? starter.offset().top : 0;
-                    dialog.options.start_left = (starter.hasOwnProperty('offset')) ? starter.offset().left :0;
+                    dialog.options.start_left = (starter.hasOwnProperty('offset')) ? starter.offset().left : 0;
                     dialog.options.height = elem.data('height');
                     dialog.options.width = elem.data('width');
                     dialog.css({
@@ -177,22 +177,15 @@ var Modul_popup = function () {
         me.elements.filterDeviceReading('get', dev, par)
             .each(function (index) {
                 var elem = $(this);
-                var state = elem.getReading('get').val;
+                var value = elem.getReading('get').val;
+                var state = ftui.getPart(value, elem.data('part'));
                 if (ftui.isValid(state)) {
                     var id = elem.data('id');
-                    if (state == elem.data('get-on')) {
+
+                    if (elem.matchingState('get', state) === 'on') {
                         $('div[data-id="' + id + '"].dialog-starter').trigger('click');
-                    } else if (state == elem.data('get-off')) {
-                        ftui.showModal(false);
-                        $('div[data-id="' + id + '"].dialog-close').trigger('click');
-                    } else if (state.match(new RegExp('^' + elem.data('get-on') + '$'))) {
-                        $('div[data-id="' + id + '"].dialog-starter').trigger('click');
-                    } else if (state.match(new RegExp('^' + elem.data('get-off') + '$'))) {
-                        ftui.showModal(false);
-                        $('div[data-id="' + id + '"].dialog-close').trigger('click');
-                    } else if (elem.data('get-off') == '!on' && state != elem.data('get-on')) {
-                        $('div[data-id="' + id + '"].dialog-starter').trigger('click');
-                    } else if (elem.data('get-on') == '!off' && state != elem.data('get-off')) {
+                    }
+                    if (elem.matchingState('get', state) === 'off') {
                         ftui.showModal(false);
                         $('div[data-id="' + id + '"].dialog-close').trigger('click');
                     }

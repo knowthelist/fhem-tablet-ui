@@ -25,6 +25,28 @@ var Modul_image = function () {
         }
     }
 
+
+    function addurlparam(uri, key, value) {
+        // http://stackoverflow.com/a/6021027
+        var hash = uri.replace(/^.*#/, '#');
+        if (hash != uri) {
+            uri = uri.replace(hash, '');
+        } else {
+            hash = '';
+        }
+        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+
+        if (uri.match(re)) {
+            uri = uri.replace(re, '$1' + key + "=" + value + '$2');
+        } else {
+            uri = uri + separator + key + "=" + value;
+        }
+        uri += hash;
+        ftui.log(1, 'widget_image url=' + uri);
+        return uri;
+    }
+
     function init_attr(elem) {
         elem.initData('state-get', '');
         elem.initData('opacity', 0.8);
@@ -37,6 +59,16 @@ var Modul_image = function () {
         elem.initData('path', '');
         elem.initData('suffix', '');
         elem.initData('refresh', 15 * 60);
+
+        // if hide reading is defined, set defaults for comparison
+        if (elem.isValidData('hide')) {
+            elem.initData('hide-on', 'true|1|on');
+        }
+        elem.initData('hide', elem.data('get'));
+        if (elem.isValidData('hide-on')) {
+            elem.initData('hide-off', '!on');
+        }
+        me.addReading(elem, 'hide');
 
         me.addReading(elem, 'get');
         me.addReading(elem, 'state-get');
@@ -60,7 +92,7 @@ var Modul_image = function () {
             //3rd party source refresh
             if (elem.data('url')) {
                 var url = elem.data('url');
-                if (elem.data('nocache') || elem.hasClass('nocache')) {
+                if (!elem.data('cache') && !elem.hasClass('cache')) {
                     url = addurlparam(url, '_', new Date().getTime());
                 }
                 elemImg.attr('src', url);
@@ -111,27 +143,9 @@ var Modul_image = function () {
                     update_classes(val, elem);
                 }
             });
-    }
 
-    function addurlparam(uri, key, value) {
-        // http://stackoverflow.com/a/6021027
-        var hash = uri.replace(/^.*#/, '#');
-        if (hash != uri) {
-            uri = uri.replace(hash, '');
-        } else {
-            hash = '';
-        }
-        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-
-        if (uri.match(re)) {
-            uri = uri.replace(re, '$1' + key + "=" + value + '$2');
-        } else {
-            uri = uri + separator + key + "=" + value;
-        }
-        uri += hash;
-        ftui.log(1, 'widget_image url=' + uri);
-        return uri;
+        //extra reading for hide
+        me.update_hide(dev, par);
     }
 
     // public

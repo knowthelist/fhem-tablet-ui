@@ -13,6 +13,7 @@ Requires
 * font-awesome http://fortawesome.github.io/Font-Awesome
 * jquery.gridster  http://gridster.net
 * jquery.toast
+All requires are included in the lib folder.
 
 Install
 -------
@@ -44,25 +45,28 @@ Just configure the **index.html** to change the dashboard for your needs.
 
 Change the wiget container according your rooms
 ```html
-<li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
-	<header>KUECHE</header>
-	<div class="container">
-	  <div class="left">
-                <div data-type="thermostat" data-device="KuecheHeizung_Clima"></div>
-                <div data-type="thermostat" data-device="KuecheHeizung2_Clima"></div>
-	  </div>
-	  <div class="right">
+<li data-row="2" data-col="2" data-sizey="3" data-sizex="3">
+    <header>KUECHE</header>
+    <div class="sheet">
+        <div class="row">
+            <div class="cell" data-type="thermostat" data-device="KuecheHeizung_Clima"></div>
+            <div class="cell">
                 <div data-type="switch" data-device="HerdLicht_Sw"></div>
                 <div>HerdLicht</div>
-                <div data-type="symbol" data-device="KuechenFenster"></div>
-	  </div>
-	</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell" data-type="thermostat" data-device="KuecheHeizung2_Clima"></div>
+            <div class="cell" data-type="symbol" data-device="KuechenFenster"></div>
+        </div>
+    </div>
 </li>
 ```
 Change the widgets you have and want to see on the dashboard
 ```html
 <div data-type="thermostat" data-device='WohnzimmerHeizung_Clima'></div>
 ```
+
 Widgets
 -------
 Currently there are more then 20 types of widgets in the base installation.
@@ -102,7 +106,6 @@ Currently there are more then 20 types of widgets in the base installation.
 - **medialist** : a list of media elements e.g. songs in a playlist
 - **notify** : popup browser notifications for reading changes
 
-More plugins are available [here](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
 
 By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
 
@@ -144,6 +147,10 @@ General attribute meaning
 - **data-warn**  : name of the reading containing a integer value to be shown as a red warn overlay (default <null>)
 - **data-warn-color**  : forecolor for warn badge (default '#aaa')
 - **data-warn-background-color**  : background color for warn badge (default '#aa2200')
+- **data-hide**   : name of the reading to hide/show the widget (default 'STATE')
+- **data-hide-on**   : value for HIDE (default 'true|1|on')
+- **data-hide-off**   : value for SHOW (default '!on')
+- **data-hideparents**: jquery selector to hide element's parents too
 - **data-reachable**  : name of the reading containing a integer value to indicate whether the device is reachable or not (default <null>)
 
 dual state notation   
@@ -176,6 +183,8 @@ class 'invert' inverts foreground and background color
 
 data-lock: the widget gets locked if the corresponding FHEM reading has the value 1, on or true.
 
+data-[on|off]-color: the expected format for color value via reading is RGB (with ot without #)
+
 See [examples](#switch) of Switch
 
 ####Symbol widget
@@ -183,7 +192,9 @@ See [examples](#switch) of Switch
 - **data-warn**  : name of the reading containing a integer value to be shown as a red warn overlay (default <null>)
 - **data-warn-color**  : forecolor for warn badge (default '#aaa')
 - **data-warn-background-color**  : background color for warn badge (default '#aa2200')
-- **data-hide**   : string to compare with current value. hide element when it's value equals data-hide. Or a DEVICE:READING to determine hiding from reading value  
+- **data-hide**   : name of the reading to hide/show the widget (default 'STATE')
+- **data-hide-on**   : value for HIDE (default 'true|1|on')
+- **data-hide-off**   : value for SHOW (default '!on')
 - **data-hideparents**: jquery selector to hide element's parents too
 - **data-lock**  : name of the reading containing a boolean value for the lock (readonly) parameter (default <null>)
 - **data-reachable**  : name of the reading containing a integer value to indicate whether the device is reachable or not (default <null>)
@@ -213,6 +224,8 @@ The CSS class 'compressed' forces the switch or symbol to a height and width of 
 data-get-on,data-get-off and data-states accept also RegEx values.
 The value for one icon can also contain an additional animatation CSS name, e.g. "fa-exclamation-triangle fa-blink" for a blinking symbol
 
+data-[on|off]-color: the expected format for color value via reading is RGB (with ot without #)
+
 See [examples](#symbol) of Symbol
 
 ####Label widget
@@ -229,7 +242,9 @@ See [examples](#symbol) of Symbol
 - **data-substitution**: multiple functions to replace the original value (see descriptions below)
 - **data-pre-text**: include this text before reading text
 - **data-post-text**: include this text after reading text
-- **data-hide**   : string to compare with current value. hide element when it's value equals data-hide. Or a DEVICE:READING to determine hiding from reading value  
+- **data-hide**   : name of the reading to hide/show the widget (default 'STATE')
+- **data-hide-on**   : value for HIDE (default 'true|1|on')
+- **data-hide-off**   : value for SHOW (default '!on')
 - **data-hideparents**: jquery selector to hide element's parents too
 - **data-refresh**  : auto refresh interval in secondes (default '0', 0 means no auto refresh)
 - **class**     : small, large, big, bigger, thin, red, green, blue, orange, darker, timestamp, w1x, w2x, w3x, circleborder
@@ -305,7 +320,8 @@ data-device, data-get can be references (jQuery seletor) to select-widgets to ch
 
 ####Push widget
 - **data-set**    : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
-- **data-set-on** : value (or an array of values) to send when the the button get pressed. (default '')
+- **data-set-on** : value (or an array of values) to send after the the button get released (or when pressed, if data-on-off is set) (default 'on')
+- **data-set-off** : value to send after the the button get released. (default '') 
 - **data-background-icon** : name of the font-awesome icon for background (default 'fa-circle')
 - **data-cmd**  : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-doubleclick**: timeout to wait for a second click or touch. '0' disables the doubleclick feature. (default '0')
@@ -319,7 +335,6 @@ data-device, data-get can be references (jQuery seletor) to select-widgets to ch
 - **data-hideparents**: jquery selector to hide element's parents too
 - **data-lock**  : name of the reading containing a boolean value for the lock (readonly) parameter (default <null>)
 - **data-reachable**  : name of the reading containing a integer value to indicate whether the device is reachable or not (default <null>)
-
 
 'data-set-on' can also be an array of values to toggle between this values
 
@@ -361,6 +376,12 @@ all parameters from knob widget plus following additional parameters
 - **data-step**  : step size for value adjustment e.g. 0.5 (default 1)
 - **data-off**   : value to send to get the thermostat switch off (for this, dial the knob to then minimum value)
 - **data-boost** : value to send to force boost mode (for this, dial the knob to then maximum value)
+- **data-height**  : vertical size of the widget (default 100)
+- **data-width**   : horizontal size of the widget (default 100)
+- **data-touch-height**  : vertical size of the widget  during changes (default 10)
+- **data-touch-width**   : horizontal size of the widget during changes (default 30)
+
+
 - **class**		 : mini, small, big, bigger, readonly
 
 // special for MAX! WandThermostat
@@ -379,6 +400,14 @@ all parameters from knob widget plus following additional parameters
 - **data-tickstep** : distance between ticks (default 4|20)
 - **data-unit** : add a unit after the desired value.
 - **class**		: mini, small, big, bigger, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
+
+
+class hue-tick		: draw ticks in color range
+class hue-front		: draw handle in color range
+class hue-back		: draw background in color range
+class dim-tick 		: draw ticks in brightness range
+class dim-front		: draw handle in brightness range
+class dim-back		: draw background in brightness range
 
 ####Homestatus widget
 all parameters from knob widget plus following additional parameters
@@ -411,7 +440,10 @@ all parameters from knob widget plus following additional parameters
 - **data-height**: height for vertical sliders (default '120px', for mini '60px')
 - **data-color** : color for quantity range (default '#aa6900')
 - **data-background-color** : color for range bar (default '#404040')
--
+- **data-handle-diameter** : size for the handle (default 20)
+- **data-touch-diameter** : size for the handle on movement (default the normal size)
+
+
 - **class**     : mini, horizontal, negated, value, textvalue, FS20, tap, big, bigger, large
 
 The slider supports tap to target only if the CSS class 'tap' is added.
@@ -481,6 +513,10 @@ data-lock: the widget gets locked if the corresponding FHEM reading has the valu
 - **data-state-get**: name of the parameter that contains the status value
 - **data-states**   : array of states
 - **data-classes**  : a array of class names. The additional added class is defined by the matching element of the states array compared to state-get value
+- **data-hide**   : name of the reading to hide/show the widget (default 'STATE')
+- **data-hide-on**   : value for HIDE (default 'true|1|on')
+- **data-hide-off**   : value for SHOW (default '!on')
+- **data-hideparents**: jquery selector to hide element's parents too
 - **class**	    : nocache
 
 If 'data-url' is not set, then the URL for image src is built from: data-path + valueof data-get + data-suffix
@@ -526,6 +562,7 @@ data-return-time has to be placed on the main pagetab (the first one > index 0)
 ####Pagebutton widget
 - **data-url**              : URL of the new page to show
 - **data-active-pattern**   : RegEx to define active state  (default null)
+- **data-fade-duration**    : time in millisecondes or 'slow'/'fast' to fade to next page (default 'slow')
 all other parameters like switch widget
  -**class**                 : blank,nocache,default,prefetch,
 
@@ -707,7 +744,8 @@ See [examples](#range) of Range
 - **data-active-color**            : rgb value or color name for the text and icon in case active-pattern is matching (default same as data-color)
 - **data-active-background-color** : rgb value or color name for the back in case active-pattern is matching (default same as data-background-color)
 - **data-active-border-color**     : rgb value or color name for the border in case active-pattern is matching (default same as data-border-color)
-- **class**                         : blank,
+- **data-fade-duration**           : time in millisecondes or 'slow'/'fast' to fade to next page (default 'slow')
+- **class**                        : blank,
 
 class 'blank' force to open the given URL on a new window
 
@@ -811,73 +849,65 @@ Format
 -------
 The layout, look and behavior can be influenced by the class attribute.
 
-**CSS Class description**
+**Positioning**
 
-not all widgets support all classes
-- readonly		: changing of state is not allowed 
-- w1x, w2x, w3x         : set the widget to a fix width: 1x, 2x, 3x width
-- small			: font 80% size (label), small diameter for volume widget
-- mini			: lowest diameter for volume widget
-- large			: font 150% size
-- big			: font 200% size
-- bigger		: font 320% size
-- gigantic              : font 144px and robotothin font
-- thin			: font thin
-- darker		: forecolor in gray
-- hue-tick		: draw ticks in color range
-- hue-front		: draw handle in color range
-- hue-back		: draw background in color range
-- dim-tick 		: draw ticks in brightness range
-- dim-front		: draw handle in brightness range
-- dim-back		: draw background in brightness range
-- red			: foreground color red
-- green			: foreground color green
-- blue			: foreground color blue
-- lightblue		: foreground color lightblue
-- orange		: foreground color orange
-- gray           	: foreground color gray
-- lightgray           	: foreground color lightgray
-- white           	: foreground color white
-- black           	: foreground color black
-- bg-red		: background color red
-- bg-green		: background color green
-- bg-blue		: background color blue
-- bg-lightblue		: background color lightblue
-- bg-orange		: background color orange
-- bg-gray           	: background color gray
-- bg-lightgray         	: background color lightgray
-- doublebox-v           : container to place 2 small widgets (e.g. switch) one above the other
-- doublebox-h           : container to place 2 small widgets (e.g. switch) side by side
-- triplebox-v           : container to place 3 small widgets (e.g. switch) one above the other
-- timestamp		: deliver the date time for the reading instead of the value
-- blink                 : blink animatation for label or symbol widget
-- rotate-90		: rotate (e.g an image) for 90 degres  
-- circleborder          : draws a round border around labels
-- autohide              : Hides an element in case of an invalid reading (not available for this device)
-- notransmit            : suppress send to FHEM after changes
-- truncate              : short a string if necessary and add ... instead
+"sheet > row > cell"-Layout
 
-Positioning:
-- row                   : new row
-- col-x-y 		: new column with x/y of width (col-1-3,col-2-3,col-1-2,col-1-4,col-1-8,col-1-5,col-2-5,col-3-5,col-4-5)
-- inline		: positioning elements in a row, no line break
-- newline		: positioning elements at a new row, line break
-- top-space     : 15px extra on top (top-space-2x -> 30px; top-space-3x -> 45px)
-- left-space	: 15px extra on left (left-space-2x -> 30px; left-space-3x -> 45px)
-- right-space  	: 15px extra on right (right-space-2x -> 30px; right-space-3x -> 45px)
-- top-narrow    : -15px closer on top  (top-narrow-2x -> -30px; top-narrow-10 -> -10px)
-- left-narrow	: 15px closer on left (left-narrow-2x -> 30px; left-narrow-3x -> 45px)
-- right-narrow  	: 15px closer on right (right-narrow-2x -> 30px; right-narrow-3x -> 45px)
-- centered		: horizontal centered (set this class to parent div)
-- left-align	: align text left
-- right-align	: align text right
-- bottom        : align text at the bottom of
-- wider			: 15px extra space for the widget all around 
-- narrow		: shorter distant to the widget above 
-- fullsize		: 100% in width and height
-- compressed            : forces switches/symbols to a height and width of 1em instead of 2em to have less space around the icon
+This is a table like layout which centers all widgets very easy. 
 
-Flexbox Layout:
+- sheet         : start a new sheet with new rows and new cells
+- row           : new row within the current sheet
+- cell		    : new cell within the current row (column)
+- cell-1-x      : new cell within the current row. Fix width X of Y - e.g. cell-1-3 (33%), cell-1-4 (25%)
+- cell-x        : new cell within the current row. Fix width Percent - e.g. cell-20 (20%), cell-40 (40%)
+- left-align    : align the widget left within the cell
+- right-align   : align the widget right within the cell
+- bottom-align  : align the widget bottom within the cell
+- top-align     : align the widget top within the cell
+- center-align  : align the widget center within the cell
+
+````html
+<li data-row="1" data-col="3" data-sizey="2" data-sizex="2">
+    <header>Sheet > Row > Cell</header>
+    <div class="sheet">
+        <div class="row">
+            <div class="cell" data-type="symbol" data-device="dummy1"></div>
+            <div class="cell" data-type="symbol" data-device="dummy2"></div>
+        </div>
+        <div class="row">
+            <div class="cell" data-type="symbol" data-device="dummy3"></div>
+            <div class="cell" data-type="symbol" data-device="dummy4"></div>
+        </div>
+    </div>
+</li>
+````
+
+"row > col"-Layout
+
+This is a line orientated layout which allows different number of columns per row. 
+The height of the row is determined by the largest element.
+
+- row           : new row within the current sheet
+- col		    : new column within the current row. Auto width. 
+- col-1-x       : new column within the current row. Fix width X of Y - e.g. col-1-3 (33%), col-1-4 (25%)
+- col-x         : new column within the current row. Fix width Percent - e.g. col-20 (20%), col-40 (40%)
+ 
+ ````html
+<li data-row="1" data-col="5" data-sizey="2" data-sizex="2">
+    <header>row > col</header>
+    <div class="row">
+        <div class="col" data-type="symbol" data-device="dummy1"></div>
+        <div class="col" data-type="symbol" data-device="dummy2"></div>
+    </div>
+    <div class="row">
+        <div class="col" data-type="symbol" data-device="dummy3"></div>
+        <div class="col" data-type="symbol" data-device="dummy4"></div>
+    </div>
+</li>
+````
+
+"hbox / vbox"-Layout
+
 - vbox          : vertical box - items  one above the other
 - hbox          : horizontal box - items side by side
 - card          : a main box
@@ -892,6 +922,96 @@ Flexbox Layout:
 - items-center  : how to align items in a hbox
 - items-bottom  : how to align items in a hbox
 - items-space-between  : how to align items in a hbox
+- items-space-around  : how to align items in a hbox
+
+```html
+<li data-row="1" data-col="1" data-sizey="2" data-sizex="2">
+    <header>vbox > hbox</header>
+    <div class="vbox">
+        <div class="hbox">
+            <div class="red" data-type="switch" data-device="dummy1"></div>
+            <div class="green" data-type="switch" data-device="dummy2"></div>
+        </div>
+        <div class="hbox">
+            <div class="blue" data-type="switch" data-device="dummy3"></div>
+            <div class="orange" data-type="switch" data-device="dummy4"></div>
+        </div>
+    </div>
+</li>
+```
+
+
+**Common Positioning classes**
+- inline		: positioning elements in a row, no line break
+- newline		: positioning elements at a new row, line break
+- top-space     : 15px extra on top (top-space-2x -> 30px; top-space-3x -> 45px)
+- left-space	: 15px extra on left (left-space-2x -> 30px; left-space-3x -> 45px)
+- right-space  	: 15px extra on right (right-space-2x -> 30px; right-space-3x -> 45px)
+- top-narrow    : -15px closer on top  (top-narrow-2x -> -30px; top-narrow-10 -> -10px)
+- left-narrow	: 15px closer on left (left-narrow-2x -> 30px; left-narrow-3x -> 45px)
+- right-narrow  	: 15px closer on right (right-narrow-2x -> 30px; right-narrow-3x -> 45px)
+- centered		: horizontal centered (set this class to parent div)
+- wider			: 15px extra space for the widget all around 
+- narrow		: shorter distant to the widget above 
+- fullsize		: 100% in width and height
+- compressed    : forces switches/symbols to a height and width of 1em instead of 2em to have less space around the icon
+- w1x, w2x, w3x  : set the widget to a fix width: 1x, 2x, 3x width
+- doublebox-v           : container to place 2 small widgets (e.g. switch) one above the other
+- doublebox-h           : container to place 2 small widgets (e.g. switch) side by side
+- triplebox-v           : container to place 3 small widgets (e.g. switch) one above the other
+
+**Foreground Colors**
+- red			: foreground color red
+- green			: foreground color green
+- blue			: foreground color blue
+- lightblue		: foreground color lightblue
+- orange		: foreground color orange
+- gray          : foreground color gray
+- lightgray     : foreground color lightgray
+- white         : foreground color white
+- black         : foreground color black
+- mint          : foreground color lightgray
+- yellow        : foreground color lightgray
+
+**Background Colors**
+- bg-red		: background color red
+- bg-green		: background color green
+- bg-blue		: background color blue
+- bg-lightblue	: background color lightblue
+- bg-orange		: background color orange
+- bg-gray       : background color gray
+- bg-lightgray  : background color lightgray
+- bg-white      : background color white
+- bg-black      : background color black
+- bg-mint       : background color lightgray
+- bg-yellow     : background color lightgray
+
+**Label or Symbol Size**
+- mini          : 50%
+- tiny          : 60%
+- small         : 80%
+- normal        : 100%
+- large         : 125%
+- big           : 150%
+- bigger        : 200%
+- tall          : 350%
+- grande        : 600%
+- gigantic      : 144px
+
+**Font style**
+- thin			: font thin
+- bold			: font bold
+- darker		: forecolor in gray
+- truncate      : short a string if necessary and add ... instead
+
+**Others**
+- readonly		: changing of state is not allowed 
+- blink         : blink animatation for label or symbol widget
+- rotate-90		: rotate (e.g an image) for 90 degres  
+- circleborder  : draws a round border around labels
+- autohide      : Hides an element in case of an invalid reading (not available for this device)
+- notransmit    : suppress send to FHEM after changes
+
 
 
 Icon configuration
@@ -949,27 +1069,65 @@ It is also possible to change only color of single widgets by adding one of thes
 Meta tags configuration
 -------
 
-To disable longpoll, set an other value then 1
-```html
-<meta name="longpoll" content="1">
-```
+Following settings can be added into to the HTML header
+
+**Gridster**
+
 To disable drag&drop for gridster set this value to 1
 ```html
 <meta name='gridster_disable' content='1'>
 ```
-To disable Toast messages set this value to 0
+
+Add or change this meta tag to set the amount of Gridster columns and rows 
 ```html
-<meta name='toast' content='1'>
+<meta name="gridster_cols" content="12">
+<meta name="gridster_rows" content="9">
 ```
-Change this to adjust the size of a Gridster base (data-sizey=1/data-sizex=1)
+
+Add or change this meta tag to  to adjust the size of a Gridster base to set the size of tiles manually
 ```html
 <meta name="widget_base_width" content="116">
 <meta name="widget_base_height" content="131">
 ```
+
 Add this to adjust the size of the Gridster margin
 ```html
 <meta name="widget_margin" content="4">
 ```
+
+
+Additional settings for Gridster are:
+- widget_min_cols
+- gridster_starthidden
+- gridster_resize (auto resize -> values: 0|1)
+
+
+To disable longpoll, set an other value then 1
+```html
+<meta name="longpoll" content="1">
+```
+
+To enable verbose level, set values greater then 0 (1-5)
+```html
+<meta name="debug" content="1">
+```
+
+To disable Toast messages set this value to 0
+```html
+<meta name='toast' content='1'>
+```
+
+To change the folder where FHEM can be reached
+```html
+<meta name='fhemweb_url' content='/fhem/'>
+```
+
+To change the language for time/date functions
+```html
+<meta name='lang' content='de'>
+```
+
+
 
 
 Examples

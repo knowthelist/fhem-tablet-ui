@@ -1,5 +1,5 @@
 /* FTUI Plugin
- * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
@@ -101,8 +101,8 @@ var Modul_famultibutton = function () {
                     }, elem.data('doubleclick') * 1));
                     elem.setOn();
                 }
-                elem.children().filter('#bg').css('color', elem.data('firstclick-background-color'));
-                elem.children().filter('#fg').css('color', elem.data('firstclick-color'));
+                elem.find('#bg').css('color', elem.data('firstclick-background-color'));
+                elem.find('#fg').css('color', elem.data('firstclick-color'));
                 return false;
             } else {
                 elem.data('_firstclick', false);
@@ -113,37 +113,36 @@ var Modul_famultibutton = function () {
     }
 
     function showOverlay(elem, value) {
-        elem.children().filter('#warn-back').remove();
-        elem.children().filter('#warn').remove();
+        elem.find('#warn-back').remove();
+        elem.find('#warn').remove();
         if (ftui.isValid(value) && value !== "") {
             var val = ($.isNumeric(value) && value < 100) ? Number(value).toFixed(0) : '!';
-            var bgElem = $('<i/>', {
-                    id: 'warn-back',
-                    class: 'fa fa-stack-1x fa-circle'
-                })
-                .appendTo(elem);
+            var faElem = elem.find('.famultibutton');
+            var bgWarnElem = $('<i/>', {
+                id: 'warn-back',
+                class: 'fa fa-stack-1x fa-circle'
+            }).appendTo(faElem);
 
-            var fgElem = $('<i/>', {
+            var fgWarnElem = $('<i/>', {
                 id: 'warn',
                 class: 'fa fa-stack-1x '
-            })
+            }).html(val).appendTo(faElem);
 
-            .html(val).appendTo(elem);
             if (elem.isValidData('warn-color')) {
-                fgElem.css({
+                fgWarnElem.css({
                     color: elem.data('warn-color')
                 });
             }
             if (elem.isValidData('warn-background-color')) {
-                bgElem.css({
+                bgWarnElem.css({
                     color: elem.data('warn-background-color')
                 });
             }
             if (elem.hasClass('warnsamecolor')) {
-                fgElem.css({
+                fgWarnElem.css({
                     color: '#000'
                 });
-                bgElem.css({
+                bgWarnElem.css({
                     color: elem.data('on-color')
                 });
             }
@@ -192,7 +191,7 @@ var Modul_famultibutton = function () {
             }
         }
 
-        var elm = elem.children().filter('#fg');
+        var elm = elem.find('#fg');
         var idx = ftui.indexOfGeneric(states, state);
         if (idx > -1) {
             var faelem = elem.data('famultibutton');
@@ -215,7 +214,7 @@ var Modul_famultibutton = function () {
                 .addClass('fa fa-stack-1x')
                 .addClass(icons[idx])
                 .css("color", ftui.getStyle('.' + colorValue, 'color') || colorValue);
-            var bgelm = elem.children().filter('#bg');
+            var bgelm = elem.find('#bg');
             bgelm.removeClass()
                 .addClass('fa fa-stack-2x')
                 .addClass(bgicons[idx]);
@@ -226,7 +225,7 @@ var Modul_famultibutton = function () {
 
     function toggleOn(elem) {
 
-        if (me.isReadOnly(elem)) {
+        if (elem.hasClass('lock')) {
             elem.addClass('fail-shake');
             setTimeout(function () {
                 var faelem = elem.data('famultibutton');
@@ -258,7 +257,7 @@ var Modul_famultibutton = function () {
 
     function toggleOff(elem) {
 
-        if (me.isReadOnly(elem)) {
+        if (elem.hasClass('lock')) {
             elem.addClass('fail-shake');
             setTimeout(function () {
                 var faelem = elem.data('famultibutton');
@@ -399,33 +398,48 @@ var Modul_famultibutton = function () {
         elem.initData('get', 'STATE');
         elem.initData('set', '');
         elem.initData('cmd', 'set');
-        elem.initData('get-on', 'on');
-        elem.initData('get-off', 'off');
-        elem.initData('set-on', elem.data('get-on'));
-        elem.initData('set-off', elem.data('get-off'));
+        elem.initData('get-on', 'true|1|on|open');
+        elem.initData('get-off', 'false|0|off|closed');
+        elem.initData('set-on', (elem.data('get-on')) != 'true|1|on|open' ? elem.data('get-on') : 'on');
+        elem.initData('set-off', (elem.data('get-off')) != 'false|0|off|closed' ? elem.data('get-off') : 'off');
         elem.initData('mode', 'toggle');
         elem.initData('doubleclick', 0);
         elem.initData('firstclick-background-color', '#6F4500');
         elem.initData('firstclick-color', null);
         elem.initData('get-warn', -1);
 
+        // reachable parameter
+        elem.initData('reachable-on', '!off');
+        elem.initData('reachable-off', 'false|0');
+        me.addReading(elem, 'reachable');
+
+        // if hide reading is defined, set defaults for comparison
+        if (elem.isValidData('hide')) {
+            elem.initData('hide-on', 'true|1|on');
+        }
+        elem.initData('hide', 'STATE');
+        if (elem.isValidData('hide-on')) {
+            elem.initData('hide-off', '!on');
+        }
+        me.addReading(elem, 'hide');
+
+        // if lock reading is defined, set defaults for comparison
+        if (elem.isValidData('lock')) {
+            elem.initData('lock-on', 'true|1|on');
+        }
+        elem.initData('lock', elem.data('get'));
+        if (elem.isValidData('lock-on')) {
+            elem.initData('lock-off', '!on');
+        }
+        me.addReading(elem, 'lock');
+
         me.addReading(elem, 'get');
         me.addReading(elem, 'warn');
 
-        if (elem.isDeviceReading('reachable')) {
-            me.addReading(elem, 'reachable');
-        }
-        if (elem.isValidData('lock')) {
-            me.addReading(elem, 'lock');
-        }
-        if (elem.isDeviceReading('hide')) {
-            me.addReading(elem, 'hide');
-        }
-
-        elem.initData('off-color', ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#505050');
+        elem.initData('off-color', elem.data('color') ||  ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#505050');
         elem.initData('off-background-color', elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.off', 'background-color') || '#505050');
-        elem.initData('on-color', ftui.getStyle('.' + me.widgetname + '.on', 'color') || '#aa6900');
-        elem.initData('on-background-color', elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.on', 'background-color') || '#aa6900');
+        elem.initData('on-color', elem.data('color') || ftui.getStyle('.' + me.widgetname + '.on', 'color') || '#aa6900');
+        elem.initData('on-background-color', elem.data('color') ||  elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.on', 'background-color') || '#aa6900');
 
         if (elem.hasClass('invert')) {
             var c1 = elem.data('off-background-color');
@@ -435,6 +449,12 @@ var Modul_famultibutton = function () {
             elem.data('on-background-color', elem.data('on-color'));
             elem.data('on-color', c2);
         }
+
+        // translate html color names into FTUI colors
+        elem.data('off-color', ftui.getStyle('.' + elem.data('off-color'), 'color') || elem.data('off-color'));
+        elem.data('on-color', ftui.getStyle('.' + elem.data('on-color'), 'color') || elem.data('on-color'));
+        elem.data('off-background-color', ftui.getStyle('.' + elem.data('off-background-color'), 'color') || elem.data('off-background-color'));
+        elem.data('on-background-color', ftui.getStyle('.' + elem.data('on-background-color'), 'color') || elem.data('on-background-color'));
 
         if (elem.isDeviceReading('on-color')) {
             me.addReading(elem, 'on-color');
@@ -467,24 +487,15 @@ var Modul_famultibutton = function () {
                     } else {
                         var faelem = elem.data('famultibutton');
                         if (faelem) {
-                            if (state == elem.data('get-on'))
+                            if (elem.matchingState('get', state) === 'on') {
                                 faelem.setOn();
-                            else if (state == elem.data('get-off'))
+                            }
+                            if (elem.matchingState('get', state) === 'off') {
                                 faelem.setOff();
-                            else if (state.match(new RegExp('^' + elem.data('get-on') + '$')))
-                                faelem.setOn();
-                            else if (state.match(new RegExp('^' + elem.data('get-off') + '$')))
-                                faelem.setOff();
-                            else if (elem.data('get-off') == '!on' && state != elem.data('get-on'))
-                                faelem.setOff();
-                            else if (elem.data('get-on') == '!off' && state != elem.data('get-off'))
-                                faelem.setOn();
+                            }
                         }
                     }
                     me.update_cb(elem, state);
-                    if (!elem.isDeviceReading('hide')) {
-                        me.checkHide(elem, state);
-                    }
                 }
             });
         // update from extra reading for colorize
@@ -498,13 +509,15 @@ var Modul_famultibutton = function () {
                     var val = elem.getReading(key).val;
                     if (ftui.isValid(val)) {
                         val = '#' + val.replace('#', '');
+                        console.log(val);
+
                         var faelem = elem.data('famultibutton');
                         if (faelem) {
                             // change color in options
                             faelem.o[oparm[index]] = val;
                             if (faelem.getState() === estat[index]) {
                                 // it's current state -> change directly
-                                elem.children().filter(selec[index]).css("color", val);
+                                elem.find(selec[index]).css("color", val);
                             }
                         }
                     }
@@ -512,28 +525,13 @@ var Modul_famultibutton = function () {
         });
 
         //extra reading for lock
-        me.elements.filterDeviceReading('lock', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
-                elem.data('readonly', elem.getReading('lock').val);
-            });
+        me.update_lock(dev, par);
 
         //extra reading for hide
-        me.elements.filterDeviceReading('hide', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
-                me.checkHide(elem, elem.getReading('hide').val);
-            });
+        me.update_hide(dev, par);
 
         //extra reading for reachable
-        me.elements.filterDeviceReading('reachable', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
-                elem.removeClass(function (index, css) {
-                    return (css.match(/(^|\s)reachable-\S+/g) || []).join(' ');
-                });
-                elem.addClass('reachable-' + elem.getReading('reachable').val);
-            });
+        me.update_reachable(dev, par);
 
 
         //extra reading for warn

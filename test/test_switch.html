@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.5.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizey="3" data-sizex="3">
+                <header>Switch Widget</header>
+                <!-- place your widget here -->
+                <div class="vbox">
+                    <div class="hbox">
+                        <div class="vbox gray">normal</div>
+                        <div class="vbox">
+                            <div data-type="switch" data-icon="fa-rss" data-device='isAutoHomeStatus' data-get-on="1" data-get-off="0" data-set-on="1" data-set-off="0" class="green"></div>
+                            <div class="gray">on</div>
+                        </div>
+                        <div class="vbox">
+                            <div data-type="switch" data-icon="fa-rss" data-device='isAutoHomeStatus' data-get-on="0" data-get-off="1" data-set-on="0" data-set-off="1" class="green"></div>
+                            <div class="gray">off</div>
+                        </div>
+                    </div>
+                    <div class="hbox">
+                        <div class="vbox gray">invert</div>
+                        <div class="vbox">
+                            <div data-type="switch" data-icon="fa-rss" data-device='isAutoHomeStatus' data-get-on="1" data-get-off="0" data-set-on="1" data-set-off="0" class="green invert"></div>
+                            <div class="gray">on</div>
+                        </div>
+                        <div class="vbox">
+                            <div data-type="switch" data-icon="fa-rss" data-device='isAutoHomeStatus' data-get-on="0" data-get-off="1" data-set-on="0" data-set-off="1" class="green invert"></div>
+                            <div class="gray">off</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="4" data-col="1" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE2</header>
+                <!-- place your widget here -->
+                <div class="vbox">
+                    <div data-type="switch" data-icon="fa-lock" data-device='dummy1' data-get-on="0" data-get-off="1" data-set-on="0" data-set-off="1"></div>
+                    <div data-type="label" data-device='dummy1' class=""></div>
+                    <div data-type="switch" data-icon="fa-rss" data-device='ftuitest' data-off-background-color="#55ddff" data-lock="dummy1:state" data-lock-on="0" data-on-background-color="#dd3388" class=""></div>
+                    <div data-type="label" data-device='ftuitest' class=""></div>
+                </div>
+            </li>
+            <li data-row="1" data-col="4" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE3</header>
+                <!-- place your widget here -->
+                <div class="vbox">
+                    <div data-type="switch" data-device="AvReceiver" data-get="mute" data-set="mute" data-states='["on","off"]' data-set-states='["off","on"]' data-icons='["fa-volume-off","fa-volume-up"]' data-background-icons='["none","none"]' data-colors='["#ddd","#999"]'></div>
+                    <div data-type="label" data-device="AvReceiver" data-get="mute"></div>
+                </div>
+
+            </li>
+            <li data-row="1" data-col="7" data-sizey="3" data-sizex="3">
+                <header>REACHABLE</header>
+                <!-- place your widget here -->
+                <div class="vbox">
+                    <div data-type="switch" data-device="dummy3" data-cmd="setreading" data-get="reachable" data-set="reachable" data-set-on="1" data-set-off="0" data-get-on="1" data-set-off="0" data-icon="fa-lock"></div>
+                    <div data-type="switch" data-device="dummy3" data-reachable="reachable"></div>
+                </div>
+            </li>
+            <li data-row="1" data-col="8" data-sizey="3" data-sizex="3">
+                <header>HIDE</header>
+                <!-- place your widget here -->
+                <div class="vbox">
+                    <div data-type="switch" data-device="dummy3" data-cmd="setreading" data-get="hide" data-set="hide" data-set-on="1" data-set-off="0" data-get-on="1" data-set-off="0" data-icon="fa-lock"></div>
+                    <div data-type="switch" data-device="dummy3" data-hide="hide" data-hide-on="1"></div>
+                </div>
+            </li>
+            <li data-row="4" data-col="10" data-sizey="3" data-sizex="3">
+                <header>HUEDevice</header>
+                <!-- place your widget here -->
+                <div class="vbox">
+                    <div data-type="switch" data-device="HUEDevice1" data-reachable="reachable"></div>
+                </div>
+            </li>
+            <li data-row="4" data-col="4" data-sizey="3" data-sizex="6">
+                <header>EXAMPLE6</header>
+                <!-- place your widget here -->
+                <div class="hbox">
+                    <div class="vbox">
+                        <div data-type="switch" data-device="dummy3" data-set-on="Anwesend" data-set-off="Abwesend" data-states='["Anwesend","Abwesend"]' data-icons='["fa-home", "fa-car"]' data-colors='["white", "white"]' data-background-colors='["green", "red"]'></div>
+                        <div>Normal</div>
+                    </div>
+                    <div class="vbox large">
+                        <div data-type="switch" data-device="dummy3" data-set-on="Anwesend" data-set-off="Abwesend" data-states='["Anwesend","Abwesend"]' data-icons='["fa-home", "fa-car"]' data-colors='["white", "white"]' data-background-colors='["green", "red"]'></div>
+                        <div>large</div>
+                    </div>
+                    <div class="vbox big">
+                        <div data-type="switch" data-device="dummy3" data-set-on="Anwesend" data-set-off="Abwesend" data-states='["Anwesend","Abwesend"]' data-icons='["fa-home", "fa-car"]' data-colors='["white", "white"]' data-background-colors='["green", "red"]'></div>
+                        <div>big</div>
+                    </div>
+                    <div class="vbox bigger">
+                        <div data-type="switch" data-device="dummy3" data-set-on="Anwesend" data-set-off="Abwesend" data-states='["Anwesend","Abwesend"]' data-icons='["fa-home", "fa-car"]' data-colors='["white", "white"]' data-background-colors='["green", "red"]'></div>
+                        <div>bigger</div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

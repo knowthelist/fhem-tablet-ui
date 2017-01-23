@@ -98,6 +98,7 @@ var Modul_pagebutton = function () {
             elem.initData('active-pattern', '.*/' + elem.data('url'));
             elem.initData('get-warn', -1);
             elem.initData('blink', 'off');
+            elem.initData('fade-duration', 'slow');
             elem.initData('return-time', 0);
 
             me.init_attr(elem);
@@ -113,11 +114,18 @@ var Modul_pagebutton = function () {
                 var sel = elem.data('load');
                 if (sel) {
                     elem.closest('nav').trigger('changedSelection');
-                    $(sel).siblings().removeClass('active');
+                    
+                    $(sel).siblings().filter('.page').fadeOut(elem.data('fade-duration'), function () {
+                        $(sel).siblings().filter('.page').removeClass("active");
+                    });
                     //load page if not done until now
                     if ($(sel + " > *").children().length === 0 || elem.hasClass('nocache'))
                         loadPage.call(me, elem);
-                    $(sel).addClass('active');
+                    $(sel).fadeIn(elem.data('fade-duration'), function () {
+                        $(sel).addClass('active');
+                    });
+
+
                     localStorage.setItem('pagebutton_lastSel', sel);
                     startReturnTimer(me.elements.eq(0));
                     $(document).trigger('changedSelection');

@@ -29,6 +29,10 @@ var Modul_slideout = function () {
 
         var panel = $(elem.data('panel'))[0];
         var menu = $(elem.data('menu'))[0];
+        var widgetElem = $('<div/>', {
+            class: 'widget_' + me.widgetname
+        }).appendTo(elem);
+
 
         if (ftui.isValid(panel) && ftui.isValid(menu)) {
 
@@ -39,7 +43,7 @@ var Modul_slideout = function () {
                 'tolerance': 70,
                 'touch': elem.hasClass('notouch') ? false : true,
             });
-            elem.addClass('fa-stack');
+            widgetElem.addClass('fa-stack');
 
             if (elem.data('position') === 'right') {
                 $(elem.data('menu')).css({
@@ -56,7 +60,7 @@ var Modul_slideout = function () {
                     color: elem.mappedColor('icon-color'),
                 })
                 .addClass('fa ' + icon + ' fa-lg fa-fw')
-                .appendTo(elem);
+                .appendTo(widgetElem);
 
             elem.click(function (event) {
                 slideout.toggle();
@@ -84,7 +88,7 @@ var Modul_slideout = function () {
             ftui.log(1, 'Slideout: Error - no panel element or menu element found');
         }
 
-        return elem;
+        return widgetElem;
     }
 
     function update(dev, par) {}

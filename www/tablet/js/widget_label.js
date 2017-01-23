@@ -37,9 +37,6 @@ var Modul_label = function () {
                 }
             }
             me.update_cb(elem, val);
-            if (!elem.isDeviceReading('hide')) {
-                me.checkHide(elem, val);
-            }
         }
         var color = elem.data('color');
         if (color && !elem.isDeviceReading('color')) {
@@ -51,7 +48,6 @@ var Modul_label = function () {
     function init_attr(elem) {
 
         elem.initData('get', 'STATE');
-        elem.initData('part', -1);
         elem.initData('unit', '');
         elem.initData('color', '');
         elem.initData('limits', elem.data('states') || []);
@@ -62,6 +58,16 @@ var Modul_label = function () {
         elem.initData('pre-text', '');
         elem.initData('post-text', '');
         elem.initData('refresh', 0);
+
+        // if hide reading is defined, set defaults for comparison
+        if (elem.isValidData('hide')) {
+            elem.initData('hide-on', 'true|1|on');
+        }
+        elem.initData('hide', elem.data('get'));
+        if (elem.isValidData('hide-on')) {
+            elem.initData('hide-off', '!on');
+        }
+        me.addReading(elem, 'hide');
 
         // fill up colors to limits.length
         // if an index s isn't set, use the value of s-1
@@ -77,9 +83,6 @@ var Modul_label = function () {
         me.addReading(elem, 'limits-get');
         if (elem.isDeviceReading('color')) {
             me.addReading(elem, 'color');
-        }
-        if (elem.isDeviceReading('hide')) {
-            me.addReading(elem, 'hide');
         }
     }
 
@@ -143,11 +146,7 @@ var Modul_label = function () {
             });
 
         //extra reading for hide
-        me.elements.filterDeviceReading('hide', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
-                me.checkHide(elem, elem.getReading('hide').val);
-            });
+        me.update_hide(dev, par);
 
         //extra reading for colorize
         me.elements.filterDeviceReading('limits-get', dev, par)
