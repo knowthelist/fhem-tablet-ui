@@ -495,7 +495,9 @@ var Modul_famultibutton = function () {
                             }
                         }
                     }
-                    me.update_cb(elem, state);
+                    if (!elem.isValidData('warn')) {
+                        me.update_cb(elem, state);
+                    }
                 }
             });
         // update from extra reading for colorize

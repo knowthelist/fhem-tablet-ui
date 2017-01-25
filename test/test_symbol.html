@@ -1,28 +1,31 @@
+<!DOCTYPE html>
 <html>
-<title>FHEM</title>
 
 <head>
     <!--
-    /* FHEM tablet ui */
-    /*
-    * Just another dashboard for FHEM
-    *
-    * Version: 2.5.*
-    * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
-    * URL: https://github.com/knowthelist/fhem-tablet-ui
-    *
-    * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
-    * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
-    *
-    * - create a new folder named 'tablet' in /<fhem-path>/www
-    * - copy all files incl. sub folders into /<fhem-path>/www/tablet
-    * - add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
-    * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
-    */
-   -->
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.5.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    
+    <meta name="gridster_resize" content="0">
+
+    <link rel="stylesheet" type="text/css" href="css/fhem-tablet-ui-user.css">
 
     <script src="js/fhem-tablet-ui.js" defer></script>
-
 
     <title>FHEM-Tablet-UI</title>
 </head>
@@ -53,7 +56,13 @@
                 <div data-type="label" data-device="AvReceiver" data-get="mute" data-substitution="toDate().ago('hh:mm:ss')" class="timestamp"></div>
                 <div data-type="label" data-device="AvReceiver" data-get="mute" data-substitution="toDate().ago('h mm:ss')" class="timestamp"></div>
             </li>
-
+            <li data-row="1" data-col="3" data-sizey="2" data-sizex="3">
+                <header>HTML</header>
+                <div class="center">
+                    <div data-type="symbol" data-device="ftuitest" data-get="STATE" data-warn="countWarnings" data-icon="fa-trash" data-on-colors="yellow"' data-get-on="(0|1)" class="big">
+                    </div>
+                </div>
+            </li>
             <li data-row="8" data-col="1" data-sizex="4" data-sizey="2">
                 <header>Fenster</header>
                 <div class="hbox">
