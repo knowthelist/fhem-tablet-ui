@@ -144,7 +144,9 @@ General attribute meaning
 - **data-cmd**      : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-doubleclick**: timeout to wait for x millisecondes click or touch. '0' disables the doubleclick feature. (default '0')
 - **data-lock**  : name of the reading containing a boolean value for the lock (readonly) parameter (default <null>)
-- **data-warn**  : name of the reading containing a integer value to be shown as a red warn overlay (default <null>)
+- **data-warn**  : name of the reading to be shown as a red warn overlay (default <null>)
+- **data-warn-on**   : value(s) that show the warn badge (default 'true|on|[1-9]{1}[0-9]*')
+- **data-warn-off**   : value(s) that hide the warn badge (default 'false|off|0')
 - **data-warn-color**  : forecolor for warn badge (default '#aaa')
 - **data-warn-background-color**  : background color for warn badge (default '#aa2200')
 - **data-hide**   : name of the reading to hide/show the widget (default 'STATE')
@@ -189,7 +191,9 @@ See [examples](#switch) of Switch
 
 ####Symbol widget
 - **data-get**      			: name of the reading to get from FHEM (default 'STATE')
-- **data-warn**  : name of the reading containing a integer value to be shown as a red warn overlay (default <null>)
+- **data-warn**  : name of the reading to be shown as a red warn overlay (default <null>)
+- **data-warn-on**   : value(s) that show the warn badge (default 'true|on|[1-9]{1}[0-9]*')
+- **data-warn-off**   : value(s) that hide the warn badge (default 'false|off|0')
 - **data-warn-color**  : forecolor for warn badge (default '#aaa')
 - **data-warn-background-color**  : background color for warn badge (default '#aa2200')
 - **data-hide**   : name of the reading to hide/show the widget (default 'STATE')
@@ -378,8 +382,8 @@ all parameters from knob widget plus following additional parameters
 - **data-boost** : value to send to force boost mode (for this, dial the knob to then maximum value)
 - **data-height**  : vertical size of the widget (default 100)
 - **data-width**   : horizontal size of the widget (default 100)
-- **data-touch-height**  : vertical size of the widget  during changes (default 10)
-- **data-touch-width**   : horizontal size of the widget during changes (default 30)
+- **data-touch-height**  : vertical size of the widget  during changes (default: the normal size - 100)
+- **data-touch-width**   : horizontal size of the widget during changes (default the normal size - 100)
 
 
 - **class**		 : mini, small, big, bigger, readonly
