@@ -224,12 +224,18 @@ var Modul_slider = function () {
         var heightUnit = ($.isNumeric(height)) ? 'px' : '';
         var margin = elem.data('margin');
         var marginUnit = ($.isNumeric(margin)) ? 'px' : '';
+        var widthHandle = elem.data('handle-diameter');
+        var widthHandleUnit = ($.isNumeric(widthHandle)) ? 'px' : '';
 
         if (elem.hasClass('horizontal')) {
             elem.css({
                 'margin-bottom': margin + marginUnit,
                 'margin-top': margin + marginUnit,
                 'height': height + heightUnit
+            });
+
+            rangeContainer.css({
+                'height': widthHandle + widthHandleUnit
             });
 
             if (width) {
@@ -418,10 +424,8 @@ var Modul_slider = function () {
             .each(function (idx) {
                 var elem = $(this);
                 var val = elem.getReading(reading).val;
-            console.log('sliderVal:',val);
                 if (ftui.isValid(val)) {
                     var state = elem.matchingState(reading, val);
-                    console.log(state);
                     setTimer(elem, state);
                 }
             });
