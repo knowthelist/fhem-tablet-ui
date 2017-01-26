@@ -9,7 +9,7 @@ DIR www/tablet/lib/highcharts/themes
 UPD 2016-11-25_00:14:16 510 www/tablet/css/fhem-blue-ui.css
 UPD 2016-11-25_00:14:16 510 www/tablet/css/fhem-green-ui.css
 UPD 2017-01-11_10:24:19 1953 www/tablet/css/fhem-mobil-ui.css
-UPD 2017-01-23_23:33:00 44203 www/tablet/css/fhem-tablet-ui.css
+UPD 2017-01-26_00:55:14 44299 www/tablet/css/fhem-tablet-ui.css
 UPD 2017-01-23_23:35:03 31393 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2016-11-25_00:14:16 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2016-11-25_00:14:16 5295 www/tablet/css/ftui_chart.css
@@ -91,7 +91,7 @@ UPD 2016-11-30_22:14:17 4496 www/tablet/js/widget_klimatrend.js
 UPD 2017-01-19_20:29:52 8486 www/tablet/js/widget_knob.js
 UPD 2017-01-07_08:40:10 6100 www/tablet/js/widget_label.js
 UPD 2016-12-04_19:08:20 877 www/tablet/js/widget_level.js
-UPD 2017-01-22_06:57:08 10569 www/tablet/js/widget_link.js
+UPD 2017-01-26_00:21:10 10561 www/tablet/js/widget_link.js
 UPD 2016-11-25_00:14:16 1493 www/tablet/js/widget_loading.js
 UPD 2016-12-21_14:20:41 4805 www/tablet/js/widget_medialist.js
 UPD 2016-11-25_00:14:16 1965 www/tablet/js/widget_meteogram.js

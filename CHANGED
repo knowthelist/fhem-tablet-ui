@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2017-01-25
- - Fixed bug that prevented the warn sign
+2017-01-26
+ - Fixed bug that prevented correct text alignment in Link
