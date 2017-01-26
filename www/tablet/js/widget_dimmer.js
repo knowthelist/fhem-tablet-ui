@@ -158,7 +158,7 @@ var Modul_dimmer = function () {
     }
 
     function update_cb(elem, state) {
-        if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
+        if (elem.hasClass('warn') || elem.children().find('#fg').hasClass('warn'))
             me.showOverlay(elem, state);
         else
             me.showOverlay(elem, "");

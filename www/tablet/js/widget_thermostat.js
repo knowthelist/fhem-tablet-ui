@@ -153,8 +153,6 @@ var Modul_thermostat = function () {
             elem.initData('mode', '');
             elem.initData('height', 100);
             elem.initData('width', 100);
-            elem.initData('touch-height', elem.data('height'));
-            elem.initData('touch-width', elem.data('width'));
             elem.initData('max', 30);
             elem.initData('min', 10);
             elem.initData('cursor', 6);
@@ -172,6 +170,9 @@ var Modul_thermostat = function () {
             me.addReading(elem, 'mode');
 
             me.init_attr(elem);
+            
+            elem.initData('touch-height', elem.data('height'));
+            elem.initData('touch-width', elem.data('width'));
             me.init_ui(elem);
 
         });

@@ -92,7 +92,7 @@ var Modul_image = function () {
             //3rd party source refresh
             if (elem.data('url')) {
                 var url = elem.data('url');
-                if (!elem.data('cache') && !elem.hasClass('cache')) {
+                if (elem.data('nocache') || elem.hasClass('nocache')) {
                     url = addurlparam(url, '_', new Date().getTime());
                 }
                 elemImg.attr('src', url);

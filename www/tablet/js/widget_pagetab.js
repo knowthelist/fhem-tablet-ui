@@ -101,9 +101,9 @@ var Modul_pagetab = function () {
             me.elements.each(function (index) {
                 var elem = $(this);
                 elem.initData('off-color', ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#606060');
-                elem.initData('off-background-color', ftui.getStyle('.' + me.widgetname + '.off', 'background-color') || 'transparent');
+                elem.initData('off-background-color', elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.off', 'background-color') || 'transparent');
                 elem.initData('on-color', ftui.getStyle('.' + me.widgetname + '.on', 'color') || '#222222');
-                elem.initData('on-background-color', ftui.getStyle('.' + me.widgetname + '.on', 'background-color') || '#606060');
+                elem.initData('on-background-color', elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.on', 'background-color') || '#606060');
                 elem.initData('background-icon', 'fa-circle');
                 elem.initData('mode', 'toggle');
                 elem.initData('text', '');
@@ -187,14 +187,14 @@ var Modul_pagetab = function () {
                         me.showMultiStates(elem, states, state, -1);
                     }
                 }
-                if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
+                if (elem.hasClass('warn') || elem.children().find('#fg').hasClass('warn'))
                     me.showOverlay(elem, state);
                 else
                     me.showOverlay(elem, "");
 
                 var id = dev + "_" + elem.data('url');
 
-                if (elem.children().filter('#fg').hasClass('activate')) {
+                if (elem.children().find('#fg').hasClass('activate')) {
                     //only for the first occurance (Flipflop logic)
                     if (localStorage.getItem(id) != 'true') {
                         localStorage.setItem(id, 'true');
