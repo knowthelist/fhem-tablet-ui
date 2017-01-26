@@ -48,8 +48,18 @@ body {
     font-family: robotothin, sans-serif;
 }
 
-.fa-stack{position:relative;display:inline-block;width:2em;height:2em;line-height:2em;vertical-align:middle}
-.fa-2x{font-size:2em}
+.fa-stack {
+    position: relative;
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    vertical-align: middle
+}
+
+.fa-2x {
+    font-size: 2em
+}
 
 [class^="ftui-"],
 [class*=" ftui-"] {
@@ -406,7 +416,7 @@ section [class='col'],
 }
 
 .col-3-4,
-.col-75{
+.col-75 {
     width: 74% !important;
 }
 
@@ -449,6 +459,7 @@ section [class='col'],
 .col-80 {
     width: 79% !important;
 }
+
 
 /*auto col */
 
@@ -2019,6 +2030,8 @@ div[data-type="circlemenu"] > .circlemenu,
 
 div[data-type="link"] {
     text-align: center;
+    margin-left: auto;
+    margin-right: auto
 }
 
 div[data-type="label"] {
@@ -2232,7 +2245,7 @@ select::-ms-expand {
 .unreachable[data-type="knob"] > .overlay:before,
 .unreachable[data-type="volume"] > .overlay:before,
 .unreachable[data-type="thermostat"] > .overlay:before,
-.unreachable[data-type="spinner"] > .overlay:before{
+.unreachable[data-type="spinner"] > .overlay:before {
     content: "\f128";
     font-family: FontAwesome;
     font-size: 4em;
@@ -2242,13 +2255,13 @@ select::-ms-expand {
 .unreachable[data-type="knob"] > .overlay,
 .unreachable[data-type="volume"] > .overlay,
 .unreachable[data-type="thermostat"] > .overlay,
-.unreachable[data-type="spinner"] > .overlay{
+.unreachable[data-type="spinner"] > .overlay {
     position: absolute;
     top: 1%;
     left: 35%;
 }
 
-[data-type="knob"] ,
+[data-type="knob"],
 [data-type="volume"],
 [data-type="thermostat"] {
     position: relative;

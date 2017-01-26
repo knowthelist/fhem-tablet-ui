@@ -197,7 +197,7 @@ var Modul_link = function () {
         if (!elem.hasClass('fixcontent')) {
             // recalculate width of text element
             elemText.css({
-                //width: elem.innerWidth() - iconWidth - 15 + 'px',
+                width: 'calc(100% - ' + iconWidth + 'px)' ,
             });
         }
 
