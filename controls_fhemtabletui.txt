@@ -9,8 +9,8 @@ DIR www/tablet/lib/highcharts/themes
 UPD 2016-11-25_00:14:16 510 www/tablet/css/fhem-blue-ui.css
 UPD 2016-11-25_00:14:16 510 www/tablet/css/fhem-green-ui.css
 UPD 2017-01-11_10:24:19 1953 www/tablet/css/fhem-mobil-ui.css
-UPD 2017-01-26_00:55:14 44299 www/tablet/css/fhem-tablet-ui.css
-UPD 2017-01-23_23:35:03 31393 www/tablet/css/fhem-tablet-ui.min.css
+UPD 2017-01-27_23:21:24 44382 www/tablet/css/fhem-tablet-ui.css
+UPD 2017-01-27_23:21:30 31513 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2016-11-25_00:14:16 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2016-11-25_00:14:16 5295 www/tablet/css/ftui_chart.css
 UPD 2016-11-25_00:14:16 1023 www/tablet/css/ftui_colorwheel.css
@@ -66,7 +66,7 @@ UPD 2017-01-26_22:30:01 1706 www/tablet/js/widget_button.js
 UPD 2017-01-16_18:17:36 5907 www/tablet/js/widget_calview.js
 UPD 2016-12-09_22:10:18 197310 www/tablet/js/widget_chart.js
 UPD 2016-11-30_20:45:50 4076 www/tablet/js/widget_checkbox.js
-UPD 2016-11-30_21:03:12 3033 www/tablet/js/widget_circlemenu.js
+UPD 2017-01-27_21:57:55 3076 www/tablet/js/widget_circlemenu.js
 UPD 2016-12-01_23:59:51 1524 www/tablet/js/widget_classchanger.js
 UPD 2016-12-07_19:26:51 5830 www/tablet/js/widget_clock.js
 UPD 2016-11-30_22:09:00 3111 www/tablet/js/widget_colorwheel.js
@@ -110,7 +110,7 @@ UPD 2017-01-21_15:22:17 4272 www/tablet/js/widget_select.js
 UPD 2017-01-19_21:12:36 9782 www/tablet/js/widget_settimer.js
 UPD 2016-11-30_20:32:01 12520 www/tablet/js/widget_simplechart.js
 UPD 2017-01-21_16:51:54 3096 www/tablet/js/widget_slideout.js
-UPD 2017-01-26_01:33:21 16131 www/tablet/js/widget_slider.js
+UPD 2017-01-27_20:30:27 16135 www/tablet/js/widget_slider.js
 UPD 2017-01-23_23:34:32 12387 www/tablet/js/widget_spinner.js
 UPD 2016-11-30_23:24:47 3054 www/tablet/js/widget_svgplot.js
 UPD 2016-11-30_22:56:44 4241 www/tablet/js/widget_swiper.js
@@ -156,9 +156,9 @@ UPD 2016-11-25_00:14:16 2396 www/tablet/lib/jquery.wakeup.js
 UPD 2016-11-25_00:14:16 80909 www/tablet/lib/material-icons.css
 UPD 2016-11-25_00:14:16 71950 www/tablet/lib/material-icons.min.css
 UPD 2016-12-05_22:13:38 25177 www/tablet/lib/openautomation.css
-UPD 2017-01-17_12:06:20 56738 www/tablet/lib/powerange.js
+UPD 2017-01-27_20:29:29 56812 www/tablet/lib/powerange.js
 UPD 2017-01-17_08:32:33 1155 www/tablet/lib/powerange.min.css
-UPD 2017-01-17_12:06:36 19892 www/tablet/lib/powerange.min.js
+UPD 2017-01-27_20:29:37 19929 www/tablet/lib/powerange.min.js
 UPD 2016-11-25_00:14:16 31889 www/tablet/lib/responsivevoice.js
 UPD 2016-11-25_00:14:16 6927 www/tablet/lib/slideout.min.js
 UPD 2016-11-25_00:14:16 62078 www/tablet/lib/swiper.jquery.min.js
