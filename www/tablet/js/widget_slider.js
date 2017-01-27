@@ -11,7 +11,7 @@ function depends_slider() {
     if (!$.fn.Powerange) {
         if (!$('link[href="' + ftui.config.dir + '/../lib/powerange.min.css"]').length)
             $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/powerange.min.css" type="text/css" />');
-        return ["lib/powerange.js"];
+        return ["lib/powerange.min.js"];
     }
 }
 

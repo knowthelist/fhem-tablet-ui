@@ -1848,7 +1848,9 @@
         Vertical.prototype.onmousemove = function (e) {
             if (e.target.className !== 'range-handle' && !this.options.tap)
                 return;
-            e.preventDefault();
+            if (typeof e.preventDefault == 'function') {
+                e.preventDefault()
+            }
             if (e.touches) e = e.touches[0];
 
             var bottomOffset = this.handleOffsetY + this.startY - e.clientY,

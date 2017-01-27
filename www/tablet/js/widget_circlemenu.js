@@ -1,5 +1,5 @@
 /* FTUI Plugin
- * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
@@ -16,18 +16,19 @@ var Modul_circlemenu = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="circlemenu"]>ul');
+        me.elements = $('div[data-type="circlemenu"]');
         me.elements.each(function (index) {
-            var parent = $(this).parent('div[data-type="circlemenu"]');
-            $(this).circleMenu({
-                    item_diameter: parent.data('item-diameter') || '4em',
-                    item_width: parent.data('item-width'),
-                    item_height: parent.data('item-height'),
+            var elem = $(this);
+            var ulElem = elem.find('ul');
+            ulElem.circleMenu({
+                    item_diameter: elem.data('item-diameter') || '4em',
+                    item_width: elem.data('item-width'),
+                    item_height: elem.data('item-height'),
                     trigger: 'click',
-                    circle_radius: parent.data('circle-radius') || 70,
-                    direction: parent.data('direction') || 'full',
-                    border: parent.data('border') || 'round',
-                    close_event: ($(this).hasClass("keepopen") || parent.hasClass("keepopen")) ? '' : 'click',
+                    circle_radius: elem.data('circle-radius') || 70,
+                    direction: elem.data('direction') || 'full',
+                    border: elem.data('border') || 'round',
+                    close_event: (ulElem.hasClass("keepopen") || elem.hasClass("keepopen")) ? '' : 'click',
                     close: function () {
                         setTimeout(function () {
                             ftui.showModal(false);
@@ -39,30 +40,31 @@ var Modul_circlemenu = function () {
                         }, 50);
                     },
                     open: function () {
-                        var elem = this;
-                        if (elem.options.close_event !== '') {
-                            parent.data('timeoutMenu', setTimeout(function () {
-                                elem.close();
+                        var cm = this;
+                        if (cm.options.close_event !== '') {
+                            elem.data('timeoutMenu', setTimeout(function () {
+                                cm.close();
                                 setTimeout(function () {
                                     ftui.showModal(false);
                                 }, 1000);
-                            }, parent.data('close-after') || Math.max(4000, 1000 * (parent.find('li').length - 1))));
+                            }, elem.data('close-after') || Math.max(4000, 1000 * (elem.find('li').length - 1))));
                         }
-                        if (!parent.hasClass("noshade")) {
+                        if (!elem.hasClass("noshade")) {
                             ftui.showModal(true);
                         }
                     },
                 })
                 .addClass('circlemenu');
-            parent.css({
-                    minWidth: parent.data('item-width')
+            elem.css({
+                    minWidth: elem.data('item-width')
                 })
                 .closest('.gridster>ul>li').css({
                     overflow: 'visible'
                 });
 
-
+            ulElem.wrapAll('<div class="circlemenu-wrapper"></div>');
         });
+        
         $('.menu li:not(:first-child)').on('click', function () {
             var timeoutMenu = $(this).parent().data('timeoutMenu');
             if (timeoutMenu)

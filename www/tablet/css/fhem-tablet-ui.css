@@ -1543,7 +1543,7 @@ div[data-type="link"] > div.fa {
     display: block !important;
 }
 
-div[data-type="circlemenu"] {
+.circlemenu-wrapper {
     min-height: 4em;
     min-width: 4em;
     margin-bottom: 0px;
@@ -2006,15 +2006,17 @@ li {
 
 .menu li:first-child {}
 
-div[data-type="circlemenu"] > .circlemenu > li {
+/* Circlemenu Widget */
+
+div[data-type="circlemenu"] > .circlemenu-wrapper > .circlemenu > li {
     background-color: #2A2A2A;
 }
 
-div[data-type="circlemenu"] > .circlemenu li div[data-type="push"] {
+div[data-type="circlemenu"] > .circlemenu-wrapper > .circlemenu li div[data-type="push"] {
     color: #555;
 }
 
-div[data-type="circlemenu"] > .circlemenu,
+div[data-type="circlemenu"] > .circlemenu-wrapper > .circlemenu,
 .absolute {
     position: absolute;
 }
