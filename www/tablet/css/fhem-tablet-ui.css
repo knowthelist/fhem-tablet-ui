@@ -1832,6 +1832,69 @@ div[data-type="link"] > div.fa {
     font-size: 50%;
 }
 
+/* Size for Weather */
+
+img.gigantic,
+.gigantic > img{
+    width: 800% !important;
+}
+
+img.grande,
+.grande > img{
+    width: 600% !important;
+}
+
+img.bigger,
+.bigger > img{
+    width: 450% !important;
+}
+
+img.big,
+.big > img{
+    width: 320% !important;
+}
+
+img.tall,
+.tall > img{
+    width: 350% !important;
+}
+
+img.bigger,
+.bigger > img{
+    width: 200% !important;
+}
+
+img.big,
+.big > img{
+    width: 150% !important;
+}
+
+img.large,
+.large > img{
+    width: 125% !important;
+}
+
+img.normal,
+normal > img{
+    width: 100% !important;
+}
+
+img.small,
+.small > img{
+    width: 80% !important;
+}
+
+img.tiny,
+.tiny > img{
+    width: 60% !important;
+}
+
+img.mini,
+.mini > img{
+    width: 50% !important;
+}
+
+
 .top {
     vertical-align: super;
     top: 0;

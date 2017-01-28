@@ -528,7 +528,7 @@ Use data-url + data-refresh or data-device + data-get, not both.
 
 ####Weather widget
 - **data-get**      : name of the reading to get the weather literal from FHEM (default 'STATE')
-- **data-imageset** : collection of images to display current weather situation. Possible values: 'meteocons', 'kleinklima' (Default: 'meteocons')
+- **data-imageset** : collection of images to display current weather situation. Possible values: 'meteocons', 'kleinklima', 'meteoconsdirect' (Default: 'meteocons')
 - **data-image-path**: path to the images of the selected imageset (default: <fhem-dir>/images/weather/)
 
 ####CircleMenu widget

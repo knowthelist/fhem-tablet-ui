@@ -94,15 +94,15 @@ var Modul_weather = function () {
         'chance of storm night': '9',
         'haze night': 'K',
         // DWD
-//        'bedeckt': 'N',
-//        'heiter': 'H',
-//        'leichter Regen': 'Q',
-//        'Nebel': 'F',
-//        'Regen': 'R',
-//        'Regenschauer': 'Q',
-//        'Schneefall': 'V',
-//        'Schneeschauer': 'U',
-//        'Schneeregen': 'X',
+        //        'bedeckt': 'N',
+        //        'heiter': 'H',
+        //        'leichter Regen': 'Q',
+        //        'Nebel': 'F',
+        //        'Regen': 'R',
+        //        'Regenschauer': 'Q',
+        //        'Schneefall': 'V',
+        //        'Schneeschauer': 'U',
+        //        'Schneeregen': 'X',
         '---': ')',
         'bew\u00f6lkt': 'H',
         'Dunst oder flacher Nebel': 'M',
@@ -135,14 +135,14 @@ var Modul_weather = function () {
         'stark bew\u00f6lkt': 'Y',
         'starkes Gewitter': 'P',
         'wolkenlos': 'B',
-	//Wunderground
-//       'clear': 'C',
-//        'cloudy': 'Y',
-//        'rain': 'R',
-//        'sleet': 'Q',
-//        'snow': 'W',
-//        'sunny': 'B',	
-//        'mostlycloudy': 'H',
+        //Wunderground
+        //       'clear': 'C',
+        //        'cloudy': 'Y',
+        //        'rain': 'R',
+        //        'sleet': 'Q',
+        //        'snow': 'W',
+        //        'sunny': 'B',	
+        //        'mostlycloudy': 'H',
         'chanceflurries': 'T',
         'chancerain': 'R',
         'chancesleet': 'Q',
@@ -165,7 +165,7 @@ var Modul_weather = function () {
         'nt_clear': '2',
         'nt_cloudy': '5',
         'nt_flurries': '9',
-        'nt_fog': 'F',	
+        'nt_fog': 'F',
         'nt_hazy': 'K',
         'nt_mostlycloudy': '4',
         'nt_mostlysunny': '3',
@@ -265,15 +265,15 @@ var Modul_weather = function () {
         'chance of storm night': 'chance_of_storm_night.png',
         'haze night': 'haze_night.png',
         // DWD
-//        'bedeckt': 'overcast.png',
-//        'heiter': 'partly_cloudy.png',
-//        'leichter Regen': 'drizzle.png',
-//        'Nebel': 'fog.png',
-//        'Regen': 'rain.png',
-//        'Regenschauer': 'chance_of_rain.png',
-//        'Schneefall': 'snow.png',
-//        'Schneeschauer': 'chance_of_snow.png',
-//        'Schneeregen': 'rainsnow.png',
+        //        'bedeckt': 'overcast.png',
+        //        'heiter': 'partly_cloudy.png',
+        //        'leichter Regen': 'drizzle.png',
+        //        'Nebel': 'fog.png',
+        //        'Regen': 'rain.png',
+        //        'Regenschauer': 'chance_of_rain.png',
+        //        'Schneefall': 'snow.png',
+        //        'Schneeschauer': 'chance_of_snow.png',
+        //        'Schneeregen': 'rainsnow.png',
         '---': 'na.png',
         'bew\u00f6lkt': 'mostlycloudy.png',
         'Dunst oder flacher Nebel': 'haze.png',
@@ -306,13 +306,13 @@ var Modul_weather = function () {
         'stark bew\u00f6lkt': 'cloudy.png',
         'starkes Gewitter': 'thunderstorm.png',
         'wolkenlos': 'sunny.png',
-	//Wunderground
-//       'clear': 'sunny.png',
-//        'cloudy': 'cloudy.png',
-//        'rain': 'rain.png',
-//        'sleet': 'rainsnow.png',
-//        'snow': 'snow.png',
-//        'sunny': 'sunny.png',	
+        //Wunderground
+        //       'clear': 'sunny.png',
+        //        'cloudy': 'cloudy.png',
+        //        'rain': 'rain.png',
+        //        'sleet': 'rainsnow.png',
+        //        'snow': 'snow.png',
+        //        'sunny': 'sunny.png',	
         'chanceflurries': 'chance_of_flurries.png',
         'chancerain': 'chance_of_rain.png',
         'chancesleet': 'chance_of_sleet.png',
@@ -336,7 +336,7 @@ var Modul_weather = function () {
         'nt_clear': 'clear_night.png',
         'nt_cloudy': 'cloudy_night.png',
         'nt_flurries': 'windy_night.png',
-        'nt_fog': 'fog_night.png',	
+        'nt_fog': 'fog_night.png',
         'nt_hazy': 'haze_night.png',
         'nt_mostlycloudy': 'mostlycloudy_night.png',
         'nt_mostlysunny': 'mostly_clear_night.png',
@@ -549,7 +549,7 @@ var Modul_weather = function () {
 
     function init_attr(elem) {
 
-        elem.initData('get',  'STATE');
+        elem.initData('get', 'STATE');
         elem.addClass('weather');
 
         me.addReading(elem, 'get');
@@ -619,6 +619,9 @@ var Modul_weather = function () {
                         elem.prepend('<img style="width:100%" src="' + elem.data('image-path') + mapped + '" title="' + val + '">');
                     } else if (elem.data('imageset') == "reading") {
                         elem.prepend('<img style="width:100%" src="' + _val + '">');
+                    } else if (elem.data('imageset') == "meteoconsdirect") {
+                        elem.attr('data-icon', val);
+                        console.log('VAL:',val);
                     } else {
                         mapped = meteoconsmap[mapped.replace(/^:/, '')];
                         elem.attr('data-icon', mapped);

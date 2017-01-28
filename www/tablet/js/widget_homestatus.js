@@ -224,11 +224,16 @@ var Modul_homestatus = function () {
             me.init_ui(elem);
 
             // hack: force refresh
-            setTimeout(function () {
+            var ii = 0;
+            var cssListener = setInterval(function () {
+                ii++;
                 isUpdating = true;
                 elem.find('input').val(elem.data('curval')).trigger('change');
                 isUpdating = false;
-            }, 15000);
+                if (ii > 20) {
+                    clearInterval(cssListener);
+                }
+            }, 500);
         });
     }
 
