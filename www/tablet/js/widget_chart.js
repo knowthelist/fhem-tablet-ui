@@ -8,49 +8,57 @@
 "use strict";
 
 function depends_chart (){
-	$('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_chart.css" type="text/css" />');
+	var mainCSS = $('head').find("[href$='fhem-tablet-ui-user.css']");
+	if (mainCSS.length)
+		mainCSS.before('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_chart.css" type="text/css" />');
+	else
+		$('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_chart.css" type="text/css" />');
+
+	if (!$.fn.visibilityChanged) {
+		(function ($) {
+			var defaults = {
+				callback: function () { },
+				runOnLoad: true,
+				frequency: 100,
+				previousVisibility : null
+			};
+
+			var methods = {};
+			methods.checkVisibility = function (element, options) {
+				if (jQuery.contains(document, element[0])) {
+					var previousVisibility = options.previousVisibility;
+					var isVisible = element.is(':visible');
+					options.previousVisibility = isVisible;
+					if (previousVisibility === null) {
+						if (options.runOnLoad) {
+							options.callback(element, isVisible);
+						}
+					} else if (previousVisibility !== isVisible) {
+						options.callback(element, isVisible);
+					}
+
+					setTimeout(function() {
+						methods.checkVisibility(element, options);
+					}, options.frequency);
+				} 
+			};
+
+			$.fn.visibilityChanged = function (options) {
+				var settings = $.extend({}, defaults, options);
+				return this.each(function () {
+					methods.checkVisibility($(this), settings);
+				});
+			};
+		})(jQuery);		
+	}
+
 	if (!$.fn.draggable)
 		return ["../pgm2/jquery-ui.min.js"];
 }
 
-(function ($) {
-    var defaults = {
-        callback: function () { },
-        runOnLoad: true,
-        frequency: 100,
-        previousVisibility : null
-    };
-
-    var methods = {};
-    methods.checkVisibility = function (element, options) {
-        if (jQuery.contains(document, element[0])) {
-            var previousVisibility = options.previousVisibility;
-            var isVisible = element.is(':visible');
-            options.previousVisibility = isVisible;
-            if (previousVisibility === null) {
-                if (options.runOnLoad) {
-                    options.callback(element, isVisible);
-                }
-            } else if (previousVisibility !== isVisible) {
-                options.callback(element, isVisible);
-            }
-
-            setTimeout(function() {
-                methods.checkVisibility(element, options);
-            }, options.frequency);
-        } 
-    };
-
-    $.fn.visibilityChanged = function (options) {
-        var settings = $.extend({}, defaults, options);
-        return this.each(function () {
-            methods.checkVisibility($(this), settings);
-        });
-    };
-})(jQuery);
-
 var widget_chart = {
 	instance : 0,
+	pendingUpdateRequests : [], // needed to overcome multi refresh problem with popup windows before first appearance
 	initialized : [],
 	LOGTYPE : 'console',
 	logtext : '',
@@ -1063,7 +1071,7 @@ var widget_chart = {
 					evt=event.originalEvent.touches[0];
 				} else {
 					evt = event;
-				} 
+				}
 				//$(event.delegateTarget).append(widget_chart.createElem('text').attr({'class':'debug','x':'20','y':'20'}));
 				//event.preventDefault();
 				if(data.crosshair)	{
@@ -1109,7 +1117,7 @@ var widget_chart = {
 									legendY=(((mx-values[i][1]))/(mx-mn)*data.graphHeight/100*target.height()+data.topOffset);
 									//crh_text[i].attr({'x':values[i][0], 'y':legendY+''});
 									prefix = (data.legend!==undefined)?((data.legend[i]!=='')?data.legend[i] + ": ":''):'';
-									var valtxt = values[i][2]?values[i][2]:(parseInt((values[i][1]+yshift)/yscale*100+0.5))/100 + " " + (uxis!='secondary'?data.yunit:data.yunit_sec);
+									var valtxt = values[i][2]?values[i][2]:parseFloat(((values[i][1]+yshift)/yscale).toFixed(data.cursor_digits)) + " " + (uxis!='secondary'?data.yunit:data.yunit_sec);
 									if (data.graphsshown[i])
 										crh_text[i].text(prefix + valtxt);
 									else
@@ -1127,8 +1135,8 @@ var widget_chart = {
 						}
 
 						if (!data.logProxy) { // draw time value below x axis
-							i=crh_text.length-1;
-							legendY = data.graphHeight/100*target.height()+data.topOffset+widget_chart.getTextSizePixels(crh_text[i].parents("[class^=basesvg]"),'O','crosshair').height;
+							var itime=crh_text.length-1;
+							legendY = data.graphHeight/100*target.height()+data.topOffset+widget_chart.getTextSizePixels(crh_text[itime].parents("[class^=basesvg]"),'O','crosshair').height;
 							var xminutes = (x-data.textWidth_prim)*100/data.basewidth*data.xrange/data.graphWidth;
 							var tstart = ftui.dateFromString(data.mindate);
 							var tx = new Date(tstart);
@@ -1143,15 +1151,15 @@ var widget_chart = {
 							} else {
 								textX2Value = (tx.hhmm()=="00:00"||data.xticks>1440) ? tx.ddmm() : tx.ddmm() + tx.hhmm() ; // if we are at exactly 00:00 of if difference between ticks is larger than a day don't display hours.
 							}
-							crh_text[i].text(textX2Value);
+							crh_text[itime].text(textX2Value);
 							var rw = widget_chart.getTextSizePixels(target,textX2Value,'text crosshair').width;
 							var rh = widget_chart.getTextSizePixels(target,textX2Value,'text crosshair').height;
-							if (!crh_text[i].parent().find('rect').length) {
-								crh_text[i].parent().prepend(widget_chart.createElem('rect').attr({'class':'crosshair','x':x-rw/2,'y':legendY-rh/2,'width':rw+'px','height':rh+'px','style':'z-index:10000; fill:black'}));
-								crh_text[i].attr({'text-anchor':'middle'});
+							if (!crh_text[itime].parent().find('rect').length) {
+								crh_text[itime].parent().prepend(widget_chart.createElem('rect').attr({'class':'crosshair','x':x-rw/2,'y':legendY-rh/2,'width':rw+'px','height':rh+'px','style':'z-index:10000; fill:black'}));
+								crh_text[itime].attr({'text-anchor':'middle'});
 							}
-							crh_text[i].parent().find('rect').attr({'x':x-rw/2, 'y':legendY-rh/2});
-							crh_text[i].attr({'x':x,'y':legendY+3, 'filter':''});
+							crh_text[itime].parent().find('rect').attr({'x':x-rw/2, 'y':legendY-rh/2});
+							crh_text[itime].attr({'x':x,'y':legendY+3, 'filter':''});
 						}
 						data.lastV = values;
 						//console.log(values);
@@ -1175,10 +1183,12 @@ var widget_chart = {
 		}
 	},
 	doHide: function(elem,cls,data) {
-		if (data.prefix && (data.prefix.search('webkit') >= 0))
+		var browserCaps = widget_chart.getBrowserCaps();
+		if (browserCaps.prefix && (browserCaps.prefix.search('webkit') >= 0)) {
 			if (elem) {elem.find(cls).attr({'x':'100000','x1':'100000','x2':'100000'});} // hack for chrome/webik problem with display:none
-		else
-			if (elem) {elem.hide();}		
+		} else {
+			if (elem) {elem.hide();}
+		}
 	},
 	correctLeapYear: function(ds,de,mode){ // helper function to correct leap year day numbers
 		var width = Math.abs(ds-de);
@@ -1428,6 +1438,7 @@ var widget_chart = {
 
 		if (graph.attr('animstate')=='show') graph.attr('animstate','hide'); else graph.attr('animstate','show');
 	},
+	
 	refresh: function (elem,type,swoffset) { // main function for generation of all HTML code and dynamics for graph called whenever thigs change (e.g. data update, shift, scale, ...)
 		var theObj, getData;
 		if (elem) theObj=elem; else theObj=this;
@@ -1436,7 +1447,6 @@ var widget_chart = {
 
 		var y_margin = [];
 		if ($.isArray(data.y_margin)) y_margin=[parseInt(data.y_margin[0]),parseInt(data.y_margin[data.y_margin.length-1])]; else y_margin=[parseInt(data.y_margin),parseInt(data.y_margin)];
-		console.log(data.y_margin, y_margin);
 		var y_margin_sec = [];
 		if ($.isArray(data.y_margin_sec)) y_margin_sec=[parseInt(data.y_margin_sec[0]),parseInt(data.y_margin_sec[data.y_margin_sec.length-1])]; else y_margin_sec=[parseInt(data.y_margin_sec),parseInt(data.y_margin_sec)];
 		var minarray = data.minvalue;
@@ -1508,7 +1518,7 @@ var widget_chart = {
 		var instance = data.instance;
 		var svg_old = $(theObj).find('svg.basesvg'+instance); // get previous graphics document (SVG, only skeleton at initial call)
 
-		if (!svg_old.parent().is(':visible') || svg_old.width()<=0) return;
+		if (!svg_old.parent().is(':visible') || svg_old.width()<=0) return; // chart div is not visible nothing to do
 
 		if (svg_old.height() <= 0) svg_old.height($(theObj).hasClass('fullsize') ? $(theObj)[0].getBoundingClientRect().height*0.85 : ''); //in case of popup the init function can not detect the right size of the window, so we have to do it here
 		var classesContainer = svg_old.find('#classesContainer');
@@ -1927,6 +1937,18 @@ var widget_chart = {
 						'<feMergeNode in="SourceGraphic"/>'+
 					'</feMerge>'+
 				'</filter>'+
+				'<filter x="0" y="0" width="1" height="1" id="nowhite">'+
+					'<feColorMatrix " result="res" in="SourceGraphic" type="matrix" values="'+
+							'1 0 0 0 0 '+
+							'0 1 0 0 0 '+
+							'0 0 1 0 0 '+
+							'-0.33 -0.33 -0.33 1 0"'+
+						'>'+
+					'</feColorMatrix>'+
+					'<feComponentTransfer>'+
+					'	<feFuncA type="table" tableValues="0 1 1 0"></feFuncA>'+
+					'</feComponentTransfer>'+
+				'</filter>'+
 			'</defs>';
 
 		//Save pixel coordinates of graph area for later use
@@ -2174,7 +2196,7 @@ var widget_chart = {
 
 		svg_new.find('[id="baseforDDD"]').before(legend_menu);
 
-		for (k=data.nGraphs-1; k>=0; k--) { // main loop for generation of page content (chart with graphs)
+		for (var k=data.nGraphs-1; k>=0; k--) { // main loop for generation of page content (chart with graphs)
 		
 			tstart = ftui.dateFromString(mindate);
 			style = widget_chart.getArrayValue(style_array,k,'');
@@ -2276,7 +2298,7 @@ var widget_chart = {
 							break;
 						}
 					}
-					if (!found) pointsarray[iv][i1][1] = pointsarray[k][i1][1]; // no fitting time value found, use last value of reference array instead
+					if (!found) pointsarray[k][i1][1] = pointsarray[iv][i1][1]; // no fitting time value found, use last value of reference array instead
 				}
 				ptype = 'icons';
 			}
@@ -2625,7 +2647,7 @@ var widget_chart = {
 								var ysc = (uaxis!="secondary")?(y+data.shiftY)/data.scaleY:(y+data.shiftY_sec)/data.scaleY_sec;
 								
 								if ($.isArray(ytary)) {
-									yticks = ytary[iyticks+1]?(($.isArray(ytary[iyticks])?ytary[iyticks+1][0]-ytary[iyticks][0]:ytary[iyticks+1]-ytary[iyticks])):yticks;
+									yticks = (ytary.length && ytary.length > iyticks+1)?(($.isArray(ytary[iyticks])?ytary[iyticks+1][0]-ytary[iyticks][0]:ytary[iyticks+1]-ytary[iyticks])):yticks;
 									yticks = yticks * ((uaxis!="secondary")?data.scaleY:data.scaleY_sec);
 									if (ytary[iyticks] && $.isArray(ytary[iyticks])) {
 										text.text(ytary[iyticks][1]);
@@ -2922,8 +2944,9 @@ var widget_chart = {
 									attrval.width = strkG.stroke;
 									attrval.height = strkG.stroke;
 									attrval.preserveAspectRatio = 'none';
-									point_new.attr(attrval);
 									point_new[0].setAttributeNS('http://www.w3.org/1999/xlink','href',points[j][2]); // setting xlink:href seems to be not working properly
+									if (points[j][2].indexOf('proplanta')>-1) attrval.filter = 'url(#nowhite)'; else attrval.filter = '';
+									point_new.attr(attrval);
 									g.append(point_new);
 								}
 							}
@@ -3148,6 +3171,7 @@ function init_attr(elem) { // initialize all attributes called from widget init 
 	elem.data('bottomOffset',    elem.data('noticks')?0:2*elem.data('textHeight'));
 	elem.data('topOffset',       2*elem.data('textHeight'));
 	elem.data('crosshair',       elem.data('crosshair')                                                          || false);
+	elem.data('cursor_digits',   elem.data('cursor_digits')                                                      || 5);
 	elem.data('crs_inactive',    elem.data('crs_inactive')                                                       || false);
 	elem.data('showlegend',      elem.data('showlegend')                                                         || false);
 	elem.data('nofulldays',      elem.data('nofulldays')                                                         || false);
@@ -3262,7 +3286,7 @@ function init () { // initialization of widget, run at widget creation/reload
 		elem.data.defaultWidth = '93%';
 
 		widget_chart.instance++;
-		
+
 		elem.data('instance', widget_chart.instance);
 
 		var gs = [];
@@ -3295,7 +3319,6 @@ function update (dev,par) {
 	var base = this;
 	var deviceElements= this.elements.filter("div[data-logdevice]");
 	var prev_width = [];
-	prev_width[$(base).data('instance')] = $(base).find('svg.basesvg'+$(base).data('instance')).width();
 	widget_chart.doLog("widget_chart.update","Update triggered with: " + dev + ":" + par);
 
 	function waitForInitialization(base,instance,type,i) {
@@ -3303,12 +3326,23 @@ function update (dev,par) {
 		var svg_old = $(base).find('svg.basesvg'+data.instance);
 		var time = (data.initdelay)?data.initdelay:100;
 		var initialized = data.initialized;
+		if (isNaN(widget_chart.pendingUpdateRequests[data.instance])) widget_chart.pendingUpdateRequests[data.instance] = 0; //initialize if not already done
+		widget_chart.pendingUpdateRequests[data.instance]++;
+		//widget_chart.doLog("widget_chart.update","Pending Update Requests for instance "+data.instance+": " + widget_chart.pendingUpdateRequests[data.instance]);
+		
 		setTimeout(function(){
-			if (!initialized||isNaN(svg_old.height())||isNaN(svg_old.width())||prev_width[instance]!=svg_old.width()||(!svg_old.parent().is(':visible'))) {
-				prev_width[instance] = svg_old.width(); // we need to wait until the size does not change any more (e.g. when fading in)
-				waitForInitialization(base,instance,type,i);
+			if (!initialized||isNaN(svg_old.height())||isNaN(svg_old.width())||prev_width[data.instance]!=svg_old.width()||(!svg_old.parent().is(':visible'))) {
+				prev_width[data.instance] = svg_old.width(); // we need to wait until the size does not change any more (e.g. when fading in)
+				waitForInitialization(base,data.instance,type,i);
+				widget_chart.pendingUpdateRequests[data.instance]--;
+				//widget_chart.doLog("widget_chart.update","Pending Update Requests for instance "+data.instance+": " + widget_chart.pendingUpdateRequests[data.instance]);
 			} else {
-				widget_chart.refresh(base,type);
+				widget_chart.pendingUpdateRequests[data.instance]--;
+				//widget_chart.doLog("widget_chart.update","Pending Update Requests for instance "+data.instance+": " + widget_chart.pendingUpdateRequests[data.instance]);
+				if (widget_chart.pendingUpdateRequests[data.instance] <= 0) {
+					widget_chart.refresh(base,type);
+					widget_chart.doLog("widget_chart.update","Pending Update done in "+data.instance);
+				}
 			}
 		},time);
 	}
@@ -3322,6 +3356,7 @@ function update (dev,par) {
 		}
 
 		if ( elem.data('get')==par && isLogdevice ) {
+			prev_width[elem.data('instance')] = elem.find('svg.basesvg'+elem.data('instance')).width();
 			if (elem.is(':visible')) { // element is visible, we can refresh it right away
 				waitForInitialization(elem,elem.data('instance'),'start'); // need to be sure that window is initialized (e.g. to get right width/height)
 			} else { // element is not yet visible (e.g. inside popup), do "refresh" only when popup opens.
