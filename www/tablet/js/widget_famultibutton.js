@@ -434,12 +434,16 @@ var Modul_famultibutton = function () {
         me.addReading(elem, 'lock');
 
         me.addReading(elem, 'get');
+        
+        // warn parameter
+        elem.initData('warn-on', 'true|on|[1-9]{1}[0-9]*');
+        elem.initData('warn-off', 'false|off|0');
         me.addReading(elem, 'warn');
 
-        elem.initData('off-color', elem.data('color') ||  ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#505050');
+        elem.initData('off-color', elem.data('color') || ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#505050');
         elem.initData('off-background-color', elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.off', 'background-color') || '#505050');
         elem.initData('on-color', elem.data('color') || ftui.getStyle('.' + me.widgetname + '.on', 'color') || '#aa6900');
-        elem.initData('on-background-color', elem.data('color') ||  elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.on', 'background-color') || '#aa6900');
+        elem.initData('on-background-color', elem.data('color') || elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.on', 'background-color') || '#aa6900');
 
         if (elem.hasClass('invert')) {
             var c1 = elem.data('off-background-color');
@@ -541,9 +545,10 @@ var Modul_famultibutton = function () {
             .each(function (idx) {
                 var elem = $(this);
                 var warn = elem.getReading('warn').val;
-                if (warn > 0 || warn == 'true' || warn == 'on') {
+                if (elem.matchingState('warn', warn) === 'on') {
                     me.showOverlay(elem, ftui.getPart(warn, elem.data('get-warn')));
-                } else {
+                }
+                if (elem.matchingState('warn', warn) === 'off') {
                     me.showOverlay(elem, "");
                 }
             });

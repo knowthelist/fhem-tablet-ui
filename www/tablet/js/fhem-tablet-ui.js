@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.5.0
+ * Version: 2.5.1
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -259,7 +259,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.5.0',
+    version: '2.5.1',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -317,10 +317,6 @@ var ftui = {
         ftui.config.TOAST = $("meta[name='toast']").attr("content") || 5; //1,2,3...= n Toast-Messages, 0: No Toast-Messages
         ftui.config.shortpollInterval = $("meta[name='shortpoll-only-interval']").attr("content") || 30;
         //self path
-        ftui.config.dir = $('script[src*="fhem-tablet-ui"]').attr('src');
-        var name = ftui.config.dir.split('/').pop();
-        ftui.config.dir = ftui.config.dir.replace('/' + name, "");
-        ftui.log(1, 'Plugin dir: ' + ftui.config.dir);
         var url = window.location.pathname;
         ftui.config.filename = url.substring(url.lastIndexOf('/') + 1);
         ftui.log(1, 'Filename: ' + ftui.config.filename);
@@ -333,12 +329,12 @@ var ftui = {
 
         // init Toast
         function configureToast() {
-            if ($.toast && !$('link[href="' + ftui.config.dir + '/../lib/jquery.toast.min.css"]').length)
-                $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/jquery.toast.min.css" type="text/css" />');
+            if ($.toast && !$('link[href="lib/jquery.toast.min.css"]').length)
+                $('head').append('<link rel="stylesheet" href="lib/jquery.toast.min.css" type="text/css" />');
         }
 
         if (!$.fn.toast) {
-            ftui.dynamicload(ftui.config.dir + "/../lib/jquery.toast.min.js", false).done(function () {
+            ftui.dynamicload("lib/jquery.toast.min.js", false).done(function () {
                 configureToast();
             });
         } else {
@@ -369,7 +365,7 @@ var ftui = {
         // init FTUI CSS if not already loaded
         if ($('link[href*="fhem-tablet-ui.css"]').length === 0 &&
             $('link[href*="fhem-tablet-ui.min.css"]').length === 0) {
-            var cssUrl = ftui.config.dir + '/../css/fhem-tablet-ui.css';
+            var cssUrl = 'css/fhem-tablet-ui.css';
             $.when($.get(cssUrl, function () {
                 $('<link>', {
                     rel: 'stylesheet',
@@ -377,11 +373,18 @@ var ftui = {
                     'href': cssUrl
                 }).prependTo('head');
             })).then(function () {
+                var ii=0;
                 var cssListener = setInterval(function () {
+                    ftui.log(1, 'fhem-tablet-ui.css dynamically loaded. Waiting until it is ready to use...');
                     if ($("body").css("text-align") === "center") {
                         clearInterval(cssListener);
                         ftui.loadStyleSchema();
                         ftui.initPage();
+                    }
+                    ii++;
+                    if ( ii > 120) {
+                        clearInterval(cssListener);
+                        ftui.toast("fhem-tablet-ui.css not ready to use", 'error');
                     }
                 }, 50);
             });
@@ -501,11 +504,11 @@ var ftui = {
 
         if ($('.gridster').length > 0) {
 
-            if (!$('link[href="' + ftui.config.dir + '/../lib/jquery.gridster.min.css"]').length)
-                $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/jquery.gridster.min.css" type="text/css" />');
+            if (!$('link[href="lib/jquery.gridster.min.css"]').length)
+                $('head').append('<link rel="stylesheet" href="lib/jquery.gridster.min.css" type="text/css" />');
 
             if (!$.fn.gridster) {
-                ftui.dynamicload(ftui.config.dir + "/../lib/jquery.gridster.min.js", false).done(function () {
+                ftui.dynamicload("lib/jquery.gridster.min.js", false).done(function () {
                     configureGridster();
                 });
             } else {
@@ -581,14 +584,14 @@ var ftui = {
 
     initHeaderLinks: function () {
 
-        if ($('[class*=fa-]').length > 0 && !$('link[href="' + ftui.config.dir + '/../lib/font-awesome.min.css"]').length)
-            $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/font-awesome.min.css" type="text/css" />');
-        if ($('[class*=oa-]').length > 0 && !$('link[href="' + ftui.config.dir + '/../lib/openautomation.css"]').length)
-            $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/openautomation.css" type="text/css" />');
-        if ($('[class*=fs-]').length > 0 && !$('link[href="' + ftui.config.dir + '/../lib/fhemSVG.css"]').length)
-            $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/fhemSVG.css" type="text/css" />');
-        if ($('[class*=mi-]').length > 0 && !$('link[href="' + ftui.config.dir + '/../lib/material-icons.min.css"]').length)
-            $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/material-icons.min.css" type="text/css" />');
+        if ($('[class*=fa-]').length > 0 && !$('link[href="lib/font-awesome.min.css"]').length)
+            $('head').append('<link rel="stylesheet" href="lib/font-awesome.min.css" type="text/css" />');
+        if ($('[class*=oa-]').length > 0 && !$('link[href="lib/openautomation.css"]').length)
+            $('head').append('<link rel="stylesheet" href="lib/openautomation.css" type="text/css" />');
+        if ($('[class*=fs-]').length > 0 && !$('link[href="lib/fhemSVG.css"]').length)
+            $('head').append('<link rel="stylesheet" href="lib/fhemSVG.css" type="text/css" />');
+        if ($('[class*=mi-]').length > 0 && !$('link[href="lib/material-icons.min.css"]').length)
+            $('head').append('<link rel="stylesheet" href="lib/material-icons.min.css" type="text/css" />');
     },
 
     initLongpoll: function () {
@@ -877,14 +880,6 @@ var ftui = {
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 ftui.toast("<u>FHEM Command Failed</u><br>" + textStatus + ": " + errorThrown, 'error');
-            })
-            .done(function (data) {
-                // really neccessary ?
-                /*if ( !ftui.config.doLongPoll ){
-                    setTimeout(function(){
-                        ftui.shortPoll();
-                    }, 4000);
-                }*/
             });
     },
 
@@ -1002,7 +997,7 @@ var ftui = {
         ftui.log(2, 'Create widget : ' + name);
 
         // get the plugin
-        ftui.dynamicload(ftui.config.dir + "/widget_" + name + ".js", true).done(function () {
+        ftui.dynamicload("js/widget_" + name + ".js", true).done(function () {
 
                 // get all dependencies of this plugin
                 var depsPromises = [];
@@ -1019,7 +1014,7 @@ var ftui = {
                             if (dep.indexOf(".js") < 0) {
                                 depsPromises.push(ftui.loadPlugin(dep));
                             } else {
-                                depsPromises.push(ftui.dynamicload(ftui.config.dir + "/../" + dep, false));
+                                depsPromises.push(ftui.dynamicload(dep, false));
                             }
                         });
                     }
@@ -1057,7 +1052,7 @@ var ftui = {
             })
             .fail(function () {
                 ftui.toast('Failed to load plugin : ' + name);
-                ftui.log(1, 'Failed to load plugin : ' + name + '  - add <script src="' + ftui.config.dir + '/widget_' + name + '.js" defer></script> do your page, to see more informations about this failure');
+                ftui.log(1, 'Failed to load plugin : ' + name + '  - add <script src="js/widget_' + name + '.js" defer></script> do your page, to see more informations about this failure');
                 deferredLoad.resolve();
             });
 
@@ -1350,9 +1345,9 @@ var ftui = {
     },
 
     getIconId: function (iconName) {
-        if (!iconName || iconName === '' || !$('link[href="' + ftui.config.dir + '/../lib/font-awesome.min.css"]').length)
+        if (!iconName || iconName === '' || !$('link[href="lib/font-awesome.min.css"]').length)
             return "?";
-        var rules = $('link[href="' + ftui.config.dir + '/../lib/font-awesome.min.css"]')[0].sheet.cssRules;
+        var rules = $('link[href="lib/font-awesome.min.css"]')[0].sheet.cssRules;
         for (var rule in rules) {
             if (rules[rule].selectorText && rules[rule].selectorText.match(new RegExp(iconName + ':'))) {
                 var id = rules[rule].style.content;
@@ -1685,12 +1680,13 @@ if (!ftui.isValid(window.jQuery)) {
     script.onload = function () {
         (function ($) {
             $(document).ready(function () {
+                console.log('jQuery dynamically loaded');
                 onjQueryLoaded();
             });
         })(jQuery);
 
     };
-    script.src = ftui.config.dir + "../pgm2/jquery.min.js";
+    script.src = "lib/jquery.min.js";
     document.getElementsByTagName('head')[0].appendChild(script);
 } else {
     $(document).ready(function () {

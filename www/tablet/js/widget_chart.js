@@ -10,9 +10,9 @@
 function depends_chart (){
 	var mainCSS = $('head').find("[href$='fhem-tablet-ui-user.css']");
 	if (mainCSS.length)
-		mainCSS.before('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_chart.css" type="text/css" />');
+		mainCSS.before('<link rel="stylesheet" href="css/ftui_chart.css" type="text/css" />');
 	else
-		$('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../css/ftui_chart.css" type="text/css" />');
+		$('head').append('<link rel="stylesheet" href="css/ftui_chart.css" type="text/css" />');
 
 	if (!$.fn.visibilityChanged) {
 		(function ($) {

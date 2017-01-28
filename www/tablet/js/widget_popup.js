@@ -9,7 +9,7 @@
 
 function depends_popup() {
     if (!$.fn.draggable)
-        return ["../pgm2/jquery-ui.min.js"];
+        return ["lib/jquery-ui.min.js"];
 }
 
 var Modul_popup = function () {

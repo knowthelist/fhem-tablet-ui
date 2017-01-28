@@ -7,7 +7,7 @@
 
 "use strict";
 
-$('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../css/ftui_range.css" type="text/css" />');
+$('head').append('<link rel="stylesheet" href="css/ftui_range.css" type="text/css" />');
 
 var Modul_range = function () {
 

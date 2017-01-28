@@ -9,7 +9,7 @@
 
 var Modul_spinner = function () {
 
-    $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../css/ftui_spinner.css" type="text/css" />');
+    $('head').append('<link rel="stylesheet" href="css/ftui_spinner.css" type="text/css" />');
 
     function getValueNumeric(elem) {
         var value = elem.data('value');

@@ -17,7 +17,9 @@ body {
     font-size: small;
     color: #eeeeee;
     width: auto;
+    /* never remove this, it is important for internal checks */
     text-align: center;
+    /* never remove this */
     margin: 0px;
 }
 

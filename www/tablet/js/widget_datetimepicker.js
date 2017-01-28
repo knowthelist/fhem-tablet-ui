@@ -10,7 +10,7 @@
 function depends_datetimepicker() {
     var deps = [];
     if (!$.fn.datetimepicker) {
-        $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/jquery.datetimepicker.css" type="text/css" />');
+        $('head').append('<link rel="stylesheet" href="lib/jquery.datetimepicker.css" type="text/css" />');
         deps.push("lib/jquery.datetimepicker.js");
     }
     if (typeof Module_label == 'undefined') {

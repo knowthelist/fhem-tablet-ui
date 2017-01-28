@@ -9,13 +9,22 @@
 
 var Modul_medialist = function () {
 
-    $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../css/ftui_medialist.css" type="text/css" />');
+    $('head').append('<link rel="stylesheet" href="css/ftui_medialist.css" type="text/css" />');
 
     function changedCurrent(elem, pos) {
         elem.find('.media').each(function (index) {
             $(this).removeClass('current');
         });
-        var idx = elem.hasClass('index1') ? pos - 1 : pos;
+        var idx = pos;
+        if (elem.data('set-value') === 'index1' || elem.hasClass('index1')) {
+            idx = pos - 1;
+        }
+        if (elem.data('set-value') === 'file' || elem.hasClass('file')) {
+            idx = elem.find('.media').filter(function (index) {
+                return $(this).data("file") === pos;
+            }).index();
+        }
+
         var currentElem = elem.find('.media').eq(idx);
         if (currentElem.length > 0) {
             currentElem.addClass("current");
@@ -28,6 +37,7 @@ var Modul_medialist = function () {
     function init_attr(elem) {
         elem.initData('get', 'STATE');
         elem.initData('set', 'play');
+        elem.initData('set-value', 'index0');
         elem.initData('pos', 'Pos');
         elem.initData('cmd', 'set');
         elem.initData('color', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname, 'color') || '#222');
@@ -43,11 +53,11 @@ var Modul_medialist = function () {
     function init_ui(elem) {
 
         // prepare container element
-                var width = elem.data('width');
+        var width = elem.data('width');
         var widthUnit = ($.isNumeric(width)) ? 'px' : '';
         var height = elem.data('height');
         var heightUnit = ($.isNumeric(height)) ? 'px' : '';
-        
+
         elem.html('')
             .addClass('media-list')
             .css({
@@ -58,8 +68,15 @@ var Modul_medialist = function () {
                 backgroundColor: elem.mappedColor('background-color'),
             });
 
-        elem.on('click', '.media', function (index) {
-            elem.data('value', elem.hasClass('index1') ? $(this).index() + 1 : $(this).index());
+        elem.on('click', '.media', function () {
+            var value = $(this).index();
+            if (elem.data('set-value') === 'index1' || elem.hasClass('index1')) {
+                value = $(this).index() + 1;
+            }
+            if (elem.data('set-value') === 'file' || elem.hasClass('file')) {
+                value = $(this).data('file');
+            }
+            elem.data('value', value);
             elem.transmitCommand();
         });
     }
@@ -73,7 +90,7 @@ var Modul_medialist = function () {
                 var list = elem.getReading('get').val;
                 var pos = elem.getReading('pos').val;
 
-                if (ftui.isValid(list)) {
+                if (ftui.isValid(list) && list !== '<BINARY>') {
                     elem.html('');
                     var text = '';
                     try {
@@ -81,14 +98,14 @@ var Modul_medialist = function () {
 
                         for (var idx in collection) {
                             var media = collection[idx];
-                            text += '<div class="media">';
+                            text += '<div class="media" data-file="' + media.File + '">';
                             text += '<div class="media-image">';
                             text += '<img class="cover" src="' + media.Cover + '"/>';
                             text += '</div>';
                             text += '<div class="media-text">';
                             text += '<div class="title" data-track="' + media.Track + '">' + media.Title + '</div>';
                             text += '<div class="artist">' + media.Artist + '</div>';
-                            text += '<div class="duration">' + ftui.durationFromSeconds(media.Time) + '</div>';
+                            text += '<div class="duration">' + ((media.Time > 0) ? ftui.durationFromSeconds(media.Time) : '&nbsp;') + '</div>';
                             text += '</div></div>';
                         }
                     } catch (e) {
@@ -108,7 +125,7 @@ var Modul_medialist = function () {
             .each(function (idx) {
                 var elem = $(this);
                 var pos = elem.getReading('pos').val;
-                if (ftui.isValid(pos)){
+                if (ftui.isValid(pos)) {
                     changedCurrent(elem, pos);
                 }
             });

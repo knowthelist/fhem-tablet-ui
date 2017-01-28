@@ -9,7 +9,7 @@
 
 function depends_slideout() {
     if (!$.fn.Slideout) {
-        $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../css/ftui_slideout.css" type="text/css" />');
+        $('head').append('<link rel="stylesheet" href="css/ftui_slideout.css" type="text/css" />');
         return ["lib/slideout.min.js"];
     }
 }

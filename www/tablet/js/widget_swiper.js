@@ -9,7 +9,7 @@
 
 function depends_swiper() {
     if (!$.fn.Swiper) {
-        $('head').append('<link rel="stylesheet" href="' + ftui.config.dir + '/../lib/swiper.min.css" type="text/css" />');
+        $('head').append('<link rel="stylesheet" href="lib/swiper.min.css" type="text/css" />');
         return ["lib/swiper.jquery.min.js"];
     }
 }
