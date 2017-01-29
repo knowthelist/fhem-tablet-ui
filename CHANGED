@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2017-01-29
- - Bugfixed wrong size and status for Symbol cascaded into Push
+2017-01-30
+ - Adjusted click area for all widgets derived from famultibutton
