@@ -127,16 +127,16 @@
 
             state = true;
 
-            faElem.children().children('#bg').css("color", options['onBackgroundColor']);
-            faElem.children().children('#fg').css("color", options['onColor']);
+            faElem.children('#bg').css("color", options['onBackgroundColor']);
+            faElem.children('#fg').css("color", options['onColor']);
             elem.trigger('setOn');
         }
 
         function setOff() {
 
             state = false;
-            faElem.children().children('#bg').css("color", options['offBackgroundColor']);
-            faElem.children().children('#fg').css("color", options['offColor']);
+            faElem.children('#bg').css("color", options['offBackgroundColor']);
+            faElem.children('#fg').css("color", options['offColor']);
             elem.trigger('setOff');
         }
 
@@ -154,11 +154,11 @@
                     // Fade the colors in the step function
                     step: function (now, fx) {
                         var completion = (now - fx.start) / (fx.end - fx.start);
-                        faElem.children().children('#bg').css('color', getGradientColor(
+                        faElem.children('#bg').css('color', getGradientColor(
                             options['onBackgroundColor'],
                             options['offBackgroundColor'],
                             completion));
-                        faElem.children().children('#fg').css('color', getGradientColor(
+                        faElem.children('#fg').css('color', getGradientColor(
                             options['onColor'],
                             options['offColor'],
                             completion));
