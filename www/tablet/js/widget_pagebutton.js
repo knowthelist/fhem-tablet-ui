@@ -208,7 +208,7 @@ var Modul_pagebutton = function () {
 
     function update_cb(elem, state) {
         if (!elem.isValidData('warn')) {
-            if (elem.hasClass('warn') || elem.children().find('#fg').hasClass('warn'))
+            if (elem.hasClass('warn') || elem.children().children('#fg').hasClass('warn'))
                 me.showOverlay(elem, ftui.getPart(state, elem.data('get-warn')));
             else
                 me.showOverlay(elem, "");
@@ -216,7 +216,7 @@ var Modul_pagebutton = function () {
 
         var id = elem.data('device') + "_" + elem.data('get') + "_" + elem.data('url');
 
-        if (elem.children().find('#fg').hasClass('activate')) {
+        if (elem.children().children('#fg').hasClass('activate')) {
             //only for the first occurance (Flipflop logic)
             if (localStorage.getItem(id) !== 'true') {
                 localStorage.setItem(id, 'true');

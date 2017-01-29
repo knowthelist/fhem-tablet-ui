@@ -17,7 +17,7 @@ var Modul_playstream = function () {
 
     function startStream(elem) {
         elem.data('audio').play();
-        var elemFgIcon = elem.children().filter('#fg');
+        var elemFgIcon = elem.children().children('#fg');
         elemFgIcon.removeClass();
         elemFgIcon.addClass('fa fa-stack-1x');
         elemFgIcon.addClass(elem.data('icon-play'));
@@ -25,7 +25,7 @@ var Modul_playstream = function () {
 
     function stopStream(elem) {
         elem.data('audio').pause();
-        var elemFgIcon = elem.children().filter('#fg');
+        var elemFgIcon = elem.children().children('#fg');
         elemFgIcon.removeClass();
         elemFgIcon.addClass('fa fa-stack-1x');
         elemFgIcon.addClass(elem.data('icon'));

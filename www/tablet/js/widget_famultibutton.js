@@ -101,8 +101,8 @@ var Modul_famultibutton = function () {
                     }, elem.data('doubleclick') * 1));
                     elem.setOn();
                 }
-                elem.find('#bg').css('color', elem.data('firstclick-background-color'));
-                elem.find('#fg').css('color', elem.data('firstclick-color'));
+                elem.children().children('#bg').css('color', elem.data('firstclick-background-color'));
+                elem.children().children('#fg').css('color', elem.data('firstclick-color'));
                 return false;
             } else {
                 elem.data('_firstclick', false);
@@ -191,7 +191,7 @@ var Modul_famultibutton = function () {
             }
         }
 
-        var elm = elem.find('#fg');
+        var elm = elem.children().children('#fg');
         var idx = ftui.indexOfGeneric(states, state);
         if (idx > -1) {
             var faelem = elem.data('famultibutton');
@@ -214,7 +214,7 @@ var Modul_famultibutton = function () {
                 .addClass('fa fa-stack-1x')
                 .addClass(icons[idx])
                 .css("color", ftui.getStyle('.' + colorValue, 'color') || colorValue);
-            var bgelm = elem.find('#bg');
+            var bgelm = elem.children().children('#bg');
             bgelm.removeClass()
                 .addClass('fa fa-stack-2x')
                 .addClass(bgicons[idx]);

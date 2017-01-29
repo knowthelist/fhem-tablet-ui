@@ -187,14 +187,14 @@ var Modul_pagetab = function () {
                         me.showMultiStates(elem, states, state, -1);
                     }
                 }
-                if (elem.hasClass('warn') || elem.children().find('#fg').hasClass('warn'))
+                if (elem.hasClass('warn') || elem.children().children('#fg').hasClass('warn'))
                     me.showOverlay(elem, state);
                 else
                     me.showOverlay(elem, "");
 
                 var id = dev + "_" + elem.data('url');
 
-                if (elem.children().find('#fg').hasClass('activate')) {
+                if (elem.children().children('#fg').hasClass('activate')) {
                     //only for the first occurance (Flipflop logic)
                     if (localStorage.getItem(id) != 'true') {
                         localStorage.setItem(id, 'true');

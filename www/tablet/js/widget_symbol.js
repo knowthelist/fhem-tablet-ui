@@ -35,7 +35,7 @@ var Modul_symbol = function () {
 
     function update_cb(elem, state) {
         $('.fa-stack:has(.zero)').removeClass('fa-stack');
-        if (elem.hasClass('warn') || elem.children().find('#fg').hasClass('warn'))
+        if (elem.hasClass('warn') || elem.children().children('#fg').hasClass('warn'))
             me.showOverlay(elem, ftui.getPart(state, elem.data('get-warn')));
         else
             me.showOverlay(elem, "");
