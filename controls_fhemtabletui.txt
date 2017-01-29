@@ -62,7 +62,7 @@ UPD 2017-01-28_21:42:16 62296 www/tablet/js/fhem-tablet-ui.js
 UPD 2017-01-23_20:48:48 31226 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2016-11-25_00:14:16 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2016-12-21_08:04:04 6503 www/tablet/js/widget_agenda.js
-UPD 2017-01-26_22:30:01 1706 www/tablet/js/widget_button.js
+UPD 2017-01-29_01:34:10 1710 www/tablet/js/widget_button.js
 UPD 2017-01-16_18:17:36 5907 www/tablet/js/widget_calview.js
 UPD 2017-01-28_21:50:03 199276 www/tablet/js/widget_chart.js
 UPD 2017-01-28_21:49:28 4049 www/tablet/js/widget_checkbox.js
@@ -72,10 +72,10 @@ UPD 2016-12-07_19:26:51 5830 www/tablet/js/widget_clock.js
 UPD 2017-01-28_21:49:06 3084 www/tablet/js/widget_colorwheel.js
 UPD 2017-01-28_21:48:58 2581 www/tablet/js/widget_datetimepicker.js
 UPD 2017-01-28_21:48:49 5797 www/tablet/js/widget_departure.js
-UPD 2017-01-26_22:30:18 6801 www/tablet/js/widget_dimmer.js
+UPD 2017-01-29_01:36:27 6805 www/tablet/js/widget_dimmer.js
 UPD 2016-11-30_20:51:00 3298 www/tablet/js/widget_eventmonitor.js
 UPD 2017-01-28_21:48:31 2801 www/tablet/js/widget_example.js
-UPD 2017-01-28_21:35:02 21723 www/tablet/js/widget_famultibutton.js
+UPD 2017-01-29_01:30:01 21783 www/tablet/js/widget_famultibutton.js
 UPD 2016-12-21_01:05:46 8481 www/tablet/js/widget_fullcalview.js
 UPD 2016-11-25_00:14:16 2387 www/tablet/js/widget_gds.js
 UPD 2016-12-04_23:42:04 8975 www/tablet/js/widget_highchart.js
@@ -95,11 +95,11 @@ UPD 2017-01-26_00:21:10 10561 www/tablet/js/widget_link.js
 UPD 2016-11-25_00:14:16 1493 www/tablet/js/widget_loading.js
 UPD 2017-01-28_21:47:11 5457 www/tablet/js/widget_medialist.js
 UPD 2016-11-25_00:14:16 1965 www/tablet/js/widget_meteogram.js
-UPD 2017-01-26_22:29:38 3474 www/tablet/js/widget_multistatebutton.js
+UPD 2017-01-29_01:43:28 3478 www/tablet/js/widget_multistatebutton.js
 UPD 2016-12-20_14:51:22 3770 www/tablet/js/widget_notify.js
-UPD 2017-01-26_22:27:13 9771 www/tablet/js/widget_pagebutton.js
-UPD 2017-01-26_22:26:16 8576 www/tablet/js/widget_pagetab.js
-UPD 2016-11-30_22:36:45 5223 www/tablet/js/widget_playstream.js
+UPD 2017-01-29_01:36:01 9779 www/tablet/js/widget_pagebutton.js
+UPD 2017-01-29_01:37:08 8584 www/tablet/js/widget_pagetab.js
+UPD 2017-01-29_01:43:51 5227 www/tablet/js/widget_playstream.js
 UPD 2017-01-28_21:46:40 7163 www/tablet/js/widget_popup.js
 UPD 2017-01-22_20:21:29 3554 www/tablet/js/widget_progress.js
 UPD 2017-01-23_20:16:07 1910 www/tablet/js/widget_push.js
@@ -115,7 +115,7 @@ UPD 2017-01-28_21:44:43 12360 www/tablet/js/widget_spinner.js
 UPD 2016-11-30_23:24:47 3054 www/tablet/js/widget_svgplot.js
 UPD 2017-01-28_21:51:04 4214 www/tablet/js/widget_swiper.js
 UPD 2017-01-28_21:37:41 1616 www/tablet/js/widget_switch.js
-UPD 2017-01-28_21:38:52 2010 www/tablet/js/widget_symbol.js
+UPD 2017-01-29_01:32:04 2014 www/tablet/js/widget_symbol.js
 UPD 2017-01-26_23:00:43 9981 www/tablet/js/widget_thermostat.js
 UPD 2016-11-25_00:14:16 2587 www/tablet/js/widget_tts.js
 UPD 2017-01-16_18:17:36 6477 www/tablet/js/widget_uwz.js
@@ -125,8 +125,8 @@ UPD 2016-12-09_22:27:03 95024 www/tablet/js/widget_wdtimer.js
 UPD 2017-01-28_02:36:54 23419 www/tablet/js/widget_weather.js
 UPD 2016-12-05_21:07:37 25336 www/tablet/js/widget_weekprofile.js
 UPD 2016-12-20_09:03:38 7163 www/tablet/js/widget_wind_direction.js
-UPD 2017-01-23_20:14:41 18493 www/tablet/lib/fa-multi-button.js
-UPD 2017-01-23_20:14:46 6696 www/tablet/lib/fa-multi-button.min.js
+UPD 2017-01-29_01:31:13 18595 www/tablet/lib/fa-multi-button.js
+UPD 2017-01-29_01:40:49 6786 www/tablet/lib/fa-multi-button.min.js
 UPD 2016-11-25_00:14:16 17041 www/tablet/lib/farbtastic.js
 UPD 2016-11-25_00:14:16 26586 www/tablet/lib/fhemSVG.css
 UPD 2016-11-25_00:14:16 30926 www/tablet/lib/font-awesome.min.css
