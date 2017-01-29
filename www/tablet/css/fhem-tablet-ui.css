@@ -1596,8 +1596,22 @@ div[data-type="link"] > div.fa {
     overflow: auto;
 }
 
-[data-type]:not([data-type="label"]):not(.readonly):not([data-type="symbol"]):not([data-type="spinner"]),
+[data-type]:not([data-type="label"]):not(.readonly):not([data-type="symbol"]):not([data-type="spinner"])
+:not([data-type="switch"]):not([data-type="button"]):not([data-type="pagebutton"])
+:not([data-type="pagetab"]):not([data-type="dimmer"]):not([data-type="multistatebutton"])
+:not([data-type="push"]):not([data-type="playstream"]),
 [onclick] {
+    cursor: pointer;
+}
+
+[data-type="switch"] > .famultibutton,
+[data-type="button"] > .famultibutton,
+[data-type="pagebutton"] > .famultibutton,
+[data-type="pagetab"] > .famultibutton,
+[data-type="dimmer"] > .famultibutton,
+[data-type="multistatebutton"] > .famultibutton,
+[data-type="push"] > .famultibutton,
+[data-type="playstream"] > .famultibutton {
     cursor: pointer;
 }
 
@@ -1659,6 +1673,10 @@ div[data-type="link"] > div.fa {
     width: 1em !important;
     height: 1em !important;
     line-height: 1em !important;
+}
+
+.famultibutton .famultibutton {
+    font-size: 1em !important;
 }
 
 .wider {
@@ -1815,23 +1833,23 @@ div[data-type="link"] > div.fa {
 }
 
 .large {
-    font-size: 125%;
+    font-size: 125% !important;
 }
 
 .normal {
-    font-size: 100%;
+    font-size: 100% !important;
 }
 
 .small {
-    font-size: 80%;
+    font-size: 80% !important;
 }
 
 .tiny {
-    font-size: 60%;
+    font-size: 60% !important;
 }
 
 .mini {
-    font-size: 50%;
+    font-size: 50% !important;
 }
 
 /* Size for Weather */

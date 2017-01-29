@@ -120,6 +120,8 @@
 
             elem.data("famultibutton", elem);
 
+            initEvents();
+            
             return elem;
         };
 
@@ -331,166 +333,111 @@
             return match ? match[1] : false;
         }
 
-        var touch_pos_x, touch_pos_y;
-        var android = getAndroidVersion();
-        var onlyTouch = (android && parseFloat(android) < 5);
-        var clickEventType = (onlyTouch) ? 'touchstart' : 'touchstart mousedown';
-        var moveEventType = ((onlyTouch) ? 'touchmove' : 'touchmove mousemove');
-        var releaseEventType = ((onlyTouch) ? 'touchend' : 'touchend mouseup');
-        var leaveEventType = ((onlyTouch) ? 'touchleave' : 'touchleave mouseout');
-        var lastState;
+        function initEvents() {
+            var touch_pos_x, touch_pos_y;
+            var android = getAndroidVersion();
+            var onlyTouch = (android && parseFloat(android) < 5);
+            var clickEventType = (onlyTouch) ? 'touchstart' : 'touchstart mousedown';
+            var moveEventType = ((onlyTouch) ? 'touchmove' : 'touchmove mousemove');
+            var releaseEventType = ((onlyTouch) ? 'touchend' : 'touchend mouseup');
+            var leaveEventType = ((onlyTouch) ? 'touchleave' : 'touchleave mouseout');
+            var lastState;
 
-        if (options['mode'] == 'push') {
-            this.on(clickEventType, function (e) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                touch_pos_y = $(window).scrollTop();
-                touch_pos_x = $(window).scrollLeft();
-            });
-            this.on(releaseEventType, function (e) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                if (Math.abs(touch_pos_y - $(window).scrollTop()) > 3 ||
-                    (Math.abs(touch_pos_x - $(window).scrollLeft()) > 3)) return;
+            if (options['mode'] == 'push') {
+                faElem.on(clickEventType, function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    touch_pos_y = $(window).scrollTop();
+                    touch_pos_x = $(window).scrollLeft();
+                });
+                faElem.on(releaseEventType, function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    if (Math.abs(touch_pos_y - $(window).scrollTop()) > 3 ||
+                        (Math.abs(touch_pos_x - $(window).scrollLeft()) > 3)) return;
 
-                lastState = state;
-                setOn();
-
-                if (typeof options['toggleOn'] === 'function') {
-                    options['toggleOn'].call(this);
-                }
-
-                setTimeout(function () {
-                    fadeOff();
-                }, 200);
-
-                if (lastState === true) {
-                    setTimeout(function () {
-                        setOn();
-                    }, 1000);
-                }
-
-                setTimeout(function () {
-                    if (state === true) {
-                        setOn();
-                    }
-                }, 1200);
-
-                elem.trigger('clicked');
-
-                return false;
-            });
-        } else if (options['mode'] == 'updown') {
-            this.on(clickEventType, function (e) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-
-                lastState = state;
-                setOn();
-
-                if (typeof options['toggleOn'] === 'function') {
-                    options['toggleOn'].call(this);
-                }
-
-            });
-            this.on(releaseEventType, function (e) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-
-                if (typeof options['toggleOff'] === 'function') {
-                    options['toggleOff'].call(this);
-                }
-
-                setTimeout(function () {
-                    fadeOff();
-                }, 200);
-
-                if (lastState === true) {
-                    setTimeout(function () {
-                        setOn();
-                    }, 1000);
-                }
-
-                setTimeout(function () {
-                    if (state === true) {
-                        setOn();
-                    }
-                }, 1200);
-
-
-                elem.trigger('clicked');
-
-                return false;
-            });
-        } else if (options['mode'] == 'toggle') {
-            this.on(clickEventType, function (e) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                touch_pos_y = $(window).scrollTop();
-                touch_pos_x = $(window).scrollLeft();
-            });
-            this.on(releaseEventType, function (e) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-
-                if (Math.abs(touch_pos_y - $(window).scrollTop()) > 3 ||
-                    (Math.abs(touch_pos_x - $(window).scrollLeft()) > 3)) return;
-                if (state) {
-
-                    setOff();
-                    if (typeof options['toggleOff'] === 'function') {
-                        options['toggleOff'].call(this);
-                    }
-                } else {
-
+                    lastState = state;
                     setOn();
+
                     if (typeof options['toggleOn'] === 'function') {
                         options['toggleOn'].call(this);
                     }
-                }
 
-                elem.trigger('clicked');
+                    setTimeout(function () {
+                        fadeOff();
+                    }, 200);
 
-                return false;
-            });
-        } else if (options['mode'] == 'dimmer') {
-            this.on(clickEventType, function (e) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                var event = e.originalEvent;
-                dragy = event.touches ? event.touches[0].clientY : e.pageY;
-                diff = 0;
-                isDown = true;
-            });
-            this.on(leaveEventType, function (e) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                if (isDrag) {
-                    isDrag = false;
-                    elem.animate({
-                        top: 0
-                    });
-                    clearInterval(objTimer);
-                    isRunning = false;
-                    moveScale();
-                }
-                isDown = false;
-            });
-
-            this.on(releaseEventType, function (e) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                if (isDrag) {
-                    isDrag = false;
-                    elem.animate({
-                        top: 0
-                    });
-                    clearTimeout(objTimer);
-                    isRunning = false;
-                    if (typeof options['valueChanged'] === 'function') {
-                        options['valueChanged'].call(this, currVal);
+                    if (lastState === true) {
+                        setTimeout(function () {
+                            setOn();
+                        }, 1000);
                     }
-                } else {
+
+                    setTimeout(function () {
+                        if (state === true) {
+                            setOn();
+                        }
+                    }, 1200);
+
+                    elem.trigger('clicked');
+
+                    return false;
+                });
+            } else if (options['mode'] == 'updown') {
+                faElem.on(clickEventType, function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+
+                    lastState = state;
+                    setOn();
+
+                    if (typeof options['toggleOn'] === 'function') {
+                        options['toggleOn'].call(this);
+                    }
+
+                });
+                faElem.on(releaseEventType, function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+
+                    if (typeof options['toggleOff'] === 'function') {
+                        options['toggleOff'].call(this);
+                    }
+
+                    setTimeout(function () {
+                        fadeOff();
+                    }, 200);
+
+                    if (lastState === true) {
+                        setTimeout(function () {
+                            setOn();
+                        }, 1000);
+                    }
+
+                    setTimeout(function () {
+                        if (state === true) {
+                            setOn();
+                        }
+                    }, 1200);
+
+
+                    elem.trigger('clicked');
+
+                    return false;
+                });
+            } else if (options['mode'] == 'toggle') {
+                faElem.on(clickEventType, function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    touch_pos_y = $(window).scrollTop();
+                    touch_pos_x = $(window).scrollLeft();
+                });
+                faElem.on(releaseEventType, function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+
+                    if (Math.abs(touch_pos_y - $(window).scrollTop()) > 3 ||
+                        (Math.abs(touch_pos_x - $(window).scrollLeft()) > 3)) return;
                     if (state) {
 
                         setOff();
@@ -504,37 +451,95 @@
                             options['toggleOn'].call(this);
                         }
                     }
-                }
-                isDrag = false;
-                isDown = false;
-                moveScale();
-                drawScale();
-                elem.trigger('clicked');
-                return false;
-            });
-            this.on(moveEventType, function (e) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                if (isDown)
-                    isDrag = true;
 
-                var event = e.originalEvent;
-                posy = event.touches ? event.touches[0].clientY : e.pageY;
+                    elem.trigger('clicked');
 
-                diff = posy - dragy;
-
-                if (diff > 20) diff = 20;
-                if (diff < -20) diff = -20;
-                if (isDrag) {
-                    this.style.top = diff + "px";
-                    if (!isRunning) {
+                    return false;
+                });
+            } else if (options['mode'] == 'dimmer') {
+                faElem.on(clickEventType, function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    var event = e.originalEvent;
+                    dragy = event.touches ? event.touches[0].clientY : e.pageY;
+                    diff = 0;
+                    isDown = true;
+                });
+                faElem.on(leaveEventType, function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    if (isDrag) {
+                        isDrag = false;
+                        elem.animate({
+                            top: 0
+                        });
+                        clearInterval(objTimer);
+                        isRunning = false;
                         moveScale();
-                        tickTimer();
-                        isRunning = true;
                     }
-                }
-            });
+                    isDown = false;
+                });
+
+                faElem.on(releaseEventType, function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    if (isDrag) {
+                        isDrag = false;
+                        elem.animate({
+                            top: 0
+                        });
+                        clearTimeout(objTimer);
+                        isRunning = false;
+                        if (typeof options['valueChanged'] === 'function') {
+                            options['valueChanged'].call(this, currVal);
+                        }
+                    } else {
+                        if (state) {
+
+                            setOff();
+                            if (typeof options['toggleOff'] === 'function') {
+                                options['toggleOff'].call(this);
+                            }
+                        } else {
+
+                            setOn();
+                            if (typeof options['toggleOn'] === 'function') {
+                                options['toggleOn'].call(this);
+                            }
+                        }
+                    }
+                    isDrag = false;
+                    isDown = false;
+                    moveScale();
+                    drawScale();
+                    elem.trigger('clicked');
+                    return false;
+                });
+                faElem.on(moveEventType, function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    if (isDown)
+                        isDrag = true;
+
+                    var event = e.originalEvent;
+                    posy = event.touches ? event.touches[0].clientY : e.pageY;
+
+                    diff = posy - dragy;
+
+                    if (diff > 20) diff = 20;
+                    if (diff < -20) diff = -20;
+                    if (isDrag) {
+                        this.style.top = diff + "px";
+                        if (!isRunning) {
+                            moveScale();
+                            tickTimer();
+                            isRunning = true;
+                        }
+                    }
+                });
+            }
         }
+
         // public functions;
         this.setOn = function () {
             setOn();

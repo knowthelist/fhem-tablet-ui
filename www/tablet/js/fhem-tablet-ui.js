@@ -373,7 +373,7 @@ var ftui = {
                     'href': cssUrl
                 }).prependTo('head');
             })).then(function () {
-                var ii=0;
+                var ii = 0;
                 var cssListener = setInterval(function () {
                     ftui.log(1, 'fhem-tablet-ui.css dynamically loaded. Waiting until it is ready to use...');
                     if ($("body").css("text-align") === "center") {
@@ -382,7 +382,7 @@ var ftui = {
                         ftui.initPage();
                     }
                     ii++;
-                    if ( ii > 120) {
+                    if (ii > 120) {
                         clearInterval(cssListener);
                         ftui.toast("fhem-tablet-ui.css not ready to use", 'error');
                     }
@@ -1347,15 +1347,18 @@ var ftui = {
     getIconId: function (iconName) {
         if (!iconName || iconName === '' || !$('link[href="lib/font-awesome.min.css"]').length)
             return "?";
-        var rules = $('link[href="lib/font-awesome.min.css"]')[0].sheet.cssRules;
-        for (var rule in rules) {
-            if (rules[rule].selectorText && rules[rule].selectorText.match(new RegExp(iconName + ':'))) {
-                var id = rules[rule].style.content;
-                if (!id)
-                    return iconName;
-                id = id.replace(/"/g, '').replace(/'/g, "");
-                return (/[^\u0000-\u00ff]/.test(id)) ? id :
-                    String.fromCharCode(parseInt(id.replace('\\', ''), 16));
+        var cssFile = $('link[href="lib/font-awesome.min.css"]')[0];
+        if (cssFile && cssFile.sheet && cssFile.sheet.cssRules) {
+            var rules = cssFile.sheet.cssRules;
+            for (var rule in rules) {
+                if (rules[rule].selectorText && rules[rule].selectorText.match(new RegExp(iconName + ':'))) {
+                    var id = rules[rule].style.content;
+                    if (!id)
+                        return iconName;
+                    id = id.replace(/"/g, '').replace(/'/g, "");
+                    return (/[^\u0000-\u00ff]/.test(id)) ? id :
+                        String.fromCharCode(parseInt(id.replace('\\', ''), 16));
+                }
             }
         }
     },
