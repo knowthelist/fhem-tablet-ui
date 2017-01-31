@@ -771,7 +771,7 @@ main > .box.horizontal {
     width: auto;
 }
 
-:not([data-type="circlemenu"]) > .menu {
+div:not(.circlemenu-wrapper) > .menu {
     background: #1D1F20;
     height: 100vh;
     width: 180px;
@@ -2283,6 +2283,10 @@ select::-ms-expand {
 
 [class*='col-'] > .select {
     width: 90%;
+}
+
+[data-type="select"].select {
+    height: auto;
 }
 
 .select {

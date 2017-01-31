@@ -763,6 +763,7 @@ var ftui = {
                 url: ftui.config.fhem_dir,
                 cache: false,
                 async: true,
+                method: 'GET',
                 data: {
                     XHR: 1,
                     inform: "type=status;filter=" + ftui.config.longPollFilter + ";fmt=JSON"
@@ -872,6 +873,7 @@ var ftui = {
         $.ajax({
                 async: true,
                 cache: false,
+                method: 'POST',
                 url: ftui.config.fhem_dir,
                 data: {
                     cmd: cmdline,
@@ -958,6 +960,7 @@ var ftui = {
         else {
             $.ajax({
                     async: false,
+                    method: 'GET',
                     url: "/fhem/tablet/data/" + ftui.config.filename.replace(".html", ".dat"),
                 })
                 .done(function (data) {

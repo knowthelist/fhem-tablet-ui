@@ -47,6 +47,7 @@ var Modul_iframe = function () {
 
             $.ajax({
                 type: 'HEAD',
+                method: 'GET',
                 url: elem.data('check-src'),
                 timeout: elem.data('timeout'),
                 success: function () {

@@ -1105,6 +1105,7 @@ Additional settings for Gridster are:
 - gridster_starthidden
 - gridster_resize (auto resize -> values: 0|1)
 
+**General settings**
 
 To disable longpoll, set an other value then 1
 ```html
@@ -1131,8 +1132,13 @@ To change the language for time/date functions
 <meta name='lang' content='de'>
 ```
 
+**Mobil zooming**
 
+To prevent auto scaling and gesture zooming on mobil devices, add this meta tag to HTML page header
 
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+```
 
 Examples
 -------

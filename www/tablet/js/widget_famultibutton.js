@@ -373,7 +373,7 @@ var Modul_famultibutton = function () {
 
         var id = elem.data('device') + "_" + elem.data('get');
 
-        if (id !== ' _STATE') {
+        if (id !== ' _STATE' && id !== ' _' ) {
 
             // Notification from other widgets
             $(document).on("onforTimerStarted", function (event, wgtId) {
