@@ -1,26 +1,34 @@
-// load widget base functions
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
+"use strict";
+
+function depends_screensaver() {
+    var deps = [];
 	
-// widget implementation starts here
-// change 'widget_example' to 'widget_mywidgetname'
-// and 'widgetname:"example",' to 'widgetname:"mywidgetname",'
-var widget_screensaver = $.extend({}, widget_widget, {
-    widgetname:"screensaver",
-    // privat sub function
-    init_attr: function(elem) {
-        elem.initData('timeout', '60');
-    },
-    // mandatory function, get called on start up
-    init: function () {
-        var base = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            base.init_attr($(this));
-			var elem = $(this);
+    $('head').append('<link rel="stylesheet" href="lib/screensaver.css" type="text/css" />');
+		
+    return deps;
+}
+
+var Modul_screensaver = function () {
+	
+    function init() {
+
+        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements.each(function (index) {
+
+            var elem = $(this);
+			
+			elem.initData('timeout', '60');
 						
 			elem.attr('id', 'screensaver');
+							
+			function show_screensaver(){
+				$('#screensaver').fadeIn();
+				screensaver_active = true;
+			}
+			function stop_screensaver(){
+				$('#screensaver').fadeOut();
+				screensaver_active = false;
+			}
 			
 			if ($('#screensaver')) {
 				$('#screensaver').hide();
@@ -32,15 +40,6 @@ var widget_screensaver = $.extend({}, widget_widget, {
 					show_screensaver();
 				}, 1000 * idletime);
 
-				function show_screensaver(){
-					$('#screensaver').fadeIn();
-					screensaver_active = true;
-				}
-					function stop_screensaver(){
-					$('#screensaver').fadeOut();
-					screensaver_active = false;
-				}
-			
 				var moveEventType=((document.ontouchmove!==null)?'mousemove':'touchstart');
 				$(document).bind(moveEventType, function(e) {
 					clearTimeout(mousetimeout);
@@ -54,8 +53,15 @@ var widget_screensaver = $.extend({}, widget_widget, {
 				});
 			}
         });
-    },
-    // mandatory function, get called after start up once and on every FHEM poll
-    update: function (dev,par) {
     }
-});
+	
+    // public
+    // inherit all public members from base class
+    var me = $.extend(new Modul_widget(), {
+        //override or own public members
+        widgetname: 'screensaver',
+        init: init
+    });
+
+    return me;
+};
