@@ -13,7 +13,7 @@ function depends_pagetab() {
     }
 }
 
-var Modul_pagetab = function () {
+var Modul_pagetab = function() {
 
     function startReturnTimer() {
         var mainElem = me.elements.eq(0);
@@ -23,7 +23,7 @@ var Modul_pagetab = function () {
         clearTimeout(returnTimer);
         if (waitUntilReturn > 0 && lastUrl !== mainElem.data('url')) {
             ftui.log(1, 'Reload main tab in : ' + waitUntilReturn + ' seconds');
-            returnTimer = setTimeout(function () {
+            returnTimer = setTimeout(function() {
                 // back to first page
                 localStorage.setItem('pagetab_doload', 'initializing');
                 loadPage(mainElem.data('url'), true);
@@ -46,7 +46,7 @@ var Modul_pagetab = function () {
         }
         $('div.gridster').fadeTo(200, 0);
         if (ftui.isValid(goUrl)) {
-            $.get(goUrl, function (data_html) {
+            $.get(goUrl, function(data_html) {
                 $('div.gridster')
                     .html($(data_html).closest('div.gridster').html())
                     .fadeTo(600, 1);
@@ -65,7 +65,7 @@ var Modul_pagetab = function () {
     }
 
     function toggleOff(elem) {
-        setTimeout(function () {
+        setTimeout(function() {
             elem.setOn();
         }, 50);
     }
@@ -98,7 +98,7 @@ var Modul_pagetab = function () {
         } else {
             ftui.log(3, 'normal init : ');
 
-            me.elements.each(function (index) {
+            me.elements.each(function(index) {
                 var elem = $(this);
                 elem.initData('off-color', ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#606060');
                 elem.initData('off-background-color', elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.off', 'background-color') || 'transparent');
@@ -131,7 +131,14 @@ var Modul_pagetab = function () {
                     }
                 }
 
-                elem.attr('title', elem.data('url'));
+                // this will get the data-title="titletext"
+                // if it is not set, it will use the url as title
+                if (elem.data('title')) {
+                    elem.attr('title', elem.data('title'));
+                } else {
+                    elem.attr('title', elem.data('url'));
+                }
+
 
                 // prepare text element
                 if (elem.data('text')) {
@@ -153,7 +160,7 @@ var Modul_pagetab = function () {
                 }
             });
 
-            $(window).once('popstate', function (event) {
+            $(window).once('popstate', function(event) {
                 localStorage.setItem('pagetab_doload', 'initializing');
                 var hashUrl = window.location.hash.replace('#', '');
                 if (hashUrl) {
@@ -165,7 +172,7 @@ var Modul_pagetab = function () {
 
             // start return timer after last activity
             if (me.elements.eq(0).data('return-time') > 0) {
-                $('body').once('touchend mouseup', function (e) {
+                $('body').once('touchend mouseup', function(e) {
                     startReturnTimer();
                 });
             }
@@ -178,7 +185,7 @@ var Modul_pagetab = function () {
 
         // update from normal state reading
         me.elements.filterDeviceReading('get', dev, par)
-            .each(function (index) {
+            .each(function(index) {
                 var elem = $(this);
                 var state = elem.getReading('get').val;
                 if (state) {
