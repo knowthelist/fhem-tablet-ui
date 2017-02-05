@@ -1,0 +1,51 @@
+.gridster > ul > li, .card, section {
+    background-color:#223343;
+}
+
+.gridster li header, .card > header {
+    background: #3a4f5c;
+    color: #aaa;
+    border-bottom: 1px solid #222;
+}
+
+/* Slider colors */
+.range-handle {
+  background-color: #bcbcbc !important;
+}
+.range-bar {
+  background-color: #404040;
+}
+
+polyline {
+    stroke: #337ab7 !important;
+}
+
+option {background-color: #ffffff;}
+.pagetab.on{color:#5D6E80;background-color:#0088CC;}
+.pagetab.off{color:#5D6E80;background-color:#aaa;}
+.pagebutton.on{color:#223343;background-color:#4C5D71;}
+.pagebutton.off{color:#4C5D71;background-color:transparent;}
+.dimmer.on{color:#eee;background-color:#0088CC;}
+.dimmer.off{color:#eee;background-color:#4C5D71;}
+.symbol.on{color:#59BFFD;background-color:#59BFFD;}
+.symbol.off{color:#4C5D71;background-color:#aaa;}
+.switch.on{color:#eee;background-color:#0088CC;}
+.switch.off{color:#eee;background-color:#4C5D71;}
+.push.on{color:#eee;background-color:#3DA5D8;}
+.push.off{color:#eee;background-color:#4C5D71;}
+.thermostat.tkcolor{color:#4C5D71;}
+.thermostat.fgcolor{color:#4C5D71;}
+.thermostat.input{color:#aaa;}
+.thermostat.mincolor{color:#0088CC;}
+.thermostat.maxcolor{color:#f71525;}
+.homestatus{color:#0088CC;background-color:#aaa;}
+.homestatus.tkcolor{color:#4C5D71;}
+.homestatus.mincolor{color:#eee;}
+.homestatus.maxcolor{color:#4C5D71;}
+.slider{color:#0088CC;background-color:#999;}
+.volume.hdcolor{color:#0088CC;}
+.volume.fgcolor{color:#555;}
+.checkbox.on {color:#fff;background-color:#0088CC;}
+.checkbox.off {color:#fff;background-color:#999;}
+.playstream.on {color:#fff;background-color:#0088CC;}
+.playstream.off {color:#fff;background-color:#999;}

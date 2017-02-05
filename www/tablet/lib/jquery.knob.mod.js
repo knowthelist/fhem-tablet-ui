@@ -9,7 +9,7 @@
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  *
  * Thanks to vor, eskimoblood, spiffistan, FabrizioC
- * Modded 2015 by Mario Stephan for https://github.com/knowthelist/fhem-tablet-ui
+ * Modded 2015-2016 by Mario Stephan for https://github.com/knowthelist/fhem-tablet-ui
  */
 (function (factory) {
     if (typeof exports === 'object') {
@@ -91,6 +91,7 @@
                 }
                 s._carve().init();
                 s._configure()
+                 ._listen()
                  ._draw();
             };
 
@@ -258,6 +259,8 @@
 
             this.$.val(this.o.format(this.v));
             this._draw();
+
+            this.$.data('knob',this);
 
             return this;
         };
@@ -431,16 +434,15 @@
 
         this._listen = function () {
             if (!this.o.readOnly) {
-                if(document.ontouchstart!==null){
-                this.$c.bind(
+                this.$c
+                .bind(
                         "mousedown",
                         function (e) {
                             e.preventDefault();
                             s._xy()._mouse(e);
                         }
-                    );}
-                else {
-                 this.$c.bind(
+                    )
+                .bind(
                         "touchstart",
                         function (e) {
                             e.preventDefault();
@@ -448,9 +450,10 @@
                             s._moveInput(true);
                         }
                     );
-                }
                 this.listen();
             } else {
+                this.$c.unbind("mousedown");
+                this.$c.unbind("touchstart");
                 this.$.attr('readonly', 'readonly');
             }
 

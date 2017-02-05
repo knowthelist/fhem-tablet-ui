@@ -1,15 +1,19 @@
 body {
-    background-color: #ffffff;
+    background-color: #eeeeee;
     color: #222222;
 }
 
-.gridster ul li {
-    background-color:#eee;
-    overflow: hidden;
-    text-align: center;
+nav {
+    background-color: #1D1F20;
+    background-image: linear-gradient(145deg, #1D1F20,#404348);
+    color: #ffffff;
 }
 
-.gridster li header {
+.gridster > ul > li, .card, section {
+    background-color:#fff;
+}
+
+.gridster li header, .card > header {
     background: #ffffff;
     color: #222;
     border-bottom: 1px solid #222;
@@ -17,6 +21,10 @@ body {
 
 ul, ol {
     list-style: none;
+}
+
+.uline{
+    border-bottom: 1px solid #888;
 }
 
 /* Slider colors */
@@ -43,21 +51,38 @@ polyline {
     color: #eeeeee;
 }
 
+i#warn {
+    color: #FFFFFF;
+}
+i#warn-back {
+    color: #DB1D1D;
+}
+
+.main-color              { color:#0088CC;}
+
+.bg-gray,.btn-gray               { background-color:#999999;}
+.bg-lightgray,.btn-lightgray     { background-color:#EDEDED;}
+
+option {background-color: #ffffff;}
 .pagetab.on{color:#eee;background-color:#0088CC;}
 .pagetab.off{color:#eee;background-color:#aaa;}
 .dimmer.on{color:#eee;background-color:#0088CC;}
 .dimmer.off{color:#eee;background-color:#aaa;}
 .symbol.on{color:#0088CC;background-color:#0088CC;}
-.symbol.off{color:#eee;background-color:#eee;}
+.symbol.off{color:#222;background-color:#222;}
 .switch.on{color:#eee;background-color:#0088CC;}
 .switch.off{color:#eee;background-color:#aaa;}
 .push.on{color:#0088CC;background-color:#0088CC;}
-.push.off{color:#888;background-color:#888;}
+.push.off{color:#888888;background-color:#888888;}
 .thermostat.tkcolor{color:#888;}
 .thermostat.fgcolor{color:#555;}
 .thermostat.input{color:#444;}
 .homestatus.fgcolor{color:#0088CC;}
 .homestatus.tkcolor{color:#aaa;}
-.slider{color:#0088CC;}
+.slider{color:#0088CC;background-color:#999;}
 .volume.hdcolor{color:#0088CC;}
 .volume.fgcolor{color:#555;}
+.checkbox.on {color:#fff;background-color:#0088CC;}
+.checkbox.off {color:#fff;background-color:#999;}
+.playstream.on {color:#fff;background-color:#0088CC;}
+.playstream.off {color:#fff;background-color:#999;}

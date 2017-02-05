@@ -106,7 +106,7 @@
     top: 54px;
     left: 8px;
     width: 92%;
-    height: 69%;
+    height: calc(100% - 77px);
     background-color: #484848;
     padding-bottom: 3px;
     padding-top: 3px;
@@ -117,6 +117,30 @@
     left: 4%;
     height: 74%
 }
+
+.departure.large .listText {
+    top: 19% !important;
+    left: 4% !important;
+    height: 72% !important;
+}
+
+.departure.large .header{
+    font-size: 23px !important;
+    margin-top: 24px !important;
+}
+
+.departure.large .station{
+    font-size: 31px !important;
+ }
+
+.departure.large .icon {
+    top: 16px !important;
+    left: 16px !important;
+    width: 45px !important;
+    height: 45px !important;
+    font-size: 32px !important;
+}
+
 .DVB.departure{
     color: #EFC822 !important;
     background-color: #CCAE20 !important;
@@ -139,3 +163,16 @@
 .VVO.departure .listText {
     background-color: #2A2A5C;
 }
+
+.DB.departure {
+    background-color: #FF0100 !important;
+}
+.DB.departure .icon {
+    color: #000000 !important;
+    background-color: transparent !important;
+}
+.DB.departure .listText {
+    background-color: #FFFFFF !important;
+        color: #000000 !important;
+}
+

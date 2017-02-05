@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * !!!! Evaluation version - run only in a staging enviroment !!!!
+     *
+     * - create a new folder named 'tablet_eval' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet_eval
+     * - add 'define TABLETUIEVAL HTTPSRV ftui_eval ./www/tablet_eval Tablet-EVAL' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet_eval/
+     */
+    -->
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+
+    <script src="../pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="lib/jquery.gridster.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FTUI Dev</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+
+            <!-- top left -->
+            <li data-row="1" data-col="1" data-sizex="3" data-sizey="4">
+                <header>Control</header>
+                <!-- place your widget here -->
+                <div class="top-space">
+                    <div class="top-space">
+                        <div data-type="switch" data-device="ftuitest" data-get="hide" data-set="hide" data-cmd="setreading" data-get-on="true" data-get-off="false" data-set-on="true" data-set-off="false"></div>
+                        <div>Hide</div>
+                    </div>
+                    <div class="top-space">
+                        <div data-type="label" data-device="ftuitest" data-get="hide" class="bigger"></div>
+                    </div>
+                    <div class="top-space">
+                        <div data-type="switch" data-device="ftuitest"></div>
+                        <div>State</div>
+                    </div>
+                    <div class="top-space">
+                        <div data-type="label" data-device="ftuitest" class="bigger"></div>
+                    </div>
+                </div>
+            </li>
+
+            <!-- bottom left -->
+            <li data-row="5" data-col="1" data-sizex="3" data-sizey="3">
+                <header>Hide Label</header>
+                <div class="center">
+                    <div data-type="label" data-device="ftuitest" data-hide-on="off"></div>
+                </div>
+            </li>
+
+            <!-- top center -->
+            <li data-row="1" data-col="4" data-sizex="6" data-sizey="4">
+                <header>Hide Symbol</header>
+                <div class="center">
+                    <div data-type="symbol" data-device="ftuitest" data-icon="mi-filter_1"></div>
+                    <div data-type="symbol" data-device="ftuitest" data-icon="mi-filter_2" data-hide-on="off"></div>
+                    <div data-type="symbol" data-device="ftuitest" data-icon="mi-filter_3"></div>
+                </div>
+                <div data-type="symbol" data-device='AgroWeather' data-get="fc0_frost" data-get-on="1" data-get-off="!on" data-icon="fa-snowflake-o" data-on-color="#bb3232" data-hide-on="0">
+                </div>
+            </li>
+
+            <li data-row="1" data-col="10" data-sizex="3" data-sizey="4">
+                <header>EXAMPLE5</header>
+                <!-- place your widget here -->
+                <div data-type="label" data-device="ftuitest" data-substitution="s/(.*)d(.*)h/$1 days $2 hours/g" class=""></div>
+                <div data-type="label" data-device="BadFenster" class="top-space-3x" data-states='["closed","open"]' data-colors='["green", "red"]'></div>
+            </li>
+            <li data-row="5" data-col="10" data-sizex="3" data-sizey="3">
+                <header>Hide Symbol reading</header>
+                <!-- place your widget here -->
+                <div class="center">
+                    <div data-type="symbol" data-device="ftuitest" data-icon="mi-filter_1"></div>
+                    <div data-type="symbol" data-device="ftuitest" data-icon="mi-filter_2" data-hide="ftuitest:hide"></div>
+                    <div data-type="symbol" data-device="ftuitest" data-icon="mi-filter_3"></div>
+                </div>
+            </li>
+            <li data-row="5" data-col="4" data-sizex="6" data-sizey="3">
+                <header>Hide Label reading</header>
+                <!-- place your widget here -->
+                <div class="center">
+                    <div data-type="label" data-device="ftuitest" data-hide="ftuitest:hide"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

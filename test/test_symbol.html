@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.5.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    
+    <meta name="gridster_resize" content="0">
+
+    <link rel="stylesheet" type="text/css" href="css/fhem-tablet-ui-user.css">
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizex="3" data-sizey="2">
+                <header>Narrow</header>
+                <div class="vbox">
+                    <div class="hbox squareborder bg-green icon">
+                        <div data-type="symbol" class="small left-narrow-10 right-narrow-10" data-device="HZ_EZ" data-get="battery" data-icons='["oa-measure_battery_100","oa-measure_battery_25"]' data-get-on='["ok","low"]' data-colors='["SeaGreen","IndianRed"]'>
+                        </div>
+                        <div data-type="symbol" class="small left-narrow right-narrow-10" data-device="HZ_EZ" data-get="battery" data-icons='["oa-measure_battery_100","oa-measure_battery_25"]' data-get-on='["ok","low"]' data-colors='["SeaGreen","IndianRed"]'>
+                        </div>
+                        <div data-type="symbol" class="small left-narrow right-narrow-10" data-device="HZ_EZ" data-get="battery" data-icons='["oa-measure_battery_100","oa-measure_battery_25"]' data-get-on='["ok","low"]' data-colors='["SeaGreen","IndianRed"]'>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="3" data-sizex="3" data-sizey="2" data-type="html" data-class="dummy2:STATE" ddddata-map-class='{"on":"bg-green", "off":"bg-red"}'>
+                <header>HTML</header>
+                <div class="center">
+                    <div data-type="symbol" data-device="ftuitest" data-get="STATE" data-icons='["fa-trash warn fa-spin","fa-trash warn","fa-trash"]' data-on-colors='["yellow","yellow","#333333"]' data-get-on='["(0|1)","(2|3|4|5|6)","(7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31)"]' class="big inline">
+                    </div>
+                </div>
+                <div data-type="label" data-device="AvReceiver" data-get="mute" data-substitution="toDate().ago()" class="timestamp"></div>
+                <div data-type="label" data-device="AvReceiver" data-get="mute" data-substitution="toDate().ago('hh:mm:ss')" class="timestamp"></div>
+                <div data-type="label" data-device="AvReceiver" data-get="mute" data-substitution="toDate().ago('h mm:ss')" class="timestamp"></div>
+            </li>
+            <li data-row="1" data-col="3" data-sizey="2" data-sizex="3">
+                <header>HTML</header>
+                <div class="center">
+                    <div data-type="symbol" data-device="ftuitest" data-get="STATE" data-warn="countWarnings" data-icon="fa-trash" data-on-colors="yellow"' data-get-on="(0|1)" class="big">
+                    </div>
+                </div>
+            </li>
+            <li data-row="8" data-col="1" data-sizex="4" data-sizey="2">
+                <header>Fenster</header>
+                <div class="hbox">
+                    <div class="vbox">
+                        <div data-type="symbol" data-device="WEZ.Balkontuer" data-get-on="!off" data-get-off="closed" data-on-color="#880000" data-off-color="#008800" class="big">
+                        </div>
+                        <div>WEZ</div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="symbol" data-device="Schlafzimmer.Fenster" data-get-on="!off" data-get-off="closed" data-on-color="#880000" data-off-color="#008800" class="big">
+                        </div>
+                        <div>Schlafzimmer</div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="symbol" data-device="Bad.Fenster" data-get-on="!off" data-get-off="closed" data-on-color="#880000" data-off-color="#008800" class="big">
+                        </div>
+                        <div>Bad</div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="8" data-col="1" data-sizex="5" data-sizey="2">
+                <header>PUSH</header>
+                <div class="hbox">
+                    <div class="vbox">
+                        <div data-type="classchanger" data-device="dummy2" data-off-class="bg-red" data-on-class="bg-green" class="bg-square">
+                            <div data-type="push" data-icon="fa-angle-up" data-background-icon="fa-square-o" data-device="PB_RollAuf_WzLi" data-set="trigger" class="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="classchanger" data-device="dummy2" data-off-class="bg-red" data-on-class="bg-green" class="bg-square">
+                            <div data-type="push" data-icon="fa-angle-up" data-background-icon="fa-square-o" data-device="PB_RollAuf_WzLi" data-set="trigger" class="big">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="classchanger" data-device="dummy2" data-off-class="bg-red" data-on-class="bg-green" class="bg-square">
+                            <div data-type="push" data-icon="fa-angle-up" data-background-icon="fa-square-o" data-device="PB_RollAuf_WzLi" data-set="trigger" class="bigger">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="10" data-sizex="2" data-sizey="2">
+                <header>undefined</header>
+                <div data-type="symbol" data-device="dummy3" data-background-icons='["fa-circle-thin","fa-circle-thin","fa-circle-thin"]' data-icons='["fa-lightbulb-o","fa-lightbulb-o","fa-lightbulb-o"]' data-states='["off","on","undefined"]' data-colors='["#505050","#aa6900","#aa6900"]' data-background-colors='["#505050","#aa6900","#505050"]' class="cell">
+                </div>
+            </li>
+            <li data-row="1" data-col="10" data-sizey="2" data-sizex="2">
+                <header>HUE</header>
+                <div data-type="symbol" data-device="HUEDevice1" data-on-color="HUEDevice1:rgb" data-off-color="HUEDevice1:rgb" data-icons="fa-lightbulb-o">
+                </div>
+            </li>
+            <li data-row="2" data-col="1" data-sizey="2" data-sizex="2">
+                <header>HUE</header>
+                <div class="vbox">
+                <div data-type="symbol" data-device="dummy2" data-background-icon="fa-circle" data-on-background-color="green" data-off-background-color="red" data-color="#222" data-icon="">MS</div>
+            
+                    </div>
+            </li>
+            <li class="halbTransparent border-left border-right" data-row="2" data-col="4" data-sizex="2" data-sizey="2">
+                <header class="headerTransparent">Frostwarnung</header>
+                <div class="container inline top-space-2x">
+                    <div class="small" data-type="symbol" data-device="AgroWeather" data-get="fc6_frost" data-get-on="1" data-get-off="!on" data-icon="fa-snowflake-o" data-on-color="#5858FA" data-hide="0"></div>
+                    <div data-type="label" data-device="AgroWeather" data-get="fc0_date" data-substitution="toDate().eeee()" data-limits-get="fc0_frost" data-limits='[0,1]' data-colors='["white","#5858FA"]'></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

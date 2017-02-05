@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="widget_base_width" content="74">
+    <meta name="widget_base_height" content="71">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="gridster_disable" content="1">
+    <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="debug" content="4"> <!-- verbose level 1-6 = output to console;0 = not output -->
+
+    <link rel="stylesheet" href="lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
+
+    <script src="../pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="lib/jquery.gridster.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+
+<style>
+
+    .result-container {
+        position: relative;
+    }
+    .result-container > header{
+        position: absolute;
+        top: 0px;
+    }
+
+</style>
+<script>
+    $(document).ready(function(){
+
+        var old = console.log;
+        var logger = document.getElementById('log');
+        console.log = function (message) {
+            if (typeof message == 'object') {
+                logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+            } else {
+                logger.innerHTML += message + '<br />';
+            }
+            $(logger).scrollTop($(logger).last()[0].scrollHeight);
+        }
+
+        $("button").click(function(){
+            $("#result").html($("#snippet").val());
+            ftui.initWidgets("#result");
+        });
+    });
+</script>
+
+</head>
+<body>
+    <div class="gridster">
+    <ul>
+
+    <li data-row="1" data-col="1" data-sizex="6" data-sizey="4">
+       <header>SNIPPET</header>
+       <textarea id="snippet" name="Text1" cols="45" rows="15" class="top-space-2x"></textarea>
+       <button id="submit" type="submit" name="Submit" value="Init" class="left-space">Init</button>
+    </li>
+
+    <li data-row="1" data-col="7" data-sizex="6" data-sizey="4" class="result-container">
+        <header>RESULT</header>
+        <div id="result" class="squareborder center"></div>
+    </li>
+
+    <li data-row="5" data-col="1" data-sizex="12" data-sizey="3">
+      <header>LOG</header>
+      <div id="log" class="events"></div>
+    </li>
+
+    </ul>
+    </div>
+</body>
+</html>

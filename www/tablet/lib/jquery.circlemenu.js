@@ -56,6 +56,7 @@
             dir;
 
         self._state = 'closed';
+        self._locked = false;
         self.element.addClass(pluginName+'-closed');
 
         if(typeof self.options.direction === 'string'){
@@ -123,15 +124,23 @@
                 self.close();
             });
         }else if(self.options.trigger === 'click'){
-            self.element.children('li:first-child').on('click',function(evt){
+
+            self.element.children('li:first-child').children().addBack()
+            .on('clicked click',function(evt){
                 evt.preventDefault();
-                if(self._state === 'closed' || self._state === 'closing'){
-                    self.open();
-                }else{
-                    self.close(true);
+                if(self._locked === false){
+                    self._locked = true;
+                    if(self._state === 'closed' || self._state === 'closing'){
+                        self.open();
+                    }else{
+                        self.close(true);
+                    }
+                    setTimeout( function() {
+                        self._locked = false;
+                    }, 350);
                 }
                 return false;
-            });
+              });
         }else if(self.options.trigger === 'none'){
             // Do nothing
         }
@@ -189,7 +198,7 @@
 
                 self._timeouts.push(setTimeout(function(){
                     $item.css({top:0,left:0});
-                    vendorPrefixes($item,'transform','scale(.5)');
+                    vendorPrefixes($item,'transform','scale(0)');
                 }, start + Math.abs(self.options.step_in) * index));
             });
             self._timeouts.push(setTimeout(function(){
@@ -218,7 +227,7 @@
             selected = self.element.children('li:nth-child('+index+')');
             self.trigger('select',selected);
             vendorPrefixes(selected.add(set_other), 'transition', 'all 500ms ease-out');
-            vendorPrefixes(selected, 'transform', 'scale(2)');
+            vendorPrefixes(selected, 'transform', 'scale(0)');
             vendorPrefixes(set_other, 'transform', 'scale(0)');
             selected.css('opacity','0');
             set_other.css('opacity','0');
@@ -236,6 +245,8 @@
     CircleMenu.prototype.initCss = function(){
         var self = this, 
             $items;
+        var value = String(self.options.item_diameter);
+        var unit = ( value.match(/^.*(px|%|em)$/) ) ? '' : 'px';
 
         self._state = 'closed';
         self.element.removeClass(pluginName+'-open');
@@ -243,30 +254,30 @@
             'list-style': 'none',
             'margin': 0,
             'padding': 0,
-            'width': self.options.item_diameter+'px'
+            'width': self.options.item_diameter + unit
         });
         $items = self.element.children('li');
         $items.attr('style','');
         $items.css({
             'display': 'block',
-            'width': (self.options.item_width) ? self.options.item_width : self.options.item_diameter+'px',
-            'height': (self.options.item_height) ? self.options.item_height : self.options.item_diameter+'px',
+            'width': (self.options.item_width) ? self.options.item_width : 'auto',
+            'height': (self.options.item_height) ? self.options.item_height : self.options.item_diameter + unit,
             'text-align': 'center',
-            'line-height': self.options.item_diameter+'px',
+            'line-height': self.options.item_diameter + unit,
             'position': 'absolute',
             'z-index': 1,
             'opacity': ''
         });
-        self.element.children('li:first-child').css({'z-index': 1000-self.options.depth});
+        self.element.children('li:first-child').css({'z-index': 1000-self.options.depth, 'background-color':'transparent' });
         self.menu_items.css({
             top:0,
             left:0
         });
         if ( self.options.border === 'square')
-            vendorPrefixes($items, 'border-radius', self.options.item_diameter/5+'px');
+            vendorPrefixes($items, 'border-radius', self.options.item_diameter/5 + unit);
         else
-            vendorPrefixes($items, 'border-radius', self.options.item_diameter+'px');
-        vendorPrefixes(self.menu_items, 'transform', 'scale(.5)');
+            vendorPrefixes($items, 'border-radius', self.options.item_diameter + unit);
+        vendorPrefixes(self.menu_items, 'transform', 'scale(0)');
         setTimeout(function(){
             vendorPrefixes($items, 'transition', 'all '+self.options.speed+'ms '+self.options.transition_function);
         },0);

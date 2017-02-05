@@ -9,6 +9,7 @@
 .levelRange {
     position: absolute;
     border-radius: 15px;
+    left: 0;
 }
 .labelMax,.labelMin,.labelLimitMin,.labelLimitMax{
     position: absolute;

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.2
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * Example for a flexbox layout instead of gridster
+     */
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="debug" content="0"> <!-- verbose level 1-6 = output to console;0 = not output -->
+
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+    <link rel="stylesheet" href="css/fhem-mobil-ui.css" />
+
+    <script src="../pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+<body>
+<main id="content1">
+    <div class="hbox">
+        <div class="card phone-width items-center">
+          <header>Standard Box 10</header>
+          <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+          <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+          <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+          <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+        </div>
+      <div class="card phone-width items-center">
+        <header>Standard Box 20</header>
+        <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+        <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+        <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+        <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+      </div>
+      <div class="card phone-width items-center">
+        <header>Standard Box 30</header>
+        <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+        <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+        <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+        <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+      </div>
+      <div class="card phone-width items-center">
+        <header>Standard Box 40</header>
+        <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+        <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+        <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+        <div data-type="symbol" data-device="BadFenster" class="narrow big"></div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

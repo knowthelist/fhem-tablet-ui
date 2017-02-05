@@ -1,0 +1,40 @@
+<html>
+<title>FHEM</title>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * first page
+     * -->
+</head>
+<body>
+  <div class="page" id="content2">
+    <div class="gridster">
+      <ul>
+        <li data-row="2" data-col="1" data-sizex="9" data-sizey="4">
+             <!-- place your widget here -->
+             <div class="center bg-mint">
+                <div data-type="label" data-device="AgroWeather" data-get="fc2_tempMax" data-unit="°C&nbsp;" class="bottom gigantic inline verticalLine"></div>
+                <div class="inline">
+                   <div data-type="label" data-device="AgroWeather" data-get="fc2_weatherDay" class="large cell"></div>
+                   <div data-type="weather" data-device="AgroWeather" data-get="fc2_weatherDay" class="bigplus thin"></div>
+                   min:&nbsp;<div data-type="label" data-device="AgroWeather" data-get="fc2_tempMin" data-unit="%B0C%0A" class="inline medium"></div>
+                </div>
+             </div><div class="row"></div>
+             <div class="left">
+                 <div data-type="label" data-device="AgroWeather" data-get="fc2_date" data-substitution="toDate().eeee()+','" class="left large cell darker"></div>
+                 <div data-type="label" data-device="AgroWeather" data-get="fc2_date" data-substitution="toDate().ddmm()" class="left large cell darker"></div>
+             </div>
+             <!-- place your widget here -->
+        </li>
+        <li data-row="7" data-col="1" data-sizex="9" data-sizey="1">
+            <!-- place your widgets here -->
+            <div class="center">
+             FOOTER TWO
+            </div>
+        </li>
+      </ul>
+    </div>
+   </div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * !!!! Evaluation version - run only in a staging enviroment !!!!
+     *
+     * - create a new folder named 'tablet_eval' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet_eval
+     * - add 'define TABLETUIEVAL HTTPSRV ftui_eval ./www/tablet_eval Tablet-EVAL' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet_eval/
+     */
+    -->
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FTUI Dev</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizex="3" data-sizey="4">
+                <header>MinMax-Reading</header>
+                <!-- place your widget here -->
+                <div data-type="progress" data-device="ftuitest" data-min="min" data-max="max" class=""></div>
+                <div data-type="progress" data-device="ftuitest" class=""></div>
+            </li>
+            <li data-row="5" data-col="1" data-sizex="3" data-sizey="3">
+                <header>MinMax-Fix</header>
+                <!-- place your widget here -->
+                <div data-type="progress" data-device="ftuitest" data-min="30" data-max="70" class=""></div>
+            </li>
+            <li data-row="1" data-col="4" data-sizex="6" data-sizey="4">
+                <header>MinMax-Default</header>
+                <!-- place your widget here -->
+                <div data-type="progress" data-device="ftuitest" class=""></div>
+            </li>
+            <li data-row="1" data-col="10" data-sizex="3" data-sizey="4">
+                <header>PART</header>
+                <!-- place your widget here -->
+                <div data-type="progress" data-device="ftuitest" data-get="progressText" data-part="(\d+)%" class=""></div>
+            </li>
+            <li data-row="5" data-col="10" data-sizex="3" data-sizey="3">
+                <header>EXAMPLE5</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="5" data-col="4" data-sizex="6" data-sizey="3">
+                <header>EXAMPLE6</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="2" data-col="2" data-sizey="3" data-sizex="3">
+                <header>KUECHE</header>
+                <div class="sheet">
+                    <div class="row">
+                        <div class="cell" data-type="thermostat" data-device="KuecheHeizung_Clima"></div>
+                        <div class="cell">
+                            <div data-type="switch" data-device="HerdLicht_Sw"></div>
+                            <div>HerdLicht</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="cell" data-type="thermostat" data-device="KuecheHeizung2_Clima"></div>
+                        <div class="cell" data-type="symbol" data-device="KuechenFenster"></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
