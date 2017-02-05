@@ -1,6 +1,13 @@
 // FTUI Widget widget_loading.js
 // roman1528
 
+"use strict";
+
+function depends_example() {
+    var deps = [];
+    return deps;
+}
+
 var Modul_loading = function () {
 	
 	function runLoad (elem) {
@@ -31,12 +38,13 @@ var Modul_loading = function () {
 			}
 			});
 		});
-	};
+	}
 	
     function init () {
-        var me = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
-        this.elements.each(function(index) {
+
+        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements.each(function (index) {
+
             var elem = $(this);
 			var zindex = '2';
 			
@@ -60,10 +68,15 @@ var Modul_loading = function () {
 			
 			runLoad(elem);
         });
-    };
+    }
 
-    return $.extend(new Modul_widget(), {
+    // public
+    // inherit all public members from base class
+    var me = $.extend(new Modul_widget(), {
+        //override or own public members
         widgetname: 'loading',
         init: init,
     });
+
+    return me;
 };
