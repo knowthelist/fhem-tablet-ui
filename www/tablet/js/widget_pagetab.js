@@ -33,7 +33,6 @@ var Modul_pagetab = function () {
     }
 
     function loadPage(goUrl, doPush) {
-        return;
         // set return timer
         localStorage.setItem('pagetab_lastUrl', goUrl);
         startReturnTimer();
