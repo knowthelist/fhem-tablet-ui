@@ -12,7 +12,7 @@
 function depends_svgplot() {
     var deps = [];
     if (!$.fn.famultibutton) {
-        deps.push("lib/fa-multi-button.min.js");
+        deps.push(ftui.config.basedir + "lib/fa-multi-button.min.js");
     }
     if (typeof Modul_image == 'undefined') {
         deps.push('image');

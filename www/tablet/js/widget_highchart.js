@@ -1,9 +1,9 @@
 // load highcharts libs
 function depends_highchart() {
     if (!$.fn.highchart) {
-        return ['lib/highcharts/highcharts.js'
-                , 'lib/highcharts/highcharts-more.js'
-                , 'lib/highcharts/themes/dark-unica.js'
+        return [ftui.config.basedir + 'lib/highcharts/highcharts.js'
+                , ftui.config.basedir + 'lib/highcharts/highcharts-more.js'
+                , ftui.config.basedir + 'lib/highcharts/themes/dark-unica.js'
         ];
     }
 }

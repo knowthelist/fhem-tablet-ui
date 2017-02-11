@@ -10,9 +10,9 @@
 function depends_meteogram (){
     if (!$.fn.highchart)
     {
-        return [  'lib/highcharts/highcharts.js'
-                , 'lib/highcharts/themes/dark-unica.js'
-                , 'js/highcharts-meteogram.js'
+        return [  ftui.config.basedir + 'lib/highcharts/highcharts.js'
+                , ftui.config.basedir + 'lib/highcharts/themes/dark-unica.js'
+                , ftui.config.basedir + 'js/highcharts-meteogram.js'
         ];
     }
 };

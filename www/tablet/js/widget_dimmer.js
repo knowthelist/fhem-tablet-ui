@@ -1,5 +1,5 @@
 /* FTUI Plugin
- * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
@@ -44,9 +44,7 @@ var Modul_dimmer = function () {
                 elem.data('num-value', val);
                 elem.setDimValue(parseInt(val));
             }
-            if (elem.isDeviceReading('lock')) {
-                me.addReading(elem, 'lock');
-            }
+
         });
     }
 
@@ -101,43 +99,41 @@ var Modul_dimmer = function () {
 
     function update(dev, par) {
 
-        // update from desired temp reading
+        // update from normal state reading
         me.elements.filterDeviceReading('get', dev, par)
             .each(function (index) {
                 var elem = $(this);
-                var state = elem.getReading('get').val;
+                var value = elem.getReading('get').val;
+                var state = ftui.getPart(value, elem.data('part'));
                 if (ftui.isValid(state)) {
-                    var states = $(this).data('states') || $(this).data('get-on');
+                    var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
                     if ($.isArray(states)) {
-                        me.showMultiStates($(this), states, state);
+                        me.showMultiStates(elem, states, state);
                     } else {
-                        var faelem = $(this).data('famultibutton');
+                        var faelem = elem.data('famultibutton');
                         if (faelem) {
-                            if (state == $(this).data('get-on'))
+                            if (elem.matchingState('get', state) === 'on') {
                                 faelem.setOn();
-                            else if (state == $(this).data('get-off'))
+                            }
+                            if (elem.matchingState('get', state) === 'off') {
                                 faelem.setOff();
-                            else if (state.match(new RegExp('^' + $(this).data('get-on') + '$')))
-                                faelem.setOn();
-                            else if (state.match(new RegExp('^' + $(this).data('get-off') + '$')))
-                                faelem.setOff();
-                            else if ($(this).data('get-off') == '!on' && state != $(this).data('get-on'))
-                                faelem.setOff();
-                            else if ($(this).data('get-on') == '!off' && state != $(this).data('get-off'))
-                                faelem.setOn();
+                            }
                         }
                     }
-                    me.update_cb($(this), state);
+                    if (!elem.isValidData('warn')) {
+                        me.update_cb(elem, state);
+                    }
                 }
             });
 
-
         //extra reading for lock
-        me.elements.filterDeviceReading('lock', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
-                elem.data('readonly', elem.getReading('lock').val);
-            });
+        me.update_lock(dev, par);
+
+        //extra reading for hide
+        me.update_hide(dev, par);
+
+        //extra reading for reachable
+        me.update_reachable(dev, par);
 
         //extra reading for colorize
         me.elements.filterDeviceReading('dim', dev, par)

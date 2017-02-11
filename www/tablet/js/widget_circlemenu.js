@@ -9,7 +9,7 @@
 
 function depends_circlemenu() {
     if (!$.fn.circleMenu)
-        return ["lib/jquery.circlemenu.js"];
+        return [ftui.config.basedir + "lib/jquery.circlemenu.js"];
 }
 
 var Modul_circlemenu = function () {

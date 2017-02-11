@@ -9,7 +9,7 @@
 
 function depends_popup() {
     if (!$.fn.draggable)
-        return ["lib/jquery-ui.min.js"];
+        return [ftui.config.basedir + "lib/jquery-ui.min.js"];
 }
 
 var Modul_popup = function () {
@@ -113,7 +113,7 @@ var Modul_popup = function () {
                         dialog.draggable();
                     else {
                         console.log("widget_popup tries to load jquery ui. insert correct script tag into html header to avoid error (and this warning)");
-                        console.log('e.g.: <script type="text/javascript" src="../pgm2/jquery-ui.min.js"></script>');
+                        console.log('e.g.: <script type="text/javascript" src="lib/jquery-ui.min.js"></script>');
                     }
                 }
 

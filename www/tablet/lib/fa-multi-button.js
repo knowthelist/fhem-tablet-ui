@@ -2,7 +2,7 @@
 /**
  * Modern toggle, push button, dimmer or just a signal indicator
  *
- * Version: 1.1.1
+ * Version: 1.2.1
  * Requires: jQuery v1.7+
  *
  * Copyright (c) 2015 Mario Stephan
@@ -121,7 +121,7 @@
             elem.data("famultibutton", elem);
 
             initEvents();
-            
+
             return elem;
         };
 
@@ -321,7 +321,8 @@
                 });
             } else {
                 canvasScale.animate({
-                    left: faElem.innerWidth() / 5 + 'px'
+                    left: faElem.innerWidth() / 5 + 'px',
+                    top: '0px'
                 });
             }
 
@@ -336,7 +337,8 @@
         function initEvents() {
             var touch_pos_x, touch_pos_y;
             var android = getAndroidVersion();
-            var onlyTouch = (android && parseFloat(android) < 5);
+            var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            var onlyTouch = ((android && parseFloat(android) < 5) || iOS );
             var clickEventType = (onlyTouch) ? 'touchstart' : 'touchstart mousedown';
             var moveEventType = ((onlyTouch) ? 'touchmove' : 'touchmove mousemove');
             var releaseEventType = ((onlyTouch) ? 'touchend' : 'touchend mouseup');
@@ -470,7 +472,7 @@
                     e.stopImmediatePropagation();
                     if (isDrag) {
                         isDrag = false;
-                        elem.animate({
+                        faElem.animate({
                             top: 0
                         });
                         clearInterval(objTimer);
@@ -485,7 +487,7 @@
                     e.stopImmediatePropagation();
                     if (isDrag) {
                         isDrag = false;
-                        elem.animate({
+                        faElem.animate({
                             top: 0
                         });
                         clearTimeout(objTimer);
@@ -530,6 +532,10 @@
                     if (diff < -20) diff = -20;
                     if (isDrag) {
                         this.style.top = diff + "px";
+                        var canvas = canvasScale[0];
+
+                        canvas.style.top = -diff + 'px';
+
                         if (!isRunning) {
                             moveScale();
                             tickTimer();

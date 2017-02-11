@@ -34,7 +34,6 @@ var Modul_push = function () {
            
 
             elem.data('mode', (elem.data('set-off') !== '') ? 'updown' : 'push' );
-            console.log(elem.data('mode'));
             me.init_attr(elem);
             me.init_ui(elem);
         });

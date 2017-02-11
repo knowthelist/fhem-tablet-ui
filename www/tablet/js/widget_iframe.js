@@ -10,7 +10,7 @@
 
 function depends_iframe() {
     if (!$.fn.famultibutton) {
-        return ["lib/fa-multi-button.min.js"];
+        return [ftui.config.basedir + "lib/fa-multi-button.min.js"];
     }
 }
 

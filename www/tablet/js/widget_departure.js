@@ -10,7 +10,7 @@
 
 var Modul_departure = function () {
 
-    $('head').append('<link rel="stylesheet" href="css/ftui_departure.css" type="text/css" />');
+    $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_departure.css" type="text/css" />');
 
     function startTimer(elem) {
         var interval = elem.data('refresh');

@@ -64,14 +64,14 @@ Name: weekprofile_<FHEM_Device_Name>
 function depends_weekprofile (){
 	var deps = [];
 	if (!$.fn.datetimepicker){
-	    deps.push("lib/jquery.datetimepicker.js");
-	    //$('head').append('<link rel="stylesheet" href="'+ dir + '/../lib/jquery.datetimepicker.css" type="text/css" />');    
+	    deps.push(ftui.config.basedir + "lib/jquery.datetimepicker.js");
+	    //$('head').append('<link rel="stylesheet" href="'+ ftui.config.basedir + 'lib/jquery.datetimepicker.css" type="text/css" />');    
 	}
 	if (!$.fn.draggable){
-	    deps.push("../pgm2/jquery-ui.min.js");
+	    deps.push(ftui.config.basedir + "lib/jquery-ui.min.js");
 	}
 	return deps;
-};
+}
 
 var Modul_weekprofile = function () {
 	
@@ -97,7 +97,7 @@ var Modul_weekprofile = function () {
                 },
                 "Speichern": function(){
                     var canClose = weekprofile_saveProfile( $('.weekprofile_'+device), device );
-                    if (canClose == true) {
+                    if (canClose === true) {
 						// localStorage-Kopie loeschen
 						localStorage.removeItem(this.widgetname+"_sav_"+device);
                         weekprofile_dialog.dialog( "close" );
@@ -117,7 +117,7 @@ var Modul_weekprofile = function () {
                 }
             },
             create: function (e, ui) {
-                var pane = $('.weekprofile_'+device).find(".ui-dialog-buttonpane")
+                var pane = $('.weekprofile_'+device).find(".ui-dialog-buttonpane");
                 $('.weekprofile_'+device).find('.ui-dialog-titlebar-close').remove();                
             }, 
             open: function () {
@@ -132,7 +132,8 @@ var Modul_weekprofile = function () {
         //Verwendete Plugins aktivieren und Aktionen zuweisen
         weekprofile_setActions($('.weekprofile_'+device), device, config.style); 
         weekprofile_dialog.dialog( "open" );
-    };
+    }
+    
 	function weekprofile_setActions(elem,device,style){
 		//Verwendete Plugins aktivieren
         weekprofile_setDateTimePicker(elem, device, style); //DateTimePicker Plugin zuweisen
@@ -142,7 +143,8 @@ var Modul_weekprofile = function () {
         weekprofile_setDeleteLineAction(elem, device); //"Minus"-Schalter Aktion     
 		weekprofile_setTimeChangedAction(elem, device); // Zeit geaendert	
 		weekprofile_setTempChangedAction(elem, device); // Temperatur geaendert	
-	};
+	}
+    
     function weekprofile_buildweekprofilecmddropdown(list, selectedval, theme,style,profileid,lineno) {
         var result = "";
 		
@@ -156,14 +158,16 @@ var Modul_weekprofile = function () {
         }
         result += "</select>";   
         return result;        
-    };   
+    }
+    
     function weekprofile_buildlines(times, temps, cmds, profileid, theme, style) {
         var result = "<div class='weekprofile_lines'>"; 
 		var starttime = "00:00";
 		for (var lineno = 0; lineno < times.length; lineno++) {
 			if(lineno > 0) {
 				starttime = times[lineno-1];
-			};
+			}
+            
 			result += "<div>" +			
 		 		  "   <div class='weekprofile_profiletime cell inline text'>" +
                   "       <div class='weekprofile_starttime "+theme+" "+style+"' type='text' style='visibility: visible;'>"+starttime+"</div>" +
@@ -173,7 +177,8 @@ var Modul_weekprofile = function () {
 				result += 	"<div class='weekprofile_starttime "+theme+" "+style+"' type='text' style='visibility: visible;'>"+times[lineno]+"</div>";
 			}else{
 				result +=   "<input data-profile='"+profileid+"' data-line='"+lineno+"' class='weekprofile_time "+theme+" "+style+"' type='text' style='visibility: visible;' value='"+times[lineno]+"'>";
-			};
+			}
+            
 			result +=       "   </div>" +
                         "   <div class='weekprofile_profilecmd cell inline input-control text'>";
 			result += weekprofile_buildweekprofilecmddropdown(cmds, temps[lineno], theme, style, profileid, lineno); 
@@ -182,12 +187,15 @@ var Modul_weekprofile = function () {
 			if(lineno != times.length-1) {
 				result +=   "<div class='weekprofile_deletelinediv cell inline'>" +
 						"     <button data-profile='"+profileid+"' data-line='"+lineno+"' id='addline"+profileid+"_"+lineno+"' class='fa weekprofile_deleteline weekprofile_button "+theme+" "+style+"' type='button'>-</button></div>";
-			};
+			}
+            
 			result += "</div>";
-		};	
+		}
+        
 		result += "</div>";
         return result;          
-    }; 	
+    }
+    
     function weekprofile_buildprofile(profile, cmds, id, theme, style) {
         var result = "";  
 		result += "<div data-profile='"+id+"' id='profile"+id+"' class='weekprofile_profile row'>";
@@ -208,7 +216,8 @@ var Modul_weekprofile = function () {
 		result += weekprofile_buildlines(profile.times, profile.temps, cmds, id, theme, style);
 		result += "   </div>";	
         return result;          
-    }; 
+    }
+    
     function weekprofile_buildweekprofilelist(config,device) {
         var result = "";        
         result += 	"   <div class='weekprofile_profilelist'>";       
@@ -217,12 +226,14 @@ var Modul_weekprofile = function () {
         }       
         result += 	"   </div>";
         return result;
-    };
+    }
+    
     function weekprofile_buildweekprofile(config,device) { 
         return "<div class='weekprofile_dialog "+config.theme+"'>"+
 		  weekprofile_buildweekprofilelist(config,device) +
                "</div>";
-    };
+    }
+    
     function weekprofile_deleteProfile(elem, device) {
         var config = weekprofile_loadLocal(device);
         var currProfile = elem.data('profile');
@@ -231,7 +242,8 @@ var Modul_weekprofile = function () {
 		weekprofile_setActions(newElem, config.name, config.style); 
 		elem.parent().parent().parent().parent().replaceWith(newElem);        
         weekprofile_saveLocal(config);
-    };
+    }
+    
     function weekprofile_addProfile(elem, device) {
         var config = weekprofile_loadLocal(device);   
 		var newprofile = {};
@@ -246,7 +258,8 @@ var Modul_weekprofile = function () {
         $('.weekprofile_'+device).find('.weekprofile_profilelist').append(jqRow);
         weekprofile_setActions(jqRow, config.name, config.style); 
         weekprofile_saveLocal(config); //Aktuelle Profile lokal speichern
-    };
+    }
+    
 	function weekprofile_addLine(elem, device) {
 		// Profile und Zeile finden
 		var config = weekprofile_loadLocal(device);
@@ -265,7 +278,8 @@ var Modul_weekprofile = function () {
 		weekprofile_setActions(jqNewLines, device, config.style); 
 		elem.parent().parent().parent().replaceWith(jqNewLines);
         weekprofile_saveLocal(config); //Aktuelle Profile lokal speichern		
-    };
+    }
+    
 	function weekprofile_deleteLine(elem, device) {
 		// Zeile finden
 		var config = weekprofile_loadLocal(device);
@@ -280,7 +294,8 @@ var Modul_weekprofile = function () {
 		weekprofile_setActions(jqNewLines, device, config.style); 		
 		elem.parent().parent().parent().replaceWith(jqNewLines);
 		weekprofile_saveLocal(config); //Aktuelle Profile lokal speichern
-    };	
+    }
+    
 	function weekprofile_timeChanged(elem, device) {
 		console.log("changed");
 		// Zeile finden
@@ -290,7 +305,7 @@ var Modul_weekprofile = function () {
 		// Gibt es eine naechste Zeile?
 		if(currLine >= config.profiles[currProfile].times.length -1) {
 			return;  // nein 
-		};
+		}
 		// in profile uebernehmen
 		config.profiles[currProfile].times[currLine] = elem.val();
 		// ja, also naechste Zeile suchen
@@ -298,7 +313,8 @@ var Modul_weekprofile = function () {
 		// Die Startzeit ist das erste erste Element
 		nextLine.children().first().children().first().html(elem.val());
 		weekprofile_saveLocal(config); //Aktuelle Profile lokal speichern
-    };	
+    }
+    
 	function weekprofile_tempChanged(elem, device) {
 		// Zeile finden
 		var config = weekprofile_loadLocal(device);
@@ -307,7 +323,8 @@ var Modul_weekprofile = function () {
 		// in profile uebernehmen
 		config.profiles[currProfile].temps[currLine] = config.templist[elem.val()];
 		weekprofile_saveLocal(config); //Aktuelle Profile lokal speichern
-	};
+	}
+    
     function weekprofile_saveProfile(elem, device) { // Ins weekprofile Device schreiben
         var config = weekprofile_loadLocal(device);
 
@@ -334,55 +351,64 @@ var Modul_weekprofile = function () {
         weekprofile_saveLocal(config); 
         //--------------------------------------------------  
         return true;
-    };
+    }
+    
     function weekprofile_saveLocal(config) {
         var dataToStore = JSON.stringify(config);
         localStorage.setItem(this.widgetname+"_"+config.name, dataToStore);
-    };    
+    }
+    
     function weekprofile_loadLocal(device) {        
         return JSON.parse(localStorage.getItem(this.widgetname+"_"+device));        
-    };         
+    }
+    
     function weekprofile_setDeleteAction(elem,device) {
         elem.find('.weekprofile_deleteprofile').each(function(){       
             $(this).on('click', function(event) {
                 weekprofile_deleteProfile( $(this), device );
             });
         });        
-    };    
+    }
+    
     function weekprofile_setAddLineAction(elem,device) {
         elem.find('.weekprofile_addline').each(function(){       
             $(this).on('click', function(event) {
                 weekprofile_addLine( $(this), device );
             });
         });        
-    };           
+    }
+    
     function weekprofile_setDeleteLineAction(elem,device) {
         elem.find('.weekprofile_deleteline').each(function(){       
             $(this).on('click', function(event) {
                 weekprofile_deleteLine( $(this), device );
             });
         });        
-    };          
+    }
+    
     function weekprofile_setTimeChangedAction(elem,device) {
         elem.find('.weekprofile_time').each(function(){       
             $(this).on('input change', function(event) {
 				weekprofile_timeChanged( $(this), device );
             });
         });        
-    };      
+    }
+    
     function weekprofile_setTempChangedAction(elem,device) {
         elem.find('.weekprofile_cmd').each(function(){  
             $(this).on('input change', function(event) {
 				weekprofile_tempChanged( $(this), device );
             });
         });        
-    };           
+    }
+    
     function weekprofile_setDateTimePicker(elem,device,style) {      
-        elem.find('.weekprofile_time').each(function(){     
+        elem.find('.weekprofile_time').each(function(){    
+            var dtp_style;
             if (style != 'dark' ) {
-				var dtp_style = 'default';
+				dtp_style = 'default';
 			}else{
-				var dtp_style ='dark'; 
+				dtp_style ='dark'; 
 			}
             $(this).datetimepicker({
                 step:5, 
@@ -394,11 +420,13 @@ var Modul_weekprofile = function () {
                 className:  "weekprofile_datetimepicker "+"weekprofile_datetimepicker_"+device, 
             });           
         });        
-    };         
+    }
+    
     function weekprofile_getCheckedString(val) {
         if (val) {return "checked";}        
         return "";
-    };       
+    }
+    
     function weekprofile_getProfiles(elem) { /*Erstellt den localStore, verankert den Aufruf des PopUps*/
         var attr_device = elem.data('device');  
         var attr_title = elem.data('title');
@@ -419,10 +447,11 @@ var Modul_weekprofile = function () {
         })
         .done(function(data ) {
 			var config = {};
+            var weekprofile_title;
             if (attr_title == 'NAME') { 
-				var weekprofile_title = attr_device; 
+				weekprofile_title = attr_device; 
 			}else{ 
-				var weekprofile_title = attr_title; 
+				weekprofile_title = attr_title; 
 			}            
                     
             if (typeof date !== Object) {return;}
@@ -435,10 +464,10 @@ var Modul_weekprofile = function () {
 				 profile.times = parsedData[days[dayNum]].time;
 				 profile.temps = parsedData[days[dayNum]].temp;
 				 // es kam vor, dass die Zeiten und Temperaturen leer sind
-				 if(profile.times.length == 0 || profile.temps.length == 0) {
+				 if(profile.times.length === 0 || profile.temps.length === 0) {
 					profile.times = ["24:00"];
 					profile.temps = ["5.0"];
-				 };
+				 }
 				 // check whether this is basically the same as one
 				 // which already exists
 				 var found = false;
@@ -449,7 +478,7 @@ var Modul_weekprofile = function () {
 						config.profiles[j].weekdays[dayNum] = true;
 						break;
 					} 
-				 };
+				 }
 				 if(found) continue;
 				 // neues Profil 
 				 profile.weekdays = [false,false,false,false,false,false,false];
@@ -480,7 +509,8 @@ var Modul_weekprofile = function () {
                 weekprofile_showDialog(elem, attr_device);                        
             });    
         });    
-    };      
+    }
+    
     function weekprofile_getWeekdayFlags(elem, profiles) {
 		// Wochentage aus UI uebernehmen
 		var days = ["so","mo","di","mi","do","fr","sa"];
@@ -492,17 +522,20 @@ var Modul_weekprofile = function () {
 				profiles[profileid].weekdays[i] = $( this ).children().children(".weekprofile_profileweekdays").children().children("#checkbox_"+days[i]+"-reihe"+profileid).prop('checked');
 			};	
 		});	
-    };
+    }
+    
 	function weekprofile_arrayInsert(a,pos,newElem) {
 		for(var i = a.length; i > pos; i--) {
 			a[i] = a[i-1];
 		};
 		a[pos] = newElem;	
-	}; 
+	}
+    
 	function weekprofile_arrayCompare(a1,a2) {
 		return (a1.length == a2.length) && a1.every(function(element, index) {
 				return element === a2[index]; } );
-	};
+	}
+    
     function init() {
         var base = this;
 		this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
@@ -519,9 +552,10 @@ var Modul_weekprofile = function () {
             //-----------------------------------------------
             weekprofile_getProfiles(elem);         
         });
-    };            
+    }
+    
     function update (dev,par){
-    };
+    }
     
 	return $.extend(new Modul_widget(), {
         widgetname: 'weekprofile',

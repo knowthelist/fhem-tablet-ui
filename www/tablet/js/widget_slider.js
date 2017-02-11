@@ -9,9 +9,9 @@
 
 function depends_slider() {
     if (!$.fn.Powerange) {
-        if (!$('link[href="lib/powerange.min.css"]').length)
-            $('head').append('<link rel="stylesheet" href="lib/powerange.min.css" type="text/css" />');
-        return ["lib/powerange.min.js"];
+        if (!$('link[href$="lib/powerange.min.css"]').length)
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/powerange.min.css" type="text/css" />');
+        return [ftui.config.basedir + "lib/powerange.min.js"];
     }
 }
 
@@ -32,7 +32,7 @@ var Modul_slider = function () {
                         var storeval = parseInt(localStorage.getItem(id));
                         var pwrng = elem.data('Powerange');
                         storeval = storeval + parseInt(elem.data('timer-step'));
-                        if (storeval <= pwrng.options.max) {
+                        if (pwrng && storeval <= pwrng.options.max) {
                             pwrng.setStart(storeval);
                             localStorage.setItem(id, storeval);
                         }
@@ -73,7 +73,7 @@ var Modul_slider = function () {
         var storeval = localStorage.getItem(id);
 
         // isunsel == false (0) means drag is over
-        if ((!isunsel) && (selMode) && (sliVal != storeval)) {
+        if (pwrng && (!isunsel) && (selMode) && (sliVal != storeval)) {
 
             if (elem.hasClass('lock')) {
                 elem.addClass('fail-shake');

@@ -10,8 +10,8 @@
 function depends_checkbox() {
     var deps = [];
     if (!$.fn.Switchery) {
-        $('head').append('<link rel="stylesheet" href="lib/switchery.min.css" type="text/css" />');
-        deps.push("lib/switchery.min.js");
+        $('head').append('<link rel="stylesheet" href$="lib/switchery.min.css" type="text/css" />');
+        deps.push(ftui.config.basedir + "lib/switchery.min.js");
     }
     if (typeof Module_famultibutton == 'undefined' || !$.fn.famultibutton) {
         deps.push('famultibutton');

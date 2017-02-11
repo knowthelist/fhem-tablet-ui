@@ -115,7 +115,7 @@ var Modul_volume = function () {
             } else {
                 //send decimal value
                 v = v * (this.o.origmax / this.o.max);
-                v = v.toFixed(0);
+                v = (this.step < 1) ? Number(v).toFixed(1) : v;
             }
             var device = this.$.data('device');
             if (typeof device != 'undefined') {
@@ -204,7 +204,8 @@ var Modul_volume = function () {
                             val = val * elem.data('max');
                         } else {
                             //is decimal value
-                            val = (val * (elem.data('max') / elem.data('origmax'))).toFixed(0);
+                            val = (val * (elem.data('max') / elem.data('origmax')));
+                            val = (elem.data('step') < 1) ? Number(val).toFixed(1) : val;
                         }
                         if (knob_elem.val() != val) {
                             knob_elem.val(val).trigger('change');

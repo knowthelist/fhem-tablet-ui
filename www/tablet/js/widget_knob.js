@@ -9,7 +9,7 @@
 
 function depends_knob() {
     if (!$.fn.knob)
-        return ["lib/jquery.knob.mod.min.js"];
+        return [ftui.config.basedir + "lib/jquery.knob.mod.min.js"];
 }
 
 var Modul_knob = function () {
@@ -139,7 +139,7 @@ var Modul_knob = function () {
                 'cursor': elem.data('cursor'),
                 'unit': elem.data('unit'),
                 'setValue': elem.data('set-value'),
-                'touchPosition': elem.data('touchposition') || 'left',
+                'touchPosition': elem.data('touchposition') || elem.data('touch-position') || 'left',
                 'draw': me.drawDial,
                 'readOnly': elem.hasClass('readonly'),
                 'change': me.onChange,

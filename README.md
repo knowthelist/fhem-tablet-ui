@@ -384,6 +384,7 @@ all parameters from knob widget plus following additional parameters
 - **data-width**   : horizontal size of the widget (default 100)
 - **data-touch-height**  : vertical size of the widget  during changes (default: the normal size - 100)
 - **data-touch-width**   : horizontal size of the widget during changes (default the normal size - 100)
+- **data-touch-position**   : position of the value during moving on touch devices (default 'left')
 
 
 - **class**		 : mini, small, big, bigger, readonly
@@ -999,6 +1000,7 @@ The height of the row is determined by the largest element.
 - big           : 150%
 - bigger        : 200%
 - tall          : 350%
+- great         : 450%
 - grande        : 600%
 - gigantic      : 144px
 
@@ -1082,16 +1084,18 @@ To disable drag&drop for gridster set this value to 1
 <meta name='gridster_disable' content='1'>
 ```
 
-Add or change this meta tag to set the amount of Gridster columns and rows 
+Add or change this meta tag to set the amount of Gridster columns and rows. These values are used for calculation of 
+gridster_base_width and gridster_base_height
 ```html
 <meta name="gridster_cols" content="12">
 <meta name="gridster_rows" content="9">
 ```
 
-Add or change this meta tag to  to adjust the size of a Gridster base to set the size of tiles manually
+Add or change this meta tag to  to adjust the size of a Gridster base to set the size of tiles manually. The gridster_cols
+and gridster_rows definitions (if determined) will be ignored.
 ```html
-<meta name="widget_base_width" content="116">
-<meta name="widget_base_height" content="131">
+<meta name="gridster_base_width" content="116">
+<meta name="gridster_base_height" content="131">
 ```
 
 Add this to adjust the size of the Gridster margin
@@ -1105,19 +1109,39 @@ Additional settings for Gridster are:
 - gridster_starthidden
 - gridster_resize (auto resize -> values: 0|1)
 
+**Polling settings**
+
+To set longpoll type, select "websocket", "ajax" or "0". Default is "websocket". Older browser needs "ajax". To disable longpoll set "0".
+If your browser dont support WebSockets, then the fall back "ajax" will be used.
+```html
+<meta name="longpoll_type" content="websocket">
+```
+
+Define a special event filter. e.g. if you use a dedicated FTUI Room for you FTUi devices, then you select this Room here.
+```html
+<meta name="longpoll_filter" content=".*">
+```
+
+Interval for shortpolls (full refresh) in secondes.
+```html
+<meta name="shortpoll_interval" content="900">
+```
+
+Interval for shortpolls (full refresh) in secondes if longpoll is disabled (longpoll_type="0")
+```html
+<meta name="shortpoll_only_interval" content="30">
+```
+
+
 **General settings**
 
-To disable longpoll, set an other value then 1
-```html
-<meta name="longpoll" content="1">
-```
 
 To enable verbose level, set values greater then 0 (1-5)
 ```html
 <meta name="debug" content="1">
 ```
 
-To disable Toast messages set this value to 0
+Number of Toast messages maximal displayed at the same time. Default is 5. To disable Toast messages set this value to 0
 ```html
 <meta name='toast' content='1'>
 ```
@@ -1138,6 +1162,15 @@ To prevent auto scaling and gesture zooming on mobil devices, add this meta tag 
 
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+```
+
+**Home Screen App**
+
+To start your page in full screen mode from Home Screen on an iOS Device, you have to add this hints to you header
+
+```html
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 ```
 
 Examples
@@ -1864,7 +1897,7 @@ Create two comboboxes to select the inputs of a two zone AV receiver. List for Z
         OK
     </div>
 </li>
-``
+```
 
 ###Dialog
 -------

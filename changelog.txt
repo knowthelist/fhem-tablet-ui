@@ -20,3 +20,10 @@
 - Slider Widget: timer to interpolatem progress steps
 - adjusted sizes for Symbol and Label
 - new layout schema: Sheet > Row > Cell
+
+2.6.0 (.02.2017)
+- Added WebSockets as default for longpoll
+- Update for Dimmer to get data-lock working again
+- Enabled flexible base directory again (was removed with 2.5.1)
+- Added data-bind to show internal variables 
+- Dity up CSS classes

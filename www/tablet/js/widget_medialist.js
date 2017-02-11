@@ -9,7 +9,7 @@
 
 var Modul_medialist = function () {
 
-    $('head').append('<link rel="stylesheet" href="css/ftui_medialist.css" type="text/css" />');
+    $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_medialist.css" type="text/css" />');
 
     function changedCurrent(elem, pos) {
         elem.find('.media').each(function (index) {

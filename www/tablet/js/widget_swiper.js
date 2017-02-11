@@ -9,8 +9,8 @@
 
 function depends_swiper() {
     if (!$.fn.Swiper) {
-        $('head').append('<link rel="stylesheet" href="lib/swiper.min.css" type="text/css" />');
-        return ["lib/swiper.jquery.min.js"];
+        $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/swiper.min.css" type="text/css" />');
+        return [ftui.config.basedir + "lib/swiper.jquery.min.js"];
     }
 }
 

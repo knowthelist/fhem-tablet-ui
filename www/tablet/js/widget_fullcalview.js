@@ -4,16 +4,16 @@
 
 function depends_fullcalview() {
     if (!$.fn.fullCalendar) {
-        $('head').append('<link rel="stylesheet" href="fullcalendar/fullcalendar.css" type="text/css" />');
-        $('head').append('<link rel="stylesheet" href="lib/jquery.qtip.min.css" type="text/css" />');
-        return ['fullcalendar/lib/moment.min.js',
-		'fullcalendar/fullcalendar.js',
-		'fullcalendar/lang/de.js',
-		'ical/ical.js',
-		'ical/ical_events.js',
-		'ical/ical_fullcalendar.js',
-		'lib/jquery.qtip.min.js',
-		'lib/moment.min.js'];
+        $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'fullcalendar/fullcalendar.css" type="text/css" />');
+        $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/jquery.qtip.min.css" type="text/css" />');
+        return [ftui.config.basedir + 'fullcalendar/lib/moment.min.js',
+		ftui.config.basedir + 'fullcalendar/fullcalendar.js',
+		ftui.config.basedir + 'fullcalendar/lang/de.js',
+		ftui.config.basedir + 'ical/ical.js',
+		ftui.config.basedir + 'ical/ical_events.js',
+		ftui.config.basedir + 'ical/ical_fullcalendar.js',
+		ftui.config.basedir + 'lib/jquery.qtip.min.js',
+		ftui.config.basedir + 'lib/moment.min.js'];
     }
 }
 
