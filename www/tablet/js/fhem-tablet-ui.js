@@ -629,6 +629,11 @@ var ftui = {
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/fhemSVG.css" type="text/css" />');
         if ($('[class*=mi-]').length > 0 && !$('link[href$="lib/material-icons.min.css"]').length)
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/material-icons.min.css" type="text/css" />');
+        if ($('[class*=wi-]').length > 0 && !$('link[href$="lib/weather-icons.min.css"]').length)
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/weather-icons.min.css" type="text/css" />');
+        if ($('[class*=wi-wind]').length > 0 && !$('link[href$="lib/weather-icons-wind.min.css"]').length)
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/weather-icons-wind.min.css" type="text/css" />');
+
     },
 
     initLongpoll: function () {
@@ -1808,7 +1813,8 @@ var src = document.querySelector('script[src*="fhem-tablet-ui"]').getAttribute('
 var file = src.split('/').pop();
 src = src.replace('/' + file, '');
 var dir = src.split('/').pop();
-ftui.config.basedir = src.replace(dir, '').replace('', './');
+ftui.config.basedir = src.replace(dir, '');
+if (ftui.config.basedir === '') ftui.config.basedir = './';
 console.log('Base dir: ' + ftui.config.basedir);
 
 // load jQuery lib
