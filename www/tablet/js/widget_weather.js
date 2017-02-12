@@ -628,7 +628,11 @@ var Modul_weather = function () {
                         case "YahooCode":
                             elem.addClass('wi wi-yahoo-' + val);
                             ftui.log(3, 'weather: set weathericons YahooCode: wi-yahoo-' + val);
-                            break;                               
+                            break; 
+                        case "WindDirection":
+                            elem.addClass('wi wi-wind towards-' + val + '-deg');
+                            ftui.log(3, 'weather: set weathericons WindDirection: wi wi-wind towards-' + val + '-deg');
+                            break;                                 
                         default:
                             elem.addClass('wi wi-' + val);
                             ftui.log(3, 'weather: set weathericons to: wi-' + val);
