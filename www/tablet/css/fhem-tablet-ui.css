@@ -309,22 +309,10 @@ section {
     vertical-align: middle;
 }
 
-/*.gridster [class*='col'],
-section [class*='col'],
-[class*='row'] > [class*='col'],
-.gridster [class*='col'],
-section [class*='col'],
-.row > .col,
-.row > .col 
-*/
 [class*='col'] {
     display: inline-block;
     vertical-align: middle;
     height: 100%;
-}
-
-[class*=row]{
-    white-space: nowrap; 
 }
 
 .fullsize,
