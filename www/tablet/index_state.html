@@ -77,7 +77,11 @@
                     <div class="row-200">
                         <div class="col-40 right-align right-space mint">Last Value:</div>
                         <div class="col-60 left-align" data-bind="ftui.poll.lastValue"></div>
-                    </div>                    
+                    </div>
+                    <div class="row-200">
+                        <div class="col-40 right-align right-space mint">FHEM longpoll:</div>
+                        <div class="col-60 left-align" data-bind="ftui.deviceStates['WEB'].longpoll.val"></div>
+                    </div>
                 </div>
             </li>
         </ul>
