@@ -529,7 +529,7 @@ Use data-url + data-refresh or data-device + data-get, not both.
 
 ####Weather widget
 - **data-get**      : name of the reading to get the weather literal from FHEM (default 'STATE')
-- **data-imageset** : collection of images to display current weather situation. Possible values: 'meteocons', 'kleinklima', 'meteoconsdirect' (Default: 'meteocons')
+- **data-imageset** : collection of images to display current weather situation. Possible values: 'meteocons', 'kleinklima', 'meteoconsdirect', 'weathericons' (Default: 'meteocons')
 - **data-image-path**: path to the images of the selected imageset (default: <fhem-dir>/images/weather/)
 
 ####CircleMenu widget
@@ -1023,6 +1023,8 @@ The height of the row is determined by the largest element.
 Icon configuration
 -------
 
+The icon libraries get automatically included according to the used icon suffix.
+
 - Built-in icons
 Built in icons have the ftui- prefix. Currently available are: ftui-window, ftui-door
 
@@ -1033,19 +1035,14 @@ Just enter the icon name (with suffix "fa-"), all icons are available. e.g. data
 - Material Icons
 Select one of over 1000 icons from https://design.google.com/icons/.
 Just enter the icon name (with suffix "mi-"), all icons are available. e.g. data-icon="mi-local_gas_station"
-To enable these icons, just add following line to your index.html.
-
-```html
-<link rel="stylesheet" href="lib/material-icons.min.css" />
-```
 
 - FHEM and OpenAutomation
-Enable respectively add following lines to index.html to active FHEMWEB icons for FHEM Tablet ui
-```html
-<link rel="stylesheet" href="lib/openautomation.css" />
-<link rel="stylesheet" href="lib/fhemSVG.css" />
-```
 This font icons has the prefix 'fs-' and 'oa-'
+
+- Weather-icons
+Select icons from authors page
+https://erikflowers.github.io/weather-icons/
+This font icons has the prefix 'wi-'
 
 Color configuration
 -------
@@ -1132,6 +1129,10 @@ Interval for shortpolls (full refresh) in secondes if longpoll is disabled (long
 <meta name="shortpoll_only_interval" content="30">
 ```
 
+To change the folder where FHEM can be reached for polling
+```html
+<meta name='fhemweb_url' content='/fhem/'>
+```
 
 **General settings**
 
@@ -1146,7 +1147,7 @@ Number of Toast messages maximal displayed at the same time. Default is 5. To di
 <meta name='toast' content='1'>
 ```
 
-To change the folder where FHEM can be reached
+To change the folder where FHEM can be reached for sending
 ```html
 <meta name='fhemweb_url' content='/fhem/'>
 ```

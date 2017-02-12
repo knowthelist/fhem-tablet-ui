@@ -621,7 +621,18 @@ var Modul_weather = function () {
                         elem.prepend('<img style="width:100%" src="' + _val + '">');
                     } else if (elem.data('imageset') == "meteoconsdirect") {
                         elem.attr('data-icon', val);
-                        console.log('VAL:',val);
+                        ftui.log(3, 'weather: set meteoconsdirect val:', val);
+                    } else if (elem.data('imageset') == "weathericons") {
+                        elem.addClass('weathericons');
+                        switch (elem.data('device-type')) {
+                        case "YahooCode":
+                            elem.addClass('wi wi-yahoo-' + val);
+                            ftui.log(3, 'weather: set weathericons YahooCode: wi-yahoo-' + val);
+                            break;                               
+                        default:
+                            elem.addClass('wi wi-' + val);
+                            ftui.log(3, 'weather: set weathericons to: wi-' + val);
+                        }
                     } else {
                         mapped = meteoconsmap[mapped.replace(/^:/, '')];
                         elem.attr('data-icon', mapped);
