@@ -516,8 +516,6 @@ var Modul_famultibutton = function () {
                     var val = elem.getReading(key).val;
                     if (ftui.isValid(val)) {
                         val = '#' + val.replace('#', '');
-                        console.log(val);
-
                         var faelem = elem.data('famultibutton');
                         if (faelem) {
                             // change color in options

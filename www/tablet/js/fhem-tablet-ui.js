@@ -785,7 +785,10 @@ var ftui = {
             return;
         }
 
-        if ('WebSocket' in window && ftui.config.longPollType === 'websocket') {
+        if ('WebSocket' in window && 
+            ftui.config.longPollType === 'websocket' &&
+            ftui.deviceStates['WEB'] &&
+            ftui.deviceStates['WEB'].longpoll.val === 'websocket' ) {
 
             if (ftui.websocket) {
                 ftui.log(3, 'valid ftui.websocket found');
@@ -811,7 +814,8 @@ var ftui = {
             };
 
         } else {
-            ftui.log(1, 'longpoll: websockets not supportetd by browser > fall back to AJAX');
+            
+            ftui.log(1, 'longpoll: websockets not supportetd or not activated > fall back to AJAX');
             if (ftui.xhr) {
                 ftui.log(3, 'valid ftui.xhr found');
                 return;
@@ -1199,7 +1203,7 @@ var ftui = {
             console.log('now:', new Date());
             console.log('FTUI version: ' + ftui.version);
             console.log('Longpoll: ' + ftui.config.doLongPoll);
-            console.log('Longpoll type: ' + ((ftui.websocket) ? 'Websocket' : 'AJAX'));
+            console.log('Longpoll type: ' + ftui.config.longPollType);
             console.log('Longpoll objects there: ' + (ftui.isValid(ftui.longPollRequest) && ftui.isValid(ftui.xhr) || ftui.isValid(ftui.websocket)));
             console.log('Longpoll curent line: ' + ftui.poll.currLine);
             console.log('Longpoll last event before: ' + ftui.poll.lastEventTimestamp.ago());
