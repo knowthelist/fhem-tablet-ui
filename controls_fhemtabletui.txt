@@ -56,13 +56,18 @@ UPD 2017-02-11_14:27:26 21659 www/tablet/fonts/Roboto-Thin-webfont.eot
 UPD 2017-02-11_14:27:26 74077 www/tablet/fonts/Roboto-Thin-webfont.svg
 UPD 2017-02-11_14:27:26 47700 www/tablet/fonts/Roboto-Thin-webfont.ttf
 UPD 2017-02-11_14:27:26 24944 www/tablet/fonts/Roboto-Thin-webfont.woff
+UPD 2016-03-24_07:51:54 99774 www/tablet/fonts/weathericons-regular-webfont.eot
+UPD 2016-03-24_07:51:54 184969 www/tablet/fonts/weathericons-regular-webfont.svg
+UPD 2016-03-24_07:51:54 99564 www/tablet/fonts/weathericons-regular-webfont.ttf
+UPD 2016-03-24_07:51:54 56468 www/tablet/fonts/weathericons-regular-webfont.woff
+UPD 2016-03-24_07:51:54 44720 www/tablet/fonts/weathericons-regular-webfont.woff2
 UPD 2017-02-11_14:27:26 3265 www/tablet/ftui_snippet_tester.html
 UPD 2017-02-11_14:27:26 17624 www/tablet/index-example.html
 UPD 2017-02-11_14:27:26 2208 www/tablet/index_empty.html
 UPD 2017-02-11_14:27:26 9958 www/tablet/index_layout.html
 UPD 2017-02-11_14:12:02 3799 www/tablet/index_state.html
-UPD 2017-02-11_23:05:32 67951 www/tablet/js/fhem-tablet-ui.js
-UPD 2017-02-11_23:06:34 34715 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2017-02-11_23:54:15 67951 www/tablet/js/fhem-tablet-ui.js
+UPD 2017-02-11_23:54:45 34715 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2017-02-11_14:27:26 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2017-02-11_14:27:26 6503 www/tablet/js/widget_agenda.js
 UPD 2017-01-29_01:34:10 1710 www/tablet/js/widget_button.js
@@ -125,7 +130,7 @@ UPD 2017-02-11_14:27:26 6477 www/tablet/js/widget_uwz.js
 UPD 2017-02-05_16:45:24 8653 www/tablet/js/widget_volume.js
 UPD 2017-02-11_14:27:26 988 www/tablet/js/widget_wakeup.js
 UPD 2017-02-06_02:22:37 95916 www/tablet/js/widget_wdtimer.js
-UPD 2017-01-28_02:36:54 23419 www/tablet/js/widget_weather.js
+UPD 2017-02-12_02:04:13 24110 www/tablet/js/widget_weather.js
 UPD 2017-02-06_03:29:02 25489 www/tablet/js/widget_weekprofile.js
 UPD 2017-02-11_14:27:26 7163 www/tablet/js/widget_wind_direction.js
 UPD 2017-02-11_13:46:08 19565 www/tablet/lib/fa-multi-button.js
@@ -171,4 +176,6 @@ UPD 2017-02-11_14:27:26 15163 www/tablet/lib/swiper.min.css
 UPD 2017-02-11_14:27:26 50765 www/tablet/lib/switchery.js
 UPD 2017-02-11_14:27:26 683 www/tablet/lib/switchery.min.css
 UPD 2017-02-11_14:27:26 19088 www/tablet/lib/switchery.min.js
+UPD 2017-02-11_15:29:20 126822 www/tablet/lib/weather-icons-wind.min.css
+UPD 2017-02-11_15:17:09 26659 www/tablet/lib/weather-icons.min.css
 UPD 2017-02-11_14:27:26 750 www/tablet/repair.html
