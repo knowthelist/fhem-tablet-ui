@@ -130,7 +130,7 @@ UPD 2017-02-11_14:27:26 6477 www/tablet/js/widget_uwz.js
 UPD 2017-02-05_16:45:24 8653 www/tablet/js/widget_volume.js
 UPD 2017-02-11_14:27:26 988 www/tablet/js/widget_wakeup.js
 UPD 2017-02-06_02:22:37 95916 www/tablet/js/widget_wdtimer.js
-UPD 2017-02-12_02:04:13 24110 www/tablet/js/widget_weather.js
+UPD 2017-02-12_02:44:29 24395 www/tablet/js/widget_weather.js
 UPD 2017-02-06_03:29:02 25489 www/tablet/js/widget_weekprofile.js
 UPD 2017-02-11_14:27:26 7163 www/tablet/js/widget_wind_direction.js
 UPD 2017-02-11_13:46:08 19565 www/tablet/lib/fa-multi-button.js
