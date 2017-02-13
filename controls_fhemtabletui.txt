@@ -11,8 +11,8 @@ UPD 2017-01-29_15:04:15 1659 www/tablet/css/fhem-darkblue-ui.css
 UPD 2017-02-11_14:27:26 510 www/tablet/css/fhem-green-ui.css
 UPD 2017-02-11_14:27:26 1953 www/tablet/css/fhem-mobil-ui.css
 UPD 2017-02-05_13:50:40 6916 www/tablet/css/fhem-tablet-ui-wdtimer.css
-UPD 2017-02-13_00:22:27 48564 www/tablet/css/fhem-tablet-ui.css
-UPD 2017-02-13_00:22:58 34723 www/tablet/css/fhem-tablet-ui.min.css
+UPD 2017-02-13_02:13:18 55258 www/tablet/css/fhem-tablet-ui.css
+UPD 2017-02-13_02:13:23 40318 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2017-02-11_14:27:26 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2017-02-11_14:27:26 5295 www/tablet/css/ftui_chart.css
 UPD 2017-02-11_14:27:26 1023 www/tablet/css/ftui_colorwheel.css
@@ -66,8 +66,8 @@ UPD 2017-02-11_14:27:26 17624 www/tablet/index-example.html
 UPD 2017-02-11_14:27:26 2208 www/tablet/index_empty.html
 UPD 2017-02-11_14:27:26 9958 www/tablet/index_layout.html
 UPD 2017-02-12_14:42:28 4054 www/tablet/index_state.html
-UPD 2017-02-12_14:36:41 68076 www/tablet/js/fhem-tablet-ui.js
-UPD 2017-02-12_14:38:58 34783 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2017-02-13_00:43:15 68098 www/tablet/js/fhem-tablet-ui.js
+UPD 2017-02-13_00:47:43 34802 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2017-02-11_14:27:26 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2017-02-11_14:27:26 6503 www/tablet/js/widget_agenda.js
 UPD 2017-01-29_01:34:10 1710 www/tablet/js/widget_button.js
@@ -77,7 +77,7 @@ UPD 2017-02-11_16:21:16 4098 www/tablet/js/widget_checkbox.js
 UPD 2017-02-06_02:04:36 3098 www/tablet/js/widget_circlemenu.js
 UPD 2017-02-11_14:27:26 1524 www/tablet/js/widget_classchanger.js
 UPD 2017-02-11_14:27:26 5830 www/tablet/js/widget_clock.js
-UPD 2017-02-06_02:12:04 3107 www/tablet/js/widget_colorwheel.js
+UPD 2017-02-13_00:45:28 3133 www/tablet/js/widget_colorwheel.js
 UPD 2017-02-06_03:17:32 2630 www/tablet/js/widget_datetimepicker.js
 UPD 2017-02-06_03:17:56 5824 www/tablet/js/widget_departure.js
 UPD 2017-02-10_19:04:13 6295 www/tablet/js/widget_dimmer.js
@@ -107,7 +107,7 @@ UPD 2017-01-29_01:43:28 3478 www/tablet/js/widget_multistatebutton.js
 UPD 2017-02-11_14:27:26 3770 www/tablet/js/widget_notify.js
 UPD 2017-02-09_19:07:46 9779 www/tablet/js/widget_pagebutton.js
 UPD 2017-02-11_18:10:47 8584 www/tablet/js/widget_pagetab.js
-UPD 2017-01-29_01:43:51 5227 www/tablet/js/widget_playstream.js
+UPD 2017-02-13_03:33:15 5205 www/tablet/js/widget_playstream.js
 UPD 2017-02-06_02:32:51 7181 www/tablet/js/widget_popup.js
 UPD 2017-01-22_20:21:29 3554 www/tablet/js/widget_progress.js
 UPD 2017-01-23_23:45:24 1866 www/tablet/js/widget_push.js
