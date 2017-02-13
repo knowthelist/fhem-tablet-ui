@@ -9,7 +9,7 @@
 
 function depends_colorwheel() {
     if (!$.fn.farbtastic) {
-        $('head').append('<link rel="stylesheet" href$="css/ftui_colorwheel.css" type="text/css" />');
+        $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_colorwheel.css" type="text/css" />');
         return [ftui.config.basedir + "lib/farbtastic.js"];
     }
 }

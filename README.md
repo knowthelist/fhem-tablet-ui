@@ -542,7 +542,7 @@ Use data-url + data-refresh or data-device + data-get, not both.
 - **class**		 : keepopen, noshade
 
 ####Playstream widget
-- **data-url**      : URL of the Radio stream
+- **data-url**      : URL of the Radio stream or a reading name containing an URL
 - **data-get**      : name of the reading to get the control state from FHEM (default 'STATE')
 - **data-get-on**   : value for PLAY status to get. (default 'on')
 - **data-get-off**  : value for STOP status to get. (default 'off')

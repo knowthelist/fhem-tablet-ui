@@ -1,5 +1,5 @@
 /* FTUI Plugin
- * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
@@ -49,6 +49,8 @@ var Modul_playstream = function () {
             elem.initData('audio', new Audio(elem.data('url')));
 
             elem.data('mode', 'toggle');
+
+            me.addReading(elem, 'url');
             me.addReading(elem, 'volume');
             me.init_attr(elem);
             me.init_ui(elem);
@@ -79,38 +81,29 @@ var Modul_playstream = function () {
     }
 
     function update(dev, par) {
-
+       
         // update from normal state reading
         me.elements.filterDeviceReading('get', dev, par)
             .each(function (index) {
                 var elem = $(this);
-                var state = elem.getReading('get').val;
+                var value = elem.getReading('get').val;
+                var state = ftui.getPart(value, elem.data('part'));
                 if (state) {
-                    var states = elem.data('get-on');
                     var faelem = elem.data('famultibutton');
                     if (faelem) {
-                        if (state == elem.data('get-on')) {
+                        
+                        if (elem.matchingState('get', state) === 'on') {
                             faelem.setOn();
                             startStream(elem);
-                        } else if (state == elem.data('get-off')) {
+                        }
+                        if (elem.matchingState('get', state) === 'off') {
                             faelem.setOff();
                             stopStream(elem);
-                        } else if (state.match(new RegExp('^' + elem.data('get-on') + '$'))) {
-                            faelem.setOn();
-                            startStream(elem);
-                        } else if (state.match(new RegExp('^' + elem.data('get-off') + '$'))) {
-                            faelem.setOff();
-                            stopStream(elem);
-                        } else if (elem.data('get-off') == '!on' && state != elem.data('get-on')) {
-                            faelem.setOff();
-                            stopStream(elem);
-                        } else if (elem.data('get-on') == '!off' && state != elem.data('get-off')) {
-                            faelem.setOn();
-                            startStream(elem);
                         }
                     }
                 }
             });
+
         // update from extra reading for volume
         me.elements.filterDeviceReading('volume', dev, par)
             .each(function (idx) {
@@ -119,6 +112,20 @@ var Modul_playstream = function () {
                 if ($.isNumeric(volume)) {
                     ftui.log(3, 'playstream - set volume to :', parseInt(volume) / 100.0);
                     elem.data('audio').volume = parseInt(volume) / 100.0;
+                }
+            });
+        
+        // update from extra reading for url
+        me.elements.filterDeviceReading('url', dev, par)
+            .each(function (idx) {
+                var elem = $(this);
+                var url = elem.getReading('url').val;
+                if (ftui.isValid(url)) {
+                    ftui.log(3, 'playstream - set url to :', url);
+                    var isPlaying = !elem.data('audio').paused;
+                    elem.data('audio').src = url;
+                    elem.data('audio').load();
+                    if (isPlaying) elem.data('audio').play();
                 }
             });
     }

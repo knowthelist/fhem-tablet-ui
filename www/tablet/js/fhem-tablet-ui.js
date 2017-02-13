@@ -1217,7 +1217,7 @@ var ftui = {
             console.log('--------- end healthCheck ---------------');
         }
         var timeDiff = new Date() - ftui.poll.lastEventTimestamp;
-        if (timeDiff / 1000 > 240) {
+        if (timeDiff / 1000 > 240 && !ftui.config.DEMO ) {
             ftui.log(1, 'No longpoll event since ' + timeDiff / 1000 + 'secondes -> restart polling');
             ftui.setOnline();
             ftui.restartLongPoll();
