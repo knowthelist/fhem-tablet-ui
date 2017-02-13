@@ -16,7 +16,7 @@ var Modul_circlemenu = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="circlemenu"]');
+        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
             var ulElem = elem.find('ul');
@@ -61,7 +61,7 @@ var Modul_circlemenu = function () {
                 .closest('.gridster>ul>li').css({
                     overflow: 'visible'
                 });
-
+console.log('wrap');
             ulElem.wrapAll('<div class="circlemenu-wrapper"></div>');
         });
         

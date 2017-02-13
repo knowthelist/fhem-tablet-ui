@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.1
+ * Version: 2.6.2
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -226,7 +226,7 @@ var plugins = {
     updateParameters: function () {
         ftui.subscriptions = {};
         ftui.subscriptionTs = {};
-        ftui.devs = [];
+        ftui.devs = ['WEB'];
         for (var i = this.modules.length - 1; i >= 0; i -= 1) {
             var module = this.modules[i];
             for (var key in module.subscriptions) {
@@ -266,7 +266,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.1',
+    version: '2.6.2',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -320,8 +320,9 @@ var ftui = {
 
         ftui.paramIdMap = {};
         ftui.timestampMap = {};
-        ftui.config.longPollType = $("meta[name='longpoll_type']").attr("content") || 'websocket';
-        ftui.config.doLongPoll = (ftui.config.longPollType === 'ajax' || ftui.config.longPollType === 'websocket');
+        ftui.config.longPollType = $("meta[name='longpoll']").attr("content") ||
+            $("meta[name='longpoll_type']").attr("content") || 'websocket';
+        ftui.config.doLongPoll = (ftui.config.longPollType !== '0');
         ftui.config.longPollFilter = $("meta[name='longpoll_filter']").attr("content") || '.*';
         ftui.config.DEMO = ($("meta[name='demo']").attr("content") == '1');
         ftui.config.debuglevel = $("meta[name='debug']").attr("content") || 0;
@@ -356,7 +357,7 @@ var ftui = {
 
         // after the page became visible, check server connection
         $(document).on('visibilitychange', function () {
-            if (document.visibilityState == 'hidden') {
+            if (document.visibilityState === 'hidden') {
                 // page is hidden
             } else {
                 // page is visible
@@ -404,6 +405,7 @@ var ftui = {
                 var cssListener = setInterval(function () {
                     ftui.log(1, 'fhem-tablet-ui.css dynamically loaded. Waiting until it is ready to use...');
                     if ($("body").css("text-align") === "center") {
+                        ftui.log(1, 'fhem-tablet-ui.css is ready to use.');
                         clearInterval(cssListener);
                         ftui.loadStyleSchema();
                         ftui.initPage();
@@ -542,17 +544,18 @@ var ftui = {
                 configureGridster();
             }
 
+            if (ftui.gridster.resize) {
+                $(window).on('resize', function () {
+                    if (ftui.states.width !== window.innerWidth) {
+                        clearTimeout(ftui.states.delayResize);
+                        ftui.states.delayResize = setTimeout(configureGridster, 500);
+                        ftui.states.width = window.innerWidth;
+                    }
+                });
+            }
         }
 
-        if (ftui.gridster.resize) {
-            $(window).on('resize', function () {
-                if (ftui.states.width !== window.innerWidth) {
-                    clearTimeout(ftui.states.delayResize);
-                    ftui.states.delayResize = setTimeout(configureGridster, 500);
-                    ftui.states.width = window.innerWidth;
-                }
-            });
-        }
+
     },
 
     initPage: function (area) {
@@ -672,7 +675,7 @@ var ftui = {
         var startTime = new Date();
 
         // invalidate all readings for detection of outdated ones
-        for (var device in ftui.deviceStates) {
+        for (var device in ftui.devs) {
             var params = ftui.deviceStates[device];
             for (var reading in params) {
                 params[reading].valid = false;
@@ -681,8 +684,8 @@ var ftui = {
         console.time('get jsonlist2');
 
         //Request all devices from FHEM
-        var devicelist = (ftui.isValid(ftui.devs)) ? $.map(ftui.devs, $.trim).join() : '.*';
-
+        var devicelist = (ftui.devs.length > 0) ? $.map(ftui.devs, $.trim).join() : '.*';
+        ftui.log(4, 'shortpoll: devicelist=' + devicelist);
         $.getJSON(ftui.config.fhemDir, {
                 cmd: 'jsonlist2 ' + devicelist,
                 XHR: 1,
@@ -718,6 +721,7 @@ var ftui = {
                         var param = params[reading] || {};
                         param.date = newParam.Time;
                         param.val = newParam.Value;
+                        //console.log('*****',device);
                         param.valid = true;
                         params[reading] = param;
                         ftui.deviceStates[device] = params;
@@ -742,10 +746,11 @@ var ftui = {
                 var len = fhemJSON.Results.length;
                 ftui.log(2, 'shortpoll: fhemJSON.Results.length=' + len);
                 var results = fhemJSON.Results;
+
                 for (var i = 0; i < len; i++) {
                     var res = results[i];
                     var devName = res.Name;
-                    if (devName.indexOf('FHEMWEB') !== 0 && devName.indexOf('WEB_') !== 0) {
+                    if (devName.indexOf('FHEMWEB') < 0 && devName.indexOf('WEB_') < 0) {
                         checkReading(devName, res.Readings);
                         checkReading(devName, res.Internals);
                         checkReading(devName, res.Attributes);
@@ -785,10 +790,10 @@ var ftui = {
             return;
         }
 
-        if ('WebSocket' in window && 
+        if ('WebSocket' in window &&
             ftui.config.longPollType === 'websocket' &&
-            ftui.deviceStates['WEB'] &&
-            ftui.deviceStates['WEB'].longpoll.val === 'websocket' ) {
+            ftui.isValid(ftui.deviceStates['WEB'].longpoll.val) &&
+            ftui.deviceStates['WEB'].longpoll.val === 'websocket') {
 
             if (ftui.websocket) {
                 ftui.log(3, 'valid ftui.websocket found');
@@ -814,7 +819,7 @@ var ftui = {
             };
 
         } else {
-            
+
             ftui.log(1, 'longpoll: websockets not supportetd or not activated > fall back to AJAX');
             if (ftui.xhr) {
                 ftui.log(3, 'valid ftui.xhr found');
@@ -847,10 +852,10 @@ var ftui = {
                         ftui.xhr = new window.XMLHttpRequest();
                         ftui.xhr.addEventListener("readystatechange", function (e) {
                             var data = e.target.responseText;
-                            if (e.target.readyState == 4) {
+                            if (e.target.readyState === 4) {
                                 return;
                             }
-                            if (e.target.readyState == 3) {
+                            if (e.target.readyState === 3) {
                                 ftui.handleUpdates(data);
                             }
                         }, false);
@@ -987,7 +992,6 @@ var ftui = {
         $.each($('link[href$="-ui.css"],link[href$="-ui.min.css"]'), function (index, thisSheet) {
             if (!thisSheet || !thisSheet.sheet || !thisSheet.sheet.cssRules) return;
             var rules = thisSheet.sheet.cssRules;
-
             for (var r in rules) {
                 if (rules[r].style) {
                     var styles = rules[r].style.cssText.split(';');
@@ -997,7 +1001,7 @@ var ftui = {
                     for (var s in styles) {
                         var param = styles[s].toString().split(':');
                         if (param[0].match(/color/)) {
-                            params[$.trim(param[0])] = $.trim(param[1]).replace('! important', '').replace('!important', '');
+                            params[$.trim(param[0])] = ftui.rgbToHex($.trim(param[1]).replace('! important', '').replace('!important', ''));
                         }
                     }
                     if (Object.keys(params).length > 0)
@@ -1217,7 +1221,7 @@ var ftui = {
             console.log('--------- end healthCheck ---------------');
         }
         var timeDiff = new Date() - ftui.poll.lastEventTimestamp;
-        if (timeDiff / 1000 > 240 && !ftui.config.DEMO ) {
+        if (timeDiff / 1000 > 240 && !ftui.config.DEMO && ftui.config.doLongPoll) {
             ftui.log(1, 'No longpoll event since ' + timeDiff / 1000 + 'secondes -> restart polling');
             ftui.setOnline();
             ftui.restartLongPoll();
@@ -1458,7 +1462,14 @@ var ftui = {
 
     getStyle: function (selector, prop) {
         var props = ftui.config.styleCollection[selector];
-        return (props && props[prop]) ? props[prop] : null;
+        var style = (props && props[prop]) ? props[prop] : null;
+        if (style === null) {
+            var reverseSelector = '.' + selector.split('.').reverse().join('.');
+            reverseSelector = reverseSelector.substring(0, reverseSelector.length - 1);
+            props = ftui.config.styleCollection[reverseSelector];
+            style = (props && props[prop]) ? props[prop] : null;
+        }
+        return style;
     },
 
     getClassColor: function (elem) {
