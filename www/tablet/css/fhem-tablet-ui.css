@@ -2591,7 +2591,7 @@ input.textinput {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    font-size: small;
+    font-size: 100%;
     color: #eeeeee;
 }
 
