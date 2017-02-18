@@ -66,8 +66,8 @@ UPD 2017-02-11_14:27:26 17624 www/tablet/index-example.html
 UPD 2017-02-11_14:27:26 2208 www/tablet/index_empty.html
 UPD 2017-02-11_14:27:26 9958 www/tablet/index_layout.html
 UPD 2017-02-12_14:42:28 4054 www/tablet/index_state.html
-UPD 2017-02-18_18:50:26 68960 www/tablet/js/fhem-tablet-ui.js
-UPD 2017-02-18_18:56:33 35196 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2017-02-18_19:33:19 68989 www/tablet/js/fhem-tablet-ui.js
+UPD 2017-02-18_19:34:47 35214 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2017-02-11_14:27:26 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2017-02-11_14:27:26 6503 www/tablet/js/widget_agenda.js
 UPD 2017-01-29_01:34:10 1710 www/tablet/js/widget_button.js
