@@ -320,6 +320,7 @@ var ftui = {
 
         ftui.paramIdMap = {};
         ftui.timestampMap = {};
+        ftui.devs = ['WEB'];
         ftui.config.longPollType = $("meta[name='longpoll_type']").attr("content") || 'websocket';
         var longpoll = $("meta[name='longpoll']").attr("content") || '1';
         ftui.config.doLongPoll = (longpoll != '0');
