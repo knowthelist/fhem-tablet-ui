@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+
+    <meta name="debug" content="2">
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizex="3" data-sizey="4">
+                <header>EXAMPLE1</header>
+                <!-- place your widget here -->
+                <div data-type="select" data-device="AvReceiver" data-list="channelList" data-delimiter="," class="bigger"></div>
+                <div>data-delimiter=","</div>
+            </li>
+            <li data-row="5" data-col="1" data-sizex="3" data-sizey="3">
+                <header>EXAMPLE2</header>
+                <!-- place your widget here -->
+                <div data-type="select" data-device="AvReceiver" data-list="channelList" data-delimiter="," class=""></div>
+                <div>normal</div>
+                                <div data-type="select" data-device="AvReceiver" data-list="channelList" data-delimiter="," class="bigger"></div>
+                <div>bigger</div>
+                                <div data-type="select" data-device="AvReceiver" data-list="channelList" data-delimiter="," class="great"></div>
+                <div>great</div>
+            </li>
+            <li data-row="1" data-col="4" data-sizex="6" data-sizey="4">
+                <header>EXAMPLE3</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="1" data-col="10" data-sizex="3" data-sizey="4">
+                <header>EXAMPLE4</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="5" data-col="10" data-sizex="3" data-sizey="3">
+                <header>EXAMPLE5</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="5" data-col="4" data-sizex="6" data-sizey="3">
+                <header>EXAMPLE6</header>
+                <!-- place your widget here -->
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

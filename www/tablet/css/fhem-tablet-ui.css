@@ -370,28 +370,7 @@ section {
 
 /* End gridster layout */
 
-.row-1-1,
-.row-3-3 {
-    height: 99.6% !important;
-}
 
-.row-1-2,
-.row-2-4 {
-    height: 49.5% !important;
-}
-
-.row-1-3 {
-    height: 33% !important;
-}
-
-.row-2-3 {
-    height: 66.66% !important;
-}
-
-.row-1-4,
-.row-2-8 {
-    height: 24% !important;
-}
 
 .col-1-1,
 .col-100 {
@@ -1315,32 +1294,33 @@ div[data-type="link"] > div.fa {
 
 .row-8,
 .row-1-12 {
-    height: 8.3%;
+    height: 8.3% !important;
 }
 
 .row-10,
 .row-1-10 {
-    height: 10%;
+    height: 10% !important;
 }
 
 .row-12,
 .row-1-8 {
-    height: 12.5%;
+    height: 12.5% !important;
 }
 
 .row-20,
 .row-1-5 {
-    height: 20%;
+    height: 20% !important;
 }
 
 .row-25,
-.row-1-4 {
-    height: 25%;
+.row-1-4,
+.row-2-8 {
+    height: 25% !important;
 }
 
 .row-33,
 .row-1-3 {
-    height: 33%;
+    height: 33% !important;
 }
 
 .row-40,
@@ -1349,33 +1329,44 @@ div[data-type="link"] > div.fa {
 }
 
 .row-50,
-.row-1-2 {
-    height: 50%;
+.row-1-2,
+.row-2-4 {
+    height: 50% !important;
 }
 
 .row-60,
 .row-3-5 {
-    height: 60%;
+    height: 60% !important;
 }
 
 .row-66,
 .row-2-3 {
-    height: 66%;
+    height: 66% !important;
+}
+
+.row-70 {
+    height: 70% !important;
 }
 
 .row-75,
 .row-1-12 {
-    height: 75%;
+    height: 75% !important;
 }
 
 .row-80,
 .row-4-5 {
-    height: 80%;
+    height: 80% !important;
 }
 
-.row-80,
+.row-90,
 .row-4-5 {
-    height: 80%;
+    height: 80% !important;
+}
+
+.row-100,
+.row-1-1,
+.row-3-3 {
+    height: 100% !important;
 }
 
 [class*=row] > [class*=cell] {
@@ -2591,7 +2582,7 @@ input.textinput {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    font-size: small;
+    font-size: 1em;
     color: #eeeeee;
 }
 
@@ -2654,9 +2645,9 @@ select::-ms-expand {
 
 .select_wrapper:after {
     position: absolute;
-    bottom: .15em;
-    top: .15em;
-    right: .5rem;
+    bottom: 4px;
+    line-height: 0.9em;
+    right: 6px;
     content: "\f107";
     font-family: FontAwesome;
     font-style: normal;

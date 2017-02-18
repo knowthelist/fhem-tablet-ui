@@ -178,6 +178,8 @@ var Modul_volume = function () {
             elem.data('hdcolor', elem.data('hdcolor') || hdDefaultColor);
             elem.data('tickstep', elem.data('tickstep') || (((mode >> 1) % 2 !== 0) ? 4 : 20));
             elem.data('cursor', elem.data('cursor') || 6);
+            elem.initData('height', 160);
+            elem.initData('width', 160);
 
             me.init_attr(elem);
             me.init_ui(elem);

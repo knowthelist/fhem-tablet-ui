@@ -39,50 +39,68 @@ var Modul_knob = function () {
 
     function init_attr(elem) {
 
-        elem.data('get', elem.data('get') || 'STATE');
-        elem.data('set', elem.data('set') || '');
-        elem.data('cmd', elem.data('cmd') || 'set');
-        elem.data('set-value', elem.data('set-value') || '$v');
-        elem.data('get-value', elem.data('get-value') || elem.data('part') || '-1');
+        elem.initData('get', 'STATE');
+        elem.initData('set', '');
+        elem.initData('cmd', 'set');
+        elem.initData('set-value', '$v');
+        elem.initData('get-value', elem.data('part') || '-1');
 
-        elem.data('min', elem.isValidData('min') ? elem.data('min') : 0);
-        elem.data('max', elem.isValidData('max') ? elem.data('max') : 100);
+        elem.initData('min', 0);
+        elem.initData('max', 100);
 
-        elem.data('height', elem.isValidData('height') ? elem.data('height') : 120);
-        elem.data('width', elem.isValidData('width') ? elem.data('width') : 120);
-        if (elem.hasClass('bigger')) {
-            elem.data('height', 260);
-            elem.data('width', 260);
+        if (elem.isValidData('height')) {
+            if (elem.hasClass('bigger')) {
+                elem.data('height', 260);
+            }
+            if (elem.hasClass('big')) {
+                elem.data('height', 210);
+            }
+            if (elem.hasClass('large')) {
+                elem.data('height', 150);
+            }
+            if (elem.hasClass('small')) {
+                elem.data('height', 100);
+            }
+            if (elem.hasClass('mini')) {
+                elem.data('height', 52);
+                elem.data('thickness', 0.45);
+            }
         }
-        if (elem.hasClass('big')) {
-            elem.data('height', 210);
-            elem.data('width', 210);
-        }
-        if (elem.hasClass('large')) {
-            elem.data('height', 150);
-            elem.data('width', 150);
-        }
-        if (elem.hasClass('small')) {
-            elem.data('height', 100);
-            elem.data('width', 100);
-        }
-        if (elem.hasClass('mini')) {
-            elem.data('height', 52);
-            elem.data('width', 52);
+        if (elem.isValidData('width')) {
+            if (elem.hasClass('bigger')) {
+                elem.data('width', 260);
+            }
+            if (elem.hasClass('big')) {
+                elem.data('width', 210);
+            }
+            if (elem.hasClass('large')) {
+                elem.data('width', 150);
+            }
+            if (elem.hasClass('small')) {
+                elem.data('width', 100);
+            }
+            if (elem.hasClass('mini')) {
+                elem.data('width', 52);
+                elem.data('thickness', 0.45);
+            }
         }
 
-        elem.data('initvalue', elem.isValidData('initvalue') ? elem.data('initvalue') : 10);
-        elem.data('step', elem.isValidData('step') ? elem.data('step') : 1);
-        elem.data('angleoffset', elem.isValidData('angleoffset') ? elem.data('angleoffset') : -120);
-        elem.data('anglearc', elem.isValidData('anglearc') ? elem.data('anglearc') : 240);
+        elem.initData('height', 120);
+        elem.initData('width', 120);
 
-        elem.data('bgcolor', elem.data('bgcolor') || ftui.getStyle('.' + me.widgetname, 'background-color') || '#505050');
-        elem.data('fgcolor', elem.data('fgcolor') || ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname, 'color') || '#aa6900');
-        elem.data('inputcolor', elem.data('inputcolor') || ftui.getStyle('.' + me.widgetname + '.input', 'color') || '#ffffff');
-        elem.data('hdcolor', elem.data('hdcolor') || ftui.getStyle('.' + me.widgetname + '.handle', 'color') || '#666');
+        elem.initData('initvalue', 10);
+        elem.initData('thickness', 0.25);
+        elem.initData('step', 1);
+        elem.initData('angleoffset', -120);
+        elem.initData('anglearc', 240);
 
-        elem.data('font', elem.data('font') || ftui.getStyle('.' + me.widgetname, 'font-family') || '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
-        elem.data('font-weight', elem.data('font-weight') || ftui.getStyle('.' + me.widgetname, 'font') || 'normal');
+        elem.initData('bgcolor', ftui.getStyle('.' + me.widgetname, 'background-color') || '#505050');
+        elem.initData('fgcolor', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname, 'color') || '#aa6900');
+        elem.initData('inputcolor', ftui.getStyle('.' + me.widgetname + '.input', 'color') || '#ffffff');
+        elem.initData('hdcolor', ftui.getStyle('.' + me.widgetname + '.handle', 'color') || '#666');
+
+        elem.initData('font', ftui.getStyle('.' + me.widgetname, 'font-family') || '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
+        elem.initData('font-weight', ftui.getStyle('.' + me.widgetname, 'font') || 'normal');
 
         elem.initData('unit', '');
 
@@ -127,7 +145,7 @@ var Modul_knob = function () {
                 'inputColor': elem.data('inputcolor'),
                 'minColor': elem.data('mincolor'),
                 'maxColor': elem.data('maxcolor'),
-                'thickness': (elem.hasClass('mini')) ? 0.45 : 0.25,
+                'thickness': elem.data('thickness'),
                 'tickdistance': elem.data('tickstep'),
                 'lastvalue': 0,
                 'displayInput': elem.data('displayinput'),

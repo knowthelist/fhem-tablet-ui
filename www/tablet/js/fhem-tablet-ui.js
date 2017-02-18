@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.2
+ * Version: 2.6.3
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -266,7 +266,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.2',
+    version: '2.6.3',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -320,9 +320,9 @@ var ftui = {
 
         ftui.paramIdMap = {};
         ftui.timestampMap = {};
-        ftui.config.longPollType = $("meta[name='longpoll']").attr("content") ||
-            $("meta[name='longpoll_type']").attr("content") || 'websocket';
-        ftui.config.doLongPoll = (ftui.config.longPollType !== '0');
+        ftui.config.longPollType = $("meta[name='longpoll_type']").attr("content") || 'websocket';
+        var longpoll = $("meta[name='longpoll']").attr("content") || '1';
+        ftui.config.doLongPoll = (longpoll != '0');
         ftui.config.longPollFilter = $("meta[name='longpoll_filter']").attr("content") || '.*';
         ftui.config.DEMO = ($("meta[name='demo']").attr("content") == '1');
         ftui.config.debuglevel = $("meta[name='debug']").attr("content") || 0;
@@ -624,7 +624,11 @@ var ftui = {
 
     initHeaderLinks: function () {
 
-        if ($('[class*=fa-]').length > 0 && !$('link[href$="lib/font-awesome.min.css"]').length)
+        if ( ($('[class*=fa-]').length > 0 ||
+            $('[data-type="select"]').length > 0 ||
+            $('[data-type="homestatus"]').length > 0 ) &&
+            !$('link[href$="lib/font-awesome.min.css"]').length 
+           )
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/font-awesome.min.css" type="text/css" />');
         if ($('[class*=oa-]').length > 0 && !$('link[href$="lib/openautomation.css"]').length)
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/openautomation.css" type="text/css" />');
@@ -792,7 +796,9 @@ var ftui = {
 
         if ('WebSocket' in window &&
             ftui.config.longPollType === 'websocket' &&
-            ftui.isValid(ftui.deviceStates['WEB'].longpoll.val) &&
+            ftui.deviceStates['WEB'] &&
+            ftui.deviceStates['WEB'].longpoll &&
+            ftui.deviceStates['WEB'].longpoll.val &&
             ftui.deviceStates['WEB'].longpoll.val === 'websocket') {
 
             if (ftui.websocket) {

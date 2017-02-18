@@ -17,7 +17,7 @@ var Modul_homestatus = function () {
 
     var isUpdating = false;
 
-    function drawDial() {
+ function drawDial() {
 
         /*jshint validthis: true */
         var sector = 0;
@@ -36,10 +36,10 @@ var Modul_homestatus = function () {
 
         if (sector == 1) {
             // inner circle
-            c.lineWidth = this.radius * 0.4;
+            c.lineWidth = this.radius*0.8;
             c.strokeStyle = this.o.fgColor;
             c.beginPath();
-            c.arc(this.xy, this.xy, this.radius * 0.2, 0, 2 * Math.PI);
+            c.arc(this.xy, this.xy, this.radius * 0.4, 0, 2 * Math.PI);
             c.stroke();
         } else {
             // outer section
@@ -70,27 +70,28 @@ var Modul_homestatus = function () {
                 end = Math.PI * 2;
                 sector = 4;
             }
-            c.lineWidth = this.radius * 0.6;
+            c.lineWidth = this.radius;
             c.beginPath();
             c.strokeStyle = this.o.fgColor;
-            c.arc(this.xy, this.xy, this.radius * 0.7, start, end);
+            c.arc(this.xy, this.xy, this.radius * 1.3, start, end);
             c.stroke();
         }
+        
         // sections
         c.strokeStyle = this.o.tkColor;
-        c.lineWidth = this.radius * 0.6;
+        c.lineWidth = this.radius;
         c.beginPath();
-        c.arc(this.xy, this.xy, this.radius * 0.7, 0, 0.025);
+        c.arc(this.xy, this.xy, this.radius * 1.3, 0, 0.025);
         c.stroke();
         c.beginPath();
-        c.arc(this.xy, this.xy, this.radius * 0.7, Math.PI - 0.025, Math.PI);
+        c.arc(this.xy, this.xy, this.radius * 1.3, Math.PI - 0.025, Math.PI);
         c.stroke();
         c.beginPath();
-        c.arc(this.xy, this.xy, this.radius * 0.7, 1.5 * Math.PI - 0.025, 1.5 * Math.PI);
+        c.arc(this.xy, this.xy, this.radius * 1.3, 1.5 * Math.PI - 0.025, 1.5 * Math.PI);
         c.stroke();
         if (texts.length > 4) {
             c.beginPath();
-            c.arc(this.xy, this.xy, this.radius * 0.7, 0.5 * Math.PI - 0.025, 0.5 * Math.PI);
+            c.arc(this.xy, this.xy, this.radius * 1.3, 0.5 * Math.PI - 0.025, 0.5 * Math.PI);
             c.stroke();
         }
 
@@ -98,61 +99,61 @@ var Modul_homestatus = function () {
         c.lineWidth = 2;
         c.strokeStyle = this.o.tkColor;
         c.beginPath();
-        c.arc(this.xy, this.xy, this.radius * 0.4, 0, 2 * Math.PI);
+        c.arc(this.xy, this.xy, this.radius * 0.8, 0, 2 * Math.PI);
         c.stroke();
 
         // outer circle line
         c.lineWidth = 2;
         c.beginPath();
-        c.arc(this.xy, this.xy, this.radius, 0, 2 * Math.PI, false);
+        c.arc(this.xy, this.xy, this.radius *1.8, 0, 2 * Math.PI, false);
         c.stroke();
 
         //cavans font
-        var cfont = 10 * window.devicePixelRatio + "px sans-serif";
-        var cfafont = 22 * window.devicePixelRatio + "px " + this.$.data("icon-font");
-        var coffset = 5 * window.devicePixelRatio;
+        var ratio = window.devicePixelRatio;
+        var cfont = 10 * ratio + "px sans-serif";
+        var cfafont = 22 * ratio + "px " + this.$.data("icon-font");
 
         c.fillStyle = (sector == 1) ? this.o.minColor : this.o.maxColor;
         c.font = cfont;
-        c.fillText(texts[0], this.xy - 15, this.xy + 10 + coffset);
+        c.fillText(texts[0], this.xy - 14 * ratio, this.xy + 16 * ratio);
         c.font = cfafont;
-        c.fillText(ftui.getIconId(icons[0]), this.xy - 12, this.xy + 2);
+        c.fillText(ftui.getIconId(icons[0]), this.xy - 12 * ratio, this.xy + 2);
 
         c.fillStyle = (sector == 2) ? this.o.minColor : this.o.maxColor;
         c.font = cfafont;
-        c.fillText(ftui.getIconId(icons[1]), this.xy - this.radius * 0.7, this.xy - this.radius * 0.4);
+        c.fillText(ftui.getIconId(icons[1]), this.xy - this.radius * 1.1    , this.xy - this.radius * 0.8);
         c.font = cfont;
-        c.fillText(texts[1], this.xy - this.radius * 0.85, this.xy - 10);
+        c.fillText(texts[1], this.xy - this.radius * 1.5, this.xy - 10 * ratio);
 
         c.fillStyle = (sector == 4) ? this.o.minColor : this.o.maxColor;
         c.font = cfafont;
-        c.fillText(ftui.getIconId(icons[3]), this.xy + this.radius * 0.35, this.xy - this.radius * 0.4);
+        c.fillText(ftui.getIconId(icons[3]), this.xy + this.radius * 0.6, this.xy - this.radius * 0.8);
         c.font = cfont;
-        c.fillText(texts[3], this.xy + this.radius * 0.44, this.xy - 10);
+        c.fillText(texts[3], this.xy + this.radius * 0.9, this.xy - 10 * ratio );
 
         if (texts.length > 4) {
             c.fillStyle = (sector == 3) ? this.o.minColor : this.o.maxColor;
             c.font = cfafont;
-            c.fillText(ftui.getIconId(icons[2]), this.xy + this.radius * 0.4, this.xy + this.radius * 0.5 + coffset);
+            c.fillText(ftui.getIconId(icons[2]), this.xy + this.radius * 0.6, this.xy + this.radius * 1.2);
             c.font = cfont;
-            c.fillText(texts[2], this.xy + this.radius * 0.44, this.xy + this.radius * 0.3 - coffset);
+            c.fillText(texts[2], this.xy + this.radius, this.xy + 20 * ratio );
             c.fillStyle = (sector == 5) ? this.o.minColor : this.o.maxColor;
             c.font = cfafont;
-            c.fillText(ftui.getIconId(icons[4]), this.xy - this.radius * 0.7, this.xy + this.radius * 0.5 + coffset);
+            c.fillText(ftui.getIconId(icons[4]), this.xy - this.radius * 0.9, this.xy + this.radius * 1.2);
             c.font = cfont;
-            c.fillText(texts[4], this.xy - this.radius * 0.85, this.xy + this.radius * 0.3 - coffset);
+            c.fillText(texts[4], this.xy - this.radius * 1.5, this.xy + 20 * ratio);
         } else {
             c.fillStyle = (sector == 3) ? this.o.minColor : this.o.maxColor;
             c.font = cfafont;
-            c.fillText(ftui.getIconId(icons[2]), this.xy - this.radius * 0.15, this.xy + this.radius * 0.65 + coffset);
+            c.fillText(ftui.getIconId(icons[2]), this.xy - 12 * ratio, this.xy + this.radius * 1.3);
             c.font = cfont;
-            c.fillText(texts[2], this.xy - 12, this.xy + this.radius * 0.82 + coffset);
+            c.fillText(texts[2], this.xy - 12 * ratio, this.xy + this.radius * 1.6 );
         }
 
         this.o.status = sector;
         return false;
     }
-
+    
     function onChange(v) {}
 
     function onRelease(v) {
@@ -182,12 +183,14 @@ var Modul_homestatus = function () {
             if (elem.data('version') && elem.data('version') !== '') {
                 defaultStates = ['home', 'asleep', 'absent', 'gone', 'gotosleep'];
             }
-            elem.data('get', elem.data('get') || 'STATE');
-            elem.data('cmd', elem.data('cmd') || 'set');
-            elem.data('get-on', typeof elem.data('get-on') != 'undefined' ? elem.data('get-on') : defaultStates);
-            elem.data('set-on', typeof elem.data('set-on') != 'undefined' ? elem.data('set-on') : elem.data('get-on'));
-            elem.data('height', 1 * elem.attr('data-height') || 210);
-            elem.data('width', 1 * elem.attr('data-width') || 210);
+            elem.initData('get', 'STATE');
+            elem.initData('cmd', elem.data('cmd') || 'set');
+            elem.initData('get-on', defaultStates);
+            elem.initData('set-on', elem.data('get-on'));
+            elem.initData('height', 210);
+            elem.initData('width', 210);
+            
+            
             if (elem.hasClass('small')) {
                 elem.data('height', 160);
                 elem.data('width', 160);
@@ -219,6 +222,7 @@ var Modul_homestatus = function () {
             elem.data('angleoffset', 0);
             elem.data('anglearc', 360);
             elem.data('displayinput', false);
+            elem.data('thickness', 1);
 
             me.init_attr(elem);
             me.init_ui(elem);
