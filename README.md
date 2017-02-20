@@ -1108,7 +1108,12 @@ Additional settings for Gridster are:
 
 **Polling settings**
 
-To set longpoll type, select "websocket", "ajax" or "0". Default is "websocket". Older browser needs "ajax". To disable longpoll set "0".
+To disable longpoll set this setting to "0". Default is '1' -> longpoll on
+```html
+<meta name="longpoll" content="1">
+```
+
+To set longpoll type, select "websocket", "ajax". Default is "websocket". Older browser needs "ajax".
 If your browser dont support WebSockets, then the fall back "ajax" will be used.
 ```html
 <meta name="longpoll_type" content="websocket">
@@ -1119,6 +1124,12 @@ Define a special event filter. e.g. if you use a dedicated FTUI Room for you FTU
 <meta name="longpoll_filter" content=".*">
 ```
 
+This setting affects the maximal allowd time range (in seconds) without any incomming longpoll event. 
+After this time the connection is considered as disconnected and a reconnect is tried.
+```html
+<meta name='longpoll_maxage' content='240'>
+```    
+        
 Interval for shortpolls (full refresh) in secondes.
 ```html
 <meta name="shortpoll_interval" content="900">
@@ -1133,6 +1144,13 @@ To change the folder where FHEM can be reached for polling
 ```html
 <meta name='fhemweb_url' content='/fhem/'>
 ```
+
+To change the folder where FHEM can be reached for polling
+```html
+<meta name='web_device' content='WEB'>
+```
+
+
 
 **General settings**
 

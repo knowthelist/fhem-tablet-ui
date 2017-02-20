@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.3
+ * Version: 2.6.4
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -226,7 +226,7 @@ var plugins = {
     updateParameters: function () {
         ftui.subscriptions = {};
         ftui.subscriptionTs = {};
-        ftui.devs = ['WEB'];
+        ftui.devs = [ftui.config.webDevice];
         for (var i = this.modules.length - 1; i >= 0; i -= 1) {
             var module = this.modules[i];
             for (var key in module.subscriptions) {
@@ -266,7 +266,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.3',
+    version: '2.6.4',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -320,13 +320,15 @@ var ftui = {
 
         ftui.paramIdMap = {};
         ftui.timestampMap = {};
-        ftui.devs = ['WEB'];
+        ftui.devs = [ftui.config.webDevice];
         ftui.config.longPollType = $("meta[name='longpoll_type']").attr("content") || 'websocket';
         var longpoll = $("meta[name='longpoll']").attr("content") || '1';
         ftui.config.doLongPoll = (longpoll != '0');
         ftui.config.longPollFilter = $("meta[name='longpoll_filter']").attr("content") || '.*';
         ftui.config.DEMO = ($("meta[name='demo']").attr("content") == '1');
         ftui.config.debuglevel = $("meta[name='debug']").attr("content") || 0;
+        ftui.config.webDevice = $("meta[name='web_device']").attr("content") || 'WEB';
+        ftui.config.maxLongpollAge = $("meta[name='longpoll_maxage']").attr("content") || 240;
         ftui.config.DEBUG = (ftui.config.debuglevel > 0);
         ftui.config.TOAST = $("meta[name='toast']").attr("content") || 5; //1,2,3...= n Toast-Messages, 0: No Toast-Messages
         ftui.config.shortpollInterval = $("meta[name='shortpoll_only_interval']").attr("content") || 30;
@@ -341,6 +343,8 @@ var ftui = {
         var userLang = navigator.language || navigator.userLanguage;
         ftui.config.lang = $("meta[name='lang']").attr("content") || (ftui.isValid(userLang)) ? userLang.split('-')[0] : 'de';
 
+        // Get CSFS Token
+        ftui.getCSrf();
 
         // init Toast
         function configureToast() {
@@ -625,11 +629,11 @@ var ftui = {
 
     initHeaderLinks: function () {
 
-        if ( ($('[class*=fa-]').length > 0 ||
-            $('[data-type="select"]').length > 0 ||
-            $('[data-type="homestatus"]').length > 0 ) &&
-            !$('link[href$="lib/font-awesome.min.css"]').length 
-           )
+        if (($('[class*=fa-]').length > 0 ||
+                $('[data-type="select"]').length > 0 ||
+                $('[data-type="homestatus"]').length > 0) &&
+            !$('link[href$="lib/font-awesome.min.css"]').length
+        )
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/font-awesome.min.css" type="text/css" />');
         if ($('[class*=oa-]').length > 0 && !$('link[href$="lib/openautomation.css"]').length)
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/openautomation.css" type="text/css" />');
@@ -691,10 +695,15 @@ var ftui = {
         //Request all devices from FHEM
         var devicelist = (ftui.devs.length > 0) ? $.map(ftui.devs, $.trim).join() : '.*';
         ftui.log(4, 'shortpoll: devicelist=' + devicelist);
-        $.getJSON(ftui.config.fhemDir, {
-                cmd: 'jsonlist2 ' + devicelist,
-                XHR: 1,
-                timeout: 60000
+
+        $.ajax({
+                cache: false,
+                url: ftui.config.fhemDir,
+                data: {
+                    cmd: 'jsonlist2 ' + devicelist,
+                    fwcsrf: ftui.config.csrf,
+                    XHR: "1"
+                }
             })
             .done(function (fhemJSON) {
                 console.timeEnd('get jsonlist2');
@@ -748,34 +757,39 @@ var ftui = {
                 }
 
                 // import the whole fhemJSON
-                var len = fhemJSON.Results.length;
-                ftui.log(2, 'shortpoll: fhemJSON.Results.length=' + len);
-                var results = fhemJSON.Results;
+                if (fhemJSON) {
+                    var len = fhemJSON.Results.length;
+                    ftui.log(2, 'shortpoll: fhemJSON.Results.length=' + len);
+                    var results = fhemJSON.Results;
 
-                for (var i = 0; i < len; i++) {
-                    var res = results[i];
-                    var devName = res.Name;
-                    if (devName.indexOf('FHEMWEB') < 0 && devName.indexOf('WEB_') < 0) {
-                        checkReading(devName, res.Readings);
-                        checkReading(devName, res.Internals);
-                        checkReading(devName, res.Attributes);
+                    for (var i = 0; i < len; i++) {
+                        var res = results[i];
+                        var devName = res.Name;
+                        if (devName.indexOf('FHEMWEB') < 0 && devName.indexOf('WEB_') < 0) {
+                            checkReading(devName, res.Readings);
+                            checkReading(devName, res.Internals);
+                            checkReading(devName, res.Attributes);
+                        }
                     }
-                }
 
-                // finished
-                var duration = ftui.diffSeconds(startTime, new Date());
-                if (ftui.config.DEBUG) {
-                    var paramCount = Object.keys(ftui.paramIdMap).length;
-                    ftui.toast("Full refresh done in " +
-                        duration + "s for " +
-                        paramCount + " parameter(s)");
+                    // finished
+                    var duration = ftui.diffSeconds(startTime, new Date());
+                    if (ftui.config.DEBUG) {
+                        var paramCount = Object.keys(ftui.paramIdMap).length;
+                        ftui.toast("Full refresh done in " +
+                            duration + "s for " +
+                            paramCount + " parameter(s)");
+                    }
+                    ftui.log(1, 'shortPoll - Done');
+                    ftui.states.lastShortpoll = ltime;
+                    ftui.poll.lastShortpollTimestamp = new Date();
+                    ftui.saveStatesLocal();
+                    ftui.updateBindElements('ftui.');
+                    ftui.onUpdateDone();
+                } else {
+                    ftui.log(1, "shortPoll request failed: Result is null");
+                    ftui.toast("<u>ShortPoll Request Failed: : Result is null </u><br>", 'error');
                 }
-                ftui.log(1, 'shortPoll - Done');
-                ftui.states.lastShortpoll = ltime;
-                ftui.poll.lastShortpollTimestamp = new Date();
-                ftui.saveStatesLocal();
-                ftui.updateBindElements('ftui.');
-                ftui.onUpdateDone();
                 console.timeEnd('read jsonlist2');
             })
             .fail(function (jqxhr, textStatus, error) {
@@ -797,10 +811,10 @@ var ftui = {
 
         if ('WebSocket' in window &&
             ftui.config.longPollType === 'websocket' &&
-            ftui.deviceStates['WEB'] &&
-            ftui.deviceStates['WEB'].longpoll &&
-            ftui.deviceStates['WEB'].longpoll.val &&
-            ftui.deviceStates['WEB'].longpoll.val === 'websocket') {
+            ftui.deviceStates[ftui.config.webDevice] &&
+            ftui.deviceStates[ftui.config.webDevice].longpoll &&
+            ftui.deviceStates[ftui.config.webDevice].longpoll.val &&
+            ftui.deviceStates[ftui.config.webDevice].longpoll.val === 'websocket') {
 
             if (ftui.websocket) {
                 ftui.log(3, 'valid ftui.websocket found');
@@ -986,6 +1000,7 @@ var ftui = {
                 url: ftui.config.fhemDir,
                 data: {
                     cmd: cmdline,
+                    fwcsrf: ftui.config.csrf,
                     XHR: "1"
                 }
             })
@@ -1206,6 +1221,17 @@ var ftui = {
         return deferred.promise();
     },
 
+    getCSrf: function () {
+
+        $.ajax({
+            'url': ftui.config.fhemDir,
+            'type': 'GET',
+            'success': function (data, textStatus, jqXHR) {
+                ftui.config.csrf = jqXHR.getResponseHeader('X-FHEM-csrfToken');
+            }
+        });
+    },
+
     healthCheck: function () {
         if (ftui.config.debuglevel > 0) {
             var d = new Date();
@@ -1228,7 +1254,7 @@ var ftui = {
             console.log('--------- end healthCheck ---------------');
         }
         var timeDiff = new Date() - ftui.poll.lastEventTimestamp;
-        if (timeDiff / 1000 > 240 && !ftui.config.DEMO && ftui.config.doLongPoll) {
+        if (timeDiff / 1000 > ftui.config.maxLongpollAge && !ftui.config.DEMO && ftui.config.doLongPoll) {
             ftui.log(1, 'No longpoll event since ' + timeDiff / 1000 + 'secondes -> restart polling');
             ftui.setOnline();
             ftui.restartLongPoll();

@@ -27,3 +27,6 @@
 - Enabled flexible base directory again (was removed with 2.5.1)
 - Added data-bind to show internal variables 
 - Dity up CSS classes
+
+2.6.4 (20.02.2017)
+- Added CSRF Token handling
