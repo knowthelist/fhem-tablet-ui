@@ -96,7 +96,7 @@ UPD 2017-02-11_14:27:26 2751 www/tablet/js/widget_input.js
 UPD 2017-02-11_14:27:26 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2017-02-11_14:27:26 2983 www/tablet/js/widget_joinedlabel.js
 UPD 2017-02-11_14:27:26 4496 www/tablet/js/widget_klimatrend.js
-UPD 2017-02-18_18:28:13 8526 www/tablet/js/widget_knob.js
+UPD 2017-02-21_00:28:07 8016 www/tablet/js/widget_knob.js
 UPD 2017-01-07_08:40:10 6100 www/tablet/js/widget_label.js
 UPD 2017-02-11_14:27:26 877 www/tablet/js/widget_level.js
 UPD 2017-01-26_00:21:10 10561 www/tablet/js/widget_link.js
