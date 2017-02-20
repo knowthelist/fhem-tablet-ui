@@ -48,41 +48,27 @@ var Modul_knob = function () {
         elem.initData('min', 0);
         elem.initData('max', 100);
 
-        if (elem.isValidData('height')) {
-            if (elem.hasClass('bigger')) {
-                elem.data('height', 260);
-            }
-            if (elem.hasClass('big')) {
-                elem.data('height', 210);
-            }
-            if (elem.hasClass('large')) {
-                elem.data('height', 150);
-            }
-            if (elem.hasClass('small')) {
-                elem.data('height', 100);
-            }
-            if (elem.hasClass('mini')) {
-                elem.data('height', 52);
-                elem.data('thickness', 0.45);
-            }
+
+        if (elem.hasClass('bigger')) {
+            elem.data('height', 260);
+            elem.data('width', 260);
         }
-        if (elem.isValidData('width')) {
-            if (elem.hasClass('bigger')) {
-                elem.data('width', 260);
-            }
-            if (elem.hasClass('big')) {
-                elem.data('width', 210);
-            }
-            if (elem.hasClass('large')) {
-                elem.data('width', 150);
-            }
-            if (elem.hasClass('small')) {
-                elem.data('width', 100);
-            }
-            if (elem.hasClass('mini')) {
-                elem.data('width', 52);
-                elem.data('thickness', 0.45);
-            }
+        if (elem.hasClass('big')) {
+            elem.data('height', 210);
+            elem.data('width', 210);
+        }
+        if (elem.hasClass('large')) {
+            elem.data('height', 150);
+            elem.data('width', 150);
+        }
+        if (elem.hasClass('small')) {
+            elem.data('height', 100);
+            elem.data('width', 100);
+        }
+        if (elem.hasClass('mini')) {
+            elem.data('height', 52);
+            elem.data('width', 52);
+            elem.data('thickness', 0.45);
         }
 
         elem.initData('height', 120);
