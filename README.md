@@ -667,6 +667,8 @@ The crosshair cursor currently only works dynamically on desktop browsers. On iO
 - **data-draggable**   : allow moving of the dialog (default 'true')
 - **data-mode**        : (default 'animate')
 
+data-mode types are: 'animateTop', 'animate', 'fade'
+
 class="interlock" on popup elements prevents popup from closing manually. Closing could only be triggered through data-get-off
 
 It's important that a ```<div class="dialog">``` inside the widget can be found. See the [basic structure](#dialog) of popup

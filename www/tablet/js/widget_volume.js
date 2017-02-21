@@ -115,7 +115,7 @@ var Modul_volume = function () {
             } else {
                 //send decimal value
                 v = v * (this.o.origmax / this.o.max);
-                v = (this.step < 1) ? Number(v).toFixed(1) : v;
+                v = (this.step < 1) ? Number(v).toFixed(1) : Number(v).toFixed(0);
             }
             var device = this.$.data('device');
             if (typeof device != 'undefined') {

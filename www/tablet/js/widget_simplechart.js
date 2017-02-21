@@ -113,6 +113,7 @@ var Modul_simplechart = function () {
             },
             data: {
                 cmd: cmd.join(' '),
+                fwcsrf: ftui.config.csrf,
                 XHR: "1"
             },
         }).done(function (data) {
