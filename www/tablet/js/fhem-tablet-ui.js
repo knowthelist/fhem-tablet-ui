@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.4
+ * Version: 2.6.5
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -266,7 +266,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.4',
+    version: '2.6.5',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -699,6 +699,7 @@ var ftui = {
         $.ajax({
                 cache: false,
                 url: ftui.config.fhemDir,
+                dataType: "json",
                 data: {
                     cmd: 'jsonlist2 ' + devicelist,
                     fwcsrf: ftui.config.csrf,
@@ -757,7 +758,7 @@ var ftui = {
                 }
 
                 // import the whole fhemJSON
-                if (fhemJSON) {
+                if (fhemJSON && fhemJSON.Results) {
                     var len = fhemJSON.Results.length;
                     ftui.log(2, 'shortpoll: fhemJSON.Results.length=' + len);
                     var results = fhemJSON.Results;
@@ -1254,7 +1255,10 @@ var ftui = {
             console.log('--------- end healthCheck ---------------');
         }
         var timeDiff = new Date() - ftui.poll.lastEventTimestamp;
-        if (timeDiff / 1000 > ftui.config.maxLongpollAge && !ftui.config.DEMO && ftui.config.doLongPoll) {
+        if (timeDiff / 1000 > ftui.config.maxLongpollAge &&
+            ftui.config.maxLongpollAge > 0 &&
+            !ftui.config.DEMO &&
+            ftui.config.doLongPoll) {
             ftui.log(1, 'No longpoll event since ' + timeDiff / 1000 + 'secondes -> restart polling');
             ftui.setOnline();
             ftui.restartLongPoll();

@@ -370,8 +370,6 @@ section {
 
 /* End gridster layout */
 
-
-
 .col-1-1,
 .col-100 {
     width: 99.6% !important;
@@ -383,7 +381,7 @@ section {
 
 .col-2-3,
 .col-4-6,
-.col-66{
+.col-66 {
     width: 65% !important;
 }
 
@@ -1594,10 +1592,7 @@ div[data-type="link"] > div.fa {
     overflow: auto;
 }
 
-[data-type]:not([data-type="label"]):not(.readonly):not([data-type="symbol"]):not([data-type="spinner"])
-:not([data-type="switch"]):not([data-type="button"]):not([data-type="pagebutton"])
-:not([data-type="pagetab"]):not([data-type="dimmer"]):not([data-type="multistatebutton"])
-:not([data-type="push"]):not([data-type="playstream"]),
+[data-type]:not([data-type="label"]):not(.readonly):not([data-type="symbol"]):not([data-type="spinner"]):not([data-type="switch"]):not([data-type="button"]):not([data-type="pagebutton"]):not([data-type="pagetab"]):not([data-type="dimmer"]):not([data-type="multistatebutton"]):not([data-type="push"]):not([data-type="playstream"]),
 [onclick] {
     cursor: pointer;
 }
@@ -1657,14 +1652,14 @@ div[data-type="link"] > div.fa {
     width: 1.35em;
 }
 
-[data-type="symbol"].height-narrow  > .famultibutton,
+[data-type="symbol"].height-narrow > .famultibutton,
 [data-type="multistatebutton"].height-narrow > .famultibutton,
 [data-type="switch"].height-narrow > .famultibutton,
 [data-type="button"].height-narrow > .famultibutton,
 [data-type="push"].height-narrow > .famultibutton,
 [data-type="pagebutton"].height-narrow > .famultibutton {
     height: 1.4em;
-    line-height:  1.4em;
+    line-height: 1.4em;
 }
 
 .compressed > .famultibutton,
@@ -1769,7 +1764,7 @@ div[data-type="link"] > div.fa {
 }
 
 .top-space,
-.top-space-50{
+.top-space-50 {
     margin-top: 1em !important;
 }
 
@@ -1914,7 +1909,6 @@ div[data-type="link"] > div.fa {
     padding-top: 4em !important;
     margin-top: 0em !important;
 }
-
 
 .row > .cell.top-space-3x,
 .row > .cell.top-space-3,
@@ -2097,7 +2091,7 @@ div[data-type="link"] > div.fa {
     font-size: 600% !important;
 }
 
-.great{
+.great {
     font-size: 450% !important;
 }
 
@@ -2189,68 +2183,68 @@ div[data-type="link"] > div.fa {
     line-height: 100% !important;
 }
 
+
 /* Size for Weather */
 
 img.gigantic,
-.gigantic > img{
+.gigantic > img {
     width: 800% !important;
 }
 
 img.grande,
-.grande > img{
+.grande > img {
     width: 600% !important;
 }
 
 img.great,
-.great > img{
+.great > img {
     width: 450% !important;
 }
 
 img.big,
-.big > img{
+.big > img {
     width: 320% !important;
 }
 
 img.tall,
-.tall > img{
+.tall > img {
     width: 350% !important;
 }
 
 img.bigger,
-.bigger > img{
+.bigger > img {
     width: 200% !important;
 }
 
 img.big,
-.big > img{
+.big > img {
     width: 150% !important;
 }
 
 img.large,
-.large > img{
+.large > img {
     width: 125% !important;
 }
 
 img.normal,
-normal > img{
+normal > img {
     width: 100% !important;
 }
 
 img.small,
-.small > img{
+.small > img {
     width: 80% !important;
 }
 
 img.tiny,
-.tiny > img{
+.tiny > img {
     width: 60% !important;
 }
 
 img.mini,
-.mini > img{
+.mini > img {
     width: 50% !important;
 }
-
 
 .top {
     vertical-align: super;
@@ -2300,39 +2294,41 @@ i#warn-back {
 }
 
 .doublebox-v {
-    min-height: 104px;
-    max-height: 104px;
-    min-width: 52px;
-    max-width: 52px;
+    height: 6em;
+    width: 1em;
 }
 
 .doublebox-h {
-    min-width: 104px;
-    max-width: 104px;
-    min-height: 52px;
-    max-height: 52px;
-}
-
-.doublebox-v [data-type] {
-    margin-top: -4px;
-    margin-bottom: -4px;
-}
-
-.doublebox-h [data-type] {
-    margin-left: -6px;
-    margin-right: -6px;
+    width: 6em;
+    white-space: nowrap;
 }
 
 .triplebox-v {
-    min-height: 140px;
-    max-height: 140px;
-    min-width: 52px;
-    max-width: 52px;
+    height: 9em;
+    width: 1em;
+}
+
+.triplebox-h {
+    width: 9em;
+    white-space: nowrap;
+}
+
+.doublebox-v [data-type] {
+    height: 3.3em;
+}
+
+.doublebox-h [data-type] {
+    width: 3em;
+    display: inline-block;
 }
 
 .triplebox-v [data-type] {
-    margin-top: -4px;
-    margin-bottom: -4px;
+    height: 3.3em;
+}
+
+.triplebox-h [data-type] {
+    width: 3em;
+    display: inline-block;
 }
 
 .fa-square-o + .fa-chevron-up {
@@ -2432,6 +2428,7 @@ li {
 }
 
 .menu li:first-child {}
+
 
 /* Circlemenu Widget */
 
@@ -3063,8 +3060,15 @@ img.faded {
 
 /* pseudo classes for widget init function */
 
-.pagebutton.on{color:#2A2A2A;background-color:#505050;}
-.pagebutton.off{color:#505050;background-color:transparent;}
+.pagebutton.on {
+    color: #2A2A2A;
+    background-color: #505050;
+}
+
+.pagebutton.off {
+    color: #505050;
+    background-color: transparent;
+}
 
 .symbol.on {
     color: #aa6900;
