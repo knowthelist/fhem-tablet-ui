@@ -99,7 +99,8 @@ var Modul_popup = function () {
                 starter.addClass('dialog-starter');
 
             var close = $('<div/>', {
-                class: 'dialog-close'
+                class: 'dialog-close',
+                id: elem.attr('id')
             }).html('x').appendTo(dialog);
 
             if (dialog && close && starter) {
