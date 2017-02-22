@@ -109,7 +109,7 @@ UPD 2017-02-11_14:27:26 3770 www/tablet/js/widget_notify.js
 UPD 2017-02-09_19:07:46 9779 www/tablet/js/widget_pagebutton.js
 UPD 2017-02-11_18:10:47 8584 www/tablet/js/widget_pagetab.js
 UPD 2017-02-13_03:33:15 5205 www/tablet/js/widget_playstream.js
-UPD 2017-02-21_22:28:14 8365 www/tablet/js/widget_popup.js
+UPD 2017-02-22_22:36:54 8915 www/tablet/js/widget_popup.js
 UPD 2017-01-22_20:21:29 3554 www/tablet/js/widget_progress.js
 UPD 2017-01-23_23:45:24 1866 www/tablet/js/widget_push.js
 UPD 2017-02-06_03:22:08 6051 www/tablet/js/widget_range.js
