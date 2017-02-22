@@ -156,21 +156,32 @@ var Modul_popup = function () {
 
                 //prepare events
                 $(window).resize(function () {
-                    dialog.options.end_top = (elem.isValidData('top')) ? elem.data('top') : ($(window).height() - parseInt(elem.data('height'))) / 2;
-                    dialog.options.end_left = (elem.isValidData('left')) ? elem.data('left') : ($(window).width() - parseInt(elem.data('width'))) / 2;
-                    dialog.options.height = parseInt(elem.data('height'));
-                    dialog.options.width = parseInt(elem.data('width'));
+                    var width = elem.data('width');
+                    var height = elem.data('height');
+                    if ( width.indexOf('%') > 0 ){
+                        dialog.options.end_left = (elem.isValidData('left')) ? elem.data('left') : ((100 - parseInt(width)) / 2) + '%';
+                    } else {
+                        dialog.options.end_left = (elem.isValidData('left')) ? elem.data('left') : ($(window).width() - parseInt(width)) / 2; 
+                    }
+                    if ( height.indexOf('%') > 0 ){
+                        dialog.options.end_top = (elem.isValidData('top')) ? elem.data('top') : ((100 - parseInt(height)) / 2) + '%';
+                    } else {
+                        dialog.options.end_top = (elem.isValidData('top')) ? elem.data('top') : ($(window).height() - parseInt(height)) / 2; 
+                    }
+
+                    dialog.options.height = height;
+                    dialog.options.width = width;
 
                     if (elem.data('mode') === 'animateTop') {
-                        dialog.options.start_top = 0 - dialog.options.height; 
+                        dialog.options.start_top = 0 - parseInt(dialog.options.height); 
                         dialog.options.start_left = dialog.options.end_left; 
                         dialog.css({
                             top: dialog.options.start_top,
                             left: dialog.options.start_left,
                         });
                     } else {
-                        dialog.options.start_top = (ftui.isValid(starter) ) ? starter.offset().top + dialog.options.height/2 : 0;
-                        dialog.options.start_left = (ftui.isValid(starter) ) ? starter.offset().left + dialog.options.width/2 : 0;
+                        dialog.options.start_top = (ftui.isValid(starter) ) ? starter.offset().top + parseInt(dialog.options.height)/2 : 0;
+                        dialog.options.start_left = (ftui.isValid(starter) ) ? starter.offset().left + parseInt(dialog.options.width)/2 : 0;
                         dialog.css({
                             height: 0,
                             width: 0,
