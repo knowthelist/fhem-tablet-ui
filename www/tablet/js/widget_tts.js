@@ -2,7 +2,7 @@
 
 function depends_tts() {
     if (!$.fn.tts) {
-        return ['lib/responsivevoice.js'];
+        return [ftui.config.basedir + 'lib/responsivevoice.js'];
     }
 }
 
