@@ -63,6 +63,10 @@ body {
     font-size: 2em
 }
 
+.fa-fw {
+    width: 1.28571429em;
+}
+
 [class^="ftui-"],
 [class*=" ftui-"] {
     font-family: 'FTUI-icons' !important;
@@ -310,7 +314,7 @@ section {
 }
 
 [class*='col-'],
-[class='col'] {
+.col {
     display: inline-block;
     vertical-align: middle;
     height: 100%;
@@ -593,6 +597,7 @@ main > .box.horizontal {
     flex-grow: 9;
 }
 
+
 .box.horizontal.items-top,
 .hbox.items-top,
 .card.items-top {
@@ -618,7 +623,7 @@ main > .box.horizontal {
 .hbox > .bottom-align {
     align-self: flex-end;
 }
-
+ 
 .box.horizontal > .center-align,
 .hbox > .center-align,
 .box.vertical > .center-align,
@@ -917,7 +922,7 @@ main > .box.horizontal {
 
 .bg-blue,
 .btn-blue {
-    background-color: #337ab7 !important;
+    background-color: #436D8D !important;
 }
 
 .bg-white,
@@ -1610,6 +1615,7 @@ div[data-type="link"] > div.fa {
 
 .label-unit {
     font-size: 50%;
+    vertical-align: super;
 }
 
 .truncate,
@@ -2264,6 +2270,11 @@ img.mini,
     border-right-style: outset;
 }
 
+.horizontalLine {
+    border-top: 1px solid;
+    opacity: 0.7;
+}
+
 [data-type="pagetab"] .label {
     font-size: 50% !important;
     white-space: nowrap;
@@ -2617,6 +2628,26 @@ select::-ms-expand {
     min-width: 70px;
     max-width: 70px;
     width: 70px;
+}
+
+.w-60 {
+    padding-left: 20%;
+    padding-right: 20%
+}
+
+.w-70 {
+    padding-left: 15%;
+    padding-right: 15%
+}
+
+.w-80 {
+    padding-left: 10%;
+    padding-right: 10%
+}
+
+.w-90 {
+    padding-left: 5%;
+    padding-right: 5%
 }
 
 [data-type="select"],
