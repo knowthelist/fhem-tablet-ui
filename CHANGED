@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
 2017-02-23
- - Added very important fa-class to css
+ - Added basedir to tts widget
