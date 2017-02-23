@@ -158,12 +158,12 @@ var Modul_popup = function () {
                 $(window).resize(function () {
                     var width = elem.data('width');
                     var height = elem.data('height');
-                    if ( width.indexOf('%') > 0 ){
+                    if ( String(elem.data('width')).indexOf('%') > 0 ){
                         dialog.options.end_left = (elem.isValidData('left')) ? elem.data('left') : ((100 - parseInt(width)) / 2) + '%';
                     } else {
                         dialog.options.end_left = (elem.isValidData('left')) ? elem.data('left') : ($(window).width() - parseInt(width)) / 2; 
                     }
-                    if ( height.indexOf('%') > 0 ){
+                    if ( String(elem.data('height')).indexOf('%') > 0 ){
                         dialog.options.end_top = (elem.isValidData('top')) ? elem.data('top') : ((100 - parseInt(height)) / 2) + '%';
                     } else {
                         dialog.options.end_top = (elem.isValidData('top')) ? elem.data('top') : ($(window).height() - parseInt(height)) / 2; 

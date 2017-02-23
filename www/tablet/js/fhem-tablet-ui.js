@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.5
+ * Version: 2.6.6
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -266,7 +266,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.5',
+    version: '2.6.6',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -796,10 +796,15 @@ var ftui = {
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ", " + error;
                 ftui.log(1, "shortPoll request failed: " + err);
-                ftui.toast("<u>ShortPoll Request Failed, will retry in 3s</u><br>" + err, 'error');
                 ftui.states.lastSetOnline = 0;
                 ftui.states.lastShortpoll = 0;
-                ftui.startShortPollInterval(3000);
+                if (textStatus.indexOf('parsererror') < 0) {
+                    ftui.toast("<u>ShortPoll Request Failed, will retry in 3s</u><br>" + err, 'error');
+                    ftui.startShortPollInterval(3000);
+                } else {
+                    ftui.toast("<u>ShortPoll Request Failed</u><br>" + err, 'error');
+                }
+
             });
     },
 
@@ -824,7 +829,9 @@ var ftui = {
             if (ftui.config.DEBUG) {
                 ftui.toast("Longpoll (WebSocket) started");
             }
-            var wsURL = ftui.config.fhemDir.replace(/^http/i, "ws") + "?XHR=1&inform=type=status;filter=" + ftui.config.longPollFilter + ";fmt=JSON";
+            var wsURL = ftui.config.fhemDir.replace(/^http/i, "ws") + "?XHR=1&inform=type=status;filter=" +
+                ftui.config.longPollFilter + ";fmt=JSON" +
+                "&fwcsrf=" + ftui.config.csrf;
             ftui.log(1, 'websockets URL=' + wsURL);
 
             ftui.websocket = new WebSocket(wsURL);
@@ -834,6 +841,9 @@ var ftui = {
             };
             ftui.websocket.onerror = function (msg) {
                 ftui.log(1, "Error while longpoll: " + msg);
+                if (ftui.config.debuglevel > 1) {
+                    ftui.toast("Error while longpoll (websocket)<br>" + msg.data, 'error');
+                }
                 ftui.restartLongPoll();
             };
             ftui.websocket.onmessage = function (msg) {
@@ -868,7 +878,8 @@ var ftui = {
                     method: 'GET',
                     data: {
                         XHR: 1,
-                        inform: "type=status;filter=" + ftui.config.longPollFilter + ";fmt=JSON"
+                        inform: "type=status;filter=" + ftui.config.longPollFilter + ";fmt=JSON",
+                        fwcsrf: ftui.config.csrf
                     },
                     xhr: function () {
                         ftui.xhr = new window.XMLHttpRequest();
@@ -907,6 +918,9 @@ var ftui = {
                         ftui.longPoll();
                     else {
                         ftui.log(1, "Error while longpoll: " + textStatus + ": " + errorThrown);
+                        if (ftui.config.debuglevel > 1) {
+                            ftui.toast("Error while longpoll (ajax)<br>" + textStatus + ": " + errorThrown, 'error');
+                        }
                         ftui.restartLongPoll();
                     }
                 });
