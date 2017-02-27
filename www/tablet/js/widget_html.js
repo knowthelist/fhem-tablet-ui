@@ -25,6 +25,11 @@ var Modul_html = function () {
 
         console.log('onClicked', elem);
 
+        elem.addClass("flashNow");
+        setTimeout(function () {
+            elem.removeClass("flashNow");
+        }, 500);
+
         if (elem.isValidData('url')) {
             document.location.href = elem.data('url');
             var hashUrl = window.location.hash.replace('#', '');
@@ -166,8 +171,10 @@ var Modul_html = function () {
                 });
             } else {
                 if (elem.isValidData('clicked')) {
-                    elem.on('click', function () {
+                    elem.on(ftui.config.clickEventType, function (e) {
                         onClicked(elem);
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
                     });
                 }
             }

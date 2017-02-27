@@ -1623,8 +1623,15 @@ var widget_chart = {
 				context: {elem: $(theObj)},
 				data: {
 					cmd: cmd.join(' '),
-					XHR: "1"
+					XHR: "1",
+                    fwcsrf: ftui.config.csrf
 				},
+                xhrFields: {
+                    withCredentials: (ftui.config.credentials) ? true : false
+                },
+                    headers: {
+                    'Authorization': 'Basic ' + btoa(ftui.config.credentials)
+                },
 			}).done(function(dat) { // jshint ignore:line
 				var lines = dat.split('\n');
 				var point=[];

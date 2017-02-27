@@ -487,6 +487,10 @@ section {
 .hbox,
 .vbox,
 .box {
+      display: -webkit-box !important;
+  display: -moz-box !important;
+  display: -ms-flexbox !important;
+  display: -webkit-flex !important; 
     display: flex !important;
     justify-content: center;
     align-items: center;
@@ -655,6 +659,8 @@ main > .box.horizontal {
 .hbox.items-space-around,
 .vbox.items-space-around,
 .card.items-space-around {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-around;
     justify-content: space-around;
 }
 
@@ -1324,6 +1330,10 @@ div[data-type="link"] > div.fa {
 .row-33,
 .row-1-3 {
     height: 33% !important;
+}
+
+.row-30 {
+    height: 30% !important;
 }
 
 .row-40,
@@ -2095,6 +2105,10 @@ div[data-type="link"] > div.fa {
 
 .grande {
     font-size: 600% !important;
+}
+
+.huge {
+    font-size: 500% !important;
 }
 
 .great {
@@ -3076,6 +3090,16 @@ img.faded {
     100% {
         transform: translateX(0);
     }
+}
+
+.flashNow {
+    animation-name: flash;
+    animation-timing-function: ease-out;
+    animation-duration: .4s;
+}
+@keyframes flash {
+    0% { background: white; }
+    100% { background: none; }
 }
 
 .marquee {

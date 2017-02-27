@@ -22,6 +22,14 @@
     font-size: 40px;
     cursor: pointer;
 }
+.spinner.plain > .lefticon {
+    font-size: 30px;
+    font-weight: bold
+}
+.spinner.plain > .righticon {
+    font-size: 30px;
+    font-weight: bold
+}
 .spinner > .lefticon.fa,.spinner > .righticon.fa {
     padding-bottom: 0px;
     font-size: 20px;
@@ -36,6 +44,12 @@
     background-color: #313131;
     height: 7px;
 }
+.spinner.plain > .levelArea {
+    margin-left:2px;
+    margin-right:2px;
+    visibility: hidden;
+}
+
 .spinner .levelRange {
     position: absolute;
     border-radius: 5px;
@@ -49,11 +63,16 @@
     top: -24%;
     left: 25%;
 }
-.spinner.valueonly > .spinnerText {
+.spinner.valueonly > .spinnerText,
+.spinner.plain > .spinnerText{
     position: absolute;
-    top: 2px;
+    top: 26%;
     left: 23%;
     font-size: 30px;
     font-weight: bold;
     font-family: robotothin,sans-serif;
+}
+
+.spinner.plain > .spinnerText {
+    font-size: 18px;
 }

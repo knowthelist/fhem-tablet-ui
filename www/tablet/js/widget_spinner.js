@@ -77,7 +77,7 @@ var Modul_spinner = function () {
             value = elem.data('on');
         }
         elem.data('value', value);
-        if (elem.hasClass('value') || elem.hasClass('valueonly')) {
+        if (elem.hasClass('value') || elem.hasClass('valueonly') || elem.hasClass('plain')) {
             var textElem = elem.find('.spinnerText');
             if (isNaN(value))
                 textElem.text(value);
@@ -188,14 +188,18 @@ var Modul_spinner = function () {
 
         var leftIcon = elem.data('icon-left');
         var rightIcon = elem.data('icon-right');
+        var width = elem.data('width');
+        var widthUnit = ($.isNumeric(width)) ? 'px' : '';
+        var height = elem.data('height');
+        var heightUnit = ($.isNumeric(height)) ? 'px' : '';
 
         // prepare container element
         elem.html('')
             .addClass('spinner')
             .css({
-                width: elem.data('width') + 'px',
-                maxWidth: elem.data('width') + 'px',
-                height: elem.data('height') + 'px',
+                width: width + widthUnit,
+                maxWidth: width + widthUnit,
+                height: height + heightUnit,
                 lineHeight: elem.data('height') * 0.9 + 'px',
                 color: elem.mappedColor('text-color'),
                 backgroundColor: elem.mappedColor('background-color'),
@@ -251,13 +255,13 @@ var Modul_spinner = function () {
         }
 
         // prepare text element
-        if (elem.hasClass('value') || elem.hasClass('valueonly')) {
+        if (elem.hasClass('value') || elem.hasClass('valueonly') || elem.hasClass('plain')) {
             var elemText = $('<div/>', {
                 class: 'spinnerText',
             }).css({
                 width: '50%',
             }).appendTo(elem);
-            if (elem.hasClass('valueonly'))
+            if (elem.hasClass('valueonly') || elem.hasClass('plain'))
                 elemText.css({
                     fontSize: elem.data('height') * 0.6 + 'px',
                 });
@@ -267,21 +271,29 @@ var Modul_spinner = function () {
         // UP button
         elemRightIcon.on('touchstart mousedown', function (e) {
             elemRightIcon.fadeTo("fast", 0.5);
-            onClicked(elem, 1);
             e.preventDefault();
+            e.stopPropagation();
+            onClicked(elem, 1);
         });
         elemRightIcon.on('touchend touchleave mouseup mouseout', function (e) {
             elemRightIcon.fadeTo("fast", 1);
             if (elem.delayTimer)
                 onReleased(elem);
             e.preventDefault();
+            e.stopPropagation();
+        });
+        elemRightIcon.on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
         });
 
         // DOWN button
         elemLeftIcon.on('touchstart mousedown', function (e) {
             elemLeftIcon.fadeTo("fast", 0.5);
+                        e.preventDefault();
+            e.stopPropagation();
             onClicked(elem, -1);
-            e.preventDefault();
         });
         elemLeftIcon.on('touchend touchleave mouseup mouseout', function (e) {
             elemLeftIcon.fadeTo("fast", 1);
@@ -289,7 +301,12 @@ var Modul_spinner = function () {
                 onReleased(elem);
             e.preventDefault();
         });
-        
+        elemLeftIcon.on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        });
+
         //Overlay
         elem.append($('<div/>', {
             class: 'overlay'

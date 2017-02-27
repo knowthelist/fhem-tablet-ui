@@ -116,6 +116,12 @@ var Modul_simplechart = function () {
                 fwcsrf: ftui.config.csrf,
                 XHR: "1"
             },
+            xhrFields: {
+                withCredentials: (ftui.config.credentials) ? true : false
+            },
+            headers: {
+                'Authorization': 'Basic ' + btoa(ftui.config.credentials)
+            }            
         }).done(function (data) {
             var points = [];
             var lines = data.split('\n');

@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.6
+ * Version: 2.6.7
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -227,6 +227,7 @@ var plugins = {
         ftui.subscriptions = {};
         ftui.subscriptionTs = {};
         ftui.devs = [ftui.config.webDevice];
+        ftui.reads = ['STATE'];
         for (var i = this.modules.length - 1; i >= 0; i -= 1) {
             var module = this.modules[i];
             for (var key in module.subscriptions) {
@@ -235,6 +236,10 @@ var plugins = {
                 var d = ftui.subscriptions[key].device;
                 if (ftui.devs.indexOf(d) < 0) {
                     ftui.devs.push(d);
+                }
+                var r = ftui.subscriptions[key].reading;
+                if (ftui.reads.indexOf(r) < 0) {
+                    ftui.reads.push(r);
                 }
             }
         }
@@ -266,7 +271,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.6',
+    version: '2.6.7',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -321,6 +326,7 @@ var ftui = {
         ftui.paramIdMap = {};
         ftui.timestampMap = {};
         ftui.devs = [ftui.config.webDevice];
+        ftui.reads = ['STATE'];
         ftui.config.longPollType = $("meta[name='longpoll_type']").attr("content") || 'websocket';
         var longpoll = $("meta[name='longpoll']").attr("content") || '1';
         ftui.config.doLongPoll = (longpoll != '0');
@@ -342,6 +348,8 @@ var ftui = {
         // lang
         var userLang = navigator.language || navigator.userLanguage;
         ftui.config.lang = $("meta[name='lang']").attr("content") || (ftui.isValid(userLang)) ? userLang.split('-')[0] : 'de';
+        // credentials
+        ftui.config.credentials = $("meta[name='credentials']").attr("content");
 
         // Get CSFS Token
         ftui.getCSrf();
@@ -383,12 +391,15 @@ var ftui = {
             ftui.toast('You are in Privacy Mode<br>Please deactivate Privacy Mode and then reload the page.', 'error');
         }
 
+        // detect clickEventType
+        var android = ftui.getAndroidVersion();
+        var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        var onlyTouch = ((android && parseFloat(android) < 5) || iOS);
+        ftui.config.clickEventType = (onlyTouch) ? 'touchstart' : 'touchstart mousedown';
+        
         //add background for modal dialogs
         $("<div id='shade' />").prependTo('body').hide();
-        var android = ftui.getAndroidVersion();
-        var onlyTouch = (android && parseFloat(android) < 5);
-        var clickEventType = (onlyTouch) ? 'touchstart' : 'touchstart mousedown';
-        $('#shade').on(clickEventType, function (e) {
+        $('#shade').on(ftui.config.clickEventType, function (e) {
             $(document).trigger("shadeClicked");
         });
 
@@ -695,15 +706,23 @@ var ftui = {
         //Request all devices from FHEM
         var devicelist = (ftui.devs.length > 0) ? $.map(ftui.devs, $.trim).join() : '.*';
         ftui.log(4, 'shortpoll: devicelist=' + devicelist);
+        var readinglist = (ftui.reads.length > 0) ? $.map(ftui.reads, $.trim).join(' ') : '';
+        ftui.log(4, 'shortpoll: readinglist=' + readinglist);
 
         $.ajax({
                 cache: false,
                 url: ftui.config.fhemDir,
                 dataType: "json",
                 data: {
-                    cmd: 'jsonlist2 ' + devicelist,
+                    cmd: 'jsonlist2 ' + devicelist + ' ' + readinglist,
                     fwcsrf: ftui.config.csrf,
                     XHR: "1"
+                },
+                xhrFields: {
+                    withCredentials: (ftui.config.credentials) ? true : false
+                },
+                headers: {
+                    'Authorization': 'Basic ' + btoa(ftui.config.credentials)
                 }
             })
             .done(function (fhemJSON) {
@@ -767,9 +786,9 @@ var ftui = {
                         var res = results[i];
                         var devName = res.Name;
                         if (devName.indexOf('FHEMWEB') < 0 && devName.indexOf('WEB_') < 0) {
-                            checkReading(devName, res.Readings);
                             checkReading(devName, res.Internals);
                             checkReading(devName, res.Attributes);
+                            checkReading(devName, res.Readings);                            
                         }
                     }
 
@@ -880,6 +899,12 @@ var ftui = {
                         XHR: 1,
                         inform: "type=status;filter=" + ftui.config.longPollFilter + ";fmt=JSON",
                         fwcsrf: ftui.config.csrf
+                    },
+                    xhrFields: {
+                        withCredentials: (ftui.config.credentials) ? true : false
+                    },
+                    headers: {
+                        'Authorization': 'Basic ' + btoa(ftui.config.credentials)
                     },
                     xhr: function () {
                         ftui.xhr = new window.XMLHttpRequest();
@@ -1017,6 +1042,12 @@ var ftui = {
                     cmd: cmdline,
                     fwcsrf: ftui.config.csrf,
                     XHR: "1"
+                },
+                xhrFields: {
+                    withCredentials: (ftui.config.credentials) ? true : false
+                },
+                headers: {
+                    'Authorization': 'Basic ' + btoa(ftui.config.credentials)
                 }
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -1243,6 +1274,12 @@ var ftui = {
             'type': 'GET',
             'success': function (data, textStatus, jqXHR) {
                 ftui.config.csrf = jqXHR.getResponseHeader('X-FHEM-csrfToken');
+            },
+            xhrFields: {
+                withCredentials: (ftui.config.credentials) ? true : false
+            },
+            headers: {
+                'Authorization': 'Basic ' + btoa(ftui.config.credentials)
             }
         });
     },

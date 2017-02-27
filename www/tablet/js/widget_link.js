@@ -162,7 +162,7 @@ var Modul_link = function () {
 
         // set colors of the container element
         colorize(elem);
-
+console.log('init link');
         // prepare left icon
         if (leftIcon) {
             var elemLeftIcon = $('<div/>', {
