@@ -1514,6 +1514,10 @@ div[data-type="link"] > div.fa {
     width: 80%;
 }
 
+.cell-90 {
+    width: 90%;
+}
+
 .cell-100,
 .cell-1-1 {
     width: 100%;
