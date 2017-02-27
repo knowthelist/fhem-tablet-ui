@@ -722,7 +722,7 @@ var ftui = {
                     withCredentials: (ftui.config.credentials) ? true : false
                 },
                 headers: {
-                    'Authorization': 'Basic ' + btoa(ftui.config.credentials)
+                    'Authorization': 'Basic ' + ftui.config.credentials
                 }
             })
             .done(function (fhemJSON) {
@@ -855,11 +855,11 @@ var ftui = {
 
             ftui.websocket = new WebSocket(wsURL);
             ftui.websocket.onclose = function (msg) {
-                ftui.log(1, "Error while longpoll: " + msg);
+                ftui.log(1, "Error while longpoll: " + msg.data);
                 ftui.restartLongPoll();
             };
             ftui.websocket.onerror = function (msg) {
-                ftui.log(1, "Error while longpoll: " + msg);
+                ftui.log(1, "Error while longpoll: " + msg.data);
                 if (ftui.config.debuglevel > 1) {
                     ftui.toast("Error while longpoll (websocket)<br>" + msg.data, 'error');
                 }
@@ -904,7 +904,7 @@ var ftui = {
                         withCredentials: (ftui.config.credentials) ? true : false
                     },
                     headers: {
-                        'Authorization': 'Basic ' + btoa(ftui.config.credentials)
+                        'Authorization': 'Basic ' + ftui.config.credentials
                     },
                     xhr: function () {
                         ftui.xhr = new window.XMLHttpRequest();
@@ -1047,7 +1047,7 @@ var ftui = {
                     withCredentials: (ftui.config.credentials) ? true : false
                 },
                 headers: {
-                    'Authorization': 'Basic ' + btoa(ftui.config.credentials)
+                    'Authorization': 'Basic ' + ftui.config.credentials
                 }
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -1279,7 +1279,7 @@ var ftui = {
                 withCredentials: (ftui.config.credentials) ? true : false
             },
             headers: {
-                'Authorization': 'Basic ' + btoa(ftui.config.credentials)
+                'Authorization': 'Basic ' + ftui.config.credentials
             }
         });
     },

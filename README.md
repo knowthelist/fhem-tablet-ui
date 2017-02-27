@@ -1177,6 +1177,13 @@ To change the language for time/date functions
 <meta name='lang' content='de'>
 ```
 
+To enable basic server authorization
+```html
+<meta name='credentials' content='base64Auth'>
+```
+Generate credentials with ```echo -n <<user>>:<<password>>| base64```
+
+
 **Mobil zooming**
 
 To prevent auto scaling and gesture zooming on mobil devices, add this meta tag to HTML page header
