@@ -433,18 +433,10 @@ var Modul_weekprofile = function () {
         var attr_theme = elem.data('theme');
         var attr_style = elem.data('style');
 		var attr_profile = elem.data('profile');
-        
-        $.ajax({
-            async: true,
-            timeout: 15000,
-            cache: false,
-            context:{'DEF': 'DEF'},            
-            url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
-            data: {
-				cmd: "get "+attr_device+" profile_data "+attr_profile,
-                XHR: "1"
-            }            
-        })
+
+        var cmd = "get " + attr_device + " profile_data " + attr_profile;
+
+        ftui.sendFhemCommand(cmd)
         .done(function(data ) {
 			var config = {};
             var weekprofile_title;

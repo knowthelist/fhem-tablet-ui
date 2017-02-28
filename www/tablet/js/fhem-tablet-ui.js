@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.8
+ * Version: 2.6.9
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -285,7 +285,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.8',
+    version: '2.6.9',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -483,6 +483,8 @@ var ftui = {
 
     initGridster: function (area) {
 
+        ftui.gridster.minX = parseInt($("meta[name='widget_base_width'],meta[name='gridster_min_width']").attr("content") || 0);
+        ftui.gridster.minY = parseInt($("meta[name='widget_base_height'],meta[name='gridster_min_height']").attr("content") || 0);
         ftui.gridster.baseX = parseInt($("meta[name='widget_base_width'],meta[name='gridster_base_width']").attr("content") || 0);
         ftui.gridster.baseY = parseInt($("meta[name='widget_base_height'],meta[name='gridster_base_height']").attr("content") || 0);
         ftui.gridster.cols = parseInt($("meta[name='gridster_cols']").attr("content") || 0);
@@ -519,6 +521,13 @@ var ftui = {
 
             baseX = (ftui.gridster.baseX > 0) ? ftui.gridster.baseX : (window.innerWidth - colMargins) / cols;
             baseY = (ftui.gridster.baseY > 0) ? ftui.gridster.baseY : (window.innerHeight - rowMargins) / rows;
+
+            if (baseX < ftui.gridster.minX) {
+                baseX = ftui.gridster.minX;
+            }
+            if (baseY < ftui.gridster.minY) {
+                baseY = ftui.gridster.minY;
+            }
 
             ftui.gridster.mincols = parseInt($("meta[name='widget_min_cols']").attr("content") || cols);
 
@@ -725,7 +734,7 @@ var ftui = {
         ftui.shortPollRequest = $.ajax({
                 cache: false,
                 url: ftui.config.fhemDir,
-                dataType: "json",
+                //dataType: "json",
                 username: ftui.config.username,
                 password: ftui.config.password,
                 data: {
@@ -1069,20 +1078,26 @@ var ftui = {
             return;
         }
         ftui.startShortPollInterval();
+        
+        ftui.sendFhemCommand(cmdline);
+    },
+
+    sendFhemCommand: function (cmdline) {
+
         cmdline = cmdline.replace('  ', ' ');
         ftui.log(1, 'send to FHEM: ' + cmdline);
-        $.ajax({
+        return $.ajax({
                 async: true,
                 cache: false,
                 method: 'POST',
                 url: ftui.config.fhemDir,
+                username: ftui.config.username,
+                password: ftui.config.password,
                 data: {
                     cmd: cmdline,
                     fwcsrf: ftui.config.csrf,
                     XHR: "1"
-                },
-                username: ftui.config.username,
-                password: ftui.config.password
+                }
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 ftui.toast("<u>FHEM Command Failed</u><br>" + textStatus + ": " + errorThrown, 'error');
@@ -1307,17 +1322,20 @@ var ftui = {
         $.ajax({
             'url': ftui.config.fhemDir,
             'type': 'GET',
-            xhrFields: {
-                withCredentials: (ftui.config.username) ? true : false
-            },
-            headers: {
-                'Authorization': 'Basic ' + btoa(ftui.config.username + ':' + ftui.config.password)
-            },
+            cache: false,
+            username: ftui.config.username,
+            password: ftui.config.password,
             'success': function (data, textStatus, jqXHR) {
                 ftui.config.csrf = jqXHR.getResponseHeader('X-FHEM-csrfToken');
+                if (!ftui.config.csrf) {
+                    ftui.config.csrf = ftui.getPart(data, ".*fwcsrf='(.*?)'.*");
+                }
                 ftui.log(1, 'Got csrf from FHEM:' + ftui.config.csrf);
             }
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            ftui.log(1, "Failed to get csrfToken: " + textStatus + ": " + errorThrown);
         });
+
     },
 
     healthCheck: function () {
@@ -1480,7 +1498,7 @@ var ftui = {
             } else {
                 var ret = '';
                 if (ftui.isValid(value)) {
-                    var matches = value.match(new RegExp('^' + part + '$'));
+                    var matches = value.match(new RegExp(part));
                     if (matches) {
                         for (var i = 1, len = matches.length; i < len; i++) {
                             ret += matches[i];

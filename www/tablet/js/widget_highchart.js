@@ -96,28 +96,10 @@ var Modul_highchart = function () {
         var logdevice = elem.data('logdevice');
         var logfile = elem.data('logfile') || '-';
 
-        var cmd = [
-            'get',
-            logdevice,
-            logfile,
-            '-',
-            mindate,
-            maxdate,
-            column_spec
-        ];
+        var cmd = ['get', logdevice, logfile, '-',  mindate,  maxdate, column_spec ].join(' ');
 
-        $.ajax({
-            url: $('meta[name="fhemweb_url"]').attr('content') || '../fhem/',
-            async: true,
-            cache: false,
-            context: {
-                elem: elem
-            },
-            data: {
-                cmd: cmd.join(' '),
-                XHR: '1'
-            },
-        }).done(function (data) {
+        ftui.sendFhemCommand(cmd)
+            .done(function (data) {
 
             var seriesCount = 0;
             var seriesData = [];

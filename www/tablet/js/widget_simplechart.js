@@ -95,211 +95,190 @@ var Modul_simplechart = function () {
         var logdevice = elem.attr("data-logdevice");
         var logfile = elem.attr("data-logfile") || "-";
 
-        var cmd = [
-           'get',
-           logdevice,
-           logfile,
-           '-',
-           mindate,
-           maxdate,
-           column_spec
-      ];
-        $.ajax({
-            url: ftui.config.fhem_dir,
-            async: true,
-            cache: false,
-            context: {
-                elem: elem
-            },
-            data: {
-                cmd: cmd.join(' '),
-                fwcsrf: ftui.config.csrf,
-                XHR: "1"
-            },
-            username: ftui.config.username,
-            password: ftui.config.password
-            
-        }).done(function (data) {
-            var points = [];
-            var lines = data.split('\n');
-            var point = [];
-            var i = 0;
-            var tstart = ftui.dateFromString(mindate);
-            $.each(lines, function (index, value) {
-                if (value) {
-                    var val = ftui.getPart(value.replace('\r\n', ''), 2);
-                    var minutes = ftui.diffMinutes(tstart, ftui.dateFromString(value));
-                    if (val && minutes && $.isNumeric(val)) {
-                        point = [minutes, val];
-                        vals.push(val);
-                        i++;
-                        points[index] = point;
-                        var j = 0,
-                            len = 0;
-                        if (val > max && $.isArray(maxarray)) {
-                            for (j = 0, len = maxarray.length; j < len; j++) {
-                                if (maxarray[j] > val) {
-                                    max = maxarray[j];
-                                    break;
+        var cmd = ['get', logdevice, logfile, '-', mindate, maxdate, column_spec ].join(' ');
+
+        ftui.sendFhemCommand(cmd)
+            .done(function (data) {
+                var points = [];
+                var lines = data.split('\n');
+                var point = [];
+                var i = 0;
+                var tstart = ftui.dateFromString(mindate);
+                $.each(lines, function (index, value) {
+                    if (value) {
+                        var val = ftui.getPart(value.replace('\r\n', ''), 2);
+                        var minutes = ftui.diffMinutes(tstart, ftui.dateFromString(value));
+                        if (val && minutes && $.isNumeric(val)) {
+                            point = [minutes, val];
+                            vals.push(val);
+                            i++;
+                            points[index] = point;
+                            var j = 0,
+                                len = 0;
+                            if (val > max && $.isArray(maxarray)) {
+                                for (j = 0, len = maxarray.length; j < len; j++) {
+                                    if (maxarray[j] > val) {
+                                        max = maxarray[j];
+                                        break;
+                                    }
                                 }
                             }
-                        }
-                        if (val < min && $.isArray(minarray)) {
-                            for (j = 0, len = minarray.length; j < len; j++) {
-                                if (minarray[j] < val) {
-                                    min = minarray[j];
-                                    break;
+                            if (val < min && $.isArray(minarray)) {
+                                for (j = 0, len = minarray.length; j < len; j++) {
+                                    if (minarray[j] < val) {
+                                        min = minarray[j];
+                                        break;
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            });
+                });
 
-            //add last know point
-            points[i] = point;
+                //add last know point
+                points[i] = point;
 
-            var xrange = parseInt(ftui.diffMinutes(tstart, ftui.dateFromString(maxdate)));
-            var strokeWidth = (document.documentElement.style.vectorEffect === undefined) ? (max - min) / 150 : 1;
-            var strokeWidthDashed = (strokeWidth == 1) ? 1.2 : 10;
+                var xrange = parseInt(ftui.diffMinutes(tstart, ftui.dateFromString(maxdate)));
+                var strokeWidth = (document.documentElement.style.vectorEffect === undefined) ? (max - min) / 150 : 1;
+                var strokeWidthDashed = (strokeWidth == 1) ? 1.2 : 10;
 
-            var svg = elem.find('svg.chart');
-            if (svg) {
-                //clear previous content
-                svg.parent().find('text').remove();
-                svg.find('line').remove();
-                var polyline = svg.find('polyline');
-                if (polyline) {
-                    var graph = polyline.parent();
-                    //y-axis
-                    var yaxis = createElem('line');
-                    yaxis.attr({
-                        'id': 'yaxis',
-                        'x1': '3',
-                        'y1': min,
-                        'x2': '3',
-                        'y2': max,
-                        'style': 'stroke:#555;stroke-width:' + strokeWidth + 'px',
-                        'vector-effect': 'non-scaling-stroke',
-                    });
-                    polyline.parent().append(yaxis);
-
-                    if (!noticks) {
-                        //y-ticks
-                        for (var y = min; y <= max; y += yticks) {
-                            var line = createElem('line');
-                            line.attr({
-                                'x1': '0',
-                                'y1': y,
-                                'x2': xrange,
-                                'y2': y,
-                                'style': 'stroke:#555;stroke-width:' + strokeWidth + 'px',
-                                'vector-effect': 'non-scaling-stroke',
-                            });
-                            graph.prepend(line);
-                            var text = createElem('text');
-                            var textY = (caption) ? (((max - y) * 100) / (max - min) * 0.8 + 12) : (((max - y) * 100) / (max - min) * 0.87 + 5);
-
-                            text.attr({
-                                'x': '99%',
-                                'y': textY + '%',
-                                'style': 'font-size:9px',
-                                'text-anchor': "end",
-                                'fill': '#ddd',
-                            });
-                            text.text(((fix > -1 && fix <= 20) ? y.toFixed(fix) : y) + unit);
-                            svg.parent().append(text);
-                        }
-
-                        //x-axis
-                        var textX1 = createElem('text');
-                        textX1.attr({
-                            'x': '0',
-                            'y': '100%',
-                            'fill': '#ddd',
-                            'style': 'font-size:9px',
-                        });
-                        textX1.text(tstart.ddmm());
-                        svg.parent().append(textX1);
-
-                        for (var x = xticks; x <= xrange; x += xticks) {
-
-                            var tx = new Date(tstart);
-                            var textX2 = createElem('text');
-                            textX2.attr({
-                                'x': 93 * x / xrange + '%',
-                                'y': '100%',
-                                'text-anchor': "middle",
-                                'fill': '#ddd',
-                                'style': 'font-size:9px',
-                            });
-                            tx.setMinutes(tstart.getMinutes() + x);
-                            //console.log(tx);
-                            var textX2Value = (tx.hhmm() == "00:00") ? tx.ddmm() : tx.hhmm();
-                            textX2.text(textX2Value);
-                            svg.parent().append(textX2);
-
-                            var xtick1 = createElem('line');
-                            xtick1.attr({
-                                'x1': 100 * x / xrange + '%',
-                                'y1': min,
-                                'x2': 100 * x / xrange + '%',
-                                'y2': max,
-                                'stroke-dasharray': strokeWidth * 2 + ',' + strokeWidth * 2,
-                                'style': 'stroke:#555;stroke-width:' + strokeWidthDashed + 'px',
-                                'vector-effect': 'non-scaling-stroke',
-                            });
-                            graph.append(xtick1);
-                        }
-
-                    } else {
-                        var elmLine = createElem('line');
-                        elmLine.attr({
-                            'x1': '0',
+                var svg = elem.find('svg.chart');
+                if (svg) {
+                    //clear previous content
+                    svg.parent().find('text').remove();
+                    svg.find('line').remove();
+                    var polyline = svg.find('polyline');
+                    if (polyline) {
+                        var graph = polyline.parent();
+                        //y-axis
+                        var yaxis = createElem('line');
+                        yaxis.attr({
+                            'id': 'yaxis',
+                            'x1': '3',
                             'y1': min,
-                            'x2': xrange,
-                            'y2': min,
+                            'x2': '3',
+                            'y2': max,
                             'style': 'stroke:#555;stroke-width:' + strokeWidth + 'px',
                             'vector-effect': 'non-scaling-stroke',
                         });
-                        graph.prepend(elmLine);
+                        polyline.parent().append(yaxis);
 
-                    }
+                        if (!noticks) {
+                            //y-ticks
+                            for (var y = min; y <= max; y += yticks) {
+                                var line = createElem('line');
+                                line.attr({
+                                    'x1': '0',
+                                    'y1': y,
+                                    'x2': xrange,
+                                    'y2': y,
+                                    'style': 'stroke:#555;stroke-width:' + strokeWidth + 'px',
+                                    'vector-effect': 'non-scaling-stroke',
+                                });
+                                graph.prepend(line);
+                                var text = createElem('text');
+                                var textY = (caption) ? (((max - y) * 100) / (max - min) * 0.8 + 12) : (((max - y) * 100) / (max - min) * 0.87 + 5);
+
+                                text.attr({
+                                    'x': '99%',
+                                    'y': textY + '%',
+                                    'style': 'font-size:9px',
+                                    'text-anchor': "end",
+                                    'fill': '#ddd',
+                                });
+                                text.text(((fix > -1 && fix <= 20) ? y.toFixed(fix) : y) + unit);
+                                svg.parent().append(text);
+                            }
+
+                            //x-axis
+                            var textX1 = createElem('text');
+                            textX1.attr({
+                                'x': '0',
+                                'y': '100%',
+                                'fill': '#ddd',
+                                'style': 'font-size:9px',
+                            });
+                            textX1.text(tstart.ddmm());
+                            svg.parent().append(textX1);
+
+                            for (var x = xticks; x <= xrange; x += xticks) {
+
+                                var tx = new Date(tstart);
+                                var textX2 = createElem('text');
+                                textX2.attr({
+                                    'x': 93 * x / xrange + '%',
+                                    'y': '100%',
+                                    'text-anchor': "middle",
+                                    'fill': '#ddd',
+                                    'style': 'font-size:9px',
+                                });
+                                tx.setMinutes(tstart.getMinutes() + x);
+                                //console.log(tx);
+                                var textX2Value = (tx.hhmm() == "00:00") ? tx.ddmm() : tx.hhmm();
+                                textX2.text(textX2Value);
+                                svg.parent().append(textX2);
+
+                                var xtick1 = createElem('line');
+                                xtick1.attr({
+                                    'x1': 100 * x / xrange + '%',
+                                    'y1': min,
+                                    'x2': 100 * x / xrange + '%',
+                                    'y2': max,
+                                    'stroke-dasharray': strokeWidth * 2 + ',' + strokeWidth * 2,
+                                    'style': 'stroke:#555;stroke-width:' + strokeWidthDashed + 'px',
+                                    'vector-effect': 'non-scaling-stroke',
+                                });
+                                graph.append(xtick1);
+                            }
+
+                        } else {
+                            var elmLine = createElem('line');
+                            elmLine.attr({
+                                'x1': '0',
+                                'y1': min,
+                                'x2': xrange,
+                                'y2': min,
+                                'style': 'stroke:#555;stroke-width:' + strokeWidth + 'px',
+                                'vector-effect': 'non-scaling-stroke',
+                            });
+                            graph.prepend(elmLine);
+
+                        }
 
 
-                    //show chart caption if set
-                    if (caption) {
-                        var textCaption = createElem('text');
-                        textCaption.attr({
-                            'x': '50%',
-                            'y': '8',
-                            'fill': '#ddd',
-                            'text-anchor': "middle",
-                            'style': 'font-size:10px;font-weight:bold',
+                        //show chart caption if set
+                        if (caption) {
+                            var textCaption = createElem('text');
+                            textCaption.attr({
+                                'x': '50%',
+                                'y': '8',
+                                'fill': '#ddd',
+                                'text-anchor': "middle",
+                                'style': 'font-size:10px;font-weight:bold',
+                            });
+                            caption = caption.replace('$min', Math.min.apply(null, vals))
+                                .replace('$max', Math.max.apply(null, vals))
+                                .replace('$cur', vals[vals.length - 1]);
+                            textCaption.text(caption);
+                            svg.parent().append(textCaption);
+                        }
+                        //The graph it self
+                        polyline.attr({
+                            'points': getSvgPoints(points),
+                            'style': 'fill:none;stroke:orange;stroke-width:' + strokeWidth * 2 + 'px',
+                            'vector-effect': 'non-scaling-stroke'
                         });
-                        caption = caption.replace('$min', Math.min.apply(null, vals))
-                            .replace('$max', Math.max.apply(null, vals))
-                            .replace('$cur', vals[vals.length - 1]);
-                        textCaption.text(caption);
-                        svg.parent().append(textCaption);
                     }
-                    //The graph it self
-                    polyline.attr({
-                        'points': getSvgPoints(points),
-                        'style': 'fill:none;stroke:orange;stroke-width:' + strokeWidth * 2 + 'px',
-                        'vector-effect': 'non-scaling-stroke'
+                    //Viewbox (autoscaler)
+                    var graphHeight = (caption) ? 80 : 87;
+                    var graphTop = (caption) ? 10 : 2;
+                    svg.attr({
+                        "height": graphHeight + "%",
+                        y: graphTop + "%"
                     });
+                    svg[0].setAttribute('viewBox', [0, -max, xrange, max - min].join(' '));
                 }
-                //Viewbox (autoscaler)
-                var graphHeight = (caption) ? 80 : 87;
-                var graphTop = (caption) ? 10 : 2;
-                svg.attr({
-                    "height": graphHeight + "%",
-                    y: graphTop + "%"
-                });
-                svg[0].setAttribute('viewBox', [0, -max, xrange, max - min].join(' '));
-            }
-        });
+            });
     }
 
     function update(dev, par) {

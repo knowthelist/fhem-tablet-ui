@@ -49,8 +49,7 @@ var Modul_svgplot = function () {
             var logfile = elem.data('logfile');
             if (gplot && logdev && logfile) {
                 elem.empty();
-                var fhemweb = $("meta[name='fhemweb_url']").attr("content") || "/fhem";
-                var src = fhemweb + '/SVG_showLog?dev=' + device + '&logdev=' + logdev + '&gplotfile=' + gplot + '&logfile=' + logfile + '&_=1';
+                var src = ftui.config.fhemDir + '/SVG_showLog?dev=' + device + '&logdev=' + logdev + '&gplotfile=' + gplot + '&logfile=' + logfile + '&_=1';
                 var img = $('<img/>', {
                     alt: logfile,
                     src: src,

@@ -108,15 +108,14 @@ var Modul_fullcalview = function () {
             eventsources = ($.isArray(elem.data('device')) ? elem.data('device') : [elem.data('device')]);
             eventcolors = ($.isArray(elem.data('eventcolors')) ? elem.data('eventcolors') : [elem.data('eventcolors')]);
             eventtextcolors = ($.isArray(elem.data('eventtextcolors')) ? elem.data('eventtextcolors') : [elem.data('eventtextcolors')]);
-            var preURL = ($("meta[name='fhemweb_url']").attr("content") ? $("meta[name='fhemweb_url']").attr("content") : '');
-
+    
             if ((eventsources.length > 0 && eventcolors.length > 0 && eventtextcolors.length > 0) &&
                 ((eventsources.length == eventcolors.length) && (eventsources.length == eventtextcolors.length))) {
                 for (var n = 0; n < eventsources.length; n++) {
                     eventdataUpdate[n] = eventsources[n] + ':lastUpdate';
                     ics_sources[n] = {
                         eID: '' + eventsources[n] + '',
-                        url: preURL + '/fhem?detail=' + eventsources[n] + '&dev.get' + eventsources[n] + '=' + eventsources[n] + '&cmd.get' + eventsources[n] + '=get&arg.get' + eventsources[n] + '=vcalendar&val.get' + eventsources[n] + '=&XHR=1',
+                        url: ftui.config.fhemDir + '/fhem?detail=' + eventsources[n] + '&dev.get' + eventsources[n] + '=' + eventsources[n] + '&cmd.get' + eventsources[n] + '=get&arg.get' + eventsources[n] + '=vcalendar&val.get' + eventsources[n] + '=&XHR=1',
                         event_properties: {
                             color: '' + eventcolors[n] + '',
                             textColor: '' + eventtextcolors[n] + ''

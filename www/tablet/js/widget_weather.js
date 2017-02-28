@@ -554,7 +554,7 @@ var Modul_weather = function () {
 
         me.addReading(elem, 'get');
 
-        var fhem_path = $("meta[name='fhemweb_url']").attr("content") || "/fhem/";
+        var fhem_path = ftui.config.fhemDir;
         fhem_path = fhem_path.replace(/\/$/, '');
         var image_path = $("meta[name='weather_image_path']").attr("content") || fhem_path + '/images/default/weather/';
         elem.initData('image-path', image_path);

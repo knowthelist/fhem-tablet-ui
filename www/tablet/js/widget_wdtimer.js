@@ -698,18 +698,11 @@ var Modul_wdtimer = function () {
 		var attr_style = elem.data('style');
 		var attr_savecfg = elem.data('savecfg');
         var attr_timesteps = elem.data('timesteps');
-		$.ajax({
-			async: true,
-			timeout: 15000,
-			cache: false,
-			context:{'DEF': 'DEF'},            
-			url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
-			data: {
-				cmd: ["list",attr_device].join(' '),
-				XHR: "1"
-			}            
-		})
-		.done(function(data ) {
+        
+        var cmd= ["list",attr_device].join(' ');
+
+		ftui.sendFhemCommand(cmd)
+            .done(function(data ) {
 			var wdtimer_enabled = true;
 			var wdtimer_def = "";
 			var wdtimer_title;

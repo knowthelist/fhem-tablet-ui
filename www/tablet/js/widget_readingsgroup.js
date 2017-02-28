@@ -40,24 +40,11 @@ var Modul_readingsgroup = function () {
                         //console.log('readingsgroup DO update' );
                         elem.data('lastUpdate', dNow);
 
-                        var cmd = [
-                       'get',
-                       elem.data('device'),
-                       "html"
-                  ];
-                        ftui.log('readingsgroup update', dev, ' - ', cmd.join(' '));
-                        $.ajax({
-                            url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
-                            async: true,
-                            cache: false,
-                            context: {
-                                elem: elem
-                            },
-                            data: {
-                                cmd: cmd.join(' '),
-                                XHR: "1"
-                            },
-                        }).done(function (data, dev) {
+                        var cmd = [ 'get', elem.data('device'), "html" ].join(' ');
+                        ftui.log('readingsgroup update', dev, ' - ', cmd);
+                        
+                        ftui.sendFhemCommand(cmd)
+                            .done(function (data, dev) {
                             //console.log('received update for dynamic html : ', $(this) );
                             $(this.elem).html(data);
                         });
