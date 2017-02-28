@@ -11,8 +11,8 @@ UPD 2017-01-29_15:04:15 1659 www/tablet/css/fhem-darkblue-ui.css
 UPD 2017-02-11_14:27:26 510 www/tablet/css/fhem-green-ui.css
 UPD 2017-02-11_14:27:26 1953 www/tablet/css/fhem-mobil-ui.css
 UPD 2017-02-05_13:50:40 6916 www/tablet/css/fhem-tablet-ui-wdtimer.css
-UPD 2017-02-27_03:53:26 56132 www/tablet/css/fhem-tablet-ui.css
-UPD 2017-02-27_03:53:30 40938 www/tablet/css/fhem-tablet-ui.min.css
+UPD 2017-02-27_23:51:49 56265 www/tablet/css/fhem-tablet-ui.css
+UPD 2017-02-27_23:54:59 41012 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2017-02-11_14:27:26 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2017-02-11_14:27:26 5295 www/tablet/css/ftui_chart.css
 UPD 2017-02-11_14:27:26 1023 www/tablet/css/ftui_colorwheel.css
@@ -20,7 +20,7 @@ UPD 2017-02-11_14:27:26 3297 www/tablet/css/ftui_departure.css
 UPD 2017-02-11_14:27:26 1079 www/tablet/css/ftui_medialist.css
 UPD 2017-02-11_14:27:26 442 www/tablet/css/ftui_range.css
 UPD 2017-02-11_14:27:26 970 www/tablet/css/ftui_slideout.css
-UPD 2017-02-26_14:46:23 1568 www/tablet/css/ftui_spinner.css
+UPD 2017-02-27_23:42:05 1586 www/tablet/css/ftui_spinner.css
 UPD 2017-02-11_14:27:26 5166 www/tablet/demo_ftui.html
 UPD 2017-02-11_14:27:26 127396 www/tablet/fonts/fhemSVG.eot
 UPD 2017-02-11_14:27:26 528460 www/tablet/fonts/fhemSVG.svg
@@ -66,13 +66,13 @@ UPD 2017-02-11_14:27:26 17624 www/tablet/index-example.html
 UPD 2017-02-11_14:27:26 2208 www/tablet/index_empty.html
 UPD 2017-02-11_14:27:26 9958 www/tablet/index_layout.html
 UPD 2017-02-12_14:42:28 4054 www/tablet/index_state.html
-UPD 2017-02-27_04:35:44 72620 www/tablet/js/fhem-tablet-ui.js
-UPD 2017-02-27_06:00:34 37126 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2017-02-28_00:34:22 75980 www/tablet/js/fhem-tablet-ui.js
+UPD 2017-02-28_06:31:00 39511 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2017-02-11_14:27:26 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2017-02-11_14:27:26 6503 www/tablet/js/widget_agenda.js
 UPD 2017-01-29_01:34:10 1710 www/tablet/js/widget_button.js
 UPD 2017-02-11_14:27:26 5907 www/tablet/js/widget_calview.js
-UPD 2017-02-27_03:33:22 199583 www/tablet/js/widget_chart.js
+UPD 2017-02-27_17:41:23 199438 www/tablet/js/widget_chart.js
 UPD 2017-02-11_16:21:16 4098 www/tablet/js/widget_checkbox.js
 UPD 2017-02-13_23:44:23 3138 www/tablet/js/widget_circlemenu.js
 UPD 2017-02-11_14:27:26 1524 www/tablet/js/widget_classchanger.js
@@ -117,7 +117,7 @@ UPD 2017-02-11_14:27:26 2824 www/tablet/js/widget_readingsgroup.js
 UPD 2017-02-11_14:27:26 1551 www/tablet/js/widget_rotor.js
 UPD 2017-01-21_15:22:17 4272 www/tablet/js/widget_select.js
 UPD 2017-01-19_21:12:36 9782 www/tablet/js/widget_settimer.js
-UPD 2017-02-27_03:39:05 12799 www/tablet/js/widget_simplechart.js
+UPD 2017-02-27_17:41:34 12662 www/tablet/js/widget_simplechart.js
 UPD 2017-02-20_22:59:41 3118 www/tablet/js/widget_slideout.js
 UPD 2017-02-06_02:04:00 16149 www/tablet/js/widget_slider.js
 UPD 2017-02-26_14:41:08 13048 www/tablet/js/widget_spinner.js
