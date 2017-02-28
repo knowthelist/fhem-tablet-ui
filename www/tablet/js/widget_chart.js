@@ -1626,12 +1626,9 @@ var widget_chart = {
 					XHR: "1",
                     fwcsrf: ftui.config.csrf
 				},
-                xhrFields: {
-                    withCredentials: (ftui.config.credentials) ? true : false
-                },
-                    headers: {
-                    'Authorization': 'Basic ' + btoa(ftui.config.credentials)
-                },
+                username: ftui.config.username,
+                password: ftui.config.password
+                
 			}).done(function(dat) { // jshint ignore:line
 				var lines = dat.split('\n');
 				var point=[];

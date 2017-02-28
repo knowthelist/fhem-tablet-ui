@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.7
+ * Version: 2.6.8
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -227,7 +227,7 @@ var plugins = {
         ftui.subscriptions = {};
         ftui.subscriptionTs = {};
         ftui.devs = [ftui.config.webDevice];
-        ftui.reads = ['STATE'];
+        ftui.reads = ['STATE', 'longpoll'];
         for (var i = this.modules.length - 1; i >= 0; i -= 1) {
             var module = this.modules[i];
             for (var key in module.subscriptions) {
@@ -243,6 +243,20 @@ var plugins = {
                 }
             }
         }
+
+        // build filter
+        var devicelist = (ftui.devs.length > 0) ? $.map(ftui.devs, $.trim).join() : '.*';
+        var readinglist = (ftui.reads.length > 0) ? $.map(ftui.reads, $.trim).join(' ') : '';
+
+        // ToDo: find a decent auto filter
+        ftui.poll.longPollFilter = ftui.config.longPollFilter
+
+        if (!ftui.config.shortPollFilter) {
+            ftui.poll.shortPollFilter = devicelist + ' ' + readinglist;
+        } else {
+            ftui.poll.shortPollFilter = ftui.config.shortPollFilter
+        }
+
         // force shortpoll
         ftui.states.lastShortpoll = 0;
     },
@@ -271,7 +285,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.7',
+    version: '2.6.8',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -330,6 +344,7 @@ var ftui = {
         ftui.config.longPollType = $("meta[name='longpoll_type']").attr("content") || 'websocket';
         var longpoll = $("meta[name='longpoll']").attr("content") || '1';
         ftui.config.doLongPoll = (longpoll != '0');
+        ftui.config.shortPollFilter = $("meta[name='shortpoll_filter']").attr("content");
         ftui.config.longPollFilter = $("meta[name='longpoll_filter']").attr("content") || '.*';
         ftui.config.DEMO = ($("meta[name='demo']").attr("content") == '1');
         ftui.config.debuglevel = $("meta[name='debug']").attr("content") || 0;
@@ -349,7 +364,8 @@ var ftui = {
         var userLang = navigator.language || navigator.userLanguage;
         ftui.config.lang = $("meta[name='lang']").attr("content") || (ftui.isValid(userLang)) ? userLang.split('-')[0] : 'de';
         // credentials
-        ftui.config.credentials = $("meta[name='credentials']").attr("content");
+        ftui.config.username = $("meta[name='username']").attr("content");
+        ftui.config.password = $("meta[name='password']").attr("content");
 
         // Get CSFS Token
         ftui.getCSrf();
@@ -396,7 +412,7 @@ var ftui = {
         var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         var onlyTouch = ((android && parseFloat(android) < 5) || iOS);
         ftui.config.clickEventType = (onlyTouch) ? 'touchstart' : 'touchstart mousedown';
-        
+
         //add background for modal dialogs
         $("<div id='shade' />").prependTo('body').hide();
         $('#shade').on(ftui.config.clickEventType, function (e) {
@@ -704,25 +720,18 @@ var ftui = {
         console.time('get jsonlist2');
 
         //Request all devices from FHEM
-        var devicelist = (ftui.devs.length > 0) ? $.map(ftui.devs, $.trim).join() : '.*';
-        ftui.log(4, 'shortpoll: devicelist=' + devicelist);
-        var readinglist = (ftui.reads.length > 0) ? $.map(ftui.reads, $.trim).join(' ') : '';
-        ftui.log(4, 'shortpoll: readinglist=' + readinglist);
+        //ToDo log request
 
-        $.ajax({
+        ftui.shortPollRequest = $.ajax({
                 cache: false,
                 url: ftui.config.fhemDir,
                 dataType: "json",
+                username: ftui.config.username,
+                password: ftui.config.password,
                 data: {
-                    cmd: 'jsonlist2 ' + devicelist + ' ' + readinglist,
+                    cmd: 'jsonlist2 ' + ftui.poll.shortPollFilter,
                     fwcsrf: ftui.config.csrf,
                     XHR: "1"
-                },
-                xhrFields: {
-                    withCredentials: (ftui.config.credentials) ? true : false
-                },
-                headers: {
-                    'Authorization': 'Basic ' + ftui.config.credentials
                 }
             })
             .done(function (fhemJSON) {
@@ -788,7 +797,7 @@ var ftui = {
                         if (devName.indexOf('FHEMWEB') < 0 && devName.indexOf('WEB_') < 0) {
                             checkReading(devName, res.Internals);
                             checkReading(devName, res.Attributes);
-                            checkReading(devName, res.Readings);                            
+                            checkReading(devName, res.Readings);
                         }
                     }
 
@@ -849,21 +858,50 @@ var ftui = {
                 ftui.toast("Longpoll (WebSocket) started");
             }
             var wsURL = ftui.config.fhemDir.replace(/^http/i, "ws") + "?XHR=1&inform=type=status;filter=" +
-                ftui.config.longPollFilter + ";fmt=JSON" +
+                ftui.poll.longPollFilter + ";fmt=JSON" +
                 "&fwcsrf=" + ftui.config.csrf;
             ftui.log(1, 'websockets URL=' + wsURL);
+            ftui.states.longPollRestart = false;
 
             ftui.websocket = new WebSocket(wsURL);
-            ftui.websocket.onclose = function (msg) {
-                ftui.log(1, "Error while longpoll: " + msg.data);
-                ftui.restartLongPoll();
+            ftui.websocket.onclose = function (event) {
+                var reason;
+                if (event.code == 1000)
+                    reason = "Normal closure, meaning that the purpose for which the connection was established has been fulfilled.";
+                else if (event.code == 1001)
+                    reason = "An endpoint is \"going away\", such as a server going down or a browser having navigated away from a page.";
+                else if (event.code == 1002)
+                    reason = "An endpoint is terminating the connection due to a protocol error";
+                else if (event.code == 1003)
+                    reason = "An endpoint is terminating the connection because it has received a type of data it cannot accept (e.g., an endpoint that understands only text data MAY send this if it receives a binary message).";
+                else if (event.code == 1004)
+                    reason = "Reserved. The specific meaning might be defined in the future.";
+                else if (event.code == 1005)
+                    reason = "No status code was actually present.";
+                else if (event.code == 1006)
+                    reason = "The connection was closed abnormally, e.g., without sending or receiving a Close control frame";
+                else if (event.code == 1007)
+                    reason = "An endpoint is terminating the connection because it has received data within a message that was not consistent with the type of the message (e.g., non-UTF-8 [http://tools.ietf.org/html/rfc3629] data within a text message).";
+                else if (event.code == 1008)
+                    reason = "An endpoint is terminating the connection because it has received a message that \"violates its policy\". This reason is given either if there is no other sutible reason, or if there is a need to hide specific details about the policy.";
+                else if (event.code == 1009)
+                    reason = "An endpoint is terminating the connection because it has received a message that is too big for it to process.";
+                else if (event.code == 1010) // Note that this status code is not used by the server, because it can fail the WebSocket handshake instead.
+                    reason = "An endpoint (client) is terminating the connection because it has expected the server to negotiate one or more extension, but the server didn't return them in the response message of the WebSocket handshake. <br /> Specifically, the extensions that are needed are: " + event.reason;
+                else if (event.code == 1011)
+                    reason = "A server is terminating the connection because it encountered an unexpected condition that prevented it from fulfilling the request.";
+                else if (event.code == 1015)
+                    reason = "The connection was closed due to a failure to perform a TLS handshake (e.g., the server certificate can't be verified).";
+                else
+                    reason = "Unknown reason";
+                ftui.log(1, "websocket closed: " + reason);
+                ftui.restartLongPoll(reason);
             };
             ftui.websocket.onerror = function (msg) {
-                ftui.log(1, "Error while longpoll: " + msg.data);
+                ftui.log(1, "Error while longpoll");
                 if (ftui.config.debuglevel > 1) {
-                    ftui.toast("Error while longpoll (websocket)<br>" + msg.data, 'error');
+                    ftui.toast("Error while longpoll (websocket)", 'error');
                 }
-                ftui.restartLongPoll();
             };
             ftui.websocket.onmessage = function (msg) {
                 ftui.handleUpdates(msg.data);
@@ -897,15 +935,11 @@ var ftui = {
                     method: 'GET',
                     data: {
                         XHR: 1,
-                        inform: "type=status;filter=" + ftui.config.longPollFilter + ";fmt=JSON",
+                        inform: "type=status;filter=" + ftui.poll.longPollFilter + ";fmt=JSON",
                         fwcsrf: ftui.config.csrf
                     },
-                    xhrFields: {
-                        withCredentials: (ftui.config.credentials) ? true : false
-                    },
-                    headers: {
-                        'Authorization': 'Basic ' + ftui.config.credentials
-                    },
+                    username: ftui.config.username,
+                    password: ftui.config.password,
                     xhr: function () {
                         ftui.xhr = new window.XMLHttpRequest();
                         ftui.xhr.addEventListener("readystatechange", function (e) {
@@ -917,6 +951,9 @@ var ftui = {
                                 ftui.handleUpdates(data);
                             }
                         }, false);
+
+                        ftui.log(1, 'ajax lomgpoll responseURL=' + ftui.xhr.responseURL);
+                        ftui.log(1, 'ajax longpol  statusText=' + ftui.xhr.statusText);
                         return ftui.xhr;
                     }
                 })
@@ -930,7 +967,7 @@ var ftui = {
                         ftui.longPoll();
                     else {
                         ftui.log(1, "Disconnected from FHEM - poll done - " + data);
-                        ftui.restartLongPoll();
+                        ftui.restartLongPoll(data);
                     }
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
@@ -946,9 +983,10 @@ var ftui = {
                         if (ftui.config.debuglevel > 1) {
                             ftui.toast("Error while longpoll (ajax)<br>" + textStatus + ": " + errorThrown, 'error');
                         }
-                        ftui.restartLongPoll();
+                        ftui.restartLongPoll(textStatus + ": " + errorThrown);
                     }
                 });
+
         }
     },
 
@@ -1043,12 +1081,8 @@ var ftui = {
                     fwcsrf: ftui.config.csrf,
                     XHR: "1"
                 },
-                xhrFields: {
-                    withCredentials: (ftui.config.credentials) ? true : false
-                },
-                headers: {
-                    'Authorization': 'Basic ' + ftui.config.credentials
-                }
+                username: ftui.config.username,
+                password: ftui.config.password
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 ftui.toast("<u>FHEM Command Failed</u><br>" + textStatus + ": " + errorThrown, 'error');
@@ -1157,14 +1191,15 @@ var ftui = {
         localStorage.setItem('shortPollDuration', ftui.poll.shortPollDuration);
     },
 
-    restartLongPoll: function () {
-        ftui.toast("Disconnected from FHEM");
+    restartLongPoll: function (msg, error) {
+        ftui.toast("Disconnected from FHEM<br>" + msg, error);
         if (ftui.websocket) {
             ftui.websocket.close();
             ftui.websocket = null;
         }
-        if (ftui.config.doLongPoll) {
+        if (ftui.config.doLongPoll && !ftui.states.longPollRestart) {
             ftui.toast("Retry to connect in 10 seconds");
+            ftui.states.longPollRestart = true;
             setTimeout(function () {
                 ftui.longPoll();
             }, 10000);
@@ -1272,14 +1307,15 @@ var ftui = {
         $.ajax({
             'url': ftui.config.fhemDir,
             'type': 'GET',
-            'success': function (data, textStatus, jqXHR) {
-                ftui.config.csrf = jqXHR.getResponseHeader('X-FHEM-csrfToken');
-            },
             xhrFields: {
-                withCredentials: (ftui.config.credentials) ? true : false
+                withCredentials: (ftui.config.username) ? true : false
             },
             headers: {
-                'Authorization': 'Basic ' + ftui.config.credentials
+                'Authorization': 'Basic ' + btoa(ftui.config.username + ':' + ftui.config.password)
+            },
+            'success': function (data, textStatus, jqXHR) {
+                ftui.config.csrf = jqXHR.getResponseHeader('X-FHEM-csrfToken');
+                ftui.log(1, 'Got csrf from FHEM:' + ftui.config.csrf);
             }
         });
     },
@@ -1312,7 +1348,7 @@ var ftui = {
             ftui.config.doLongPoll) {
             ftui.log(1, 'No longpoll event since ' + timeDiff / 1000 + 'secondes -> restart polling');
             ftui.setOnline();
-            ftui.restartLongPoll();
+            ftui.restartLongPoll('Reason: missing longpoll events', 'error');
         }
     },
 

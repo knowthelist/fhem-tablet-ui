@@ -275,6 +275,8 @@ e.g.:
     position: relative;
 }
 
+Build-in classes are: aftercomma-top and unit-top
+
 Functions for data-substitution:
 
 1. Array of replacements
@@ -1179,9 +1181,12 @@ To change the language for time/date functions
 
 To enable basic server authorization
 ```html
-<meta name='credentials' content='base64Auth'>
+<meta name='username' content='myUser'>
+<meta name='password' content='myPass'>
 ```
-Generate credentials with ```echo -n <<user>>:<<password>>| base64```
+
+Caution! Currently FHEM doesn't support authorization and lonpoll=websockt
+Use longpoll=1 (ajax) instead.
 
 
 **Mobil zooming**

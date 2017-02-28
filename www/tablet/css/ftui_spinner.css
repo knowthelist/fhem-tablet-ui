@@ -66,7 +66,7 @@
 .spinner.valueonly > .spinnerText,
 .spinner.plain > .spinnerText{
     position: absolute;
-    top: 26%;
+    top: 0.1em;
     left: 23%;
     font-size: 30px;
     font-weight: bold;
@@ -75,4 +75,5 @@
 
 .spinner.plain > .spinnerText {
     font-size: 18px;
+    top: 0.5em;
 }

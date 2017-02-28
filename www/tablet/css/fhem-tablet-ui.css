@@ -1629,6 +1629,15 @@ div[data-type="link"] > div.fa {
 
 .label-unit {
     font-size: 50%;
+}
+
+.unit-top .label-unit {
+    font-size: 50%;
+    vertical-align: super;
+}
+
+.aftercomma-top .label-aftercomma {
+    font-size: 50%;
     vertical-align: super;
 }
 
