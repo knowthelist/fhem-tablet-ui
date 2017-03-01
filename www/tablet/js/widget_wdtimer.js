@@ -913,18 +913,18 @@ var Modul_wdtimer = function () {
 		arr_currentProfilesResult.push(error, arr_profiles, arr_profilesDetail);
 		return arr_currentProfilesResult;        
 	};
-	function init() {
-		if (!$.fn.datetimepicker){
-			ftui.dynamicload('lib/jquery.datetimepicker.js', null, null, false);
-			$('head').append('<link rel="stylesheet" href="./lib/jquery.datetimepicker.css" type="text/css" />');    
-		}
-		if (!$.fn.Switchery){
-			ftui.dynamicload('lib/switchery.min.js', null, null, false);
-			$('head').append('<link rel="stylesheet" href="./lib/switchery.min.css" type="text/css" />');
-		}
-		if (!$.fn.draggable){
-			ftui.dynamicload('../pgm2/jquery-ui.min.js', null, null, false);
-		}
+    function init() {
+        if (!$.fn.datetimepicker){
+            ftui.dynamicload(ftui.config.basedir + 'lib/jquery.datetimepicker.js', null, null, false);
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + '/lib/jquery.datetimepicker.css" type="text/css" />');    
+        }
+        if (!$.fn.Switchery){
+            ftui.dynamicload(ftui.config.basedir + 'lib/switchery.min.js', null, null, false);
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + '/lib/switchery.min.css" type="text/css" />');
+        }
+        if (!$.fn.draggable){
+            ftui.dynamicload(ftui.config.basedir + 'lib/jquery-ui.min.js', null, null, false);
+        }
 		
 		this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
 		this.elements.each(function(index) {

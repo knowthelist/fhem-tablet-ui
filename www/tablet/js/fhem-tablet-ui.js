@@ -1078,7 +1078,7 @@ var ftui = {
             return;
         }
         ftui.startShortPollInterval();
-        
+
         ftui.sendFhemCommand(cmdline);
     },
 
@@ -1163,7 +1163,8 @@ var ftui = {
             ftui.states.lastShortpoll = 0;
             ftui.startShortPollInterval(1000);
             if (!ftui.config.doLongPoll) {
-                ftui.config.doLongPoll = (ftui.config.longPollType === 'ajax' || ftui.config.longPollType === 'websocket');
+                var longpoll = $("meta[name='longpoll']").attr("content") || '1';
+                ftui.config.doLongPoll = (longpoll != '0');
                 if (ftui.config.doLongPoll)
                     ftui.startLongPollInterval(100);
             }
@@ -1560,9 +1561,13 @@ var ftui = {
     // global date format functions
     dateFromString: function (str) {
         var m = str.match(/(\d+)-(\d+)-(\d+)[_\s](\d+):(\d+):(\d+).*/);
-        var m2 = str.match(/(\d\d).(\d\d).(\d\d\d\d)/);
+        var m2 = str.match(/^(\d+)$/);
+        var m3 = str.match(/(\d\d).(\d\d).(\d\d\d\d)/);
+
         var offset = new Date().getTimezoneOffset();
-        return (m) ? new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]) : (m2) ? new Date(+m2[3], +m2[2] - 1, +m2[1], 0, -offset, 0, 0) : new Date();
+        return (m) ? new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]) :
+            (m2) ? new Date(m2[1] * 1000) :
+            (m3) ? new Date(+m3[3], +m3[2] - 1, +m3[1], 0, -offset, 0, 0) : new Date();
     },
 
     diffMinutes: function (date1, date2) {
@@ -1786,6 +1791,15 @@ Date.prototype.ddmm = function () {
     var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
     var dd = this.getDate().toString();
     return (dd[1] ? dd : "0" + dd[0]) + '.' + (mm[1] ? mm : "0" + mm[0]) + '.'; // padding
+};
+
+Date.prototype.ddmmhhmm = function () {
+    var MM = (this.getMonth() + 1).toString(); // getMonth() is zero-based
+    var dd = this.getDate().toString();
+    var hh = this.getHours().toString();
+    var mm = this.getMinutes().toString();
+    return (dd[1] ? dd : "0" + dd[0]) + '.' + (MM[1] ? MM : "0" + MM[0]) + '. ' +
+        (hh[1] ? hh : "0" + hh[0]) + ':' + (mm[1] ? mm : "0" + mm[0]);
 };
 
 Date.prototype.eeee = function () {

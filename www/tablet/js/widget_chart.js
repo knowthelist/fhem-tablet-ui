@@ -10,9 +10,9 @@
 function depends_chart (){
 	var mainCSS = $('head').find("[href$='fhem-tablet-ui-user.css']");
 	if (mainCSS.length)
-		mainCSS.before('<link rel="stylesheet" href="css/ftui_chart.css" type="text/css" />');
+		mainCSS.before('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_chart.css" type="text/css" />');
 	else
-		$('head').append('<link rel="stylesheet" href="css/ftui_chart.css" type="text/css" />');
+		$('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_chart.css" type="text/css" />');
 
 	if (!$.fn.visibilityChanged) {
 		(function ($) {
@@ -53,7 +53,7 @@ function depends_chart (){
 	}
 
 	if (!$.fn.draggable)
-		return ["../pgm2/jquery-ui.min.js"];
+		return [ftui.config.basedir + "lib/jquery-ui.min.js"];
 }
 
 var widget_chart = {
@@ -1615,23 +1615,15 @@ var widget_chart = {
 				mindate,
 				maxdate,
 				(ptype.search('icons:')>=0 && columnspec.search('logProxy')<=-1)?'':columnspec // as text out of logfiles are only reported when there is an empty columnspec, we need to set it for ptype "icons"
-			];
-			if (getData) {$.ajax({ // ajax call to get data from server
-				url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
-				async: false,
-				cache: false,
-				context: {elem: $(theObj)},
-				data: {
-					cmd: cmd.join(' '),
-					XHR: "1",
-                    fwcsrf: ftui.config.csrf
-				},
-                username: ftui.config.username,
-                password: ftui.config.password
+			].join(' ');
+            var point=[];
+            
+			if (getData) {
                 
-			}).done(function(dat) { // jshint ignore:line
+            ftui.sendFhemCommand(cmd)
+                .done(function(dat) { // jshint ignore:line
 				var lines = dat.split('\n');
-				var point=[];
+				point=[];
 				var i=0, j=0;
 				var tstart = ftui.dateFromString(mindate);
 				var found_logproxy = false;
