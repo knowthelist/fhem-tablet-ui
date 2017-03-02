@@ -72,7 +72,7 @@ UPD 2017-02-11_14:27:26 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2017-02-11_14:27:26 6503 www/tablet/js/widget_agenda.js
 UPD 2017-01-29_01:34:10 1710 www/tablet/js/widget_button.js
 UPD 2017-02-11_14:27:26 5907 www/tablet/js/widget_calview.js
-UPD 2017-03-01_00:42:09 199214 www/tablet/js/widget_chart.js
+UPD 2017-03-02_22:09:52 199463 www/tablet/js/widget_chart.js
 UPD 2017-02-11_16:21:16 4098 www/tablet/js/widget_checkbox.js
 UPD 2017-02-13_23:44:23 3138 www/tablet/js/widget_circlemenu.js
 UPD 2017-02-11_14:27:26 1524 www/tablet/js/widget_classchanger.js
