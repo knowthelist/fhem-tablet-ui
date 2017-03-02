@@ -102,9 +102,9 @@ var Modul_widget = function () {
         if (ftui.isValid(subst)) {
             if ($.isArray(subst)) {
                 for (var i = 0, len = subst.length; i < len; i += 2) {
-                    var match = value.match(new RegExp(subst[i]));
+                    var match = value.match(new RegExp('^' + subst[i] + '$'));
                     if (match && i + 1 < len) {
-                        console.log(value, 'match', subst[i], subst[i + 1]);
+                        //console.log(value, 'match', subst[i], subst[i + 1]);
                         return subst[i + 1].replace('$1', value);
 
                     }
