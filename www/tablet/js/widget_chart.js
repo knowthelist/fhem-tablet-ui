@@ -1615,15 +1615,22 @@ var widget_chart = {
 				mindate,
 				maxdate,
 				(ptype.search('icons:')>=0 && columnspec.search('logProxy')<=-1)?'':columnspec // as text out of logfiles are only reported when there is an empty columnspec, we need to set it for ptype "icons"
-			].join(' ');
-            var point=[];
-            
-			if (getData) {
-                
-            ftui.sendFhemCommand(cmd)
-                .done(function(dat) { // jshint ignore:line
+			];
+			if (getData) {$.ajax({ // ajax call to get data from server
+				url: ftui.config.fhemDir,
+				async: false,
+				cache: false,
+				context: {elem: $(theObj)},
+                username: ftui.config.username,
+                password: ftui.config.password,
+				data: {
+					cmd: cmd.join(' '),
+					XHR: "1",
+                    fwcsrf: ftui.config.csrf
+				}             
+			}).done(function(dat) { // jshint ignore:line
 				var lines = dat.split('\n');
-				point=[];
+				var point=[];
 				var i=0, j=0;
 				var tstart = ftui.dateFromString(mindate);
 				var found_logproxy = false;
