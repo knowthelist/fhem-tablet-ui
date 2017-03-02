@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.9
+ * Version: 2.6.10
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -285,7 +285,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.9',
+    version: '2.6.10',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -720,8 +720,8 @@ var ftui = {
         var startTime = new Date();
 
         // invalidate all readings for detection of outdated ones
-        for (var device in ftui.devs) {
-            var params = ftui.deviceStates[device];
+        for (var i=0, len = ftui.devs.length; i<len; i++) {
+            var params = ftui.deviceStates[ftui.devs[i]];
             for (var reading in params) {
                 params[reading].valid = false;
             }
@@ -731,18 +731,8 @@ var ftui = {
         //Request all devices from FHEM
         //ToDo log request
 
-        ftui.shortPollRequest = $.ajax({
-                cache: false,
-                url: ftui.config.fhemDir,
-                //dataType: "json",
-                username: ftui.config.username,
-                password: ftui.config.password,
-                data: {
-                    cmd: 'jsonlist2 ' + ftui.poll.shortPollFilter,
-                    fwcsrf: ftui.config.csrf,
-                    XHR: "1"
-                }
-            })
+        ftui.shortPollRequest = 
+            ftui.sendFhemCommand('jsonlist2 ' + ftui.poll.shortPollFilter)
             .done(function (fhemJSON) {
                 console.timeEnd('get jsonlist2');
                 console.time('read jsonlist2');
@@ -1089,7 +1079,7 @@ var ftui = {
         return $.ajax({
                 async: true,
                 cache: false,
-                method: 'POST',
+                method: 'GET',
                 url: ftui.config.fhemDir,
                 username: ftui.config.username,
                 password: ftui.config.password,
@@ -1097,11 +1087,12 @@ var ftui = {
                     cmd: cmdline,
                     fwcsrf: ftui.config.csrf,
                     XHR: "1"
-                }
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
                 ftui.toast("<u>FHEM Command Failed</u><br>" + textStatus + ": " + errorThrown, 'error');
+                }
             });
+            
     },
 
     loadStyleSchema: function () {
