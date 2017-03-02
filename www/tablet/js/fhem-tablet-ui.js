@@ -720,7 +720,7 @@ var ftui = {
         var startTime = new Date();
 
         // invalidate all readings for detection of outdated ones
-        for (var i=0, len = ftui.devs.length; i<len; i++) {
+        for (var i = 0, len = ftui.devs.length; i < len; i++) {
             var params = ftui.deviceStates[ftui.devs[i]];
             for (var reading in params) {
                 params[reading].valid = false;
@@ -731,7 +731,7 @@ var ftui = {
         //Request all devices from FHEM
         //ToDo log request
 
-        ftui.shortPollRequest = 
+        ftui.shortPollRequest =
             ftui.sendFhemCommand('jsonlist2 ' + ftui.poll.shortPollFilter)
             .done(function (fhemJSON) {
                 console.timeEnd('get jsonlist2');
@@ -1077,22 +1077,22 @@ var ftui = {
         cmdline = cmdline.replace('  ', ' ');
         ftui.log(1, 'send to FHEM: ' + cmdline);
         return $.ajax({
-                async: true,
-                cache: false,
-                method: 'GET',
-                url: ftui.config.fhemDir,
-                username: ftui.config.username,
-                password: ftui.config.password,
-                data: {
-                    cmd: cmdline,
-                    fwcsrf: ftui.config.csrf,
-                    XHR: "1"
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
+            async: true,
+            cache: false,
+            method: 'GET',
+            url: ftui.config.fhemDir,
+            username: ftui.config.username,
+            password: ftui.config.password,
+            data: {
+                cmd: cmdline,
+                fwcsrf: ftui.config.csrf,
+                XHR: "1"
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
                 ftui.toast("<u>FHEM Command Failed</u><br>" + textStatus + ": " + errorThrown, 'error');
-                }
-            });
-            
+            }
+        });
+
     },
 
     loadStyleSchema: function () {
@@ -1317,11 +1317,11 @@ var ftui = {
             cache: false,
             username: ftui.config.username,
             password: ftui.config.password,
+            data: {
+                XHR: "1"
+            },
             'success': function (data, textStatus, jqXHR) {
                 ftui.config.csrf = jqXHR.getResponseHeader('X-FHEM-csrfToken');
-                if (!ftui.config.csrf) {
-                    ftui.config.csrf = ftui.getPart(data, ".*fwcsrf='(.*?)'.*");
-                }
                 ftui.log(1, 'Got csrf from FHEM:' + ftui.config.csrf);
             }
         }).fail(function (jqXHR, textStatus, errorThrown) {
