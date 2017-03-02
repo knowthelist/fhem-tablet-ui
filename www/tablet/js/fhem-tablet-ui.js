@@ -1490,7 +1490,7 @@ var ftui = {
             } else {
                 var ret = '';
                 if (ftui.isValid(value)) {
-                    var matches = value.match(new RegExp(part));
+                    var matches = value.match(new RegExp('^' + part + '$'));
                     if (matches) {
                         for (var i = 1, len = matches.length; i < len; i++) {
                             ret += matches[i];
