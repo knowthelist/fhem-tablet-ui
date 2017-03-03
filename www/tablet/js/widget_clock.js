@@ -16,7 +16,7 @@ var Modul_clock = function () {
         elem.initData('shortday-length', 3);
         elem.initData('days', ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]);
         elem.initData('shortmonth-length', 3);
-        elem.initData('months', ["Januar", "Februar", "M‰rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]);
+        elem.initData('months', ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]);
 
 
         if (!$.isArray(elem.data('days'))) {
