@@ -113,7 +113,7 @@ UPD 2017-02-23_19:40:14 8957 www/tablet/js/widget_popup.js
 UPD 2017-01-22_20:21:29 3554 www/tablet/js/widget_progress.js
 UPD 2017-01-23_23:45:24 1866 www/tablet/js/widget_push.js
 UPD 2017-02-06_03:22:08 6051 www/tablet/js/widget_range.js
-UPD 2017-02-28_21:58:34 2331 www/tablet/js/widget_readingsgroup.js
+UPD 2017-03-03_17:46:38 2323 www/tablet/js/widget_readingsgroup.js
 UPD 2017-02-11_14:27:26 1551 www/tablet/js/widget_rotor.js
 UPD 2017-01-21_15:22:17 4272 www/tablet/js/widget_select.js
 UPD 2017-01-19_21:12:36 9782 www/tablet/js/widget_settimer.js
