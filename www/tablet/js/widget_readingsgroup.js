@@ -46,7 +46,7 @@ var Modul_readingsgroup = function () {
                         ftui.sendFhemCommand(cmd)
                             .done(function (data, dev) {
                             //console.log('received update for dynamic html : ', $(this) );
-                            $(this.elem).html(data);
+                            elem.html(data);
                         });
                     }
                 }
