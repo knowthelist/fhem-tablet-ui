@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.10
+ * Version: 2.6.11
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -285,7 +285,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.10',
+    version: '2.6.11',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -712,7 +712,7 @@ var ftui = {
         ftui.config.shortpollInterval = $("meta[name='shortpoll_interval']").attr("content") || 15 * 60; // 15 minutes
     },
 
-    shortPoll: function () {
+    shortPoll: function (silent) {
         var ltime = new Date().getTime() / 1000;
         if ((ltime - ftui.states.lastShortpoll) < ftui.config.shortpollInterval)
             return;
@@ -728,8 +728,6 @@ var ftui = {
         }
         console.time('get jsonlist2');
 
-        //Request all devices from FHEM
-        //ToDo log request
 
         ftui.shortPollRequest =
             ftui.sendFhemCommand('jsonlist2 ' + ftui.poll.shortPollFilter)
@@ -813,7 +811,9 @@ var ftui = {
                     ftui.poll.lastShortpollTimestamp = new Date();
                     ftui.saveStatesLocal();
                     ftui.updateBindElements('ftui.');
-                    ftui.onUpdateDone();
+                    if (!silent) {
+                        ftui.onUpdateDone();
+                    }
                 } else {
                     ftui.log(1, "shortPoll request failed: Result is null");
                     ftui.toast("<u>ShortPoll Request Failed: : Result is null </u><br>", 'error');
@@ -1067,6 +1067,7 @@ var ftui = {
             console.log('DEMO-Mode: no setFhemStatus');
             return;
         }
+        // postpone update
         ftui.startShortPollInterval();
 
         ftui.sendFhemCommand(cmdline);

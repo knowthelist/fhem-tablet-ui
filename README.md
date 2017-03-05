@@ -1139,6 +1139,11 @@ Interval for shortpolls (full refresh) in secondes.
 <meta name="shortpoll_interval" content="900">
 ```
 
+Define a filter for shortpoll. Default is NULL (Autofilter from widgets devices + readings)
+```html
+<meta name="shortpoll_filter" content="">
+```
+
 Interval for shortpolls (full refresh) in secondes if longpoll is disabled (longpoll_type="0")
 ```html
 <meta name="shortpoll_only_interval" content="30">

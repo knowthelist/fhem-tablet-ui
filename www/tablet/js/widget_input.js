@@ -14,6 +14,7 @@ var Modul_input = function () {
         elem.find('.textinput').val(elem.getReading('ext_get').val);
         me.addReading(elem,'ext_get');
         plugins.updateParameters();
+        ftui.shortPoll('silent');
     }
 
     function init_attr(elem) {

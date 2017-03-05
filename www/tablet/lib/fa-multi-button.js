@@ -70,7 +70,9 @@
             options = $.extend({}, options, elem.data());
 
             var content = (elem.html() !== elem.text()) ? elem.find('*').detach() : jQuery('<div>', {}).text(elem.text());
-            content.attr('id', 'fg');
+            if (options['onColor'] !== 'none' && options['offColor'] !== 'none') {
+                content.attr('id', 'fg');
+            }
             content.addClass('fa-stack-1x');
 
             elem.html('');
@@ -338,7 +340,7 @@
             var touch_pos_x, touch_pos_y;
             var android = getAndroidVersion();
             var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            var onlyTouch = ((android && parseFloat(android) < 5) || iOS );
+            var onlyTouch = ((android && parseFloat(android) < 5) || iOS);
             var clickEventType = (onlyTouch) ? 'touchstart' : 'touchstart mousedown';
             var moveEventType = ((onlyTouch) ? 'touchmove' : 'touchmove mousemove');
             var releaseEventType = ((onlyTouch) ? 'touchend' : 'touchend mouseup');
