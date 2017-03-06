@@ -69,9 +69,10 @@ var Modul_select = function () {
         me.elements.filterDeviceReading('alias', dev, par)
             .each(function (index) {
                 var elem = $(this);
+                var delimiter = elem.data('delimiter');
                 var items = elem.getReading('alias').val;
                 if (ftui.isValid(items)) {
-                    items = items.split(':');
+                    items = items.split(delimiter);
                     elem.data('alias', items);
                     fillList(elem);
                 }
