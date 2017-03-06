@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.11
+ * Version: 2.6.12
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -285,7 +285,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.11',
+    version: '2.6.12',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -412,6 +412,9 @@ var ftui = {
         var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         var onlyTouch = ((android && parseFloat(android) < 5) || iOS);
         ftui.config.clickEventType = (onlyTouch) ? 'touchstart' : 'touchstart mousedown';
+        ftui.config.moveEventType = ((onlyTouch) ? 'touchmove' : 'touchmove mousemove');
+        ftui.config.releaseEventType = ((onlyTouch) ? 'touchend' : 'touchend mouseup');
+        ftui.config.leaveEventType = ((onlyTouch) ? 'touchleave' : 'touchleave mouseout');
 
         //add background for modal dialogs
         $("<div id='shade' />").prependTo('body').hide();

@@ -269,13 +269,13 @@ var Modul_spinner = function () {
 
         // event handler
         // UP button
-        elemRightIcon.on('touchstart mousedown', function (e) {
+        elemRightIcon.on(ftui.config.clickEventType, function (e) {
             elemRightIcon.fadeTo("fast", 0.5);
             e.preventDefault();
             e.stopPropagation();
             onClicked(elem, 1);
         });
-        elemRightIcon.on('touchend touchleave mouseup mouseout', function (e) {
+        elemRightIcon.on(ftui.config.releaseEventType + ' ' + ftui.config.leaveEventType, function (e) {
             elemRightIcon.fadeTo("fast", 1);
             if (elem.delayTimer)
                 onReleased(elem);
@@ -289,13 +289,13 @@ var Modul_spinner = function () {
         });
 
         // DOWN button
-        elemLeftIcon.on('touchstart mousedown', function (e) {
+        elemLeftIcon.on(ftui.config.clickEventType, function (e) {
             elemLeftIcon.fadeTo("fast", 0.5);
                         e.preventDefault();
             e.stopPropagation();
             onClicked(elem, -1);
         });
-        elemLeftIcon.on('touchend touchleave mouseup mouseout', function (e) {
+        elemLeftIcon.on(ftui.config.releaseEventType + ' ' + ftui.config.leaveEventType, function (e) {
             elemLeftIcon.fadeTo("fast", 1);
             if (elem.delayTimer)
                 onReleased(elem);
