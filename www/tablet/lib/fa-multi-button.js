@@ -69,7 +69,9 @@
 
             options = $.extend({}, options, elem.data());
 
-            var content = (elem.html() !== elem.text()) ? elem.find('*').detach() : jQuery('<div>', {}).text(elem.text());
+            var content = (elem.html() !== elem.text()) ?
+                jQuery('<div>', {}).html(elem.html()).children().detach() :
+                jQuery('<div>', {}).text(elem.text());
             if (options['onColor'] !== 'none' && options['offColor'] !== 'none') {
                 content.attr('id', 'fg');
             }
