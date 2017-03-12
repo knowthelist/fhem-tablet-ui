@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.12
+ * Version: 2.6.13
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -285,7 +285,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.12',
+    version: '2.6.13',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -353,6 +353,7 @@ var ftui = {
         ftui.config.DEBUG = (ftui.config.debuglevel > 0);
         ftui.config.TOAST = $("meta[name='toast']").attr("content") || 5; //1,2,3...= n Toast-Messages, 0: No Toast-Messages
         ftui.config.shortpollInterval = $("meta[name='shortpoll_only_interval']").attr("content") || 30;
+        ftui.config.shortPollDelay = $("meta[name='shortpoll_restart_delay']").attr("content") || 3000;
         //self path
         var url = window.location.pathname;
         ftui.config.filename = url.substring(url.lastIndexOf('/') + 1);
@@ -829,7 +830,8 @@ var ftui = {
                 ftui.states.lastSetOnline = 0;
                 ftui.states.lastShortpoll = 0;
                 if (textStatus.indexOf('parsererror') < 0) {
-                    ftui.toast("<u>ShortPoll Request Failed, will retry in 3s</u><br>" + err, 'error');
+                    ftui.toast("<u>ShortPoll Request Failed, will retry in " + ftui.config.shortPollDelay / 1000 + "s</u><br>" + err, 'error');
+                    ftui.getCSrf();
                     ftui.startShortPollInterval(3000);
                 } else {
                     ftui.toast("<u>ShortPoll Request Failed</u><br>" + err, 'error');
@@ -1330,6 +1332,7 @@ var ftui = {
             }
         }).fail(function (jqXHR, textStatus, errorThrown) {
             ftui.log(1, "Failed to get csrfToken: " + textStatus + ": " + errorThrown);
+            ftui.config.shortPollDelay = 30000;
         });
 
     },
@@ -1346,7 +1349,7 @@ var ftui = {
             console.log('Longpoll objects there: ' + (ftui.isValid(ftui.longPollRequest) && ftui.isValid(ftui.xhr) || ftui.isValid(ftui.websocket)));
             console.log('Longpoll curent line: ' + ftui.poll.currLine);
             console.log('Longpoll last event before: ' + ftui.poll.lastEventTimestamp.ago());
-            console.log('Longpoll last reading uodate before: ' + ftui.poll.lastUpdateTimestamp.ago());
+            console.log('Longpoll last reading update before: ' + ftui.poll.lastUpdateTimestamp.ago());
             console.log('Shortpoll interval: ' + ftui.config.shortpollInterval);
             console.log('Shortpoll last run before: ' + d.ago());
             console.log('FHEM dev/par count: ' + Object.keys(ftui.paramIdMap).length);
@@ -1862,7 +1865,7 @@ function onjQueryLoaded() {
     //for widget
 
     $.fn.widgetId = function () {
-        return ['ftui', $(this).data('type'), $(this).data('device'), $(this).data('get')].join('_');
+        return ['ftui', $(this).data('type'), $(this).data('device'), $(this).data('get'),  $(this).index()].join('_');
     };
 
     $.fn.filterData = function (key, value) {

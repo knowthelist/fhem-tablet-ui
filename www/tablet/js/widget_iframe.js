@@ -31,6 +31,8 @@ var Modul_iframe = function () {
         elem.initData('check', true);
 
         me.addReading(elem, 'get');
+        if (elem.isValidData('url'))
+            me.addReading(elem, 'url');
     }
 
     function init_ui(elem) {
@@ -101,6 +103,14 @@ var Modul_iframe = function () {
                         me.init_ui(elem);
                 }
                 elem.data('value', value);
+            });
+
+        //extra reading for url
+        me.elements.filterDeviceReading('url', dev, par)
+            .each(function (idx) {
+                var elem = $(this);
+                elem.data('src', elem.getReading('url').val);
+                me.init_ui(elem);
             });
     }
 

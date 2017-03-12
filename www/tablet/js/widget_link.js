@@ -162,7 +162,7 @@ var Modul_link = function () {
 
         // set colors of the container element
         colorize(elem);
-console.log('init link');
+        console.log('init link');
         // prepare left icon
         if (leftIcon) {
             var elemLeftIcon = $('<div/>', {
@@ -197,7 +197,7 @@ console.log('init link');
         if (!elem.hasClass('fixcontent')) {
             // recalculate width of text element
             elemText.css({
-                width: 'calc(100% - ' + iconWidth + 'px)' ,
+                width: 'calc(100% - ' + iconWidth + 'px)',
             });
         }
 
