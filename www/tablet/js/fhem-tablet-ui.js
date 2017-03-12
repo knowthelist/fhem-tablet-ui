@@ -1095,7 +1095,7 @@ var ftui = {
                 XHR: "1"
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                ftui.toast("<u>FHEM Command Failed</u><br>" + textStatus + ": " + errorThrown, 'error');
+                ftui.toast("<u>FHEM Command failed</u><br>" + textStatus + ": " + errorThrown, 'error');
             }
         });
 
