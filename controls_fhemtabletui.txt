@@ -100,7 +100,7 @@ UPD 2017-02-11_14:27:26 4496 www/tablet/js/widget_klimatrend.js
 UPD 2017-02-21_00:28:07 8016 www/tablet/js/widget_knob.js
 UPD 2017-03-07_01:01:53 6100 www/tablet/js/widget_label.js
 UPD 2017-02-11_14:27:26 877 www/tablet/js/widget_level.js
-UPD 2017-03-17_22:27:52 10862 www/tablet/js/widget_link.js
+UPD 2017-03-18_10:38:02 10848 www/tablet/js/widget_link.js
 UPD 2017-02-11_14:27:26 1493 www/tablet/js/widget_loading.js
 UPD 2017-02-06_03:21:48 5484 www/tablet/js/widget_medialist.js
 UPD 2017-02-06_02:16:52 2031 www/tablet/js/widget_meteogram.js
