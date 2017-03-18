@@ -990,10 +990,9 @@ var ftui = {
                         ftui.xhr = null;
                     }
                     ftui.longPollRequest = null;
-                    if (ftui.states.longPollRestart){
+                    if (ftui.states.longPollRestart) {
                         ftui.longPoll();
-                    }
-                    else {
+                    } else {
                         ftui.log(1, "Disconnected from FHEM - poll done - " + data);
                         ftui.restartLongPoll(data);
                     }
@@ -1004,10 +1003,9 @@ var ftui = {
                         ftui.xhr = null;
                     }
                     ftui.longPollRequest = null;
-                    if (ftui.states.longPollRestart){
+                    if (ftui.states.longPollRestart) {
                         ftui.longPoll();
-                    }
-                    else {
+                    } else {
                         ftui.log(1, "Error while longpoll: " + textStatus + ": " + errorThrown);
                         if (ftui.config.debuglevel > 1) {
                             ftui.toast("Error while longpoll (ajax)<br>" + textStatus + ": " + errorThrown, 'error');
