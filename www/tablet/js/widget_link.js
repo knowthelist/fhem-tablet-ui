@@ -255,7 +255,6 @@ var Modul_link = function () {
                 
                 // postpone longpoll start
                 clearTimeout(ftui.longPollTimer);
-            }
         }
 
         // load area content but wait until main page is loaded
