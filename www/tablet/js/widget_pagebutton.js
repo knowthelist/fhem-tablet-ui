@@ -87,6 +87,7 @@ var Modul_pagebutton = function () {
     }
 
     function init() {
+        var fetchCount = 1;
         me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
@@ -114,7 +115,7 @@ var Modul_pagebutton = function () {
                 var sel = elem.data('load');
                 if (sel) {
                     elem.closest('nav').trigger('changedSelection');
-                    
+
                     $(sel).siblings().filter('.page').fadeOut(elem.data('fade-duration'), function () {
                         $(sel).siblings().filter('.page').removeClass("active");
                     });
@@ -167,10 +168,16 @@ var Modul_pagebutton = function () {
             // prefetch page if necessary
             if (elem.isValidData('load') && elem.isValidData('url') && (elem.hasClass('prefetch'))) {
 
-                // pre fetch sub pages randomly delayed
+                // pre fetch sub pages delayed
+                var delay = fetchCount * 1000;
+                fetchCount++;
                 setTimeout(function () {
+                    clearTimeout(ftui.longPollTimer);
                     loadPage(elem);
-                }, 5000 * Math.random() + 500);
+                }, delay);
+
+                // postpone longpoll start
+                clearTimeout(ftui.longPollTimer);
             }
 
             // load area content but wait until main page is loaded

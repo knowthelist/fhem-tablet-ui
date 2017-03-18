@@ -138,6 +138,7 @@ var Modul_link = function () {
         var text = elem.html();
         var iconWidth = 0;
         var elem_url = elem.data('url');
+        var fetchCount = 1;
 
         // prepare container element
         elem.html('')
@@ -244,10 +245,17 @@ var Modul_link = function () {
         // prefetch page if necessary
         if (elem.isValidData('load') && elem.isValidData('url') && (elem.hasClass('prefetch'))) {
 
-            // pre fetch sub pages randomly delayed
-            setTimeout(function () {
-                loadPage(elem);
-            }, 5000 * Math.random() + 500);
+                // pre fetch sub pages delayed
+                var delay = fetchCount * 1000;
+                fetchCount++;
+                setTimeout(function () {
+                    clearTimeout(ftui.longPollTimer);
+                    loadPage(elem);
+                }, delay);
+                
+                // postpone longpoll start
+                clearTimeout(ftui.longPollTimer);
+            }
         }
 
         // load area content but wait until main page is loaded
