@@ -134,8 +134,8 @@ UPD 2017-03-01_00:28:34 95955 www/tablet/js/widget_wdtimer.js
 UPD 2017-02-28_21:35:50 24357 www/tablet/js/widget_weather.js
 UPD 2017-02-28_22:00:53 25229 www/tablet/js/widget_weekprofile.js
 UPD 2017-02-11_14:27:26 7163 www/tablet/js/widget_wind_direction.js
-UPD 2017-03-07_01:01:07 19731 www/tablet/lib/fa-multi-button.js
-UPD 2017-03-07_01:01:12 6897 www/tablet/lib/fa-multi-button.min.js
+UPD 2017-03-19_02:11:31 19816 www/tablet/lib/fa-multi-button.js
+UPD 2017-03-19_02:11:36 6904 www/tablet/lib/fa-multi-button.min.js
 UPD 2017-02-11_14:27:26 17041 www/tablet/lib/farbtastic.js
 UPD 2017-02-11_14:27:26 26586 www/tablet/lib/fhemSVG.css
 UPD 2017-02-11_14:27:26 30926 www/tablet/lib/font-awesome.min.css
