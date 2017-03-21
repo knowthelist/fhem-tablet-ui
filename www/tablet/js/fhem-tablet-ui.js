@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.14
+ * Version: 2.6.15
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -170,7 +170,9 @@ var Modul_widget = function () {
                         reading = fqreading[1];
                     }
                     // fill objects for mapping from FHEMWEB paramid to device + reading
-                    if (ftui.isValid(device) && ftui.isValid(reading)) {
+                    if (ftui.isValid(device) && ftui.isValid(reading) && 
+                        device !== '' && reading !== '' &&
+                        device !== ' ' && reading !== ' ' ) {
                         device = device.toString();
                         var paramid = (reading === 'STATE') ? device : [device, reading].join('-');
                         subscriptions[paramid] = {};
@@ -288,7 +290,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.14',
+    version: '2.6.15',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -299,6 +301,7 @@ var ftui = {
         debuglevel: 0,
         doLongPoll: true,
         lang: 'de',
+        toastPosition: 'bottom-left',
         shortpollInterval: 0,
         styleCollection: {},
         stdColors: ["green", "orange", "red", "ligthblue", "blue", "gray", "white", "mint"]
@@ -355,6 +358,7 @@ var ftui = {
         ftui.config.maxLongpollAge = $("meta[name='longpoll_maxage']").attr("content") || 240;
         ftui.config.DEBUG = (ftui.config.debuglevel > 0);
         ftui.config.TOAST = $("meta[name='toast']").attr("content") || 5; //1,2,3...= n Toast-Messages, 0: No Toast-Messages
+        ftui.config.toastPosition = $("meta[name='toast_position']").attr("content") || 'bottom-left';
         ftui.config.shortpollInterval = $("meta[name='shortpoll_only_interval']").attr("content") || 30;
         ftui.config.shortPollDelay = $("meta[name='shortpoll_restart_delay']").attr("content") || 3000;
         //self path
@@ -1073,7 +1077,6 @@ var ftui = {
                     }
                     // just a trigger
                     if (isTrigger && subscription) {
-                        console.log('tigger', subscription.device, subscription.reading);
                         plugins.update(subscription.device, subscription.reading);
                     }
                 } catch (err) {
@@ -1690,6 +1693,7 @@ var ftui = {
                         hideAfter: 20000, // in milli seconds
                         icon: 'error',
                         loader: false,
+                        position : ftui.config.toastPosition,
                         stack: tstack
                     });
                 }
@@ -1704,6 +1708,7 @@ var ftui = {
                 $.toast({
                     text: text,
                     loader: false,
+                    position : ftui.config.toastPosition,
                     stack: tstack
                 });
             }
