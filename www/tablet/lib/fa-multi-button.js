@@ -135,6 +135,7 @@
 
             faElem.children('#bg').css("color", options['onBackgroundColor']);
             faElem.children('#fg').css("color", options['onColor']);
+            faElem.addClass('active');
             elem.trigger('setOn');
         }
 
@@ -143,6 +144,7 @@
             state = false;
             faElem.children('#bg').css("color", options['offBackgroundColor']);
             faElem.children('#fg').css("color", options['offColor']);
+            faElem.removeClass('active');
             elem.trigger('setOff');
         }
 
@@ -351,7 +353,7 @@
 
             if (options['mode'] == 'push') {
                 faElem.on(clickEventType, function (e) {
-                    e.preventDefault();
+                    //e.preventDefault();
                     e.stopImmediatePropagation();
                     touch_pos_y = $(window).scrollTop();
                     touch_pos_x = $(window).scrollLeft();
@@ -433,7 +435,7 @@
                 });
             } else if (options['mode'] == 'toggle') {
                 faElem.on(clickEventType, function (e) {
-                    e.preventDefault();
+                    //e.preventDefault();
                     e.stopImmediatePropagation();
                     touch_pos_y = $(window).scrollTop();
                     touch_pos_x = $(window).scrollLeft();
