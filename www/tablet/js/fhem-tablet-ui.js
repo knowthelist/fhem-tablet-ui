@@ -1262,7 +1262,6 @@ var ftui = {
                     var deps = getDependencies();
                     if (deps) {
                         deps = ($.isArray(deps)) ? deps : [deps];
-                        //console.log('deps',deps);
                         $.map(deps, function (dep, i) {
                             if (dep.indexOf(".js") < 0) {
                                 depsPromises.push(ftui.loadPlugin(dep));
