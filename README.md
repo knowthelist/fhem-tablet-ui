@@ -1174,6 +1174,11 @@ Number of Toast messages maximal displayed at the same time. Default is 5. To di
 <meta name='toast' content='1'>
 ```
 
+Position of the toast: top-left, top-right bottom-left and bottom-right, top-center, bottom-center and mid-center
+```html
+<meta name='toast_position' content='bottom-left'>
+```
+
 To change the folder where FHEM can be reached for sending
 ```html
 <meta name='fhemweb_url' content='/fhem/'>

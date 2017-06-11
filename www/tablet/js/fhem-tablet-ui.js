@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.15
+ * Version: 2.6.16
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -251,7 +251,7 @@ var plugins = {
         var readinglist = (ftui.reads.length > 0) ? $.map(ftui.reads, $.trim).join(' ') : '';
 
         if (!ftui.config.longPollFilter) {
-            ftui.poll.longPollFilter = devicelist + ' ' + readinglist;
+            ftui.poll.longPollFilter = devicelist + ', ' + readinglist;
         } else {
             ftui.poll.longPollFilter = ftui.config.longPollFilter
         }
@@ -290,7 +290,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.15',
+    version: '2.6.16',
     config: {
         DEBUG: false,
         DEMO: false,
