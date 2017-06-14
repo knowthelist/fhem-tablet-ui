@@ -128,6 +128,7 @@ var Modul_knob = function () {
                 'fgColor': elem.data('fgcolor'),
                 'tempColor': elem.data('tempcolor'),
                 'hdColor': elem.data('hdcolor'),
+                'tkColor': elem.data('tkcolor'),
                 'inputColor': elem.data('inputcolor'),
                 'minColor': elem.data('mincolor'),
                 'maxColor': elem.data('maxcolor'),
