@@ -1,0 +1,239 @@
+/* weekprofile_widget default CSS */
+.weekprofile {
+    z-index: 1000;
+	position: fixed;
+}
+.weekprofile_dialog {
+    height: 150px;
+    overflow: auto;
+    width: auto;
+}
+
+.weekprofile_profile{
+/* Formatierungstest		*/	
+	padding-left: 10px;
+/* Formatierungstest		*/
+    padding: 5px;
+	border-style: solid;
+	border-radius: 10px;
+	border-width: 2px;
+	border-color: grey;
+}
+
+.weekprofile_profileweekdays{
+/* Formatierungstest		*/	
+	padding-left: 6px;
+/* Formatierungstest		*/
+	
+}
+.weekprofile_profile.error {
+    background-color: #cd3700 !important; 
+}
+
+.weekprofile_lines{
+/* Formatierungstest		*/
+	margin: 0 auto;
+
+	text-align: left;
+/* Formatierungstest		*/
+/*    padding-left: 46px;	*/
+}
+
+.weekprofile_button {
+    padding: 0.5em;
+    margin-left: 0.3em;
+    text-decoration: none;
+    border: none;
+    font-weight: normal;
+    color: inherit;
+}
+.weekprofile_deleteprofile {
+    font-size: 15px;
+    height:35px;
+    width:35px;    
+}
+
+.weekprofile_delprofile {
+	/* Formatierungstest		*/
+	/*padding-left: 44px; */
+	/* Formatierungstest		*/
+}
+
+.weekprofile_addline {
+    font-size: 15px;
+    height:35px;
+    width:35px;    
+	
+}.weekprofile_addlinediv {
+	padding-left: 3px;
+    padding-right: 4px; 
+	vertical-align: middle;
+}
+
+.weekprofile_deleteline {
+    font-size: 15px;
+    height:35px;
+    width:35px;    
+	
+}.weekprofile_deletelinediv {
+    vertical-align: middle;	
+}
+
+.weekprofile_profiletime {
+    width: auto !important; 
+    margin: 4px 2.5px !important;
+    vertical-align: middle;
+    text-align: center;
+}
+.weekprofile_profilecmd{
+    width: auto !important; 
+    margin: 4px 2.5px !important;
+    vertical-align: middle;
+    text-align: center;
+	padding-left: 13px;
+}
+.weekprofile_time{ 
+    border: none;
+    font-size: small;
+    width: 50px !important;    
+    height: 35px;  
+	padding: 0px;
+	/* margin-top: 2px; */
+	text-align: center; 
+}
+
+.weekprofile_starttime{ 
+    border: none;
+    font-size: small;
+    width: 50px !important;    
+    height: 35px;    
+	margin-top: 2px;
+	display: table-cell;
+	vertical-align: middle; 
+}
+
+.weekprofile_cmd {
+	/* Formatierungstest		*/
+	text-align: right;
+	padding-right: 1em !important;
+	width: 55px !important;
+	/* Formatierungstest		*/
+    height: 35px;    
+    border: none;
+	/* margin-top: 2px; */
+}
+
+.weekprofile_checkbox {
+	position: relative;
+    display: inherit;       
+    padding: 0em;
+    border: none;
+	top: -5px;
+    margin-left: -4px;        
+    height:35px;
+    line-height: 1.6em;
+    width:35px;
+}
+  
+.weekprofile_checkbox label {
+	cursor: pointer;
+	position: absolute;
+	left: 7px;
+	top: 7px;
+}
+.weekprofile_checkbox label:after {
+	opacity: 0;
+	content: '';
+	position: absolute;
+	top: -7px;
+	left: -7px;
+	width: 35px;
+	height: 35px;    
+}
+.weekprofile_checkbox input[type=radio]:checked + label:after {
+	opacity: 0.5;
+}
+ 
+.weekprofile_header {
+    text-align: center; 
+    width: 100%;
+ 	padding-bottom: 5px;
+	padding-top: 5px;
+    font-size: 1.4em;    
+}
+.weekprofile_header_icon {
+    position: absolute;
+    left: 8px;
+    font-size: 1.25em !important;
+}
+
+.weekprofile_footer {
+    width: 100%;
+    float: right;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+.weekprofile_footer .ui-dialog-buttonset{
+    float: inherit;
+}
+
+.weekprofile_active {
+    float:left;
+    display: inline-block;
+    margin: 6px;
+}
+
+.weekprofile_shader {
+    position:absolute;
+    background-color:#000000;
+    opacity:0.5;
+    height:100%;
+    width:100%;
+    top:0px;
+    left:0px;    
+}
+
+/* ---------------------------------------------------- */
+/* weekprofile_widget Style "round" */
+.weekprofile_button.round { border-radius: 10px; }        
+.weekprofile_header.round { border-top-left-radius: 10px; border-top-right-radius: 10px; }
+.weekprofile_footer.round { border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; }
+.weekprofile_checkbox.begin.round { border-bottom-left-radius: 10px; border-top-left-radius: 10px; }  
+.weekprofile_checkbox.end.round { border-bottom-right-radius: 10px; border-top-right-radius: 10px; }   
+.weekprofile_checkbox.round input[type=radio]:checked + label.begin::after { border-bottom-left-radius: 10px; border-top-left-radius: 10px; }    
+.weekprofile_checkbox.round input[type=radio]:checked + label.end::after { border-bottom-right-radius: 10px; border-top-right-radius: 10px; } 
+.weekprofile_time.round { border-radius: 10px; }
+.weekprofile_starttime.round { border-radius: 10px; }
+/* ---------------------------------------------------- */
+/* weekprofile_widget Style "square" */
+.weekprofile_cmd.square { border-radius: unset; }
+/* ---------------------------------------------------- */
+/* weekprofile_widget Theam "dark" */
+.weekprofile_button.dark:hover, .weekprofile_time.dark:hover, .weekprofile_starttime.dark:hover, .weekprofile_cmd.dark:hover, .weekprofile_checkbox.dark:hover { background-color: #007fff; }
+.weekprofile_button.dark { color: #d1eeee; background-color: #393939; }
+.weekprofile_time.dark { background-color: #393939; color: #d1eeee; }
+.weekprofile_starttime.dark { background-color: #393939; color: #d1eeee; }
+.weekprofile_datetimepicker.dark { background-color: #393939 !important; color: #d1eeee !important; }
+.weekprofile_cmd.dark { background-color: #393939; color: #d1eeee; }
+.weekprofile_checkbox.dark { background-color: #393939; color: #d1eeee; }
+.weekprofile_checkbox.dark label:after { background-color: #cc5500; }
+.weekprofile_dialog.dark{ background-color: #2a2a2a; }
+.weekprofile_header.dark { background-color: #262626; color: #d1eeee; }
+.weekprofile_footer.dark { background-color: #262626; }
+/* ---------------------------------------------------- */
+/* weekprofile_widget Theam "light" */
+.weekprofile_button.light:hover, .weekprofile_time.light:hover, .weekprofile_starttime.light:hover, .weekprofile_cmd.light:hover, .weekprofile_checkbox.light:hover { background-color: #007fff; }
+.weekprofile_button.light { color: #000000; background-color: #e3c7c7; border: 1px solid #e0e0e0; }
+.weekprofile_time.light { background-color: #e3c7c7; color: #000000;  border: 1px solid #e0e0e0; }
+.weekprofile_starttime.light { background-color: #e3c7c7; color: #000000;  border: 1px solid #e0e0e0; }
+.weekprofile_datetimepicker.light { background-color: #e3c7c7 !important; color: #000000 !important; border: 1px solid #e0e0e0; }
+.weekprofile_cmd.light { background-color: #e3c7c7; color: #000000; border: 1px solid #e0e0e0; }
+.weekprofile_checkbox.light { background-color: #e3c7c7; color: #000000;  border: 1px solid #e0e0e0; }
+.weekprofile_checkbox.light label:after { background-color: #cc5500; }
+
+.weekprofile_dialog.light{ background-color: #ffffff; }
+.weekprofile_header.light { background-color: #ffffff; color: #000000; border: 1px solid #e0e0e0; }
+.weekprofile_footer.light { background-color: #ffffff; border: 1px solid #e0e0e0; }
+/* ---------------------------------------------------- */
+/* weekprofile_widget Theam "custom" */
+/* ---------------------------------------------------- */

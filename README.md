@@ -379,6 +379,9 @@ all parameters from knob widget plus following additional parameters
 - **data-mode**  : name of the reading for mode of thermostates
 - **data-min**   : minimal value to set (default 10)
 - **data-max**   : maximal value to set (default 30)
+- **data-mincolor**   : Color of min temp (default '#4477ff');
+- **data-maxcolor**   : Color of max temp (default '#ff0000');
+- **data-tempcolor**   : Color of current temp text (default '#999');
 - **data-step**  : step size for value adjustment e.g. 0.5 (default 1)
 - **data-off**   : value to send to get the thermostat switch off (for this, dial the knob to then minimum value)
 - **data-boost** : value to send to force boost mode (for this, dial the knob to then maximum value)
@@ -1154,7 +1157,7 @@ To change the folder where FHEM can be reached for polling
 <meta name='fhemweb_url' content='/fhem/'>
 ```
 
-To change the folder where FHEM can be reached for polling
+The name of your FHEMWEB device
 ```html
 <meta name='web_device' content='WEB'>
 ```

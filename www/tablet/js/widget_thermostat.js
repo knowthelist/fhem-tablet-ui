@@ -40,7 +40,7 @@ var Modul_thermostat = function () {
         var dist = this.o.tickdistance || 4;
         var mincolor = this.o.minColor || '#ff0000';
         var maxcolor = this.o.maxColor || '#4477ff';
-        var destcolor = this.o.fgColor;
+        var tempcolor = this.o.tempColor;
 
         // draw ticks
         for (var tick = this.startAngle; tick < this.endAngle + 0.00001; tick += tick_w * dist) {
@@ -87,7 +87,7 @@ var Modul_thermostat = function () {
         //draw current value as text
         var x = this.radius * 0.7 * Math.cos(acAngle);
         var y = this.radius * 0.7 * Math.sin(acAngle);
-        c.fillStyle = destcolor;
+        c.fillStyle = tempcolor;
         c.font = cfont;
         c.fillText(this.o.isValue, this.xy + x - 5 * (this.o.height / 50), this.xy + y + 5 * (this.o.height / 100));
 
@@ -158,6 +158,7 @@ var Modul_thermostat = function () {
             elem.initData('cursor', 6);
             elem.initData('off', -1);
             elem.initData('boost', -1);
+            elem.initData('tempcolor', ftui.getStyle('.' + me.widgetname + '.tempcolor', 'color') || '#999');
             elem.initData('fgcolor', ftui.getStyle('.' + me.widgetname + '.fgcolor', 'color') || '#666');
             elem.initData('mincolor', ftui.getStyle('.' + me.widgetname + '.mincolor', 'color') || '#4477ff');
             elem.initData('maxcolor', ftui.getStyle('.' + me.widgetname + '.maxcolor', 'color') || '#ff0000');

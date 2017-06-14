@@ -313,9 +313,9 @@ var ftui = {
         longPollRequest: null,
         shortPollTimer: null,
         longPollTimer: null,
-        lastUpdateTimestamp: new Date(1970, 1, 1),
-        lastEventTimestamp: new Date(1970, 1, 1),
-        lastShortpollTimestamp: new Date(1970, 1, 1),
+        lastUpdateTimestamp: new Date(),
+        lastEventTimestamp: new Date(),
+        lastShortpollTimestamp: new Date(),
     },
 
     states: {
@@ -694,6 +694,7 @@ var ftui = {
 
     startLongpoll: function () {
         ftui.log(2, 'startLongpoll: ' + ftui.config.doLongPoll);
+        ftui.poll.lastEventTimestamp = new Date();
         if (ftui.config.doLongPoll) {
             ftui.config.shortpollInterval = $("meta[name='shortpoll_interval']").attr("content") || 15 * 60; // 15 minutes
             ftui.longPollTimer = setTimeout(function () {
@@ -888,8 +889,8 @@ var ftui = {
             if (ftui.config.DEBUG) {
                 ftui.toast("Longpoll (WebSocket) started");
             }
-            var wsURL = ftui.config.fhemDir.replace(/^http/i, "ws") + "?XHR=1&inform=type=status;addglobal=1;filter=" +
-                ftui.poll.longPollFilter + ";fmt=JSON" +
+            var wsURL = ftui.config.fhemDir.replace(/^http/i, "ws") + "?XHR=1&inform=type=status;filter=" +
+                ftui.poll.longPollFilter + ";since=" + ftui.poll.lastEventTimestamp.getTime() + ";fmt=JSON" +
                 "&fwcsrf=" + ftui.config.csrf;
             ftui.log(1, 'websockets URL=' + wsURL);
             ftui.states.longPollRestart = false;
@@ -966,7 +967,8 @@ var ftui = {
                     method: 'GET',
                     data: {
                         XHR: 1,
-                        inform: "type=status;addglobal=1;filter=" + ftui.poll.longPollFilter + ";fmt=JSON",
+                        inform: "type=status;filter=" + ftui.poll.longPollFilter + ";since=" + 
+                                ftui.poll.lastEventTimestamp.getTime() + ";fmt=JSON",
                         fwcsrf: ftui.config.csrf
                     },
                     username: ftui.config.username,
@@ -1198,6 +1200,7 @@ var ftui = {
             if (!ftui.config.doLongPoll) {
                 var longpoll = $("meta[name='longpoll']").attr("content") || '1';
                 ftui.config.doLongPoll = (longpoll != '0');
+                ftui.states.longPollRestart = false;
                 if (ftui.config.doLongPoll)
                     ftui.startLongpoll();
             }
@@ -1208,6 +1211,7 @@ var ftui = {
     setOffline: function () {
         if (ftui.config.DEBUG) ftui.toast("Lost connection to FHEM");
         ftui.config.doLongPoll = false;
+        ftui.states.longPollRestart = true;
         clearInterval(ftui.shortPollTimer);
         ftui.stopLongpoll();
         ftui.saveStatesLocal();
@@ -1381,7 +1385,7 @@ var ftui = {
             ftui.config.doLongPoll) {
             ftui.log(1, 'No longpoll event since ' + timeDiff / 1000 + 'secondes -> restart polling');
             ftui.setOnline();
-            ftui.restartLongPoll('Reason: missing longpoll events', 'error');
+            ftui.restartLongPoll();
         }
     },
 
