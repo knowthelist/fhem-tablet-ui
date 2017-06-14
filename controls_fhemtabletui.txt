@@ -90,7 +90,7 @@ UPD 2017-02-28_21:41:30 8601 www/tablet/js/widget_fullcalview.js
 UPD 2017-02-11_14:27:26 2387 www/tablet/js/widget_gds.js
 UPD 2017-02-28_22:02:28 8689 www/tablet/js/widget_highchart.js
 UPD 2017-02-28_22:04:09 8209 www/tablet/js/widget_highchart3d.js
-UPD 2017-02-18_18:55:25 11230 www/tablet/js/widget_homestatus.js
+UPD 2017-06-14_23:39:26 11230 www/tablet/js/widget_homestatus.js
 UPD 2017-02-26_14:37:49 9582 www/tablet/js/widget_html.js
 UPD 2017-03-12_10:44:12 4648 www/tablet/js/widget_iframe.js
 UPD 2017-01-26_22:21:10 5339 www/tablet/js/widget_image.js
@@ -98,7 +98,7 @@ UPD 2017-03-05_01:56:43 2785 www/tablet/js/widget_input.js
 UPD 2017-02-11_14:27:26 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2017-02-11_14:27:26 2983 www/tablet/js/widget_joinedlabel.js
 UPD 2017-02-11_14:27:26 4496 www/tablet/js/widget_klimatrend.js
-UPD 2017-06-14_23:22:56 8020 www/tablet/js/widget_knob.js
+UPD 2017-06-14_23:40:16 8069 www/tablet/js/widget_knob.js
 UPD 2017-03-07_01:01:53 6100 www/tablet/js/widget_label.js
 UPD 2017-02-11_14:27:26 877 www/tablet/js/widget_level.js
 UPD 2017-03-18_10:41:40 10796 www/tablet/js/widget_link.js
