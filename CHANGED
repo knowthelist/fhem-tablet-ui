@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2017-06-14
- - Added parameter tempcolor for thermostat
+2017-06-26
+ - Improved websocket close event handling
