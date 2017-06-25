@@ -20,6 +20,7 @@ var Modul_label = function () {
             val = me.map(elem.data('map-get'), val, val);
             val = me.fix(val, elem.data('fix'));
             val = elem.data('pre-text') + val + elem.data('post-text');
+            ftui.log(4, 'label.update_value: value=' + val);
             if (!isNaN(parseFloat(val)) && isFinite(val) && val.indexOf('.') > -1) {
                 var vals = val.split('.');
                 val = "<span class='label-precomma'>" + vals[0] + "</span>" +
@@ -32,8 +33,10 @@ var Modul_label = function () {
                     elem.html(val + "<span class='label-unit'>" + window.unescape(unit) + "</span>");
                 else
                     elem.html(val);
-                if (elem.children().length > 0) {
-                    elem.trigger('domChanged');
+                if (elem.find('[data-type]').length > 0) {
+                    var id = elem.widgetId();
+                    elem.attr('id', id);
+                    ftui.initWidgets('#' + id);
                 }
             }
             me.update_cb(elem, val);

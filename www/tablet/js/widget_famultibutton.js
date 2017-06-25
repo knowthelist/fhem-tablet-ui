@@ -394,7 +394,6 @@ var Modul_famultibutton = function () {
     }
 
     function init_attr(elem) {
-
         elem.initData('get', 'STATE');
         elem.initData('set', '');
         elem.initData('cmd', 'set');
@@ -484,6 +483,7 @@ var Modul_famultibutton = function () {
                 var elem = $(this);
                 var value = elem.getReading('get').val;
                 var state = ftui.getPart(value, elem.data('part'));
+                ftui.log(2, 'famultibutton.update for "get": state=' + state);
                 if (ftui.isValid(state)) {
                     var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
                     if ($.isArray(states)) {

@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.16
+ * Version: 2.6.17
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -28,15 +28,15 @@ if (typeof Framework7 === 'function') {
         },
         views: []
     };
-    $('.view').each(function (index) {
-        var view = f7.ftui.addView('#' + $(this)[0].id, {
+    Dom7('.view').each(function (index) {
+        var view = f7.ftui.addView('#' + Dom7(this)[0].id, {
             dynamicNavbar: true
         });
         f7.ftui.views.push(view);
 
     });
     f7.ftui.onPageInit('*', function (page) {
-        ftui.log(page.name + ' initialized');
+        ftui.log(1,page.name + ' initialized');
         ftui.initWidgets('[data-page="' + page.name + '"]');
     });
 }
@@ -282,7 +282,7 @@ var plugins = {
         // update data-bind elements
         ftui.updateBindElements('ftui.deviceStates');
 
-        ftui.log(1, 'update done for "' + dev + ':' + par + '"');
+        ftui.log(1, 'call "plugins.update" done for "' + dev + ':' + par + '"');
     }
 };
 
@@ -290,7 +290,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.16',
+    version: '2.6.17',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -435,7 +435,8 @@ var ftui = {
 
         // init FTUI CSS if not already loaded
         if ($('link[href$="css/fhem-tablet-ui.css"]').length === 0 &&
-            $('link[href$="css/fhem-tablet-ui.min.css"]').length === 0) {
+            $('link[href$="css/fhem-tablet-ui.min.css"]').length === 0 &&
+            !f7) {
             var cssUrl = ftui.config.basedir + 'css/fhem-tablet-ui.css';
             $.when($.get(cssUrl, function () {
                 $('<link>', {
@@ -709,8 +710,10 @@ var ftui = {
         if (ftui.longPollRequest)
             ftui.longPollRequest.abort();
         if (ftui.websocket) {
+            ftui.websocket.send('bye');
             ftui.websocket.close();
-            ftui.websocket = null;
+            ftui.websocket = undefined;
+            ftui.log(2, 'stopped websocket');
         }
     },
 
@@ -721,17 +724,20 @@ var ftui = {
         if (msg) {
             ftui.toast("Disconnected from FHEM<br>" + msg, error);
         }
-        ftui.stopLongpoll();
 
+        ftui.stopLongpoll();
+        
         if (ftui.states.longPollRestart) {
             delay = 2000;
         } else {
             ftui.toast("Retry to connect in 10 seconds");
             delay = 10000;
         }
+
         ftui.longPollTimer = setTimeout(function () {
             ftui.startLongpoll();
         }, delay);
+
     },
 
     startShortPollInterval: function (delay) {
@@ -889,13 +895,15 @@ var ftui = {
             if (ftui.config.DEBUG) {
                 ftui.toast("Longpoll (WebSocket) started");
             }
-            var wsURL = ftui.config.fhemDir.replace(/^http/i, "ws") + "?XHR=1&inform=type=status;filter=" +
+            ftui.poll.URL = ftui.config.fhemDir.replace(/^http/i, "ws") + "?XHR=1&inform=type=status;filter=" +
                 ftui.poll.longPollFilter + ";since=" + ftui.poll.lastEventTimestamp.getTime() + ";fmt=JSON" +
-                "&fwcsrf=" + ftui.config.csrf;
-            ftui.log(1, 'websockets URL=' + wsURL);
+                "&timestamp="+new Date().getTime();
+                //"&fwcsrf=" + ftui.config.csrf;
+                 
+            ftui.log(1, 'websockets URL=' + ftui.poll.URL);
             ftui.states.longPollRestart = false;
 
-            ftui.websocket = new WebSocket(wsURL);
+            ftui.websocket = new WebSocket(ftui.poll.URL);
             ftui.websocket.onclose = function (event) {
                 var reason;
                 if (event.code == 1000)
@@ -926,12 +934,15 @@ var ftui = {
                     reason = "The connection was closed due to a failure to perform a TLS handshake (e.g., the server certificate can't be verified).";
                 else
                     reason = "Unknown reason";
-                ftui.log(1, "websocket closed: " + reason);
-                ftui.restartLongPoll(reason);
+                ftui.log(1, "websocket (url=" + event.target.url + ") closed!  reason=" + reason );
+                // if current socket closes then restart websocket 
+                if (event.target.url === ftui.poll.URL) {
+                    ftui.restartLongPoll(reason);
+                }
             };
-            ftui.websocket.onerror = function (msg) {
-                ftui.log(1, "Error while longpoll");
-                if (ftui.config.debuglevel > 1) {
+            ftui.websocket.onerror = function (event) {
+                ftui.log(1, "Error while longpoll: " + event.data);
+                if (ftui.config.debuglevel > 1 && event.target.url === ftui.poll.URL) {
                     ftui.toast("Error while longpoll (websocket)", 'error');
                 }
             };
@@ -1201,8 +1212,9 @@ var ftui = {
                 var longpoll = $("meta[name='longpoll']").attr("content") || '1';
                 ftui.config.doLongPoll = (longpoll != '0');
                 ftui.states.longPollRestart = false;
-                if (ftui.config.doLongPoll)
+                if (ftui.config.doLongPoll){
                     ftui.startLongpoll();
+                }
             }
             ftui.log(1, 'FTUI is online');
         }
@@ -1362,12 +1374,12 @@ var ftui = {
             var d = new Date();
             d.setTime(ftui.states.lastShortpoll * 1000);
             console.log('--------- start healthCheck --------------');
-            console.log('now:', new Date());
+            console.log('now: ' + new Date());
             console.log('FTUI version: ' + ftui.version);
             console.log('Longpoll: ' + ftui.config.doLongPoll);
             console.log('Longpoll type: ' + ftui.config.longPollType);
             console.log('Longpoll objects there: ' + (ftui.isValid(ftui.longPollRequest) && ftui.isValid(ftui.xhr) || ftui.isValid(ftui.websocket)));
-            console.log('Longpoll curent line: ' + ftui.poll.currLine);
+            console.log('Longpoll current line: ' + ftui.poll.currLine);
             console.log('Longpoll last event before: ' + ftui.poll.lastEventTimestamp.ago());
             console.log('Longpoll last reading update before: ' + ftui.poll.lastUpdateTimestamp.ago());
             console.log('Shortpoll interval: ' + ftui.config.shortpollInterval);
