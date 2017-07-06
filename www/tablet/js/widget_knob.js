@@ -141,6 +141,8 @@ var Modul_knob = function () {
                 'cmd': elem.data('cmd'),
                 'set': elem.data('set'),
                 'mode': elem.data('mode'),
+                'off': elem.data('off'),
+                'boost': elem.data('boost'),
                 'cursor': elem.data('cursor'),
                 'unit': elem.data('unit'),
                 'setValue': elem.data('set-value'),

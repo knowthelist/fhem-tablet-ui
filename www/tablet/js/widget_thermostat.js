@@ -41,7 +41,7 @@ var Modul_thermostat = function () {
         var mincolor = this.o.minColor || '#ff0000';
         var maxcolor = this.o.maxColor || '#4477ff';
         var tempcolor = this.o.tempColor;
-
+console.log('value:'+this.v);
         // draw ticks
         for (var tick = this.startAngle; tick < this.endAngle + 0.00001; tick += tick_w * dist) {
             var i = step * (tick - this.startAngle) + this.o.min;
@@ -102,6 +102,17 @@ var Modul_thermostat = function () {
         }
         return false;
     }
+    
+    function onFormat(v) {
+        /*jshint validthis: true */
+        v = _base.onFormat(v);
+        if (v == this.min && this.off != -1) {
+                v = this.off;
+        } else if (v == this.max && this.boost != -1) {
+                v = this.boost;
+        }
+        return v;
+    }
 
     function onChange(v) {
         /*jshint validthis: true */
@@ -119,11 +130,7 @@ var Modul_thermostat = function () {
         /*jshint validthis: true */
         if (!isUpdating) {
             var device = this.$.data('device');
-            if (v == this.o.min && this.$.data('off') != -1) {
-                v = this.$.data('off');
-            } else if (v == this.o.max && this.$.data('boost') != -1) {
-                v = this.$.data('boost');
-            }
+
             // if size has been changed on change then back to normal
             if (this.$c.height() !== this.h) {
                 this.$c.height(this.h + 'px');
@@ -203,9 +210,10 @@ var Modul_thermostat = function () {
                     }
                     var knob_elem = elem.find('input');
                     if (knob_elem) {
-                        knob_elem.val(parseFloat(val)).trigger('change');
                         if (textdisplay)
-                            knob_elem.val(textdisplay);
+                            knob_elem.val(textdisplay).trigger('change');
+                        else
+                            knob_elem.val(parseFloat(val)).trigger('change');
                         knob_elem.css({
                             visibility: 'visible'
                         });
@@ -258,7 +266,10 @@ var Modul_thermostat = function () {
 
     // public
     // inherit all public members from base class
-    var me = $.extend(new Modul_knob(), {
+    var base = new Modul_knob();
+    var _base = {};
+    _base.onFormat = base.onFormat;
+    var me = $.extend(base, {
         //override or own public members
         widgetname: 'thermostat',
         init: init,
@@ -266,6 +277,7 @@ var Modul_thermostat = function () {
         drawDial: drawDial,
         onRelease: onRelease,
         onChange: onChange,
+        onFormat: onFormat
     });
 
     return me;
