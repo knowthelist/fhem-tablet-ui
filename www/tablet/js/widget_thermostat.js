@@ -41,7 +41,7 @@ var Modul_thermostat = function () {
         var mincolor = this.o.minColor || '#ff0000';
         var maxcolor = this.o.maxColor || '#4477ff';
         var tempcolor = this.o.tempColor;
-console.log('value:'+this.v);
+
         // draw ticks
         for (var tick = this.startAngle; tick < this.endAngle + 0.00001; tick += tick_w * dist) {
             var i = step * (tick - this.startAngle) + this.o.min;
@@ -103,15 +103,20 @@ console.log('value:'+this.v);
         return false;
     }
     
-    function onFormat(v) {
+    function checkExtreme(v) {
         /*jshint validthis: true */
-        v = _base.onFormat(v);
         if (v == this.min && this.off != -1) {
                 v = this.off;
         } else if (v == this.max && this.boost != -1) {
                 v = this.boost;
         }
         return v;
+    }
+    
+    function onFormat(v) {
+        /*jshint validthis: true */
+        v = _base.onFormat(v);
+        return checkExtreme.call(this,v);
     }
 
     function onChange(v) {
@@ -138,7 +143,8 @@ console.log('value:'+this.v);
             if (this.$c.width() !== this.w) {
                 this.$c.width(this.w + 'px');
             }
-
+            
+            v = checkExtreme.call(this.o,v);
             var mode = this.$.getReading(this.o.mode).val;
             if (mode === 'auto')
                 v = mode + ' ' + v;
