@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2017-07-07
- - Bugfix again for off/boost function in thermostat widget
+2017-08-04
+ - Support data-get-on from reading
