@@ -202,7 +202,9 @@ var Modul_pagebutton = function () {
                 });
             }
 
-            $(this).attr('title', $(this).data('url'));
+            if (!elem.hasClass('notitle')) {
+                $(this).attr('title', $(this).data('url'));
+            }
         });
     }
 

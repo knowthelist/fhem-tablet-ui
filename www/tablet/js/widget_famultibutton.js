@@ -373,7 +373,7 @@ var Modul_famultibutton = function () {
 
         var id = elem.data('device') + "_" + elem.data('get');
 
-        if (id !== ' _STATE' && id !== ' _' ) {
+        if (id !== ' _STATE' && id !== ' _') {
 
             // Notification from other widgets
             $(document).on("onforTimerStarted", function (event, wgtId) {
@@ -399,8 +399,11 @@ var Modul_famultibutton = function () {
         elem.initData('cmd', 'set');
         elem.initData('get-on', 'true|1|on|open');
         elem.initData('get-off', 'false|0|off|closed');
-        elem.initData('set-on', (elem.data('get-on')) != 'true|1|on|open' ? elem.data('get-on') : 'on');
-        elem.initData('set-off', (elem.data('get-off')) != 'false|0|off|closed' ? elem.data('get-off') : 'off');
+        
+        var getOn = elem.data('get-on');
+        var getOff = elem.data('get-off');
+        elem.initData('set-on', (getOn !== 'true|1|on|open' && getOn !== '!off' ) ? elem.data('get-on') : 'on');
+        elem.initData('set-off', (getOff !== 'false|0|off|closed' && getOff !== '!on' ) ? elem.data('get-off') : 'off');
         elem.initData('mode', 'toggle');
         elem.initData('doubleclick', 0);
         elem.initData('firstclick-background-color', '#6F4500');
@@ -411,6 +414,12 @@ var Modul_famultibutton = function () {
         elem.initData('reachable-on', '!off');
         elem.initData('reachable-off', 'false|0');
         me.addReading(elem, 'reachable');
+        if (elem.isDeviceReading('reachable-on')) {
+            me.addReading(elem, 'reachable-on');
+        }
+        if (elem.isDeviceReading('reachable-off')) {
+            me.addReading(elem, 'reachable-off');
+        }
 
         // if hide reading is defined, set defaults for comparison
         if (elem.isValidData('hide')) {
@@ -421,6 +430,12 @@ var Modul_famultibutton = function () {
             elem.initData('hide-off', '!on');
         }
         me.addReading(elem, 'hide');
+        if (elem.isDeviceReading('hide-on')) {
+            me.addReading(elem, 'hide-on');
+        }
+        if (elem.isDeviceReading('hide-off')) {
+            me.addReading(elem, 'hide-off');
+        }
 
         // if lock reading is defined, set defaults for comparison
         if (elem.isValidData('lock')) {
@@ -431,9 +446,21 @@ var Modul_famultibutton = function () {
             elem.initData('lock-off', '!on');
         }
         me.addReading(elem, 'lock');
+        if (elem.isDeviceReading('lock-on')) {
+            me.addReading(elem, 'lock-on');
+        }
+        if (elem.isDeviceReading('lock-off')) {
+            me.addReading(elem, 'lock-off');
+        }
 
         me.addReading(elem, 'get');
-        
+        if (elem.isDeviceReading('get-on')) {
+            me.addReading(elem, 'get-on');
+        }
+        if (elem.isDeviceReading('get-off')) {
+            me.addReading(elem, 'get-off');
+        }
+
         // warn parameter
         elem.initData('warn-on', 'true|on|[1-9]{1}[0-9]*');
         elem.initData('warn-off', 'false|off|0');
@@ -478,33 +505,37 @@ var Modul_famultibutton = function () {
     function update(dev, par) {
 
         // update from normal state reading
-        me.elements.filterDeviceReading('get', dev, par)
-            .each(function (index) {
-                var elem = $(this);
-                var value = elem.getReading('get').val;
-                var state = ftui.getPart(value, elem.data('part'));
-                ftui.log(2, 'famultibutton.update for "get": state=' + state);
-                if (ftui.isValid(state)) {
-                    var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
-                    if ($.isArray(states)) {
-                        me.showMultiStates(elem, states, state);
-                    } else {
-                        var faelem = elem.data('famultibutton');
-                        if (faelem) {
-                            if (elem.matchingState('get', state) === 'on') {
-                                faelem.setOn();
-                            }
-                            if (elem.matchingState('get', state) === 'off') {
-                                faelem.setOff();
+        $.each(['get', 'get-on', 'get-off'], function (index, key) {
+            me.elements.filterDeviceReading(key, dev, par)
+                .each(function (index) {
+                    var elem = $(this);
+                    var value = elem.getReading('get').val;
+                    var state = ftui.getPart(value, elem.data('part'));
+                    ftui.log(2, 'famultibutton.update for "get": state=' + state);
+                    if (ftui.isValid(state)) {
+                        var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
+                        if ($.isArray(states)) {
+                            me.showMultiStates(elem, states, state);
+                        } else {
+                            var faelem = elem.data('famultibutton');
+                            if (faelem) {
+                                if (elem.matchingState('get', state) === 'on') {
+                                    faelem.setOn();
+                                    checkForTimer(elem);
+                                }
+                                if (elem.matchingState('get', state) === 'off') {
+                                    faelem.setOff();
+                                }
                             }
                         }
+                        if (!elem.isValidData('warn')) {
+                            me.update_cb(elem, state);
+                        }
                     }
-                    if (!elem.isValidData('warn')) {
-                        me.update_cb(elem, state);
-                    }
-                }
-            });
-        
+                });
+
+        });
+
         // update from extra reading for colorize
         var oparm = ['offColor', 'onColor', 'onBackgroundColor', 'offBackgroundColor'];
         var selec = ['#fg', '#fg', '#bg', '#bg'];

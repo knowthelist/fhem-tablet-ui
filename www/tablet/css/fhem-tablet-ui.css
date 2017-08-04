@@ -376,44 +376,44 @@ section {
 
 .col-1-1,
 .col-100 {
-    width: 99.6% !important;
+    width: 100% !important;
 }
 
 .col-5-6 {
-    width: 83% !important;
+    width: 83.333% !important;
 }
 
 .col-2-3,
 .col-4-6,
 .col-66 {
-    width: 65% !important;
+    width: 66.66666% !important;
 }
 
 .col-1-3,
 .col-2-6,
 .col-33 {
-    width: 32% !important;
+    width: 33.333% !important;
 }
 
 .col-3-4,
 .col-75 {
-    width: 74% !important;
+    width: 75% !important;
 }
 
 .col-1-2,
 .col-2-4,
 .col-3-6,
 .col-50 {
-    width: 48.4% !important;
+    width: 50% !important;
 }
 
 .col-1-4,
 .col-25 {
-    width: 24% !important;
+    width: 25% !important;
 }
 
 .col-1-6 {
-    width: 16.67% !important;
+    width: 16.6666667% !important;
 }
 
 .col-1-8 {
@@ -427,54 +427,54 @@ section {
 
 .col-1-5,
 .col-20 {
-    width: 19% !important;
+    width: 20% !important;
 }
 
 .col-2-5,
 .col-40 {
-    width: 39% !important;
+    width: 40% !important;
 }
 
 .col-3-5,
 .col-60 {
-    width: 59% !important;
+    width: 60% !important;
 }
 
 .col-4-5,
 .col-80 {
-    width: 79% !important;
+    width: 80% !important;
 }
 
 
 /*auto col */
 
 [class*=row] > .col:first-child:nth-last-child(1) {
-    width: 99.6%;
+    width: 100%;
 }
 
 [class*=row] > .col:first-child:nth-last-child(2),
 [class*=row] > .col:first-child:nth-last-child(2) ~ .col {
-    width: 48.4%;
+    width: 50%;
 }
 
 [class*=row] > .col:first-child:nth-last-child(3),
 [class*=row] > .col:first-child:nth-last-child(3) ~ .col {
-    width: 32%;
+    width: 33.3333%;
 }
 
 [class*=row] > .col:first-child:nth-last-child(4),
 [class*=row] > .col:first-child:nth-last-child(4) ~ .col {
-    width: 24%;
+    width: 25%;
 }
 
 [class*=row] > .col:first-child:nth-last-child(5),
 [class*=row] > .col:first-child:nth-last-child(5) ~ .col {
-    width: 19%;
+    width: 20%;
 }
 
 [class*=row] > .col:first-child:nth-last-child(6),
 [class*=row] > .col:first-child:nth-last-child(6) ~ .col {
-    width: 16.67%;
+    width: 16.66667%;
 }
 
 .bold {
@@ -1646,6 +1646,14 @@ div[data-type="link"] > div.fa {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.wordwrap { 
+   white-space: pre-wrap;      /* CSS3 */   
+   white-space: -moz-pre-wrap; /* Firefox */    
+   white-space: -pre-wrap;     /* Opera <7 */   
+   white-space: -o-pre-wrap;   /* Opera 7 */    
+   word-wrap: break-word;      /* IE */
 }
 
 .center {
