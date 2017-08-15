@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.18
+ * Version: 2.6.19
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -36,8 +36,8 @@ if (typeof Framework7 === 'function') {
 
     });
     f7.ftui.onPageInit('*', function (page) {
-        ftui.log(1, page.name + ' initialized');
-        ftui.initWidgets('[data-page="' + page.name + '"]');
+        ftui.log(1, 'f7: ' + page.name + ' initialized');
+        ftui.initWidgets('.page[data-page="' + page.name + '"]');
     });
 }
 
@@ -162,7 +162,7 @@ var Modul_widget = function () {
     function addReading(elem, key) {
         var data = elem.data(key);
         if (ftui.isValid(data)) {
-            if ($.isArray(data) || !data.toString().match(/^[#\.\[].*/)) {
+            if ($.isArray(data) || !data.toString().match(/^[#\.\[][^:]*$/)) {
                 var device = elem.data('device');
                 if (!$.isArray(data)) {
                     data = new Array(data.toString());
@@ -296,7 +296,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.18',
+    version: '2.6.19',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -1966,7 +1966,7 @@ function onjQueryLoaded() {
                 device = temp[0].replace('[', ''),
                 reading = temp[1].replace(']', ''),
                 param = ftui.getDeviceParameter(device, reading);
-           if (ftui.isValid(param)) { on = param.val; }
+           if (param && ftui.isValid(param)) { on = param.val; }
         }
         var off = String(offData);
         if (off.match(/:/)) {
@@ -1974,7 +1974,7 @@ function onjQueryLoaded() {
                 device = temp[0].replace('[', ''),
                 reading = temp[1].replace(']', ''),
                 param = ftui.getDeviceParameter(device, reading);
-            if (ftui.isValid(param)) { off = param.val; }
+            if (param && ftui.isValid(param)) { off = param.val; }
         }
         if (ftui.isValid(onData)) {
             if (state === on) {
@@ -2007,7 +2007,7 @@ function onjQueryLoaded() {
     $.fn.isExternData = function (key) {
         var data = $(this).data(key);
         if (!data) return '';
-        return (data.match(/^[#\.\[].*/));
+        return (data.match(/^[#\.\[][^:]*$/));
     };
 
     $.fn.cleanWhitespace = function () {
@@ -2041,7 +2041,7 @@ function onjQueryLoaded() {
     $.fn.valOfData = function (key) {
         var data = $(this).data(key);
         if (!ftui.isValid(data)) return '';
-        return (data.toString().match(/^[#\.\[].*/)) ? $(data).data('value') : data;
+        return (data.toString().match(/^[#\.\[][^:]*$/)) ? $(data).data('value') : data;
     };
 
     $.fn.transmitCommand = function () {
