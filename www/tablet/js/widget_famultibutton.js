@@ -20,8 +20,9 @@ var Modul_famultibutton = function () {
         var secondes;
         if (seton && !$.isNumeric(seton) && !$.isArray(seton) && ftui.getPart(seton, 1) === "on-for-timer") {
             secondes = ftui.getPart(elem.data("set-on"), 2);
-        }
-        if (elem.data("countdown")) {
+        } else if (elem.isDeviceReading('countdown')) {
+            secondes = elem.data("secondes");
+        } else {
             secondes = elem.data("countdown");
         }
         return secondes;
@@ -397,13 +398,13 @@ var Modul_famultibutton = function () {
         elem.initData('get', 'STATE');
         elem.initData('set', '');
         elem.initData('cmd', 'set');
-        elem.initData('get-on', 'true|1|on|open');
-        elem.initData('get-off', 'false|0|off|closed');
-        
+        elem.initData('get-on', 'true|1|on|open|ON');
+        elem.initData('get-off', 'false|0|off|closed|OFF');
+
         var getOn = elem.data('get-on');
         var getOff = elem.data('get-off');
-        elem.initData('set-on', (getOn !== 'true|1|on|open' && getOn !== '!off' ) ? elem.data('get-on') : 'on');
-        elem.initData('set-off', (getOff !== 'false|0|off|closed' && getOff !== '!on' ) ? elem.data('get-off') : 'off');
+        elem.initData('set-on', (getOn !== 'true|1|on|open|ON' && getOn !== '!off') ? elem.data('get-on') : 'on');
+        elem.initData('set-off', (getOff !== 'false|0|off|closed|OFF' && getOff !== '!on') ? elem.data('get-off') : 'off');
         elem.initData('mode', 'toggle');
         elem.initData('doubleclick', 0);
         elem.initData('firstclick-background-color', '#6F4500');
@@ -459,6 +460,11 @@ var Modul_famultibutton = function () {
         }
         if (elem.isDeviceReading('get-off')) {
             me.addReading(elem, 'get-off');
+        }
+
+        // counterdown
+        if (elem.isDeviceReading('countdown')) {
+            me.addReading(elem, 'countdown');
         }
 
         // warn parameter
@@ -581,6 +587,13 @@ var Modul_famultibutton = function () {
                 if (elem.matchingState('warn', warn) === 'off') {
                     me.showOverlay(elem, "");
                 }
+            });
+        
+        //extra reading for countdown
+        me.elements.filterDeviceReading('countdown', dev, par)
+            .each(function (idx) {
+                var elem = $(this);
+                elem.data('secondes', elem.getReading('countdown').val);
             });
     }
 

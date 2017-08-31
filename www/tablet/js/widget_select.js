@@ -32,6 +32,7 @@ var Modul_select = function () {
         elem.initData('set', ((elem.data('get') !== 'STATE') ? elem.attr('data-get') : ''));
         elem.initData('cmd', 'set');
         elem.initData('quote', '');
+        elem.initData('filter', '');
         elem.initData('list', 'setList');
         elem.initData('delimiter', ':');
 
@@ -48,7 +49,8 @@ var Modul_select = function () {
         var wrap_elem = $('<div/>', {}).addClass('select_wrapper').appendTo(elem);
         var select_elem = $('<select/>', {})
             .on('change', function (e) {
-                elem.data('value', elem.data('quote') + $("option:selected", this).val() + elem.data('quote'));
+                var value = $("option:selected", this).val();
+                elem.data('value', elem.data('quote') + value + elem.data('filter') + elem.data('quote'));
                 $(this).blur();
                 elem.transmitCommand();
                 elem.trigger('changedValue');

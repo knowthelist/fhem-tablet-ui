@@ -22,6 +22,7 @@ var Modul_input = function () {
         elem.initData('set', '');
         elem.initData('cmd', 'set');
         elem.initData('value', '');
+        elem.initData('filter', '');
 
         if (elem.isExternData('device')) {
             $(elem.data('device')).once('changedValue', function (e) {

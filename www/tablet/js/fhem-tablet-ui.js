@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.19
+ * Version: 2.6.20
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -296,7 +296,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.19',
+    version: '2.6.20',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -351,8 +351,6 @@ var ftui = {
 
         ftui.paramIdMap = {};
         ftui.timestampMap = {};
-        ftui.devs = [ftui.config.webDevice];
-        ftui.reads = ['STATE'];
         ftui.config.longPollType = $("meta[name='longpoll_type']").attr("content") || 'websocket';
         var longpoll = $("meta[name='longpoll']").attr("content") || '1';
         ftui.config.doLongPoll = (longpoll != '0');
@@ -360,7 +358,7 @@ var ftui = {
         ftui.config.longPollFilter = $("meta[name='longpoll_filter']").attr("content");
         ftui.config.DEMO = ($("meta[name='demo']").attr("content") == '1');
         ftui.config.debuglevel = $("meta[name='debug']").attr("content") || 0;
-        ftui.config.webDevice = $("meta[name='web_device']").attr("content") || 'WEB';
+        ftui.config.webDevice = $("meta[name='web_device']").attr("content") || $('body').data('webname').trim() || 'WEB';
         ftui.config.maxLongpollAge = $("meta[name='longpoll_maxage']").attr("content") || 240;
         ftui.config.DEBUG = (ftui.config.debuglevel > 0);
         ftui.config.TOAST = $("meta[name='toast']").attr("content") || 5; //1,2,3...= n Toast-Messages, 0: No Toast-Messages
@@ -380,6 +378,9 @@ var ftui = {
         // credentials
         ftui.config.username = $("meta[name='username']").attr("content");
         ftui.config.password = $("meta[name='password']").attr("content");
+        // subscriptions
+        ftui.devs = [ftui.config.webDevice];
+        ftui.reads = ['STATE'];
 
         // Get CSFS Token
         ftui.getCSrf();
@@ -480,11 +481,13 @@ var ftui = {
             ftui.restartLongPoll();
             ftui.initHeaderLinks();
             ftui.disableSelection();
-            // remove space between inline block elements
-            // https://stackoverflow.com/questions/5078239/how-to-remove-the-space-between-inline-block-elements
-            $("[class^=col]").parent().each(function () {
-                $(this).cleanWhitespace();
+
+            $('.gridster li > header ~ .hbox:only-of-type, .gridster li > header ~ .center:only-of-type, .card > header ~ div:only-of-type').each(function (index) {
+                $(this).css({
+                    'height': 'calc(100% - ' + $(this).siblings('header').outerHeight() + 'px)'
+                });
             });
+
         });
 
         if (!f7) {
@@ -582,14 +585,10 @@ var ftui = {
                 });
             }
 
-            $('.gridster > ul > li:has(.center)').addClass('vbox');
+            $('.gridster > ul > li').children('center').parents().addClass('has_center');
             // max height for inner boxes
-            $('.gridster > ul > li:has(.vbox)').addClass('vbox');
-            $('.gridster li > header ~ .hbox:only-of-type').each(function (index) {
-                $(this).css({
-                    'height': 'calc(100% - ' + $(this).siblings('header').outerHeight() + 'px)'
-                });
-            });
+            $('.gridster > ul > li').children('.vbox').parents().addClass('has_vbox');
+
         }
 
         if ($('.gridster').length > 0) {
@@ -662,7 +661,7 @@ var ftui = {
         ftui.log(2, 'initWidgets - area=' + area);
 
         //collect required widgets types
-        $('*:not(.dialog) [data-type]', area).each(function (index) {
+        $('[data-type]', area).each(function (index) {
             var type = $(this).data("type");
             //console.log('type:' + type);
             if (types.indexOf(type) < 0) {
@@ -1966,7 +1965,9 @@ function onjQueryLoaded() {
                 device = temp[0].replace('[', ''),
                 reading = temp[1].replace(']', ''),
                 param = ftui.getDeviceParameter(device, reading);
-           if (param && ftui.isValid(param)) { on = param.val; }
+            if (param && ftui.isValid(param)) {
+                on = param.val;
+            }
         }
         var off = String(offData);
         if (off.match(/:/)) {
@@ -1974,7 +1975,9 @@ function onjQueryLoaded() {
                 device = temp[0].replace('[', ''),
                 reading = temp[1].replace(']', ''),
                 param = ftui.getDeviceParameter(device, reading);
-            if (param && ftui.isValid(param)) { off = param.val; }
+            if (param && ftui.isValid(param)) {
+                off = param.val;
+            }
         }
         if (ftui.isValid(onData)) {
             if (state === on) {
@@ -2028,8 +2031,8 @@ function onjQueryLoaded() {
         paraname = String(paraname);
         if (paraname && paraname.match(/:/)) {
             var temp = paraname.split(':');
-            devname = temp[0];
-            paraname = temp[1];
+            devname = temp[0].replace('[', '');
+            paraname = temp[1].replace(']', '');
         }
         if (devname && devname.length > 0) {
             var params = ftui.deviceStates[devname];
@@ -2046,7 +2049,7 @@ function onjQueryLoaded() {
 
     $.fn.transmitCommand = function () {
         if ($(this).hasClass('notransmit')) return;
-        var cmdl = [$(this).valOfData('cmd'), $(this).valOfData('device'), $(this).valOfData('set'), $(this).valOfData('value')].join(' ');
+        var cmdl = [$(this).valOfData('cmd'), $(this).valOfData('device') + $(this).valOfData('filter'), $(this).valOfData('set'), $(this).valOfData('value')].join(' ');
         ftui.setFhemStatus(cmdl);
         ftui.toast(cmdl);
     };

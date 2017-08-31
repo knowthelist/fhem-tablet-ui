@@ -156,8 +156,8 @@ General attribute meaning
 - **data-reachable**  : name of the reading containing a integer value to indicate whether the device is reachable or not (default <null>)
 
 dual state notation   
-- **data-get-on**   : value for ON status to get or an array of states (default 'on')
-- **data-get-off**  : value for OFF status to get. (default 'off')
+- **data-get-on**   : value for ON status to get or an array of states (default 'true|1|on|open|ON')
+- **data-get-off**  : value for OFF status to get. (default 'false|0|off|closed|OFF')
 - **data-set-on**   : value for ON status to set. (default: value of data-get-on)
 - **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
 - **data-icon**     			: name of the font-awesome icon. (default: fa-lightbulb-o)
@@ -205,8 +205,8 @@ See [examples](#switch) of Switch
 
 
 dual state notation
-- **data-get-on**   			: value for ON status to get or an array of states (default 'open')
-- **data-get-off**  			: value for OFF status to get. (default 'closed')
+- **data-get-on**   			: value for ON status to get or an array of states (default 'true|1|on|open|ON')
+- **data-get-off**  			: value for OFF status to get. (default 'false|0|off|closed|OFF')
 - **data-icon**     			: name of the font-awesome icon.  (default 'ftui-window')
 - **data-background-icon** 		: name of the font-awesome icon for background (default '')
 - **data-on-background-color**          : fix color attribute for ON state or DEVICE:READING for dynamic setting (default '#aa6900')

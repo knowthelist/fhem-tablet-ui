@@ -69,6 +69,7 @@ var Modul_swiper = function () {
             paginationClickable: true,
             nextButton: elemNext,
             prevButton: elemPrev,
+            autoHeight: true,
             moveStartThreshold: 70,
             autoplay: elem.data('autoplay'),
             autoplayDisableOnInteraction: false,

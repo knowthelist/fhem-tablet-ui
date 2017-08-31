@@ -38,11 +38,12 @@ var Modul_classchanger = function () {
         me.elements.filterDeviceReading('get', dev, par)
             .each(function (index) {
                 var elem = $(this);
-                var value = elem.getReading('get').val;
-                if (value == elem.data('get-on')) {
+                var state = elem.getReading('get').val;
+                if (elem.matchingState('get', state) === 'on') {
                     elem.removeClass(elem.data('off-class'));
                     elem.addClass(elem.data('on-class'));
-                } else {
+                }
+                if (elem.matchingState('get', state) === 'off') {
                     elem.removeClass(elem.data('on-class'));
                     elem.addClass(elem.data('off-class'));
                 }
