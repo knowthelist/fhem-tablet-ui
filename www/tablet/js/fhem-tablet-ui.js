@@ -358,7 +358,7 @@ var ftui = {
         ftui.config.longPollFilter = $("meta[name='longpoll_filter']").attr("content");
         ftui.config.DEMO = ($("meta[name='demo']").attr("content") == '1');
         ftui.config.debuglevel = $("meta[name='debug']").attr("content") || 0;
-        ftui.config.webDevice = $("meta[name='web_device']").attr("content") || $('body').data('webname').trim() || 'WEB';
+        ftui.config.webDevice = $("meta[name='web_device']").attr("content") || $.trim($('body').data('webname')) || 'WEB';
         ftui.config.maxLongpollAge = $("meta[name='longpoll_maxage']").attr("content") || 240;
         ftui.config.DEBUG = (ftui.config.debuglevel > 0);
         ftui.config.TOAST = $("meta[name='toast']").attr("content") || 5; //1,2,3...= n Toast-Messages, 0: No Toast-Messages
