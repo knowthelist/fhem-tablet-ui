@@ -29,9 +29,9 @@ var Modul_slider = function () {
                 var tid = setInterval(function () {
                     if (elem && elem.data('timer-step')) {
                         var id = elemID(elem);
-                        var storeval = parseInt(localStorage.getItem(id));
+                        var storeval = parseFloat(localStorage.getItem(id));
                         var pwrng = elem.data('Powerange');
-                        storeval = storeval + parseInt(elem.data('timer-step'));
+                        storeval = storeval + parseFloat(elem.data('timer-step'));
                         if (pwrng && storeval <= pwrng.options.max) {
                             pwrng.setStart(storeval);
                             localStorage.setItem(id, storeval);
@@ -79,7 +79,7 @@ var Modul_slider = function () {
                 elem.addClass('fail-shake');
                 setTimeout(function () {
 
-                    pwrng.setStart(parseInt(storeval));
+                    pwrng.setStart(parseFloat(storeval));
                     elem.removeClass('fail-shake');
                 }, 500);
                 return;
@@ -313,9 +313,9 @@ var Modul_slider = function () {
 
         function onResize() {
             var storeval = localStorage.getItem(id);
-            pwrng.setStart(parseInt(storeval));
+            pwrng.setStart(parseFloat(storeval));
             // second call necessary
-            pwrng.setStart(parseInt(storeval));
+            pwrng.setStart(parseFloat(storeval));
         }
 
         // Refresh slider position after it became visible
@@ -371,8 +371,8 @@ var Modul_slider = function () {
                     if (new RegExp('^' + elem.data('off') + '$').test(txtValue))
                         val = pwrng.options.min;
                     if ($.isNumeric(val) && input_elem) {
-                        var v = elem.hasClass('negated') ? pwrng.options.max + pwrng.options.min - parseInt(val) : parseInt(val);
-                        pwrng.setStart(parseInt(v));
+                        var v = elem.hasClass('negated') ? pwrng.options.max + pwrng.options.min - parseFloat(val) : parseFloat(val);
+                        pwrng.setStart(parseFloat(v));
                         localStorage.setItem(elemID(elem), v);
                         ftui.log(1, 'slider dev:' + dev + ' par:' + par + ' changed to:' + v);
 
