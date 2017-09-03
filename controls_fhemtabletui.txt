@@ -154,7 +154,7 @@ UPD 2017-02-11_14:27:26 1794 www/tablet/lib/highcharts/themes/grid.js
 UPD 2017-02-11_14:27:26 1684 www/tablet/lib/highcharts/themes/sand-signika.js
 UPD 2017-02-11_14:27:26 1764 www/tablet/lib/highcharts/themes/skies.js
 UPD 2016-09-14_17:34:06 253669 www/tablet/lib/jquery-ui.min.js
-UPD 2017-02-11_14:27:26 11108 www/tablet/lib/jquery.circlemenu.js
+UPD 2017-09-03_11:41:07 11288 www/tablet/lib/jquery.circlemenu.js
 UPD 2017-02-11_14:27:26 18412 www/tablet/lib/jquery.datetimepicker.css
 UPD 2017-02-11_14:27:26 80573 www/tablet/lib/jquery.datetimepicker.js
 UPD 2017-02-11_14:27:26 3021 www/tablet/lib/jquery.gridster.min.css
