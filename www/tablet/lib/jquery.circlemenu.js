@@ -1,4 +1,4 @@
-﻿;(function($, window, document, undefined){
+;(function($, window, document, undefined){
     var pluginName = 'circleMenu',
         defaults = {
             depth: 0,
@@ -38,6 +38,7 @@
         var self = this,
             directions = {
                 'vertical':[-400,0],
+                'vertical-top':[-800,0],
                 'horizontal':[400,0],
                 'bottom-left':[180,90],
                 'bottom':[135,45],
@@ -79,6 +80,7 @@
             // linear hack
             if (self.options.angle.start<-360) {x = 0; y = index * self.options.circle_radius +self.options.circle_radius;}
             if (self.options.angle.start>360) {x = index * self.options.circle_radius + self.options.circle_radius;y = 0;}
+            if (self.options.angle.start<-790) {x = 0; y = -(index * self.options.circle_radius +self.options.circle_radius);}	//vertical-top
 
             $item.data('plugin_'+pluginName+'-pos-x', x);
             $item.data('plugin_'+pluginName+'-pos-y', y);

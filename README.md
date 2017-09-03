@@ -543,7 +543,7 @@ Use data-url + data-refresh or data-device + data-get, not both.
 - **data-border**        : style of border - 'round','square' (default 'round')
 - **data-item-width**    : fixed size for width in px (default value of data-item-diameter)
 - **data-item-height**   : fixed size for height in px (default value of data-item-diameter)
-- **data-direction**     : position of the items in relation to the center (default full). Options are: top | right | bottom | left | top-right | top-left | bottom-right | bottom-left | top-half | right-half | bottom-half | left-half | full | vertical | horizontal
+- **data-direction**     : position of the items in relation to the center (default full). Options are: top | right | bottom | left | top-right | top-left | bottom-right | bottom-left | top-half | right-half | bottom-half | left-half | full | vertical | vertical-top | horizontal
 - **class**		 : keepopen, noshade
 
 ####Playstream widget
