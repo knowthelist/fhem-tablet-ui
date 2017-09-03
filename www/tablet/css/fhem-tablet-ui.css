@@ -258,12 +258,150 @@ a:active {
 }
 
 .padding {
-    padding: 7px;
+    padding: 1em;
 }
 
 .margin {
     margin: 1em;
 }
+
+
+/* position of a inner div */
+
+.topleft {
+    display: flex !important;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+}
+
+.topcenter {
+    display: flex !important;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+}
+
+.topright {
+    display: flex !important;
+    justify-content: flex-end;
+    align-items: flex-start;
+    height: 100%;
+}
+
+.centerleft {
+    display: flex !important;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+}
+
+.center,
+.col.middle {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.centerright {
+    display: flex !important;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+}
+
+.bottomleft {
+    display: flex !important;
+    justify-content: flex-start;
+    align-items: flex-end;
+    height: 100%;
+}
+
+.bottomcenter {
+    display: flex !important;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100%;
+}
+
+.bottomright {
+    display: flex !important;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 100%;
+}
+
+
+/*  Display positions  */
+
+.display {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.display-topleft {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.display-topcenter {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 0%);
+}
+
+.display-topright {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.display-centerleft {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(0%, -50%);
+}
+
+.display-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.display-centerright {
+    position: absolute;
+    top: 50%;
+    right: 0%;
+    transform: translate(0%, -50%);
+}
+
+.display-bottomleft {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+}
+
+.display-bottomcenter {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 0%);
+}
+
+.display-bottomright {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+
+/* . */
 
 #header-nav {
     height: 55px;
@@ -324,13 +462,6 @@ section {
     height: 100%;
 }
 
-.center,
-.col.middle {
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-}
-
 .fullsize,
 .gridster > ul {
     width: 100% !important;
@@ -389,6 +520,7 @@ section {
     height: 100%;
     width: 100%;
 }
+
 
 /* End gridster layout */
 
@@ -465,15 +597,15 @@ section {
     width: 80% !important;
 }
 
+
 /*auto row */
 
 .card > .box.horizontal:only-of-type,
-
 .row:first-of-type:nth-last-of-type(2),
 .row:first-of-type:nth-last-of-type(2) ~ .row {
     height: 50%;
 }
-    
+
 .row:first-of-type:nth-last-of-type(3),
 .row:first-of-type:nth-last-of-type(3) ~ .row {
     height: 33.3333%;
@@ -483,6 +615,7 @@ section {
 .row:first-of-type:nth-last-of-type(4) ~ .row {
     height: 25%;
 }
+
 
 /*auto col */
 
@@ -568,7 +701,8 @@ main > .box.horizontal {
 
 .vbox,
 .card,
-.box.vertical {
+.box.vertical,
+.has_vbox {
     flex-direction: column;
     flex: 1;
 }
@@ -636,7 +770,6 @@ main > .box.horizontal {
     flex-grow: 9;
 }
 
-
 .box.horizontal.items-top,
 .hbox.items-top,
 .card.items-top {
@@ -662,7 +795,7 @@ main > .box.horizontal {
 .hbox > .bottom-align {
     align-self: flex-end;
 }
- 
+
 .box.horizontal > .center-align,
 .hbox > .center-align,
 .box.vertical > .center-align,
@@ -1689,12 +1822,17 @@ div[data-type="link"] > div.fa {
     text-overflow: ellipsis;
 }
 
-.wordwrap { 
-   white-space: pre-wrap;      /* CSS3 */   
-   white-space: -moz-pre-wrap; /* Firefox */    
-   white-space: -pre-wrap;     /* Opera <7 */   
-   white-space: -o-pre-wrap;   /* Opera 7 */    
-   word-wrap: break-word;      /* IE */
+.wordwrap {
+    white-space: pre-wrap;
+    /* CSS3 */
+    white-space: -moz-pre-wrap;
+    /* Firefox */
+    white-space: -pre-wrap;
+    /* Opera <7 */
+    white-space: -o-pre-wrap;
+    /* Opera 7 */
+    word-wrap: break-word;
+    /* IE */
 }
 
 .narrow {
@@ -3139,9 +3277,14 @@ img.faded {
     animation-timing-function: ease-out;
     animation-duration: .4s;
 }
+
 @keyframes flash {
-    0% { background: white; }
-    100% { background: none; }
+    0% {
+        background: white;
+    }
+    100% {
+        background: none;
+    }
 }
 
 .marquee {
