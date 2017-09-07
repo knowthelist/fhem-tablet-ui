@@ -311,6 +311,9 @@ var Modul_spinner = function () {
         elem.append($('<div/>', {
             class: 'overlay'
         }));
+        
+        //Wrapper
+        elem.wrapAll('<div class="spinner-wrapper"></div>');
     }
 
     function update(dev, par) {

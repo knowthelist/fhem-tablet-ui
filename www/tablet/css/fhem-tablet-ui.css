@@ -302,6 +302,8 @@ a:active {
     justify-content: center;
     align-items: center;
     height: 100%;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 .centerright {
@@ -677,6 +679,7 @@ section {
 .row:first-of-type:nth-last-of-type(6) ~ .row {
     height: 8.3333%;
 }
+
 
 /*auto col */
 
@@ -2309,12 +2312,12 @@ div[data-type="link"] > div.fa {
     font-size: 350% !important;
 }
 
-.xxxxl{
+.xxxxl {
     font-size: 300% !important;
 }
 
 .bigger,
-.xxxl{
+.xxxl {
     font-size: 200% !important;
 }
 

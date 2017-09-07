@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+    /* use display-* classes for multiple elements in the same parent div 
+        other classes are for one element in a parent div only 
+    */
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizey="2" data-sizex="2">
+                <header>topleft</header>
+                <div class="topleft" data-type="symbol"></div>
+            </li>
+            <li data-row="1" data-col="3" data-sizey="2" data-sizex="4">
+                <header>topcenter</header>
+                <div class="topcenter" data-type="symbol"></div>
+            </li>
+            <li data-row="1" data-col="7" data-sizey="2" data-sizex="2">
+                <header>topright</header>
+                <div class="topright" data-type="symbol"></div>
+            </li>
+            <li data-row="3" data-col="1" data-sizey="4" data-sizex="2">
+                <header>centerleft</header>
+                <div class="centerleft" data-type="symbol"></div>
+            </li>
+            <li data-row="3" data-col="3" data-sizey="4" data-sizex="4">
+                <header>display</header>
+                <div class="display">
+                    <div class="display-topleft margin" data-type="label">display-topleft</div>
+                    <div class="display-topcenter margin" data-type="label">display-topcenter</div>
+                    <div class="display-topright margin" data-type="label">display-topright</div>
+                    <div class="display-centerleft margin" data-type="label">display-centerleft</div>
+                    <div class="display-center margin" data-type="label">display-center</div>
+                    <div class="display-centerright margin" data-type="label">display-centerright</div>
+                    <div class="display-bottomleft margin" data-type="label">display-bottomleft</div>
+                    <div class="display-bottomcenter margin" data-type="label">display-bottomcenter</div>
+                    <div class="display-bottomright margin" data-type="label">display-bottomright</div>
+                </div>
+            </li>
+            <li data-row="3" data-col="7" data-sizey="4" data-sizex="2">
+                <header>centerright</header>
+                <div class="centerright" data-type="symbol"></div>
+            </li>
+            <li data-row="7" data-col="1" data-sizey="2" data-sizex="2">
+                <header>bottomleft</header>
+                <div class="bottomleft" data-type="symbol"></div>
+            </li>
+            <li data-row="7" data-col="3" data-sizey="2" data-sizex="4">
+                <header>bottomcenter</header>
+                <div class="bottomcenter" data-type="symbol"></div>
+            </li>
+            <li data-row="7" data-col="7" data-sizey="2" data-sizex="2">
+                <header>bottomright</header>
+                <div class="bottomright " data-type="symbol"></div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
