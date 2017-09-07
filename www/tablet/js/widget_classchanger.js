@@ -22,8 +22,8 @@ var Modul_classchanger = function () {
             var elem = $(this);
             elem.initData('get', 'STATE');
 
-            elem.initData('get-on', 'on');
-            elem.initData('get-off', 'off');
+            elem.initData('get-on', 'true|1|on|open|ON');
+            elem.initData('get-off', '!on');
 
             elem.initData('on-class', 'on');
             elem.initData('off-class', 'off');

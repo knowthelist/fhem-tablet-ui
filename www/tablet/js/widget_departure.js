@@ -51,15 +51,20 @@ var Modul_departure = function () {
 
 
         // prepare container element
-        elem.html('')
-            .addClass('departure')
+        var contElem = $('<div/>', {
+            class: 'departure-wrapper'
+        });
+
+        var innerElem = $('<div/>', { 
+            class: 'departure'
+            })
             .css({
                 width: elem.data('width') + 'px',
                 maxWidth: elem.data('width') + 'px',
                 height: elem.data('height') + 'px',
                 color: elem.mappedColor('text-color'),
                 backgroundColor: elem.mappedColor('background-color'),
-            });
+            }).prependTo(contElem);
 
         // prepare icon
         var elemIcon = $('<div/>', {
@@ -68,7 +73,7 @@ var Modul_departure = function () {
             .css({
                 color: elem.mappedColor('icon-color'),
             })
-            .prependTo(elem);
+            .prependTo(innerElem);
         if (icon)
             elemIcon.addClass('fa ' + icon + ' fa-lg fa-fw');
         else
@@ -79,17 +84,17 @@ var Modul_departure = function () {
                 class: 'station',
             })
             .text(elem.data('get'))
-            .appendTo(elem);
+            .appendTo(innerElem);
 
         // prepare refresh element
         var elemRefresh = $('<div/>', {
             class: 'refresh fa fa-refresh fa-fw',
-        }).appendTo(elem);
+        }).appendTo(innerElem);
 
         // prepare timestamp element
         $('<div/>', {
             class: 'time',
-        }).appendTo(elem);
+        }).appendTo(innerElem);
 
         // prepare list header
         var text = '&nbsp;<div class="header">';
@@ -103,8 +108,11 @@ var Modul_departure = function () {
                 class: 'listText',
             })
             .fadeOut()
-            .appendTo(elem);
+            .appendTo(innerElem);
 
+        elem.html('').append(contElem);
+        
+        
         // event handler
         elemRefresh.on('click', function (e) {
             requestUpdate(elem);

@@ -1,3 +1,7 @@
+[data-type="departure"] {
+
+}
+
 .departure{
     position: relative;
     border-radius: 10px;
@@ -141,37 +145,37 @@
     font-size: 32px !important;
 }
 
-.DVB.departure{
+.DVB .departure{
     color: #EFC822 !important;
     background-color: #CCAE20 !important;
 }
-.DVB.departure .icon {
+.DVB .departure .icon {
     color: #3F862A !important;
 }
-.DVB.departure .listText {
+.DVB .departure .listText {
     background-color: #222;
     color: #EFC822;
 }
 
-.VVO.departure {
+.VVO .departure {
     background-color: #1765BF !important;
 }
-.VVO.departure .icon {
+.VVO .departure .icon {
     color: #3F862A !important;
     background-color: #CCAE20 !important;
 }
-.VVO.departure .listText {
+.VVO .departure .listText {
     background-color: #2A2A5C;
 }
 
-.DB.departure {
+.DB .departure {
     background-color: #FF0100 !important;
 }
-.DB.departure .icon {
+.DB .departure .icon {
     color: #000000 !important;
     background-color: transparent !important;
 }
-.DB.departure .listText {
+.DB .departure .listText {
     background-color: #FFFFFF !important;
         color: #000000 !important;
 }

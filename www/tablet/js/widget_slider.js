@@ -172,10 +172,17 @@ var Modul_slider = function () {
         var storeval = localStorage.getItem(id);
         storeval = (storeval) ? storeval : '5';
 
+        // prepare container element
+        var contElem = $('<div/>', {
+            class: 'slider-wrapper'
+        }).css({
+            'height': '100%'
+        });;
+        
         var input_elem = $('<input/>', {
             type: 'text',
             class: me.widgetname,
-        }).appendTo(elem);
+        }).appendTo(contElem);
 
         elem.data('selection', 0);
         var step = elem.data('step');
@@ -196,6 +203,7 @@ var Modul_slider = function () {
         });
 
         elem.data('Powerange', pwrng);
+        elem.html('').append(contElem);
 
         var rangeContainer = elem.find('.range-container');
         var rangeQuantity = elem.find('.range-quantity');
@@ -228,7 +236,7 @@ var Modul_slider = function () {
         var widthHandleUnit = ($.isNumeric(widthHandle)) ? 'px' : '';
 
         if (elem.hasClass('horizontal')) {
-            elem.css({
+            contElem.css({
                 'margin-bottom': margin + marginUnit,
                 'margin-top': margin + marginUnit,
                 'height': height + heightUnit
@@ -244,11 +252,11 @@ var Modul_slider = function () {
                 });
             } else {
                 if (elem.hasClass('mini'))
-                    elem.css({
+                    contElem.css({
                         'width': '60px'
                     });
                 else
-                    elem.css({
+                    contElem.css({
                         'width': '120px'
                     });
             }
@@ -275,7 +283,7 @@ var Modul_slider = function () {
                 });
             } else {
                 if (elem.hasClass('mini'))
-                    elem.css({
+                    contElem.css({
                         'height': '60px'
                     });
                 else

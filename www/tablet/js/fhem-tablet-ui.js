@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.20
+ * Version: 2.6.21
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -167,7 +167,7 @@ var Modul_widget = function () {
                 if (!$.isArray(data)) {
                     data = new Array(data.toString());
                 }
-                for (var i = 0, len = data.length; i < len; i++) {
+                for (var i = data.length - 1; i >= 0; i -= 1) {
                     var reading = data[i];
                     // fully qualified readings => DEVICE:READING
                     if (reading.match(/:/)) {
@@ -296,7 +296,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.20',
+    version: '2.6.21',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -349,6 +349,8 @@ var ftui = {
 
     init: function () {
 
+        ftui.hideWidgets();
+        
         ftui.paramIdMap = {};
         ftui.timestampMap = {};
         ftui.config.longPollType = $("meta[name='longpoll_type']").attr("content") || 'websocket';
@@ -388,7 +390,8 @@ var ftui = {
         // init Toast
         function configureToast() {
             if ($.toast && !$('link[href$="lib/jquery.toast.min.css"]').length)
-                $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/jquery.toast.min.css" type="text/css" />');
+                $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir +
+                    'lib/jquery.toast.min.css" type="text/css" />');
         }
 
         if (!$.fn.toast) {
@@ -512,7 +515,8 @@ var ftui = {
         ftui.gridster.baseY = parseInt($("meta[name='widget_base_height'],meta[name='gridster_base_height']").attr("content") || 0);
         ftui.gridster.cols = parseInt($("meta[name='gridster_cols']").attr("content") || 0);
         ftui.gridster.rows = parseInt($("meta[name='gridster_rows']").attr("content") || 0);
-        ftui.gridster.resize = parseInt($("meta[name='gridster_resize']").attr("content") || (ftui.gridster.baseX + ftui.gridster.baseY) > 0 ? 0 : 1);
+        ftui.gridster.resize = parseInt($("meta[name='gridster_resize']").attr("content") || (ftui.gridster.baseX + ftui.gridster.baseY) >
+            0 ? 0 : 1);
         if ($("meta[name='widget_margin']").attr("content"))
             ftui.gridster.margins = parseInt($("meta[name='widget_margin']").attr("content"));
 
@@ -585,16 +589,17 @@ var ftui = {
                 });
             }
 
-            $('.gridster > ul > li').children('center').parents().addClass('has_center');
+            $('.gridster > ul > li >.center',area).parent().addClass('has_center');
             // max height for inner boxes
-            $('.gridster > ul > li').children('.vbox').parents().addClass('has_vbox');
+            $('.gridster > ul > li > .vbox',area).parent().addClass('has_vbox');
 
         }
 
         if ($('.gridster').length > 0) {
 
             if (!$('link[href$="lib/jquery.gridster.min.css"]').length)
-                $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/jquery.gridster.min.css" type="text/css" />');
+                $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir +
+                    'lib/jquery.gridster.min.css" type="text/css" />');
 
             if (!$.fn.gridster) {
                 ftui.dynamicload(ftui.config.basedir + "lib/jquery.gridster.min.js", false).done(function () {
@@ -620,6 +625,9 @@ var ftui = {
 
     initPage: function (area) {
 
+        //hideWidgets
+        ftui.hideWidgets(area);
+        
         //init gridster
         area = (ftui.isValid(area)) ? area : '';
         console.time('initPage');
@@ -696,11 +704,14 @@ var ftui = {
         if ($('[class*=fs-]').length > 0 && !$('link[href$="lib/fhemSVG.css"]').length)
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/fhemSVG.css" type="text/css" />');
         if ($('[class*=mi-]').length > 0 && !$('link[href$="lib/material-icons.min.css"]').length)
-            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/material-icons.min.css" type="text/css" />');
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir +
+                'lib/material-icons.min.css" type="text/css" />');
         if ($('[class*=wi-]').length > 0 && !$('link[href$="lib/weather-icons.min.css"]').length)
-            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/weather-icons.min.css" type="text/css" />');
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir +
+                'lib/weather-icons.min.css" type="text/css" />');
         if ($('[class*=wi-wind]').length > 0 && !$('link[href$="lib/weather-icons-wind.min.css"]').length)
-            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/weather-icons-wind.min.css" type="text/css" />');
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir +
+                'lib/weather-icons-wind.min.css" type="text/css" />');
 
     },
 
@@ -770,7 +781,7 @@ var ftui = {
         var startTime = new Date();
 
         // invalidate all readings for detection of outdated ones
-        for (var i = 0, len = ftui.devs.length; i < len; i++) {
+        for (var i = ftui.devs.length; i -= 1;) {
             var params = ftui.deviceStates[ftui.devs[i]];
             for (var reading in params) {
                 params[reading].valid = false;
@@ -837,7 +848,7 @@ var ftui = {
                     var len = fhemJSON.Results.length;
                     ftui.log(2, 'shortpoll: fhemJSON.Results.length=' + len);
                     var results = fhemJSON.Results;
-                    for (var i = 0; i < len; i++) {
+                    for (var i = len - 1; i >= 0; i -= 1) {
                         var res = results[i];
                         var devName = res.Name;
                         if (devName.indexOf('FHEMWEB') < 0 && devName.indexOf('WEB_') < 0) {
@@ -875,7 +886,8 @@ var ftui = {
                 ftui.states.lastSetOnline = 0;
                 ftui.states.lastShortpoll = 0;
                 if (textStatus.indexOf('parsererror') < 0) {
-                    ftui.toast("<u>ShortPoll Request Failed, will retry in " + ftui.config.shortPollDelay / 1000 + "s</u><br>" + err, 'error');
+                    ftui.toast("<u>ShortPoll Request Failed, will retry in " + ftui.config.shortPollDelay / 1000 + "s</u><br>" +
+                        err, 'error');
                     ftui.getCSrf();
                     ftui.startShortPollInterval(3000);
                 } else {
@@ -918,13 +930,16 @@ var ftui = {
             ftui.websocket.onclose = function (event) {
                 var reason;
                 if (event.code == 1000)
-                    reason = "Normal closure, meaning that the purpose for which the connection was established has been fulfilled.";
+                    reason =
+                    "Normal closure, meaning that the purpose for which the connection was established has been fulfilled.";
                 else if (event.code == 1001)
-                    reason = "An endpoint is \"going away\", such as a server going down or a browser having navigated away from a page.";
+                    reason =
+                    "An endpoint is \"going away\", such as a server going down or a browser having navigated away from a page.";
                 else if (event.code == 1002)
                     reason = "An endpoint is terminating the connection due to a protocol error";
                 else if (event.code == 1003)
-                    reason = "An endpoint is terminating the connection because it has received a type of data it cannot accept (e.g., an endpoint that understands only text data MAY send this if it receives a binary message).";
+                    reason =
+                    "An endpoint is terminating the connection because it has received a type of data it cannot accept (e.g., an endpoint that understands only text data MAY send this if it receives a binary message).";
                 else if (event.code == 1004)
                     reason = "Reserved. The specific meaning might be defined in the future.";
                 else if (event.code == 1005)
@@ -932,17 +947,24 @@ var ftui = {
                 else if (event.code == 1006)
                     reason = "The connection was closed abnormally, e.g., without sending or receiving a Close control frame";
                 else if (event.code == 1007)
-                    reason = "An endpoint is terminating the connection because it has received data within a message that was not consistent with the type of the message (e.g., non-UTF-8 [http://tools.ietf.org/html/rfc3629] data within a text message).";
+                    reason =
+                    "An endpoint is terminating the connection because it has received data within a message that was not consistent with the type of the message (e.g., non-UTF-8 [http://tools.ietf.org/html/rfc3629] data within a text message).";
                 else if (event.code == 1008)
-                    reason = "An endpoint is terminating the connection because it has received a message that \"violates its policy\". This reason is given either if there is no other sutible reason, or if there is a need to hide specific details about the policy.";
+                    reason =
+                    "An endpoint is terminating the connection because it has received a message that \"violates its policy\". This reason is given either if there is no other sutible reason, or if there is a need to hide specific details about the policy.";
                 else if (event.code == 1009)
-                    reason = "An endpoint is terminating the connection because it has received a message that is too big for it to process.";
+                    reason =
+                    "An endpoint is terminating the connection because it has received a message that is too big for it to process.";
                 else if (event.code == 1010) // Note that this status code is not used by the server, because it can fail the WebSocket handshake instead.
-                    reason = "An endpoint (client) is terminating the connection because it has expected the server to negotiate one or more extension, but the server didn't return them in the response message of the WebSocket handshake. <br /> Specifically, the extensions that are needed are: " + event.reason;
+                    reason =
+                    "An endpoint (client) is terminating the connection because it has expected the server to negotiate one or more extension, but the server didn't return them in the response message of the WebSocket handshake. <br /> Specifically, the extensions that are needed are: " +
+                    event.reason;
                 else if (event.code == 1011)
-                    reason = "A server is terminating the connection because it encountered an unexpected condition that prevented it from fulfilling the request.";
+                    reason =
+                    "A server is terminating the connection because it encountered an unexpected condition that prevented it from fulfilling the request.";
                 else if (event.code == 1015)
-                    reason = "The connection was closed due to a failure to perform a TLS handshake (e.g., the server certificate can't be verified).";
+                    reason =
+                    "The connection was closed due to a failure to perform a TLS handshake (e.g., the server certificate can't be verified).";
                 else
                     reason = "Unknown reason";
                 ftui.log(1, "websocket (url=" + event.target.url + ") closed!  reason=" + reason);
@@ -1174,7 +1196,8 @@ var ftui = {
                     for (var s in styles) {
                         var param = styles[s].toString().split(':');
                         if (param[0].match(/color/)) {
-                            params[$.trim(param[0])] = ftui.rgbToHex($.trim(param[1]).replace('! important', '').replace('!important', ''));
+                            params[$.trim(param[0])] = ftui.rgbToHex($.trim(param[1]).replace('! important', '').replace(
+                                '!important', ''));
                         }
                     }
                     if (Object.keys(params).length > 0)
@@ -1320,6 +1343,7 @@ var ftui = {
                             }
                         }
                         ftui.log(1, 'Loaded plugin: ' + name);
+                        $('[data-type="' + name + '"]', area).removeClass('hide');
 
                     } else {
                         ftui.log(1, 'Failed to create widget: ' + name);
@@ -1331,7 +1355,8 @@ var ftui = {
             })
             .fail(function () {
                 ftui.toast('Failed to load plugin : ' + name);
-                ftui.log(1, 'Failed to load plugin : ' + name + '  - add <script src="js/widget_' + name + '.js" defer></script> do your page, to see more informations about this failure');
+                ftui.log(1, 'Failed to load plugin : ' + name + '  - add <script src="js/widget_' + name +
+                    '.js" defer></script> do your page, to see more informations about this failure');
                 deferredLoad.resolve();
             });
 
@@ -1389,7 +1414,8 @@ var ftui = {
             console.log('FTUI version: ' + ftui.version);
             console.log('Longpoll: ' + ftui.config.doLongPoll);
             console.log('Longpoll type: ' + ftui.config.longPollType);
-            console.log('Longpoll objects there: ' + (ftui.isValid(ftui.longPollRequest) && ftui.isValid(ftui.xhr) || ftui.isValid(ftui.websocket)));
+            console.log('Longpoll objects there: ' + (ftui.isValid(ftui.longPollRequest) && ftui.isValid(ftui.xhr) || ftui.isValid(
+                ftui.websocket)));
             console.log('Longpoll current line: ' + ftui.poll.currLine);
             console.log('Longpoll last event before: ' + ftui.poll.lastEventTimestamp.ago());
             console.log('Longpoll last reading update before: ' + ftui.poll.lastUpdateTimestamp.ago());
@@ -1542,7 +1568,7 @@ var ftui = {
                 if (ftui.isValid(value)) {
                     var matches = value.match(new RegExp('^' + part + '$'));
                     if (matches) {
-                        for (var i = 1, len = matches.length; i < len; i++) {
+                        for (var i = matches.length - 1; i >= 0; i -= 1) {
                             ret += matches[i];
                         }
                     }
@@ -1661,7 +1687,7 @@ var ftui = {
     },
 
     getClassColor: function (elem) {
-        for (var i = 0, len = ftui.config.stdColors.length; i < len; i++) {
+        for (var i = ftui.config.stdColors.length - 1; i >= 0; i -= 1) {
             if (elem.hasClass(ftui.config.stdColors[i])) {
                 return ftui.getStyle('.' + ftui.config.stdColors[i], 'color');
             }
@@ -1697,6 +1723,10 @@ var ftui = {
             $(this).css('-moz-user-select', 'none');
             $(this).css('-webkit-user-select', 'none');
         });
+    },
+
+    hideWidgets: function (area) {
+        $('[data-type]', area).addClass('hide');
     },
 
     toast: function (text, error) {
@@ -1791,7 +1821,8 @@ Date.prototype.ago = function (format) {
     var hours = Math.floor(x % 24);
     x /= 24;
     var days = Math.floor(x);
-    var strUnits = (ftui.config.lang === 'de') ? ['Tag(e)', 'Stunde(n)', 'Minute(n)', 'Sekunde(n)'] : ['day(s)', 'hour(s)', 'minute(s)', 'second(s)'];
+    var strUnits = (ftui.config.lang === 'de') ? ['Tag(e)', 'Stunde(n)', 'Minute(n)', 'Sekunde(n)'] : ['day(s)', 'hour(s)', 'minute(s)',
+        'second(s)'];
     var ret;
     if (ftui.isValid(format)) {
         ret = format.replace('dd', days);
@@ -1956,9 +1987,10 @@ function onjQueryLoaded() {
         if (!ftui.isValid(value)) {
             return '';
         }
-        var state = String(ftui.getPart(value, $(this).data(key + '-part')));
-        var onData = $(this).data(key + '-on');
-        var offData = $(this).data(key + '-off');
+        var elm = $(this);
+        var state = String(ftui.getPart(value, elm.data(key + '-part')));
+        var onData = elm.data(key + '-on');
+        var offData = elm.data(key + '-off');
         var on = String(onData);
         if (on.match(/:/)) {
             var temp = on.split(':'),
@@ -2049,7 +2081,8 @@ function onjQueryLoaded() {
 
     $.fn.transmitCommand = function () {
         if ($(this).hasClass('notransmit')) return;
-        var cmdl = [$(this).valOfData('cmd'), $(this).valOfData('device') + $(this).valOfData('filter'), $(this).valOfData('set'), $(this).valOfData('value')].join(' ');
+        var cmdl = [$(this).valOfData('cmd'), $(this).valOfData('device') + $(this).valOfData('filter'), $(this).valOfData('set'), $(
+            this).valOfData('value')].join(' ');
         ftui.setFhemStatus(cmdl);
         ftui.toast(cmdl);
     };

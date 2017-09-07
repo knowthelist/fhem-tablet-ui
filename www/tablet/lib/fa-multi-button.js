@@ -2,10 +2,10 @@
 /**
  * Modern toggle, push button, dimmer or just a signal indicator
  *
- * Version: 1.2.1
+ * Version: 1.3.0
  * Requires: jQuery v1.7+
  *
- * Copyright (c) 2015 Mario Stephan
+ * Copyright (c) 2015-2017 Mario Stephan
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  *
  * Thanks to phoxoey
@@ -78,42 +78,48 @@
             content.addClass('fa-stack-1x');
 
             elem.html('');
+            elem.bi = options['backgroundIcon'];
+            elem.fi = options['icon'];
 
             faElem = $('<div/>', {
                 class: 'famultibutton'
-            }).appendTo(elem);
-
+            });
 
             faElem.addClass('fa-stack');
 
-            jQuery('<i/>', {
-                    'id': 'bg',
-                    'class': 'fa fa-stack-2x'
-                }).addClass(options['backgroundIcon'])
-                .appendTo(faElem);
+            elem.bg = jQuery('<i/>', {
+                'id': 'bg',
+                'class': 'fa fa-stack-2x'
+            }).addClass(elem.bi);
 
-            jQuery('<i/>', {
+            elem.fg = jQuery('<i/>', {
                 'id': 'fg',
                 'class': 'fa fa-stack-1x'
-            }).addClass(options['icon']).appendTo(faElem);
+            }).addClass(elem.fi);
 
             content.appendTo(faElem);
 
             if (options['classes'] && options['classes'].length > 0) {
-                for (var i = 0; i < options['classes'].length; i++) {
+                for (var i = 0, len = options['classes'].length; i < len; i++) {
                     faElem.addClass(options['classes'][i]);
                 }
             }
 
-            elem.o = options;
+            elem.bg.appendTo(faElem);
+            elem.fg.appendTo(faElem);
+            faElem.appendTo(elem);
 
+            elem.o = options;
+            elem.w = faElem.width();
+            elem.h = faElem.height();
+            
             setOff();
 
             if (options['mode'] == 'dimmer') {
                 canvasScale = $('<canvas>').attr({
                     id: 'scale',
-                    height: elem.height() + 'px',
-                    width: elem.width() + 'px'
+                    height: elem.h + 'px',
+                    width: elem.w + 'px'
                 }).appendTo(faElem);
 
                 baseTop = parseInt(canvasScale.offset().top) - parseInt(faElem.offset().top);
@@ -133,8 +139,8 @@
 
             state = true;
 
-            faElem.children('#bg').css("color", options['onBackgroundColor']);
-            faElem.children('#fg').css("color", options['onColor']);
+            elem.bg.css("color", options['onBackgroundColor']);
+            elem.fg.css("color", options['onColor']);
             faElem.addClass('active');
             elem.trigger('setOn');
         }
@@ -142,10 +148,34 @@
         function setOff() {
 
             state = false;
-            faElem.children('#bg').css("color", options['offBackgroundColor']);
-            faElem.children('#fg').css("color", options['offColor']);
+            elem.bg.css("color", options['offBackgroundColor']);
+            elem.fg.css("color", options['offColor']);
             faElem.removeClass('active');
             elem.trigger('setOff');
+        }
+
+        function setForegroundColor(color) {
+
+            elem.fg.css("color", color);
+        }
+
+        function setBackgroundColor(color) {
+
+            elem.bg.css("color", color);
+        }
+
+        function setForegroundIcon(icon) {
+
+            elem.fg.removeClass(elem.fi);
+            elem.fi = icon;
+            elem.fg.addClass(elem.fi);
+        }
+
+        function setBackgroundIcon(icon) {
+
+            elem.bg.removeClass(elem.bi);
+            elem.bi = icon;
+            elem.bg.addClass(elem.bi);
         }
 
         function fadeOff() {
@@ -162,11 +192,11 @@
                     // Fade the colors in the step function
                     step: function (now, fx) {
                         var completion = (now - fx.start) / (fx.end - fx.start);
-                        faElem.children('#bg').css('color', getGradientColor(
+                        elem.bg.css('color', getGradientColor(
                             options['onBackgroundColor'],
                             options['offBackgroundColor'],
                             completion));
-                        faElem.children('#fg').css('color', getGradientColor(
+                        elem.fg.css('color', getGradientColor(
                             options['onColor'],
                             options['offColor'],
                             completion));
@@ -243,15 +273,16 @@
                 }
                 var canvas = $canvasProgress[0];
                 if (canvas) {
-                    canvas.height = faElem.height();
-                    canvas.width = faElem.width();
+                    canvas.height = elem.h;
+                    canvas.width = elem.w;
                     var x = canvas.width / 2;
                     var y = canvas.height / 2;
                     if (canvas.getContext) {
                         var c = canvas.getContext('2d');
                         c.beginPath();
                         c.strokeStyle = options.onColor;
-                        c.arc(x, y, x * ((-0.4 / 90) * Number(options.progressWidth) + 0.8), -0.5 * Math.PI, (-0.5 + value * 2) * Math.PI, false);
+                        c.arc(x, y, x * ((-0.4 / 90) * Number(options.progressWidth) + 0.8), -0.5 * Math.PI, (-0.5 + value * 2) *
+                            Math.PI, false);
                         c.lineWidth = x * 0.80 * options.progressWidth / 100;
                         c.stroke();
                     }
@@ -280,8 +311,8 @@
         function drawScale() {
 
             var canvas = canvasScale[0];
-            canvas.height = faElem.innerHeight();
-            canvas.width = faElem.innerWidth();
+            canvas.height = elem.h;
+            canvas.width = elem.w;
 
             if (canvas.getContext) {
 
@@ -323,11 +354,11 @@
 
             if (isDrag) {
                 canvasScale.animate({
-                    left: -faElem.innerWidth() * 0.6 + 'px'
+                    left: -elem.w * 0.6 + 'px'
                 });
             } else {
                 canvasScale.animate({
-                    left: faElem.innerWidth() / 5 + 'px',
+                    left: elem.w / 5 + 'px',
                     top: '0px'
                 });
             }
@@ -571,6 +602,18 @@
         };
         this.setProgressValue = function (val) {
             setProgressValue(val);
+        };
+        this.setForegroundColor = function (color) {
+            setForegroundColor(color);
+        };
+        this.setBackgroundColor = function (color) {
+            setBackgroundColor(color);
+        };
+        this.setForegroundIcon = function (icon) {
+            setForegroundIcon(icon);
+        };
+        this.setBackgroundIcon = function (icon) {
+            setBackgroundIcon(icon);
         };
         return intialize();
     };

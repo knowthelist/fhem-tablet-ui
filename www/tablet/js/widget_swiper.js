@@ -20,8 +20,9 @@ var Modul_swiper = function () {
         var idx = ftui.indexOfGeneric(states, state);
         if (idx > -1) {
             var swiper = elem[0].swiper;
-            if (swiper)
+            if (swiper) {
                 swiper.slideTo(idx);
+            }
         }
     }
 
@@ -70,6 +71,7 @@ var Modul_swiper = function () {
             nextButton: elemNext,
             prevButton: elemPrev,
             autoHeight: true,
+            observer: true,
             moveStartThreshold: 70,
             autoplay: elem.data('autoplay'),
             autoplayDisableOnInteraction: false,
@@ -97,17 +99,9 @@ var Modul_swiper = function () {
             });
         }
 
-        /*elem.find('ul>li>*').click(function(event) {
-            //console.log('click');
-            //event.preventDefault();
-            //more functionality here
-        });*/
-
         // Refresh swiper after it became visible
-        elem.closest('[data-type="popup"]').on("fadein", function (event) {
-            swiper.update();
-        });
-
+        // now via observer:true parameter
+    
         return elem;
     }
 

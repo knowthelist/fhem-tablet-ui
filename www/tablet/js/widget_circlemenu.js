@@ -55,14 +55,14 @@ var Modul_circlemenu = function () {
                     },
                 })
                 .addClass('circlemenu');
-            elem.css({
-                    minWidth: elem.data('item-width')
-                })
-                .closest('.gridster>ul>li').css({
+            elem.closest('.gridster>ul>li').css({
                     overflow: 'visible'
                 });
-console.log('wrap');
+
             ulElem.wrapAll('<div class="circlemenu-wrapper"></div>');
+            elem.find('circlemenu-wrapper').css({
+                    minWidth: elem.data('item-width')
+                })
         });
         
         $('.menu li:not(:first-child)').on('click', function () {
