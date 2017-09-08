@@ -72,6 +72,7 @@ var Modul_swiper = function () {
             prevButton: elemPrev,
             autoHeight: true,
             observer: true,
+            observeParents: true,
             moveStartThreshold: 70,
             autoplay: elem.data('autoplay'),
             autoplayDisableOnInteraction: false,
