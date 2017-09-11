@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.22
+ * Version: 2.6.23
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -296,7 +296,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.22',
+    version: '2.6.23',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -1343,7 +1343,7 @@ var ftui = {
                             }
                         }
                         ftui.log(1, 'Loaded plugin: ' + name);
-                        $('[data-type="' + name + '"]', area).removeClass('hide');
+                        $('[data-type="' + name + '"]', area).removeClass('widget-hide');
 
                     } else {
                         ftui.log(1, 'Failed to create widget: ' + name);
@@ -1726,7 +1726,7 @@ var ftui = {
     },
 
     hideWidgets: function (area) {
-        $('[data-type]', area).addClass('hide');
+        $('[data-type]', area).addClass('widget-hide');
     },
 
     toast: function (text, error) {

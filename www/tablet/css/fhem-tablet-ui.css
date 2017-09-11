@@ -464,6 +464,7 @@ section {
     float: left;
     text-align: center;
     height: 100%;
+    min-height: 1px;
 }
 
 .fullsize,
@@ -771,6 +772,7 @@ main > .box.horizontal {
 .has_center {
     flex-direction: column;
     flex: 1;
+    min-height: fit-content;
 }
 
 .card > .box.horizontal:only-of-type,
@@ -1065,6 +1067,7 @@ main > .box.horizontal {
         top: 50%;
         left: 80px;
         transform: translate3d(-1em, -50%, 0);
+        -webkit-transform: translate3d(-1em, -50%, 0);
         transition: all 0.15s ease-in-out;
     }
     .menu ul li span:before {
@@ -1082,6 +1085,7 @@ main > .box.horizontal {
     .menu ul li:hover span {
         opacity: 1;
         transform: translate3d(0px, -50%, 0);
+        -webkit-transform: translate3d(0px, -50%, 0);
     }
 }
 
@@ -1093,6 +1097,7 @@ main > .box.horizontal {
         width: 230px !important;
         box-shadow: 0 0 0 100em rgba(0, 0, 0, 0);
         transform: translate3d(-230px, 0, 0);
+        -webkit-transform: translate3d(-230px, 0, 0);
         transition: all 0.3s ease-in-out;
     }
     .menu .menu-trigger {
@@ -1113,13 +1118,16 @@ main > .box.horizontal {
         top: 45%;
         left: 50%;
         transform: translate3d(-50%, -50%, 0);
+        -webkit-transform: translate3d(-50%, -50%, 0);
     }
     .menu .menu-trigger:after {
         top: 55%;
         transform: translate3d(-50%, -50%, 0);
+        -webkit-transform: translate3d(-50%, -50%, 0);
     }
     .menu.show {
         transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
         box-shadow: 0 0 0 100em rgba(0, 0, 0, 0.6);
     }
 }
@@ -2584,7 +2592,8 @@ input {
 }
 
 .autohide.invalid,
-.hide {
+.hide,
+.widget-hide {
     display: none;
 }
 
