@@ -11,8 +11,8 @@ UPD 2017-01-29_15:04:15 1659 www/tablet/css/fhem-darkblue-ui.css
 UPD 2017-02-11_14:27:26 510 www/tablet/css/fhem-green-ui.css
 UPD 2017-02-11_14:27:26 1953 www/tablet/css/fhem-mobil-ui.css
 UPD 2017-02-05_13:50:40 6916 www/tablet/css/fhem-tablet-ui-wdtimer.css
-UPD 2017-09-08_00:39:51 58710 www/tablet/css/fhem-tablet-ui.css
-UPD 2017-09-08_00:40:47 41937 www/tablet/css/fhem-tablet-ui.min.css
+UPD 2017-09-11_18:07:54 59096 www/tablet/css/fhem-tablet-ui.css
+UPD 2017-09-11_18:01:54 42221 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2017-02-11_14:27:26 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2017-08-31_23:07:02 6609 www/tablet/css/ftui_chart.css
 UPD 2017-02-11_14:27:26 1023 www/tablet/css/ftui_colorwheel.css
@@ -67,8 +67,8 @@ UPD 2017-02-11_14:27:26 17624 www/tablet/index-example.html
 UPD 2017-02-11_14:27:26 2208 www/tablet/index_empty.html
 UPD 2017-02-11_14:27:26 9958 www/tablet/index_layout.html
 UPD 2017-02-12_14:42:28 4054 www/tablet/index_state.html
-UPD 2017-09-08_14:45:17 81492 www/tablet/js/fhem-tablet-ui.js
-UPD 2017-09-08_14:45:26 42216 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2017-09-11_17:32:19 81506 www/tablet/js/fhem-tablet-ui.js
+UPD 2017-09-11_17:56:23 42231 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2017-02-11_14:27:26 20988 www/tablet/js/highcharts-meteogram.js
 UPD 2017-02-11_14:27:26 6503 www/tablet/js/widget_agenda.js
 UPD 2017-01-29_01:34:10 1710 www/tablet/js/widget_button.js
