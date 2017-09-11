@@ -177,7 +177,7 @@ var Modul_slider = function () {
             class: 'slider-wrapper'
         }).css({
             'height': '100%'
-        });;
+        });
         
         var input_elem = $('<input/>', {
             type: 'text',
@@ -317,7 +317,8 @@ var Modul_slider = function () {
 
         elem.addClass(pwrng.options.klass);
 
-        pwrng.setStart(storeval);
+        // set initial value
+        pwrng.setStart(parseFloat(storeval));
 
         function onResize() {
             var storeval = localStorage.getItem(id);
@@ -381,6 +382,7 @@ var Modul_slider = function () {
                     if ($.isNumeric(val) && input_elem) {
                         var v = elem.hasClass('negated') ? pwrng.options.max + pwrng.options.min - parseFloat(val) : parseFloat(val);
                         pwrng.setStart(parseFloat(v));
+
                         localStorage.setItem(elemID(elem), v);
                         ftui.log(1, 'slider dev:' + dev + ' par:' + par + ' changed to:' + v);
 

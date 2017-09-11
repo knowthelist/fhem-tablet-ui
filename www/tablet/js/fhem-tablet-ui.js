@@ -2,14 +2,14 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.23
+ * Version: 2.6.24
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  *
  */
 
-/* global Framework7:true, jQuery:true */
+/* global Framework7:true, jQuery:true, Dom7:true */
 
 "use strict";
 
@@ -259,13 +259,13 @@ var plugins = {
         if (!ftui.config.longPollFilter) {
             ftui.poll.longPollFilter = devicelist + ', ' + readinglist;
         } else {
-            ftui.poll.longPollFilter = ftui.config.longPollFilter
+            ftui.poll.longPollFilter = ftui.config.longPollFilter;
         }
 
         if (!ftui.config.shortPollFilter) {
             ftui.poll.shortPollFilter = devicelist + ' ' + readinglist;
         } else {
-            ftui.poll.shortPollFilter = ftui.config.shortPollFilter
+            ftui.poll.shortPollFilter = ftui.config.shortPollFilter;
         }
 
         // force shortpoll
@@ -296,7 +296,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.23',
+    version: '2.6.24',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -477,19 +477,23 @@ var ftui = {
         }
 
         $(document).on("initWidgetsDone", function () {
+            
             // start shortpoll delayed
             ftui.startShortPollInterval(500);
             // restart longpoll
             ftui.states.longPollRestart = true;
             ftui.restartLongPoll();
             ftui.initHeaderLinks();
-            ftui.disableSelection();
 
             $('.gridster li > header ~ .hbox:only-of-type, .gridster li > header ~ .center:only-of-type, .card > header ~ div:only-of-type').each(function (index) {
                 $(this).css({
                     'height': 'calc(100% - ' + $(this).siblings('header').outerHeight() + 'px)'
                 });
             });
+            
+            // trigger refreshs
+            $(document).trigger('changedSelection');
+            ftui.disableSelection();
 
         });
 
@@ -781,7 +785,7 @@ var ftui = {
         var startTime = new Date();
 
         // invalidate all readings for detection of outdated ones
-        for (var i = ftui.devs.length; i -= 1;) {
+        for (var i = 0, len = ftui.devs.length; i < len; i++) {
             var params = ftui.deviceStates[ftui.devs[i]];
             for (var reading in params) {
                 params[reading].valid = false;
@@ -1079,7 +1083,7 @@ var ftui = {
                     var params = null;
                     var param = null;
                     var isSTATE = (dataJSON[1] !== dataJSON[2]);
-                    var isTrigger = (dataJSON[1] == '' && dataJSON[2] == '');
+                    var isTrigger = (dataJSON[1] === '' && dataJSON[2] === '');
 
                     ftui.log(4, dataJSON);
 
@@ -1992,21 +1996,22 @@ function onjQueryLoaded() {
         var onData = elm.data(key + '-on');
         var offData = elm.data(key + '-off');
         var on = String(onData);
+        var temp, device, reading, param;
         if (on.match(/:/)) {
-            var temp = on.split(':'),
-                device = temp[0].replace('[', ''),
-                reading = temp[1].replace(']', ''),
-                param = ftui.getDeviceParameter(device, reading);
+            temp = on.split(':');
+            device = temp[0].replace('[', '');
+            reading = temp[1].replace(']', '');
+            param = ftui.getDeviceParameter(device, reading);
             if (param && ftui.isValid(param)) {
                 on = param.val;
             }
         }
         var off = String(offData);
         if (off.match(/:/)) {
-            var temp = off.split(':'),
-                device = temp[0].replace('[', ''),
-                reading = temp[1].replace(']', ''),
-                param = ftui.getDeviceParameter(device, reading);
+            temp = off.split(':');
+            device = temp[0].replace('[', '');
+            reading = temp[1].replace(']', '');
+            param = ftui.getDeviceParameter(device, reading);
             if (param && ftui.isValid(param)) {
                 off = param.val;
             }
@@ -2052,7 +2057,7 @@ function onjQueryLoaded() {
                 })
             .remove();
         return this;
-    }
+    };
 
     $.fn.getReading = function (key, idx) {
         var devname = String($(this).data('device')),
