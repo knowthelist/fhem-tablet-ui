@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.24
+ * Version: 2.6.25
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -296,7 +296,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.24',
+    version: '2.6.25',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -350,7 +350,7 @@ var ftui = {
     init: function () {
 
         ftui.hideWidgets();
-        
+
         ftui.paramIdMap = {};
         ftui.timestampMap = {};
         ftui.config.longPollType = $("meta[name='longpoll_type']").attr("content") || 'websocket';
@@ -477,7 +477,7 @@ var ftui = {
         }
 
         $(document).on("initWidgetsDone", function () {
-            
+
             // start shortpoll delayed
             ftui.startShortPollInterval(500);
             // restart longpoll
@@ -485,12 +485,14 @@ var ftui = {
             ftui.restartLongPoll();
             ftui.initHeaderLinks();
 
-            $('.gridster li > header ~ .hbox:only-of-type, .gridster li > header ~ .center:only-of-type, .card > header ~ div:only-of-type').each(function (index) {
+            $(
+                '.gridster li > header ~ .hbox:only-of-type, .gridster li > header ~ .center:only-of-type, .card > header ~ div:only-of-type'
+            ).each(function (index) {
                 $(this).css({
                     'height': 'calc(100% - ' + $(this).siblings('header').outerHeight() + 'px)'
                 });
             });
-            
+
             // trigger refreshs
             $(document).trigger('changedSelection');
             ftui.disableSelection();
@@ -593,9 +595,9 @@ var ftui = {
                 });
             }
 
-            $('.gridster > ul > li >.center',area).parent().addClass('has_center');
+            $('.gridster > ul > li >.center', area).parent().addClass('has_center');
             // max height for inner boxes
-            $('.gridster > ul > li > .vbox',area).parent().addClass('has_vbox');
+            $('.gridster > ul > li > .vbox', area).parent().addClass('has_vbox');
 
         }
 
@@ -631,7 +633,7 @@ var ftui = {
 
         //hideWidgets
         ftui.hideWidgets(area);
-        
+
         //init gridster
         area = (ftui.isValid(area)) ? area : '';
         console.time('initPage');
@@ -1637,7 +1639,7 @@ var ftui = {
 
         var offset = new Date().getTimezoneOffset();
         return (m) ? new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]) :
-            (m2) ? new Date(m2[1] * 1000) :
+            (m2) ? new Date(70, 1, 1, 0, 0, m2[1], 0) :
             (m3) ? new Date(+m3[3], +m3[2] - 1, +m3[1], 0, -offset, 0, 0) : new Date();
     },
 
@@ -2034,6 +2036,10 @@ function onjQueryLoaded() {
             if (on === '!off' && !state.match(new RegExp('^' + off + '$'))) {
                 return 'on';
             } else if (off === '!on' && !state.match(new RegExp('^' + on + '$'))) {
+                return 'off';
+            } else if (on === '!' + off && !state.match(new RegExp('^' + off + '$'))) {
+                return 'on';
+            } else if (off === '!' + on && !state.match(new RegExp('^' + on + '$'))) {
                 return 'off';
             }
         }
