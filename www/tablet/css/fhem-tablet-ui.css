@@ -2898,8 +2898,6 @@ select::-ms-expand {
 
 .select_wrapper:after {
     position: absolute;
-    bottom: 4px;
-    line-height: 0.9em;
     right: 6px;
     content: "\f107";
     font-family: FontAwesome;
@@ -2907,7 +2905,8 @@ select::-ms-expand {
     font-weight: normal;
     text-decoration: inherit;
     font-size: 150%;
-    padding: 5px !important;
+    top: 50%;
+    transform: translate(-50%, -50%);
     pointer-events: none;
 }
 
