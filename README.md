@@ -858,6 +858,38 @@ data-get JSON-Object:
 - **data-post-text**: include this text after reading text
 - **data-mode**  : kind of notification - notification, toast-error, toast (default 'notification')
 
+####controller widget
+- **data-get**  : name of the reading to get from FHEM (default 'STATE')
+- **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
+- **data-cmd**  : name of the command (**\<command\>** \<device\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
+- **data-min**  : minimal value to set (default 0)
+- **data-max**  : maximal value to set (default 100)
+- **data-step** : step value (default 1)
+- **data-on**   : value or RegEx where the slider moves to max  (default 'on') 
+- **data-off**  : value or RegEx where the slider moves to min  (default 'off')
+- **data-width**: width for controller (default '4em')
+- **data-height**: height for controller (default '11em')
+- **data-color** : color for quantity range (default '#fff')
+- **data-background-color** : color for range bar (default 'rgba(40,40,40,0.5)')
+- **data-icon** : name for the fix icon
+- **data-icon-color** : color for the fix icon
+
+####contolbutton widget
+- **data-get**      : name of the reading to get from FHEM (default 'STATE')
+- **data-set**      : name of the reading to set from FHEM (default '')
+- **data-cmd**      : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set' 
+- **data-get-on**   : value for ON status to get or an array of states (default 'true|1|on|open|ON')
+- **data-get-off**  : value for OFF status to get. (default 'false|0|off|closed|OFF')
+- **data-set-on**   : value for ON status to set. (default: value of data-get-on)
+- **data-set-off**  : value for OFF status to set. (default: value of data-get-off)
+- **data-icon**     			: name of the font-awesome icon. (default: fa-lightbulb-o)
+- **data-background-icon** 		: name of the font-awesome icon for background (default 'fa-circle')
+- **data-on-background-color**          : color for ON state or DEVICE:READING for dynamic setting (default '#aa6900')
+- **data-off-background-color**         : color for OFF state or DEVICE:READING for dynamic setting (default '#505050')
+- **data-on-color** 			: color for ON state or DEVICE:READING for dynamic setting (default '#aa6900')
+- **data-off-color**			: color for Off state or DEVICE:READING for dynamic setting (default '#505050')
+
+
 Format
 -------
 The layout, look and behavior can be influenced by the class attribute.
@@ -996,8 +1028,10 @@ The height of the row is determined by the largest element.
 - bg-lightgray  : background color lightgray
 - bg-white      : background color white
 - bg-black      : background color black
-- bg-mint       : background color lightgray
-- bg-yellow     : background color lightgray
+- bg-mint       : background color mint
+- bg-yellow     : background color yellow
+- bg-gray-trans : background color gray and half transparent (in contrast to class="half-transparent" only the background gets transparent 
+not the content too)
 
 **Label or Symbol Size**
 - mini          : 50%
@@ -1025,6 +1059,8 @@ The height of the row is determined by the largest element.
 - circleborder  : draws a round border around labels
 - autohide      : Hides an element in case of an invalid reading (not available for this device)
 - notransmit    : suppress send to FHEM after changes
+- half-transparent : makes the whole element half transpoarent including the content 
+- transparent   : makes the element total transpoarent. Nothing is shown, also each child gets tranparent
 
 
 
