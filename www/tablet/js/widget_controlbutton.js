@@ -94,7 +94,6 @@ var Modul_controlbutton = function () {
 
             // Events
             elem.on(ftui.config.clickEventType, function (e) {
-                e.preventDefault();
                 e.stopImmediatePropagation();
 
                 elem.touch_pos_y = $(window).scrollTop();
@@ -106,6 +105,8 @@ var Modul_controlbutton = function () {
             elem.on(ftui.config.releaseEventType, function (e) {
                 e.preventDefault();
                 e.stopImmediatePropagation();
+                
+                console.log(Math.abs(elem.touch_pos_y - $(window).scrollTop()) );
 
                 if ( Math.abs(elem.touch_pos_y - $(window).scrollTop()) > 3 ||
                     Math.abs(elem.touch_pos_x - $(window).scrollLeft()) > 3 ||
