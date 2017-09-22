@@ -1,3 +1,8 @@
+[data-type="controlbutton"] {
+    width: 4em;
+    height: 4em;
+}
+
 .controlbutton-wrapper {
     width: 100%;
     height: 100%;

@@ -55,6 +55,7 @@ var Modul_select = function () {
                 elem.transmitCommand();
                 elem.trigger('changedValue');
             })
+            .attr('size',elem.data('size'))
             .appendTo(wrap_elem);
         fillList(elem);
         elem.data('value', elem.data('quote') + $("option:selected", select_elem).val() + elem.data('quote'));

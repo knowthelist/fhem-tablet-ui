@@ -31,12 +31,12 @@ var Modul_iframe = function () {
         elem.initData('check', true);
 
         me.addReading(elem, 'get');
-        if (elem.isValidData('url'))
+        if (elem.isValidData('url')) {
             me.addReading(elem, 'url');
+        }
     }
 
     function init_ui(elem) {
-        console.log('check', elem.data('check'));
         if (elem.data('check')) {
             elem.empty();
             var spinner = $('<div />').appendTo(elem);
@@ -60,6 +60,7 @@ var Modul_iframe = function () {
                     } else {
                         style = 'height:' + elem.data('height') + 'px;width:' + elem.data('width') + 'px;';
                     }
+                    ftui.log(2,'iframe - after check - src=' + elem.data('src'));
                     $("<iframe src='" + elem.data('src') + "' style='" + style + "border:none' scrolling='" + elem.data('scrolling') + "'/>").appendTo(elem);
                 },
                 error: function (x, t, m) {
@@ -82,6 +83,7 @@ var Modul_iframe = function () {
             } else {
                 style = 'height:' + elem.data('height') + 'px;width:' + elem.data('width') + 'px;';
             }
+            ftui.log(2,'iframe - src=' + elem.data('src'));
             $("<iframe src='" + elem.data('src') + "' style='" + style + "border:none' scrolling='" + elem.data('scrolling') + "'/>").appendTo(elem);
         }
     }
@@ -110,6 +112,7 @@ var Modul_iframe = function () {
             .each(function (idx) {
                 var elem = $(this);
                 elem.data('src', elem.getReading('url').val);
+                ftui.log(2,'iframe - set src from url - src=' + elem.data('src'));
                 me.init_ui(elem);
             });
     }

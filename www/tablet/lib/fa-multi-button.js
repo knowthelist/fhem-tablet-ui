@@ -112,7 +112,7 @@
             elem.o = options;
             elem.w = faElem.width();
             elem.h = faElem.height();
-            
+
             setOff();
 
             if (options['mode'] == 'dimmer') {
@@ -180,29 +180,29 @@
 
         function fadeOff() {
 
-            if (state) {
-
-                state = false;
-
-                $('<div />').animate({
-                    'width': 100
-                }, {
-                    duration: 700,
-                    easing: 'swing',
-                    // Fade the colors in the step function
-                    step: function (now, fx) {
-                        var completion = (now - fx.start) / (fx.end - fx.start);
-                        elem.bg.css('color', getGradientColor(
-                            options['onBackgroundColor'],
-                            options['offBackgroundColor'],
-                            completion));
-                        elem.fg.css('color', getGradientColor(
-                            options['onColor'],
-                            options['offColor'],
-                            completion));
-                    },
-                });
-            }
+            $('<div />').animate({
+                'width': 100
+            }, {
+                duration: 700,
+                easing: 'swing',
+                // Fade the colors in the step function
+                step: function (now, fx) {
+                    var completion = (now - fx.start) / (fx.end - fx.start);
+                    elem.bg.css('color', getGradientColor(
+                        options['onBackgroundColor'],
+                        options['offBackgroundColor'],
+                        completion));
+                    elem.fg.css('color', getGradientColor(
+                        options['onColor'],
+                        options['offColor'],
+                        completion));
+                },
+                complete: function () {
+                    if (state === true) {
+                        setOn();
+                    }
+                }
+            });
         }
 
         // helper functions for color fade out
@@ -382,7 +382,7 @@
             var leaveEventType = ((onlyTouch) ? 'touchleave' : 'touchleave mouseout');
             var lastState;
 
-            if (options['mode'] == 'push') {
+            if (options['mode'] === 'push') {
                 faElem.on(clickEventType, function (e) {
                     //e.preventDefault();
                     e.stopImmediatePropagation();
@@ -402,6 +402,7 @@
                         options['toggleOn'].call(this);
                     }
 
+                    state = false;
                     setTimeout(function () {
                         fadeOff();
                     }, 200);
@@ -411,12 +412,6 @@
                             setOn();
                         }, 1000);
                     }
-
-                    setTimeout(function () {
-                        if (state === true) {
-                            setOn();
-                        }
-                    }, 1200);
 
                     elem.trigger('clicked');
 
@@ -443,6 +438,7 @@
                         options['toggleOff'].call(this);
                     }
 
+                    state = false;
                     setTimeout(function () {
                         fadeOff();
                     }, 200);
@@ -452,12 +448,6 @@
                             setOn();
                         }, 1000);
                     }
-
-                    setTimeout(function () {
-                        if (state === true) {
-                            setOn();
-                        }
-                    }, 1200);
 
 
                     elem.trigger('clicked');
