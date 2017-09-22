@@ -11,6 +11,8 @@ function depends_slider() {
     if (!$.fn.Powerange) {
         if (!$('link[href$="lib/powerange.min.css"]').length)
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/powerange.min.css" type="text/css" />');
+        if (!$('link[href$="css/ftui_slider.css"]').length)
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_slider.css" type="text/css" />');
         return [ftui.config.basedir + "lib/powerange.min.js"];
     }
 }
@@ -126,6 +128,7 @@ var Modul_slider = function () {
         elem.initData('timer-state-off', 'off');
 
         me.addReading(elem, 'get');
+
         // numeric value means fix value, others mean it is a reading
         if (!$.isNumeric(elem.data('max'))) {
             me.addReading(elem, 'max');
@@ -175,10 +178,8 @@ var Modul_slider = function () {
         // prepare container element
         var contElem = $('<div/>', {
             class: 'slider-wrapper'
-        }).css({
-            'height': '100%'
         });
-        
+
         var input_elem = $('<input/>', {
             type: 'text',
             class: me.widgetname,

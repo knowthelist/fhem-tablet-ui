@@ -203,7 +203,7 @@ var Modul_famultibutton = function () {
                     bgcolors[s] = bgcolors[s > 0 ? s - 1 : 0];
                 }
             }
-            
+
             var elm = elem.children().children('#fg');
             var id = elem.data('device') + "_" + elem.data('get');
             localStorage.setItem(me.widgetname + '_' + id + '_index', idx);
@@ -213,10 +213,10 @@ var Modul_famultibutton = function () {
             var bgColorValue = (bgcolors[idx].match(/:/)) ? elem.getReading('on-background-color').val : bgcolors[idx];
 
             faelem.setForegroundIcon(icons[idx]);
-            faelem.setForegroundColor( ftui.getStyle('.' + colorValue, 'color') || colorValue);
+            faelem.setForegroundColor(ftui.getStyle('.' + colorValue, 'color') || colorValue);
 
             faelem.setBackgroundIcon(bgicons[idx]);
-            faelem.setBackgroundColor( ftui.getStyle('.' + bgColorValue, 'color') || bgColorValue);
+            faelem.setBackgroundColor(ftui.getStyle('.' + bgColorValue, 'color') || bgColorValue);
 
         }
     }
@@ -368,6 +368,12 @@ var Modul_famultibutton = function () {
                 me.valueChanged(elem, v);
             },
         });
+
+        var size = elem.data('size');
+        var sizeUnit = ($.isNumeric(size)) ? '%' : '';
+        if (size) {
+            elem.css({'font-size': size+sizeUnit});
+        }
 
         var id = elem.data('device') + "_" + elem.data('get');
 

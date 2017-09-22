@@ -594,6 +594,7 @@ Examples: https://github.com/knowthelist/fhem-tablet-ui/blob/master/examples/pag
 - **data-height**       : fixed size for height (in % or px)
 - **data-autoplay**     : delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
 - **data-tabclass**     : CSS class name of the dedicated tab elements (default 'swipertab')
+- **data-startpage**    : number of the first shown page
 
 Parameter for page elements of the swiper <li>
 - **data-hash**         : reference value for URL hash on which the page get activated
@@ -1104,12 +1105,12 @@ and gridster_rows definitions (if determined) will be ignored.
 
 Add this to adjust the size of the Gridster margin
 ```html
-<meta name="widget_margin" content="4">
+<meta name="gridster_margin" content="4">
 ```
 
 
 Additional settings for Gridster are:
-- widget_min_cols
+- gridster_min_cols
 - gridster_starthidden
 - gridster_resize (auto resize -> values: 0|1)
 

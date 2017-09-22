@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.25
+ * Version: 2.6.27
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -45,7 +45,7 @@ if (typeof Framework7 === 'function') {
 var Modul_widget = function () {
 
     var subscriptions = {};
-    var elements;
+    var elements = [];
 
     function update_lock(dev, par) {
         $.each(['lock', 'lock-on', 'lock-off'], function (index, key) {
@@ -143,7 +143,39 @@ var Modul_widget = function () {
         return defaultVal;
     }
 
-    function init_attr(elem) {}
+    function init_attr(elem) {
+
+        elem.initData('get', 'STATE');
+        elem.initData('set', '');
+        elem.initData('cmd', 'set');
+
+        me.addReading(elem, 'get');
+
+        // reachable parameter
+        elem.initData('reachable-on', '!off');
+        elem.initData('reachable-off', 'false|0');
+        me.addReading(elem, 'reachable');
+
+        // if hide reading is defined, set defaults for comparison
+        if (elem.isValidData('hide')) {
+            elem.initData('hide-on', 'true|1|on');
+        }
+        elem.initData('hide', 'STATE');
+        if (elem.isValidData('hide-on')) {
+            elem.initData('hide-off', '!on');
+        }
+        me.addReading(elem, 'hide');
+
+        // if lock reading is defined, set defaults for comparison
+        if (elem.isValidData('lock')) {
+            elem.initData('lock-on', 'true|1|on');
+        }
+        elem.initData('lock', elem.data('get'));
+        if (elem.isValidData('lock-on')) {
+            elem.initData('lock-off', '!on');
+        }
+        me.addReading(elem, 'lock');
+    }
 
     function init_ui(elem) {
         elem.text(me.widgetname);
@@ -154,8 +186,9 @@ var Modul_widget = function () {
         ftui.log(1, "init widget: name=" + me.widgetname + " area=" + me.area);
         me.elements = $('[data-type="' + me.widgetname + '"]', me.area);
         me.elements.each(function (index) {
-            me.init_attr($(this));
-            me.init_ui($(this));
+            var elem = $(this);
+            me.init_attr(elem);
+            elem = me.init_ui(elem);
         });
     }
 
@@ -296,7 +329,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.25',
+    version: '2.6.27',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -433,6 +466,7 @@ var ftui = {
         ftui.config.moveEventType = ((onlyTouch) ? 'touchmove' : 'touchmove mousemove');
         ftui.config.releaseEventType = ((onlyTouch) ? 'touchend' : 'touchend mouseup');
         ftui.config.leaveEventType = ((onlyTouch) ? 'touchleave' : 'touchleave mouseout');
+        ftui.config.enterEventType = ((onlyTouch) ? 'touchenter' : 'touchenter mouseenter');
 
         //add background for modal dialogs
         $("<div id='shade' />").prependTo('body').hide();
@@ -486,7 +520,7 @@ var ftui = {
             ftui.initHeaderLinks();
 
             $(
-                '.gridster li > header ~ .hbox:only-of-type, .gridster li > header ~ .center:only-of-type, .card > header ~ div:only-of-type'
+                '.gridster li > header ~ .hbox:only-of-type, .gridster li > header ~ .center:not([data-type]):only-of-type, .card > header ~ div:not([data-type]):only-of-type'
             ).each(function (index) {
                 $(this).css({
                     'height': 'calc(100% - ' + $(this).siblings('header').outerHeight() + 'px)'
@@ -515,16 +549,16 @@ var ftui = {
 
     initGridster: function (area) {
 
-        ftui.gridster.minX = parseInt($("meta[name='widget_base_width'],meta[name='gridster_min_width']").attr("content") || 0);
-        ftui.gridster.minY = parseInt($("meta[name='widget_base_height'],meta[name='gridster_min_height']").attr("content") || 0);
+        ftui.gridster.minX = parseInt($("meta[name='widget_min_width'],meta[name='gridster_min_width']").attr("content") || 0);
+        ftui.gridster.minY = parseInt($("meta[name='widget_min_height'],meta[name='gridster_min_height']").attr("content") || 0);
         ftui.gridster.baseX = parseInt($("meta[name='widget_base_width'],meta[name='gridster_base_width']").attr("content") || 0);
         ftui.gridster.baseY = parseInt($("meta[name='widget_base_height'],meta[name='gridster_base_height']").attr("content") || 0);
         ftui.gridster.cols = parseInt($("meta[name='gridster_cols']").attr("content") || 0);
         ftui.gridster.rows = parseInt($("meta[name='gridster_rows']").attr("content") || 0);
         ftui.gridster.resize = parseInt($("meta[name='gridster_resize']").attr("content") || (ftui.gridster.baseX + ftui.gridster.baseY) >
             0 ? 0 : 1);
-        if ($("meta[name='widget_margin']").attr("content"))
-            ftui.gridster.margins = parseInt($("meta[name='widget_margin']").attr("content"));
+        if ($("meta[name='widget_margin'],meta[name='gridster_margin']").attr("content"))
+            ftui.gridster.margins = parseInt($("meta[name='widget_margin'],meta[name='gridster_margin']").attr("content"));
 
         function configureGridster() {
 
@@ -562,7 +596,8 @@ var ftui = {
                 baseY = ftui.gridster.minY;
             }
 
-            ftui.gridster.mincols = parseInt($("meta[name='widget_min_cols']").attr("content") || cols);
+            ftui.gridster.mincols = parseInt($("meta[name='widget_min_cols'],meta[name='gridster_min_cols']").attr("content") ||
+                cols);
 
             if (ftui.gridster.instances[area])
                 ftui.gridster.instances[area].destroy();
@@ -1598,9 +1633,11 @@ var ftui = {
         return !d ? 0 : s.length - d;
     },
 
+    // 1. numeric, 2. regex, 3. negation double, 4. indexof 
     indexOfGeneric: function (array, find) {
         if (!array) return -1;
         for (var i = 0, len = array.length; i < len; i++) {
+            // leave the loop on first none numeric item
             if (!$.isNumeric(array[i]))
                 return ftui.indexOfRegex(array, find);
         }
@@ -1617,13 +1654,24 @@ var ftui = {
     },
 
     indexOfRegex: function (array, find) {
-        for (var i = 0, len = array.length; i < len; i++) {
+        var len = array.length;
+        for (var i = 0; i < len; i++) {
             try {
                 var match = find.match(new RegExp('^' + array[i] + '$'));
                 if (match)
                     return i;
             } catch (e) {}
         }
+        
+        // negation double
+        if (len === 2 && array[0] === '!' + array[1] && find !== array[0]) {
+            return 0;
+        }
+        if (len === 2 && array[1] === '!' + array[0] && find !== array[1]) {
+            return 1;
+        }
+
+        // last chance: index of
         return array.indexOf(find);
     },
 

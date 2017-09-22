@@ -100,6 +100,8 @@ var Modul_swiper = function () {
             });
         }
 
+        swiper.slideTo(elem.data('startpage')-1);
+        
         // Refresh swiper after it became visible
         // now via observer:true parameter
     
