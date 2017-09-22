@@ -20,6 +20,7 @@ UPD 2017-09-01_19:22:09 3336 www/tablet/css/ftui_departure.css
 UPD 2017-02-11_14:27:26 1079 www/tablet/css/ftui_medialist.css
 UPD 2017-02-11_14:27:26 442 www/tablet/css/ftui_range.css
 UPD 2017-02-11_14:27:26 970 www/tablet/css/ftui_slideout.css
+UPD 2017-09-22_21:53:55 808 www/tablet/css/ftui_slider.css
 UPD 2017-02-27_23:42:05 1586 www/tablet/css/ftui_spinner.css
 UPD 2017-06-13_20:19:36 6936 www/tablet/css/ftui_weekprofile.css
 UPD 2017-02-11_14:27:26 5166 www/tablet/demo_ftui.html
@@ -79,7 +80,7 @@ UPD 2017-09-03_16:18:04 3145 www/tablet/js/widget_circlemenu.js
 UPD 2017-09-03_21:59:56 1611 www/tablet/js/widget_classchanger.js
 UPD 2017-03-03_01:43:22 5829 www/tablet/js/widget_clock.js
 UPD 2017-02-13_00:45:28 3133 www/tablet/js/widget_colorwheel.js
-UPD 2017-09-21_22:28:13 5063 www/tablet/js/widget_controlbutton.js
+UPD 2017-09-22_19:15:36 5126 www/tablet/js/widget_controlbutton.js
 UPD 2017-09-22_08:48:55 7740 www/tablet/js/widget_controller.js
 UPD 2017-02-06_03:17:32 2630 www/tablet/js/widget_datetimepicker.js
 UPD 2017-09-01_18:41:27 6044 www/tablet/js/widget_departure.js
