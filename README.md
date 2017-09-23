@@ -1051,6 +1051,7 @@ not the content too)
 - bold			: font bold
 - darker		: forecolor in gray
 - truncate      : short a string if necessary and add ... instead
+- smallicon     : makes the inner icon 70% of size related to its outer icon
 
 **Others**
 - readonly		: changing of state is not allowed 

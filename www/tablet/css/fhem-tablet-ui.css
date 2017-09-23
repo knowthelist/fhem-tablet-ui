@@ -2397,9 +2397,7 @@ div[data-type="link"] > div.fa {
     font-size: 150% !important;
 }
 
-.big > .famultibutton > #fg,
-.xl > .famultibutton > #fg,
-[data-size] > .famultibutton > #fg {
+.smallicon > .famultibutton > #fg {
     font-size: 70% !important;
 }
 
@@ -2928,6 +2926,11 @@ select::-ms-expand {
 
 [data-type="select"].select {
     height: auto;
+}
+
+[class*='col-'][data-type="select"].select,
+[data-type="select"].select.col {
+    height: 100%;
 }
 
 .select {
