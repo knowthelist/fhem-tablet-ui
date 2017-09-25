@@ -100,11 +100,14 @@ var Modul_swiper = function () {
             });
         }
 
-        swiper.slideTo(elem.data('startpage')-1);
-        
+        var startpage = elem.data('startpage');
+        if ($.isNumeric(startpage)) {
+            swiper.slideTo(startpage - 1);
+        }
+
         // Refresh swiper after it became visible
         // now via observer:true parameter
-    
+
         return elem;
     }
 

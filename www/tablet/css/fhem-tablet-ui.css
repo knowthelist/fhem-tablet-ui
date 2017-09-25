@@ -1391,10 +1391,6 @@ div[data-type="link"] > div.fa {
 
 /* auto height of sheets */
 
-.gridster li header ~ div:first-of-type:nth-last-of-type(1) {
-    height: calc(100% - 1.6em);
-}
-
 .sheet:first-child:nth-last-child(2),
 .sheet:first-child:nth-last-child(2) ~ .sheet {
     height: 50%;
