@@ -42,6 +42,7 @@
         var posy = 0;
         var isDrag = false;
         var isDown = false;
+        var timer;
 
         // setup options
         var defaultOptions = {
@@ -57,6 +58,7 @@
             toggleOff: null,
             valueChanged: null,
             progressWidth: 15,
+            timeout: 0,
             max: 100,
             min: 0,
             step: 1,
@@ -456,7 +458,7 @@
                 });
             } else if (options['mode'] == 'toggle') {
                 faElem.on(clickEventType, function (e) {
-                    //e.preventDefault();
+
                     e.stopImmediatePropagation();
                     touch_pos_y = $(window).scrollTop();
                     touch_pos_x = $(window).scrollLeft();
@@ -467,17 +469,28 @@
 
                     if (Math.abs(touch_pos_y - $(window).scrollTop()) > 3 ||
                         (Math.abs(touch_pos_x - $(window).scrollLeft()) > 3)) return;
+
                     if (state) {
 
                         setOff();
                         if (typeof options['toggleOff'] === 'function') {
                             options['toggleOff'].call(this);
                         }
+                        if (options['timeout'] > 0) {
+                            timer = setTimeout(function () {
+                                setOn();
+                            }, options['timeout']);
+                        }
                     } else {
 
                         setOn();
                         if (typeof options['toggleOn'] === 'function') {
                             options['toggleOn'].call(this);
+                        }
+                        if (options['timeout'] > 0) {
+                            timer = setTimeout(function () {
+                                setOff();
+                            }, options['timeout']);
                         }
                     }
 
@@ -529,11 +542,21 @@
                             if (typeof options['toggleOff'] === 'function') {
                                 options['toggleOff'].call(this);
                             }
+                            if (options['timeout'] > 0) {
+                                timer = setTimeout(function () {
+                                    setOn();
+                                }, options['timeout']);
+                            }
                         } else {
 
                             setOn();
                             if (typeof options['toggleOn'] === 'function') {
                                 options['toggleOn'].call(this);
+                            }
+                            if (options['timeout'] > 0) {
+                                timer = setTimeout(function () {
+                                    setOff();
+                                }, options['timeout']);
                             }
                         }
                     }
@@ -575,9 +598,11 @@
 
         // public functions;
         this.setOn = function () {
+            clearTimeout(timer);
             setOn();
         };
         this.setOff = function () {
+            clearTimeout(timer);
             setOff();
         };
         this.getState = function () {

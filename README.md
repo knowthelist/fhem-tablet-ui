@@ -313,6 +313,8 @@ See [examples](#label) of Label
 - **data-cmd**  : name of the command to send to FHEM (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-quote** : characters to enclose the send value. (default '')
 - **data-delimiter** : character which delimites list item. (default ':')
+- **data-size** : number of visible options in the drop-down list. (default '1')
+
 - **class**     : wider, w1x, w2x, w3x, large, big, notransmit
 
 ####Input widget
