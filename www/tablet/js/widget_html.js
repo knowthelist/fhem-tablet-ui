@@ -171,10 +171,22 @@ var Modul_html = function () {
                 });
             } else {
                 if (elem.isValidData('clicked')) {
+
                     elem.on(ftui.config.clickEventType, function (e) {
-                        onClicked(elem);
+                        //e.preventDefault();
+                        e.stopImmediatePropagation();
+                        elem.data('touch_pos_y', $(window).scrollTop());
+                        elem.data('touch_pos_x', $(window).scrollLeft());
+                    });
+                    elem.on(ftui.config.releaseEventType, function (e) {
                         e.preventDefault();
                         e.stopImmediatePropagation();
+                        //ftui.toast(elem.data('touch_pos_y'));
+                        if (Math.abs(elem.data('touch_pos_y') - $(window).scrollTop()) > 3 ||
+                            (Math.abs(elem.data('touch_pos_x') - $(window).scrollLeft()) > 3)) return;
+
+                        onClicked(elem);
+
                     });
                 }
             }

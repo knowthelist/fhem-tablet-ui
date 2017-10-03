@@ -154,6 +154,7 @@ General attribute meaning
 - **data-hide-off**   : value for SHOW (default '!on')
 - **data-hideparents**: jquery selector to hide element's parents too
 - **data-reachable**  : name of the reading containing a integer value to indicate whether the device is reachable or not (default <null>)
+- **data-timeout** .  : millisecondes until the switch falls back into the initial position (default: 0 [disabled])
 
 dual state notation   
 - **data-get-on**   : value for ON status to get or an array of states (default 'true|1|on|open|ON')

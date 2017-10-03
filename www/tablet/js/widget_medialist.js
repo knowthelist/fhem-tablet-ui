@@ -96,7 +96,7 @@ var Modul_medialist = function () {
                     try {
                         var collection = JSON.parse(list);
 
-                        for (var idx in collection) {
+                        for (var idx = 0, len=collection.length; idx < len; idx++) {
                             var media = collection[idx];
                             text += '<div class="media" data-file="' + media.File + '">';
                             text += '<div class="media-image">';

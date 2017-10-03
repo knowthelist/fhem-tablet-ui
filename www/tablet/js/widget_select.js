@@ -15,7 +15,7 @@ var Modul_select = function () {
             var items = elem.data('items') || '';
             var alias = elem.data('alias') || elem.data('items');
             select_elem.empty();
-            for (var i = 0; i < items.length; i++) {
+            for (var i = 0, len=items.length; i < len; i++) {
                 select_elem.append('<option value="' + items[i] + '">' + (alias && alias[i] || items[i]) + '</option>');
             }
         }
@@ -34,7 +34,16 @@ var Modul_select = function () {
         elem.initData('quote', '');
         elem.initData('filter', '');
         elem.initData('list', 'setList');
-        elem.initData('delimiter', ':');
+        elem.initData('delimiter', /[\s,:;]+/);
+        elem.initData('delay', 1000);
+        
+
+        elem.initData('color', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname, 'color') || '#222');
+        elem.initData('background-color', ftui.getStyle('.' + me.widgetname, 'background-color') || 'transparent');
+        elem.initData('text-color', ftui.getStyle('.' + me.widgetname, 'text-color') || '#ddd');
+        elem.initData('width', '100%');
+        elem.initData('height', '100%');
+        elem.initData('delay', 1000);
 
         me.addReading(elem, 'get');
         me.addReading(elem, 'list');
@@ -65,7 +74,7 @@ var Modul_select = function () {
         // update from normal state reading
         me.elements.filterDeviceReading('get', dev, par)
             .each(function (index) {
-                setCurrentItem($(this));
+                me.setCurrentItem($(this));
             });
 
         // update alias reading
@@ -93,19 +102,22 @@ var Modul_select = function () {
                         items = items.split(' ');
                         var founditems = items;
                         $.each(items, function (key, value) {
-                            var tokens = value.split(delimiter);
+                            var tokens = value.split(':');
                             if (tokens && tokens.length > 1) {
                                 if (tokens[0] == setreading)
                                     founditems = tokens[1].split(',');
                             }
                         });
                         items = founditems;
-                    } else
+                    } else {
+                        console.log(delimiter);
                         items = items.split(delimiter);
+                        console.log(items);
+                    }
                 }
                 elem.data('items', items);
-                fillList(elem);
-                setCurrentItem(elem);
+                me.fillList(elem);
+                me.setCurrentItem(elem);
             });
     }
 
@@ -117,6 +129,8 @@ var Modul_select = function () {
         init_attr: init_attr,
         init_ui: init_ui,
         update: update,
+        fillList: fillList,
+        setCurrentItem: setCurrentItem
     });
 
     return me;
