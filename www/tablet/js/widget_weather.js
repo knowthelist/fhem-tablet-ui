@@ -1,5 +1,5 @@
 /* FTUI Plugin
- * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * originally created by Thomas Nesges
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
@@ -547,7 +547,48 @@ var Modul_weather = function () {
         'n14': ':rain',
     };
 
-    function init_ui(elem) {}
+    function showOverlay(elem, value) {
+        elem.find('#warn-back').remove();
+        elem.find('#warn').remove();
+        
+        if (ftui.isValid(value) && value !== "") {
+            var val = ($.isNumeric(value) && value < 100) ? Number(value).toFixed(0) : '!';
+            var bgWarnElem = $('<i/>', {
+                id: 'warn-back',
+                class: 'fa fa-stack-1x fa-circle'
+            }).appendTo(elem);
+
+            var fgWarnElem = $('<i/>', {
+                id: 'warn',
+                class: 'fa fa-stack-1x '
+            }).html(val).appendTo(elem);
+
+            if (elem.isValidData('warn-color')) {
+                fgWarnElem.css({
+                    color: elem.data('warn-color')
+                });
+            }
+            if (elem.isValidData('warn-background-color')) {
+                bgWarnElem.css({
+                    color: elem.data('warn-background-color')
+                });
+            }
+            if (elem.hasClass('warnsamecolor')) {
+                fgWarnElem.css({
+                    color: '#000'
+                });
+                bgWarnElem.css({
+                    color: elem.data('on-color')
+                });
+            }
+        }
+    }
+
+    function init_ui(elem) {
+        var icon = $('<div class="weather-icon"></div>');
+        elem.append(icon);
+        
+    }
 
     function init_attr(elem) {
 
@@ -555,6 +596,11 @@ var Modul_weather = function () {
         elem.addClass('weather');
 
         me.addReading(elem, 'get');
+
+        // warn parameter
+        elem.initData('warn-on', 'true|on|[1-9]{1}[0-9]*');
+        elem.initData('warn-off', 'false|off|0');
+        me.addReading(elem, 'warn');
 
         var fhem_path = ftui.config.fhemDir;
         fhem_path = fhem_path.replace(/\/$/, '');
@@ -578,7 +624,8 @@ var Modul_weather = function () {
                     var _val = val;
 
                     //wheater icons
-                    $(this).empty();
+                    var icon = elem.find('.weather-icon');
+                    icon.empty();
 
                     var device_type;
                     if (elem.data('device-type')) {
@@ -598,7 +645,7 @@ var Modul_weather = function () {
                     }
                     var translate = true;
                     if (device_type == 'PROPLANTA') {
-                        var matches = val.match('^http://www\.proplanta\.de/wetterdaten/images/symbole/([tn][0-9]+)\.gif');
+                        var matches = val.match('^https://www\.proplanta\.de/wetterdaten/images/symbole/([tn][0-9]+)\.gif');
                         if (matches) {
                             val = matches[1];
                         } else {
@@ -618,31 +665,45 @@ var Modul_weather = function () {
                     var mapped = typeof translation == "undefined" ? val : translation;
                     if (elem.data('imageset') == "kleinklima") {
                         mapped = kleinklimamap[mapped.replace(/^:/, '')];
-                        elem.prepend('<img style="width:100%" src="' + elem.data('image-path') + mapped + '" title="' + val + '">');
+                        icon.prepend('<img style="width:100%" src="' + elem.data('image-path') + mapped + '" title="' + val + '">');
                     } else if (elem.data('imageset') == "reading") {
-                        elem.prepend('<img style="width:100%" src="' + _val + '">');
+                        icon.prepend('<img style="width:100%" src="' + _val + '">');
                     } else if (elem.data('imageset') == "meteoconsdirect") {
-                        elem.attr('data-icon', val);
+                        icon.attr('data-icon', val);
                         ftui.log(3, 'weather: set meteoconsdirect val:', val);
                     } else if (elem.data('imageset') == "weathericons") {
-                        elem.addClass('weathericons');
+                        icon.addClass('weathericons');
                         switch (elem.data('device-type')) {
-                        case "YahooCode":
-                            elem.addClass('wi wi-yahoo-' + val);
-                            ftui.log(3, 'weather: set weathericons YahooCode: wi-yahoo-' + val);
-                            break; 
-                        case "WindDirection":
-                            elem.addClass('wi wi-wind towards-' + val + '-deg');
-                            ftui.log(3, 'weather: set weathericons WindDirection: wi wi-wind towards-' + val + '-deg');
-                            break;                                 
-                        default:
-                            elem.addClass('wi wi-' + val);
-                            ftui.log(3, 'weather: set weathericons to: wi-' + val);
+                            case "YahooCode":
+                                icon.addClass('wi wi-yahoo-' + val);
+                                ftui.log(3, 'weather: set weathericons YahooCode: wi-yahoo-' + val);
+                                break;
+                            case "WindDirection":
+                                icon.addClass('wi wi-wind towards-' + val + '-deg');
+                                ftui.log(3, 'weather: set weathericons WindDirection: wi wi-wind towards-' + val + '-deg');
+                                break;
+                            default:
+                                icon.addClass('wi wi-' + val);
+                                ftui.log(3, 'weather: set weathericons to: wi-' + val);
                         }
                     } else {
                         mapped = meteoconsmap[mapped.replace(/^:/, '')];
-                        elem.attr('data-icon', mapped);
+                        icon.attr('data-icon', mapped);
+                        icon.addClass('meteocons');
                     }
+                }
+            });
+
+        //extra reading for warn
+        me.elements.filterDeviceReading('warn', dev, par)
+            .each(function (idx) {
+                var elem = $(this);
+                var warn = elem.getReading('warn').val;
+                if (elem.matchingState('warn', warn) === 'on') {
+                    showOverlay(elem, ftui.getPart(warn, elem.data('get-warn')));
+                }
+                if (elem.matchingState('warn', warn) === 'off') {
+                    showOverlay(elem, "");
                 }
             });
     }

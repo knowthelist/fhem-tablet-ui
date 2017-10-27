@@ -314,6 +314,7 @@ See [examples](#label) of Label
 - **data-cmd**  : name of the command to send to FHEM (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-quote** : characters to enclose the send value. (default '')
 - **data-delimiter** : character which delimites list item. (default ':')
+- **data-part** : RegEx or number (which word) for filtering the get reading
 - **data-size** : number of visible options in the drop-down list. (default '1')
 
 - **class**     : wider, w1x, w2x, w3x, large, big, notransmit
@@ -539,6 +540,10 @@ Use data-url + data-refresh or data-device + data-get, not both.
 - **data-get**      : name of the reading to get the weather literal from FHEM (default 'STATE')
 - **data-imageset** : collection of images to display current weather situation. Possible values: 'meteocons', 'kleinklima', 'meteoconsdirect', 'weathericons' (Default: 'meteocons')
 - **data-image-path**: path to the images of the selected imageset (default: <fhem-dir>/images/weather/)
+- **data-warn**  : name of the reading to be shown as a red warn overlay (default <null>)
+- **data-warn-on**   : value(s) that show the warn badge (default 'true|on|[1-9]{1}[0-9]*')
+- **data-warn-off**   : value(s) that hide the warn badge (default 'false|off|0')
+- **device-type**     : YahooCode, WindDirection (default: '')
 
 ####CircleMenu widget
 - **data-item-diameter** : diameter of the circle (default 52)
