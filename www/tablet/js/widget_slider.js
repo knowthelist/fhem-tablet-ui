@@ -380,7 +380,7 @@ var Modul_slider = function () {
                         val = pwrng.options.max;
                     if (new RegExp('^' + elem.data('off') + '$').test(txtValue))
                         val = pwrng.options.min;
-                    if ($.isNumeric(val) && input_elem) {
+                    if ($.isNumeric(val) && input_elem  && pwrng.options.min < pwrng.options.max) {
                         var v = elem.hasClass('negated') ? pwrng.options.max + pwrng.options.min - parseFloat(val) : parseFloat(val);
                         pwrng.setStart(parseFloat(v));
 
