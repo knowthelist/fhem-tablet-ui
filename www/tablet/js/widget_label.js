@@ -29,14 +29,14 @@ var Modul_label = function () {
             }
 
             if (!elem.hasClass('fixedlabel') && !elem.hasClass('fixcontent')) {
-                if (unit)
+                if (unit) {
                     elem.html(val + "<span class='label-unit'>" + window.unescape(unit) + "</span>");
-                else
+                } else {
                     elem.html(val);
+                }
+                // init embedded widgets
                 if (elem.find('[data-type]').length > 0) {
-                    var id = elem.widgetId();
-                    elem.attr('id', id);
-                    ftui.initWidgets('#' + id);
+                    ftui.initWidgets('[data-uuid="' + elem.uuid() + '"]');
                 }
             }
             me.update_cb(elem, val);

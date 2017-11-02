@@ -99,7 +99,6 @@
                 'class': 'fa fa-stack-1x'
             }).addClass(elem.fi);
 
-            content.appendTo(faElem);
 
             if (options['classes'] && options['classes'].length > 0) {
                 for (var i = 0, len = options['classes'].length; i < len; i++) {
@@ -109,6 +108,7 @@
 
             elem.bg.appendTo(faElem);
             elem.fg.appendTo(faElem);
+            content.appendTo(faElem);
             faElem.appendTo(elem);
 
             elem.o = options;

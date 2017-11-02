@@ -329,25 +329,25 @@ var Modul_famultibutton = function () {
             type = 'fhem-cmd';
         }
         switch (type) {
-        case 'url':
-            if (elem.hasClass('blank')) {
-                window.open(target, '_blank');
-            } else {
-                document.location.href = target;
-            }
-            break;
-        case 'url-xhr':
-            if (device && typeof device != "undefined" && device !== " ") {
-                ftui.toast(target);
-            }
-            $.get(target);
-            break;
-        case 'fhem-cmd':
-            if (device && typeof device != "undefined" && device !== " ") {
-                ftui.toast(target);
-            }
-            ftui.setFhemStatus(target);
-            break;
+            case 'url':
+                if (elem.hasClass('blank')) {
+                    window.open(target, '_blank');
+                } else {
+                    document.location.href = target;
+                }
+                break;
+            case 'url-xhr':
+                if (device && typeof device != "undefined" && device !== " ") {
+                    ftui.toast(target);
+                }
+                $.get(target);
+                break;
+            case 'fhem-cmd':
+                if (device && typeof device != "undefined" && device !== " ") {
+                    ftui.toast(target);
+                }
+                ftui.setFhemStatus(target);
+                break;
         }
         elem.trigger("toggled");
     }
@@ -369,10 +369,17 @@ var Modul_famultibutton = function () {
             },
         });
 
+        // init embedded widgets
+        if (elem.find('[data-type]').length > 0) {
+            ftui.initWidgets('[data-uuid="' + elem.uuid() + '"]');
+        }
+
         var size = elem.data('size');
         var sizeUnit = ($.isNumeric(size)) ? '%' : '';
         if (size) {
-            elem.css({'font-size': size+sizeUnit});
+            elem.css({
+                'font-size': size + sizeUnit
+            });
         }
 
         var id = elem.data('device') + "_" + elem.data('get');

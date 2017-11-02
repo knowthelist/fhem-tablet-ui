@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.28
+ * Version: 2.6.29
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -329,7 +329,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.28',
+    version: '2.6.29',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -521,7 +521,7 @@ var ftui = {
 
             $(
                 '.gridster li > header ~ .hbox:only-of-type, ' +
-                '.gridster li > header ~ .center:not([data-type]):only-of-type, ' + 
+                '.gridster li > header ~ .center:not([data-type]):only-of-type, ' +
                 '.card > header ~ div:not([data-type]):only-of-type, ' +
                 '.gridster li header ~ div:first-of-type:nth-last-of-type(1)'
             ).each(function (index) {
@@ -1507,15 +1507,15 @@ var ftui = {
             var d = max - min;
             s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
             switch (max) {
-            case r:
-                h = (g - b) / d + (g < b ? 6 : 0);
-                break;
-            case g:
-                h = (b - r) / d + 2;
-                break;
-            case b:
-                h = (r - g) / d + 4;
-                break;
+                case r:
+                    h = (g - b) / d + (g < b ? 6 : 0);
+                    break;
+                case g:
+                    h = (b - r) / d + 2;
+                    break;
+                case b:
+                    h = (r - g) / d + 4;
+                    break;
             }
             h /= 6;
         }
@@ -1665,7 +1665,7 @@ var ftui = {
                     return i;
             } catch (e) {}
         }
-        
+
         // negation double
         if (len === 2 && array[0] === '!' + array[1] && find !== array[0]) {
             return 0;
@@ -2005,7 +2005,19 @@ function onjQueryLoaded() {
     //for widget
 
     $.fn.widgetId = function () {
-        return ['ftui', $(this).data('type'), $(this).data('device'), $(this).data('get'), $(this).index()].join('_');
+        return ['ftui', $(this).data('type'), $(this).data('device').replace(' ', 'default'), $(this).data('get'), $(this).index()].join('_');
+    };
+
+    $.fn.uuid = function () {
+        if (!$(this).isValidData('uuid')) {
+            var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+            $(this).attr('data-uuid', uuid);
+        }
+        return $(this).data('uuid');
     };
 
     $.fn.filterData = function (key, value) {
