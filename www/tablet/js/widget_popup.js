@@ -16,33 +16,33 @@ var Modul_popup = function () {
 
     function hide(dialog, mode) {
         switch (mode) {
-        case 'animate':
-            dialog.animate({
-                height: 0,
-                width: 0,
-                top: dialog.options.start_top,
-                left: dialog.options.start_left,
-                opacity: 0
-            }, 500, "swing", function () {
-                ftui.showModal(false);
-                dialog.trigger('fadeout');
-            });
-            break;
-        case 'animateTop':
-            dialog.animate({
-                top: dialog.options.start_top,
-                left: dialog.options.start_left,
-            }, 500, "swing", function () {
-                ftui.showModal(false);
-                dialog.trigger('fadeout');
-            });
-            break;
-        default:
+            case 'animate':
+                dialog.animate({
+                    height: 0,
+                    width: 0,
+                    top: dialog.options.start_top,
+                    left: dialog.options.start_left,
+                    opacity: 0
+                }, 500, "swing", function () {
+                    ftui.showModal(false);
+                    dialog.trigger('fadeout');
+                });
+                break;
+            case 'animateTop':
+                dialog.animate({
+                    top: dialog.options.start_top,
+                    left: dialog.options.start_left,
+                }, 500, "swing", function () {
+                    ftui.showModal(false);
+                    dialog.trigger('fadeout');
+                });
+                break;
+            default:
 
-            dialog.fadeOut(500, function () {
-                ftui.showModal(false);
-                dialog.trigger('fadeout');
-            });
+                dialog.fadeOut(500, function () {
+                    ftui.showModal(false);
+                    dialog.trigger('fadeout');
+                });
         }
     }
 
@@ -53,36 +53,36 @@ var Modul_popup = function () {
             ftui.showModal(true);
         }
         switch (mode) {
-        case 'animate':
-            dialog.show();
-            dialog.animate({
-                height: dialog.options.height,
-                width: dialog.options.width,
-                top: dialog.options.end_top,
-                left: dialog.options.end_left,
-                opacity: 1
-            }, 500, "swing", function () {
+            case 'animate':
+                dialog.show();
+                dialog.animate({
+                    height: dialog.options.height,
+                    width: dialog.options.width,
+                    top: dialog.options.end_top,
+                    left: dialog.options.end_left,
+                    opacity: 1
+                }, 500, "swing", function () {
+                    dialog.trigger('fadein');
+                });
+                break;
+            case 'animateTop':
+                dialog.show();
+                dialog.animate({
+                    top: dialog.options.end_top,
+                    left: dialog.options.end_left,
+                }, 500, "swing", function () {
+                    dialog.trigger('fadein');
+                });
+                break;
+            default:
+                dialog.css({
+                    height: dialog.options.height,
+                    width: dialog.options.width,
+                    top: dialog.options.end_top,
+                    left: dialog.options.end_left,
+                });
+                dialog.fadeIn(500);
                 dialog.trigger('fadein');
-            });
-            break;
-        case 'animateTop':
-            dialog.show();
-            dialog.animate({
-                top: dialog.options.end_top,
-                left: dialog.options.end_left,
-            }, 500, "swing", function () {
-                dialog.trigger('fadein');
-            });
-            break;
-        default:
-            dialog.css({
-                height: dialog.options.height,
-                width: dialog.options.width,
-                top: dialog.options.end_top,
-                left: dialog.options.end_left,
-            });
-            dialog.fadeIn(500);
-            dialog.trigger('fadein');
         }
     }
 
@@ -95,6 +95,7 @@ var Modul_popup = function () {
         elem.initData('mode', 'animate');
         elem.initData('starter', null);
         elem.initData('draggable', true);
+        elem.initData('return-time', 0);
 
         me.addReading(elem, 'get');
     }
@@ -158,30 +159,30 @@ var Modul_popup = function () {
                 $(window).resize(function () {
                     var width = elem.data('width');
                     var height = elem.data('height');
-                    if ( String(elem.data('width')).indexOf('%') > 0 ){
+                    if (String(elem.data('width')).indexOf('%') > 0) {
                         dialog.options.end_left = (elem.isValidData('left')) ? elem.data('left') : ((100 - parseInt(width)) / 2) + '%';
                     } else {
-                        dialog.options.end_left = (elem.isValidData('left')) ? elem.data('left') : ($(window).width() - parseInt(width)) / 2; 
+                        dialog.options.end_left = (elem.isValidData('left')) ? elem.data('left') : ($(window).width() - parseInt(width)) / 2;
                     }
-                    if ( String(elem.data('height')).indexOf('%') > 0 ){
+                    if (String(elem.data('height')).indexOf('%') > 0) {
                         dialog.options.end_top = (elem.isValidData('top')) ? elem.data('top') : ((100 - parseInt(height)) / 2) + '%';
                     } else {
-                        dialog.options.end_top = (elem.isValidData('top')) ? elem.data('top') : ($(window).height() - parseInt(height)) / 2; 
+                        dialog.options.end_top = (elem.isValidData('top')) ? elem.data('top') : ($(window).height() - parseInt(height)) / 2;
                     }
 
                     dialog.options.height = height;
                     dialog.options.width = width;
 
                     if (elem.data('mode') === 'animateTop') {
-                        dialog.options.start_top = 0 - parseInt(dialog.options.height); 
-                        dialog.options.start_left = dialog.options.end_left; 
+                        dialog.options.start_top = 0 - parseInt(dialog.options.height);
+                        dialog.options.start_left = dialog.options.end_left;
                         dialog.css({
                             top: dialog.options.start_top,
                             left: dialog.options.start_left,
                         });
                     } else {
-                        dialog.options.start_top = (ftui.isValid(starter) ) ? starter.offset().top + parseInt(dialog.options.height)/2 : 0;
-                        dialog.options.start_left = (ftui.isValid(starter) ) ? starter.offset().left + parseInt(dialog.options.width)/2 : 0;
+                        dialog.options.start_top = (ftui.isValid(starter)) ? starter.offset().top + parseInt(dialog.options.height) / 2 : 0;
+                        dialog.options.start_left = (ftui.isValid(starter)) ? starter.offset().left + parseInt(dialog.options.width) / 2 : 0;
                         dialog.css({
                             height: 0,
                             width: 0,
@@ -206,6 +207,14 @@ var Modul_popup = function () {
                     e.preventDefault();
                     show(dialog, elem.data('mode'));
                     elem.trigger('fadein');
+                    var waitUntilReturn = elem.data('return-time');
+                    if (waitUntilReturn > 0 ) {
+                        ftui.log(1, 'Close popup in : ' + waitUntilReturn + ' seconds');
+                        setTimeout(function () {
+                            hide(dialog, elem.data('mode'));
+                        }, waitUntilReturn * 1000);
+                    }
+
                     return false;
                 });
             }

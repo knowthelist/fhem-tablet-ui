@@ -679,6 +679,7 @@ The crosshair cursor currently only works dynamically on desktop browsers. On iO
 - **data-left**        : fixed position from left of the screen in % or px (default: middle of screen)
 - **data-top**         : fixed position from top of the screen in % or px (default: middle of screen)
 - **data-draggable**   : allow moving of the dialog (default 'true')
+- **data-return-time** : time in secondes until the popup closes automatically (default 0 -> never)
 - **data-mode**        : (default 'animate')
 
 data-mode types are: 'animateTop', 'animate', 'fade'
