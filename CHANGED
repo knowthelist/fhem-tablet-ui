@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2017-11-02
- - Added return-time parameter to popup widget
+2017-11-03
+ - Changed weather wind direction from 'toward' to 'from'
