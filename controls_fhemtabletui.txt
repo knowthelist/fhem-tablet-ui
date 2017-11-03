@@ -11,8 +11,8 @@ UPD 2017-01-29_15:04:15 1659 www/tablet/css/fhem-darkblue-ui.css
 UPD 2017-02-11_14:27:26 510 www/tablet/css/fhem-green-ui.css
 UPD 2017-02-11_14:27:26 1953 www/tablet/css/fhem-mobil-ui.css
 UPD 2017-02-05_13:50:40 6916 www/tablet/css/fhem-tablet-ui-wdtimer.css
-UPD 2017-10-27_22:23:34 59070 www/tablet/css/fhem-tablet-ui.css
-UPD 2017-10-27_22:28:44 43200 www/tablet/css/fhem-tablet-ui.min.css
+UPD 2017-11-03_18:30:22 59030 www/tablet/css/fhem-tablet-ui.css
+UPD 2017-11-03_18:38:14 43172 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2017-02-11_14:27:26 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2017-08-31_23:07:02 6609 www/tablet/css/ftui_chart.css
 UPD 2017-10-03_08:03:02 1132 www/tablet/css/ftui_checklist.css
@@ -139,7 +139,7 @@ UPD 2017-02-11_14:27:26 6477 www/tablet/js/widget_uwz.js
 UPD 2017-02-21_22:43:06 8755 www/tablet/js/widget_volume.js
 UPD 2017-02-11_14:27:26 988 www/tablet/js/widget_wakeup.js
 UPD 2017-03-01_00:28:34 95955 www/tablet/js/widget_wdtimer.js
-UPD 2017-11-03_06:56:26 26542 www/tablet/js/widget_weather.js
+UPD 2017-11-03_18:36:37 27336 www/tablet/js/widget_weather.js
 UPD 2017-06-13_20:19:33 31089 www/tablet/js/widget_weekprofile.js
 UPD 2017-02-11_14:27:26 7163 www/tablet/js/widget_wind_direction.js
 UPD 2017-11-01_03:31:59 21565 www/tablet/lib/fa-multi-button.js
