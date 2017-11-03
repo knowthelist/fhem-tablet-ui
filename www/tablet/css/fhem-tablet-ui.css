@@ -2677,13 +2677,11 @@ li {
     font-family: 'MeteoconsRegular';
     content: attr(data-icon);
     font-size: 250%;
-    color: #dcdcdc;
 }
 
 .weather>.weather-icon.weathericons:before {
     font-family: 'weathericons';
     font-size: 250%;
-    color: #dcdcdc;
 }
 
 .weather {

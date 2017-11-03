@@ -550,7 +550,7 @@ var Modul_weather = function () {
     function showOverlay(elem, value) {
         elem.find('#warn-back').remove();
         elem.find('#warn').remove();
-        
+
         if (ftui.isValid(value) && value !== "") {
             var val = ($.isNumeric(value) && value < 100) ? Number(value).toFixed(0) : '!';
             var bgWarnElem = $('<i/>', {
@@ -587,7 +587,12 @@ var Modul_weather = function () {
     function init_ui(elem) {
         var icon = $('<div class="weather-icon"></div>');
         elem.append(icon);
-        
+
+        var color = elem.data('color');
+        if (color && !elem.isDeviceReading('color')) {
+            icon.css("color", ftui.getStyle('.' + color, 'color') || color);
+        }
+
     }
 
     function init_attr(elem) {
@@ -596,6 +601,12 @@ var Modul_weather = function () {
         elem.addClass('weather');
 
         me.addReading(elem, 'get');
+
+        //color
+        elem.initData('color', '#dcdcdc');
+        if (elem.isDeviceReading('color')) {
+            me.addReading(elem, 'color');
+        }
 
         // warn parameter
         elem.initData('warn-on', 'true|on|[1-9]{1}[0-9]*');
@@ -691,6 +702,19 @@ var Modul_weather = function () {
                         icon.attr('data-icon', mapped);
                         icon.addClass('meteocons');
                     }
+                }
+            });
+
+
+        //extra reading for dynamic color
+        me.elements.filterDeviceReading('color', dev, par)
+            .each(function (idx) {
+                var elem = $(this);
+                var val = elem.getReading('color').val;
+                    var icon = elem.find('.weather-icon');
+                if (ftui.isValid(val) && icon) {
+                    val = '#' + val.replace('#', '');
+                    icon.css("color", val);
                 }
             });
 
