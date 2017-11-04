@@ -87,7 +87,7 @@ UPD 2017-02-13_00:45:28 3133 www/tablet/js/widget_colorwheel.js
 UPD 2017-09-22_19:15:36 5126 www/tablet/js/widget_controlbutton.js
 UPD 2017-09-22_08:48:55 7740 www/tablet/js/widget_controller.js
 UPD 2017-02-06_03:17:32 2630 www/tablet/js/widget_datetimepicker.js
-UPD 2017-09-01_18:41:27 6044 www/tablet/js/widget_departure.js
+UPD 2017-11-04_08:38:00 6233 www/tablet/js/widget_departure.js
 UPD 2017-02-10_19:04:13 6295 www/tablet/js/widget_dimmer.js
 UPD 2017-02-11_14:27:26 3298 www/tablet/js/widget_eventmonitor.js
 UPD 2017-02-06_03:17:05 2850 www/tablet/js/widget_example.js
@@ -186,5 +186,5 @@ UPD 2017-02-11_14:27:26 50765 www/tablet/lib/switchery.js
 UPD 2017-02-11_14:27:26 683 www/tablet/lib/switchery.min.css
 UPD 2017-02-11_14:27:26 19088 www/tablet/lib/switchery.min.js
 UPD 2017-02-13_21:44:49 126817 www/tablet/lib/weather-icons-wind.min.css
-UPD 2017-02-11_15:17:09 26659 www/tablet/lib/weather-icons.min.css
+UPD 2017-11-03_20:18:42 26645 www/tablet/lib/weather-icons.min.css
 UPD 2017-02-11_14:27:26 750 www/tablet/repair.html
