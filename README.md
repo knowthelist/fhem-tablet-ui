@@ -543,6 +543,7 @@ Use data-url + data-refresh or data-device + data-get, not both.
 - **data-warn**  : name of the reading to be shown as a red warn overlay (default <null>)
 - **data-warn-on**   : value(s) that show the warn badge (default 'true|on|[1-9]{1}[0-9]*')
 - **data-warn-off**   : value(s) that hide the warn badge (default 'false|off|0')
+- **data-color**     : fix color attribute or DEVICE:READING for dynamic setting of label color (default '#dcdcdc')
 - **device-type**     : YahooCode, WindDirection (default: '')
 
 ####CircleMenu widget
@@ -801,6 +802,7 @@ class 'blank' force to open the given URL on a new window
 - **data-icon-color**              : rgb value or color name for the left icon (default '#aa6900')
 - **data-text-color**              : fix color attribute (default '#ddd')
 - **data-icon**                    : name of the left icon   (default 'H')
+- **data-title**                   : name of the station  (default: get reading name)
 - **data-width**                   : fixed size for width (in % or px, default '200px')
 - **data-height**                  : fixed size for height (in % or px, default '250px')
 - **data-refresh**                 : auto refresh interval in secondes (default '120', 0 means no auto refresh)

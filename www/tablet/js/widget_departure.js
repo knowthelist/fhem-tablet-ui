@@ -16,23 +16,26 @@ var Modul_departure = function () {
         var interval = elem.data('refresh');
         if ($.isNumeric(interval) && interval > 0) {
             setInterval(function () {
-                if (elem.is(':visible') || elem.hasClass('hiddenrefresh')) {
-                    requestUpdate(elem);
-                }
+                requestUpdate(elem);
             }, Number(interval) * 1000);
         }
     }
 
     function requestUpdate(elem) {
-        var cmdl = [elem.data('cmd'), elem.data('device'), elem.data('get')].join(' ');
-        ftui.setFhemStatus(cmdl);
-        if (ftui.config.DEBUG) {
-            ftui.toast(cmdl);
+        if (elem.is(':visible') || elem.hasClass('hiddenrefresh')) {
+
+            var cmdl = [elem.data('cmd'), elem.data('device'), elem.data('get')].join(' ');
+            ftui.log(2, 'departure - send request: ' + cmdl);
+            ftui.setFhemStatus(cmdl);
+            if (ftui.config.DEBUG) {
+                ftui.toast(cmdl);
+            }
         }
     }
 
     function init_attr(elem) {
         elem.initData('get', 'STATE');
+        elem.initData('title', elem.data('get'));
         elem.initData('cmd', 'get');
         elem.initData('color', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname, 'color') || '#222');
         elem.initData('background-color', ftui.getStyle('.' + me.widgetname, 'background-color') || '#C0C0C0');
@@ -55,8 +58,8 @@ var Modul_departure = function () {
             class: 'departure-wrapper'
         });
 
-        var innerElem = $('<div/>', { 
-            class: 'departure'
+        var innerElem = $('<div/>', {
+                class: 'departure'
             })
             .css({
                 width: elem.data('width') + 'px',
@@ -83,7 +86,7 @@ var Modul_departure = function () {
         $('<div/>', {
                 class: 'station',
             })
-            .text(elem.data('get'))
+            .text(elem.data('title'))
             .appendTo(innerElem);
 
         // prepare refresh element
@@ -111,8 +114,8 @@ var Modul_departure = function () {
             .appendTo(innerElem);
 
         elem.html('').append(contElem);
-        
-        
+
+
         // event handler
         elemRefresh.on('click', function (e) {
             requestUpdate(elem);
@@ -121,17 +124,21 @@ var Modul_departure = function () {
         // init interval timer
         startTimer(elem);
 
-        // first refresh
-        requestUpdate(elem);
+        // first refresh 
+        setTimeout(function () {
 
-        // Refresh slider position after it became visible
-        elem.closest('[data-type="popup"]').on("fadein", function (event) {
             requestUpdate(elem);
-        });
 
-        $(document).on('changedSelection', function () {
-            requestUpdate(elem);
-        });
+
+            // Refresh slider position after it became visible
+            elem.closest('[data-type="popup"]').on("fadein", function (event) {
+                requestUpdate(elem);
+            });
+
+            $(document).on('changedSelection', function () {
+                requestUpdate(elem);
+            });
+        }, 5000);
     }
 
     function update(dev, par) {
