@@ -637,6 +637,8 @@ var Modul_weather = function () {
                     //wheater icons
                     var icon = elem.find('.weather-icon');
                     icon.empty();
+                    icon.removeClass();
+                    icon.addClass('weather-icon');
 
                     var device_type;
                     if (elem.data('device-type')) {

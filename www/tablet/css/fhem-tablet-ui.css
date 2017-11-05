@@ -2480,62 +2480,74 @@ div[data-type="link"]>div.fa {
 /* Size for Weather */
 
 img.gigantic,
-.gigantic>img {
+.gigantic>img,
+.gigantic>.weather-icon>img {
     width: 800% !important;
 }
 
 img.grande,
-.grande>img {
+.grande>img,
+.grande>.weather-icon>img {
     width: 600% !important;
 }
 
 img.great,
-.great>img {
+.great>img,
+.great>.weather-icon>img {
     width: 450% !important;
 }
 
 img.big,
-.big>img {
+.big>img,
+.big>.weather-icon>img {
     width: 320% !important;
 }
 
 img.tall,
-.tall>img {
+.tall>img,
+.tall>.weather-icon>img {
     width: 350% !important;
 }
 
 img.bigger,
-.bigger>img {
+.bigger>img,
+.bigger>.weather-icon>img {
     width: 200% !important;
 }
 
 img.big,
-.big>img {
+.big>img,
+.big>.weather-icon>img {
     width: 150% !important;
 }
 
 img.large,
-.large>img {
+.large>img,
+.large>.weather-icon>img {
     width: 125% !important;
 }
 
 img.normal,
-normal>img {
+.normal>img,
+.normal>.weather-icon>img {
     width: 100% !important;
 }
 
 img.small,
-.small>img {
+.small>img,
+.small>.weather-icon>img {
     width: 80% !important;
 }
 
 img.tiny,
-.tiny>img {
+.tiny>img,
+.tiny>.weather-icon>img {
     width: 60% !important;
 }
 
 img.mini,
-.mini>img {
+.mini>img,
+.mini>.weather-icon>img {
     width: 50% !important;
 }
 
