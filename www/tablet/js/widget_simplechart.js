@@ -116,7 +116,7 @@ var Modul_simplechart = function () {
                             var j = 0,
                                 len = 0;
                             if (val > max && $.isArray(maxarray)) {
-                                for (j = 0, len = maxarray.length; j < len; j++) {
+                                for (j = maxarray.length-1; j > 0; j--) {
                                     if (maxarray[j] > val) {
                                         max = maxarray[j];
                                         break;
