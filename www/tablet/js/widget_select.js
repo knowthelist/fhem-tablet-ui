@@ -50,6 +50,16 @@ var Modul_select = function () {
         if (elem.isValidData('alias') && !$.isArray(elem.data('alias'))) {
             me.addReading(elem, 'alias');
         }
+		
+		// if hide reading is defined, set defaults for comparison
+        if (elem.isValidData('hide')) {
+            elem.initData('hide-on', 'true|1|on');
+        }
+        elem.initData('hide', elem.data('get'));
+        if (elem.isValidData('hide-on')) {
+            elem.initData('hide-off', '!on');
+        }
+        me.addReading(elem, 'hide');
     }
 
     function init_ui(elem) {
@@ -119,6 +129,9 @@ var Modul_select = function () {
                 me.fillList(elem);
                 me.setCurrentItem(elem);
             });
+			
+		//extra reading for hide
+        me.update_hide(dev, par);
     }
 
     // public
