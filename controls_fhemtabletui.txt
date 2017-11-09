@@ -27,10 +27,10 @@ UPD 2017-09-22_21:53:55 808 www/tablet/css/ftui_slider.css
 UPD 2017-02-27_23:42:05 1586 www/tablet/css/ftui_spinner.css
 UPD 2017-06-13_20:19:36 6936 www/tablet/css/ftui_weekprofile.css
 UPD 2017-02-11_14:27:26 5166 www/tablet/demo_ftui.html
-UPD 2017-02-11_14:27:26 127396 www/tablet/fonts/fhemSVG.eot
-UPD 2017-02-11_14:27:26 528460 www/tablet/fonts/fhemSVG.svg
-UPD 2017-02-11_14:27:26 127232 www/tablet/fonts/fhemSVG.ttf
-UPD 2017-02-11_14:27:26 127308 www/tablet/fonts/fhemSVG.woff
+UPD 2017-10-03_19:36:50 226696 www/tablet/fonts/fhemSVG.eot
+UPD 2017-11-09_19:58:14 979105 www/tablet/fonts/fhemSVG.svg
+UPD 2017-10-03_19:36:50 226532 www/tablet/fonts/fhemSVG.ttf
+UPD 2017-10-03_19:36:50 226608 www/tablet/fonts/fhemSVG.woff
 UPD 2017-02-11_14:27:26 103 www/tablet/fonts/fontawesome-License.txt
 UPD 2017-02-11_14:27:26 165742 www/tablet/fonts/fontawesome-webfont.eot
 UPD 2017-02-11_14:27:26 444379 www/tablet/fonts/fontawesome-webfont.svg
@@ -145,7 +145,7 @@ UPD 2017-02-11_14:27:26 7163 www/tablet/js/widget_wind_direction.js
 UPD 2017-11-01_03:31:59 21565 www/tablet/lib/fa-multi-button.js
 UPD 2017-11-01_03:32:03 7408 www/tablet/lib/fa-multi-button.min.js
 UPD 2017-02-11_14:27:26 17041 www/tablet/lib/farbtastic.js
-UPD 2017-02-11_14:27:26 26586 www/tablet/lib/fhemSVG.css
+UPD 2017-10-03_20:01:46 72785 www/tablet/lib/fhemSVG.css
 UPD 2017-02-11_14:27:26 30926 www/tablet/lib/font-awesome.min.css
 UPD 2017-02-11_14:27:26 40391 www/tablet/lib/highcharts/graphics/meteogram-symbols-30px.png
 UPD 2017-02-11_14:27:26 20437 www/tablet/lib/highcharts/highcharts-3d.js
