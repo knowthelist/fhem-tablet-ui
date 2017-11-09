@@ -2589,17 +2589,16 @@ img.mini,
 i#warn {
     font-size: 40% !important;
     margin-left: 1.25em;
-    margin-top: -1.65em;
+    margin-top: -1.55em;
     color: #aaa;
-    font-weight: bold !important;
     font-family: sans-serif;
     letter-spacing: -1px;
 }
 
 i#warn-back {
     font-size: 80% !important;
-    margin-left: 27%;
-    margin-top: -31%;
+    margin-left: 0.65em;
+    margin-top: -0.82em;
     color: #aa2200;
 }
 
@@ -2699,17 +2698,17 @@ li {
 .weather {
     position: relative;
 }
-
+  
 .weather>#warn-back {
     position: absolute;
-    top: 0.2em;
-    left: 0.5em;
+    top: 0.4em;
+    left: 0.37em;
     font-size: 130% !important;
 }
 
 .weather>#warn {
     position: absolute;
-    top: 1.2em;
+    top: 1.1em;
     left: 0.2em;
     font-size: 90% !important;
 }
