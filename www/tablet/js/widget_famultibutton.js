@@ -408,13 +408,13 @@ var Modul_famultibutton = function () {
         elem.initData('get', 'STATE');
         elem.initData('set', '');
         elem.initData('cmd', 'set');
-        elem.initData('get-on', 'true|1|on|open|ON');
-        elem.initData('get-off', 'false|0|off|closed|OFF');
+        elem.initData('get-on', '(true|1|on|open|ON)');
+        elem.initData('get-off', '(false|0|off|closed|OFF)');
 
         var getOn = elem.data('get-on');
         var getOff = elem.data('get-off');
-        elem.initData('set-on', (getOn !== 'true|1|on|open|ON' && getOn !== '!off') ? elem.data('get-on') : 'on');
-        elem.initData('set-off', (getOff !== 'false|0|off|closed|OFF' && getOff !== '!on') ? elem.data('get-off') : 'off');
+        elem.initData('set-on', (getOn !== '(true|1|on|open|ON)' && getOn !== '!off') ? elem.data('get-on') : 'on');
+        elem.initData('set-off', (getOff !== '(false|0|off|closed|OFF)' && getOff !== '!on') ? elem.data('get-off') : 'off');
         elem.initData('mode', 'toggle');
         elem.initData('doubleclick', 0);
         elem.initData('firstclick-background-color', '#6F4500');
