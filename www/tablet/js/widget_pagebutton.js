@@ -31,6 +31,7 @@ var Modul_pagebutton = function () {
             ftui.log(1, me.widgetname + ': new content from $("' + sel + '") loaded');
             ftui.initPage(sel);
             if (elem.hasClass('default')) {
+                // start page has been loaded > make it visible
                 $(sel).addClass('active');
                 elem.closest('nav').trigger('changedSelection');
                 $(document).trigger('changedSelection');
@@ -118,18 +119,17 @@ var Modul_pagebutton = function () {
 
                     $(sel).siblings().filter('.page').fadeOut(elem.data('fade-duration'), function () {
                         $(sel).siblings().filter('.page').removeClass("active");
+                        $(sel).fadeIn(elem.data('fade-duration'), function () {
+                            $(sel).addClass('active');
+                            $(document).trigger('changedSelection');
+                        });
                     });
                     //load page if not done until now
                     if ($(sel + " > *").children().length === 0 || elem.hasClass('nocache'))
                         loadPage.call(me, elem);
-                    $(sel).fadeIn(elem.data('fade-duration'), function () {
-                        $(sel).addClass('active');
-                    });
-
 
                     localStorage.setItem('pagebutton_lastSel', sel);
                     startReturnTimer(me.elements.eq(0));
-                    $(document).trigger('changedSelection');
                 }
             });
 

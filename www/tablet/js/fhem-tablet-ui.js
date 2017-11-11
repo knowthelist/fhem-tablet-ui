@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.29
+ * Version: 2.6.30
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -329,7 +329,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.29',
+    version: '2.6.30',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -510,6 +510,24 @@ var ftui = {
             ftui.initPage();
         }
 
+        $(document).on("changedSelection", function () {
+
+            $(
+                '.gridster li > header ~ .hbox:only-of-type, ' +
+                '.gridster li > header ~ .center:not([data-type]):only-of-type, ' +
+                '.card > header ~ div:not([data-type]):only-of-type, ' +
+                '.gridster li header ~ div:first-of-type:nth-last-of-type(1)'
+            ).each(function (index) {
+                var heightHeader = $(this).siblings('header').outerHeight();
+                if (heightHeader > 0) {
+                    $(this).css({
+                        'height': 'calc(100% - ' + $(this).siblings('header').outerHeight() + 'px)'
+                    });
+                }
+            });
+
+        });
+
         $(document).on("initWidgetsDone", function () {
 
             // start shortpoll delayed
@@ -519,16 +537,7 @@ var ftui = {
             ftui.restartLongPoll();
             ftui.initHeaderLinks();
 
-            $(
-                '.gridster li > header ~ .hbox:only-of-type, ' +
-                '.gridster li > header ~ .center:not([data-type]):only-of-type, ' +
-                '.card > header ~ div:not([data-type]):only-of-type, ' +
-                '.gridster li header ~ div:first-of-type:nth-last-of-type(1)'
-            ).each(function (index) {
-                $(this).css({
-                    'height': 'calc(100% - ' + $(this).siblings('header').outerHeight() + 'px)'
-                });
-            });
+
 
             // trigger refreshs
             $(document).trigger('changedSelection');
