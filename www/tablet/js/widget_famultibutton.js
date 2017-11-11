@@ -423,7 +423,7 @@ var Modul_famultibutton = function () {
 
         // reachable parameter
         elem.initData('reachable-on', '!off');
-        elem.initData('reachable-off', 'false|0');
+        elem.initData('reachable-off', '(false|0)');
         me.addReading(elem, 'reachable');
         if (elem.isDeviceReading('reachable-on')) {
             me.addReading(elem, 'reachable-on');
@@ -434,7 +434,7 @@ var Modul_famultibutton = function () {
 
         // if hide reading is defined, set defaults for comparison
         if (elem.isValidData('hide')) {
-            elem.initData('hide-on', 'true|1|on');
+            elem.initData('hide-on', '(true|1|on)');
         }
         elem.initData('hide', 'STATE');
         if (elem.isValidData('hide-on')) {
@@ -450,7 +450,7 @@ var Modul_famultibutton = function () {
 
         // if lock reading is defined, set defaults for comparison
         if (elem.isValidData('lock')) {
-            elem.initData('lock-on', 'true|1|on');
+            elem.initData('lock-on', '(true|1|on)');
         }
         elem.initData('lock', elem.data('get'));
         if (elem.isValidData('lock-on')) {
@@ -478,8 +478,8 @@ var Modul_famultibutton = function () {
         }
 
         // warn parameter
-        elem.initData('warn-on', 'true|on|[1-9]{1}[0-9]*');
-        elem.initData('warn-off', 'false|off|0');
+        elem.initData('warn-on', '(true|on|[1-9]{1}[0-9]*)');
+        elem.initData('warn-off', '(false|off|0)');
         me.addReading(elem, 'warn');
 
         elem.initData('off-color', elem.data('color') || ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#505050');
