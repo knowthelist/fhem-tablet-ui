@@ -58,6 +58,7 @@ var Modul_image = function () {
         elem.initData('get', (elem.data('url') === '') ? 'STATE' : '');
         elem.initData('path', '');
         elem.initData('suffix', '');
+        elem.initData('substitution', '');
         elem.initData('refresh', 15 * 60);
 
         // if hide reading is defined, set defaults for comparison
@@ -126,6 +127,8 @@ var Modul_image = function () {
             .each(function (index) {
                 var elem = $(this);
                 var value = elem.getReading('get').val;
+                value = ftui.getPart(value, elem.data('part'));
+                value = me.substitution(value, elem.data('substitution'));
                 if (value) {
                     var src = [elem.data('path'), value, elem.data('suffix')].join('');
                     elem.find('img').attr('src', src);

@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.30
+ * Version: 2.6.31
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -118,7 +118,7 @@ var Modul_widget = function () {
             } else if (subst.match(/^s/)) {
                 var f = subst.substr(1, 1);
                 var sub = subst.split(f);
-                return value.replace(new RegExp(sub[1], sub[3]), sub[2]);
+                return (value) ? value.replace(new RegExp(sub[1], sub[3]), sub[2]) : '';
             } else if (subst.match(/weekdayshort/))
                 return ftui.dateFromString(value).ee();
             else if (subst.match(/.*\(\)/))
@@ -153,12 +153,12 @@ var Modul_widget = function () {
 
         // reachable parameter
         elem.initData('reachable-on', '!off');
-        elem.initData('reachable-off', 'false|0');
+        elem.initData('reachable-off', '(false|0)');
         me.addReading(elem, 'reachable');
 
         // if hide reading is defined, set defaults for comparison
         if (elem.isValidData('hide')) {
-            elem.initData('hide-on', 'true|1|on');
+            elem.initData('hide-on', '(true|1|on)');
         }
         elem.initData('hide', 'STATE');
         if (elem.isValidData('hide-on')) {
@@ -168,7 +168,7 @@ var Modul_widget = function () {
 
         // if lock reading is defined, set defaults for comparison
         if (elem.isValidData('lock')) {
-            elem.initData('lock-on', 'true|1|on');
+            elem.initData('lock-on', '(true|1|on)');
         }
         elem.initData('lock', elem.data('get'));
         if (elem.isValidData('lock-on')) {
@@ -329,7 +329,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.30',
+    version: '2.6.31',
     config: {
         DEBUG: false,
         DEMO: false,

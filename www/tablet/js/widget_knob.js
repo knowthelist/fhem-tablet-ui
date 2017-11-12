@@ -39,9 +39,9 @@ var Modul_knob = function () {
 
     function init_attr(elem) {
 
-        elem.initData('get', 'STATE');
-        elem.initData('set', '');
-        elem.initData('cmd', 'set');
+        //init standard attributes 
+        _base.init_attr.call(me, elem);
+        
         elem.initData('set-value', '$v');
         elem.initData('get-value', elem.data('part') || '-1');
 
@@ -90,22 +90,6 @@ var Modul_knob = function () {
 
         elem.initData('unit', '');
 
-        me.addReading(elem, 'get');
-
-        // if lock reading is defined, set defaults for comparison
-        if (elem.isValidData('lock')) {
-            elem.initData('lock-on', 'true|1|on');
-        }
-        elem.initData('lock', elem.data('get'));
-        if (elem.isValidData('lock-on')) {
-            elem.initData('lock-off', '!on');
-        }
-        me.addReading(elem, 'lock');
-
-        // reachable parameter
-        elem.initData('reachable-on', '!off');
-        elem.initData('reachable-off', 'false|0');
-        me.addReading(elem, 'reachable');
     }
 
     function init_ui(elem) {
@@ -218,7 +202,10 @@ var Modul_knob = function () {
 
     // public
     // inherit all public members from base class
-    var me = $.extend(new Modul_widget(), {
+    var base = new Modul_widget();
+    var _base = {};
+    _base.init_attr = base.init_attr;
+    var me = $.extend(base, {
         //override or own public members
         widgetname: 'knob',
         init_attr: init_attr,

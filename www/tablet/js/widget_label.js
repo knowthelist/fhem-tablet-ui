@@ -64,7 +64,7 @@ var Modul_label = function () {
 
         // if hide reading is defined, set defaults for comparison
         if (elem.isValidData('hide')) {
-            elem.initData('hide-on', 'true|1|on');
+            elem.initData('hide-on', '(true|1|on)');
         }
         elem.initData('hide', elem.data('get'));
         if (elem.isValidData('hide-on')) {

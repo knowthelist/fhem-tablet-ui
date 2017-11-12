@@ -103,9 +103,9 @@ var Modul_slider = function () {
 
     function init_attr(elem) {
 
-        elem.initData('get', 'STATE');
-        elem.initData('set', '');
-        elem.initData('cmd', 'set');
+        //init standard attributes 
+        _base.init_attr.call(me, elem);
+        
         elem.initData('on', 'on');
         elem.initData('off', 'off');
         elem.initData('width', null);
@@ -127,7 +127,6 @@ var Modul_slider = function () {
         elem.initData('timer-state-on', 'on');
         elem.initData('timer-state-off', 'off');
 
-        me.addReading(elem, 'get');
 
         // numeric value means fix value, others mean it is a reading
         if (!$.isNumeric(elem.data('max'))) {
@@ -136,31 +135,6 @@ var Modul_slider = function () {
         if (!$.isNumeric(elem.data('min'))) {
             me.addReading(elem, 'min');
         }
-
-        // reachable parameter
-        elem.initData('reachable-on', '!off');
-        elem.initData('reachable-off', 'false|0');
-        me.addReading(elem, 'reachable');
-
-        // if hide reading is defined, set defaults for comparison
-        if (elem.isValidData('hide')) {
-            elem.initData('hide-on', 'true|1|on');
-        }
-        elem.initData('hide', 'STATE');
-        if (elem.isValidData('hide-on')) {
-            elem.initData('hide-off', '!on');
-        }
-        me.addReading(elem, 'hide');
-
-        // if lock reading is defined, set defaults for comparison
-        if (elem.isValidData('lock')) {
-            elem.initData('lock-on', 'true|1|on');
-        }
-        elem.initData('lock', elem.data('get'));
-        if (elem.isValidData('lock-on')) {
-            elem.initData('lock-off', '!on');
-        }
-        me.addReading(elem, 'lock');
 
         if (elem.isDeviceReading('timer-state')) {
             me.addReading(elem, 'timer-state');
@@ -452,8 +426,11 @@ var Modul_slider = function () {
     }
 
     // public
-    // inherit all public members from base class
-    var me = $.extend(new Modul_widget(), {
+    // inherit members from base class
+    var base = new Modul_widget();
+    var _base = {};
+    _base.init_attr = base.init_attr;
+    var me = $.extend(base, {
         //override or own public members
         widgetname: 'slider',
         init_ui: init_ui,

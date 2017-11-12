@@ -128,9 +128,10 @@ var Modul_spinner = function () {
     }
 
     function init_attr(elem) {
-        elem.initData('get', 'STATE');
-        elem.initData('set', '');
-        elem.initData('cmd', 'set');
+        
+        //init standard attributes 
+        _base.init_attr.call(me, elem);
+        
         elem.initData('color', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname, 'color') || '#aa6900');
         elem.initData('gradient-color', []);
         elem.initData('background-color', ftui.getStyle('.' + me.widgetname, 'background-color') || '#4a4a4a');
@@ -153,35 +154,10 @@ var Modul_spinner = function () {
         elem.initData('unit', '');
         elem.initData('get-value', elem.data('part') || -1);
 
-        me.addReading(elem, 'get');
         if (elem.isDeviceReading('text-color')) {
             me.addReading(elem, 'text-color');
         }
 
-        // reachable parameter
-        elem.initData('reachable-on', '!off');
-        elem.initData('reachable-off', 'false|0');
-        me.addReading(elem, 'reachable');
-
-        // if hide reading is defined, set defaults for comparison
-        if (elem.isValidData('hide')) {
-            elem.initData('hide-on', 'true|1|on');
-        }
-        elem.initData('hide', 'STATE');
-        if (elem.isValidData('hide-on')) {
-            elem.initData('hide-off', '!on');
-        }
-        me.addReading(elem, 'hide');
-
-        // if lock reading is defined, set defaults for comparison
-        if (elem.isValidData('lock')) {
-            elem.initData('lock-on', 'true|1|on');
-        }
-        elem.initData('lock', elem.data('get'));
-        if (elem.isValidData('lock-on')) {
-            elem.initData('lock-off', '!on');
-        }
-        me.addReading(elem, 'lock');
     }
 
     function init_ui(elem) {
@@ -354,7 +330,10 @@ var Modul_spinner = function () {
 
     // public
     // inherit all public members from base class
-    var me = $.extend(new Modul_widget(), {
+    var base = new Modul_widget();
+    var _base = {};
+    _base.init_attr = base.init_attr;
+    var me = $.extend(base, {
         //override or own public members
         widgetname: 'spinner',
         init_attr: init_attr,
