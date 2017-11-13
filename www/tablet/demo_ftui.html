@@ -33,18 +33,6 @@
     <meta name="debug" content="2"> <!-- verbose level 1-6 = output to console;0 = not output -->
     <meta http-equiv="Cache-Control" content="no-store" />
 
-    <link rel="stylesheet" href="lib/jquery.gridster.min.css" />
-    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
-    <link rel="stylesheet" href="lib/font-awesome.min.css" />
-    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
-
-    <!-- define your personal style here, it wont be overwritten  -->
-    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
-    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
-
-    <script src="../pgm2/jquery.min.js"></script>
-    <script src="lib/jquery.toast.min.js"></script>
-    <script src="lib/jquery.gridster.min.js"></script>
     <script src="js/fhem-tablet-ui.js" defer></script>
 
     <title>FTUI Demo</title>
@@ -73,19 +61,20 @@
    <header>EXAMPLE3</header>
    <!-- place your widget here -->
 
-    <div class="top-space gray">Switch on/off</div>
-    <div data-type="switch" data-device="ftuitest" class="cell"></div>
+    <div class="row-10 bottomcenter gray">Switch on/off</div>
+    <div data-type="switch" data-device="ftuitest" class="row-20"></div>
 
-    <div class="top-space gray">Switch on/off blue square</div>
-    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square" class="cell blue"></div>
+    <div class="row-10 bottomcenter gray">Switch on/off blue square</div>
+    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square" class="row-20 blue"></div>
 
-    <div class="top-space gray">Botton Group</div>
-    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="0|off" data-get-off="!on" data-set-on="0" class="small green"><span class="small gray top">0</span></div>
-    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="[123][0-9]" data-get-off="!on" data-set-on="25" class="small left-narrow-10 green"><span class="small gray top">25</span></div>
-    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="[456][0-9]" data-get-off="!on" data-set-on="50" class="small left-narrow-10 green"><span class="small gray top">50</span></div>
-    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="[789][0-9]" data-get-off="!on" data-set-on="75" class="small left-narrow-10 green"><span class="small gray top">75</span></div>
-    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="100|on" data-get-off="!on" data-set-on="100" class="small left-narrow-10 green"><span class="small gray top">100</span></div>
-
+    <div class="row-10 bottomcenter gray">Botton Group</div>
+    <div class="row-20">
+    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="0|off" data-get-off="!on" data-set-on="0" class="inline small green"><span class="small gray top">0</span></div>
+    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="[123][0-9]" data-get-off="!on" data-set-on="25" class="inline small left-narrow-10 green"><span class="small gray top">25</span></div>
+    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="[456][0-9]" data-get-off="!on" data-set-on="50" class="inline small left-narrow-10 green"><span class="small gray top">50</span></div>
+    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="[789][0-9]" data-get-off="!on" data-set-on="75" class="inline small left-narrow-10 green"><span class="small gray top">75</span></div>
+    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="100|on" data-get-off="!on" data-set-on="100" class="inline small left-narrow-10 green"><span class="small gray top">100</span></div>
+</div>
 </li>
 <li data-row="1" data-col="10" data-sizex="3" data-sizey="4">
     <header>EXAMPLE4</header>

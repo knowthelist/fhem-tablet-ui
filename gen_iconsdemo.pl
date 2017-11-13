@@ -2,26 +2,16 @@
 
 use strict;
 
-my @cssfiles = qw(font-awesome.min.css openautomation.css fhemSVG.css);
+my @cssfiles = qw(font-awesome.min.css openautomation.css fhemSVG.css material-icons.min.css weather-icons.min.css);
 my $color='#f0f0f0';
 
 my $html_head = '<!DOCTYPE html>
 <html>
 <head>
         <title>FHEM-Tablet-UI :: Iconfonts Demo</title>
-        <meta name="widget_base_width" content="116">
-        <meta name="widget_base_height" content="131">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-        <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
-        <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
+        <script src="js/fhem-tablet-ui.js" defer></script>
 ';
-foreach my $cssfile (@cssfiles) {
-    $html_head .= '        <link rel="stylesheet" href="/fhem/tablet/lib/'.$cssfile.'" />'."\n";
-}
-$html_head .= '        <script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
-        <script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
-        <script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.js"></script>
+$html_head .= '
 </head>
 <body style="background-color:#2a2a2a">
 ';
@@ -59,13 +49,13 @@ foreach my $cssfile (@cssfiles) {
     }
 }
 
-open HTML, '> examples/icons.html';
+open HTML, '> icons.html';
 print HTML $html_head;
 print HTML $html_icons;
 print HTML $html_foot;
 close HTML;
 
-open HTML, '> examples/icons_table.html';
+open HTML, '> icons_table.html';
 print HTML $html_head;
 print HTML '<table>';
 print HTML $html_table;
