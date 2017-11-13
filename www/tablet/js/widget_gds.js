@@ -1,17 +1,26 @@
+"use strict";
+
+function depends_example() {
+    var deps = [];
+    return deps;
+}
+
 var Modul_gds = function () {
 	
     function init () {
-        var me = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]',this.area);
-        this.elements.each(function(index) {
-			var elem = $(this);
+
+        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements.each(function (index) {
+
+            var elem = $(this);
+			
 			elem.initData('max', 10);
-			elem.data('a_count',		'a_count');
-			elem.data('gdsUseAlerts',	'gdsUseAlerts');
+			elem.initData('a_count',		'a_count');
+			elem.initData('gdsUseAlerts',	'gdsUseAlerts');
 			
 			me.addReading(elem,'a_count');
 		});
-	};
+	}
 	
 	function update(dev,par) {
 		var me = this;
@@ -51,14 +60,16 @@ var Modul_gds = function () {
 			}
 			elem.html(text);
 		});
-	};
+	}
 
     // public
     // inherit all public members from base class
-    return $.extend(new Modul_widget(), {
+    var me = $.extend(new Modul_widget(), {
         //override or own public members
         widgetname: 'gds',
         init: init,
         update: update,
     });
+
+    return me;
 };
