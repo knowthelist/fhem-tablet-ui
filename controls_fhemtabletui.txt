@@ -26,7 +26,7 @@ UPD 2017-02-11_14:27:26 970 www/tablet/css/ftui_slideout.css
 UPD 2017-09-22_21:53:55 808 www/tablet/css/ftui_slider.css
 UPD 2017-02-27_23:42:05 1586 www/tablet/css/ftui_spinner.css
 UPD 2017-06-13_20:19:36 6936 www/tablet/css/ftui_weekprofile.css
-UPD 2017-02-11_14:27:26 5166 www/tablet/demo_ftui.html
+UPD 2017-11-13_21:51:49 4650 www/tablet/demo_ftui.html
 UPD 2017-10-03_19:36:50 226696 www/tablet/fonts/fhemSVG.eot
 UPD 2017-11-09_19:58:14 979105 www/tablet/fonts/fhemSVG.svg
 UPD 2017-10-03_19:36:50 226532 www/tablet/fonts/fhemSVG.ttf
@@ -67,6 +67,7 @@ UPD 2016-03-24_07:51:54 99564 www/tablet/fonts/weathericons-regular-webfont.ttf
 UPD 2016-03-24_07:51:54 56468 www/tablet/fonts/weathericons-regular-webfont.woff
 UPD 2016-03-24_07:51:54 44720 www/tablet/fonts/weathericons-regular-webfont.woff2
 UPD 2017-02-11_14:27:26 3265 www/tablet/ftui_snippet_tester.html
+UPD 2017-11-14_00:10:10 584382 www/tablet/icons_table.html
 UPD 2017-02-11_14:27:26 17624 www/tablet/index-example.html
 UPD 2017-02-11_14:27:26 2208 www/tablet/index_empty.html
 UPD 2017-02-11_14:27:26 9958 www/tablet/index_layout.html
