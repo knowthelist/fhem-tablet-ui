@@ -150,7 +150,8 @@ a:active {
 }
 
 .btn-round,
-.link.round {
+.link.round,
+.led.round{
     border-radius: 17px;
 }
 
@@ -2805,6 +2806,19 @@ div[data-type="circlemenu"] div.circleborder {
     left: 10px;
 }
 
+.led {
+    height: 2em;
+    width: 2em;
+}
+.led:after {
+    content: " ";
+}
+.led.square {
+    height: 1em;
+    width: 2em;
+    border-radius: 3px;
+}
+
 #shade {
     position: absolute;
     z-index: 1001;
@@ -2879,6 +2893,16 @@ select::-ms-expand {
 
 .big>select {
     font-size: 150%;
+}
+
+[data-type="input"].w3x {
+    min-width: 160px;
+    max-width: 160px;
+    width: 160px;
+}
+
+.w2x .famultibutton {
+    width: 4em;
 }
 
 .w3x select,
