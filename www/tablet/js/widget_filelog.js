@@ -38,6 +38,11 @@
  *   NOT-IMPLEMENTED-YET
  */
  
+function depends_filelog() {
+    var deps = [];
+    return deps;
+}
+
 var Modul_filelog = function () {
 	
     function init_attr(elem) {
@@ -51,7 +56,7 @@ var Modul_filelog = function () {
 		// Creation-time of Widget. 
         elem.data('start-time', new Date()); 
         
-        if (elem.data('disable-update-event') == 0) {
+        if (elem.data('disable-update-event') === 0) {
 			me.addReading(elem, 'get');
 		}
     }
@@ -150,13 +155,13 @@ var Modul_filelog = function () {
                     if ((max > 0) && (events.children().length >= max))
 						events.find('.event:first').remove();
 						
-                    events.last().append("<div class='event'>" + value + "</div>")
+                    events.last().append("<div class='event'>" + value + "</div>");
                 }
             });
             
             // Scroll to the end to show last entry.
             events.scrollTop(events.last()[0].scrollHeight);
-        })
+        });
     }
 
     function update(dev, par) {

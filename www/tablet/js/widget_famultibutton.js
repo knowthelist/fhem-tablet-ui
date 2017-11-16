@@ -156,7 +156,8 @@ var Modul_famultibutton = function () {
         if (idx > -1) {
             var faelem = elem.data('famultibutton');
             if (faelem) {
-                idxOn = idxOn || 0;
+                
+                idxOn = idxOn || idx;
                 if (idx === idxOn) {
                     faelem.setOn();
                 } else {
@@ -205,7 +206,7 @@ var Modul_famultibutton = function () {
             }
 
             var elm = elem.children().children('#fg');
-            var id = elem.data('device') + "_" + elem.data('get');
+            var id = elem.uuid();
             localStorage.setItem(me.widgetname + '_' + id + '_index', idx);
 
             // Get color values from reading or from fix array
@@ -313,20 +314,30 @@ var Modul_famultibutton = function () {
             if (!$.isArray(sets)) {
                 sets = new Array(String(sets));
             }
-            var id = device + "_" + elem.data('get');
+            var id = elem.uuid();
             var s = localStorage.getItem(me.widgetname + '_' + id + '_index') || 0;
             var set = typeof sets[s] != 'undefined' ? sets[s] : sets[0];
-            s++;
-            if (s >= sets.length) s = 0;
-            localStorage.setItem(me.widgetname + '_' + id + '_index', s);
+            //supress sending possible
+            if (set !== '') {
+                s++;
+                if (s >= sets.length) s = 0;
+                localStorage.setItem(me.widgetname + '_' + id + '_index', s);
 
-            // update widgets with multistate mode directly on click
-            var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
-            if ($.isArray(states)) {
-                me.showMultiStates(elem, states, set);
+                // update widgets with multistate mode directly on click
+                var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
+                if ($.isArray(states)) {
+                    me.showMultiStates(elem, states, set);
+                }
+
+                target = [elem.data('cmd'), device, elem.data('set'), set].join(' ');
+                type = 'fhem-cmd';
+                
+            } else {
+                if (onoff === 'off')
+                    elem.setOn();
+                else
+                    elem.setOff();
             }
-            target = [elem.data('cmd'), device, elem.data('set'), set].join(' ');
-            type = 'fhem-cmd';
         }
         switch (type) {
             case 'url':
