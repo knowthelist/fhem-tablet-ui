@@ -318,13 +318,15 @@ var Modul_famultibutton = function () {
             var s = localStorage.getItem(me.widgetname + '_' + id + '_index') || 0;
             var set = typeof sets[s] != 'undefined' ? sets[s] : sets[0];
             //supress sending possible
+
+            var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
             if (set !== '') {
                 s++;
                 if (s >= sets.length) s = 0;
                 localStorage.setItem(me.widgetname + '_' + id + '_index', s);
 
                 // update widgets with multistate mode directly on click
-                var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
+                
                 if ($.isArray(states)) {
                     me.showMultiStates(elem, states, set);
                 }
@@ -333,10 +335,15 @@ var Modul_famultibutton = function () {
                 type = 'fhem-cmd';
                 
             } else {
+                // keep current state
+                if ($.isArray(states)) {
+                    me.showMultiStates(elem, states, elem.data('value'));
+                } else {
                 if (onoff === 'off')
                     elem.setOn();
                 else
                     elem.setOff();
+                }
             }
         }
         switch (type) {
@@ -544,6 +551,7 @@ var Modul_famultibutton = function () {
                     var state = ftui.getPart(value, elem.data('part'));
                     //ftui.log(2, 'famultibutton.update for "get": state=' + state + ' dev=' + dev + ' par=' + par + ' key=' + key + ' index=' + index + ' idx=' +idx);
                     if (ftui.isValid(state)) {
+                        elem.data('value',state);
                         var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
                         if ($.isArray(states)) {
                             me.showMultiStates(elem, states, state);
