@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.31
+ * Version: 2.6.32
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -105,15 +105,12 @@ var Modul_widget = function () {
     }
 
     function substitution(value, subst) {
-        if (ftui.isValid(subst)) {
+        if (ftui.isValid(subst) && ftui.isValid(value)) {
             if ($.isArray(subst)) {
                 for (var i = 0, len = subst.length; i < len; i += 2) {
-                    var match = value.match(new RegExp('^' + subst[i] + '$'));
-                    if (match && i + 1 < len) {
-                        //console.log(value, 'match', subst[i], subst[i + 1]);
-                        return subst[i + 1].replace('$1', value);
-
-                    }
+                    if (i + 1 < len) {
+                        value=value.replace(new RegExp(String(subst[i]) , "g"),String(subst[i+1]));
+                   }
                 }
             } else if (subst.match(/^s/)) {
                 var f = subst.substr(1, 1);
@@ -329,10 +326,11 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.31',
+    version: '2.6.32',
     config: {
         DEBUG: false,
         DEMO: false,
+        ICONDEMO: false,
         dir: '',
         filename: '',
         basedir: '',
@@ -392,6 +390,7 @@ var ftui = {
         ftui.config.shortPollFilter = $("meta[name='shortpoll_filter']").attr("content");
         ftui.config.longPollFilter = $("meta[name='longpoll_filter']").attr("content");
         ftui.config.DEMO = ($("meta[name='demo']").attr("content") == '1');
+        ftui.config.ICONDEMO = ($("meta[name='icondemo']").attr("content") == '1');
         ftui.config.debuglevel = $("meta[name='debug']").attr("content") || 0;
         ftui.config.webDevice = $("meta[name='web_device']").attr("content") || $.trim($('body').data('webname')) || 'WEB';
         ftui.config.maxLongpollAge = $("meta[name='longpoll_maxage']").attr("content") || 240;
@@ -541,7 +540,9 @@ var ftui = {
 
             // trigger refreshs
             $(document).trigger('changedSelection');
-            ftui.disableSelection();
+            if (!ftui.config.ICONDEMO) {
+                ftui.disableSelection();
+            }
 
         });
 
