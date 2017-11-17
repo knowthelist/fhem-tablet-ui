@@ -27,7 +27,7 @@ var Modul_calview = function () {
             elem.initData('get', 'STATE');
             elem.initData('start', 'all');
             elem.initData('color', '');
-            elem.initData('detail', ["bdate", "btime", "summary", "location","edate","etime","source","age","description"]);
+            elem.initData('detail', ["bdate", "btime","bdatetimeiso", "summary", "location","edate","etime","edatetimeiso","source","age","description","daysleft"]);
             elem.initData('showempty', 'true');
 
             var device = $(this).data('device');
@@ -82,7 +82,7 @@ var Modul_calview = function () {
 			elem.getReading('c-term').val;
             elem.getReading('c-today').val;
             elem.getReading('c-tomorrow').val;
-			
+			//alert(color);
             if (elem.data('get') == 'STATE') {
                 var value = elem.getReading('get').val;
                 if (ftui.isValid(value)) {
@@ -123,7 +123,7 @@ var Modul_calview = function () {
 								elem.data('detail').forEach(function(spalte) {
 									if ( typeof elem.getReading(wann+'_'+num+'_'+spalte).val != "undefined" ) {
 										text += "<div class=\"col-1-"+colcounter+"\" >";
-										text += "<div data-type=\"label\" class=\"left-align\">" + elem.getReading(wann+'_'+num+'_'+spalte).val + "</div>";
+										text += "<div data-type=\"label\" class=\"left-align\" style=\"color:"+color+";\">" + elem.getReading(wann+'_'+num+'_'+spalte).val + "</div>";
 										text += "</div>";
 									}
 								});
