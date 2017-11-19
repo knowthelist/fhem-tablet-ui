@@ -3,6 +3,9 @@
 // Modifications for 2.4 mario stephan	2.12.2016
 // Modifications for 2.6 chris1284 08.12.2016 - Ursprüngliche Darstellung wieder hergestellt
 // Modifications for 2.8 chris1284 28.12.2016 - widget an aktuelle calview angepasst
+// Modifications / user wishes chris1284 13.09.2017
+// Modifications chris1284 13.09.2017 19:05 - nur noch oneline yes/no , onlinesum/desc/loc entfernt)
+// Modifications chris1284 11.10.2017 - new reading weekdayname 
 // data-get			all|today|tomorrow 
 // data-start		none|notoday|notomorrow		(only for data-get="all" -> dont show Entrys from today or today and tomorrow)
 // data-max			number how much Entries are maximal listed
@@ -27,22 +30,26 @@ var Modul_calview = function () {
             elem.initData('get', 'STATE');
             elem.initData('start', 'all');
             elem.initData('color', '');
-            elem.initData('detail', ["bdate", "btime", "summary", "location","edate","etime","source","age","description"]);
+			elem.initData('class', '');
+            elem.initData('detail', ["bdate", "btime","bdatetimeiso","timeshort","summary", "location","edate","etime","edatetimeiso","source","sourcecolor","age","description","daysleft","daysleftLong","weekdayname"]);
+			elem.initData('detailwidth', []);
+			elem.initData('dateformat', 'long');
+			elem.initData('timeformat', 'long');
+			elem.initData('sourcecolor', 'no');
             elem.initData('showempty', 'true');
-
+			elem.initData('swiperstyle', 'no');
+			elem.initData('oneline', 'no');
+			
             var device = $(this).data('device');
             console.log("device: " + device + " get: " + $(this).data('get') + " max: " + $(this).data('max'));
-            var num;
-            var value;
-            elem.initData('c-term', 'c-term');
-            elem.initData('c-today', 'c-today');
-            elem.initData('c-tomorrow', 'c-tomorrow');
             if ($(this).data('get') == 'today' || $(this).data('get') == 'tomorrow' || $(this).data('get') == 'all') {
-                value = $(this).data('max');
+				elem.initData('c-term', 'c-term');
+				elem.initData('c-today', 'c-today');
+				elem.initData('c-tomorrow', 'c-tomorrow');
+				var value = $(this).data('max');
                 var wann = $(this).data('get');
-                //elem.initData('c-'+wann, 'c-'+wann);
-                if (wann == "all") {
-                    wann = "term";
+
+                if (wann == "all") { wann = "term";
                 }
                 me.addReading(elem, 'c-' + wann);
                 console.log("c-" + wann + ": " + elem.getReading('c-' + wann).val);
@@ -57,80 +64,167 @@ var Modul_calview = function () {
                         me.addReading(elem, wann + '_' + num + '_' + wert);
                         console.log(wann + '_' + num + '_' + wert + ': ' + elem.getReading(wann + '_' + num + '_' + wert).val);
                     });
+					//elem.initData(wann + '_' + num + '_sourcecolor', wann + '_' + num + '_sourcecolor');
                 }
             }
         });
     }
 
     function update(dev, par) {
-        var deviceElements;
-        var text;
-        var num;
-        var ct;
-        if (dev == '*') {
-            deviceElements = me.elements;
-        } else {
-            deviceElements = me.elements.filter('div[data-device="' + dev + '"]');
-        }
-
-        deviceElements.each(function (index) {
+        me.elements.filter('div[data-device="' + dev + '"]')
+        .each(function (index) {
             var elem = $(this);
-            var get = elem.data('get');
+			var deviceElements;
+			var mytext = "";
+			var num;
             var color = elem.data('color');
-            elem.css("color", ftui.getStyle('.' + color, 'color') || color);
-			
+            elem.css("color", ftui.getStyle('.' + color, 'color') || color);			
 			elem.getReading('c-term').val;
             elem.getReading('c-today').val;
             elem.getReading('c-tomorrow').val;
-			
-            if (elem.data('get') == 'STATE') {
-                var value = elem.getReading('get').val;
-                if (ftui.isValid(value)) {
-                    elem.html("<div class=\"cell\" data-type=\"label\">" + value + "</div>");
-                }
-            } else if (elem.data('get') == 'today' || elem.data('get') == 'tomorrow' || elem.data('get') == 'all') {
-                text = "";
-                var beginn = 1;
-                var zeitrahmen = {
+			//alert(color);
+            if (elem.data('get') == 'STATE') { 
+				if (ftui.isValid(elem.getReading('get').val)) { mytext = "<div class=\"cell\" data-type=\"label\">" + elem.getReading('get').val + "</div>"; }} 
+			else if (elem.data('get') == 'today' || elem.data('get') == 'tomorrow' || elem.data('get') == 'all') {
+				var beginn = 1;
+				var zeitrahmen = {
 					"today": "Heute ",
-                    "tomorrow": "Morgen ",
-                    "all": ""
-                };
-                var wann = elem.data('get');
-                ct = elem.getReading('c-' + wann).val;
-
-                if (elem.data('get') == 'all') {
-                    wann = "t";
-                    ct = elem.getReading('c-term').val;
-                    if (elem.data('start') == "notoday") {
-                        beginn = 1 + parseInt(elem.getReading('c-today').val);
-                    } else if (elem.data('start') == "notomorrow") {
-                        beginn = 1 + parseInt(elem.getReading('c-today').val) + parseInt(elem.getReading('c-tomorrow').val);
-                    }
-                }
-                if (ct === 0) {
+					"tomorrow": "Morgen ",
+					"all": "" };
+            
+                if (elem.data('get') == 'all') { var readingPrefix = "t"; var count = elem.getReading('c-term').val;}
+				else if (elem.data('get') == 'today') { var readingPrefix = "today"; var count = elem.getReading('c-' + elem.data('get')).val;}
+				else if (elem.data('get') == 'tomorrow') { var readingPrefix = "tomorrow"; var count = elem.getReading('c-' + elem.data('get')).val;}
+                if (elem.data('start') == "notoday") { beginn = 1 + parseInt(elem.getReading('c-today').val); } 
+				else if (elem.data('start') == "notomorrow") { beginn = 1 + parseInt(elem.getReading('c-today').val) + parseInt(elem.getReading('c-tomorrow').val); }
+                
+                if (count === 0) {
                     if (elem.data('showempty') == "true") {
-                        text += "<div data-type=\"label\">" + zeitrahmen[wann] + "keine Termine</div>";
+                        mytext += "<div data-type=\"label\">" + zeitrahmen[readingPrefix] + "keine Termine</div>";
                     }
                 } else {
-                    if (ct > elem.data('max')) {
-                        ct = elem.data('max');
+                    if (count > elem.data('max')) {
+                        count = elem.data('max');
                     }
-                    for (var i = beginn; i <= ct; i++) {
-                        num = "00" + i;
-                        num = num.slice(-3);
-								colcounter = elem.data('detail').length;
+					if(elem.data('swiperstyle') == 'no'){
+						for (var i = beginn; i <= count; i++) {
+							num = "00" + i;
+							num = num.slice(-3);
+							var mycount = 0;
+							if (elem.data('dateformat') == 'short'){ datesubstr = 6;}
+							else {datesubstr = 10;}
+							if (elem.data('timeformat') == 'short'){ timesubstr = 5;}
+							else {timesubstr = 8;}
+							var onelinesum = "";
+							if (elem.data('onelinesum') === "yes") { onelinesum = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
+							var onelinedesc   = "";
+							if (elem.data('onelinedesc') === "yes") { onelinedesc = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
+							var onelineloc   = "";
+							if (elem.data('onelineloc') === "yes") { onelineloc = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
+							var onelinestyle   = "";
+							if (elem.data('oneline') === "yes") { onelinestyle = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
+							if(elem.data('detailwidth').length > 0) {
+								//alert(elem.data('detailwidth').length);
+								mytext += "<div class=\"hbox cell\" style=\"height:auto;\">";
 								elem.data('detail').forEach(function(spalte) {
-									if ( typeof elem.getReading(wann+'_'+num+'_'+spalte).val != "undefined" ) {
-										text += "<div class=\"col-1-"+colcounter+"\" >";
-										text += "<div data-type=\"label\" class=\"left-align\">" + elem.getReading(wann+'_'+num+'_'+spalte).val + "</div>";
-										text += "</div>";
+									if ( typeof elem.getReading(readingPrefix+'_'+num+'_'+spalte).val != "undefined" ) {
+										if(elem.data('sourcecolor') == 'yes'){color = elem.getReading(readingPrefix+'_'+num+'_sourcecolor').val;}
+										if(spalte == 'age'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
+										if(spalte == 'bdate'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
+										if(spalte == 'btime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
+										if(spalte == 'bdatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'timeshort'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'summary'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'location'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'edate'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
+										if(spalte == 'etime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
+										if(spalte == 'edatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'source'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'description'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'daysleft'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'daysleftLong'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'weekdayname'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										mycount++;
+									}
+									
+								});
+								mytext += "</div>";
+							} else {
+								var $width = 100 / elem.data('detail').length;					
+								//alert($width);
+								mytext += "<div class=\"hbox cell\">";
+								elem.data('detail').forEach(function(spalte) {
+									if ( typeof elem.getReading(readingPrefix+'_'+num+'_'+spalte).val != "undefined" ) {
+										if(elem.data('sourcecolor') == 'yes'){color = elem.getReading(readingPrefix+'_'+num+'_sourcecolor').val; }
+										if(spalte == 'bdate'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
+										if(spalte == 'btime'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
+										if(spalte == 'bdatetimeiso'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'timeshort'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'summary'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'location'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'edate'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
+										if(spalte == 'etime'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
+										if(spalte == 'edatetimeiso'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'source'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'description'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'daysleft'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'daysleftLong'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 									}
 								});
+								mytext += "</div>";
+							}
+						}
+					}
+					if(elem.data('swiperstyle') == 'yes'){
+						mytext += "<div class=\"cell\">";
+						mytext += "<div class=\"swiper-container\">";
+						mytext += "<div class=\"swiper-wrapper\">";
+						for (var i = beginn; i <= count; i++) {
+							num = "00" + i;
+							num = num.slice(-3);
+							var $width = 100 / elem.data('detail').length;
+							//alert($width);
+							mytext += "<div class=\"swiper-slide\" data-hash=\"slide"+i+"\";>";
+							mytext += "<div class=\"hbox\">";
+							elem.data('detail').forEach(function(spalte) {
+								if ( typeof elem.getReading(readingPrefix+'_'+num+'_'+spalte).val != "undefined" ) {
+									if(spalte == 'bdate'){mytext += "<div class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+									if(spalte == 'btime'){mytext += "<div class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+									if(spalte == 'bdatetimeiso'){mytext += "<div class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+									if(spalte == 'summary'){mytext += "<div class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+									if(spalte == 'location'){mytext += "<div class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+									if(spalte == 'edate'){mytext += "<div class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+									if(spalte == 'etime'){mytext += "<div class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+									if(spalte == 'edatetimeiso'){mytext += "<div class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+									if(spalte == 'source'){mytext += "<div class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+									if(spalte == 'description'){mytext += "<div class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+									if(spalte == 'daysleft'){mytext += "<div class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+									if(spalte == 'daysleftLong'){mytext += "<div class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+								}
+							});
+							mytext += "</div>";//close hbox
+							mytext += "</div>";//close swiper-slide
+						}
+						mytext += "</div>";//close swiper-wrapper
+						mytext += "<div class=\"swiper-pagination\" style=\"position:static;\"></div>";
+						//mytext += "<div class=\"swiper-button-prev\"></div>";
+						//mytext += "<div class=\"swiper-button-next\"></div>";
+						mytext += "</div>";//close swiper-container
+						mytext += "<script>\
+							var swiper = new Swiper('.swiper-container', {\
+								pagination: '.swiper-pagination',\
+								spaceBetween: 30,\
+								autoplay: 2500,\
+								autoplayDisableOnInteraction: false,\
+								centeredSlides: true,\
+								hashnav: true,\
+							});\
+							</script>";
+						mytext += "</div>";
                     }
-                }
-                elem.html(text);
+                }       
             }
+			elem.html(mytext);
         });
     }
 
