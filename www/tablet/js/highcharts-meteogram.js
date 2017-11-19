@@ -46,6 +46,13 @@ function Meteogram(xml, container) {
     this.parseYrData();
 }
 
+Meteogram.prototype.getHeight = function () {
+    return 310;
+};
+Meteogram.prototype.getWidth = function () {
+    return 800;
+};
+
 /**
  * Return weather symbol sprites as laid out at http://om.yr.no/forklaring/symbol/
  */
@@ -354,7 +361,8 @@ Meteogram.prototype.drawWindArrows = function (chart) {
 
             // Draw the wind arrows
             x = point.plotX + chart.plotLeft + 7;
-            y = 255;
+//            y = 255;
+	    y = meteogram.getHeight() - 55;
             if (meteogram.windSpeedNames[i] === 'Calm') {
                 arrow = chart.renderer.circle(x, y, 10).attr({
                     fill: 'none'
@@ -434,8 +442,10 @@ Meteogram.prototype.getChartOptions = function () {
             marginRight: 40,
             marginTop: 50,
             plotBorderWidth: 1,
-            width: 800,
-            height: 310
+//            width: 800,
+//            height: 310
+            width: this.getWidth(),
+            height: this.getHeight()
         },
 
         title: {
