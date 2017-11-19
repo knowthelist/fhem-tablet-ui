@@ -1,19 +1,11 @@
-// widget_uwz last changed 2017-01-12 20:00:00 by chris1284
+// widget_uwz last changed 2017-11-17 17:00:00 by chris1284
 //-------------------------------------------------------------------
 //-------------------------------------------------------------------
 
 "use strict";
 function depends_uwz() {
-    var deps = [];
-    /* e.g.
-    if (!$.fn.datetimepicker){
-        $('head').append('<link rel="stylesheet" href="'+ ftui.config.dir + '/../lib/jquery.datetimepicker.css" type="text/css" />');
-        deps.push("lib/jquery.datetimepicker.js");
-    }
-    if(typeof Module_label == 'undefined'){
-        deps.push('label');
-    }
-    */
+    var deps = ["lib/swiper.jquery.min.js"];
+	$('head').append('<link rel="stylesheet" href="lib/swiper.min.css" type="text/css" />');
     return deps;
 };
 
@@ -42,9 +34,13 @@ var Modul_uwz = function () {
 			var elem = $(this);
 			elem.initData('max'			, 10);
 			elem.initData('detail'		, ["WarnUWZLevel_Color", "uwzLevel", "IconURL", "ShortText", "LongText", "Start", "End", "WarnTime",]);
+			elem.initData('fontcolor'	, '#222222');
+			elem.initData('hashtxt'		, 'uwzslide');
 			elem.initData('imgsize'		, 30);
 			elem.initData('lngtxtstyle'	, '');
 			elem.initData('shttxtstyle'	, '');
+			elem.initData('swiperstyle'	, 'no');
+			elem.initData('swipername'	, 'uwzswiper');
 			elem.initData('textdivider'	, ' ');
 			elem.initData('WarnCount'	, 'WarnCount');
 
@@ -108,27 +104,70 @@ var Modul_uwz = function () {
 				while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}				
 				if ( count >= elem.data('max') ) { count = elem.data('max') - 1; } 
 				else { count = elem.getReading('WarnCount').val - 1;}
-				
-				for (var i = 0; i <= count; i++) {
-					if (typeof elem.getReading('WarnUWZLevel_Color').val != "undefined") { 
-						var colortranslation;
-						colortranslation = colormap[elem.getReading('WarnUWZLevel_Color').val];
-						while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}
-						mytext += "<div class=\"cell\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:#222222;background-color:"+colortranslation +";\">"; }
-					else if (typeof elem.getReading('Warn_'+i+'_uwzLevel').val != "undefined"){ 
-						var colortranslation;
-						colortranslation = colormap[elem.getReading('Warn_'+i+'_uwzLevel').val];
-						while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}				
-						mytext += "<div class=\"cell\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:#222222;background-color:"+colortranslation +";\">"; }
-					else { mytext += "<div class=\"cell\">"; }
-									
-					elem.data('detail').forEach(function(spalte) {
-						if (spalte == 'IconURL'){ mytext += "<div class=\"col-1-5 inline cell\"><img src=\"" + elem.getReading('Warn_'+i+'_'+spalte).val + "\" width=\""+elem.data('imgsize')+"\" height=\""+elem.data('imgsize')+"\ class=\"cell centered\"></div>"; }
-						if (spalte == 'ShortText'){ mytext += "<div class=\"col-3-4 inline cell\"><div class=\"cell centered left-align " + elem.data('shttxtstyle') + "\">" + elem.getReading('Warn_'+i+'_'+spalte).val ;}
-						if (spalte == 'LongText'){ mytext += "<div class=\"col-3-4 inline cell\"><div class=\"cell centered left-align " + elem.data('lngtxtstyle') + "\">" + elem.getReading('Warn_'+i+'_'+spalte).val;}
-						if (spalte == 'WarnTime'){ mytext += elem.data('textdivider') + "Gültig vom " + elem.getReading('Warn_'+i+'_Start_Date').val + " " + elem.getReading('Warn_'+i+'_Start_Time').val + " Uhr bis "+ elem.getReading('Warn_'+i+'_End_Date').val + " " + elem.getReading('Warn_'+i+'_End_Time').val + " Uhr.";}				
-					});
-					mytext += "</div></div></div>";
+				if(elem.data('swiperstyle') == 'no'){
+					for (var i = 0; i <= count; i++) {
+						if (typeof elem.getReading('WarnUWZLevel_Color').val != "undefined") { 
+							var colortranslation;
+							colortranslation = colormap[elem.getReading('WarnUWZLevel_Color').val];
+							while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}
+							mytext += "<div class=\"hbox\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
+						else if (typeof elem.getReading('Warn_'+i+'_uwzLevel').val != "undefined"){ 
+							var colortranslation;
+							colortranslation = colormap[elem.getReading('Warn_'+i+'_uwzLevel').val];
+							while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}				
+							mytext += "<div class=\"hbox cell\" style=\"display:inline-block;margin:4px;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
+						else { mytext += "<div class=\"hbox\">"; }
+										
+						elem.data('detail').forEach(function(spalte) {
+							if (spalte == 'IconURL'){ mytext += "<div class=\"\" style=\"margin:4px 10px;\"><img src=\"" + elem.getReading('Warn_'+i+'_'+spalte).val + "\" width=\""+elem.data('imgsize')+"\" height=\""+elem.data('imgsize')+"\ class=\"centered\"></div>"; }
+							if (spalte == 'ShortText'){ mytext += "<div class=\"left-align " + elem.data('shttxtstyle') + "\" style=\"margin:4px 10px;\"\">" + elem.getReading('Warn_'+i+'_'+spalte).val ;}
+							if (spalte == 'LongText'){ mytext += "<div class=\"left-align " + elem.data('lngtxtstyle') + "\" style=\"margin:4px 10px;\"\">" + elem.getReading('Warn_'+i+'_'+spalte).val;}
+							if (spalte == 'WarnTime'){ mytext += elem.data('textdivider') + "Gültig vom " + elem.getReading('Warn_'+i+'_Start_Date').val + " " + elem.getReading('Warn_'+i+'_Start_Time').val + " Uhr bis "+ elem.getReading('Warn_'+i+'_End_Date').val + " " + elem.getReading('Warn_'+i+'_End_Time').val + " Uhr.";}				
+						});
+						mytext += "</div></div></div>";
+					}
+				}
+				else if(elem.data('swiperstyle') == 'yes'){
+					mytext += "<div class=\"swiper-container\">";
+						mytext += "<div class=\"swiper-wrapper\">";
+						for (var i = 0; i <= count; i++) {
+							mytext += "<div class=\"swiper-slide\" data-hash=\""+elem.data('hashtxt')+""+i+"\">";
+							if (typeof elem.getReading('WarnUWZLevel_Color').val != "undefined") { 
+								var colortranslation;
+								colortranslation = colormap[elem.getReading('WarnUWZLevel_Color').val];
+								while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}
+								mytext += "<div class=\"hbox\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
+							else if (typeof elem.getReading('Warn_'+i+'_uwzLevel').val != "undefined"){ 
+								var colortranslation;
+								colortranslation = colormap[elem.getReading('Warn_'+i+'_uwzLevel').val];
+								while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}				
+								mytext += "<div class=\"hbox cell\" style=\"display:inline-block;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
+							else { mytext += "<div class=\"hbox\">"; }
+											
+							elem.data('detail').forEach(function(spalte) {
+								if (spalte == 'IconURL'){ mytext += "<div class=\"\" style=\"margin:4px 10px;\"><img src=\"" + elem.getReading('Warn_'+i+'_'+spalte).val + "\" width=\""+elem.data('imgsize')+"\" height=\""+elem.data('imgsize')+"\ class=\"centered\"></div>"; }
+								if (spalte == 'ShortText'){ mytext += "<div class=\"left-align " + elem.data('shttxtstyle') + "\" style=\"margin:4px 10px;\"\">" + elem.getReading('Warn_'+i+'_'+spalte).val ;}
+								if (spalte == 'LongText'){ mytext += "<div class=\"left-align " + elem.data('lngtxtstyle') + "\" style=\"margin:4px 10px;\"\">" + elem.getReading('Warn_'+i+'_'+spalte).val;}
+								if (spalte == 'WarnTime'){ mytext += elem.data('textdivider') + "G&uuml;ltig vom " + elem.getReading('Warn_'+i+'_Start_Date').val + " " + elem.getReading('Warn_'+i+'_Start_Time').val + " Uhr bis "+ elem.getReading('Warn_'+i+'_End_Date').val + " " + elem.getReading('Warn_'+i+'_End_Time').val + " Uhr.";}				
+							});
+							mytext += "</div></div>";//close uwz text-div and hbox
+							mytext += "</div>";//close swiper-slide
+						}				
+						mytext += "</div>";//close swiper-wrapper
+						mytext += "<div class=\"swiper-pagination\" style=\"position:static\"></div>";
+					mytext += "</div>";
+					
+					mytext += "<script>\
+						var "+elem.data('swipername')+" = new Swiper('.swiper-container', {\
+							pagination: '.swiper-pagination',\
+							spaceBetween: 30,\
+							autoplay: 2500,\
+							autoplayDisableOnInteraction: false,\
+							hashnav: true,\
+							hashnavWatchState: true\
+						});\
+						</script>";
+
 				}
 			}
 			else { mytext += "<div class=\"cell top-space\">Aktuell keine Warnmeldungen.</div>"; }		
