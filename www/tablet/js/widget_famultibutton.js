@@ -156,69 +156,67 @@ var Modul_famultibutton = function () {
         if (idx > -1) {
             var faelem = elem.data('famultibutton');
             if (faelem) {
-                
-                idxOn = idxOn || idx;
-                if (idx === idxOn) {
-                    faelem.setOn();
+
+                if (idx === idxOn || state === elem.data('set-on')) {
+                    faelem.setOn();                 
                 } else {
                     faelem.setOff();
                 }
-            }
 
-            var icons = elem.data('icons');
-            var bgicons = elem.data('background-icons');
-            var colors = elem.data('colors') || elem.data('on-colors');
-            var bgcolors = elem.data('background-colors') || elem.data('on-background-colors');
+                var icons = elem.data('icons');
+                var bgicons = elem.data('background-icons');
+                var colors = elem.data('colors') || elem.data('on-colors');
+                var bgcolors = elem.data('background-colors') || elem.data('on-background-colors');
 
 
-            // if data-icons isn't set, try using data-icon or fa-power-off instead
-            if (typeof icons == 'undefined') {
-                icons = new Array(elem.data('icon') || 'fa-power-off');
-            }
-            // if data-background-icons isn't set, try using data-background-icon or '' instead
-            if (typeof bgicons == 'undefined') {
-                bgicons = new Array(elem.data('background-icon') || '');
-            }
-            // if data-colors isn't set, try using data-on-color, data-off-color or #505050 instead
-            if (typeof colors == 'undefined') {
-                colors = new Array(elem.data('on-color') || elem.data('off-color') || '#505050');
-            }
-            // if data-background-colors isn't set, try using data-on-background-color, data-off-background-color or #505050 instead
-            if (typeof bgcolors == 'undefined') {
-                bgcolors = new Array(elem.data('on-background-color') || elem.data('off-background-color') || '#505050');
-            }
-
-            // fill up colors and icons to states.length
-            // if an index s isn't set, use the value of s-1
-            for (var s = 0, len = states.length; s < len; s++) {
-                if (typeof icons[s] == 'undefined') {
-                    icons[s] = icons[s > 0 ? s - 1 : 0];
+                // if data-icons isn't set, try using data-icon or fa-power-off instead
+                if (typeof icons == 'undefined') {
+                    icons = new Array(elem.data('icon') || 'fa-power-off');
                 }
-                if (typeof bgicons[s] == 'undefined') {
-                    bgicons[s] = bgicons[s > 0 ? s - 1 : 0];
+                // if data-background-icons isn't set, try using data-background-icon or '' instead
+                if (typeof bgicons == 'undefined') {
+                    bgicons = new Array(elem.data('background-icon') || '');
                 }
-                if (typeof colors[s] == 'undefined') {
-                    colors[s] = colors[s > 0 ? s - 1 : 0];
+                // if data-colors isn't set, try using data-on-color, data-off-color or #505050 instead
+                if (typeof colors == 'undefined') {
+                    colors = new Array(elem.data('on-color') || elem.data('off-color') || '#505050');
                 }
-                if (typeof bgcolors[s] == 'undefined') {
-                    bgcolors[s] = bgcolors[s > 0 ? s - 1 : 0];
+                // if data-background-colors isn't set, try using data-on-background-color, data-off-background-color or #505050 instead
+                if (typeof bgcolors == 'undefined') {
+                    bgcolors = new Array(elem.data('on-background-color') || elem.data('off-background-color') || '#505050');
                 }
+
+                // fill up colors and icons to states.length
+                // if an index s isn't set, use the value of s-1
+                for (var s = 0, len = states.length; s < len; s++) {
+                    if (typeof icons[s] == 'undefined') {
+                        icons[s] = icons[s > 0 ? s - 1 : 0];
+                    }
+                    if (typeof bgicons[s] == 'undefined') {
+                        bgicons[s] = bgicons[s > 0 ? s - 1 : 0];
+                    }
+                    if (typeof colors[s] == 'undefined') {
+                        colors[s] = colors[s > 0 ? s - 1 : 0];
+                    }
+                    if (typeof bgcolors[s] == 'undefined') {
+                        bgcolors[s] = bgcolors[s > 0 ? s - 1 : 0];
+                    }
+                }
+
+                var elm = elem.children().children('#fg');
+                var id = elem.uuid();
+                localStorage.setItem(me.widgetname + '_' + id + '_index', idx);
+
+                // Get color values from reading or from fix array
+                var colorValue = (colors[idx].match(/:/)) ? elem.getReading(colors[idx]).val : colors[idx];
+                var bgColorValue = (bgcolors[idx].match(/:/)) ? elem.getReading('on-background-color').val : bgcolors[idx];
+
+                faelem.setForegroundIcon(icons[idx]);
+                faelem.setForegroundColor(ftui.getStyle('.' + colorValue, 'color') || colorValue);
+
+                faelem.setBackgroundIcon(bgicons[idx]);
+                faelem.setBackgroundColor(ftui.getStyle('.' + bgColorValue, 'color') || bgColorValue);
             }
-
-            var elm = elem.children().children('#fg');
-            var id = elem.uuid();
-            localStorage.setItem(me.widgetname + '_' + id + '_index', idx);
-
-            // Get color values from reading or from fix array
-            var colorValue = (colors[idx].match(/:/)) ? elem.getReading(colors[idx]).val : colors[idx];
-            var bgColorValue = (bgcolors[idx].match(/:/)) ? elem.getReading('on-background-color').val : bgcolors[idx];
-
-            faelem.setForegroundIcon(icons[idx]);
-            faelem.setForegroundColor(ftui.getStyle('.' + colorValue, 'color') || colorValue);
-
-            faelem.setBackgroundIcon(bgicons[idx]);
-            faelem.setBackgroundColor(ftui.getStyle('.' + bgColorValue, 'color') || bgColorValue);
-
         }
     }
 
@@ -326,23 +324,23 @@ var Modul_famultibutton = function () {
                 localStorage.setItem(me.widgetname + '_' + id + '_index', s);
 
                 // update widgets with multistate mode directly on click
-                
+
                 if ($.isArray(states)) {
                     me.showMultiStates(elem, states, set);
                 }
 
                 target = [elem.data('cmd'), device, elem.data('set'), set].join(' ');
                 type = 'fhem-cmd';
-                
+
             } else {
                 // keep current state
                 if ($.isArray(states)) {
                     me.showMultiStates(elem, states, elem.data('value'));
                 } else {
-                if (onoff === 'off')
-                    elem.setOn();
-                else
-                    elem.setOff();
+                    if (onoff === 'off')
+                        elem.setOn();
+                    else
+                        elem.setOff();
                 }
             }
         }
@@ -551,7 +549,7 @@ var Modul_famultibutton = function () {
                     var state = ftui.getPart(value, elem.data('part'));
                     //ftui.log(2, 'famultibutton.update for "get": state=' + state + ' dev=' + dev + ' par=' + par + ' key=' + key + ' index=' + index + ' idx=' +idx);
                     if (ftui.isValid(state)) {
-                        elem.data('value',state);
+                        elem.data('value', state);
                         var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
                         if ($.isArray(states)) {
                             me.showMultiStates(elem, states, state);
