@@ -900,7 +900,23 @@ data-get JSON-Object:
 - **data-on-color** 			: color for ON state or DEVICE:READING for dynamic setting (default '#aa6900')
 - **data-off-color**			: color for Off state or DEVICE:READING for dynamic setting (default '#505050')
 
-
+####scale widget
+- **data-orientation**   :  'horizontal'
+- **data-width**   : 
+- **data-height**   : 
+- **data-min**   :  0
+- **data-max**   : 100
+- **data-font-size**   : 12
+- **data-tick**   : 1
+- **data-value-interval**   : 50
+- **data-extra-tick**   :  10
+- **data-tick-color**   :  '#eee'
+- **data-limits-get**   : 
+- **data-limits**   : 
+- **data-colors**   : 
+- **data-color**   : #aa6900
+        
+        
 Format
 -------
 The layout, look and behavior can be influenced by the class attribute.
