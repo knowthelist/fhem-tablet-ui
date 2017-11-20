@@ -83,7 +83,7 @@ var Modul_scale = function () {
                         context.fillStyle = '#eee';
                         context.font = cfont;
                         if (orientation === 'horizontal') {
-                            context.fillText(i, val - 5, canvas.height);
+                            context.fillText(i, val - String(i).length*3, canvas.height);
                         } else {
                             context.fillText(i, 0, dimension-val+5);
                         }
@@ -124,7 +124,7 @@ var Modul_scale = function () {
         
         elem.initData('value-interval', 50);
         elem.initData('extra-tick', 10);
-        elem.initData('tick-color', '#eee');
+        elem.initData('tick-color', '#bbb');
         elem.initData('limits-get', (elem.data('device')) ? elem.data('device') + ':' + elem.data('get') : elem.data('get'));
         elem.initData('limits', elem.data('states') || []);
         elem.initData('colors', ['#505050']);
