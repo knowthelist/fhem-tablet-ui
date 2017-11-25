@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.32
+ * Version: 2.6.33
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -109,8 +109,8 @@ var Modul_widget = function () {
             if ($.isArray(subst)) {
                 for (var i = 0, len = subst.length; i < len; i += 2) {
                     if (i + 1 < len) {
-                        value=value.replace(new RegExp(String(subst[i]) , "g"),String(subst[i+1]));
-                   }
+                        value = value.replace(new RegExp(String(subst[i]), "g"), String(subst[i + 1]));
+                    }
                 }
             } else if (subst.match(/^s/)) {
                 var f = subst.substr(1, 1);
@@ -326,7 +326,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.32',
+    version: '2.6.33',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -723,12 +723,13 @@ var ftui = {
         ftui.log(2, 'initWidgets - area=' + area);
 
         //collect required widgets types
-        $('[data-type]', area).each(function (index) {
+        $('[data-type]:not([data-ready])', area).each(function (index) {
             var type = $(this).data("type");
-            //console.log('type:' + type);
+            //console.log('type:' + type + ' idx:' + types.indexOf(type));
             if (types.indexOf(type) < 0) {
                 types.push(type);
             }
+            $(this).attr("data-ready","");
         });
 
         //init widgets
