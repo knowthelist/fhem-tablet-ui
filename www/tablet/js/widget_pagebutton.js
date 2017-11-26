@@ -1,5 +1,5 @@
 /* FTUI Plugin
- * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
@@ -180,19 +180,7 @@ var Modul_pagebutton = function () {
                 clearTimeout(ftui.longPollTimer);
             }
 
-            // load area content but wait until main page is loaded
-            if (elem.hasClass('default')) {
-                $(document).one("initWidgetsDone", function (e, area) {
-                    var sel = elem.data('load');
-                    if ($(sel + " > *").children().length === 0 || elem.hasClass('nocache')) {
-                        loadPage(elem);
-                    } else {
-                        $(sel).addClass('active');
-                        elem.closest('nav').trigger('changedSelection', [elem.text()]);
-                        $(document).trigger('changedSelection');
-                    }
-                });
-            }
+
 
 
             // start return timer after last activity
@@ -205,6 +193,26 @@ var Modul_pagebutton = function () {
             if (!elem.hasClass('notitle')) {
                 $(this).attr('title', $(this).data('url'));
             }
+        });
+
+        // load area content but wait until main page is loaded
+
+        $(document).one("initWidgetsDone", function (e, area) {
+            var defaultElem = me.elements.filter('.default');
+
+            if (defaultElem) {
+
+                var sel = defaultElem.data('load');
+                ftui.log(2, me.widgetname + ': load ' + sel);
+                if ($(sel + " > *").children().length === 0 || defaultElem.hasClass('nocache')) {
+                    loadPage(defaultElem);
+                } else {
+                    $(sel).addClass('active');
+                    defaultElem.closest('nav').trigger('changedSelection', [defaultElem.text()]);
+                    $(document).trigger('changedSelection');
+                }
+            }
+
         });
     }
 
@@ -225,14 +233,11 @@ var Modul_pagebutton = function () {
 
         var id = elem.data('device') + "_" + elem.data('get') + "_" + elem.data('url');
 
-        if (elem.children().children('#fg').hasClass('activate')) {
-            //only for the first occurance (Flipflop logic)
-            if (localStorage.getItem(id) !== 'true') {
-                localStorage.setItem(id, 'true');
-                me.toggleOn(elem);
-            }
-        } else {
-            localStorage.setItem(id, 'false');
+        if (elem.children('.famultibutton').hasClass('active')) {
+            ftui.log(2, 'pagebutton: set "' + id + '" to default due to state:' + state);
+            elem.siblings().removeClass('default');
+            elem.addClass('default');
+            me.toggleOn(elem);
         }
     }
 

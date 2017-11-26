@@ -120,9 +120,9 @@ var Modul_select = function () {
                         });
                         items = founditems;
                     } else {
-                        console.log(delimiter);
+                        //console.log(delimiter);
                         items = items.split(delimiter);
-                        console.log(items);
+                        //console.log(items);
                     }
                 }
                 elem.data('items', items);
