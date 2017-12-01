@@ -81,7 +81,7 @@ UPD 2017-11-19_14:30:28 17800 www/tablet/js/widget_calview.js
 UPD 2017-08-31_23:06:59 218568 www/tablet/js/widget_chart.js
 UPD 2017-02-11_16:21:16 4098 www/tablet/js/widget_checkbox.js
 UPD 2017-10-03_07:59:52 3393 www/tablet/js/widget_checklist.js
-UPD 2017-09-03_16:18:04 3145 www/tablet/js/widget_circlemenu.js
+UPD 2017-12-01_22:19:05 3212 www/tablet/js/widget_circlemenu.js
 UPD 2017-11-11_12:57:10 1613 www/tablet/js/widget_classchanger.js
 UPD 2017-03-03_01:43:22 5829 www/tablet/js/widget_clock.js
 UPD 2017-02-13_00:45:28 3133 www/tablet/js/widget_colorwheel.js
@@ -164,7 +164,7 @@ UPD 2017-02-11_14:27:26 1794 www/tablet/lib/highcharts/themes/grid.js
 UPD 2017-02-11_14:27:26 1684 www/tablet/lib/highcharts/themes/sand-signika.js
 UPD 2017-02-11_14:27:26 1764 www/tablet/lib/highcharts/themes/skies.js
 UPD 2016-09-14_17:34:06 253669 www/tablet/lib/jquery-ui.min.js
-UPD 2017-09-03_11:41:07 11288 www/tablet/lib/jquery.circlemenu.js
+UPD 2017-12-01_22:16:29 11288 www/tablet/lib/jquery.circlemenu.js
 UPD 2017-02-11_14:27:26 18412 www/tablet/lib/jquery.datetimepicker.css
 UPD 2017-02-11_14:27:26 80573 www/tablet/lib/jquery.datetimepicker.js
 UPD 2017-02-11_14:27:26 3021 www/tablet/lib/jquery.gridster.min.css
