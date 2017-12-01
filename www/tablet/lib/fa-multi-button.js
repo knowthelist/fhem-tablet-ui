@@ -72,12 +72,12 @@
             options = $.extend({}, options, elem.data());
 
             var content = (elem.html() !== elem.text()) ?
-                jQuery('<div>', {}).html(elem.html()).children().detach() :
+                elem.children().detach():
                 jQuery('<div>', {}).text(elem.text());
             if (options['onColor'] !== 'none' && options['offColor'] !== 'none') {
                 content.attr('id', 'fg');
             }
-            content.removeAttr('data-ready');
+            //content.removeAttr('data-ready');
             content.addClass('fa-stack-1x');
 
             elem.html('');

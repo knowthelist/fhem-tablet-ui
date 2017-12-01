@@ -80,6 +80,7 @@ var Modul_image = function () {
         me.elements.each(function (index) {
             var elem = $(this);
             me.init_attr(elem);
+            $('img',elem).remove();  
             var elemImg = $('<img/>', {
                 alt: 'img',
             }).appendTo(elem);
