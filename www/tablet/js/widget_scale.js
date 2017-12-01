@@ -50,9 +50,10 @@ var Modul_scale = function () {
                     } else {
                         context.strokeStyle = tickColor;
                     }
-                    console.log(i, val, context.strokeStyle, valColor);
+
                     context.lineWidth = 1.5;
                     context.beginPath();
+                    
                     // thicker lines every n ticks
                     if (i % extraTick === 0) {
                         if (orientation === 'horizontal') {
@@ -79,7 +80,7 @@ var Modul_scale = function () {
                     var cfont = fontSize * window.devicePixelRatio * 0.5 + "px sans-serif";
 
                     //draw vvalue as text
-                    if (i % valInterval === 0) {
+                    if (i % valInterval === 0 && !elem.hasClass('notext')) {
                         context.fillStyle = '#eee';
                         context.font = cfont;
                         if (orientation === 'horizontal') {
@@ -125,6 +126,7 @@ var Modul_scale = function () {
         elem.initData('value-interval', 50);
         elem.initData('extra-tick', 10);
         elem.initData('tick-color', '#bbb');
+        elem.initData('limits-part', elem.data('part'));
         elem.initData('limits-get', (elem.data('device')) ? elem.data('device') + ':' + elem.data('get') : elem.data('get'));
         elem.initData('limits', elem.data('states') || []);
         elem.initData('colors', ['#505050']);
@@ -149,10 +151,8 @@ var Modul_scale = function () {
     }
 
 
-    // mandatory function, get called after start up once and on every FHEM poll response
-    // here the widget get updated
     function update(dev, par) {
-        // do updates from reading for content
+
         me.elements.filterDeviceReading('get', dev, par)
             .each(function (index) {
                 var elem = $(this);

@@ -915,7 +915,8 @@ data-get JSON-Object:
 - **data-limits**   : 
 - **data-colors**   : 
 - **data-color**   : #aa6900
-        
+
+- **class**         : 'notext' -> prevent scale text
         
 Format
 -------
