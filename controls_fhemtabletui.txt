@@ -124,7 +124,7 @@ UPD 2017-01-23_23:45:24 1866 www/tablet/js/widget_push.js
 UPD 2017-02-06_03:22:08 6051 www/tablet/js/widget_range.js
 UPD 2017-03-03_17:46:38 2323 www/tablet/js/widget_readingsgroup.js
 UPD 2017-08-30_23:15:50 1551 www/tablet/js/widget_rotor.js
-UPD 2017-11-20_23:36:11 7385 www/tablet/js/widget_scale.js
+UPD 2017-12-01_22:36:55 7249 www/tablet/js/widget_scale.js
 UPD 2017-11-26_15:49:17 5588 www/tablet/js/widget_select.js
 UPD 2017-01-19_21:12:36 9782 www/tablet/js/widget_settimer.js
 UPD 2017-11-05_16:08:42 12890 www/tablet/js/widget_simplechart.js
