@@ -24,6 +24,7 @@ var Modul_circlemenu = function () {
                     item_diameter: elem.data('item-diameter') || '4em',
                     item_width: elem.data('item-width'),
                     item_height: elem.data('item-height'),
+                    transition_function: elem.data('transition'),
                     trigger: 'click',
                     circle_radius: elem.data('circle-radius') || 70,
                     direction: elem.data('direction') || 'full',
@@ -62,7 +63,7 @@ var Modul_circlemenu = function () {
             ulElem.wrapAll('<div class="circlemenu-wrapper"></div>');
             elem.find('circlemenu-wrapper').css({
                     minWidth: elem.data('item-width')
-                })
+                });
         });
         
         $('.menu li:not(:first-child)').on('click', function () {
