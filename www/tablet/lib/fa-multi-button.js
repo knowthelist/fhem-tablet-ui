@@ -77,6 +77,7 @@
             if (options['onColor'] !== 'none' && options['offColor'] !== 'none') {
                 content.attr('id', 'fg');
             }
+            content.removeAttr('data-ready');
             content.addClass('fa-stack-1x');
 
             elem.html('');
