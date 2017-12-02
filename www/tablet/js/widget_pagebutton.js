@@ -18,31 +18,34 @@ var Modul_pagebutton = function () {
     function loadPage(elem) {
         console.time('fetch content');
         var sel = elem.data('load');
-        var hashUrl = elem.data('url').replace('#', '');
-        var lockID = ['ftui', me.widgetname, hashUrl, sel].join('_');
-        if (localStorage.getItem(lockID)) {
-            ftui.log(1, 'pagebutton load locked ID=' + lockID);
-            return;
-        }
-        localStorage.setItem(lockID, 'locked');
-        ftui.log(1, me.widgetname + ': start to load content from $("' + sel + '")');
-        $(sel).load(hashUrl + " " + sel + " > *", function (data_html) {
-            console.timeEnd('fetch content');
-            ftui.log(1, me.widgetname + ': new content from $("' + sel + '") loaded');
-            ftui.initPage(sel);
-            if (elem.hasClass('default')) {
-                // start page has been loaded > make it visible
-                $(sel).addClass('active');
-                elem.closest('nav').trigger('changedSelection');
-                $(document).trigger('changedSelection');
+        var url = elem.data('url');
+        if (ftui.isValid(url)) {
+            var hashUrl = url.replace('#', '');
+            var lockID = ['ftui', me.widgetname, hashUrl, sel].join('_');
+            if (localStorage.getItem(lockID)) {
+                ftui.log(1, 'pagebutton load locked ID=' + lockID);
+                return;
             }
-            $(document).on("initWidgetsDone", function (e, area) {
-                if (area == sel) {
-                    localStorage.removeItem(lockID);
-                    startReturnTimer(me.elements.eq(0));
+            localStorage.setItem(lockID, 'locked');
+            ftui.log(1, me.widgetname + ': start to load content from $("' + sel + '")');
+            $(sel).load(hashUrl + " " + sel + " > *", function (data_html) {
+                console.timeEnd('fetch content');
+                ftui.log(1, me.widgetname + ': new content from $("' + sel + '") loaded');
+                ftui.initPage(sel);
+                if (elem.hasClass('default')) {
+                    // start page has been loaded > make it visible
+                    $(sel).addClass('active');
+                    elem.closest('nav').trigger('changedSelection');
+                    $(document).trigger('changedSelection');
                 }
+                $(document).on("initWidgetsDone", function (e, area) {
+                    if (area == sel) {
+                        localStorage.removeItem(lockID);
+                        startReturnTimer(me.elements.eq(0));
+                    }
+                });
             });
-        });
+        }
     }
 
     function startReturnTimer(elem) {
