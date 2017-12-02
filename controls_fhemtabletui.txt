@@ -115,7 +115,7 @@ UPD 2017-10-02_15:40:21 5515 www/tablet/js/widget_medialist.js
 UPD 2017-11-19_14:35:00 2975 www/tablet/js/widget_meteogram.js
 UPD 2017-01-29_01:43:28 3478 www/tablet/js/widget_multistatebutton.js
 UPD 2017-02-11_14:27:26 3770 www/tablet/js/widget_notify.js
-UPD 2017-11-26_21:40:35 10160 www/tablet/js/widget_pagebutton.js
+UPD 2017-12-02_16:27:49 10326 www/tablet/js/widget_pagebutton.js
 UPD 2017-02-11_18:10:47 8584 www/tablet/js/widget_pagetab.js
 UPD 2017-02-13_03:33:15 5205 www/tablet/js/widget_playstream.js
 UPD 2017-11-02_23:01:19 9609 www/tablet/js/widget_popup.js
