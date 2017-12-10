@@ -157,7 +157,7 @@ var Modul_departure = function () {
                     var text = '';
                     var n = 0;
                     var collection = JSON.parse(list);
-                    for (var idx in collection) {
+                    for ( var idx = 0; idx < collection.length; idx++) {
                         n++;
                         var line = collection[idx];
                         var when = line[2];
