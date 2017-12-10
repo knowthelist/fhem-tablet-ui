@@ -4158,11 +4158,12 @@ function init () { // initialization of widget, run at widget creation/reload
 
 	this.elements.each(function(index) {
 		var elem = $(this);
+		var data = elem.data();
 
 		base.init_attr(elem);
 		base.init_ui(elem);
 
-		elem.data.getDefaultSize = function(obj) {
+		data.getDefaultSize = function(obj) {
 			this.defaultHeight = obj.hasClass('fullsize') ? obj[0].getBoundingClientRect().height*0.85 : 300;		
 			if (obj.hasClass('fitsize')) {
 				var fullheight = obj.parent()[0].getBoundingClientRect().height;
@@ -4178,31 +4179,31 @@ function init () { // initialization of widget, run at widget creation/reload
 			this.defaultWidth = '93%';			
 		}
 
-		elem.data.getDefaultSize(elem);
+		data.getDefaultSize(elem);
 
 		widget_chart.instance++;
 
-		elem.data('timers',{'running':false});
-		elem.data('instance', widget_chart.instance);
+		data.timers={'running':false};
+		data.instance=widget_chart.instance;
 
 		var gs = [];
 		var graphsshown_array = elem.data('graphsshown');
 		for (var k=0, ll=widget_chart.getnGraphs(elem.data()); k<ll; k++) {gs[k]=widget_chart.getArrayValue(graphsshown_array,k,true);}
-		elem.data('graphsshown',gs);
+		data.graphsshown = gs;
 
 		var svgElement = $(
 			'<svg class="basesvg' + widget_chart.instance + '" style="overflow: visible">'+
 			'<g id="classesContainer" stroke="grey"></g>' +
 			'</svg>');
 		svgElement.appendTo(elem)
-			.css("width",elem.data('width') || elem.data.defaultWidth)
-			.css("height",elem.data('height') || elem.data.defaultHeight);
+			.css("width",elem.data('width') || data.defaultWidth)
+			.css("height",elem.data('height') || data.defaultHeight);
 
 		function showDone(e) {e.data('initialized',true);} // set initialized value on return of show() function we have to wait for this before doing the refresh
 		svgElement.show(10,showDone(elem));
 
 		widget_chart.doLog("widget_chart.init","Module initialized with width: "+ (elem.data('width')||elem.data.defaultWidth) + " height: " + (elem.data('height')||elem.data.defaultHeight));
-		$(this).data(elem.data);
+		$(this).data(data);
 
 		//base.refresh.apply(this);
 
