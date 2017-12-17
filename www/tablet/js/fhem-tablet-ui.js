@@ -633,15 +633,15 @@ var ftui = {
                 }
             }
             // corrections for gridster in gridster element
-            var gridgrid = $('.gridster > ul > li:has(* .gridster)');
-            if (gridgrid.length > 0) {
+            $('.gridster > ul > li:has(* .gridster)').each(function () {
+                var gridgrid = $(this);
                 gridgrid.css({
                     'background-color': 'transparent',
                     'margin': '-' + ftui.gridster.margins + 'px',
                     'width': gridgrid.parent().width() - gridgrid.position().left,
                     'height': '100%'
                 });
-            }
+            });
 
             $('.gridster > ul > li >.center', area).parent().addClass('has_center');
             // max height for inner boxes
