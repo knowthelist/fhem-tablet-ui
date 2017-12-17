@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.33
+ * Version: 2.6.34
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -326,7 +326,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.33',
+    version: '2.6.34',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -729,7 +729,7 @@ var ftui = {
             if (types.indexOf(type) < 0) {
                 types.push(type);
             }
-            $(this).attr("data-ready","");
+            $(this).attr("data-ready", "");
         });
 
         //init widgets
@@ -1478,6 +1478,40 @@ var ftui = {
             console.log('Shortpoll last run before: ' + d.ago());
             console.log('FHEM dev/par count: ' + Object.keys(ftui.paramIdMap).length);
             console.log('FTUI known devices count: ' + Object.keys(ftui.deviceStates).length);
+            console.log('Current modules count: ' + plugins.modules.length);
+
+            // modules details
+            var i = 0;
+            if (ftui.config.debuglevel > 1) {
+
+                for (var len = plugins.modules.length; i < len; i++) {
+
+                    console.log(i + '. ' + plugins.modules[i].widgetname + "@" + plugins.modules[i].area);
+                }
+            }
+
+            console.log('Current subscriptions count: ' + Object.keys(ftui.subscriptions).length);
+
+            // subscriptions details
+
+            i = 0;
+            for (var key in ftui.subscriptions) {
+                i++;
+                var mDev = ftui.subscriptions[key].device;
+                var mRead = ftui.subscriptions[key].reading;
+                var mValid = "--unknown--";
+                if (ftui.deviceStates[mDev]) {
+                    var params = ftui.deviceStates[mDev];
+                    if (params[mRead]) {
+                        mValid = (params[mRead].valid) ? params[mRead].val : '--known-but-invalid--';
+                    }
+                }
+                if (ftui.config.debuglevel > 1 || mValid === "--unknown--" || mValid === "--known-but-invalid--") {
+                    console.log(i + '. ' + mDev + ":" + mRead + " -> " + mValid);
+                }
+            }
+
+
             console.log('Page length: ' + $('html').html().length);
             console.log('Widgets count: ' + $('[data-type]').length);
             console.log('--------- end healthCheck ---------------');
@@ -2038,7 +2072,7 @@ function onjQueryLoaded() {
     };
 
     $.fn.filterDeviceReading = function (key, device, param) {
-        return this.filter(function () {
+        return $(this).filter(function () {
             var elem = $(this);
             var value = elem.data(key);
             return (String(value) === param && String(elem.data('device')) === device) ||

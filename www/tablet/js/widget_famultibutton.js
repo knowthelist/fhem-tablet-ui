@@ -498,29 +498,29 @@ var Modul_famultibutton = function () {
         elem.initData('warn-off', '(false|off|0)');
         me.addReading(elem, 'warn');
 
-        elem.initData('off-color', elem.data('color') || ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#505050');
-        elem.initData('off-background-color', elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.off',
+        var elemData = elem.data();
+        elem.initData('off-color', elemData.color || ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#505050');
+        elem.initData('off-background-color', elemData.backgroundColor || ftui.getStyle('.' + me.widgetname + '.off',
             'background-color') || '#505050');
-        elem.initData('on-color', elem.data('color') || ftui.getStyle('.' + me.widgetname + '.on', 'color') || '#aa6900');
-        elem.initData('on-background-color', elem.data('color') || elem.data('background-color') || ftui.getStyle('.' + me.widgetname +
+        elem.initData('on-color', elemData.color || ftui.getStyle('.' + me.widgetname + '.on', 'color') || '#aa6900');
+        elem.initData('on-background-color', elemData.color || elemData.backgroundColor || ftui.getStyle('.' + me.widgetname +
             '.on', 'background-color') || '#aa6900');
 
+        // change back with front colors
         if (elem.hasClass('invert')) {
-            var c1 = elem.data('off-background-color');
-            elem.data('off-background-color', elem.data('off-color'));
+            var c1 = elemData.offBackgroundColor;
+            elem.data('off-background-color', elemData.offColor);
             elem.data('off-color', c1);
-            var c2 = elem.data('on-background-color');
-            elem.data('on-background-color', elem.data('on-color'));
+            var c2 = elemData.onBackgroundColor;
+            elem.data('on-background-color', elemData.onColor);
             elem.data('on-color', c2);
         }
 
         // translate html color names into FTUI colors
-        elem.data('off-color', ftui.getStyle('.' + elem.data('off-color'), 'color') || elem.data('off-color'));
-        elem.data('on-color', ftui.getStyle('.' + elem.data('on-color'), 'color') || elem.data('on-color'));
-        elem.data('off-background-color', ftui.getStyle('.' + elem.data('off-background-color'), 'color') || elem.data(
-            'off-background-color'));
-        elem.data('on-background-color', ftui.getStyle('.' + elem.data('on-background-color'), 'color') || elem.data(
-            'on-background-color'));
+        elem.data('off-color', ftui.getStyle('.' + elemData.offColor, 'color') || elemData.offColor);
+        elem.data('on-color', ftui.getStyle('.' + elemData.onColor, 'color') || elemData.onColor);
+        elem.data('off-background-color', ftui.getStyle('.' + elemData.offBackgroundColor, 'color') || elemData.offBackgroundColor);
+        elem.data('on-background-color', ftui.getStyle('.' + elemData.onBackgroundColor, 'color') || elemData.onBackgroundColor);
 
         if (elem.isDeviceReading('on-color')) {
             me.addReading(elem, 'on-color');

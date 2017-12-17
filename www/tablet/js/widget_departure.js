@@ -15,14 +15,22 @@ var Modul_departure = function () {
     function startTimer(elem) {
         var interval = elem.data('refresh');
         if ($.isNumeric(interval) && interval > 0) {
-            setInterval(function () {
-                requestUpdate(elem);
+            var tid = setInterval(function () {
+                if (elem && elem.data('get')) {
+
+                    requestUpdate(elem);
+
+                } else {
+                    clearInterval(tid);
+                }
+
             }, Number(interval) * 1000);
         }
     }
 
     function requestUpdate(elem) {
-        if (elem.is(':visible') || elem.hasClass('hiddenrefresh')) {
+        var ltime = new Date().getTime() / 1000;
+        if ((ltime - elem.data('lastRefresh') > 15) && (elem.is(':visible') || elem.hasClass('hiddenrefresh'))) {
 
             var cmdl = [elem.data('cmd'), elem.data('device'), elem.data('get')].join(' ');
             ftui.log(2, 'departure - send request: ' + cmdl);
@@ -30,6 +38,7 @@ var Modul_departure = function () {
             if (ftui.config.DEBUG) {
                 ftui.toast(cmdl);
             }
+            elem.data('lastRefresh', ltime);
         }
     }
 
@@ -44,6 +53,7 @@ var Modul_departure = function () {
         elem.initData('width', '200');
         elem.initData('height', '250');
         elem.initData('refresh', elem.data('interval') || '120');
+        elem.initData('lastRefresh', 0);
 
         me.addReading(elem, 'get');
     }
@@ -157,7 +167,7 @@ var Modul_departure = function () {
                     var text = '';
                     var n = 0;
                     var collection = JSON.parse(list);
-                    for ( var idx = 0, len = collection.length; idx < len; idx++) {
+                    for (var idx = 0, len = collection.length; idx < len; idx++) {
                         n++;
                         var line = collection[idx];
                         var when = line[2];

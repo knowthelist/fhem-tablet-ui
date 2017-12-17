@@ -39,7 +39,7 @@ var Modul_pagebutton = function () {
                     $(document).trigger('changedSelection');
                 }
                 $(document).on("initWidgetsDone", function (e, area) {
-                    if (area == sel) {
+                    if (area === sel) {
                         localStorage.removeItem(lockID);
                         startReturnTimer(me.elements.eq(0));
                     }
@@ -110,32 +110,6 @@ var Modul_pagebutton = function () {
             me.init_ui(elem);
             var elem_url = elem.data('url');
 
-            elem.on("toggleOn", function (event) {
-                // only set this button to active just before switching page
-                me.elements.each(function (index) {
-                    changeState($(this), false);
-                });
-                changeState(elem, true);
-                var sel = elem.data('load');
-                if (sel) {
-                    elem.closest('nav').trigger('changedSelection');
-
-                    $(sel).siblings().filter('.page').fadeOut(elem.data('fade-duration'), function () {
-                        $(sel).siblings().filter('.page').removeClass("active");
-                        $(sel).fadeIn(elem.data('fade-duration'), function () {
-                            $(sel).addClass('active');
-                            $(document).trigger('changedSelection');
-                        });
-                    });
-                    //load page if not done until now
-                    if ($(sel + " > *").children().length === 0 || elem.hasClass('nocache'))
-                        loadPage.call(me, elem);
-
-                    localStorage.setItem('pagebutton_lastSel', sel);
-                    startReturnTimer(me.elements.eq(0));
-                }
-            });
-
             // is-current-button detection
             var url = window.location.pathname + ((window.location.hash.length) ? '#' + window.location.hash : '');
             var isActive = url.match(new RegExp('^' + elem.data('active-pattern') + '$'));
@@ -183,9 +157,6 @@ var Modul_pagebutton = function () {
                 clearTimeout(ftui.longPollTimer);
             }
 
-
-
-
             // start return timer after last activity
             if (me.elements.eq(0).data('return-time') > 0) {
                 $('body').once('touchend mouseup', function (e) {
@@ -196,6 +167,32 @@ var Modul_pagebutton = function () {
             if (!elem.hasClass('notitle')) {
                 $(this).attr('title', $(this).data('url'));
             }
+
+            elem.on("toggleOn", function (event) {
+                // only set this button to active just before switching page
+                me.elements.each(function (index) {
+                    changeState($(this), false);
+                });
+                changeState(elem, true);
+                var sel = elem.data('load');
+                if (sel) {
+                    elem.closest('nav').trigger('changedSelection');
+
+                    $(sel).siblings().filter('.page').fadeOut(elem.data('fade-duration'), function () {
+                        $(sel).siblings().filter('.page').removeClass("active");
+                        $(sel).fadeIn(elem.data('fade-duration'), function () {
+                            $(sel).addClass('active');
+                            $(document).trigger('changedSelection');
+                        });
+                    });
+                    //load page if not done until now
+                    if ($(sel + " > *").children().length === 0 || elem.hasClass('nocache'))
+                        loadPage.call(me, elem);
+
+                    localStorage.setItem('pagebutton_lastSel', sel);
+                    startReturnTimer(me.elements.eq(0));
+                }
+            });
         });
 
         // load area content but wait until main page is loaded
