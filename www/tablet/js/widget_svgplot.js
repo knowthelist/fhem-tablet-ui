@@ -14,7 +14,7 @@ function depends_svgplot() {
     if (!$.fn.famultibutton) {
         deps.push(ftui.config.basedir + "lib/fa-multi-button.min.js");
     }
-    if (typeof Modul_image == 'undefined') {
+    if (typeof window["Modul_image"] === 'undefined') {
         deps.push('image');
     }
     return deps;

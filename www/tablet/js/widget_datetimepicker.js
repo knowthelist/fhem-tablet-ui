@@ -13,7 +13,7 @@ function depends_datetimepicker() {
         $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/jquery.datetimepicker.css" type="text/css" />');
         deps.push(ftui.config.basedir + "lib/jquery.datetimepicker.js");
     }
-    if (typeof Module_label == 'undefined') {
+    if (typeof window["Modul_label"] === 'undefined') {
         deps.push('label');
     }
     return deps;

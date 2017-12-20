@@ -8,7 +8,7 @@
 "use strict";
 
 function depends_pagebutton() {
-    if (typeof Module_famultibutton == 'undefined' || !$.fn.famultibutton) {
+    if (typeof window["Modul_famultibutton"] === 'undefined' || !$.fn.famultibutton) {
         return ["famultibutton"];
     }
 }
@@ -27,7 +27,7 @@ var Modul_pagebutton = function () {
                 return;
             }
             localStorage.setItem(lockID, 'locked');
-            ftui.log(1, me.widgetname + ': start to load content from $("' + sel + '")');
+            ftui.log(1, me.widgetname + ': start to load ' + hashUrl + ' content from $("' + sel + '")');
             $(sel).load(hashUrl + " " + sel + " > *", function (data_html) {
                 console.timeEnd('fetch content');
                 ftui.log(1, me.widgetname + ': new content from $("' + sel + '") loaded');

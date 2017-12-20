@@ -8,7 +8,7 @@
 "use strict";
 
 function depends_switch() {
-    if (typeof Module_famultibutton == 'undefined' || !$.fn.famultibutton) {
+    if (typeof window["Modul_famultibutton"] === 'undefined' || !$.fn.famultibutton) {
         return ["famultibutton"];
     }
 }

@@ -12,7 +12,7 @@ function depends_controlbutton() {
     if (!$('link[href$="css/ftui_controlbutton.css"]').length) {
         $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_controlbutton.css" type="text/css" />');
     }
-    if (typeof Module_famultibutton == 'undefined' || !$.fn.famultibutton) {
+    if (typeof window["Modul_famultibutton"] === 'undefined' || !$.fn.famultibutton) {
         deps.push('famultibutton');
     }
     return deps;

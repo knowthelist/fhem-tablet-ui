@@ -12,7 +12,7 @@ function depends_checklist() {
     if (!$('link[href$="css/ftui_checklist.css"]').length)
         $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_checklist.css" type="text/css" />');
 
-    if (typeof Modul_select == 'undefined') {
+    if (typeof window["Modul_select"] === 'undefined') {
         return ["select"];
     }
 }

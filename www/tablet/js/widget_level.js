@@ -8,7 +8,7 @@
 "use strict";
 
 function depends_level() {
-    if (typeof Modul_slider == 'undefined' || !$.fn.Powerange) {
+    if (typeof window["Modul_slider"] === 'undefined' || !$.fn.Powerange) {
         return ["slider"];
     }
 }

@@ -11,7 +11,7 @@ var Modul_link = function () {
 
     function isReadOnly(elem) {
         var lock = elem.data('readonly');
-        return (lock == 'true' || lock == '1' || lock == 'on');
+        return (lock === 'true' || lock === '1' || lock === 'on');
     }
 
     function onClicked(elem) {

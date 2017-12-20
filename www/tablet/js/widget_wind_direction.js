@@ -10,7 +10,7 @@
 "use strict";
 
 function depends_wind_direction() {
-    if (typeof Modul_volume == 'undefined' || !$.fn.knob) {
+    if (typeof window["Modul_volume"] === 'undefined' || !$.fn.knob) {
         return ["volume"];
     }
 }

@@ -303,7 +303,7 @@ var plugins = {
     },
 
     load: function (name, area) {
-        ftui.log(1, 'Load widget : ' + name);
+        ftui.log(1, 'Load plugin "' + name + '" for area "' + area + '"');
         return ftui.loadPlugin(name, area);
     },
 
@@ -1352,7 +1352,7 @@ var ftui = {
     loadPlugin: function (name, area) {
 
         var deferredLoad = new $.Deferred();
-        ftui.log(2, 'Create widget : ' + name);
+        ftui.log(2, 'Start load plugin "' + name + '" for area "' + area + '"');
 
         // get the plugin
         ftui.dynamicload(ftui.config.basedir + "js/widget_" + name + ".js", true).done(function () {
@@ -1397,11 +1397,11 @@ var ftui = {
                                 module.update(module.subscriptions[key].device, module.subscriptions[key].reading);
                             }
                         }
-                        ftui.log(1, 'Loaded plugin: ' + name);
+                        ftui.log(1, 'Finished load plugin "' + name + '" for area "' + area + '"');
                         $('[data-type="' + name + '"]', area).removeClass('widget-hide');
 
                     } else {
-                        ftui.log(1, 'Failed to create widget: ' + name);
+                        ftui.log(1, 'Failed to load plugin "' + name + '" for area "' + area + '"');
                     }
 
                     deferredLoad.resolve();
@@ -1891,6 +1891,13 @@ String.prototype.toDate = function () {
 
 String.prototype.parseJson = function () {
     return ftui.parseJsonFromString(this);
+};
+
+String.prototype.toMinFromMs = function () {
+    var x = Number(this)/1000;
+    var ss = (Math.floor(x % 60)).toString();
+    var mm = (Math.floor(x /= 60)).toString();
+    return mm + ":" + (ss[1] ? ss : "0" + ss[0]);
 };
 
 String.prototype.toMinFromSec = function () {

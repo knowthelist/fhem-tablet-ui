@@ -17,13 +17,10 @@ var Modul_departure = function () {
         if ($.isNumeric(interval) && interval > 0) {
             var tid = setInterval(function () {
                 if (elem && elem.data('get')) {
-
                     requestUpdate(elem);
-
                 } else {
                     clearInterval(tid);
                 }
-
             }, Number(interval) * 1000);
         }
     }

@@ -25,17 +25,21 @@ var Modul_slider = function () {
 
     function setTimer(elem, state) {
 
+        ftui.log(2, me.widgetname + " - set timer to " + state);
         if (state === 'on' && !elem.isValidData('timer-id')) {
             var timerInterval = elem.data('timer-interval');
+            ftui.log(2, me.widgetname + " - timerInterval=" + timerInterval);
             if (timerInterval > 0) {
                 var tid = setInterval(function () {
                     if (elem && elem.data('timer-step')) {
                         var id = elemID(elem);
                         var storeval = parseFloat(localStorage.getItem(id));
+                        
                         var pwrng = elem.data('Powerange');
                         storeval = storeval + parseFloat(elem.data('timer-step'));
                         if (pwrng && storeval <= pwrng.options.max) {
-                            pwrng.setStart(storeval);
+                            ftui.log(2, me.widgetname + " - id=" + id + ' / storeval=' +storeval);
+                            pwrng.setStart(parseFloat(storeval));
                             localStorage.setItem(id, storeval);
                         }
                     } else {
@@ -104,7 +108,7 @@ var Modul_slider = function () {
     function init_attr(elem) {
 
         //init standard attributes 
-        _base.init_attr.call(me, elem);
+        base.init_attr.call(me, elem);
         
         elem.initData('on', 'on');
         elem.initData('off', 'off');
@@ -427,10 +431,11 @@ var Modul_slider = function () {
 
     // public
     // inherit members from base class
-    var base = new Modul_widget();
-    var _base = {};
-    _base.init_attr = base.init_attr;
-    var me = $.extend(base, {
+    var parent = new Modul_widget();
+    var base = { 
+        init_attr: parent.init_attr 
+    };
+    var me = $.extend(parent, {
         //override or own public members
         widgetname: 'slider',
         init_ui: init_ui,

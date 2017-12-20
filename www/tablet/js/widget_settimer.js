@@ -11,11 +11,11 @@
 function depends_settimer() {
 
     var ret = [];
-    if (typeof Modul_volume == 'undefined' || !$.fn.knob) {
+    if (typeof window["Modul_volume"] === 'undefined' || !$.fn.knob) {
         ret.push("volume");
     }
 
-    if (typeof Module_famultibutton == 'undefined' || !$.fn.famultibutton) {
+    if (typeof window["Modul_famultibutton"] === 'undefined' || !$.fn.famultibutton) {
         ret.push("famultibutton");
     }
     return ret;
