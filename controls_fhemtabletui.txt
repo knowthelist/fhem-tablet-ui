@@ -102,7 +102,7 @@ UPD 2017-12-26_20:30:59 11344 www/tablet/js/widget_homestatus.js
 UPD 2017-10-03_08:39:54 10190 www/tablet/js/widget_html.js
 UPD 2017-12-26_20:31:09 5013 www/tablet/js/widget_iframe.js
 UPD 2017-12-01_21:13:56 5560 www/tablet/js/widget_image.js
-UPD 2017-12-27_23:39:24 1040 www/tablet/js/widget_include.js
+UPD 2018-01-09_22:09:44 1041 www/tablet/js/widget_include.js
 UPD 2017-08-19_00:07:27 2822 www/tablet/js/widget_input.js
 UPD 2017-02-11_14:27:26 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2018-01-09_20:25:53 2978 www/tablet/js/widget_joinedlabel.js
@@ -116,7 +116,7 @@ UPD 2017-12-30_20:03:28 5596 www/tablet/js/widget_medialist.js
 UPD 2017-11-19_14:35:00 2975 www/tablet/js/widget_meteogram.js
 UPD 2017-01-29_01:43:28 3478 www/tablet/js/widget_multistatebutton.js
 UPD 2017-02-11_14:27:26 3770 www/tablet/js/widget_notify.js
-UPD 2018-01-09_20:08:11 11455 www/tablet/js/widget_pagebutton.js
+UPD 2018-01-09_22:00:41 11517 www/tablet/js/widget_pagebutton.js
 UPD 2017-12-19_10:29:16 8594 www/tablet/js/widget_pagetab.js
 UPD 2017-02-13_03:33:15 5205 www/tablet/js/widget_playstream.js
 UPD 2017-12-26_20:31:30 9585 www/tablet/js/widget_popup.js
