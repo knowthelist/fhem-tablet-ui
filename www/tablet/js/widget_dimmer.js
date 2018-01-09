@@ -8,9 +8,7 @@
 "use strict";
 
 function depends_dimmer() {
-    if (typeof window["Modul_famultibutton"] === 'undefined' || !$.fn.famultibutton) {
         return ["famultibutton"];
-    }
 }
 
 var Modul_dimmer = function () {

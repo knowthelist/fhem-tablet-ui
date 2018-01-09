@@ -2,11 +2,11 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.34
+ * Version: 2.6.35
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
- *
+ * https://github.com/knowthelist/fhem-tablet-ui
  */
 
 /* global Framework7:true, jQuery:true, Dom7:true */
@@ -326,7 +326,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.34',
+    version: '2.6.35',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -367,6 +367,7 @@ var ftui = {
     timestampMap: {},
     subscriptions: {},
     subscriptionTs: {},
+    scripts: [],
     gridster: {
         instances: {},
         instance: null,
@@ -513,6 +514,7 @@ var ftui = {
 
             $(
                 '.gridster li > header ~ .hbox:only-of-type, ' +
+                '.dialog > header ~ .hbox:first-of-type:nth-last-of-type(1), ' +
                 '.gridster li > header ~ .center:not([data-type]):only-of-type, ' +
                 '.card > header ~ div:not([data-type]):only-of-type, ' +
                 '.gridster li header ~ div:first-of-type:nth-last-of-type(1)'
@@ -689,28 +691,15 @@ var ftui = {
 
         ftui.initGridster(area);
 
-        //include extern html code
-        var deferredArr = $.map($('[data-template]', area), function (templ, i) {
-            var templElem = $(templ);
-            return $.get(
-                templElem.data('template'), {},
-                function (data) {
-                    var parValues = templElem.data('parameter');
-                    for (var key in parValues) {
-                        data = data.replace(new RegExp(key, 'g'), parValues[key]);
-                    }
-                    templElem.html(data);
-                }
-            );
+        //convert from template to include
+        $('[data-template]', area).each(function (index) {
+            var elem = $(this);
+            elem.attr('data-type', 'include');
+            elem.attr('data-url', elem.data('template'));
+            elem.removeAttr('data-template');
         });
 
-        //get current values of readings not before all widgets are loaded
-        $.when.apply(this, deferredArr).then(function () {
-            //continue after loading the includes
-            ftui.initWidgets(area);
-            ftui.log(1, 'init templates - Done');
-        });
-
+        ftui.initWidgets(area);
     },
 
     initWidgets: function (area) {
@@ -923,6 +912,7 @@ var ftui = {
                     }
                     ftui.log(1, 'shortPoll - Done');
                     ftui.states.lastShortpoll = ltime;
+                    ftui.poll.shortPollDuration = duration * 1000;
                     ftui.poll.lastShortpollTimestamp = new Date();
                     ftui.saveStatesLocal();
                     ftui.updateBindElements('ftui.');
@@ -1320,6 +1310,7 @@ var ftui = {
     },
 
     readStatesLocal: function () {
+        ftui.poll.shortPollDuration = localStorage.getItem('shortPollDuration') || 1000;
         if (!ftui.config.DEMO)
             ftui.deviceStates = JSON.parse(localStorage.getItem('deviceStates')) || {};
         else {
@@ -1368,10 +1359,10 @@ var ftui = {
                     if (deps) {
                         deps = ($.isArray(deps)) ? deps : [deps];
                         $.map(deps, function (dep, i) {
-                            if (dep.indexOf(".js") < 0) {
-                                depsPromises.push(ftui.loadPlugin(dep));
-                            } else {
+                            if (dep.match(new RegExp('^.*\.(js|css)$'))) {
                                 depsPromises.push(ftui.dynamicload(dep, false));
+                            } else {
+                                depsPromises.push(ftui.loadPlugin(dep));
                             }
                         });
                     }
@@ -1420,21 +1411,53 @@ var ftui = {
     },
 
     dynamicload: function (url, async) {
-        var cache = (ftui.config.DEBUG) ? false : true;
+
         ftui.log(3, 'dynamic load file:' + url + ' / async:' + async);
 
         var deferred = new $.Deferred();
+        var isAdded = false;
 
-        var script = document.createElement("script");
-        script.type = "text/javascript";
-        script.async = (async) ? true : false;
-        script.src = url;
-        script.onload = function () {
-            ftui.log(3, 'dynamic load done:' + url);
-            deferred.resolve();
-        };
+        // check if it is already included
+        for (var i = 0, len = ftui.scripts.length; i < len; i++) {
+            if (ftui.scripts[i].url === url) {
+                isAdded = true;
+                break;
+            }
+        }      
 
-        document.getElementsByTagName('head')[0].appendChild(script);
+        if (!isAdded) {
+            // not yet -> load
+            if (url.match(new RegExp('^.*\.(js)$'))) {
+
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.async = (async) ? true : false;
+                script.src = url;
+                script.onload = function () {
+                    ftui.log(3, 'dynamic load done:' + url);
+                    deferred.resolve();
+                };
+                document.getElementsByTagName('head')[0].appendChild(script);
+            } else {
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = url;
+                link.media = 'all';
+                deferred.resolve();
+                document.getElementsByTagName('head')[0].appendChild(link);
+            }
+            var scriptObject = {};
+            scriptObject.deferred = deferred;
+            scriptObject.url = url;
+            ftui.scripts.push(scriptObject);
+            
+        } else {
+            // already loaded
+            ftui.log(3, 'dynamic load not neccesary for:' + url);
+            deferred = ftui.scripts[i].deferred;
+        }
+
         return deferred.promise();
     },
 
@@ -1894,7 +1917,7 @@ String.prototype.parseJson = function () {
 };
 
 String.prototype.toMinFromMs = function () {
-    var x = Number(this)/1000;
+    var x = Number(this) / 1000;
     var ss = (Math.floor(x % 60)).toString();
     var mm = (Math.floor(x /= 60)).toString();
     return mm + ":" + (ss[1] ? ss : "0" + ss[0]);

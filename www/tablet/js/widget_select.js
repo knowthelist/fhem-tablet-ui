@@ -127,7 +127,10 @@ var Modul_select = function () {
                 }
                 elem.data('items', items);
                 me.fillList(elem);
-                me.setCurrentItem(elem);
+                // wait for DOM Update and then set current item
+                setTimeout(function () {
+                    me.setCurrentItem(elem);
+                },300);
             });
 			
 		//extra reading for hide

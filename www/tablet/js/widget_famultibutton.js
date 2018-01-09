@@ -8,12 +8,33 @@
 "use strict";
 
 function depends_famultibutton() {
+
+    var deps = [];
     if (!$.fn.famultibutton) {
-        return [ftui.config.basedir + "lib/fa-multi-button.min.js"];
+        deps.push(ftui.config.basedir + "lib/fa-multi-button.min.js");
     }
+    return deps;
+
 }
 
 var Modul_famultibutton = function () {
+
+    // Notification from other widgets
+    $(document).on("onforTimerStarted", function (event, wgtId) {
+        if (me.elements.length > 0) {
+            me.elements.filter('div[data-timer-id="' + wgtId + '"]').each(function (index) {
+                checkForRunningTimer($(this), wgtId);
+            });
+        }
+    });
+
+    $(document).on("onforTimerStopped", function (event, wgtId) {
+        if (me.elements.length > 0) {
+            me.elements.filter('div[data-timer-id="' + wgtId + '"]').each(function (index) {
+                stopRunningTimer($(this));
+            });
+        }
+    });
 
     function getSecondes(elem) {
         var seton = elem.data("set-on");
@@ -67,8 +88,9 @@ var Modul_famultibutton = function () {
     }
 
     function checkForRunningTimer(elem, id) {
-        var secondes = getSecondes(elem);
+
         if (localStorage.getItem("ftui_timer_til_" + id)) {
+            var secondes = getSecondes(elem);
             if (localStorage.getItem("ftui_timer_sec_" + id) == secondes || !secondes) {
                 startTimer(elem);
             } else {
@@ -158,7 +180,7 @@ var Modul_famultibutton = function () {
             if (faelem) {
 
                 if (idx === idxOn || state === elem.data('set-on')) {
-                    faelem.setOn();                 
+                    faelem.setOn();
                 } else {
                     faelem.setOff();
                 }
@@ -400,18 +422,9 @@ var Modul_famultibutton = function () {
 
         var id = elem.data('device') + "_" + elem.data('get');
 
-        if (id !== ' _STATE' && id !== ' _') {
+        if (id !== 'undefined_STATE' && id !== ' _STATE' && id !== ' _') {
 
-            // Notification from other widgets
-            $(document).on("onforTimerStarted", function (event, wgtId) {
-                checkForRunningTimer(elem, id);
-            });
-
-            $(document).on("onforTimerStopped", function (event, wgtId) {
-                if (wgtId == id) {
-                    stopRunningTimer(elem);
-                }
-            });
+            elem.attr('data-timer-id', id);
 
             // any old on-for-timer still active ?
             checkForRunningTimer(elem, id);

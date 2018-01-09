@@ -12,23 +12,21 @@ function depends_controlbutton() {
     if (!$('link[href$="css/ftui_controlbutton.css"]').length) {
         $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_controlbutton.css" type="text/css" />');
     }
-    if (typeof window["Modul_famultibutton"] === 'undefined' || !$.fn.famultibutton) {
-        deps.push('famultibutton');
-    }
+    deps.push('famultibutton');
     return deps;
 }
 
 var Modul_controlbutton = function () {
 
     function clicked(elem, isOn) {
-        
+
         var value = isOn ? elem.data('set-on') : elem.data('set-off');
         elem.data('value', value);
         elem.transmitCommand();
     }
-    
+
     function drawElement(elem, isOn) {
-                
+
         var controlbuttonArea = elem.controlbuttonArea || elem.find('.controlbutton-area');
         var controlbuttonIcon = elem.controlbuttonIcon || elem.find('.controlbutton-icon');
 
@@ -43,7 +41,7 @@ var Modul_controlbutton = function () {
             elem.removeClass('active');
             elem.trigger('setOff');
         }
-        elem.data('checked',isOn);
+        elem.data('checked', isOn);
     }
 
 
@@ -105,12 +103,12 @@ var Modul_controlbutton = function () {
             elem.on(ftui.config.releaseEventType, function (e) {
                 e.preventDefault();
                 e.stopImmediatePropagation();
-                
-                console.log(Math.abs(elem.touch_pos_y - $(window).scrollTop()) );
 
-                if ( Math.abs(elem.touch_pos_y - $(window).scrollTop()) > 3 ||
+                console.log(Math.abs(elem.touch_pos_y - $(window).scrollTop()));
+
+                if (Math.abs(elem.touch_pos_y - $(window).scrollTop()) > 3 ||
                     Math.abs(elem.touch_pos_x - $(window).scrollLeft()) > 3 ||
-                    !elem.clicked ) return;
+                    !elem.clicked) return;
 
                 var isOn = !elem.data('checked');
                 elem.data('checked', isOn);

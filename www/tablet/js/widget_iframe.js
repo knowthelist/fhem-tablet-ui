@@ -9,9 +9,7 @@
 "use strict";
 
 function depends_iframe() {
-    if (!$.fn.famultibutton) {
         return [ftui.config.basedir + "lib/fa-multi-button.min.js"];
-    }
 }
 
 var Modul_iframe = function () {

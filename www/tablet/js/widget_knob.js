@@ -8,8 +8,10 @@
 "use strict";
 
 function depends_knob() {
-    if (!$.fn.knob)
+
+    if (!$.fn.knob) {
         return [ftui.config.basedir + "lib/jquery.knob.mod.min.js"];
+    }
 }
 
 var Modul_knob = function () {
@@ -41,7 +43,7 @@ var Modul_knob = function () {
 
         //init standard attributes 
         _base.init_attr.call(me, elem);
-        
+
         elem.initData('set-value', '$v');
         elem.initData('get-value', elem.data('part') || '-1');
 

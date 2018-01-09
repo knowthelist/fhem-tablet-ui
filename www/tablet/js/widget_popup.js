@@ -8,7 +8,6 @@
 "use strict";
 
 function depends_popup() {
-    if (!$.fn.draggable)
         return [ftui.config.basedir + "lib/jquery-ui.min.js"];
 }
 
@@ -193,7 +192,7 @@ var Modul_popup = function () {
                     }
                 });
 
-                close.on('click', function () {
+                close.on('click', function (e) {
                     hide(dialog, elem.data('mode'));
                 });
 

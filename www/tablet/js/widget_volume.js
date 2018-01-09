@@ -8,9 +8,7 @@
 "use strict";
 
 function depends_volume() {
-    if (typeof window["Modul_knob"] === 'undefined' || !$.fn.knob) {
         return ["knob"];
-    }
 }
 
 var Modul_volume = function () {

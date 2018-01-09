@@ -11,11 +11,9 @@ function depends_datetimepicker() {
     var deps = [];
     if (!$.fn.datetimepicker) {
         $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/jquery.datetimepicker.css" type="text/css" />');
-        deps.push(ftui.config.basedir + "lib/jquery.datetimepicker.js");
+        deps.push(ftui.config.basedir + "lib/jquery.datetimepicker.min.js");
     }
-    if (typeof window["Modul_label"] === 'undefined') {
-        deps.push('label');
-    }
+    deps.push('label');
     return deps;
 }
 

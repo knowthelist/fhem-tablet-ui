@@ -9,10 +9,15 @@
 
 function depends_checkbox() {
     var deps = [];
+
+    if (!$('link[href$="lib/switchery.min.css"]').length) {
+        deps.push(ftui.config.basedir + "lib/switchery.min.css");
+    }
+
     if (!$.fn.Switchery) {
-        $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/switchery.min.css" type="text/css" />');
         deps.push(ftui.config.basedir + "lib/switchery.min.js");
     }
+
     if (typeof window["Modul_famultibutton"] === 'undefined' || !$.fn.famultibutton) {
         deps.push('famultibutton');
     }

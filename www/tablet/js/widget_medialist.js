@@ -7,9 +7,17 @@
 
 "use strict";
 
-var Modul_medialist = function () {
+function depends_medialist() {
+    var deps = [];
 
-    $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_medialist.css" type="text/css" />');
+    if (!$('link[href$="css/ftui_medialist.css"]').length) {
+        deps.push(ftui.config.basedir + "css/ftui_medialist.css");
+    }
+
+    return deps;
+}
+
+var Modul_medialist = function () {
 
     function changedCurrent(elem, pos) {
         elem.find('.media').each(function (index) {

@@ -477,6 +477,7 @@ section {
 
 .gridster {
     width: 100%;
+    height: 100%;
 }
 
 .gridster>* {
@@ -2656,8 +2657,14 @@ canvas#progress {
     position: relative;
 }
 
-input {
+[data-type] input {
     visibility: hidden;
+}
+
+.contentSpacing {
+    padding: 1em;
+    margin: 0 auto;
+    overflow: scroll;
 }
 
 .page:not(.active) {
@@ -2683,6 +2690,11 @@ ul,
 li {
     margin: 0;
     padding: 0;
+}
+
+.hw-accelerate {
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 .weather>.weather-icon.meteocons:before {

@@ -65,13 +65,18 @@ var Modul_departure = function () {
             class: 'departure-wrapper'
         });
 
+        var width = elem.data('width');
+        var widthUnit = ($.isNumeric(width)) ? 'px' : '';
+        var height = elem.data('height');
+        var heightUnit = ($.isNumeric(height)) ? 'px' : '';
+        
         var innerElem = $('<div/>', {
                 class: 'departure'
             })
             .css({
-                width: elem.data('width') + 'px',
-                maxWidth: elem.data('width') + 'px',
-                height: elem.data('height') + 'px',
+                width: width + widthUnit,
+                //maxWidth: elem.data('width') + 'px',
+                height: height + heightUnit,
                 color: elem.mappedColor('text-color'),
                 backgroundColor: elem.mappedColor('background-color'),
             }).prependTo(contElem);
