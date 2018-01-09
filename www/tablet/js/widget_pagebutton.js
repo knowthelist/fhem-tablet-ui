@@ -27,9 +27,12 @@ var Modul_pagebutton = function () {
     });
 
     $(document).on("initWidgetsDone", function (e, area) {
-        me.elements.filter('div[data-load="' + area + '"]').each(function (index) {
-            localStorage.removeItem($(this).data('lock-id'));
-            startReturnTimer(me.elements.eq(0));
+        me.elements.each(function (index) {
+            var elem = $(this);
+            if (elem.data('data-load') === area) {
+                localStorage.removeItem(elem.data('lock-id'));
+                startReturnTimer(me.elements.eq(0));
+            }
         });
     });
 

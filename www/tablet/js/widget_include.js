@@ -21,7 +21,7 @@ var Modul_include = function () {
                 for (var key in parValues) {
                     data = data.replace(new RegExp(key, 'g'), parValues[key]);
                 }
-                elem.html(data)
+                elem.html(data);
                 ftui.initPage('[data-uuid="' + elem.uuid() + '"]');
             });
         });

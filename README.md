@@ -581,6 +581,7 @@ data-return-time has to be placed on the main pagetab (the first one > index 0)
 ####Pagebutton widget
 - **data-url**              : URL of the new page to show
 - **data-active-pattern**   : RegEx to define active state  (default null)
+- **data-parent**           : selector (e.g. id) of the element, which must be loaded before 
 - **data-fade-duration**    : time in millisecondes or 'slow'/'fast' to fade to next page (default 'slow')
 all other parameters like switch widget
  -**class**                 : blank,nocache,default,prefetch,
