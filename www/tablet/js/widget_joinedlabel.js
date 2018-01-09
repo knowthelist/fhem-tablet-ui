@@ -72,7 +72,7 @@ var Modul_joinedlabel = function () {
 
             var unit = elem.data('unit');
             if (unit) {
-                html += "<span style='font-size: 50%;'>" + unit + "</span>";
+                html += "<span class='label-unit'>" + unit + "</span>";
             }
 
             elem.html(html);
