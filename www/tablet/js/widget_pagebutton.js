@@ -21,7 +21,7 @@ var Modul_pagebutton = function () {
 
     $(document).one("initWidgetsDone", function (e, area) {
         var defaultElem = me.elements.filter('.default');
-        if (defaultElem) {
+        if (defaultElem.length > 0) {
             changePage(defaultElem);
         }
     });

@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.35
+ * Version: 2.6.36
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -326,7 +326,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.35',
+    version: '2.6.36',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -1758,7 +1758,7 @@ var ftui = {
 
         var offset = new Date().getTimezoneOffset();
         return (m) ? new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]) :
-            (m2) ? new Date(70, 1, 1, 0, 0, m2[1], 0) :
+            (m2) ? new Date(70, 0, 1, 0, 0, m2[1], 0) :
             (m3) ? new Date(+m3[3], +m3[2] - 1, +m3[1], 0, -offset, 0, 0) : new Date();
     },
 
