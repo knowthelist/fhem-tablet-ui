@@ -11,8 +11,8 @@
 var Modul_include = function () {
     
     function init() {
-        me.elements = $('[data-type="' + me.widgetname + '"]');
 
+        me.elements = $('[data-type="' + me.widgetname + '"]', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
 
@@ -22,7 +22,7 @@ var Modul_include = function () {
                     data = data.replace(new RegExp(key, 'g'), parValues[key]);
                 }
                 elem.html(data);
-                ftui.initPage('[data-uuid="' + elem.uuid() + '"]');
+                ftui.initPage('[data-wgid="' + elem.wgid() + '"]');
             });
         });
     }

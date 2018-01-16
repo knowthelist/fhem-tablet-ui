@@ -15,7 +15,6 @@ var Modul_theme = function () {
 
     function init_ui(elem) {}
 
-
     function update(dev, par) {
 
         me.elements.filterDeviceReading('get', dev, par)

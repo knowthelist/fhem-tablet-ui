@@ -36,7 +36,7 @@ var Modul_label = function () {
                 }
                 // init embedded widgets
                 if (elem.find('[data-type]').length > 0) {
-                    ftui.initWidgets('[data-uuid="' + elem.uuid() + '"]');
+                    ftui.initWidgets('[data-wgid="' + elem.wgid() + '"]');
                 }
             }
             me.update_cb(elem, val);

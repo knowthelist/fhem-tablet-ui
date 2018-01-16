@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.36
+ * Version: 2.6.37
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -145,8 +145,17 @@ var Modul_widget = function () {
         elem.initData('get', 'STATE');
         elem.initData('set', '');
         elem.initData('cmd', 'set');
+        elem.initData('get-on', '(true|1|on|open|ON)');
+        elem.initData('get-off', '(false|0|off|closed|OFF)');
 
         me.addReading(elem, 'get');
+        if (elem.isDeviceReading('get-on')) {
+            me.addReading(elem, 'get-on');
+        }
+        if (elem.isDeviceReading('get-off')) {
+            me.addReading(elem, 'get-off');
+        }
+
 
         // reachable parameter
         elem.initData('reachable-on', '!off');
@@ -191,7 +200,9 @@ var Modul_widget = function () {
 
     function addReading(elem, key) {
         var data = elem.data(key);
+
         if (ftui.isValid(data)) {
+
             if ($.isArray(data) || !data.toString().match(/^[#\.\[][^:]*$/)) {
                 var device = elem.data('device');
                 if (!$.isArray(data)) {
@@ -206,6 +217,7 @@ var Modul_widget = function () {
                         reading = fqreading[1].replace(']', '');
                     }
                     // fill objects for mapping from FHEMWEB paramid to device + reading
+                    
                     if (ftui.isValid(device) && ftui.isValid(reading) &&
                         device !== '' && reading !== '' &&
                         device !== ' ' && reading !== ' ') {
@@ -326,7 +338,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.36',
+    version: '2.6.37',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -640,8 +652,8 @@ var ftui = {
                 gridgrid.css({
                     'background-color': 'transparent',
                     'margin': '-' + ftui.gridster.margins + 'px',
-                    'width': gridgrid.parent().width() - gridgrid.position().left,
-                    'height': '100%'
+//                    'width': gridgrid.parent().width() - gridgrid.position().left,
+//                    'height': '100%'
                 });
             });
 
@@ -1230,7 +1242,7 @@ var ftui = {
     loadStyleSchema: function () {
 
         $.each($('link[href$="-ui.css"],link[href$="-ui.min.css"]'), function (index, thisSheet) {
-            if (!thisSheet || !thisSheet.sheet || !thisSheet.sheet.cssRules) return;
+            if (!thisSheet || !thisSheet.sheet || !thisSheet.sheet.cssRules || thisSheet.getAttribute('disabled')) return;
             var rules = thisSheet.sheet.cssRules;
             for (var r in rules) {
                 if (rules[r].style) {
@@ -1423,7 +1435,7 @@ var ftui = {
                 isAdded = true;
                 break;
             }
-        }      
+        }
 
         if (!isAdded) {
             // not yet -> load
@@ -1451,7 +1463,7 @@ var ftui = {
             scriptObject.deferred = deferred;
             scriptObject.url = url;
             ftui.scripts.push(scriptObject);
-            
+
         } else {
             // already loaded
             ftui.log(3, 'dynamic load not neccesary for:' + url);
@@ -2083,16 +2095,17 @@ function onjQueryLoaded() {
         return ['ftui', $(this).data('type'), $(this).data('device').replace(' ', 'default'), $(this).data('get'), $(this).index()].join('_');
     };
 
-    $.fn.uuid = function () {
-        if (!$(this).isValidData('uuid')) {
-            var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    $.fn.wgid = function () {
+        var elem = $(this);
+        if (!elem.isValidData('wgid')) {
+            var wgid = elem.data('type') + '_xxxx-xxxx-xxxx'.replace(/[xy]/g, function (c) {
                 var r = Math.random() * 16 | 0,
                     v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
-            $(this).attr('data-uuid', uuid);
+            elem.attr('data-wgid', wgid);
         }
-        return $(this).data('uuid');
+        return elem.data('wgid');
     };
 
     $.fn.filterData = function (key, value) {
@@ -2185,7 +2198,7 @@ function onjQueryLoaded() {
 
     $.fn.isDeviceReading = function (key) {
         var reading = $(this).data(key);
-        return reading && !$.isNumeric(reading) && typeof reading === 'string' && reading.match(/:/);
+        return reading && !$.isNumeric(reading) && typeof reading === 'string' && reading.match(/^[\w\s-]:[\w\s-]$/);
     };
 
     $.fn.isExternData = function (key) {

@@ -10,7 +10,7 @@
 function depends_colorwheel() {
     if (!$.fn.farbtastic) {
         $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_colorwheel.css" type="text/css" />');
-        return [ftui.config.basedir + "lib/farbtastic.js"];
+        return [ftui.config.basedir + "lib/farbtastic.min.js"];
     }
 }
 
@@ -23,7 +23,8 @@ var Modul_colorwheel = function () {
     }
 
     function onRelease(elem, color) {
-        var value = color.replace('#', '');
+        ftui.log(2,me.widgetname + ' set color to:' + color);
+        var value = (typeof color === 'string') ? color.replace('#', '') : color;
         elem.data('value', value);
         elem.transmitCommand();
     }
@@ -45,6 +46,7 @@ var Modul_colorwheel = function () {
         if (elem.hasClass('mini')) {
             elem.data('width', 52);
         }
+        elem.initData('mode', 'rgb');
         me.addReading(elem, 'get');
     }
 
@@ -64,6 +66,7 @@ var Modul_colorwheel = function () {
             .appendTo(colorArea);
         var farbtastic = $.farbtastic(colorWheel, {
             width: elem.data('width'),
+            mode: elem.data('mode'),
             callback: function (color) {
                 onChange(elem, color);
             },

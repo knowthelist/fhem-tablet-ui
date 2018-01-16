@@ -226,7 +226,7 @@ var Modul_famultibutton = function () {
                 }
 
                 var elm = elem.children().children('#fg');
-                var id = elem.uuid();
+                var id = elem.wgid();
                 localStorage.setItem(me.widgetname + '_' + id + '_index', idx);
 
                 // Get color values from reading or from fix array
@@ -334,7 +334,7 @@ var Modul_famultibutton = function () {
             if (!$.isArray(sets)) {
                 sets = new Array(String(sets));
             }
-            var id = elem.uuid();
+            var id = elem.wgid();
             var s = localStorage.getItem(me.widgetname + '_' + id + '_index') || 0;
             var set = typeof sets[s] != 'undefined' ? sets[s] : sets[0];
             //supress sending possible
@@ -409,7 +409,7 @@ var Modul_famultibutton = function () {
 
         // init embedded widgets
         if (elem.find('[data-type]').length > 0) {
-            ftui.initWidgets('[data-uuid="' + elem.uuid() + '"]');
+            ftui.initWidgets('[data-wgid="' + elem.wgid() + '"]');
         }
 
         var size = elem.data('size');

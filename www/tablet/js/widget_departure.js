@@ -142,7 +142,7 @@ var Modul_departure = function () {
             requestUpdate(elem);
 
 
-            // Refresh slider position after it became visible
+            // Refresh infos after it became visible
             elem.closest('[data-type="popup"]').on("fadein", function (event) {
                 requestUpdate(elem);
             });
