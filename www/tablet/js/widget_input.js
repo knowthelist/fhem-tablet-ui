@@ -1,5 +1,5 @@
 /* FTUI Plugin
- * Copyright (c) 2016 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2016-2018 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
@@ -12,7 +12,7 @@ var Modul_input = function () {
     function updateExtReading(elem) {
         elem.data('ext_get', elem.valOfData('device') + ':' + elem.valOfData('get'));
         elem.find('.textinput').val(elem.getReading('ext_get').val);
-        me.addReading(elem,'ext_get');
+        me.addReading(elem, 'ext_get');
         plugins.updateParameters();
         ftui.shortPoll('silent');
     }
@@ -57,13 +57,21 @@ var Modul_input = function () {
 
         elem.bind("enterKey", function (e) {
             elemInput.blur();
+            if (elem.hasClass('autoclear')) {
+                elemInput.val("");
+            }
             elem.transmitCommand();
         });
         elemInput.keyup(function (e) {
-            elem.data('value', elem.find('.textinput').val());
+            elem.data('value', $(this).val());
             if (e.keyCode === 13)
                 elem.trigger("enterKey");
         });
+        if (elem.hasClass('autoselect')) {
+            elemInput.on('click', function (e) {
+                $(this).select();
+            });
+        }
     }
 
     function update(dev, par) {
