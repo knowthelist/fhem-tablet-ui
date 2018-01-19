@@ -330,7 +330,7 @@ See [examples](#label) of Label
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-cmd**  : name of the command to send to FHEM (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-value**: default value
-- **class**     : wider, w1x, w2x, w3x, large, big, notransmit
+- **class**     : wider, w1x, w2x, w3x, large, big, notransmit, autoclear, autoselect
 
 data-device, data-get can be references (jQuery seletor) to select-widgets to change the source dynamically
 

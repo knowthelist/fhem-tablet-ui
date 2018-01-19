@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.37
+ * Version: 2.6.-37
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -187,6 +187,7 @@ var Modul_widget = function () {
         elem.text(me.widgetname);
     }
 
+    function reinit() {}
 
     function init() {
         ftui.log(1, "init widget: name=" + me.widgetname + " area=" + me.area);
@@ -240,6 +241,7 @@ var Modul_widget = function () {
         widgetname: 'widget',
         area: '',
         init: init,
+        reinit: reinit,
         init_attr: init_attr,
         init_ui: init_ui,
         update: update,
@@ -318,6 +320,15 @@ var plugins = {
         ftui.log(1, 'Load plugin "' + name + '" for area "' + area + '"');
         return ftui.loadPlugin(name, area);
     },
+    
+    reinit: function () {
+        $.each(this.modules, function (index, module) {
+            //Iterate each module and run update function if module is available
+            if (typeof module === 'object') {
+                module.reinit();
+            }
+        });
+    },
 
     update: function (dev, par) {
 
@@ -338,7 +349,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.37',
+    version: '2.6.-37',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -703,15 +714,27 @@ var ftui = {
 
         ftui.initGridster(area);
 
-        //convert from template to include
-        $('[data-template]', area).each(function (index) {
-            var elem = $(this);
-            elem.attr('data-type', 'include');
-            elem.attr('data-url', elem.data('template'));
-            elem.removeAttr('data-template');
+        //include extern html code
+        var deferredArr = $.map($('[data-template]', area), function (templ, i) {
+            var templElem = $(templ);
+            return $.get(
+                templElem.data('template'), {},
+                function (data) {
+                    var parValues = templElem.data('parameter');
+                    for (var key in parValues) {
+                        data = data.replace(new RegExp(key, 'g'), parValues[key]);
+                    }
+                    templElem.html(data);
+                }
+            );
         });
 
-        ftui.initWidgets(area);
+        //get current values of readings not before all widgets are loaded
+        $.when.apply(this, deferredArr).then(function () {
+            //continue after loading the includes
+            ftui.initWidgets(area);
+            ftui.log(1, 'init templates - Done');
+        });
     },
 
     initWidgets: function (area) {
