@@ -1,5 +1,5 @@
 /* FTUI Plugin
- * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
@@ -24,7 +24,9 @@ var Modul_playstream = function () {
     }
 
     function stopStream(elem) {
-        elem.data('audio').pause();
+        var audio = elem.data('audio');
+        audio.pause();
+        audio.currentTime = 0;
         var elemFgIcon = elem.children().children('#fg');
         elemFgIcon.removeClass();
         elemFgIcon.addClass('fa fa-stack-1x');
