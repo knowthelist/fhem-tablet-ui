@@ -8,9 +8,11 @@ function depends_gds() {
 var Modul_gds = function () {
 
     function init() {
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
-			var elem = $(this);
+            var elem = $(this);
+            elem.attr("data-ready", "");
+            
 			elem.initData('max',			10);
 			elem.initData('description',	true)
 			elem.initData('region',			true)

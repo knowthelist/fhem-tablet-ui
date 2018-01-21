@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.-37
+ * Version: 2.6.37
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -191,9 +191,10 @@ var Modul_widget = function () {
 
     function init() {
         ftui.log(1, "init widget: name=" + me.widgetname + " area=" + me.area);
-        me.elements = $('[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
             me.init_attr(elem);
             elem = me.init_ui(elem);
         });
@@ -349,7 +350,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.-37',
+    version: '2.6.37',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -747,13 +748,12 @@ var ftui = {
         ftui.log(2, 'initWidgets - area=' + area);
 
         //collect required widgets types
-        $('[data-type]:not([data-ready])', area).each(function (index) {
+        $('[data-type] ', area).each(function (index) {
             var type = $(this).data("type");
-            //console.log('type:' + type + ' idx:' + types.indexOf(type));
+            console.log('type:' + type + ' idx:' + types.indexOf(type) + ' area=' + area);
             if (types.indexOf(type) < 0) {
                 types.push(type);
             }
-            $(this).attr("data-ready", "");
         });
 
         //init widgets
@@ -2221,7 +2221,7 @@ function onjQueryLoaded() {
 
     $.fn.isDeviceReading = function (key) {
         var reading = $(this).data(key);
-        return reading && !$.isNumeric(reading) && typeof reading === 'string' && reading.match(/^[\w\s-]:[\w\s-]$/);
+        return reading && !$.isNumeric(reading) && typeof reading === 'string' && reading.match(/^[\w\s-]+:[\w\s-]+$/);
     };
 
     $.fn.isExternData = function (key) {

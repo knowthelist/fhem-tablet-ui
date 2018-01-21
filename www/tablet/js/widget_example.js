@@ -41,10 +41,11 @@ var Modul_example = function () {
     // mandatory function, get called on start up
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
-
             var elem = $(this);
+            elem.attr("data-ready", "");
+            
             elem.initData('get', 'STATE');
             elem.initData('color', '#aa6633');
 

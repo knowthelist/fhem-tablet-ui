@@ -101,9 +101,11 @@ var Modul_popup = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
+            
             me.init_attr(elem);
 
             var id = [me.widgetname, me.area, index].join('_');

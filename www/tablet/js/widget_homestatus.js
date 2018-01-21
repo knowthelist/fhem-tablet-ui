@@ -171,9 +171,11 @@ var Modul_homestatus = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
+            
             var defaultAlias = ['Home', 'Night', 'Away', 'Holiday', 'Retire'];
             var defaultIcons = ['fa-home', 'fa-bed', 'fa-car', 'fa-suitcase', 'fa-tint'];
             var defaultStates = ['1', '2', '3', '4'];

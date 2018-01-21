@@ -21,9 +21,11 @@ var Modul_datetimepicker = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
+            
             elem.data('cmd', elem.isValidData('cmd') ? elem.data('cmd') : 'set');
             elem.data('set-value', elem.data('set-value') || '$v');
             elem.data('unit', elem.isValidData('unit') ? elem.data('unit') : '<span style="font-size: 180%;">&#32;&#9660;</span>');

@@ -21,17 +21,20 @@ var Modul_rotor = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]');
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
-            $(this).data('delay', $(this).data('delay') || 3500);
-            var delay = $(this).data('delay');
-            var $elem = $(this);
-            $elem.addClass('rotor');
-            $elem.find('ul').addClass('rotor-wrapper');
-            $elem.find('li').not(":first").addClass('is-hidden');
-            $elem.find('li:first').addClass('is-visible');
+            var elem = $(this);
+            elem.attr("data-ready", "");
+            
+            elem.initData('delay', 3500);
+            var delay = elem.data('delay');
+            
+            elem.addClass('rotor');
+            elem.find('ul').addClass('rotor-wrapper');
+            elem.find('li').not(":first").addClass('is-hidden');
+            elem.find('li:first').addClass('is-visible');
             setTimeout(function () {
-                switchElement($elem.find('.is-visible'), delay);
+                switchElement(elem.find('.is-visible'), delay);
             }, delay);
 
         });

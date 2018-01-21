@@ -16,9 +16,10 @@ var Modul_circlemenu = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
             var ulElem = elem.find('ul');
             ulElem.circleMenu({
                     item_diameter: elem.data('item-diameter') || '4em',

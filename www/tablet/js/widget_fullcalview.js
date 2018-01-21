@@ -75,10 +75,11 @@ var Modul_fullcalview = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="fullcalview"]');
-
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
+            
             elem.data('eventlimit', elem.data('eventlimit') || true); //true, false
             elem.data('defaultview', elem.data('defaultview') || 'basicWeek'); //alle verfügbaren Views auflisten
             elem.data('timeformat', elem.data('timeformat') || 'H:mm'); //Format für Zeitangabe

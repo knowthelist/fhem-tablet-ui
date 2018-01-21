@@ -76,9 +76,11 @@ var Modul_image = function () {
     }
 
     function init() {
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
+            
             me.init_attr(elem);
             $('img',elem).remove();  
             var elemImg = $('<img/>', {

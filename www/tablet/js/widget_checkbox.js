@@ -34,9 +34,10 @@ var Modul_checkbox = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
             elem.data('off-color', elem.data('off-color') || ftui.getStyle('.checkbox.off', 'color') || '#bfbfbf');
             elem.data('off-background-color', elem.data('off-background-color') || ftui.getStyle('.checkbox.off', 'background-color') || '#505050');
             elem.data('on-color', elem.data('on-color') || ftui.getStyle('.checkbox.on', 'color') || '#bfbfbf');

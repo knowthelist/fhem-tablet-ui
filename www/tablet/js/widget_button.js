@@ -16,9 +16,10 @@ var Modul_button = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
             elem.initData('off-color', ftui.getStyle('.button.off', 'color') || '#2A2A2A');
             elem.initData('off-background-color', ftui.getStyle('.button.off', 'background-color') || '#505050');
             elem.initData('on-color', ftui.getClassColor($(this)) || ftui.getStyle('.button.on', 'color') || '#2A2A2A');

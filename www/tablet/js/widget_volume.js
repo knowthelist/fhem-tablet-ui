@@ -8,7 +8,7 @@
 "use strict";
 
 function depends_volume() {
-        return ["knob"];
+    return ["knob"];
 }
 
 var Modul_volume = function () {
@@ -134,19 +134,33 @@ var Modul_volume = function () {
         return (this.unit) ? ret + window.unescape(this.unit) : ret;
     }
 
-    function init() {
-
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+    function reinit() {
         me.elements.each(function (index) {
             var elem = $(this);
+            var knob_elem = elem.find('input');
+            if (knob_elem) {
+                knob_elem.trigger('configure', {
+                    'hdColor': ftui.getStyle('.' + me.widgetname + '.handle', 'color')
+                });
+            }
+        });
+    }
+
+    function init() {
+
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
+        me.elements.each(function (index) {
+            var elem = $(this);
+            elem.attr("data-ready", "");
+            
             var maxval = elem.isValidData('max') ? elem.data('max') : 70;
             elem.data('origmax', maxval);
             elem.data('max', (maxval > 360) ? 360 : maxval);
-            elem.data('fgcolor', elem.data('fgcolor') || ftui.getStyle('.' + ftui.widgetname, 'color') || '#666');
+            elem.data('fgcolor', elem.data('fgcolor') || ftui.getStyle('.' + me.widgetname, 'color') || '#666');
             elem.data('get-value', elem.data('get-value') || elem.data('part') || '-1');
 
             var mode = 0; //no hue colors
-            var hdDefaultColor = ftui.getClassColor(elem) || ftui.getStyle('.volume.hdcolor', 'color') || '#aa6900';
+            var hdDefaultColor = ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname + '.handle', 'color') || '#aa6900';
             if (elem.hasClass('hue-back')) {
                 mode = mode | 1 << 0;
                 hdDefaultColor = '#cccccc';
@@ -233,6 +247,7 @@ var Modul_volume = function () {
         //override or own public members
         widgetname: 'volume',
         init: init,
+        reinit: reinit,
         update: update,
         drawDial: drawDial,
         onRelease: onRelease,

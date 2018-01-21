@@ -12,9 +12,10 @@ var Modul_include = function () {
     
     function init() {
 
-        me.elements = $('[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
 
             $.get(elem.data('url'), {}, function (data) {
                 var parValues = elem.data('parameter');

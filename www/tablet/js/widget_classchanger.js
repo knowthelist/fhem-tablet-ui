@@ -16,10 +16,11 @@ var Modul_classchanger = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
-
             var elem = $(this);
+            elem.attr("data-ready", "");
+            
             elem.initData('get', 'STATE');
 
             elem.initData('get-on', '(true|1|on|open|ON)');
