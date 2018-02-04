@@ -750,7 +750,6 @@ var ftui = {
         //collect required widgets types
         $('[data-type] ', area).each(function (index) {
             var type = $(this).data("type");
-            console.log('type:' + type + ' idx:' + types.indexOf(type) + ' area=' + area);
             if (types.indexOf(type) < 0) {
                 types.push(type);
             }
@@ -884,9 +883,10 @@ var ftui = {
                         var newParam = section[reading];
                         if (typeof newParam !== 'object') {
                             //ftui.log(5,'newParam='+newParam);
+                            
                             newParam = {
                                 "Value": newParam,
-                                "Time": ''
+                                "Time": ""
                             };
                         }
 
@@ -894,7 +894,7 @@ var ftui = {
                         if (ftui.subscriptions[paramid]) {
                             var oldParam = ftui.getDeviceParameter(device, reading);
                             isUpdated = (!oldParam || oldParam.val !== newParam.Value || oldParam.date !== newParam.Time);
-                            //ftui.log(5,'isUpdated='+isUpdated);
+                            ftui.log(5,'isUpdated='+isUpdated);
                         }
                         //write into internal cache object
                         var params = ftui.deviceStates[device] || {};
@@ -1168,8 +1168,9 @@ var ftui = {
                     var subscription = ftui.subscriptions[dataJSON[0]];
                     // update for a parameter
                     if (pmap) {
-                        if (isSTATE)
+                        if (isSTATE) {
                             pmap.reading = 'STATE';
+                        }
                         params = ftui.deviceStates[pmap.device] || {};
                         param = params[pmap.reading] || {};
                         param.val = dataJSON[1];
@@ -2221,7 +2222,7 @@ function onjQueryLoaded() {
 
     $.fn.isDeviceReading = function (key) {
         var reading = $(this).data(key);
-        return reading && !$.isNumeric(reading) && typeof reading === 'string' && reading.match(/^[\w\s-]+:[\w\s-]+$/);
+        return reading && !$.isNumeric(reading) && typeof reading === 'string' && reading.match(/^[\w\s-.]+:[\w\s-]+$/);
     };
 
     $.fn.isExternData = function (key) {

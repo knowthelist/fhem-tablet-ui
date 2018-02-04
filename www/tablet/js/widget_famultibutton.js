@@ -53,11 +53,11 @@ var Modul_famultibutton = function () {
         var id = elem.data("device") + "_" + elem.data('get');
         var now = new Date();
         var til = new Date(localStorage.getItem("ftui_timer_til_" + id));
-        var secondes = localStorage.getItem("ftui_timer_sec_" + id);
         var count = (til - now) / 1000;
+        var secondes = count;
 
         var faelem = elem.data('famultibutton');
-        if (faelem) {
+        if (faelem && count > 0) {
             clearTimeout(elem.data('timer'));
             faelem.setProgressValue(1);
             elem.data('timer', setInterval(function () {
@@ -71,19 +71,33 @@ var Modul_famultibutton = function () {
         }
     }
 
-    function checkForTimer(elem) {
-        var secondes = getSecondes(elem);
+    function checkForTimer(elem, force) {
+        var id = elem.data("device") + "_" + elem.data('get');
+        var secondes = localStorage.getItem("ftui_timer_sec_" + id);
+        if (!secondes) {
+            secondes = getSecondes(elem);
+        }
         if (secondes && $.isNumeric(secondes)) {
-            var now = new Date();
-            var til = new Date();
-            var id = elem.data("device") + "_" + elem.data('get');
-            til.setTime(now.getTime() + (parseInt(secondes) * 1000));
-            localStorage.setItem("ftui_timer_sec_" + id, secondes);
-            localStorage.setItem("ftui_timer_til_" + id, til);
-            startTimer(elem);
+            var ts = elem.getReading('get').date;
 
-            //inform other widgets to check their timer
-            $(document).trigger('onforTimerStarted', [id]);
+            if (ts || force) {
+                var now = (ts && !force) ? ts.toDate() : new Date();
+                var til = now;
+                
+                til.setTime(now.getTime() + (parseInt(secondes) * 1000));
+
+                if (force) {
+                    localStorage.setItem("ftui_timer_sec_" + id, secondes);                
+                }
+                
+                localStorage.setItem("ftui_timer_til_" + id, til);
+                startTimer(elem);
+
+                if (force) {
+                    //inform other widgets to check their timer
+                    $(document).trigger('onforTimerStarted', [id]);
+                }
+            }
         }
     }
 
@@ -91,7 +105,7 @@ var Modul_famultibutton = function () {
 
         if (localStorage.getItem("ftui_timer_til_" + id)) {
             var secondes = getSecondes(elem);
-            if (localStorage.getItem("ftui_timer_sec_" + id) == secondes || !secondes) {
+            if (localStorage.getItem("ftui_timer_sec_" + id) == secondes) {
                 startTimer(elem);
             } else {
                 stopRunningTimer(elem);
@@ -258,7 +272,7 @@ var Modul_famultibutton = function () {
         if (doubleclicked(elem, 'on')) {
             me.clicked(elem, 'on');
             elem.trigger("toggleOn");
-            checkForTimer(elem);
+            checkForTimer(elem, 'force');
             var blink = elem.data('blink');
             // blink=on     -> always reset state after 200ms
             // blink=off    -> never reset state after 200ms

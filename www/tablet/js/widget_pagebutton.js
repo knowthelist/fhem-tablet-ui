@@ -126,7 +126,7 @@ var Modul_pagebutton = function () {
     function showPage(elemPage, duration) {
 
         if (elemPage.length > 0) {
-            if (duration == 0) {
+            if (duration === 0) {
                 elemPage.siblings().filter('.page.active').removeClass("active").hide();
                 elemPage.addClass('active').show();
             } else {
