@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.37
+ * Version: 2.6.38
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -219,7 +219,7 @@ var Modul_widget = function () {
                         reading = fqreading[1].replace(']', '');
                     }
                     // fill objects for mapping from FHEMWEB paramid to device + reading
-                    
+
                     if (ftui.isValid(device) && ftui.isValid(reading) &&
                         device !== '' && reading !== '' &&
                         device !== ' ' && reading !== ' ') {
@@ -321,7 +321,7 @@ var plugins = {
         ftui.log(1, 'Load plugin "' + name + '" for area "' + area + '"');
         return ftui.loadPlugin(name, area);
     },
-    
+
     reinit: function () {
         $.each(this.modules, function (index, module) {
             //Iterate each module and run update function if module is available
@@ -350,7 +350,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.37',
+    version: '2.6.38',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -428,7 +428,11 @@ var ftui = {
         var url = window.location.pathname;
         ftui.config.filename = url.substring(url.lastIndexOf('/') + 1);
         ftui.log(1, 'Filename: ' + ftui.config.filename);
-        ftui.config.fhemDir = $("meta[name='fhemweb_url']").attr("content") || location.origin + "/fhem/";
+        var fhemUrl = $("meta[name='fhemweb_url']").attr("content");
+        ftui.config.fhemDir = fhemUrl || location.origin + "/fhem/";
+        if (fhemUrl && new RegExp("(?!\/)").test(fhemUrl)) {
+            ftui.config.fhemDir = location.origin + "/" + ftui.config.fhemDir + "/";
+        }
         ftui.config.fhemDir = ftui.config.fhemDir.replace('///', '//');
         ftui.log(1, 'FHEM dir: ' + ftui.config.fhemDir);
         // lang
@@ -664,8 +668,8 @@ var ftui = {
                 gridgrid.css({
                     'background-color': 'transparent',
                     'margin': '-' + ftui.gridster.margins + 'px',
-//                    'width': gridgrid.parent().width() - gridgrid.position().left,
-//                    'height': '100%'
+                    //                    'width': gridgrid.parent().width() - gridgrid.position().left,
+                    //                    'height': '100%'
                 });
             });
 
@@ -883,7 +887,7 @@ var ftui = {
                         var newParam = section[reading];
                         if (typeof newParam !== 'object') {
                             //ftui.log(5,'newParam='+newParam);
-                            
+
                             newParam = {
                                 "Value": newParam,
                                 "Time": ""
@@ -894,7 +898,7 @@ var ftui = {
                         if (ftui.subscriptions[paramid]) {
                             var oldParam = ftui.getDeviceParameter(device, reading);
                             isUpdated = (!oldParam || oldParam.val !== newParam.Value || oldParam.date !== newParam.Time);
-                            ftui.log(5,'isUpdated='+isUpdated);
+                            ftui.log(5, 'isUpdated=' + isUpdated);
                         }
                         //write into internal cache object
                         var params = ftui.deviceStates[device] || {};

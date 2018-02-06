@@ -548,42 +548,35 @@ var Modul_weather = function () {
     };
 
     function showOverlay(elem, value) {
-        elem.find('#warn-back').remove();
         elem.find('#warn').remove();
-
         if (ftui.isValid(value) && value !== "") {
-            var val = ($.isNumeric(value) && value < 100) ? Number(value).toFixed(0) : '!';
-            var bgWarnElem = $('<i/>', {
-                id: 'warn-back',
-                class: 'fa fa-stack-1x fa-circle'
-            }).appendTo(elem);
-
-            var fgWarnElem = $('<i/>', {
+            var val = ($.isNumeric(value)) ? Number(value).toFixed(0) : '!';
+            var digits = val.toString().length;
+            var faElem = elem.find('.famultibutton');
+            var warnElem = $('<i/>', {
                 id: 'warn',
-                class: 'fa fa-stack-1x '
+                class: 'digits' +digits
             }).html(val).appendTo(elem);
 
             if (elem.isValidData('warn-color')) {
-                fgWarnElem.css({
+                warnElem.css({
                     color: elem.data('warn-color')
                 });
             }
             if (elem.isValidData('warn-background-color')) {
-                bgWarnElem.css({
-                    color: elem.data('warn-background-color')
+                warnElem.css({
+                    backgroundColor: elem.data('warn-background-color')
                 });
             }
             if (elem.hasClass('warnsamecolor')) {
-                fgWarnElem.css({
-                    color: '#000'
-                });
-                bgWarnElem.css({
-                    color: elem.data('on-color')
+                warnElem.css({
+                    color: '#000',
+                    backgroundColor: elem.data('on-color')
                 });
             }
         }
     }
-
+    
     function init_ui(elem) {
         var icon = $('<div class="weather-icon"></div>');
         elem.append(icon);
