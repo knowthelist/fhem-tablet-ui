@@ -9,13 +9,16 @@
 
 function depends_checklist() {
 
+    var deps = [];
+
     if (!$('link[href$="css/ftui_checklist.css"]').length) {
         deps.push(ftui.config.basedir + "css/ftui_checklist.css");
     }
-    
+
     if (typeof window["Modul_select"] === 'undefined') {
-        return ["select"];
+        deps.push("select");
     }
+    return deps;
 }
 
 var Modul_checklist = function () {
