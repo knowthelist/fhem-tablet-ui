@@ -80,7 +80,7 @@ UPD 2018-01-21_14:49:42 1769 www/tablet/js/widget_button.js
 UPD 2018-01-21_14:49:40 17859 www/tablet/js/widget_calview.js
 UPD 2017-12-10_15:29:50 239224 www/tablet/js/widget_chart.js
 UPD 2018-01-21_14:49:38 4176 www/tablet/js/widget_checkbox.js
-UPD 2017-12-30_20:00:45 3355 www/tablet/js/widget_checklist.js
+UPD 2018-02-06_11:06:22 3390 www/tablet/js/widget_checklist.js
 UPD 2018-01-21_14:50:08 3271 www/tablet/js/widget_circlemenu.js
 UPD 2018-01-21_14:50:26 1684 www/tablet/js/widget_classchanger.js
 UPD 2017-03-03_01:43:22 5829 www/tablet/js/widget_clock.js
@@ -99,7 +99,7 @@ UPD 2018-01-21_14:52:43 5415 www/tablet/js/widget_gds.js
 UPD 2017-02-28_22:02:28 8689 www/tablet/js/widget_highchart.js
 UPD 2017-02-28_22:04:09 8209 www/tablet/js/widget_highchart3d.js
 UPD 2018-01-21_14:53:31 11416 www/tablet/js/widget_homestatus.js
-UPD 2018-01-21_14:53:43 10264 www/tablet/js/widget_html.js
+UPD 2018-02-04_14:05:00 10142 www/tablet/js/widget_html.js
 UPD 2017-12-26_20:31:09 5013 www/tablet/js/widget_iframe.js
 UPD 2018-01-21_14:54:00 5632 www/tablet/js/widget_image.js
 UPD 2018-01-21_14:54:12 1113 www/tablet/js/widget_include.js
