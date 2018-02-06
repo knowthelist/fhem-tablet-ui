@@ -10,6 +10,7 @@ polyline {
     stroke: #32a054 !important;
 }
 
+/*
 .pagetab.on{background-color:#32a054;}
 .dimmer.on{background-color:#32a054;}
 .symbol.on{color:#32a054;background-color:#32a054;}
@@ -19,3 +20,27 @@ polyline {
 .homestatus{color:#32a054;}
 .slider{color:#32a054;}
 .volume.hdcolor{color:#32a054;}
+*/
+
+
+[data-type="switch"] .active #bg,
+[data-type="dimmer"] .active #bg,
+[data-type="symbol"] .active #bg,
+[data-type="push"] .active #bg {
+    color:#32a054 !important;
+}
+[data-type="push"] .active #fg {
+    color:#32a054 !important;
+}
+
+[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]) .active #fg {
+    color:#32a054 !important;
+}
+
+[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]) :not(.active) #fg {
+        color:#505050 !important;
+}
+
+/* pseudo classes for widget init function */
+
+.volume.handle{color:#32a054;}
