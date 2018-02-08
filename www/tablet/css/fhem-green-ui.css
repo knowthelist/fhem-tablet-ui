@@ -33,12 +33,8 @@ polyline {
     color:#32a054 !important;
 }
 
-[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]) .active #fg {
-    color:#32a054 !important;
-}
-
-[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]) :not(.active) #fg {
-        color:#505050 !important;
+[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#fg {
+    color: #32a054 !important;
 }
 
 /* pseudo classes for widget init function */

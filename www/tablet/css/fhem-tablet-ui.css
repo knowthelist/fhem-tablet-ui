@@ -3433,11 +3433,11 @@ img.faded {
 
 /* color theme classes for widgets */
 
-[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]) .active #fg {
+[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#fg {
     color: #aa6900 !important;
 }
 
-[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]) :not(.active) #fg {
+[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#fg {
     color: #505050 !important;
 }
 
