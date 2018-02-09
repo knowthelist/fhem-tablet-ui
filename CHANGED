@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2018-02-08
- - Update for fa-multi-button lib
+2018-02-09
+ - Fixed a bug with fhemweb_url #219
