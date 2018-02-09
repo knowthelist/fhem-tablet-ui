@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.38
+ * Version: 2.6.39
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -350,7 +350,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.38',
+    version: '2.6.39',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -430,8 +430,8 @@ var ftui = {
         ftui.log(1, 'Filename: ' + ftui.config.filename);
         var fhemUrl = $("meta[name='fhemweb_url']").attr("content");
         ftui.config.fhemDir = fhemUrl || location.origin + "/fhem/";
-        if (fhemUrl && new RegExp("(?!\/)").test(fhemUrl)) {
-            ftui.config.fhemDir = location.origin + "/" + ftui.config.fhemDir + "/";
+        if (fhemUrl && new RegExp("^((?!http:\/\/|https:\/\/).)*$").test(fhemUrl)) {
+            ftui.config.fhemDir = location.origin + "/" + fhemUrl + "/";
         }
         ftui.config.fhemDir = ftui.config.fhemDir.replace('///', '//');
         ftui.log(1, 'FHEM dir: ' + ftui.config.fhemDir);
