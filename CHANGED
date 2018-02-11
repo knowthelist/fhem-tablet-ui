@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2018-02-09
- - Corrected warn badge font style
+2018-02-12
+ - Fixed a bug which ignored the lang meta tag
