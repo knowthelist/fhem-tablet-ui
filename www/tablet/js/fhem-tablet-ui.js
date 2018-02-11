@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.39
+ * Version: 2.6.40
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -350,7 +350,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.39',
+    version: '2.6.40',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -437,7 +437,7 @@ var ftui = {
         ftui.log(1, 'FHEM dir: ' + ftui.config.fhemDir);
         // lang
         var userLang = navigator.language || navigator.userLanguage;
-        ftui.config.lang = $("meta[name='lang']").attr("content") || (ftui.isValid(userLang)) ? userLang.split('-')[0] : 'de';
+        ftui.config.lang = $("meta[name='lang']").attr("content") || ((ftui.isValid(userLang)) ? userLang.split('-')[0] : 'de');
         // credentials
         ftui.config.username = $("meta[name='username']").attr("content");
         ftui.config.password = $("meta[name='password']").attr("content");
