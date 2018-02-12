@@ -83,13 +83,13 @@ var Modul_famultibutton = function () {
             if (ts || force) {
                 var now = (ts && !force) ? ts.toDate() : new Date();
                 var til = now;
-                
+
                 til.setTime(now.getTime() + (parseInt(secondes) * 1000));
 
                 if (force) {
-                    localStorage.setItem("ftui_timer_sec_" + id, secondes);                
+                    localStorage.setItem("ftui_timer_sec_" + id, secondes);
                 }
-                
+
                 localStorage.setItem("ftui_timer_til_" + id, til);
                 startTimer(elem);
 
@@ -157,7 +157,7 @@ var Modul_famultibutton = function () {
             var faElem = elem.find('.famultibutton');
             var warnElem = $('<i/>', {
                 id: 'warn',
-                class: 'digits' +digits
+                class: 'digits' + digits
             }).html(val).appendTo(faElem);
 
             if (elem.isValidData('warn-color')) {
@@ -178,7 +178,7 @@ var Modul_famultibutton = function () {
             }
         }
     }
-            
+
     function showMultiStates(elem, states, state, idxOn) {
 
         var idx = ftui.indexOfGeneric(states, state);
@@ -192,18 +192,33 @@ var Modul_famultibutton = function () {
                     faelem.setOff();
                 }
 
-                var icons = elem.data('icons'),
-                    classes = elem.data('classes'),
-                    bgicons = elem.data('background-icons'),
-                    colors = elem.data('colors'),
-                    bgcolors = elem.data('background-colors');
+                /*jshint -W030*/
+                var icons = elem.data("icons"),
+                    classes = elem.data("classes"),
+                    bgicons = elem.data("background-icons"),
+                    colors = elem.data("colors") || elem.data("on-colors"),
+                    bgcolors = elem.data("background-colors") || elem.data("on-background-colors");
+
+                void 0 === icons && (icons = new Array(elem.data("icon") || "fa-power-off"));
+                void 0 === classes && (classes = new Array(""));
+                void 0 === bgicons && (bgicons = new Array(elem.data("background-icon") || ""));
+                void 0 === colors && (colors = new Array(elem.data("on-color") || elem.data("off-color") || "#505050"));
+                void 0 === bgcolors && (bgcolors = new Array(elem.data("on-background-color") || elem.data("off-background-color") || "#505050"));
+
+                for (var i = 0, len = states.length; i < len; i++) {
+                    void 0 === icons[i] && (icons[i] = icons[i > 0 ? i - 1 : 0]);
+                    void 0 === classes[i] && (classes[i] = classes[i > 0 ? i - 1 : 0]);
+                    void 0 === bgicons[i] && (bgicons[i] = bgicons[i > 0 ? i - 1 : 0]);
+                    void 0 === colors[i] && (colors[i] = colors[i > 0 ? i - 1 : 0]);
+                    void 0 === bgcolors[i] && (bgcolors[i] = bgcolors[i > 0 ? i - 1 : 0]);
+                }
 
                 //elem.children().children('#fg');
                 localStorage.setItem(elem.wgid() + '_index', idx);
                 var faElem = elem.find('.famultibutton');
                 faElem.removeClass(classes.join(" "));
                 faElem.addClass(classes[idx]);
-                
+
                 // Get color values from reading or from fix array
                 var colorValue = (colors[idx].match(/:/)) ? elem.getReading(colors[idx]).val : colors[idx];
                 var bgColorValue = (bgcolors[idx].match(/:/)) ? elem.getReading('on-background-color').val : bgcolors[idx];
@@ -484,7 +499,7 @@ var Modul_famultibutton = function () {
         elem.initData('warn-on', '(true|on|[1-9]{1}[0-9]*)');
         elem.initData('warn-off', '(false|off|0)');
         me.addReading(elem, 'warn');
-        
+
         var elemData = elem.data();
         elem.initData("off-color", elemData.color || ftui.getStyle("." + me.widgetname + ".off", "color") || "#505050");
         elem.initData("off-background-color", elemData.backgroundColor || ftui.getStyle("." + me.widgetname + ".off", "background-color") || "#505050");
@@ -500,53 +515,24 @@ var Modul_famultibutton = function () {
             elem.data("on-background-color", elemData.onColor);
             elem.data("on-color", c2);
         }
-        
+
         // translate html color names into FTUI colors
         elem.data("off-color", ftui.getStyle("." + elemData.offColor, "color") || elemData.offColor);
         elem.data("on-color", ftui.getStyle("." + elemData.onColor, "color") || elemData.onColor);
         elem.data("off-background-color", ftui.getStyle("." + elemData.offBackgroundColor, "color") || elemData.offBackgroundColor);
         elem.data("on-background-color", ftui.getStyle("." + elemData.onBackgroundColor, "color") || elemData.onBackgroundColor);
-        
+
         if (elem.isDeviceReading("on-color")) {
             me.addReading(elem, "on-color");
         }
         if (elem.isDeviceReading("on-background-color")) {
-            me.addReading(elem, "on-background-color"); 
+            me.addReading(elem, "on-background-color");
         }
         if (elem.isDeviceReading("off-color")) {
             me.addReading(elem, "off-color");
         }
-        if (elem.isDeviceReading("off-background-color")){
+        if (elem.isDeviceReading("off-background-color")) {
             me.addReading(elem, "off-background-color");
-        }
-        var states = elem.data("states") || elem.data("limits") || elem.data("get-on");
-            
-        /*jshint -W030*/
-        if ($.isArray(states)) {
-            var icons = elem.data("icons"),
-                classes = elem.data("classes"),
-                bgicons = elem.data("background-icons"),
-                colors = elem.data("colors") || elem.data("on-colors"),
-                bgcolors = elem.data("background-colors") || elem.data("on-background-colors");
-
-            void 0 === icons && (icons = new Array(elem.data("icon") || "fa-power-off"));
-            void 0 === classes && (classes = new Array(""));
-            void 0 === bgicons && (bgicons = new Array(elem.data("background-icon") || ""));
-            void 0 === colors && (colors = new Array(elem.data("on-color") || elem.data("off-color") || "#505050"));
-            void 0 === bgcolors && (bgcolors = new Array(elem.data("on-background-color") || elem.data("off-background-color") || "#505050"));
-
-            for (var i = 0, len = states.length; i < len; i++) {
-                void 0 === icons[i] && (icons[i] = icons[i > 0 ? i - 1 : 0]);
-                void 0 === classes[i] && (classes[i] = classes[i > 0 ? i - 1 : 0]);
-                void 0 === bgicons[i] && (bgicons[i] = bgicons[i > 0 ? i - 1 : 0]); 
-                void 0 === colors[i] && (colors[i] = colors[i > 0 ? i - 1 : 0]);
-                void 0 === bgcolors[i] && (bgcolors[i] = bgcolors[i > 0 ? i - 1 : 0]);
-            }
-            elem.data("icons", icons);
-            elem.data("classes", classes), 
-            elem.data("background-icons", bgicons); 
-            elem.data("colors", colors);
-            elem.data("background-colors", bgcolors);
         }
     }
 
