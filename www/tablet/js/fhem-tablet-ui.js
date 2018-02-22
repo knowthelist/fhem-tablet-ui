@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.40
+ * Version: 2.6.41
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -71,16 +71,16 @@ var Modul_widget = function () {
                     var value = elem.getReading('hide').val;
                     if (elem.matchingState('hide', value) === 'on') {
                         if (ftui.isValid(elem.data('hideparents'))) {
-                            elem.parents(elem.data('hideparents')).hide();
+                            elem.parents(elem.data('hideparents')).addClass('hide');
                         } else {
-                            elem.hide();
+                            elem.addClass('hide');
                         }
                     }
                     if (elem.matchingState('hide', value) === 'off') {
                         if (ftui.isValid(elem.data('hideparents'))) {
-                            elem.parents(elem.data('hideparents')).show();
+                            elem.parents(elem.data('hideparents')).removeClass('hide');
                         } else {
-                            elem.show();
+                            elem.removeClass('hide');
                         }
                     }
                 });
@@ -350,7 +350,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.40',
+    version: '2.6.41',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -886,7 +886,7 @@ var ftui = {
                         var paramid = (reading === 'STATE') ? device : [device, reading].join('-');
                         var newParam = section[reading];
                         if (typeof newParam !== 'object') {
-                            //ftui.log(5,'newParam='+newParam);
+                            //ftui.log(5,'paramid='+paramid+' newParam='+newParam);
 
                             newParam = {
                                 "Value": newParam,
@@ -934,7 +934,7 @@ var ftui = {
                     for (var i = len - 1; i >= 0; i -= 1) {
                         var res = results[i];
                         var devName = res.Name;
-                        if (devName.indexOf('FHEMWEB') < 0 && devName.indexOf('WEB_') < 0) {
+                        if (devName.indexOf('FHEMWEB') < 0 && !devName.match(/WEB_\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}_\d{5}/)) {
                             checkReading(devName, res.Internals);
                             checkReading(devName, res.Attributes);
                             checkReading(devName, res.Readings);
@@ -1527,21 +1527,20 @@ var ftui = {
         if (ftui.config.debuglevel > 0) {
             var d = new Date();
             d.setTime(ftui.states.lastShortpoll * 1000);
-            console.log('--------- start healthCheck --------------');
-            console.log('now: ' + new Date());
-            console.log('FTUI version: ' + ftui.version);
-            console.log('Longpoll: ' + ftui.config.doLongPoll);
-            console.log('Longpoll type: ' + ftui.config.longPollType);
-            console.log('Longpoll objects there: ' + (ftui.isValid(ftui.longPollRequest) && ftui.isValid(ftui.xhr) || ftui.isValid(
+            console.log('healthCheck: now=' + new Date());
+            console.log('healthCheck: FTUI version=' + ftui.version);
+            console.log('healthCheck: Longpoll=' + ftui.config.doLongPoll);
+            console.log('healthCheck: Longpoll type=' + ftui.config.longPollType);
+            console.log('healthCheck: Longpoll objects there=' + (ftui.isValid(ftui.longPollRequest) && ftui.isValid(ftui.xhr) || ftui.isValid(
                 ftui.websocket)));
-            console.log('Longpoll current line: ' + ftui.poll.currLine);
-            console.log('Longpoll last event before: ' + ftui.poll.lastEventTimestamp.ago());
-            console.log('Longpoll last reading update before: ' + ftui.poll.lastUpdateTimestamp.ago());
-            console.log('Shortpoll interval: ' + ftui.config.shortpollInterval);
-            console.log('Shortpoll last run before: ' + d.ago());
-            console.log('FHEM dev/par count: ' + Object.keys(ftui.paramIdMap).length);
-            console.log('FTUI known devices count: ' + Object.keys(ftui.deviceStates).length);
-            console.log('Current modules count: ' + plugins.modules.length);
+            console.log('healthCheck: Longpoll current line=' + ftui.poll.currLine);
+            console.log('healthCheck: Longpoll last event before=' + ftui.poll.lastEventTimestamp.ago());
+            console.log('healthCheck: Longpoll last reading update before=' + ftui.poll.lastUpdateTimestamp.ago());
+            console.log('healthCheck: Shortpoll interval=' + ftui.config.shortpollInterval);
+            console.log('healthCheck: Shortpoll last run before=' + d.ago());
+            console.log('healthCheck: FHEM dev/par count=' + Object.keys(ftui.paramIdMap).length);
+            console.log('healthCheck: FTUI known devices count=' + Object.keys(ftui.deviceStates).length);
+            console.log('healthCheck: Current modules count=' + plugins.modules.length);
 
             // modules details
             var i = 0;
@@ -1549,11 +1548,11 @@ var ftui = {
 
                 for (var len = plugins.modules.length; i < len; i++) {
 
-                    console.log(i + '. ' + plugins.modules[i].widgetname + "@" + plugins.modules[i].area);
+                    console.log('healthCheck: module-' + i + ' ' + plugins.modules[i].widgetname + "@" + plugins.modules[i].area);
                 }
             }
 
-            console.log('Current subscriptions count: ' + Object.keys(ftui.subscriptions).length);
+            console.log('healthCheck: Current subscriptions count=' + Object.keys(ftui.subscriptions).length);
 
             // subscriptions details
 
@@ -1566,18 +1565,17 @@ var ftui = {
                 if (ftui.deviceStates[mDev]) {
                     var params = ftui.deviceStates[mDev];
                     if (params[mRead]) {
-                        mValid = (params[mRead].valid) ? params[mRead].val : '--known-but-invalid--';
+                        mValid = (params[mRead].valid) ? "'" + params[mRead].val + "'" : '--known-but-invalid--';
                     }
                 }
                 if (ftui.config.debuglevel > 1 || mValid === "--unknown--" || mValid === "--known-but-invalid--") {
-                    console.log(i + '. ' + mDev + ":" + mRead + " -> " + mValid);
+                    console.log('healthCheck: subscription-'+i + ' ' + mDev + ":" + mRead + " -> " + mValid);
                 }
             }
 
 
-            console.log('Page length: ' + $('html').html().length);
-            console.log('Widgets count: ' + $('[data-type]').length);
-            console.log('--------- end healthCheck ---------------');
+            console.log('healthCheck: Page length=' + $('html').html().length);
+            console.log('healthCheck: Widgets count=' + $('[data-type]').length);
         }
         var timeDiff = new Date() - ftui.poll.lastEventTimestamp;
         if (timeDiff / 1000 > ftui.config.maxLongpollAge &&
