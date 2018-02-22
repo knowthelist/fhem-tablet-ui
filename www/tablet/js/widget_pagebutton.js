@@ -221,7 +221,7 @@ var Modul_pagebutton = function () {
         // is-current-button detection
         var url = window.location.pathname + (hasHash ? window.location.hash : '');
         var isActive = url.match(new RegExp('^' + elem.data('active-pattern') + '$'));
-        if (isActive || ftui.config.filename === '' && dataUrl === 'index.html') {
+        if (isActive || (ftui.config.filename === '' && dataUrl === 'index.html')) {
             elem.siblings().removeClass('default');
             elem.addClass('default');
         }
