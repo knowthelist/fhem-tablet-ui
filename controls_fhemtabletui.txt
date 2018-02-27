@@ -66,7 +66,7 @@ UPD 2016-03-24_07:51:54 184969 www/tablet/fonts/weathericons-regular-webfont.svg
 UPD 2016-03-24_07:51:54 99564 www/tablet/fonts/weathericons-regular-webfont.ttf
 UPD 2016-03-24_07:51:54 56468 www/tablet/fonts/weathericons-regular-webfont.woff
 UPD 2016-03-24_07:51:54 44720 www/tablet/fonts/weathericons-regular-webfont.woff2
-UPD 2018-02-27_20:48:03 6592 www/tablet/ftui_check.html
+UPD 2018-02-27_21:34:32 6589 www/tablet/ftui_check.html
 UPD 2017-02-11_14:27:26 3265 www/tablet/ftui_snippet_tester.html
 UPD 2017-11-14_00:10:10 584382 www/tablet/icons_table.html
 UPD 2017-02-11_14:27:26 17624 www/tablet/index-example.html
