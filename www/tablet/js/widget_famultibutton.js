@@ -19,6 +19,7 @@ function depends_famultibutton() {
 
 var Modul_famultibutton = function () {
 
+
     // Notification from other widgets
     $(document).on("onforTimerStarted", function (event, wgtId) {
         if (me.elements.length > 0) {
@@ -52,7 +53,7 @@ var Modul_famultibutton = function () {
     function startTimer(elem) {
         var id = elem.data("device") + "_" + elem.data('get');
         var now = new Date();
-        var til = new Date(localStorage.getItem("ftui_timer_til_" + id));
+        var til = new Date(sessionStorage.getItem("ftui.timer_til." + id));
         var count = (til - now) / 1000;
         var secondes = count;
 
@@ -63,8 +64,8 @@ var Modul_famultibutton = function () {
             elem.data('timer', setInterval(function () {
                 if (count-- <= 0) {
                     clearInterval(elem.data('timer'));
-                    localStorage.removeItem("ftui_timer_sec_" + id);
-                    localStorage.removeItem("ftui_timer_til_" + id);
+                    sessionStorage.removeItem("ftui.timer_sec." + id);
+                    sessionStorage.removeItem("ftui.timer_til." + id);
                 }
                 faelem.setProgressValue(count / secondes);
             }, 1000));
@@ -73,7 +74,7 @@ var Modul_famultibutton = function () {
 
     function checkForTimer(elem, force) {
         var id = elem.data("device") + "_" + elem.data('get');
-        var secondes = localStorage.getItem("ftui_timer_sec_" + id);
+        var secondes = sessionStorage.getItem("ftui.timer_sec." + id);
         if (!secondes) {
             secondes = getSecondes(elem);
         }
@@ -87,10 +88,10 @@ var Modul_famultibutton = function () {
                 til.setTime(now.getTime() + (parseInt(secondes) * 1000));
 
                 if (force) {
-                    localStorage.setItem("ftui_timer_sec_" + id, secondes);
+                    sessionStorage.setItem("ftui.timer_sec." + id, secondes);
                 }
 
-                localStorage.setItem("ftui_timer_til_" + id, til);
+                sessionStorage.setItem("ftui.timer_til." + id, til);
                 startTimer(elem);
 
                 if (force) {
@@ -103,9 +104,9 @@ var Modul_famultibutton = function () {
 
     function checkForRunningTimer(elem, id) {
 
-        if (localStorage.getItem("ftui_timer_til_" + id)) {
+        if (sessionStorage.getItem("ftui.timer_til." + id)) {
             var secondes = getSecondes(elem);
-            if (localStorage.getItem("ftui_timer_sec_" + id) == secondes) {
+            if (sessionStorage.getItem("ftui.timer_sec." + id) == secondes) {
                 startTimer(elem);
             } else {
                 stopRunningTimer(elem);
@@ -214,7 +215,7 @@ var Modul_famultibutton = function () {
                 }
 
                 //elem.children().children('#fg');
-                localStorage.setItem(elem.wgid() + '_index', idx);
+                sessionStorage.setItem(['ftui',elem.widgetId(),'idx'].join('.'), idx);
                 var faElem = elem.find('.famultibutton');
                 faElem.removeClass(classes.join(" "));
                 faElem.addClass(classes[idx]);
@@ -281,8 +282,8 @@ var Modul_famultibutton = function () {
             elem.trigger("toggleOff");
             var id = elem.data("device") + "_" + elem.data('get');
             stopRunningTimer(elem);
-            localStorage.removeItem("ftui_timer_sec_" + id);
-            localStorage.removeItem("ftui_timer_til_" + id);
+            sessionStorage.removeItem("ftui.timer_sec." + id);
+            sessionStorage.removeItem("ftui.timer_til." + id);
 
             //inform other widgets to check their timer
             $(document).trigger('onforTimerStopped', [id]);
@@ -323,8 +324,7 @@ var Modul_famultibutton = function () {
             if (!$.isArray(sets)) {
                 sets = new Array(String(sets));
             }
-            var id = elem.wgid();
-            var s = localStorage.getItem(elem.wgid() + '_index') || 0;
+            var s = sessionStorage.getItem(['ftui',elem.widgetId(),'idx'].join('.')) || 0;
             var set = typeof sets[s] != 'undefined' ? sets[s] : sets[0];
             //supress sending possible
 
@@ -332,7 +332,7 @@ var Modul_famultibutton = function () {
             if (set !== '') {
                 s++;
                 if (s >= sets.length) s = 0;
-                localStorage.setItem(me.widgetname + '_' + id + '_index', s);
+                sessionStorage.setItem(['ftui',elem.widgetId(),'idx'].join('.'), s);
 
                 // update widgets with multistate mode directly on click
 

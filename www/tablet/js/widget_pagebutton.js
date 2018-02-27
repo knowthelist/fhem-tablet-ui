@@ -29,8 +29,8 @@ var Modul_pagebutton = function () {
     $(document).on("initWidgetsDone", function (e, area) {
         me.elements.each(function (index) {
             var elem = $(this);
-            if (elem.data('data-load') === area) {
-                localStorage.removeItem(elem.data('lock-id'));
+            if (elem.data('load') === area) {
+                sessionStorage.removeItem(elem.data('lock-id'));
                 startReturnTimer(me.elements.eq(0));
             }
         });
@@ -65,11 +65,11 @@ var Modul_pagebutton = function () {
 
                 if (ftui.isValid(url)) {
                     var hashUrl = url.replace('#', '');
-                    var lockID = ['ftui', me.widgetname, hashUrl, page].join('_');
+                    var lockID = ['ftui', me.widgetname, hashUrl, page].join('.');
 
-                    if (!localStorage.getItem(lockID)) {
+                    if (!sessionStorage.getItem(lockID)) {
 
-                        localStorage.setItem(lockID, 'locked');
+                        sessionStorage.setItem(lockID, 'locked');
                         elem.attr('data-lock-id', lockID);
                         ftui.log(1, me.widgetname + ': start to load ' + hashUrl + ' content into $("' + page + '")');
 
@@ -119,7 +119,7 @@ var Modul_pagebutton = function () {
         });
 
         lastUrl = window.location.href;
-        localStorage.setItem('pagebutton_lastSel', page);
+        sessionStorage.setItem('ftui.pagebutton.lastSel', page);
         startReturnTimer(me.elements.eq(0));
     }
 
@@ -146,8 +146,8 @@ var Modul_pagebutton = function () {
     function startReturnTimer(elem) {
 
         var waitUntilReturn = elem.data('return-time');
-        var lastUrl = localStorage.getItem('pagebutton_lastSel');
-        var returnTimer = localStorage.getItem('pagebutton_returnTimer');
+        var lastUrl = sessionStorage.getItem('ftui.pagebutton.lastSel');
+        var returnTimer = sessionStorage.getItem('ftui.pagebutton.returnTimer');
         clearTimeout(returnTimer);
         if (waitUntilReturn > 0 && lastUrl !== elem.data('load')) {
             ftui.log(1, 'Reload main page in : ' + waitUntilReturn + ' seconds');
@@ -155,7 +155,7 @@ var Modul_pagebutton = function () {
                 // back to first page
                 me.toggleOn(elem);
             }, waitUntilReturn * 1000);
-            localStorage.setItem('pagebutton_returnTimer', returnTimer);
+            sessionStorage.setItem('ftui.pagebutton.returnTimer', returnTimer);
         }
     }
 
@@ -235,8 +235,8 @@ var Modul_pagebutton = function () {
         }
 
         // remove all left locks
-        var lockID = ['ftui', me.widgetname, hashUrl, sel].join('_');
-        localStorage.removeItem(lockID);
+        var lockID = ['ftui', me.widgetname, hashUrl, sel].join('.');
+        sessionStorage.removeItem(lockID);
 
 
         isActive = false;

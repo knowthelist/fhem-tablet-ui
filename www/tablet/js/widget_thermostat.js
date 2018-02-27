@@ -102,21 +102,21 @@ var Modul_thermostat = function () {
         }
         return false;
     }
-    
+
     function checkExtreme(v) {
         /*jshint validthis: true */
         if (v == this.min && this.off != -1) {
-                v = this.off;
+            v = this.off;
         } else if (v == this.max && this.boost != -1) {
-                v = this.boost;
+            v = this.boost;
         }
         return v;
     }
-    
+
     function onFormat(v) {
         /*jshint validthis: true */
         v = _base.onFormat(v);
-        return checkExtreme.call(this,v);
+        return checkExtreme.call(this, v);
     }
 
     function onChange(v) {
@@ -143,12 +143,12 @@ var Modul_thermostat = function () {
             if (this.$c.width() !== this.w) {
                 this.$c.width(this.w + 'px');
             }
-            
-            v = checkExtreme.call(this.o,v);
-            var mode = this.$.getReading(this.o.mode).val;
-            if (mode === 'auto')
-                v = mode + ' ' + v;
-            var cmdl = this.o.cmd + ' ' + device + ' ' + this.o.set + ' ' + v;
+
+            var val = checkExtreme.call(this.o, v),
+                mode = this.$.getReading(this.o.mode).val;
+            if (mode === 'auto' && val === v)
+                val = mode + ' ' + val;
+            var cmdl = this.o.cmd + ' ' + device + ' ' + this.o.set + ' ' + val;
             ftui.setFhemStatus(cmdl);
             ftui.toast(cmdl);
         }
@@ -160,7 +160,7 @@ var Modul_thermostat = function () {
         me.elements.each(function (index) {
             var elem = $(this);
             elem.attr("data-ready", "");
-            
+
             elem.initData('get', 'desired-temp');
             elem.initData('set', elem.data('get'));
             elem.initData('temp', 'measured-temp');
@@ -186,7 +186,7 @@ var Modul_thermostat = function () {
             me.addReading(elem, 'mode');
 
             me.init_attr(elem);
-            
+
             elem.initData('touch-height', elem.data('height'));
             elem.initData('touch-width', elem.data('width'));
             me.init_ui(elem);
@@ -207,14 +207,14 @@ var Modul_thermostat = function () {
                     var val = ftui.getPart(value, elem.data('get-value'));
                     var textdisplay = false;
                     switch (val) {
-                    case elem.data('off'):
-                        value = elem.data('min');
-                        textdisplay = elem.data('off');
-                        break;
-                    case elem.data('boost'):
-                        value = elem.data('max');
-                        textdisplay = elem.data('boost');
-                        break;
+                        case elem.data('off'):
+                            value = elem.data('min');
+                            textdisplay = elem.data('off');
+                            break;
+                        case elem.data('boost'):
+                            value = elem.data('max');
+                            textdisplay = elem.data('boost');
+                            break;
                     }
                     var knob_elem = elem.find('input');
                     if (knob_elem) {

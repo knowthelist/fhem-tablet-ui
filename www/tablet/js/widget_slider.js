@@ -32,10 +32,6 @@ var Modul_slider = function () {
         onResize();
     });
 
-    function elemID(elem) {
-        return me.widgetname + "_" + elem.data("device") + "_" + elem.data('get');
-    }
-
     function setTimer(elem, state) {
 
         ftui.log(2, me.widgetname + " - set timer to " + state);
@@ -45,15 +41,15 @@ var Modul_slider = function () {
             if (timerInterval > 0) {
                 var tid = setInterval(function () {
                     if (elem && elem.data('timer-step')) {
-                        var id = elemID(elem);
-                        var storeval = parseFloat(localStorage.getItem(id));
+                        var id = elem.widgetId();
+                        var storeval = parseFloat(sessionStorage.getItem(id));
 
                         var pwrng = elem.data('Powerange');
                         storeval = storeval + parseFloat(elem.data('timer-step'));
                         if (pwrng && storeval <= pwrng.options.max) {
-                            ftui.log(3, me.widgetname + " - id=" + id + ' / storeval=' + storeval);
+                            ftui.log(3, me.widgetname + ": id=" + id + ' / storeval=' + storeval);
                             pwrng.setStart(parseFloat(storeval));
-                            localStorage.setItem(id, storeval);
+                            sessionStorage.setItem(id, storeval);
                         }
                     } else {
                         clearInterval(tid);
@@ -71,7 +67,7 @@ var Modul_slider = function () {
     function onChange(elem) {
 
         var pwrng = elem.data('Powerange');
-        var id = elemID(elem);
+        var id = elem.widgetId();
 
         var selMode = elem.data('selection');
         var v = 0,
@@ -89,7 +85,7 @@ var Modul_slider = function () {
         if (elem.hasClass('value')) {
             elem.find('#slidervalue').text(v);
         }
-        var storeval = localStorage.getItem(id);
+        var storeval = sessionStorage.getItem(id);
 
         // isunsel == false (0) means drag is over
         if (pwrng && (!isunsel) && (selMode) && (sliVal != storeval)) {
@@ -110,7 +106,7 @@ var Modul_slider = function () {
             elem.data('value', elem.data('set-value').toString().replace('$v', v.toString()));
 
             // write visible value (from pwrng) to local storage NOT the fhem exposed value)
-            localStorage.setItem(elemID(elem), sliVal);
+            sessionStorage.setItem(elem.widgetId(), sliVal);
             elem.transmitCommand();
 
             elem.data('selection', 0);
@@ -122,8 +118,8 @@ var Modul_slider = function () {
         if (me.elements.length > 0) {
             me.elements.each(function (index) {
                 var elem = $(this);
-                var id = elemID(elem);
-                var storeval = localStorage.getItem(id);
+                var id = elem.widgetId();
+                var storeval = sessionStorage.getItem(id);
                 var pwrng = elem.data('Powerange');
                 if (pwrng) {
                     pwrng.setStart(parseFloat(storeval));
@@ -177,8 +173,8 @@ var Modul_slider = function () {
 
     function init_ui(elem) {
 
-        var id = elemID(elem);
-        var storeval = localStorage.getItem(id);
+        var id = elem.widgetId();
+        var storeval = sessionStorage.getItem(id);
         storeval = (storeval) ? storeval : '5';
 
         // prepare container element
@@ -232,7 +228,7 @@ var Modul_slider = function () {
             });
         }
 
-        localStorage.setItem(id, storeval);
+        sessionStorage.setItem(id, storeval);
         var width = elem.data('width');
         var widthUnit = ($.isNumeric(width)) ? 'px' : '';
         var height = elem.data('height');
@@ -376,7 +372,7 @@ var Modul_slider = function () {
                         var v = elem.hasClass('negated') ? pwrng.options.max + pwrng.options.min - parseFloat(val) : parseFloat(val);
                         pwrng.setStart(parseFloat(v));
 
-                        localStorage.setItem(elemID(elem), v);
+                        sessionStorage.setItem(elem.widgetId(), v);
                         ftui.log(1, 'slider dev:' + dev + ' par:' + par + ' changed to:' + v);
 
                         //set colors according matches for values
