@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.42
+ * Version: 2.6.43
  *
  * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -350,7 +350,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.42',
+    version: '2.6.43',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -574,6 +574,9 @@ var ftui = {
 
         });
 
+
+
+
         $(document).on("initWidgetsDone", function () {
 
             // start shortpoll delayed
@@ -584,6 +587,13 @@ var ftui = {
             ftui.initHeaderLinks();
             ftui.saveStatesLocal("subscriptions");
             ftui.saveStatesLocal("modules");
+
+            // calculate full line height
+            $(".line-full").each(function () {
+                $(this).css({
+                    'line-height': $(this).parent().height() + 'px'
+                });
+            });
 
             // trigger refreshs
             $(document).trigger('changedSelection');
@@ -2128,7 +2138,7 @@ function onjQueryLoaded() {
     //for widget
 
     $.fn.widgetId = function () {
-        return [$(this).data('type'), $(this).data('device').replace(' ', 'default'), $(this).data('get'), $(this).index()].join('.');
+        return [$(this).data('type'), ($(this).data('device')?$(this).data('device').replace(' ', 'default'):'default'), $(this).data('get'), $(this).index()].join('.');
     };
 
     $.fn.wgid = function () {
