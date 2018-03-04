@@ -35,13 +35,18 @@
             padding: 25px;
             border-radius: 30px
         }
-        
+
         td {
             border-bottom: 1px solid #bbb;
         }
 
     </style>
     <script>
+        function parseISOLocal(s) {
+            var b = new Date(s);
+            return b.toLocaleString();
+        }
+
         function update() {
 
             var ftui = {
@@ -93,7 +98,7 @@
             strMods = strMods + "</table>";
 
             // Short
-            strShort = strShort + "<tr><td>lastTimestamp</td><td class=''>" + ftui.poll.short.lastTimestamp + "</td></tr>";
+            strShort = strShort + "<tr><td>lastTimestamp</td><td class=''>" + parseISOLocal(ftui.poll.short.lastTimestamp); + "</td></tr>";
             strShort = strShort + "<tr><td>StatusText</td><td class=''>" + ftui.poll.short.request.statusText + "</td></tr>";
             strShort = strShort + "<tr><td>Duration</td><td class=''>" + ftui.poll.short.duration + "</td></tr>";
 
@@ -111,8 +116,8 @@
                 strLong = strLong + "<tr><td>readyState</td><td class=''>no longpoll object created</td></tr>";
             }
 
-            strLong = strLong + "<tr><td>lastEventTimestamp</td><td class=''>" + ftui.poll.long.lastEventTimestamp + "</td></tr>";
-            strLong = strLong + "<tr><td>lastUpdateTimestamp</td><td class=''>" + ftui.poll.long.lastUpdateTimestamp + "</td></tr>";
+            strLong = strLong + "<tr><td>lastEventTimestamp</td><td class=''>" + parseISOLocal(ftui.poll.long.lastEventTimestamp) + "</td></tr>";
+            strLong = strLong + "<tr><td>lastUpdateTimestamp</td><td class=''>" + parseISOLocal(ftui.poll.long.lastUpdateTimestamp) + "</td></tr>";
             strLong = strLong + "<tr><td>LastDevice</td><td class=''>" + ftui.poll.long.lastDevice + "</td></tr>";
             strLong = strLong + "<tr><td>LastReading</td><td class=''>" + ftui.poll.long.lastReading + "</td></tr>";
             strLong = strLong + "<tr><td>LastValue</td><td class=''>" + ftui.poll.long.lastValue + "</td></tr>";
