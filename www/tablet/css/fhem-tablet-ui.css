@@ -156,47 +156,47 @@ a:active {
 }
 
 .black {
-    color: #111111 !important;
+    color: #111111;
 }
 
 .white {
-    color: #ffffff !important;
+    color: #ffffff;
 }
 
 .orange {
-    color: #aa6900 !important;
+    color: #aa6900;
 }
 
 .red {
-    color: #ad3333 !important;
+    color: #ad3333;
 }
 
 .green {
-    color: #32a054 !important;
+    color: #32a054;
 }
 
 .mint {
-    color: #5bc995 !important;
+    color: #5bc995;
 }
 
 .lightblue {
-    color: #6699FF !important;
+    color: #6699FF;
 }
 
 .blue {
-    color: #337ab7 !important;
+    color: #337ab7;
 }
 
 .gray {
-    color: #8C8C8C !important;
+    color: #8C8C8C;
 }
 
 .yellow {
-    color: #ffe066 !important;
+    color: #ffe066;
 }
 
 .lightgray {
-    color: #cccccc !important;
+    color: #cccccc;
 }
 
 .border-black {
@@ -581,6 +581,10 @@ section {
     width: 45% !important;
 }
 
+.col-35 {
+    width: 35% !important;
+}
+
 .col-30 {
     width: 30% !important;
 }
@@ -593,6 +597,10 @@ section {
 .col-1-6,
 .col-15 {
     width: 16.6666667% !important;
+}
+
+.col-15 {
+    width: 15% !important;
 }
 
 .col-1-8,
@@ -1170,57 +1178,57 @@ main > .box.horizontal {
 
 .bg-lightgray,
 .btn-lightgray {
-    background-color: #777777 !important;
+    background-color: #777777;
 }
 
 .bg-orange,
 .btn-orange {
-    background-color: #aa6900 !important;
+    background-color: #aa6900;
 }
 
 .bg-red,
 .btn-red {
-    background-color: #ad3333 !important;
+    background-color: #ad3333;
 }
 
 .bg-green,
 .btn-green {
-    background-color: #32a054 !important;
+    background-color: #32a054;
 }
 
 .bg-mint,
 .btn-mint {
-    background-color: #5bc995 !important;
+    background-color: #5bc995;
 }
 
 .bg-ligthblue,
 .btn-ligthblue {
-    background-color: #6699FF !important;
+    background-color: #6699FF;
 }
 
 .bg-blue,
 .btn-blue {
-    background-color: #436D8D !important;
+    background-color: #436D8D;
 }
 
 .bg-white,
 .btn-white {
-    background-color: #ffffff !important;
+    background-color: #ffffff;
 }
 
 .bg-black,
 .btn-black {
-    background-color: #111111 !important;
+    background-color: #111111;
 }
 
 .bg-yellow,
 .btn-yellow {
-    background-color: #ffe066 !important;
+    background-color: #ffe066;
 }
 
 .bg-transparent,
 .btn-transparent {
-    background-color: transparent !important;
+    background-color: transparent;
 }
 
 
@@ -1972,22 +1980,42 @@ div[data-type="link"] > div.fa {
     margin-top: -10px !important;
 }
 
-.top-narrow {
+.top-narrow-50 {
+    margin-top: -0.5em !important;
+}
+
+.top-narrow,
+.top-narrow-100 {
     margin-top: -1em !important;
 }
 
+.top-narrow-150 {
+    margin-top: -1.5em !important;
+}
+
 .top-narrow-2x,
-.top-narrow-2 {
+.top-narrow-2,
+.top-narrow-200 {
     margin-top: -2em !important;
 }
 
+.top-narrow-250 {
+    margin-top: -2.5em !important;
+}
+
 .top-narrow-3x,
-.top-narrow-3 {
+.top-narrow-3,
+.top-narrow-300 {
     margin-top: -3em !important;
 }
 
+.top-narrow-350 {
+    margin-top: -3.5em !important;
+}
+
 .top-narrow-4x,
-.top-narrow-4 {
+.top-narrow-4,
+.top-narrow-400 {
     margin-top: -4em !important;
 }
 
@@ -2430,6 +2458,16 @@ div[data-type="link"] > div.fa {
     line-height: 600% !important;
 }
 
+.line-550,
+.row-550 {
+    line-height: 550% !important;
+}
+
+.line-500,
+.row-500 {
+    line-height: 500% !important;
+}
+
 .line-great,
 .line-450,
 .row-450 {
@@ -2450,6 +2488,11 @@ div[data-type="link"] > div.fa {
 .line-300,
 .row-300 {
     line-height: 300% !important;
+}
+
+.line-250,
+.row-250 {
+    line-height: 250% !important;
 }
 
 .line-bigger,

@@ -189,13 +189,15 @@ var Modul_pagebutton = function () {
 
     function init_attr(elem) {
 
+        elem.initData('off-color', '#505050');
+        elem.initData('off-background-color', elem.data('background-color') || 'transparent');
+        elem.initData('on-color', ftui.getClassColor(elem) || '#2A2A2A');
+        elem.initData('on-background-color', elem.data('background-color') || '#505050');
+        
         //init standard attributes 
         base.init_attr.call(me, elem);
 
-        elem.initData('off-color', ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#2A2A2A');
-        elem.initData('off-background-color', elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.off', 'background-color') || '#505050');
-        elem.initData('on-color', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname + '.on', 'color') || '#2A2A2A');
-        elem.initData('on-background-color', elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.on', 'background-color') || '#aa6900');
+
         elem.initData('background-icon', 'fa-circle');
         elem.initData('active-pattern', '.*/' + elem.data('url'));
         elem.initData('get-warn', -1);

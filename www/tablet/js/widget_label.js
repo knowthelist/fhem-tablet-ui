@@ -53,7 +53,7 @@ var Modul_label = function () {
         elem.initData('get', 'STATE');
         elem.initData('unit', '');
         elem.initData('color', '');
-        elem.initData('limits', elem.data('states') || []);
+        elem.initData('limits', elem.data('states') || '');
         elem.initData('colors', ['#505050']);
         elem.initData('limits-get', (elem.data('device')) ? elem.data('device') + ':' + elem.data('get') : elem.data('get'));
         elem.initData('limits-part', elem.data('part'));
@@ -110,7 +110,7 @@ var Modul_label = function () {
         var limits = elem.data('limits');
         var colors = elem.data('colors');
         var classes = elem.data('classes');
-        if (limits) {
+        if (limits && $.isArray(limits)) {
             var idx = ftui.indexOfGeneric(limits, value);
             if (idx > -1) {
                 if (colors) {
@@ -131,36 +131,39 @@ var Modul_label = function () {
 
     function update(dev, par) {
 
-        // update from normal state reading
-        me.elements.filterDeviceReading('get', dev, par)
-            .each(function (index) {
-                update_value($(this));
-            });
+        me.elements.each(function (index) {
+            var elem = $(this);
 
-        //extra reading for dynamic color
-        me.elements.filterDeviceReading('color', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
+
+            // update from normal state reading
+            if (elem.matchDeviceReading('get', dev, par)) {
+                update_value(elem);
+            }
+
+            //extra reading for dynamic color
+            if (elem.matchDeviceReading('color', dev, par)) {
                 var val = elem.getReading('color').val;
                 if (ftui.isValid(val)) {
                     val = '#' + val.replace('#', '');
                     elem.css("color", val);
                 }
-            });
+            }
 
-        //extra reading for hide
-        me.update_hide(dev, par);
-
-        //extra reading for colorize
-        me.elements.filterDeviceReading('limits-get', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
-                var val = elem.getReading('limits-get').val;
-                if (ftui.isValid(val)) {
-                    var v = ftui.getPart(val, elem.data('limits-part'));
+            //extra reading for colorize
+            if (elem.matchDeviceReading('limits-get', dev, par)) {
+                var lval = elem.getReading('limits-get').val;
+                if (ftui.isValid(lval)) {
+                    var v = ftui.getPart(lval, elem.data('limits-part'));
                     update_colorize(v, elem);
                 }
-            });
+            }
+
+            me.updateHide(elem, dev, par);
+
+        });
+
+
+
     }
 
     // public

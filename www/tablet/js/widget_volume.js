@@ -152,7 +152,7 @@ var Modul_volume = function () {
         me.elements.each(function (index) {
             var elem = $(this);
             elem.attr("data-ready", "");
-            
+
             var maxval = elem.isValidData('max') ? elem.data('max') : 70;
             elem.data('origmax', maxval);
             elem.data('max', (maxval > 360) ? 360 : maxval);
@@ -201,10 +201,12 @@ var Modul_volume = function () {
     function update(dev, par) {
 
         isUpdating = true;
-        // update from desired temp reading
-        me.elements.filterDeviceReading('get', dev, par)
-            .each(function (index) {
-                var elem = $(this);
+
+        me.elements.each(function (index) {
+            var elem = $(this);
+
+            // update from desired temp reading
+            if (elem.matchDeviceReading('get', dev, par)) {
                 var value = elem.getReading('get').val;
                 if (ftui.isValid(value)) {
                     var knob_elem = elem.find('input');
@@ -230,13 +232,17 @@ var Modul_volume = function () {
                         });
                     }
                 }
-            });
+            }
 
-        // update from lock reading
-        me.update_lock(dev, par);
+            //extra reading for reachable
+            me.updateReachable(elem, dev, par);
 
-        //extra reading for reachable
-        me.update_reachable(dev, par);
+            //extra reading for hide
+            me.updateHide(elem, dev, par);
+
+            //extra reading for lock
+            me.updateLock(elem, dev, par);
+        });
 
         isUpdating = false;
     }

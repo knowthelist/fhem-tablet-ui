@@ -14,13 +14,13 @@ var Modul_spinner = function () {
     function getValueNumeric(elem) {
         var value = elem.data('value');
         switch (value) {
-        case elem.data('off'):
-            return parseFloat(elem.data('min')) - parseFloat(elem.data('step'));
-        case elem.data('on'):
-            return parseFloat(elem.data('max')) + parseFloat(elem.data('step'));
-        default:
-            value = parseFloat(value);
-            return (isNaN(value)) ? elem.data('min') : value;
+            case elem.data('off'):
+                return parseFloat(elem.data('min')) - parseFloat(elem.data('step'));
+            case elem.data('on'):
+                return parseFloat(elem.data('max')) + parseFloat(elem.data('step'));
+            default:
+                value = parseFloat(value);
+                return (isNaN(value)) ? elem.data('min') : value;
         }
     }
 
@@ -128,10 +128,10 @@ var Modul_spinner = function () {
     }
 
     function init_attr(elem) {
-        
+
         //init standard attributes 
         _base.init_attr.call(me, elem);
-        
+
         elem.initData('color', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname, 'color') || '#aa6900');
         elem.initData('gradient-color', []);
         elem.initData('background-color', ftui.getStyle('.' + me.widgetname, 'background-color') || '#4a4a4a');
@@ -267,7 +267,7 @@ var Modul_spinner = function () {
         // DOWN button
         elemLeftIcon.on(ftui.config.clickEventType, function (e) {
             elemLeftIcon.fadeTo("fast", 0.5);
-                        e.preventDefault();
+            e.preventDefault();
             e.stopPropagation();
             onClicked(elem, -1);
         });
@@ -287,17 +287,18 @@ var Modul_spinner = function () {
         elem.append($('<div/>', {
             class: 'overlay'
         }));
-        
+
         //Wrapper
         elem.wrapAll('<div class="spinner-wrapper"></div>');
     }
 
     function update(dev, par) {
 
-        // update from normal state reading
-        me.elements.filterDeviceReading('get', dev, par)
-            .each(function (index) {
-                var elem = $(this);
+        me.elements.each(function (index) {
+            var elem = $(this);
+
+            // update from normal state reading
+            if (elem.matchDeviceReading('get', dev, par)) {
                 var state = elem.getReading('get').val;
                 if (state) {
                     var part = elem.data('get-value');
@@ -305,27 +306,27 @@ var Modul_spinner = function () {
                     elem.data('value', val);
                     drawLevel(elem);
                 }
-            });
+            }
 
-        //extra reading for dynamic color of text
-        me.elements.filterDeviceReading('text-color', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
-                var val = elem.getReading('text-color').val;
-                if (val) {
-                    val = '#' + val.replace('#', '');
-                    elem.find('.spinnerText').css("color", val);
+            //extra reading for dynamic color of text
+            if (elem.matchDeviceReading('text-color', dev, par)) {
+                var valColor = elem.getReading('text-color').val;
+                if (valColor) {
+                    valColor = '#' + valColor.replace('#', '');
+                    elem.find('.spinnerText').css("color", valColor);
                 }
-            });
+            }
 
-        //extra reading for lock
-        me.update_lock(dev, par);
+            //extra reading for reachable
+            me.updateReachable(elem, dev, par);
 
-        //extra reading for hide
-        me.update_hide(dev, par);
+            //extra reading for hide
+            me.updateHide(elem, dev, par);
 
-        //extra reading for reachable
-        me.update_reachable(dev, par);
+            //extra reading for lock
+            me.updateLock(elem, dev, par);
+
+        });
     }
 
     // public

@@ -50,17 +50,18 @@
         function update() {
 
             var ftui = {
-                    poll: {},
-                    version: JSON.parse(localStorage.getItem('ftui.version')),
-                    subscriptions: JSON.parse(localStorage.getItem('ftui.subscriptions')),
-                    config: JSON.parse(localStorage.getItem('ftui.config')),
-                    deviceStates: JSON.parse(localStorage.getItem('ftui.deviceStates')),
-                    poll: {
-                        short: JSON.parse(localStorage.getItem('ftui.poll.short')),
-                        long: JSON.parse(localStorage.getItem('ftui.poll.long'))
-                    }
-                },
-                modules = JSON.parse(localStorage.getItem('modules'));
+                poll: {},
+                version: JSON.parse(localStorage.getItem('ftui.version')),
+                subscriptions: JSON.parse(localStorage.getItem('ftui.subscriptions')),
+                config: JSON.parse(localStorage.getItem('ftui.config')),
+                deviceStates: JSON.parse(localStorage.getItem('ftui.deviceStates')),
+                poll: {
+                    short: JSON.parse(localStorage.getItem('ftui.poll.short')),
+                    long: JSON.parse(localStorage.getItem('ftui.poll.long'))
+                }
+            };
+
+            modules = JSON.parse(localStorage.getItem('modules'));
 
             var strSubs = '<table>',
                 strMods = '<table>',
@@ -107,23 +108,28 @@
 
             // Long
             strLong = strLong + "<tr><td>longPollType</td><td class=''>" + ftui.config.longPollType + "</td></tr>";
-            if (ftui.poll.long.xhr) {
-                strLong = strLong + "<tr><td>currLine</td><td class=''>" + ftui.poll.long.currLine + "</td></tr>";
-                strLong = strLong + "<tr><td>readyState</td><td class=''>" + ftui.poll.long.request.readyState + "</td></tr>";
-            } else if (ftui.poll.long.websocket) {
-                strLong = strLong + "<tr><td>ready</td><td class=''>true</td></tr>";
+            if (ftui.poll.long) {
+                if (ftui.poll.long.xhr) {
+                    strLong = strLong + "<tr><td>currLine</td><td class=''>" + ftui.poll.long.currLine + "</td></tr>";
+                    strLong = strLong + "<tr><td>readyState</td><td class=''>" + ftui.poll.long.request.readyState + "</td></tr>";
+                } else if (ftui.poll.long.websocket) {
+                    strLong = strLong + "<tr><td>ready</td><td class=''>true</td></tr>";
+                } else {
+                    strLong = strLong + "<tr><td>readyState</td><td class=''>no longpoll object created</td></tr>";
+                }
+
+                strLong = strLong + "<tr><td>lastEventTimestamp</td><td class=''>" + parseISOLocal(ftui.poll.long.lastEventTimestamp) + "</td></tr>";
+                strLong = strLong + "<tr><td>lastUpdateTimestamp</td><td class=''>" + parseISOLocal(ftui.poll.long.lastUpdateTimestamp) + "</td></tr>";
+                strLong = strLong + "<tr><td>LastDevice</td><td class=''>" + ftui.poll.long.lastDevice + "</td></tr>";
+                strLong = strLong + "<tr><td>LastReading</td><td class=''>" + ftui.poll.long.lastReading + "</td></tr>";
+                strLong = strLong + "<tr><td>LastValue</td><td class=''>" + ftui.poll.long.lastValue + "</td></tr>";
+
+                strLong = strLong + "</table>";
+                strLong = strLong + "<h3>Filter</h3>" + ftui.poll.long.filter;
             } else {
-                strLong = strLong + "<tr><td>readyState</td><td class=''>no longpoll object created</td></tr>";
+                strLong = strLong + "</table>";
             }
-
-            strLong = strLong + "<tr><td>lastEventTimestamp</td><td class=''>" + parseISOLocal(ftui.poll.long.lastEventTimestamp) + "</td></tr>";
-            strLong = strLong + "<tr><td>lastUpdateTimestamp</td><td class=''>" + parseISOLocal(ftui.poll.long.lastUpdateTimestamp) + "</td></tr>";
-            strLong = strLong + "<tr><td>LastDevice</td><td class=''>" + ftui.poll.long.lastDevice + "</td></tr>";
-            strLong = strLong + "<tr><td>LastReading</td><td class=''>" + ftui.poll.long.lastReading + "</td></tr>";
-            strLong = strLong + "<tr><td>LastValue</td><td class=''>" + ftui.poll.long.lastValue + "</td></tr>";
-
-            strLong = strLong + "</table>";
-            strLong = strLong + "<h3>Filter</h3>" + ftui.poll.long.filter;
+            
 
             // Config
             $.each(ftui.config, function(index, key) {

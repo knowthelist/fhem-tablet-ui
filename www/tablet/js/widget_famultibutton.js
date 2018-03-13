@@ -215,7 +215,7 @@ var Modul_famultibutton = function () {
                 }
 
                 //elem.children().children('#fg');
-                sessionStorage.setItem(['ftui',elem.widgetId(),'idx'].join('.'), idx);
+                sessionStorage.setItem(['ftui', elem.widgetId(), 'idx'].join('.'), idx);
                 var faElem = elem.find('.famultibutton');
                 faElem.removeClass(classes.join(" "));
                 faElem.addClass(classes[idx]);
@@ -324,7 +324,7 @@ var Modul_famultibutton = function () {
             if (!$.isArray(sets)) {
                 sets = new Array(String(sets));
             }
-            var s = sessionStorage.getItem(['ftui',elem.widgetId(),'idx'].join('.')) || 0;
+            var s = sessionStorage.getItem(['ftui', elem.widgetId(), 'idx'].join('.')) || 0;
             var set = typeof sets[s] != 'undefined' ? sets[s] : sets[0];
             //supress sending possible
 
@@ -332,7 +332,7 @@ var Modul_famultibutton = function () {
             if (set !== '') {
                 s++;
                 if (s >= sets.length) s = 0;
-                sessionStorage.setItem(['ftui',elem.widgetId(),'idx'].join('.'), s);
+                sessionStorage.setItem(['ftui', elem.widgetId(), 'idx'].join('.'), s);
 
                 // update widgets with multistate mode directly on click
 
@@ -501,10 +501,10 @@ var Modul_famultibutton = function () {
         me.addReading(elem, 'warn');
 
         var elemData = elem.data();
-        elem.initData("off-color", elemData.color || ftui.getStyle("." + me.widgetname + ".off", "color") || "#505050");
-        elem.initData("off-background-color", elemData.backgroundColor || ftui.getStyle("." + me.widgetname + ".off", "background-color") || "#505050");
-        elem.initData("on-color", elemData.color || ftui.getStyle("." + me.widgetname + ".on", "color") || "#aa6900");
-        elem.initData("on-background-color", elemData.color || elemData.backgroundColor || ftui.getStyle("." + me.widgetname + ".on", "background-color") || "#aa6900");
+        elem.initData("off-color", elemData.color || "#505050");
+        elem.initData("off-background-color", elemData.backgroundColor || "#505050");
+        elem.initData("on-color", elemData.color || "#aa6900");
+        elem.initData("on-background-color", elemData.color || elemData.backgroundColor || "#aa6900");
 
         // change back with front colors
         if (elem.hasClass("invert")) {
@@ -540,11 +540,12 @@ var Modul_famultibutton = function () {
 
     function update(dev, par) {
 
-        // update from normal state reading
-        $.each(['get', 'get-on', 'get-off'], function (idx, key) {
-            me.elements.filterDeviceReading(key, dev, par)
-                .each(function (index) {
-                    var elem = $(this);
+        me.elements.each(function (index) {
+            var elem = $(this);
+
+            // update from normal state reading
+            $.each(['get', 'get-on', 'get-off'], function (idx, key) {
+                if (elem.matchDeviceReading(key, dev, par)) {
                     var value = elem.getReading('get').val;
                     var state = ftui.getPart(value, elem.data('part'));
                     //ftui.log(2, 'famultibutton.update for "get": state=' + state + ' dev=' + dev + ' par=' + par + ' key=' + key + ' index=' + index + ' idx=' +idx);
@@ -569,18 +570,16 @@ var Modul_famultibutton = function () {
                             me.update_cb(elem, state);
                         }
                     }
-                });
+                }
+            });
 
-        });
 
-        // update from extra reading for colorize
-        var oparm = ['offColor', 'onColor', 'onBackgroundColor', 'offBackgroundColor'];
-        var selec = ['#fg', '#fg', '#bg', '#bg'];
-        var estat = [false, true, true, false];
-        $.each(['off-color', 'on-color', 'on-background-color', 'off-background-color'], function (index, key) {
-            me.elements.filterDeviceReading(key, dev, par)
-                .each(function (idx) {
-                    var elem = $(this);
+            // update from extra reading for colorize
+            var oparm = ['offColor', 'onColor', 'onBackgroundColor', 'offBackgroundColor'];
+            var selec = ['#fg', '#fg', '#bg', '#bg'];
+            var estat = [false, true, true, false];
+            $.each(['off-color', 'on-color', 'on-background-color', 'off-background-color'], function (index, key) {
+                if (elem.matchDeviceReading(key, dev, par)) {
                     var val = elem.getReading(key).val;
                     if (ftui.isValid(val)) {
                         val = '#' + val.replace('#', '');
@@ -594,23 +593,11 @@ var Modul_famultibutton = function () {
                             }
                         }
                     }
-                });
-        });
+                }
+            });
 
-        //extra reading for lock
-        me.update_lock(dev, par);
-
-        //extra reading for hide
-        me.update_hide(dev, par);
-
-        //extra reading for reachable
-        me.update_reachable(dev, par);
-
-
-        //extra reading for warn
-        me.elements.filterDeviceReading('warn', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
+            //extra reading for warn
+            if (elem.matchDeviceReading('warn', dev, par)) {
                 var warn = elem.getReading('warn').val;
                 if (elem.matchingState('warn', warn) === 'on') {
                     me.showOverlay(elem, ftui.getPart(warn, elem.data('get-warn')));
@@ -618,14 +605,24 @@ var Modul_famultibutton = function () {
                 if (elem.matchingState('warn', warn) === 'off') {
                     me.showOverlay(elem, "");
                 }
-            });
+            }
 
-        //extra reading for countdown
-        me.elements.filterDeviceReading('countdown', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
+            //extra reading for countdown
+            if (elem.matchDeviceReading('countdown', dev, par)) {
                 elem.data('secondes', elem.getReading('countdown').val);
-            });
+            }
+
+            //extra reading for reachable
+            me.updateReachable(elem, dev, par);
+
+            //extra reading for hide
+            me.updateHide(elem, dev, par);
+
+            //extra reading for lock
+            me.updateLock(elem, dev, par);
+
+        });
+
     }
 
     // public

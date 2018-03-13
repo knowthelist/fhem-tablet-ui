@@ -198,10 +198,13 @@ var Modul_thermostat = function () {
 
         isUpdating = true;
 
-        // update from desired temp reading
-        me.elements.filterDeviceReading('get', dev, par)
-            .each(function (index) {
-                var elem = $(this);
+        me.elements.each(function (index) {
+            var elem = $(this);
+            var knob_elem = elem.find('input');
+            var knob_obj = knob_elem.data('knob');
+
+            // update from desired temp reading
+            if (elem.matchDeviceReading('get', dev, par)) {
                 var value = elem.getReading('get').val;
                 if (ftui.isValid(value)) {
                     var val = ftui.getPart(value, elem.data('get-value'));
@@ -216,7 +219,6 @@ var Modul_thermostat = function () {
                             textdisplay = elem.data('boost');
                             break;
                     }
-                    var knob_elem = elem.find('input');
                     if (knob_elem) {
                         if (textdisplay)
                             knob_elem.val(textdisplay).trigger('change');
@@ -227,48 +229,45 @@ var Modul_thermostat = function () {
                         });
                     }
                 }
-            });
+            }
 
-        //extra reading for current temp
-        me.elements.filterDeviceReading('temp', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
-                var value = elem.getReading('temp').val;
-                if (ftui.isValid(value)) {
-                    var knob_elem = elem.find('input');
-                    var knob_obj = knob_elem.data('knob');
+            //extra reading for current temp
+            if (elem.matchDeviceReading('temp', dev, par)) {
+                var valueTemp = elem.getReading('temp').val;
+                if (ftui.isValid(valueTemp)) {
+
                     if (knob_obj) {
-                        knob_obj.o.isValue = parseFloat(value);
+                        knob_obj.o.isValue = parseFloat(valueTemp);
                         knob_elem.trigger('change');
                     } else {
                         ftui.log(1, 'thermostat: Update isValue failed. No knob_obj found');
                     }
                 }
-            });
+            }
 
-        //extra reading for valve value
-        me.elements.filterDeviceReading('valve', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
-                var value = elem.getReading('valve').val;
-                if (ftui.isValid(value)) {
-                    var knob_elem = elem.find('input');
-                    var knob_obj = knob_elem.data('knob');
+            //extra reading for valve value
+            if (elem.matchDeviceReading('valve', dev, par)) {
+                var valueValve = elem.getReading('valve').val;
+                if (ftui.isValid(valueValve)) {
                     if (knob_obj) {
-                        knob_obj.o.valveValue = value;
+                        knob_obj.o.valveValue = valueValve;
                         knob_elem.trigger('change');
                     } else {
                         ftui.log(1, 'thermostat: Update valveValue failed. No knob_obj found');
                     }
                 }
-            });
+            }
 
-        //extra reading for readOnly
-        me.update_lock(dev, par);
+            //extra reading for reachable
+            me.updateReachable(elem, dev, par);
 
-        //extra reading for reachable
-        me.update_reachable(dev, par);
+            //extra reading for hide
+            me.updateHide(elem, dev, par);
 
+            //extra reading for lock
+            me.updateLock(elem, dev, par);
+        });
+        
         isUpdating = false;
     }
 

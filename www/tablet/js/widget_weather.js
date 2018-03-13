@@ -555,7 +555,7 @@ var Modul_weather = function () {
             var faElem = elem.find('.famultibutton');
             var warnElem = $('<i/>', {
                 id: 'warn',
-                class: 'digits' +digits
+                class: 'digits' + digits
             }).html(val).appendTo(elem);
 
             if (elem.isValidData('warn-color')) {
@@ -576,7 +576,7 @@ var Modul_weather = function () {
             }
         }
     }
-    
+
     function init_ui(elem) {
         var icon = $('<div class="weather-icon"></div>');
         elem.append(icon);
@@ -618,9 +618,11 @@ var Modul_weather = function () {
     function update(dev, par) {
 
         // update from normal state reading
-        me.elements.filterDeviceReading('get', dev, par)
-            .each(function (index) {
-                var elem = $(this);
+        me.elements.each(function (index) {
+            var elem = $(this);
+
+            // update from normal state reading
+            if (elem.matchDeviceReading('get', dev, par)) {
                 var state = elem.getReading('get').val;
                 if (state) {
                     var part = elem.data('part') || -1;
@@ -698,25 +700,21 @@ var Modul_weather = function () {
                         icon.addClass('meteocons');
                     }
                 }
-            });
 
+            }
 
-        //extra reading for dynamic color
-        me.elements.filterDeviceReading('color', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
-                var val = elem.getReading('color').val;
-                    var icon = elem.find('.weather-icon');
-                if (ftui.isValid(val) && icon) {
-                    val = '#' + val.replace('#', '');
-                    icon.css("color", val);
+            //extra reading for dynamic color
+            if (elem.matchDeviceReading('color', dev, par)) {
+                var cval = elem.getReading('color').val;
+                var cicon = elem.find('.weather-icon');
+                if (ftui.isValid(cval) && cicon) {
+                    cval = '#' + cval.replace('#', '');
+                    cicon.css("color", cval);
                 }
-            });
+            }
 
-        //extra reading for warn
-        me.elements.filterDeviceReading('warn', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
+            //extra reading for warn
+            if (elem.matchDeviceReading('warn', dev, par)) {
                 var warn = elem.getReading('warn').val;
                 if (elem.matchingState('warn', warn) === 'on') {
                     showOverlay(elem, ftui.getPart(warn, elem.data('get-warn')));
@@ -724,7 +722,10 @@ var Modul_weather = function () {
                 if (elem.matchingState('warn', warn) === 'off') {
                     showOverlay(elem, "");
                 }
-            });
+            }
+
+        });
+
     }
 
     // public
