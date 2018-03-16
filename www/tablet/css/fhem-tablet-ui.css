@@ -156,47 +156,47 @@ a:active {
 }
 
 .black {
-    color: #111111;
+    color: #111111 !important;
 }
 
 .white {
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
 .orange {
-    color: #aa6900;
+    color: #aa6900 !important;
 }
 
 .red {
-    color: #ad3333;
+    color: #ad3333 !important;
 }
 
 .green {
-    color: #32a054;
+    color: #32a054 !important;
 }
 
 .mint {
-    color: #5bc995;
+    color: #5bc995 !important;
 }
 
 .lightblue {
-    color: #6699FF;
+    color: #6699FF !important;
 }
 
 .blue {
-    color: #337ab7;
+    color: #337ab7 !important;
 }
 
 .gray {
-    color: #8C8C8C;
+    color: #8C8C8C !important;
 }
 
 .yellow {
-    color: #ffe066;
+    color: #ffe066 !important;
 }
 
 .lightgray {
-    color: #cccccc;
+    color: #cccccc !important;
 }
 
 .border-black {
@@ -1178,57 +1178,57 @@ main > .box.horizontal {
 
 .bg-lightgray,
 .btn-lightgray {
-    background-color: #777777;
+    background-color: #777777 !important;
 }
 
 .bg-orange,
 .btn-orange {
-    background-color: #aa6900;
+    background-color: #aa6900 !important;
 }
 
 .bg-red,
 .btn-red {
-    background-color: #ad3333;
+    background-color: #ad3333 !important;
 }
 
 .bg-green,
 .btn-green {
-    background-color: #32a054;
+    background-color: #32a054 !important;
 }
 
 .bg-mint,
 .btn-mint {
-    background-color: #5bc995;
+    background-color: #5bc995 !important;
 }
 
 .bg-ligthblue,
 .btn-ligthblue {
-    background-color: #6699FF;
+    background-color: #6699FF !important;
 }
 
 .bg-blue,
 .btn-blue {
-    background-color: #436D8D;
+    background-color: #436D8D !important;
 }
 
 .bg-white,
 .btn-white {
-    background-color: #ffffff;
+    background-color: #ffffff !important;
 }
 
 .bg-black,
 .btn-black {
-    background-color: #111111;
+    background-color: #111111 !important;
 }
 
 .bg-yellow,
 .btn-yellow {
-    background-color: #ffe066;
+    background-color: #ffe066 !important;
 }
 
 .bg-transparent,
 .btn-transparent {
-    background-color: transparent;
+    background-color: transparent !important;
 }
 
 
@@ -2221,6 +2221,7 @@ div[data-type="link"] > div.fa {
     padding-top: 3em !important;
 }
 
+section > [class*='col-'].left-space,
 .row > .cell.left-space,
 .row > [class*='cell-'].left-space,
 .row > [class*='col-'].left-space,
@@ -2233,6 +2234,7 @@ div[data-type="link"] > div.fa {
     margin-left: 0em !important;
 }
 
+section > [class*='col-'][class*='left-space-2'],
 .row > .cell[class*='left-space-2'],
 .row > [class*='cell-'][class*='left-space-2'],
 .row > [class*='col-'][class*='left-space-2'],
@@ -2245,6 +2247,7 @@ div[data-type="link"] > div.fa {
     margin-left: 0em !important;
 }
 
+section > [class*='col-'][class*='left-space-3'],
 .row > .cell[class*='left-space-3'],
 .row > [class*='cell-'][class*='left-space-3'],
 .row > [class*='col-'][class*='left-space-3'],
@@ -2257,6 +2260,7 @@ div[data-type="link"] > div.fa {
     margin-left: 0em !important;
 }
 
+section > [class*='col-'][class*='left-space-4'],
 .row > .cell[class*='left-space-4'],
 .row > [class*='cell-'][class*='left-space-4'],
 .row > [class*='col-'][class*='left-space-4'],
@@ -2269,6 +2273,7 @@ div[data-type="link"] > div.fa {
     margin-left: 0em !important;
 }
 
+section > [class*='col-'].right-space,
 .row > .cell.right-space,
 .row > [class*='cell-'].right-space,
 .row > [class*='col-'].right-space,
@@ -2281,6 +2286,7 @@ div[data-type="link"] > div.fa {
     margin-right: 0em !important;
 }
 
+section > [class*='col-'][class*='right-space-2'],
 .row > .cell[class*='right-space-2'],
 .row > [class*='cell-'][class*='right-space-2'],
 .row > [class*='col-'][class*='right-space-2'],
@@ -2293,6 +2299,7 @@ div[data-type="link"] > div.fa {
     margin-right: 0em !important;
 }
 
+section > [class*='col-'][class*='right-space-3'],
 .row > .cell[class*='right-space-3'],
 .row > [class*='cell-'][class*='right-space-3'],
 .row > [class*='col-'][class*='right-space-3'],
@@ -2305,6 +2312,7 @@ div[data-type="link"] > div.fa {
     margin-right: 0em !important;
 }
 
+section> [class*='col-'][class*='right-space-4'],
 .row > .cell[class*='right-space-4'],
 .row > [class*='cell-'][class*='right-space-4'],
 .row > [class*='col-'][class*='right-space-4'],
@@ -3479,47 +3487,65 @@ img.faded {
 
 /* color theme classes for widgets */
 
+/* Symbol */
+/* Foreground On */
 [data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#fg {
     color: #aa6900 !important;
 }
-
+/* Foreground Off */
 [data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#fg {
+    color: #505050 !important;
+}
+/* Background On */
+[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#bg {
+    color: #aa6900 !important;
+}
+/* Background Off */
+[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#bg {
     color: #505050 !important;
 }
 
 
+/* Switch */
+/* Foreground On */
+[data-type="switch"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#fg {
+    color: #2A2A2A !important;
+}
+/* Foreground Off */
+[data-type="switch"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#fg {
+    color: #2A2A2A !important;
+}
+/* Background On */
+[data-type="switch"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#bg {
+    color: #aa6900 !important;
+}
+/* Background Off */
+[data-type="switch"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#bg {
+    color: #505050 !important;
+}
+
+
+/* Pagebutton */
+/* Foreground On */
+[data-type="pagebutton"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#fg {
+    color: #2A2A2A !important;
+}
+/* Foreground Off */
+[data-type="pagebutton"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#fg {
+    color: #505050 !important;
+}
+/* Background On */
+[data-type="pagebutton"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#bg {
+    color: #505050 !important;
+}
+/* Background Off */
+[data-type="pagebutton"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#bg {
+    color: transparent !important;
+}
+
 
 /* pseudo classes for widget init function */
 
-.pagebutton.on {
-    color: #2A2A2A;
-    background-color: #505050;
-}
-
-.pagebutton.off {
-    color: #505050;
-    background-color: transparent;
-}
-
-.symbol.on {
-    color: #aa6900;
-    background-color: #aa6900;
-}
-
-.symbol.off {
-    color: #505050;
-    background-color: #505050;
-}
-
-.switch.on {
-    color: #2A2A2A;
-    background-color: #aa6900;
-}
-
-.switch.off {
-    color: #2A2A2A;
-    background-color: #505050;
-}
 
 .link {
     color: #aa6900;
@@ -3528,7 +3554,6 @@ img.faded {
 .volume.handle {
     color: #aa6900;
 }
-
 
 .progress.value {
     font-size: 70% !important;

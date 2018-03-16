@@ -13,17 +13,14 @@ Requires
 * font-awesome http://fortawesome.github.io/Font-Awesome
 * jquery.gridster  http://gridster.net
 * jquery.toast
+* and more
 All requires are included in the lib folder.
 
 Install
 -------
  * copy the whole tree into the corresponding folder of your FHEM server /\<fhem-path\>/www/tablet
- * add 'define TABLETUI HTTPSRV ftui/ ./www/tablet/ Tablet-UI' in fhem.cfg
  * rename the index-example.html to index.html or create your own index.html
- * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/ftui/
- 
- Depending on the HTTPSRV version, only this cfg works:
- 'define TABLETUI HTTPSRV ftui ./www/tablet/ Tablet-UI'
+ * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/tablet/index.html
  
  or just use 'update all https://raw.githubusercontent.com/knowthelist/fhem-tablet-ui/master/controls_fhemtabletui.txt'
  on the FHEM commandline (or input field of FHEMWEB)
