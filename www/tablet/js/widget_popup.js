@@ -100,7 +100,8 @@ var Modul_popup = function () {
     }
 
     function init() {
-
+    		
+        var zindex = 2000;
         me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
@@ -215,8 +216,20 @@ var Modul_popup = function () {
                             hide(dialog, elem.data('mode'));
                         }, waitUntilReturn * 1000);
                     }
+                    zindex += 1;
+                    dialog.css({
+                        'z-index': zindex
+                    });
 
                     return false;
+                });
+                
+                dialog.on('clicked click', function (e) {
+                    e.preventDefault();
+                    zindex += 1;
+                    dialog.css({
+                        'z-index': zindex
+                     });
                 });
             }
         });
