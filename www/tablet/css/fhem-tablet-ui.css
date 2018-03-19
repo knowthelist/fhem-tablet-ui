@@ -2312,7 +2312,7 @@ section > [class*='col-'][class*='right-space-3'],
     margin-right: 0em !important;
 }
 
-section> [class*='col-'][class*='right-space-4'],
+section > [class*='col-'][class*='right-space-4'],
 .row > .cell[class*='right-space-4'],
 .row > [class*='cell-'][class*='right-space-4'],
 .row > [class*='col-'][class*='right-space-4'],
@@ -2638,7 +2638,7 @@ img.mini,
 }
 
 .famultibutton #warn,
-.weather #warn{
+.weather #warn {
     position: absolute;
     top: -0.3em;
     right: -0.3em;
@@ -2659,9 +2659,11 @@ img.mini,
 #warn.digits2 {
     right: -0.6em;
 }
+
 #warn.digits3 {
     right: -0.9em;
 }
+
 #warn.digits4 {
     right: -1.2em;
 }
@@ -2707,6 +2709,7 @@ img.mini,
 }
 
 /*Correction for fa-square-o which is smaller then fa-square */
+
 i#bg.fa.fa-stack-2x.fa-square-o {
     font-size: 2.2em;
     top: -0.01em;
@@ -3485,71 +3488,111 @@ img.faded {
     -webkit-animation: marquee 10s linear infinite;
 }
 
+.drop-hover {
+    border: 3px dotted #3a7999;
+    color: #3a7999;
+    background: rgba(0, 0, 0, 0);
+}
+
+.drag {
+    transition: all 0.15s ease-out;
+    cursor: move;
+}
+
+.drag:hover {
+    -webkit-transform: scale(1.3);
+    -ms-transform: scale(1.3);
+    transform: scale(1.3);
+}
+
 /* color theme classes for widgets */
 
 /* Symbol */
+
 /* Foreground On */
-[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#fg {
+
+[data-type="symbol"]:not([data-colors]):not([data-on-color]) .active i#fg {
     color: #aa6900 !important;
 }
+
 /* Foreground Off */
-[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#fg {
-    color: #505050 !important;
-}
-/* Background On */
-[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#bg {
-    color: #aa6900 !important;
-}
-/* Background Off */
-[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#bg {
+
+[data-type="symbol"]:not([data-colors]):not([data-off-color]) :not(.active) i#fg {
     color: #505050 !important;
 }
 
+/* Background On */
+
+[data-type="symbol"]:not([data-background-colors]):not([data-on-background-color]) .active i#bg {
+    color: #aa6900 !important;
+}
+
+/* Background Off */
+
+[data-type="symbol"]:not([data-background-colors]):not([data-off-background-color]) :not(.active) i#bg {
+    color: #505050 !important;
+}
 
 /* Switch */
+
 /* Foreground On */
-[data-type="switch"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#fg {
+
+[data-type="switch"]:not([data-colors]):not([data-on-color]) .active i#fg {
     color: #2A2A2A !important;
 }
+
 /* Foreground Off */
-[data-type="switch"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#fg {
+
+[data-type="switch"]:not([data-colors]):not([data-off-color]) :not(.active) i#fg {
     color: #2A2A2A !important;
 }
+
 /* Background On */
-[data-type="switch"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#bg {
+
+[data-type="switch"]:not([data-background-colors]):not([data-on-background-color]) .active i#bg {
     color: #aa6900 !important;
 }
+
 /* Background Off */
-[data-type="switch"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#bg {
+
+[data-type="switch"]:not([data-background-colors]):not([data-off-background-color]) :not(.active) i#bg {
     color: #505050 !important;
 }
 
 
 /* Pagebutton */
+
 /* Foreground On */
-[data-type="pagebutton"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#fg {
-    color: #2A2A2A !important;
+
+[data-type="pagebutton"]:not([data-colors]):not([data-on-color]) .active i#fg {
+    color: #2A2A2A;
 }
+
 /* Foreground Off */
-[data-type="pagebutton"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#fg {
-    color: #505050 !important;
+
+[data-type="pagebutton"]:not([data-colors]):not([data-off-color]) :not(.active) i#fg {
+    color: #505050;
 }
+
 /* Background On */
-[data-type="pagebutton"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#bg {
-    color: #505050 !important;
+
+[data-type="pagebutton"]:not([data-background-colors]):not([data-on-background-color]) .active i#bg {
+    color: #505050;
 }
+
 /* Background Off */
-[data-type="pagebutton"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#bg {
-    color: transparent !important;
+
+[data-type="pagebutton"]:not([data-background-colors]):not([data-off-background-color]) :not(.active) i#bg {
+    color: transparent;
 }
 
 
 /* pseudo classes for widget init function */
 
-
 .link {
     color: #aa6900;
 }
+
 
 .volume.handle {
     color: #aa6900;

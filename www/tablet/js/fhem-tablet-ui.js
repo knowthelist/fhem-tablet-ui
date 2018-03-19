@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.6.44
+ * Version: 2.7.0
  *
  * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -406,7 +406,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.6.44',
+    version: '2.7.0',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -799,7 +799,7 @@ var ftui = {
         ftui.hideWidgets(area);
 
         //init gridster
-        area = (ftui.isValid(area)) ? area : 'body';
+        area = (ftui.isValid(area)) ? area : 'html';
         console.time('initPage-' + area);
 
         ftui.states.startTime = new Date();
@@ -828,7 +828,7 @@ var ftui = {
             ftui.log(1, 'init templates - Done');
             ftui.initWidgets(area).done(function () {
                 console.timeEnd('initPage-' + area);
-                var dur = 'initPage (' + area + '): ' + (new Date() - ftui.states.startTime);
+                var dur = 'initPage (' + area + '): in ' + (new Date() - ftui.states.startTime) +'ms';
                 if (ftui.config.debuglevel>1) ftui.toast(dur);
                 ftui.log(1, dur);
             });
@@ -838,7 +838,7 @@ var ftui = {
     initWidgets: function (area) {
 
         var defer = new $.Deferred();
-        area = (ftui.isValid(area)) ? area : 'body';
+        area = (ftui.isValid(area)) ? area : 'html';
         var types = [];
         ftui.log(3, plugins);
         plugins.removeArea(area);

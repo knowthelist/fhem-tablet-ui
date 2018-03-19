@@ -4,7 +4,7 @@
  * https://github.com/knowthelist/fhem-tablet-ui
  */
 
-/* global ftui:true, Modul_widget:true */
+/* global ftui:true, Modul_widget:true, plugins:true */
 
 "use strict";
 
@@ -23,12 +23,13 @@ var Modul_theme = function () {
                 var state = elem.getReading('get').val;
                 if (elem.matchingState('get', state) === 'on') {
                     elem.removeAttr('disabled');
-                    //ftui.loadStyleSchema();  
-                    // ToDo: support ftui.getStyle functions  
+                    ftui.loadStyleSchema();  
+                    plugins.reinit();
                 }
                 if (elem.matchingState('get', state) === 'off') {
                     elem.attr('disabled', 'disabled');
-                    //ftui.loadStyleSchema(); 
+                    ftui.loadStyleSchema(); 
+                    plugins.reinit();
                 }
             });
     }

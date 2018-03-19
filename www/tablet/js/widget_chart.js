@@ -15,7 +15,7 @@ function depends_chart (){
 		mainCSS.before('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_chart.css" type="text/css" />');
 	else
 		$('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_chart.css" type="text/css" />');
-	
+
 	if (!window.addResizeListener) {
 		(function(){
 			var attachEvent = document.attachEvent;
@@ -1094,12 +1094,13 @@ var widget_chart = {
 		return n;
 	},
 	joinGraphs: function(slot,actGr,actGrStr,newGr,newGrStr,i,i_last) { // helper function to join graphs when columnspec is array (e.g. for filling between two graphs)
+		var mergepoints = [];
 		if (i>i_last) { // actual index is greater than previous one, append array
-			if (actGr[slot]) var mergepoints = [actGr[slot][actGr[slot].length-1],newGr[newGr.length-1]];
+			if (actGr[slot] && actGr[slot].length > 0) mergepoints = [actGr[slot][actGr[slot].length-1],newGr[newGr.length-1]];
 			actGr[slot] = (i_last == -1)?newGr.clone():actGr[slot].concat(mergepoints).concat(newGr.clone(true));
 			actGrStr[slot] = (!actGrStr[slot])?newGrStr.clone():actGrStr[slot].concat(newGrStr.clone(true));
 		} else { // actual index is smaller than previous one, prepend array
-			if (actGr[slot]) var mergepoints = [newGr[newGr.length-1],actGr[slot][actGr[slot].length-1]];
+			if (actGr[slot] && actGr[slot].length > 0) mergepoints = [newGr[newGr.length-1],actGr[slot][actGr[slot].length-1]];
 			actGr[slot] = (i_last == -1)?newGr.clone():newGr.concat(mergepoints).concat(actGr[slot].clone(true));
 			actGrStr[slot] = (!actGrStr[slot])?newGrStr.clone():newGrStr.concat(actGrStr[slot].clone(true));
 		}
@@ -2348,7 +2349,7 @@ var widget_chart = {
 		var style_array = data.style;
 		var ptype_array = data.ptype;
 		var uaxis_array = data.uaxis;
-		var fix = widget_chart.precision( data.yticks );
+		var fix = $.isArray(data.yticks)?(data.yticks[1]?(($.isArray(data.yticks[1])?data.yticks[1][0]:data.yticks[1]) - ymin_t):ymin_t):widget_chart.precision( data.yticks );
 		var unit = data.yunit;
 		var unit_sec = data.yunit_sec;
 		var legend_array = data.legend;
@@ -3482,6 +3483,7 @@ var widget_chart = {
 							tyaxis.append(text);
 
 							for (y=ymin_t; y<=max; y+=yticks ){
+								fix = $.isArray(data.yticks)?(data.yticks[1]?(($.isArray(data.yticks[1])?data.yticks[1][0]:data.yticks[1]) - ymin_t):ymin_t):widget_chart.precision( data.yticks );
 								var line = widget_chart.createElem('line');
 								p1 = data.transD2W([0,y],uaxis);
 								p2 = data.transD2W([data.xrange,y],uaxis);
@@ -3530,10 +3532,10 @@ var widget_chart = {
 									if (ytary[iyticks] && $.isArray(ytary[iyticks])) {
 										text.text(ytary[iyticks][1]);
 									} else {
-										text.text( ((fix>-1 && fix<=20) ? ysc.toFixed(fix) : ysc)+((uaxis=="secondary") ? unit_sec : unit) );
+										text.text( ((fix>-1 && fix<=20) ? parseFloat(ysc.toFixed(fix)) : ysc)+((uaxis=="secondary") ? unit_sec : unit) );
 									}
 								} else {
-									text.text( ((fix>-1 && fix<=20) ? ysc.toFixed(fix) : ysc)+((uaxis=="secondary") ? unit_sec : unit) );
+									text.text( ((fix>-1 && fix<=20) ? parseFloat(ysc.toFixed(fix)) : ysc)+((uaxis=="secondary") ? unit_sec : unit) );
 								}
 
 								iyticks++;

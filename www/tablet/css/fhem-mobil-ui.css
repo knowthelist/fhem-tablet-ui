@@ -72,19 +72,19 @@ i#warn-back {
 
 /* Switch */
 /* Foreground On */
-[data-type="switch"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#fg {
+[data-type="switch"]:not([data-colors]):not([data-on-color]) .active i#fg {
     color: #eee !important;
 }
 /* Foreground Off */
-[data-type="switch"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#fg {
+[data-type="switch"]:not([data-colors]):not([data-on-color]) :not(.active) i#fg {
     color: #eee !important;
 }
 /* Background On */
-[data-type="switch"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#bg {
+[data-type="switch"]:not([data-background-colors]):not([data-on-background-color]) .active i#bg {
     color: #0088CC !important;
 }
 /* Background Off */
-[data-type="switch"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#bg {
+[data-type="switch"]:not([data-background-colors]):not([data-off-background-color]) :not(.active) i#bg {
     color: #aaa !important;
 }
 

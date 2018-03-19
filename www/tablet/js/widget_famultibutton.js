@@ -13,6 +13,9 @@ function depends_famultibutton() {
     if (!$.fn.famultibutton) {
         deps.push(ftui.config.basedir + "lib/fa-multi-button.min.js");
     }
+    if (!$.fn.draggable) {
+        deps.push(ftui.config.basedir + "lib/jquery-ui.min.js");
+    }
     return deps;
 
 }
@@ -419,6 +422,25 @@ var Modul_famultibutton = function () {
             checkForRunningTimer(elem, id);
         }
 
+        if (elem.hasClass('drag')) {
+            elem.draggable();
+            elem.draggable();
+        }
+
+        if (elem.hasClass('drop')) {
+            elem.droppable({
+                hoverClass: "drop-hover",
+                accept: ".drag",
+                drop: function (event, ui) {
+                    elem.data('value', ui.draggable.data('device'));
+                    ui.draggable.animate({
+                        top: "0px",
+                        left: "0px"
+                    });
+                    elem.transmitCommand();
+                }
+            });
+        }
         return elem;
     }
 
