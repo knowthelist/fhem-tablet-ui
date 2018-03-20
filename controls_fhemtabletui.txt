@@ -71,10 +71,10 @@ UPD 2017-02-11_14:27:26 3265 www/tablet/ftui_snippet_tester.html
 UPD 2017-11-14_00:10:10 584382 www/tablet/icons_table.html
 UPD 2017-02-11_14:27:26 17624 www/tablet/index-example.html
 UPD 2017-02-11_14:27:26 2208 www/tablet/index_empty.html
-UPD 2017-02-11_14:27:26 9958 www/tablet/index_layout.html
+UPD 2018-03-19_08:56:00 9958 www/tablet/index_layout.html
 UPD 2018-03-04_10:25:23 4343 www/tablet/index_state.html
-UPD 2018-03-19_02:40:42 93059 www/tablet/js/fhem-tablet-ui.js
-UPD 2018-03-19_02:46:40 47749 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2018-03-20_16:52:28 93207 www/tablet/js/fhem-tablet-ui.js
+UPD 2018-03-20_16:54:25 47826 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2017-11-19_14:35:00 21234 www/tablet/js/highcharts-meteogram.js
 UPD 2017-02-11_14:27:26 6503 www/tablet/js/widget_agenda.js
 UPD 2018-01-21_14:49:42 1769 www/tablet/js/widget_button.js
@@ -109,7 +109,7 @@ UPD 2017-02-11_14:27:26 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2018-01-09_20:25:53 2978 www/tablet/js/widget_joinedlabel.js
 UPD 2018-01-21_14:54:44 4568 www/tablet/js/widget_klimatrend.js
 UPD 2017-12-30_19:58:47 7649 www/tablet/js/widget_knob.js
-UPD 2018-03-19_02:52:01 6192 www/tablet/js/widget_label.js
+UPD 2018-03-20_13:41:38 6247 www/tablet/js/widget_label.js
 UPD 2017-12-26_20:30:09 806 www/tablet/js/widget_level.js
 UPD 2017-12-19_10:29:00 11044 www/tablet/js/widget_link.js
 UPD 2017-02-11_14:27:26 1493 www/tablet/js/widget_loading.js

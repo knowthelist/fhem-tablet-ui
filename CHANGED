@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2018-03-19
- - Added basic drag drop support to symbol
+2018-03-20
+ - Added factor function to label widget
