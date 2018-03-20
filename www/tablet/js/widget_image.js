@@ -118,8 +118,10 @@ var Modul_image = function () {
             // onClick events
             elem.on('click', function (e) {
                 var cmd = elem.data('fhem-cmd');
-                if (cmd)
+                if (cmd) {
                     ftui.setFhemStatus(cmd);
+                    ftui.toast(cmd);
+                }
             });
         });
     }
