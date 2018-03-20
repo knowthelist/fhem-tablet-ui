@@ -234,6 +234,7 @@ See [examples](#symbol) of Symbol
 - **data-get**  : name of the reading containing label text
 - **data-part** : RegEx or number (which word) for filtering shown text
 - **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)
+- **data-factor**  : a numbers to be multiplied by the numeric reading value (default '' )
 - **data-color**  : fix color attribute or DEVICE:READING for dynamic setting of label color (default '')
 - **data-colors** : a array of color values. The used element for the label color defines the matching element of the limits array
 - **data-classes**: a array of class names. The used element class defines the matching element of the limits array
@@ -995,9 +996,9 @@ The height of the row is determined by the largest element.
 - grow-1        : standard box grow
 - grow-2        : let the box grow twice
 - grow-3 ...9   : let the box grow 3 ...9 times
-- items-top     : how to align items in a hbox
-- items-center  : how to align items in a hbox
-- items-bottom  : how to align items in a hbox
+- items-top     : how to align items in a hbox/vbox
+- items-center  : how to align items in a hbox/vbox
+- items-bottom  : how to align items in a hbox/vbox
 - items-space-between  : how to align items in a hbox
 - items-space-around  : how to align items in a hbox
 

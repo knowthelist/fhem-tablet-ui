@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.7.0
+ * Version: 2.7.1
  *
  * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -178,8 +178,12 @@ var Modul_widget = function () {
     }
 
 
-    function fix(value, fix) {
-        return ($.isNumeric(value) && fix >= 0) ? Number(value).toFixed(fix) : value;
+    function fix(value, len) {
+        return ($.isNumeric(value) && len >= 0) ? Number(value).toFixed(len) : value;
+    }
+    
+    function factor(value, fac) {
+        return ($.isNumeric(value) && fac >= 0) ? Number(value) * fac : value;
     }
 
     function map(mapObj, readval, defaultVal) {
@@ -307,6 +311,7 @@ var Modul_widget = function () {
         updateReachable: updateReachable,
         substitution: substitution,
         fix: fix,
+        factor: factor,
         map: map,
         addReading: addReading,
         subscriptions: subscriptions,
@@ -406,7 +411,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.7.0',
+    version: '2.7.1',
     config: {
         DEBUG: false,
         DEMO: false,

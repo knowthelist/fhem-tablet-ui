@@ -18,6 +18,7 @@ var Modul_label = function () {
             var unit = elem.data('unit');
             val = me.substitution(val, elem.data('substitution'));
             val = me.map(elem.data('map-get'), val, val);
+            val = me.factor(val, elem.data('factor'));
             val = me.fix(val, elem.data('fix'));
             val = elem.data('pre-text') + val + elem.data('post-text');
             ftui.log(4, 'label.update_value: value=' + val);
