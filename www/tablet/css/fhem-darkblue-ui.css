@@ -25,11 +25,22 @@
     border-bottom: 1px solid #222;
 }
 
+/* label widget */
+[data-type="label"].active {
+  color: #0088CC !important;
+}
 
 polyline {
     stroke: #337ab7 !important;
 }
 
+/* circlemenu widget */
+div[data-type="circlemenu"] > .circlemenu-wrapper > .circlemenu > li {
+    background-color: #333;
+}
+div[data-type="circlemenu"] > .circlemenu-wrapper > .circlemenu li div[data-type="push"] {
+    color: #697C90;
+}
 
 option {background-color: #ffffff;}
 
@@ -56,12 +67,6 @@ option {background-color: #ffffff;}
 }
 [data-type="slider"]:not([data-color]) .range-quantity {
     background-color: #0088CC !important;
-}
-
-
-/* label widget */
-[data-type="label"].active {
-  color: #2980b9 !important;
 }
 
 /* symbol  widget */
@@ -118,7 +123,7 @@ option {background-color: #ffffff;}
 /* push  widget */
 /* foreground on */
 [data-type="push"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
-    color: #6DE08E !important;
+    color: #0088CC !important;
 }
 /* foreground off */
 [data-type="push"]:not([data-colors]):not([data-on-color]):not([data-color]) :not(.active) i#fg {
@@ -126,7 +131,7 @@ option {background-color: #ffffff;}
 }
 /* background on */
 [data-type="push"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg {
-    color: #6DE08E !important;
+    color: #0088CC !important;
 }
 /* background off */
 [data-type="push"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg {

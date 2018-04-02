@@ -75,10 +75,10 @@ polyline {
 
 /* circlemenu widget */
 div[data-type="circlemenu"] > .circlemenu-wrapper > .circlemenu > li {
-    background-color: #495C70;
+    background-color: #333;
 }
 div[data-type="circlemenu"] > .circlemenu-wrapper > .circlemenu li div[data-type="push"] {
-    color: #495C70;
+    color: #697C90;
 }
 
 /* symbol  widget */
