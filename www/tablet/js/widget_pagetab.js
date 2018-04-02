@@ -45,8 +45,9 @@ var Modul_pagetab = function () {
             history.replaceState(history.state, history.title, '#' + goUrl);
         }
         $('div.gridster').fadeTo(200, 0);
-        if (ftui.isValid(goUrl)) {
+        if (goUrl !== 'undefined' && ftui.isValid(goUrl)) {
             $.get(goUrl, function (data_html) {
+                console.log('sss'+typeof goUrl);
                 $('div.gridster')
                     .html($(data_html).closest('div.gridster').html())
                     .fadeTo(600, 1);

@@ -22,10 +22,12 @@ var Modul_symbol = function () {
             var elem = $(this);
             elem.attr("data-ready", "");
             
-            elem.initData('off-color', elem.data('color') || ftui.getStyle('.symbol.off', 'color') || '#505050');
-            elem.initData('off-background-color', elem.data('background-color') || ftui.getStyle('.symbol.off', 'background-color') || '#505050');
-            elem.initData('on-color', elem.data('color') || ftui.getClassColor(elem) || ftui.getStyle('.symbol.on', 'color') || '#aa6900');
-            elem.initData('on-background-color', elem.data('background-color') || ftui.getStyle('.symbol.on', 'background-color') || '#aa6900');
+            elem.initClassColor('on-color'); 
+
+            elem.initData('on-color', elem.data('color') || '#aa6900');
+            elem.initData('off-color', elem.data('color') || '#505050');
+            elem.initData('on-background-color', elem.data('background-color') || '#aa6900');
+            elem.initData('off-background-color', elem.data('background-color') || '#505050');
             elem.initData('background-icon', null);
             elem.initData('icon', (($.isArray(elem.data('icons'))) ? elem.data('icons')[0] : 'ftui-window'));
             elem.initData('get-warn', -1);

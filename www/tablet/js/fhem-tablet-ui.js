@@ -200,10 +200,11 @@ var Modul_widget = function () {
     function init_attr(elem) {
 
         elem.initData('get', 'STATE');
-        elem.initData('set', '');
+        var get = elem.data('get');
+        elem.initData('set', (get!=='STATE') ? get : '');
         elem.initData('cmd', 'set');
         elem.initData('get-on', '(true|1|on|open|ON)');
-        elem.initData('get-off', '(false|0|off|closed|OFF)');
+        elem.initData('get-off', '!on');
 
         me.addReading(elem, 'get');
         if (elem.isDeviceReading('get-on')) {
@@ -290,6 +291,39 @@ var Modul_widget = function () {
             }
         }
     }
+    
+    function extractReadings(elem, key) {
+        var data = elem.data(key);
+
+        if (ftui.isValid(data)) {
+
+            if ($.isArray(data) || !data.toString().match(/^[#\.\[][^:]*$/)) {
+                if (!$.isArray(data)) {
+                    data = new Array(data.toString());
+                }
+                for (var i = data.length - 1; i >= 0; i -= 1) {
+                    var device,reading,item = data[i];
+                    // only fully qualified readings => DEVICE:READING
+                    if (item.match(/:/)) {
+                        var fqreading = item.split(':');
+                        device = fqreading[0].replace('[', '');
+                        reading = fqreading[1].replace(']', '');
+                    }
+                    // fill objects for mapping from FHEMWEB paramid to device + reading
+
+                    if (ftui.isValid(device) && ftui.isValid(reading) &&
+                        device !== '' && reading !== '' &&
+                        device !== ' ' && reading !== ' ') {
+                        device = device.toString();
+                        var paramid = (reading === 'STATE') ? device : [device, reading].join('-');
+                        subscriptions[paramid] = {};
+                        subscriptions[paramid].device = device;
+                        subscriptions[paramid].reading = reading;
+                    }
+                }
+            }
+        }
+    }
 
     function update(dev, par) {
         ftui.log(1, 'warning: ' + me.widgetname + ' has not implemented update function');
@@ -314,6 +348,7 @@ var Modul_widget = function () {
         factor: factor,
         map: map,
         addReading: addReading,
+        extractReadings: extractReadings,
         subscriptions: subscriptions,
         elements: elements
     };
@@ -2283,11 +2318,28 @@ function onjQueryLoaded() {
     $.fn.isValidData = function (key) {
         return typeof $(this).data(key) != 'undefined';
     };
+    
+    $.fn.isValidAttr = function (key) {
+        return typeof $(this).attr(key) != 'undefined';
+    };
 
     $.fn.initData = function (key, value) {
         var elem = $(this);
         elem.data(key, elem.isValidData(key) ? elem.data(key) : value);
         return elem;
+    };
+        
+    $.fn.reinitData = function (key, value) {
+        var elem = $(this),
+            attrKey = 'data-' + key;
+        elem.data(key, elem.isValidAttr(attrKey) ? elem.attr(attrKey) : value);
+        return elem;
+    };
+
+    $.fn.initClassColor = function (key) {
+        var elem = $(this),
+            value = ftui.getClassColor(elem);
+        if ( value )  elem.attr('data-'+key, value);
     };
 
     $.fn.mappedColor = function (key) {

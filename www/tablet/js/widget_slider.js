@@ -135,6 +135,8 @@ var Modul_slider = function () {
         //init standard attributes 
         base.init_attr.call(me, elem);
 
+        elem.initClassColor('color'); 
+        
         elem.initData('on', 'on');
         elem.initData('off', 'off');
         elem.initData('width', null);
@@ -148,8 +150,8 @@ var Modul_slider = function () {
         elem.initData('touch-diameter', elem.data('handle-diameter'));
         elem.initData('set-value', '$v');
         elem.initData('get-value', elem.data('part') || -1);
-        elem.initData('color', ftui.getClassColor(elem) || ftui.getStyle('.slider', 'color') || '#aa6900');
-        elem.initData('background-color', ftui.getStyle('.slider', 'background-color') || '#404040');
+        elem.initData('color', '#aa6900');
+        elem.initData('background-color', '#404040');
         elem.initData('timer-state', '');
         elem.initData('timer-step', '1');
         elem.initData('timer-interval', '1000');

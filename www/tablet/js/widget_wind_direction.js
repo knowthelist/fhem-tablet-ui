@@ -10,7 +10,7 @@
 "use strict";
 
 function depends_wind_direction() {
-        return ["volume"];
+    return ["volume"];
 }
 
 var Modul_wind_direction = function () {
@@ -18,6 +18,21 @@ var Modul_wind_direction = function () {
     var isUpdating = false;
 
     function onRelease(v) {}
+
+    function actualSettings(elem) {
+
+        elem.reinitData('fgcolor', ftui.getStyle('.' + me.widgetname, 'color') || '#cccccc');
+        elem.reinitData('bgcolor', ftui.getStyle('.' + me.widgetname, 'background-color') || 'transparent');
+        elem.reinitData('nomcolor', ftui.getStyle('.' + me.widgetname + '.nominal', 'color') || '#999');
+        elem.reinitData('hdcolor', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname + '.handle', 'color') || '#aa6900');
+
+        return {
+            'fgColor': elem.data('fgcolor'),
+            'bgColor': elem.data('bgcolor'),
+            'nomColor': elem.data('nomcolor'),
+            'hdColor': elem.data('hdcolor')
+        };
+    }
 
     function init() {
 
@@ -45,10 +60,10 @@ var Modul_wind_direction = function () {
             elem.initData('tickstep', elem.hasClass('tiny') ? 90 : 45);
             elem.initData('thickness', elem.hasClass('tiny') ? 0.5 : 0.25);
             elem.initData('cursor', elem.hasClass('tiny') ? 18 : 6);
-            elem.initData('bgcolor', 'transparent');
-            elem.initData('fgcolor', '#cccccc');
-            elem.initData('tkcolor', '#696969');
-            elem.initData('hdcolor', '#aa6900');
+            elem.initData('fgcolor', ftui.getStyle('.' + me.widgetname, 'color') || '#cccccc');
+            elem.initData('bgcolor', ftui.getStyle('.' + me.widgetname, 'background-color') || 'transparent');
+            elem.initData('nomcolor', ftui.getStyle('.' + me.widgetname + '.nominal', 'color') || '#999');
+            elem.initData('hdcolor', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname + '.handle', 'color') || '#aa6900');            
             elem.initData('direction', elem.data('get') || 'wind_direction');
             elem.initData('speed', 'wind_speed');
             elem.initData('min', 0);
@@ -176,6 +191,7 @@ var Modul_wind_direction = function () {
         //override members
         widgetname: 'wind_direction',
         init: init,
+        actualSettings: actualSettings,
         update: update,
         onRelease: onRelease
     });

@@ -32,16 +32,42 @@ var Modul_checkbox = function () {
         elem.transmitCommand();
     }
 
+    function reinit() {
+        me.elements.each(function (index) {
+            var elem = $(this);
+            var switchery = elem.data('switchery');
+
+            if (switchery) {
+                //console.log(ftui.getStyle('.' + me.widgetname + '.on', 'color'));
+                switchery.reinit({
+                    color: ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname + '.on', 'background-color'),
+                    secondaryColor: ftui.getStyle('.' + me.widgetname + '.off', 'background-color'),
+                    jackColor: ftui.getStyle('.' + me.widgetname + '.on', 'color'),
+                    jackSecondaryColor: ftui.getStyle('.' + me.widgetname + '.off', 'color')
+                });
+                //switchery.setPosition(true);
+                switchery.handleOnchange(true);
+
+            }
+        });
+    }
+
     function init() {
 
         me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
             elem.attr("data-ready", "");
-            elem.data('off-color', elem.data('off-color') || ftui.getStyle('.checkbox.off', 'color') || '#bfbfbf');
-            elem.data('off-background-color', elem.data('off-background-color') || ftui.getStyle('.checkbox.off', 'background-color') || '#505050');
-            elem.data('on-color', elem.data('on-color') || ftui.getStyle('.checkbox.on', 'color') || '#bfbfbf');
-            elem.data('on-background-color', elem.data('on-background-color') || ftui.getClassColor($(this)) || ftui.getStyle('.checkbox.on', 'background-color') || '#aa6900');
+
+            elem.initClassColor('on-background-color');
+
+            elem.initData('on-color', ftui.getStyle('.checkbox.on', 'color') || '#bfbfbf');
+            elem.initData('off-color', ftui.getStyle('.checkbox.off', 'color') || '#bfbfbf');
+            elem.initData('on-background-color', ftui.getStyle('.checkbox.on', 'background-color') || '#aa6900');
+            elem.initData('off-background-color', ftui.getStyle('.checkbox.off', 'background-color') || '#505050');
+
+
+
             me.init_attr(elem);
 
             // base element that becomes a Switchery
@@ -58,6 +84,8 @@ var Modul_checkbox = function () {
                 jackColor: elem.data('on-color'),
                 jackSecondaryColor: elem.data('off-color'),
             });
+
+            elem.data('switchery', switchery);
 
             // click handler
             var switcherButton = elem.find('.switchery');
@@ -111,6 +139,7 @@ var Modul_checkbox = function () {
         //override members
         widgetname: 'checkbox',
         clicked: clicked,
+        reinit: reinit,
         init: init,
     });
     return me;

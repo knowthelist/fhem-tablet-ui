@@ -55,7 +55,6 @@ var Modul_label = function () {
         elem.initData('unit', '');
         elem.initData('color', '');
         elem.initData('limits', elem.data('states') || '');
-        elem.initData('colors', ['#505050']);
         elem.initData('limits-get', (elem.data('device')) ? elem.data('device') + ':' + elem.data('get') : elem.data('get'));
         elem.initData('limits-part', elem.data('part'));
         elem.initData('substitution', '');
@@ -72,14 +71,6 @@ var Modul_label = function () {
             elem.initData('hide-off', '!on');
         }
         me.addReading(elem, 'hide');
-
-        // fill up colors to limits.length
-        // if an index s isn't set, use the value of s-1
-        for (var s = 0, len = elem.data('limits').length; s < len; s++) {
-            if (typeof elem.data('colors')[s] == 'undefined') {
-                elem.data('colors')[s] = elem.data('colors')[s > 0 ? s - 1 : 0];
-            }
-        }
 
         elem.data('fix', ($.isNumeric(elem.data('fix'))) ? Number(elem.data('fix')) : -1);
 

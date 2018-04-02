@@ -83,18 +83,18 @@
             elem.bi = options['backgroundIcon'];
             elem.fi = options['icon'];
 
-            faElem = $('<div/>', {
+            faElem = $('<div>', {
                 class: 'famultibutton'
             });
 
             faElem.addClass('fa-stack');
 
-            elem.bg = jQuery('<i/>', {
+            elem.bg = jQuery('<i>', {
                 'id': 'bg',
                 'class': 'fa fa-stack-2x'
             }).addClass(elem.bi);
 
-            elem.fg = jQuery('<i/>', {
+            elem.fg = jQuery('<i>', {
                 'id': 'fg',
                 'class': 'fa fa-stack-1x'
             }).addClass(elem.fi);
@@ -159,6 +159,7 @@
 
         function setBackgroundColor(color) {
 
+            console.log('c:'+color);
             elem.bg.css("color", color);
         }
 

@@ -1,21 +1,99 @@
+/*  color theme style addon for FTUI
+    Copyright (c) 2018 Mario Stephan <mstephan@shared-files.de>
+    URL: https://github.com/knowthelist/fhem-tablet-ui
+*/
+
+
+/* colors */
+
+.cold {
+    color: #6DE08E;
+}
+.warm {
+    color: #337ab7;
+}
+
+.range-bar {
+  background-color: #404040;
+}
+
 /* Slider colors */
 .range-handle {
   background-color: #bcbcbc !important;
 }
-.range-bar {
+[data-type="slider"]:not([data-background-color]) .range-bar {
   background-color: #404040;
+}
+[data-type="slider"]:not([data-color]) .range-quantity {
+    background-color: #337ab7 !important;
 }
 
 polyline {
     stroke: #337ab7 !important;
 }
 
-.pagetab.on{background-color:#337ab7;}
-.dimmer.on{background-color:#337ab7;}
-.symbol.on{color:#337ab7;background-color:#337ab7;}
-.switch.on{background-color:#337ab7;}
-.checkbox.on{background-color:#337ab7;}
-.push.on{color:#337ab7;background-color:#337ab7;}
-.homestatus{color:#337ab7;}
-.slider{color:#337ab7;}
-.volume.hdcolor{color:#337ab7;}
+/* spinner colors */
+[data-type="spinner"]:not([data-color]) .spinner {
+  color: #337ab7;
+}
+[data-type="spinner"]:not([data-background-color]) .spinner {
+  background-color: #404040  !important;
+}
+[data-type="spinner"]:not([data-background-color]) .spinner .levelRange {
+  background-color: #337ab7 !important;
+}
+
+/* color theme classes for widgets */
+
+/* label widget */
+[data-type="label"].active {
+  color: #337ab7 !important;
+}
+
+/* symbol  widget */
+/* foreground on */
+[data-type="symbol"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
+    color: #337ab7 !important;
+}
+
+/* switch  widget */
+/* background on */
+[data-type="switch"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg,
+[data-type="dimmer"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg,
+[data-type="button"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg{
+    color: #337ab7 !important;
+}
+
+/* switch  widget invert */
+/* foreground on */
+[data-type="switch"]:not([data-colors]):not([data-on-color]):not([data-color]).invert .active i#fg,
+[data-type="dimmer"]:not([data-colors]):not([data-on-color]):not([data-color]).invert .active i#fg,
+[data-type="button"]:not([data-colors]):not([data-on-color]):not([data-color]).invert .active i#fg{
+    color: #337ab7 !important;
+}
+
+
+/* push  widget */
+/* foreground on */
+[data-type="push"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
+    color: #337ab7 !important;
+}
+/* background on */
+[data-type="push"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg {
+    color: #337ab7 !important;
+}
+
+
+/* pseudo classes for canvas painted widgets
+   read by ftui.getStyle() in init and reinit function  */
+
+
+.checkbox.on{color:#bfbfbf; background-color:#337ab7; }
+.checkbox.off{color:#bfbfbf; background-color:#505050; }
+
+.homestatus{background-color:#666;color:#337ab7;}
+.homestatus.icon{background-color:#777;color:#222;}
+
+.volume.handle{color:#337ab7;}
+.wind_direction.handle{color:#337ab7;}
+.thermostat{background-color:#222;color:#7a7a7a;}

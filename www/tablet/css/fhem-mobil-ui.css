@@ -1,3 +1,22 @@
+/*  color theme style addon for FTUI
+    Copyright (c) 2018 Mario Stephan <mstephan@shared-files.de>
+    URL: https://github.com/knowthelist/fhem-tablet-ui
+*/
+
+
+/* colors */
+
+.gray {
+    color: #555;
+}
+
+.cold {
+    color: #0088CC;
+}
+.warm {
+    color: #c80420;
+}
+
 body {
     background-color: #eeeeee;
     color: #222222;
@@ -27,13 +46,7 @@ ul, ol {
     border-bottom: 1px solid #888;
 }
 
-/* Slider colors */
-.range-handle {
-  background-color: #fff !important;
-}
-.range-bar {
-  background-color: #aaa;
-}
+
 
 select {
     color: #444;
@@ -58,59 +71,169 @@ i#warn-back {
     color: #DB1D1D;
 }
 
-.main-color              { color:#0088CC;}
 
-/* Symbol */
-/* Foreground On */
-[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) .active i#fg {
-    color: #aa6900 !important;
+/* color theme classes for widgets */
+
+/* Slider colors */
+.range-handle {
+  background-color: #fff !important;
 }
-/* Foreground Off */
-[data-type="symbol"]:not([data-colors]):not([data-on-colors]):not([data-color]):not([data-on-color]):not([data-off-color]):not([data-on-background-color]):not([data-off-background-color]):not([data-on-background-colors]) :not(.active) i#fg {
-    color: #505050 !important;
+[data-type="slider"]:not([data-background-color]) .range-bar {
+  background-color: #bbb !important;
+}
+[data-type="slider"]:not([data-color]) .range-quantity {
+    background-color: #0088CC !important;
+}
+
+/* label widget */
+[data-type="label"].active {
+  color: #006090 !important;
+}
+
+/* spinner colors */
+[data-type="spinner"]:not([data-color]) .spinner {
+  color: #337ab7;
+}
+[data-type="spinner"]:not([data-background-color]) .spinner {
+  background-color: #eee  !important;
+}
+[data-type="spinner"]:not([data-background-color]) .spinner .levelRange {
+  background-color: #0088CC !important;
+}
+[data-type="spinner"]:not([data-background-color]) .spinner .levelArea {
+  background-color: #cacaca !important;
+}
+
+/* Weather */
+div.weather-icon.meteocons {
+    color: #999 !important;
+}
+
+/* checkbox */
+.switchery.switchery-default{
+    background-color:#0088CC !important;
+    border-color: #0088CC !important;
+    box-shadow: #0088CC 0px 0px 0px 0px !important;
+}
+
+/* symbol  widget */
+/* foreground on */
+[data-type="symbol"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
+    color: #0088CC !important;
+}
+/* foreground off */
+[data-type="symbol"]:not([data-colors]):not([data-off-color]):not([data-color]) :not(.active) i#fg {
+    color: rgba(153, 153, 153, 0.6) !important;
 }
 
 /* Switch */
 /* Foreground On */
-[data-type="switch"]:not([data-colors]):not([data-on-color]) .active i#fg {
+[data-type="switch"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg,
+[data-type="dimmer"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg,
+[data-type="button"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
     color: #eee !important;
 }
 /* Foreground Off */
-[data-type="switch"]:not([data-colors]):not([data-on-color]) :not(.active) i#fg {
+[data-type="switch"]:not([data-colors]):not([data-on-color]):not([data-color]) :not(.active) i#fg,
+[data-type="dimmer"]:not([data-colors]):not([data-on-color]):not([data-color]) :not(.active) i#fg,
+[data-type="button"]:not([data-colors]):not([data-on-color]):not([data-color]) :not(.active) i#fg {
     color: #eee !important;
 }
 /* Background On */
-[data-type="switch"]:not([data-background-colors]):not([data-on-background-color]) .active i#bg {
+[data-type="switch"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg,
+[data-type="dimmer"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg,
+[data-type="button"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg {
     color: #0088CC !important;
 }
 /* Background Off */
-[data-type="switch"]:not([data-background-colors]):not([data-off-background-color]) :not(.active) i#bg {
-    color: #aaa !important;
+[data-type="switch"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg,
+[data-type="dimmer"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg,
+[data-type="button"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg {
+    color: rgba(153, 153, 153, 0.6) !important;
 }
+
+/* switch  widget invert */
+/* foreground on */
+[data-type="switch"]:not([data-colors]):not([data-on-color]):not([data-color]).invert .active i#fg {
+    color: rgba(6, 111, 189, 0.87) !important;
+}
+/* foreground off */
+[data-type="switch"]:not([data-colors]):not([data-on-color]):not([data-color]).invert :not(.active) i#fg {
+    color: rgba(153, 153, 153, 0.6) !important;
+}
+/* background on */
+[data-type="switch"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]).invert .active i#bg {
+    color: #f44 !important;
+}
+/* background off */
+[data-type="switch"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]).invert :not(.active) i#bg {
+    color: #2B445A !important;
+}
+
+/* push  widget */
+/* foreground on */
+[data-type="push"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
+    color: #0088CC !important;
+}
+/* foreground off */
+[data-type="push"]:not([data-colors]):not([data-on-color]):not([data-color]) :not(.active) i#fg {
+    color: #999 !important;
+}
+/* background on */
+[data-type="push"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg {
+    color: #0088CC !important;
+}
+/* background off */
+[data-type="push"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg {
+    color: #999 !important;
+}
+
+
+/* pagebutton  widget */
+/* foreground on */
+[data-type="pagebutton"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
+    color: #eee !important;
+}
+/* foreground off */
+[data-type="pagebutton"]:not([data-colors]):not([data-off-color]):not([data-color]) :not(.active) i#fg {
+    color: #777 !important;
+}
+/* background on */
+[data-type="pagebutton"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg {
+    color: #666 !important;
+}
+/* background off */
+[data-type="pagebutton"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg {
+    color: rgba(21, 21, 21, 0.1) !important;
+}
+
 
 .bg-gray,.btn-gray               { background-color:#999999;}
 .bg-lightgray,.btn-lightgray     { background-color:#EDEDED;}
 
+/* pseudo classes for canvas painted widgets
+   read by ftui.getStyle() in init and reinit function  */
+
 option {background-color: #ffffff;}
-.pagetab.on{color:#eee;background-color:#0088CC;}
-.pagetab.off{color:#eee;background-color:#aaa;}
-.dimmer.on{color:#eee;background-color:#0088CC;}
-.dimmer.off{color:#eee;background-color:#aaa;}
-.symbol.on{color:#0088CC;background-color:#0088CC;}
-.symbol.off{color:#222;background-color:#222;}
-.switch.on{color:#eee;background-color:#0088CC;}
-.switch.off{color:#eee;background-color:#aaa;}
-.push.on{color:#0088CC;background-color:#0088CC;}
-.push.off{color:#888888;background-color:#888888;}
-.thermostat.tkcolor{color:#888;}
+
+.thermostat{background-color:#fff;color:#888;}
+.thermostat.ticks{color:#888;}
 .thermostat.fgcolor{color:#555;}
-.thermostat.input{color:#444;}
-.homestatus.fgcolor{color:#0088CC;}
-.homestatus.tkcolor{color:#aaa;}
+.thermostat.nominal{color:#444;}
+.thermostat.actual{color:#eee;}
+
+.homestatus{background-color:#999;color:#0088CC;}
+.homestatus.icon{background-color:#999;color:#eee;}
+
 .slider{color:#0088CC;background-color:#999;}
-.volume.hdcolor{color:#0088CC;}
-.volume.fgcolor{color:#555;}
+.volume.handle{color:#0088CC;}
+.volume{background-color:#fff;color:#555;}
+.volume.nominal{color:#444;}
+.wind_direction.handle{color:#0088CC;}
+.wind_direction{background-color:#fff;color:#555;}
+.wind_direction.nominal{color:#444;}
 .checkbox.on {color:#fff;background-color:#0088CC;}
 .checkbox.off {color:#fff;background-color:#999;}
 .playstream.on {color:#fff;background-color:#0088CC;}
 .playstream.off {color:#fff;background-color:#999;}
+

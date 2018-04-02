@@ -102,6 +102,7 @@ Currently there are more then 20 types of widgets in the base installation.
 - **slideout** : a slide out menu plugin, usable for mobile phone pages.
 - **medialist** : a list of media elements e.g. songs in a playlist
 - **notify** : popup browser notifications for reading changes
+- **theme**  : plugin to actives css stylesheet themes
 
 
 By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
@@ -366,9 +367,8 @@ data-device, data-get can be references (jQuery seletor) to select-widgets to ch
 - **data-anglearc**  : (default 240);
 - **data-bgcolor**      : Color of background (default '#505050');
 - **data-fgcolor**      : Color of ticks (default '#666');
-- **data-inputcolor**   : Color of value  (default '#ffffff');
-- **data-hdcolor**      : Color of handle  (default '#666');
-- **data-displayInput**  : Show the value (default true);
+- **data-nomcolor**   : Color of value  (default '#ffffff');
+- **data-displayNominal**  : Show the value (default true);
 - **data-font**  :  (default '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
 - **data-font-weight**
 - **data-unit** : add a unit after the center value.
@@ -389,7 +389,8 @@ all parameters from knob widget plus following additional parameters
 - **data-max**   : maximal value to set (default 30)
 - **data-mincolor**   : Color of min temp (default '#4477ff');
 - **data-maxcolor**   : Color of max temp (default '#ff0000');
-- **data-tempcolor**   : Color of current temp text (default '#999');
+- **data-actcolor**   : Color of current temp text (default '#999');
+- **data-nomcolor**   : Color of value  (default '#ffffff');
 - **data-step**  : step size for value adjustment e.g. 0.5 (default 1)
 - **data-off**   : value to send to get the thermostat switch off (for this, dial the knob to then minimum value)
 - **data-boost** : value to send to force boost mode (for this, dial the knob to then maximum value)
@@ -415,6 +416,9 @@ all parameters from knob widget plus following additional parameters
 - **data-set-value** : Format of the value to send to FHEM (default '$v': the value only)
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
+- **data-bgcolor**      : Color of background (default '#505050');
+- **data-fgcolor**      : Color of ticks (default '#666');
+- **data-nomcolor**   : Color of value  (default '#ffffff');
 - **data-tickstep** : distance between ticks (default 4|20)
 - **data-unit** : add a unit after the desired value.
 - **class**		: mini, small, big, bigger, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
@@ -435,6 +439,11 @@ all parameters from knob widget plus following additional parameters
 - **data-set-on**   : array of states using for set. (default: value of data-get-on)
 - **data-alias**	: array of fix names to show only in the UI as an alias to the real states
 - **data-icons**    : array of icons related to the data-get-on array
+- **data-bgcolor**      : Color of background (default '#505050');
+- **data-fgcolor**      : Color of ticks (default '#666');
+- **data-nomcolor**   : Color of value  (default '#ffffff');
+- **data-mincolor**   : Color of background icons (default '#4477ff');
+- **data-maxcolor**   : Color of the active icon (default '#ff0000');
 - **data-version**  : name of the status model e.g. 'residents','roommate','guest' (default NULL)
 - **class**			: small, readonly
 
@@ -2217,6 +2226,12 @@ Example for a special value spinner. The value is visualized as numeric text wit
 </div>
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/ftui_spinner3.png)
+
+###Theme
+-------
+
+
+ <link rel="stylesheet" href="css/fhem-darkgreen-ui.css" data-type="theme" data-device="dummy1" data-get="state" data-get-on="5" data-get-off="!on">
 
 
 Specials

@@ -134,16 +134,26 @@ var Modul_volume = function () {
         return (this.unit) ? ret + window.unescape(this.unit) : ret;
     }
 
-    function reinit() {
-        me.elements.each(function (index) {
-            var elem = $(this);
-            var knob_elem = elem.find('input');
-            if (knob_elem) {
-                knob_elem.trigger('configure', {
-                    'hdColor': ftui.getStyle('.' + me.widgetname + '.handle', 'color')
-                });
+    function actualSettings(elem) {
+
+            var hdDefaultColor = ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname + '.handle', 'color') || '#aa6900';
+            if (elem.hasClass('hue-back')) {
+                hdDefaultColor = '#cccccc';
             }
-        });
+            if (elem.hasClass('hue-tick')) {
+                hdDefaultColor = '#bbbbbb';
+            }
+            elem.reinitData('fgcolor', ftui.getStyle('.' + me.widgetname, 'color') || '#666');
+            elem.reinitData('bgcolor', ftui.getStyle('.' + me.widgetname, 'background-color') || 'none');
+            elem.reinitData('nomcolor', ftui.getStyle('.' + me.widgetname + '.nominal', 'color') || '#999');
+            elem.reinitData('hdcolor', hdDefaultColor);
+        
+        return {
+            'fgColor': elem.data('fgcolor'),
+            'bgColor': elem.data('bgcolor'),
+            'hdColor': elem.data('hdcolor'),
+            'nomColor': elem.data('nomcolor')
+        };
     }
 
     function init() {
@@ -156,8 +166,8 @@ var Modul_volume = function () {
             var maxval = elem.isValidData('max') ? elem.data('max') : 70;
             elem.data('origmax', maxval);
             elem.data('max', (maxval > 360) ? 360 : maxval);
-            elem.data('fgcolor', elem.data('fgcolor') || ftui.getStyle('.' + me.widgetname, 'color') || '#666');
-            elem.data('get-value', elem.data('get-value') || elem.data('part') || '-1');
+            elem.initData('fgcolor', ftui.getStyle('.' + me.widgetname, 'color') || '#666');
+            elem.initData('get-value', elem.data('get-value') || elem.data('part') || '-1');
 
             var mode = 0; //no hue colors
             var hdDefaultColor = ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname + '.handle', 'color') || '#aa6900';
@@ -186,10 +196,11 @@ var Modul_volume = function () {
                 mode = mode | 1 << 6;
             }
             elem.data('mode', mode);
-            elem.data('bgcolor', elem.data('bgcolor') || ftui.getStyle('.' + me.widgetname, 'background-color') || 'none');
-            elem.data('hdcolor', elem.data('hdcolor') || hdDefaultColor);
-            elem.data('tickstep', elem.data('tickstep') || (((mode >> 1) % 2 !== 0) ? 4 : 20));
-            elem.data('cursor', elem.data('cursor') || 6);
+            elem.initData('fgcolor', ftui.getStyle('.' + me.widgetname, 'color') || '#666');
+            elem.initData('bgcolor', ftui.getStyle('.' + me.widgetname, 'background-color') || 'none');
+            elem.initData('hdcolor', hdDefaultColor);
+            elem.initData('tickstep', (((mode >> 1) % 2 !== 0) ? 4 : 20));
+            elem.initData('cursor', 6);
             elem.initData('height', 160);
             elem.initData('width', 160);
 
@@ -253,7 +264,7 @@ var Modul_volume = function () {
         //override or own public members
         widgetname: 'volume',
         init: init,
-        reinit: reinit,
+        actualSettings: actualSettings,
         update: update,
         drawDial: drawDial,
         onRelease: onRelease,

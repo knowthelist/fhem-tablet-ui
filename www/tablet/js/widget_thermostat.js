@@ -40,7 +40,7 @@ var Modul_thermostat = function () {
         var dist = this.o.tickdistance || 4;
         var mincolor = this.o.minColor || '#ff0000';
         var maxcolor = this.o.maxColor || '#4477ff';
-        var tempcolor = this.o.tempColor;
+        var actcolor = this.o.actColor;
 
         // draw ticks
         for (var tick = this.startAngle; tick < this.endAngle + 0.00001; tick += tick_w * dist) {
@@ -87,7 +87,7 @@ var Modul_thermostat = function () {
         //draw current value as text
         var x = this.radius * 0.7 * Math.cos(acAngle);
         var y = this.radius * 0.7 * Math.sin(acAngle);
-        c.fillStyle = tempcolor;
+        c.fillStyle = actcolor;
         c.font = cfont;
         c.fillText(this.o.isValue, this.xy + x - 5 * (this.o.height / 50), this.xy + y + 5 * (this.o.height / 100));
 
@@ -115,7 +115,7 @@ var Modul_thermostat = function () {
 
     function onFormat(v) {
         /*jshint validthis: true */
-        v = _base.onFormat(v);
+        v = base.onFormat(v);
         return checkExtreme.call(this, v);
     }
 
@@ -154,6 +154,26 @@ var Modul_thermostat = function () {
         }
     }
 
+    function actualSettings(elem) {
+    
+        elem.reinitData('fgcolor', ftui.getStyle('.' + me.widgetname, 'color') || '#666');
+        elem.reinitData('bgcolor', ftui.getStyle('.' + me.widgetname, 'background-color') || 'none');
+        elem.reinitData('nomcolor', ftui.getStyle('.' + me.widgetname + '.nominal', 'color') || '#999');
+        elem.reinitData('actcolor', ftui.getStyle('.' + me.widgetname + '.actual', 'color') || '#999');
+        elem.reinitData('mincolor', ftui.getStyle('.' + me.widgetname + '.min', 'color') || '#4477ff');
+        elem.reinitData('maxcolor', ftui.getStyle('.' + me.widgetname + '.max', 'color') || '#ff0000');
+
+
+        return {
+            'fgColor': elem.data('fgcolor'),
+            'bgColor': elem.data('bgcolor'),
+            'actColor': elem.data('actcolor'),
+            'nomColor': elem.data('nomcolor'),
+            'minColor': elem.data('mincolor'),
+            'maxColor': elem.data('maxcolor')
+        };
+    }
+
     function init() {
 
         me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
@@ -173,10 +193,10 @@ var Modul_thermostat = function () {
             elem.initData('cursor', 6);
             elem.initData('off', -1);
             elem.initData('boost', -1);
-            elem.initData('tempcolor', ftui.getStyle('.' + me.widgetname + '.tempcolor', 'color') || '#999');
-            elem.initData('fgcolor', ftui.getStyle('.' + me.widgetname + '.fgcolor', 'color') || '#666');
-            elem.initData('mincolor', ftui.getStyle('.' + me.widgetname + '.mincolor', 'color') || '#4477ff');
-            elem.initData('maxcolor', ftui.getStyle('.' + me.widgetname + '.maxcolor', 'color') || '#ff0000');
+            elem.initData('actcolor', ftui.getStyle('.' + me.widgetname + '.actual', 'color') || '#999');
+            elem.initData('fgcolor', ftui.getStyle('.' + me.widgetname, 'color') || '#666');
+            elem.initData('mincolor', ftui.getStyle('.' + me.widgetname + '.min', 'color') || '#4477ff');
+            elem.initData('maxcolor', ftui.getStyle('.' + me.widgetname + '.max', 'color') || '#ff0000');
             elem.initData('bgcolor', ftui.getStyle('.' + me.widgetname, 'background-color') || 'none');
             elem.initData('get-value', elem.data('part') || '-1');
 
@@ -267,19 +287,21 @@ var Modul_thermostat = function () {
             //extra reading for lock
             me.updateLock(elem, dev, par);
         });
-        
+
         isUpdating = false;
     }
 
     // public
     // inherit all public members from base class
-    var base = new Modul_knob();
-    var _base = {};
-    _base.onFormat = base.onFormat;
-    var me = $.extend(base, {
+    var parent = new Modul_knob();
+    var base = {
+        onFormat: parent.onFormat,
+    };
+    var me = $.extend(parent, {
         //override or own public members
         widgetname: 'thermostat',
         init: init,
+        actualSettings: actualSettings,
         update: update,
         drawDial: drawDial,
         onRelease: onRelease,

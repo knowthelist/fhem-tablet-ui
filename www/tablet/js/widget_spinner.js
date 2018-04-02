@@ -131,13 +131,15 @@ var Modul_spinner = function () {
 
         //init standard attributes 
         _base.init_attr.call(me, elem);
+        
+        elem.initClassColor('color'); 
 
-        elem.initData('color', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname, 'color') || '#aa6900');
+        elem.initData('color', '#aa6900');
         elem.initData('gradient-color', []);
-        elem.initData('background-color', ftui.getStyle('.' + me.widgetname, 'background-color') || '#4a4a4a');
-        elem.initData('icon-left-color', ftui.getStyle('.' + me.widgetname, 'icon-left-color') || '#aaa');
-        elem.initData('icon-right-color', ftui.getStyle('.' + me.widgetname, 'icon-right-color') || '#aaa');
-        elem.initData('text-color', ftui.getStyle('.' + me.widgetname, 'text-color') || '#ccc');
+        elem.initData('background-color', '#4a4a4a');
+        elem.initData('icon-left-color', '#aaa');
+        elem.initData('icon-right-color', '#aaa');
+        elem.initData('text-color', '#ccc');
         elem.initData('icon-left', elem.data('icon') || null);
         elem.initData('icon-right', null);
         elem.initData('shortdelay', 80);
@@ -170,8 +172,9 @@ var Modul_spinner = function () {
         var heightUnit = ($.isNumeric(height)) ? 'px' : '';
 
         // prepare container element
-        elem.html('')
-            .addClass('spinner')
+        var elemWrappern = $('<div/>', {
+                class: 'spinner',
+            })
             .css({
                 width: width + widthUnit,
                 maxWidth: width + widthUnit,
@@ -188,7 +191,7 @@ var Modul_spinner = function () {
             .css({
                 color: elem.mappedColor('icon-left-color'),
             })
-            .prependTo(elem);
+            .prependTo(elemWrappern);
         if (leftIcon)
             elemLeftIcon.addClass('fa ' + leftIcon + ' fa-lg fa-fw');
         else {
@@ -205,7 +208,7 @@ var Modul_spinner = function () {
             }).css({
                 width: '50%',
             })
-            .appendTo(elem);
+            .appendTo(elemWrappern);
 
         //levelRange
         $('<div/>', {
@@ -219,7 +222,7 @@ var Modul_spinner = function () {
             .css({
                 color: elem.mappedColor('icon-right-color'),
             })
-            .appendTo(elem);
+            .appendTo(elemWrappern);
         if (rightIcon)
             elemRightIcon.addClass('fa ' + rightIcon + ' fa-lg fa-fw');
         else {
@@ -236,7 +239,7 @@ var Modul_spinner = function () {
                 class: 'spinnerText',
             }).css({
                 width: '50%',
-            }).appendTo(elem);
+            }).appendTo(elemWrappern);
             if (elem.hasClass('valueonly') || elem.hasClass('plain'))
                 elemText.css({
                     fontSize: elem.data('height') * 0.6 + 'px',
@@ -289,7 +292,8 @@ var Modul_spinner = function () {
         }));
 
         //Wrapper
-        elem.wrapAll('<div class="spinner-wrapper"></div>');
+        //elem.wrapAll('<div class="spinner-wrapper"></div>');
+        elemWrappern.appendTo(elem);
     }
 
     function update(dev, par) {

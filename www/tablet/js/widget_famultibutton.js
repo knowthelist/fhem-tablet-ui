@@ -190,7 +190,7 @@ var Modul_famultibutton = function () {
             var faelem = elem.data('famultibutton');
             if (faelem) {
 
-                if (idx === idxOn || state === elem.data('set-on')) {
+                if (idx === idxOn || state == elem.data('set-on')) {
                     faelem.setOn();
                 } else {
                     faelem.setOff();
@@ -200,14 +200,14 @@ var Modul_famultibutton = function () {
                 var icons = elem.data("icons"),
                     classes = elem.data("classes"),
                     bgicons = elem.data("background-icons"),
-                    colors = elem.data("colors") || elem.data("on-colors"),
-                    bgcolors = elem.data("background-colors") || elem.data("on-background-colors");
+                    colors = elem.data("colors"),
+                    bgcolors = elem.data("background-colors");
 
                 void 0 === icons && (icons = new Array(elem.data("icon") || "fa-power-off"));
                 void 0 === classes && (classes = new Array(""));
                 void 0 === bgicons && (bgicons = new Array(elem.data("background-icon") || ""));
-                void 0 === colors && (colors = new Array(elem.data("on-color") || elem.data("off-color") || "#505050"));
-                void 0 === bgcolors && (bgcolors = new Array(elem.data("on-background-color") || elem.data("off-background-color") || "#505050"));
+                void 0 === colors && (colors = new Array(((faelem.getState()) ? elem.data("on-color") : elem.data("off-color")) || "#505050"));
+                void 0 === bgcolors && (bgcolors = new Array(((faelem.getState()) ? elem.data("on-background-color") : elem.data("off-background-color")) || "#505050"));
 
                 for (var i = 0, len = states.length; i < len; i++) {
                     void 0 === icons[i] && (icons[i] = icons[i > 0 ? i - 1 : 0]);
@@ -224,9 +224,9 @@ var Modul_famultibutton = function () {
                 faElem.addClass(classes[idx]);
 
                 // Get color values from reading or from fix array
-                var colorValue = (colors[idx].match(/:/)) ? elem.getReading(colors[idx]).val : colors[idx];
-                var bgColorValue = (bgcolors[idx].match(/:/)) ? elem.getReading('on-background-color').val : bgcolors[idx];
-
+                var colorValue = (colors[idx].match(/:/)) ? elem.getReading("colors",idx).val : colors[idx];
+                var bgColorValue = (bgcolors[idx].match(/:/)) ? elem.getReading("background-colors",idx).val : bgcolors[idx];
+                
                 faelem.setForegroundIcon(icons[idx]);
                 faelem.setForegroundColor(ftui.getStyle('.' + colorValue, 'color') || colorValue);
                 faelem.setBackgroundIcon(bgicons[idx]);
@@ -449,12 +449,12 @@ var Modul_famultibutton = function () {
         elem.initData('set', '');
         elem.initData('cmd', 'set');
         elem.initData('get-on', '(true|1|on|open|ON)');
-        elem.initData('get-off', '(false|0|off|closed|OFF)');
+        elem.initData('get-off', '!on');
 
         var getOn = elem.data('get-on');
         var getOff = elem.data('get-off');
         elem.initData('set-on', (getOn !== '(true|1|on|open|ON)' && getOn !== '!off') ? elem.data('get-on') : 'on');
-        elem.initData('set-off', (getOff !== '(false|0|off|closed|OFF)' && getOff !== '!on') ? elem.data('get-off') : 'off');
+        elem.initData('set-off', (getOff !== '!on') ? elem.data('get-off') : 'off');
         elem.initData('mode', 'toggle');
         elem.initData('doubleclick', 0);
         elem.initData('firstclick-background-color', '#6F4500');
@@ -526,7 +526,7 @@ var Modul_famultibutton = function () {
         elem.initData("off-color", elemData.color || "#505050");
         elem.initData("off-background-color", elemData.backgroundColor || "#505050");
         elem.initData("on-color", elemData.color || "#aa6900");
-        elem.initData("on-background-color", elemData.color || elemData.backgroundColor || "#aa6900");
+        elem.initData("on-background-color", elemData.backgroundColor || "#aa6900");
 
         // change back with front colors
         if (elem.hasClass("invert")) {
@@ -556,6 +556,8 @@ var Modul_famultibutton = function () {
         if (elem.isDeviceReading("off-background-color")) {
             me.addReading(elem, "off-background-color");
         }
+        
+        me.extractReadings(elem, "background-colors");
     }
 
     function update_cb(elem) {}
