@@ -303,10 +303,10 @@ data-substitution="toDate().ago()"              -  convert to time span (long fo
 
 data-substitution="toDate().ago('hh:mm:ss')"    -  convert to time span (short format)
 
-
-
 If you use class="timestamp" together with data-substitution="toDate().ago()" it is recommended to define data-refresh="xx" in secondes to refresh the value
 from time to time, in case the reading timestamp refresh rate is low.
+
+The use the label features only with a fixed label text, then use class="fixedlabel"
 
 See [examples](#label) of Label
 
@@ -1425,6 +1425,15 @@ temperature	20.1
 </div>
 ```
 
+Fixed label
+```html
+<div class="fixedlabel" 
+     data-type="label" 
+     data-device="BadWandlicht" 
+     data-states='["on","off"]' 
+     data-colors='["orange","gray"]'>Bad</div>
+```
+
 **Example** for how to create a widget for shutter via push: show state and set up/down
 ```html
 <div data-type="switch" 
@@ -2233,6 +2242,9 @@ Example for a special value spinner. The value is visualized as numeric text wit
 
  <link rel="stylesheet" href="css/fhem-darkgreen-ui.css" data-type="theme" data-device="dummy1" data-get="state" data-get-on="5" data-get-off="!on">
 
+If you use themes, you have to avoid fix color definition. Use classes instead:
+
+<div class="fixedlabel" data-type="label" data-device="BadWandlicht" data-states='["on","off"]' data-classes='["active","gray"]'>Bad</div>
 
 Specials
 -------

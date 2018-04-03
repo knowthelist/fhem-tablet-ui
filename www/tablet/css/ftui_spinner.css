@@ -12,21 +12,23 @@
 }
 .spinner > .lefticon {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
     font-size: 40px;
     cursor: pointer;
 }
 .spinner > .righticon {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
     font-size: 40px;
     cursor: pointer;
 }
-.spinner.plain > .lefticon {
+
+[data-type="spinner"].plain .lefticon {
     font-size: 30px;
     font-weight: bold
 }
-.spinner.plain > .righticon {
+
+[data-type="spinner"].plain  .righticon {
     font-size: 30px;
     font-weight: bold
 }
@@ -43,28 +45,31 @@
     border-radius: 5px;
     background-color: #313131;
     height: 7px;
+    margin-bottom: -2px;
 }
-.spinner.plain > .levelArea {
+[data-type="spinner"].plain > .levelArea {
     margin-left:2px;
     margin-right:2px;
     visibility: hidden;
 }
 
-.spinner .levelRange {
+[data-type="spinner"] .levelRange {
     position: absolute;
     border-radius: 5px;
     height: 7px;
 }
-.spinner.valueonly > .levelArea {
+
+[data-type="spinner"].valueonly  .levelArea {
     visibility: hidden;
 }
-.spinner.value > .spinnerText {
+
+[data-type="spinner"].value .spinnerText {
     position: absolute;
-    top: -24%;
+    top: -20%;
     left: 25%;
 }
-.spinner.valueonly > .spinnerText,
-.spinner.plain > .spinnerText{
+[data-type="spinner"].valueonly  .spinnerText,
+[data-type="spinner"].plain  .spinnerText{
     position: absolute;
     top: 0.1em;
     left: 23%;
@@ -73,7 +78,7 @@
     font-family: robotothin,sans-serif;
 }
 
-.spinner.plain > .spinnerText {
+[data-type="spinner"].plain  .spinnerText {
     font-size: 18px;
     top: 0.5em;
 }

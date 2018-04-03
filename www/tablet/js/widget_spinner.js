@@ -133,6 +133,15 @@ var Modul_spinner = function () {
         _base.init_attr.call(me, elem);
         
         elem.initClassColor('color'); 
+        
+       if (elem.hasClass('large')) {
+            elem.data('height', 70);
+            elem.data('width', 300);
+        }
+        if (elem.hasClass('small')) {
+            elem.data('height', 35);
+            elem.data('width', 150);
+        }
 
         elem.initData('color', '#aa6900');
         elem.initData('gradient-color', []);
@@ -195,7 +204,7 @@ var Modul_spinner = function () {
         if (leftIcon)
             elemLeftIcon.addClass('fa ' + leftIcon + ' fa-lg fa-fw');
         else {
-            elemLeftIcon.html('-');
+            elemLeftIcon.html('&minus;');
             elemLeftIcon.css({
                 fontSize: elem.data('height') * 0.9 + 'px',
                 fontFamily: 'sans serif',
