@@ -25,7 +25,7 @@ UPD 2017-02-11_14:27:26 1079 www/tablet/css/ftui_medialist.css
 UPD 2017-02-11_14:27:26 442 www/tablet/css/ftui_range.css
 UPD 2017-02-11_14:27:26 970 www/tablet/css/ftui_slideout.css
 UPD 2017-12-10_15:50:02 784 www/tablet/css/ftui_slider.css
-UPD 2017-02-27_23:42:05 1586 www/tablet/css/ftui_spinner.css
+UPD 2018-04-03_22:28:31 1717 www/tablet/css/ftui_spinner.css
 UPD 2017-06-13_20:19:36 6936 www/tablet/css/ftui_weekprofile.css
 UPD 2017-11-13_21:51:49 4650 www/tablet/demo_ftui.html
 UPD 2017-10-03_19:36:50 226696 www/tablet/fonts/fhemSVG.eot
@@ -133,7 +133,7 @@ UPD 2018-01-21_14:59:59 9875 www/tablet/js/widget_settimer.js
 UPD 2018-03-24_10:28:08 12991 www/tablet/js/widget_simplechart.js
 UPD 2017-02-20_22:59:41 3118 www/tablet/js/widget_slideout.js
 UPD 2018-03-29_00:59:08 16060 www/tablet/js/widget_slider.js
-UPD 2018-03-29_21:01:27 12218 www/tablet/js/widget_spinner.js
+UPD 2018-04-03_22:46:17 12476 www/tablet/js/widget_spinner.js
 UPD 2018-01-21_15:00:48 3083 www/tablet/js/widget_svgplot.js
 UPD 2017-12-30_19:39:40 4299 www/tablet/js/widget_swiper.js
 UPD 2018-03-29_00:09:31 1557 www/tablet/js/widget_switch.js
