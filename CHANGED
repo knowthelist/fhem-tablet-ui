@@ -1,3 +1,3 @@
 FHEM Tablet UI last change:
-2018-04-03
- - Added class small and large to spinner
+2018-04-05
+ - Fixed a bug which set wrong icon positions
