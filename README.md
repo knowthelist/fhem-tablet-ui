@@ -807,7 +807,7 @@ class 'blank' force to open the given URL on a new window
 - **data-off**                     : value which represents the OFF mode
 - **data-on**                      : value which represents the ON mode
 - **data-lock**                    : name of the reading containing the boolean value for the lock (readonly) parameter (default <null>)
-- **class**                        : valueonly,value,circulate,positiononly
+- **class**                        : valueonly,value,circulate,positiononly, small,large
 
 ####Departure widget
 - **data-color**                   :
