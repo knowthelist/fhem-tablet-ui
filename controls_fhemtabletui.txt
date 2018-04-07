@@ -109,7 +109,7 @@ UPD 2018-01-18_21:41:36 3060 www/tablet/js/widget_input.js
 UPD 2017-02-11_14:27:26 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2018-01-09_20:25:53 2978 www/tablet/js/widget_joinedlabel.js
 UPD 2018-01-21_14:54:44 4568 www/tablet/js/widget_klimatrend.js
-UPD 2018-04-02_22:13:44 8246 www/tablet/js/widget_knob.js
+UPD 2018-04-07_08:32:16 8338 www/tablet/js/widget_knob.js
 UPD 2018-03-21_11:15:32 5857 www/tablet/js/widget_label.js
 UPD 2017-12-26_20:30:09 806 www/tablet/js/widget_level.js
 UPD 2017-12-19_10:29:00 11044 www/tablet/js/widget_link.js
