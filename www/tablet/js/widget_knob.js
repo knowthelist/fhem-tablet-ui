@@ -166,10 +166,9 @@ var Modul_knob = function () {
         return elem;
     }
 
-    function update_lock(dev, par) {
-        me.elements.filterDeviceReading('lock', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
+    function updateLock(elem, dev, par) {
+        $.each(['lock', 'lock-on', 'lock-off'], function (index, key) {
+            if (elem.matchDeviceReading(key, dev, par)) {
                 var value = elem.getReading('lock').val;
                 var knob_elem = elem.find('input');
                 if (knob_elem) {
@@ -184,20 +183,24 @@ var Modul_knob = function () {
                         });
                     }
                 }
-            });
+            }
+        });
+
     }
 
 
     function update(dev, par) {
         isUpdating = true;
 
-        // update from desired temp reading
-        me.elements.filterDeviceReading('get', dev, par)
-            .each(function (index) {
-                var elem = $(this);
+        me.elements.each(function (index) {
+            var elem = $(this);
+            var knob_elem = elem.find('input');
+            var knob_obj = knob_elem.data('knob');
+
+            // update from desired temp reading
+            if (elem.matchDeviceReading('get', dev, par)) {
                 var value = elem.getReading('get').val;
                 if (value) {
-                    var knob_elem = elem.find('input');
                     if (knob_elem) {
                         var part = elem.data('get-value');
                         var val = ftui.getPart(value, part);
@@ -210,26 +213,25 @@ var Modul_knob = function () {
                         });
                     }
                 }
-            });
+            }
+            //extra reading for lock
+            me.updateLock(elem, dev, par);
 
-        // update from lock reading
-        me.update_lock(dev, par);
-
-        //extra reading for reachable
-        me.update_reachable(dev, par);
-
+            //extra reading for reachable
+            me.updateReachable(elem, dev, par);
+        });
         isUpdating = false;
     }
 
 
     // public
     // inherit all public members from base class
-    
+
     var parent = new Modul_widget();
     var base = {
         init_attr: parent.init_attr,
     };
-    var me = $.extend(parent, {    
+    var me = $.extend(parent, {
         //override or own public members
         widgetname: 'knob',
         init_attr: init_attr,
@@ -237,7 +239,7 @@ var Modul_knob = function () {
         actualSettings: actualSettings,
         init_ui: init_ui,
         update: update,
-        update_lock: update_lock,
+        updateLock: updateLock,
         onRelease: onRelease,
         onChange: onChange,
         onFormat: onFormat
