@@ -2,8 +2,8 @@
  * Copyright (c) 2015-2017 Kurt Eckert
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-/* Version 2.6
-/* Compatible FTUI Version >= 2.7
+/* Version 2.7
+/* Compatible FTUI Version >= 2.6
 
 /* global ftui:true, Modul_widget:true, Powerange:true */
 
