@@ -63,6 +63,7 @@ var Modul_weather = function () {
         "wolkig": "N",
         "Regenschauer": "Q",
         "stark bewoelkt": "Y",
+        "stark bew\uc3\ub6lkt": "Y",
         "Regen": "R",
         "bedeckt": "N",
         "sonnig": "B",
@@ -71,10 +72,12 @@ var Modul_weather = function () {
         'Schneeregen': 'V',
         'Schneeschauer': '$',
         'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'Q',
+        'unterschiedlich bew\uc3\ub6lkt, vereinzelt Schauer und Gewitter': 'Q',
         'Nebel': 'F',
         'klar': 'B',
         'Spruehregen': 'R',
         'Regen m\u00f6glich': 'R',
+        //'Regen möglich': 'R',
 
         // OPENWEATHER (Wetter.com) (incomplete)
         'leichter Schnee - Schauer': 'U',
@@ -106,7 +109,7 @@ var Modul_weather = function () {
         //        'Schneeschauer': 'U',
         //        'Schneeregen': 'X',
         '---': ')',
-        'bew\u00f6lkt': 'H',
+        'bew\uc3\ub6lkt': 'H',
         'Dunst oder flacher Nebel': 'M',
         'gefrierender Nebel': 'G',
         'gering bewÃƒÂ¶lkt': 'H',
@@ -134,7 +137,6 @@ var Modul_weather = function () {
         'Schneeregenschauer': 'X',
         'Schneetreiben': 'W',
         'schweres Gewitter': 'P',
-        'stark bew\u00f6lkt': 'Y',
         'starkes Gewitter': 'P',
         'wolkenlos': 'B',
         //Wunderground
@@ -232,6 +234,7 @@ var Modul_weather = function () {
         "wolkig": 'mostlycloudy.png',
         "Regenschauer": 'chance_of_rain.png',
         "stark bewoelkt": 'cloudy.png',
+        "stark bew\uc3\ub6lkt": 'cloudy.png',
         "Regen": 'rain.png',
         "bedeckt": 'overcast.png',
         "sonnig": 'sunny.png',
@@ -240,9 +243,11 @@ var Modul_weather = function () {
         'Schneefall': 'snow.png',
         'Schneeschauer': 'chance_of_snow.png',
         'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'scatteredshowers.png',
+        'unterschiedlich bewölkt, vereinzelt Schauer und Gewitter': 'scatteredshowers.png',
         'Nebel': 'fog.png',
         'klar': 'sunny_night.png',
         'Spruehregen': 'mist.png',
+        'Sprühregen': 'mist.png',
 
         // OPENWEATHER (wetter.com) (incomplete)
         'leichter Schnee - Schauer': 'chance_of_snow.png',
@@ -305,7 +310,6 @@ var Modul_weather = function () {
         'Schneeregenschauer': 'rainsnow.png',
         'Schneetreiben': 'heavysnow.png',
         'schweres Gewitter': 'thunderstorm.png',
-        'stark bew\u00f6lkt': 'cloudy.png',
         'starkes Gewitter': 'thunderstorm.png',
         'wolkenlos': 'sunny.png',
         //Wunderground
