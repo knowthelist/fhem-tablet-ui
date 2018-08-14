@@ -643,7 +643,7 @@ var Modul_weather = function () {
                     if (elem.data('device-type')) {
                         device_type = elem.data('device-type');
                     } else {
-                        if (par.match(/^fc\d+_weather(Day|Evening|Morning|Night)(?:Icon)?$/)) {
+                        if (par.match(/^fc\d+_weather(Day|Evening|Morning|Night|\d\d)(?:Icon)?$/)) {
                             device_type = 'PROPLANTA';
                         } else if (par.match(/^fc\d+_condition$/)) {
                             device_type = 'Weather';
