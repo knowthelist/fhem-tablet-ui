@@ -157,6 +157,9 @@ var Modul_famultibutton = function () {
         elem.find('#warn').remove();
         if (ftui.isValid(value) && value !== "") {
             var val = ($.isNumeric(value)) ? Number(value).toFixed(0) : '!';
+            if (elem.isValidData('warn-icon')) {
+                val = '<i class="fa ' + elem.data('warn-icon') + '"><i/>';
+            }
             var digits = val.toString().length;
             var faElem = elem.find('.famultibutton');
             var warnElem = $('<i/>', {
@@ -314,6 +317,9 @@ var Modul_famultibutton = function () {
         } else if (elem.attr('data-fhem-cmd')) {
             target = elem.attr('data-fhem-cmd');
             type = 'fhem-cmd';
+        } else if (elem.attr('data-js-cmd')) {
+            target = elem.attr('data-js-cmd');
+            type = 'js-cmd';
         } else {
             var sets = elem.data('set-states') || elem.data('set-' + onoff);
             // no value given means don't send it and keep current state
@@ -372,6 +378,9 @@ var Modul_famultibutton = function () {
                 }
                 $.get(target);
                 break;
+            case 'js-cmd':
+                eval(target);
+                break;                
             case 'fhem-cmd':
                 if (device && typeof device != "undefined" && device !== " ") {
                     ftui.toast(target);

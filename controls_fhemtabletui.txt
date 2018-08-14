@@ -94,7 +94,7 @@ UPD 2018-01-13_21:05:02 6777 www/tablet/js/widget_departure.js
 UPD 2018-03-20_14:38:04 6100 www/tablet/js/widget_dimmer.js
 UPD 2017-02-11_14:27:26 3298 www/tablet/js/widget_eventmonitor.js
 UPD 2018-01-21_14:51:58 2931 www/tablet/js/widget_example.js
-UPD 2018-03-28_23:38:44 24824 www/tablet/js/widget_famultibutton.js
+UPD 2018-08-14_01:44:16 25181 www/tablet/js/widget_famultibutton.js
 UPD 2017-11-16_18:41:57 5018 www/tablet/js/widget_filelog.js
 UPD 2018-01-21_14:53:01 8691 www/tablet/js/widget_fullcalview.js
 UPD 2018-01-21_14:52:43 5415 www/tablet/js/widget_gds.js

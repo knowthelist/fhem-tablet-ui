@@ -147,6 +147,7 @@ General attribute meaning
 - **data-warn-off**   : value(s) that hide the warn badge (default 'false|off|0')
 - **data-warn-color**  : forecolor for warn badge (default '#aaa')
 - **data-warn-background-color**  : background color for warn badge (default '#aa2200')
+- **data-warn-icon**  : name of the font-awesome icon to be shown instead of the warn text. (default: '')
 - **data-hide**   : name of the reading to hide/show the widget (default 'STATE')
 - **data-hide-on**   : value for HIDE (default 'true|1|on')
 - **data-hide-off**   : value for SHOW (default '!on')
