@@ -109,7 +109,7 @@ var Modul_popup = function () {
             me.init_attr(elem);
 
             var id = [me.widgetname, me.area, index].join('_');
-            var dialog = elem.find('.dialog');
+            var dialog = elem.find('.dialog').first();
             var starter = (elem.data('starter')) ? $(document).find(elem.data('starter')) : elem.children(":first");
             if (starter.hasClass('dialog')) {
                 starter = $('<div/>', {

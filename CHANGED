@@ -3,3 +3,5 @@ FHEM Tablet UI last change:
  - widget_weather: Fixed Proplanta Umlaute issue
  - widget_weather: 3h reading for Proplanta
  - widget_famultibutton: Added data-warn-icon
+ 2018-08-16
+ - widget_popup: Fixed popup in popup issue
