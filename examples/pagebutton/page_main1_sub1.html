@@ -1,5 +1,6 @@
 <html>
 <title>FHEM</title>
+
 <head>
     <!--
      /* FHEM tablet ui */
@@ -7,34 +8,38 @@
      * pagebutton sub page
      * -->
 </head>
+
 <body>
-  <div class="page" id="main1_sub1">
-    <div class="gridster">
-      <ul>
-        <li data-row="1" data-col="1" data-sizex="9" data-sizey="4">
-             <!-- place your widget here -->
-             <div class="center bg-mint">
-                <div data-type="label" data-device="AgroWeather" data-get="fc1_tempMax" data-unit="°C&nbsp;" class="bottom gigantic inline verticalLine"></div>
-                <div class="inline">
-                   <div data-type="label" data-device="AgroWeather" data-get="fc1_weatherDay" class="large cell"></div>
-                   <div data-type="weather" data-device="AgroWeather" data-get="fc1_weatherDay" class="bigplus thin"></div>
-                   min:&nbsp;<div data-type="label" data-device="AgroWeather" data-get="fc1_tempMin" data-unit="%B0C%0A" class="inline medium"></div>
-                </div>
-             </div><div class="row"></div>
-             <div class="left">
-                 <div data-type="label" data-device="AgroWeather" data-get="fc1_date" data-substitution="toDate().eeee()+','" class="left large cell darker"></div>
-                 <div data-type="label" data-device="AgroWeather" data-get="fc1_date" data-substitution="toDate().ddmm()" class="left large cell darker"></div>
-             </div>
-             <!-- place your widget here -->
-        </li>
-        <li data-row="7" data-col="1" data-sizex="9" data-sizey="1">
-            <!-- place your widgets here -->
-            <div class="center">
-             FOOTER ONE
-            </div>
-        </li>
-      </ul>
+    <div class="page" id="main1_sub1">
+        <div class="gridster">
+            <ul>
+                <li data-row="1" data-col="1" data-sizex="9" data-sizey="4">
+                    <!-- place your widget here -->
+                        <div class="row">
+                            <div data-type="pagebutton" data-parent="main1" data-url="#page_main1_sub1.html" data-load="#main1_sub1" data-off-background-color="#11d597" data-off-color="#bbb" data-on-background-color="#11d597" data-on-color="#222222" data-icon="" class="col big center">A1</div>
+                            <div data-type="pagebutton" data-parent="main1" data-url="#page_main1_sub2.html" data-load="#main1_sub2" data-off-background-color="#11d597" data-off-color="#bbb" data-on-background-color="#11d597" data-on-color="#222222" data-icon="" class="col big center">A2</div>
+                            <div data-type="pagebutton" data-parent="main1" data-url="#page_main1_sub3.html" data-load="#main1_sub3" data-off-background-color="#11d597" data-off-color="#bbb" data-on-background-color="#11d597" data-on-color="#222222" data-icon="" class="col big center">A3</div>
+                        </div>
+                        <div class="row">
+                            <div data-type="pagebutton" data-parent="main2" data-url="#page_main2_sub1.html" data-load="#main2_sub1" data-off-background-color="#6699FF" data-off-color="#bbb" data-on-background-color="#6699FF" data-on-color="#222222" data-icon="" class="col big center">B1</div>
+                            <div data-type="pagebutton" data-parent="main2" data-url="#page_main2_sub2.html" data-load="#main2_sub2" data-off-background-color="#6699FF" data-off-color="#bbb" data-on-background-color="#6699FF" data-on-color="#222222" data-icon="" class="col big center">B2</div>
+                            <div data-type="pagebutton" data-parent="main2" data-url="#page_main2_sub3.html" data-load="#main2_sub3" data-off-background-color="#6699FF" data-off-color="#bbb" data-on-background-color="#6699FF" data-on-color="#222222" data-icon="" class="col big center">B3</div>
+                        </div>
+                        <div class="row">
+                            <div data-type="pagebutton" data-parent="main3" data-url="#page_main3_sub1.html" data-load="#main3_sub1" data-off-background-color="#ad3333" data-off-color="#bbb" data-on-background-color="#ad3333" data-on-color="#222222" data-icon="" class="col big center">C1</div>
+                            <div data-type="pagebutton" data-parent="main3" data-url="#page_main3_sub2.html" data-load="#main3_sub2" data-off-background-color="#ad3333" data-off-color="#bbb" data-on-background-color="#ad3333" data-on-color="#222222" data-icon="" class="col big center">C2</div>
+                            <div data-type="pagebutton" data-parent="main3" data-url="#page_main3_sub3.html" data-load="#main3_sub3" data-off-background-color="#ad3333" data-off-color="#bbb" data-on-background-color="#ad3333" data-on-color="#222222" data-icon="" class="col big center">C3</div>
+                        </div>
+                </li>
+                <li data-row="7" data-col="1" data-sizex="9" data-sizey="1">
+                    <!-- place your widgets here -->
+                    <div class="center">
+                        FOOTER ONE
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
-   </div>
 </body>
+
 </html>

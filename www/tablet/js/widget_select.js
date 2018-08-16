@@ -50,6 +50,16 @@ var Modul_select = function () {
         if (elem.isValidData('alias') && !$.isArray(elem.data('alias'))) {
             me.addReading(elem, 'alias');
         }
+		
+		// if hide reading is defined, set defaults for comparison
+        if (elem.isValidData('hide')) {
+            elem.initData('hide-on', 'true|1|on');
+        }
+        elem.initData('hide', elem.data('get'));
+        if (elem.isValidData('hide-on')) {
+            elem.initData('hide-off', '!on');
+        }
+        me.addReading(elem, 'hide');
     }
 
     function init_ui(elem) {
@@ -110,15 +120,21 @@ var Modul_select = function () {
                         });
                         items = founditems;
                     } else {
-                        console.log(delimiter);
+                        //console.log(delimiter);
                         items = items.split(delimiter);
-                        console.log(items);
+                        //console.log(items);
                     }
                 }
                 elem.data('items', items);
                 me.fillList(elem);
-                me.setCurrentItem(elem);
+                // wait for DOM Update and then set current item
+                setTimeout(function () {
+                    me.setCurrentItem(elem);
+                },300);
             });
+			
+		//extra reading for hide
+        me.update_hide(dev, par);
     }
 
     // public

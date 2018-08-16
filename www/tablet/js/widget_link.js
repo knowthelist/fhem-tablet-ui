@@ -11,7 +11,7 @@ var Modul_link = function () {
 
     function isReadOnly(elem) {
         var lock = elem.data('readonly');
-        return (lock == 'true' || lock == '1' || lock == 'on');
+        return (lock === 'true' || lock === '1' || lock === 'on');
     }
 
     function onClicked(elem) {
@@ -126,6 +126,7 @@ var Modul_link = function () {
         elem.initData('active-border-color', elem.data('border-color'));
         elem.initData('active-background-color', elem.data('background-color'));
         me.addReading(elem, 'get');
+        me.addReading(elem, 'title');
         if (elem.isDeviceReading('lock')) {
             me.addReading(elem, 'lock');
         }
@@ -280,10 +281,16 @@ var Modul_link = function () {
                 var elem = $(this);
                 var val = elem.getReading('get').val;
                 elem.data('url', val);
+            });
+
+        me.elements.filterDeviceReading('title', dev, par)
+            .each(function (index) {
+                var elem = $(this);
+                var val = elem.getReading('title').val;
                 elem.attr('title', val);
             });
 
-        //extra reading for lock
+        // extra reading for lock
         me.elements.filterDeviceReading('lock', dev, par)
             .each(function (idx) {
                 var elem = $(this);

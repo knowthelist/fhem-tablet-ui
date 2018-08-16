@@ -8,16 +8,14 @@
 "use strict";
 
 function depends_homestatus() {
-    if (typeof Modul_knob == 'undefined' || !$.fn.knob) {
-        return ["knob"];
-    }
+    return ["knob"];
 }
 
 var Modul_homestatus = function () {
 
     var isUpdating = false;
 
- function drawDial() {
+    function drawDial() {
 
         /*jshint validthis: true */
         var sector = 0;
@@ -36,7 +34,7 @@ var Modul_homestatus = function () {
 
         if (sector == 1) {
             // inner circle
-            c.lineWidth = this.radius*0.8;
+            c.lineWidth = this.radius * 0.8;
             c.strokeStyle = this.o.fgColor;
             c.beginPath();
             c.arc(this.xy, this.xy, this.radius * 0.4, 0, 2 * Math.PI);
@@ -76,9 +74,9 @@ var Modul_homestatus = function () {
             c.arc(this.xy, this.xy, this.radius * 1.3, start, end);
             c.stroke();
         }
-        
+
         // sections
-        c.strokeStyle = this.o.tkColor;
+        c.strokeStyle = this.o.bgColor;
         c.lineWidth = this.radius;
         c.beginPath();
         c.arc(this.xy, this.xy, this.radius * 1.3, 0, 0.025);
@@ -97,7 +95,7 @@ var Modul_homestatus = function () {
 
         // inner circle line
         c.lineWidth = 2;
-        c.strokeStyle = this.o.tkColor;
+        c.strokeStyle = this.o.bgColor;
         c.beginPath();
         c.arc(this.xy, this.xy, this.radius * 0.8, 0, 2 * Math.PI);
         c.stroke();
@@ -105,7 +103,7 @@ var Modul_homestatus = function () {
         // outer circle line
         c.lineWidth = 2;
         c.beginPath();
-        c.arc(this.xy, this.xy, this.radius *1.8, 0, 2 * Math.PI, false);
+        c.arc(this.xy, this.xy, this.radius * 1.8, 0, 2 * Math.PI, false);
         c.stroke();
 
         //cavans font
@@ -113,47 +111,47 @@ var Modul_homestatus = function () {
         var cfont = 10 * ratio + "px sans-serif";
         var cfafont = 22 * ratio + "px " + this.$.data("icon-font");
 
-        c.fillStyle = (sector == 1) ? this.o.minColor : this.o.maxColor;
+        c.fillStyle = (sector == 1) ? this.o.maxColor : this.o.minColor;
         c.font = cfont;
         c.fillText(texts[0], this.xy - 14 * ratio, this.xy + 16 * ratio);
         c.font = cfafont;
         c.fillText(ftui.getIconId(icons[0]), this.xy - 12 * ratio, this.xy + 2);
 
-        c.fillStyle = (sector == 2) ? this.o.minColor : this.o.maxColor;
+        c.fillStyle = (sector == 2) ? this.o.maxColor : this.o.minColor;
         c.font = cfafont;
-        c.fillText(ftui.getIconId(icons[1]), this.xy - this.radius * 1.1    , this.xy - this.radius * 0.8);
+        c.fillText(ftui.getIconId(icons[1]), this.xy - this.radius * 1.1, this.xy - this.radius * 0.8);
         c.font = cfont;
         c.fillText(texts[1], this.xy - this.radius * 1.5, this.xy - 10 * ratio);
 
-        c.fillStyle = (sector == 4) ? this.o.minColor : this.o.maxColor;
+        c.fillStyle = (sector == 4) ? this.o.maxColor : this.o.minColor;
         c.font = cfafont;
         c.fillText(ftui.getIconId(icons[3]), this.xy + this.radius * 0.6, this.xy - this.radius * 0.8);
         c.font = cfont;
-        c.fillText(texts[3], this.xy + this.radius * 0.9, this.xy - 10 * ratio );
+        c.fillText(texts[3], this.xy + this.radius * 0.9, this.xy - 10 * ratio);
 
         if (texts.length > 4) {
-            c.fillStyle = (sector == 3) ? this.o.minColor : this.o.maxColor;
+            c.fillStyle = (sector == 3) ? this.o.maxColor : this.o.minColor;
             c.font = cfafont;
             c.fillText(ftui.getIconId(icons[2]), this.xy + this.radius * 0.6, this.xy + this.radius * 1.2);
             c.font = cfont;
-            c.fillText(texts[2], this.xy + this.radius, this.xy + 20 * ratio );
-            c.fillStyle = (sector == 5) ? this.o.minColor : this.o.maxColor;
+            c.fillText(texts[2], this.xy + this.radius, this.xy + 20 * ratio);
+            c.fillStyle = (sector == 5) ? this.o.maxColor : this.o.minColor;
             c.font = cfafont;
             c.fillText(ftui.getIconId(icons[4]), this.xy - this.radius * 0.9, this.xy + this.radius * 1.2);
             c.font = cfont;
             c.fillText(texts[4], this.xy - this.radius * 1.5, this.xy + 20 * ratio);
         } else {
-            c.fillStyle = (sector == 3) ? this.o.minColor : this.o.maxColor;
+            c.fillStyle = (sector == 3) ? this.o.maxColor : this.o.minColor;
             c.font = cfafont;
             c.fillText(ftui.getIconId(icons[2]), this.xy - 12 * ratio, this.xy + this.radius * 1.3);
             c.font = cfont;
-            c.fillText(texts[2], this.xy - 12 * ratio, this.xy + this.radius * 1.6 );
+            c.fillText(texts[2], this.xy - 12 * ratio, this.xy + this.radius * 1.6);
         }
 
         this.o.status = sector;
         return false;
     }
-    
+
     function onChange(v) {}
 
     function onRelease(v) {
@@ -171,11 +169,29 @@ var Modul_homestatus = function () {
         return v;
     }
 
+    function actualSettings(elem) {
+
+        elem.reinitData('fgcolor', ftui.getStyle('.' + me.widgetname, 'color') || '#aa6900');
+        elem.reinitData('bgcolor', ftui.getStyle('.' + me.widgetname, 'background-color') || 'aaaaaa');
+        elem.reinitData('mincolor', ftui.getStyle('.' + me.widgetname + '.icon', 'background-color') || '#2A2A2A');
+        elem.reinitData('maxcolor', ftui.getStyle('.' + me.widgetname + '.icon', 'color') || '#696969');
+
+
+        return {
+            'fgColor': elem.data('fgcolor'),
+            'bgColor': elem.data('bgcolor'),
+            'minColor': elem.data('mincolor'),
+            'maxColor': elem.data('maxcolor')
+        };
+    }
+
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
+
             var defaultAlias = ['Home', 'Night', 'Away', 'Holiday', 'Retire'];
             var defaultIcons = ['fa-home', 'fa-bed', 'fa-car', 'fa-suitcase', 'fa-tint'];
             var defaultStates = ['1', '2', '3', '4'];
@@ -189,8 +205,8 @@ var Modul_homestatus = function () {
             elem.initData('set-on', elem.data('get-on'));
             elem.initData('height', 210);
             elem.initData('width', 210);
-            
-            
+
+
             if (elem.hasClass('small')) {
                 elem.data('height', 160);
                 elem.data('width', 160);
@@ -212,12 +228,11 @@ var Modul_homestatus = function () {
             elem.data('max', 2 * Math.PI);
             elem.data('step', 0.01);
 
-            elem.data('bgcolor', elem.data('bgcolor') || ftui.getClassColor(elem) || ftui.getStyle('.homestatus', 'background-color') || '#aaaaaa');
-            elem.data('fgcolor', elem.data('fgcolor') || ftui.getClassColor(elem) || ftui.getStyle('.homestatus', 'color') || '#aa6900');
-            elem.data('tkcolor', elem.data('tkcolor') || ftui.getStyle('.homestatus.tkcolor', 'color') || '#696969');
+            elem.initData('fgcolor', ftui.getClassColor(elem) || ftui.getStyle('.homestatus', 'color') || '#aa6900');
+            elem.initData('bgcolor', ftui.getStyle('.homestatus', 'background-color') || '#aaaaaa');
 
-            elem.data('mincolor', elem.data('mincolor') || ftui.getStyle('.homestatus.mincolor', 'color') || elem.data('mincolor') || '#2A2A2A');
-            elem.data('maxcolor', elem.data('maxcolor') || ftui.getStyle('.homestatus.maxcolor', 'color') || elem.data('maxcolor') || '#696969');
+            elem.initData('mincolor', ftui.getStyle('.homestatus.icon', 'background-color') || elem.data('mincolor') || '#2A2A2A');
+            elem.initData('maxcolor', ftui.getStyle('.homestatus.icon', 'color') || elem.data('maxcolor') || '#696969');
 
             elem.data('angleoffset', 0);
             elem.data('anglearc', 360);
@@ -257,20 +272,20 @@ var Modul_homestatus = function () {
                     ftui.log(3, "Homstatus: update state=" + state + " idx=" + idx);
                     if (idx > -1) {
                         switch (idx + 1) {
-                        case 3:
-                            val = Math.PI * 0.75;
-                            break;
-                        case 4:
-                            val = Math.PI * 0.25;
-                            break;
-                        case 2:
-                            val = Math.PI * 1.75;
-                            break;
-                        case 5:
-                            val = Math.PI * 1.25;
-                            break;
-                        default:
-                            val = 0;
+                            case 3:
+                                val = Math.PI * 0.75;
+                                break;
+                            case 4:
+                                val = Math.PI * 0.25;
+                                break;
+                            case 2:
+                                val = Math.PI * 1.75;
+                                break;
+                            case 5:
+                                val = Math.PI * 1.25;
+                                break;
+                            default:
+                                val = 0;
                         }
                     }
                     ftui.log(3, "Homstatus: update curval=" + elem.data('curval') + " val=" + val);
@@ -280,6 +295,13 @@ var Modul_homestatus = function () {
                     }
                 }
             });
+
+        // update from lock reading
+        me.update_lock(dev, par);
+
+        //extra reading for reachable
+        me.update_reachable(dev, par);
+
         isUpdating = false;
     }
 
@@ -291,6 +313,7 @@ var Modul_homestatus = function () {
         init: init,
         update: update,
         drawDial: drawDial,
+        actualSettings: actualSettings,
         onFormat: onFormat,
         onRelease: onRelease,
         onChange: onChange,

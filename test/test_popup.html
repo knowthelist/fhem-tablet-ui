@@ -78,7 +78,16 @@
                                     <div class="card bg-green">
                                         <header>Card 22</header>
                                         <!-- place your widget here -->
-                                        2
+                                        <div data-type="popup" data-draggable="false" data-height="40%" data-width="90%" class="center">
+                                            <div class="big">Open Popup in Popup</div>
+                                            <div class="dialog phone-width bg-white">
+                                                <div class="center">
+                                                    <div data-type="push" class=""></div>
+                                                    <div data-type="slider" data-device="dummy1" data-max="100" class="horizontal"></div>
+                                                    <div data-type="input" data-device="dummy1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="box vertical phone-width">
@@ -101,12 +110,13 @@
             <li data-row="1" data-col="7" data-sizex="3" data-sizey="3">
                 <header>Button Popup</header>
                 <div class="center">
-                    <div data-type="popup" data-height="240px" data-width="540px" data-draggable="false" class="">
+                    <div data-type="popup" data-draggable="false" data-height="40%" data-width="90%" class="">
                         <div data-type="push" class=""></div>
-                        <div class="dialog phone-width">
+                        <div class="dialog phone-width bg-white">
                             <div class="center">
                                 <div data-type="push" class=""></div>
                                 <div data-type="slider" data-device="dummy1" data-max="100" class="horizontal"></div>
+                                <div data-type="input" data-device="dummy1"></div>
                             </div>
                         </div>
                     </div>
@@ -116,9 +126,9 @@
                 <header>Link Popup</header>
                 <!-- place your widget here -->
                 <div class="center">
-                    <div data-type="popup" data-height="400px" data-width="200px">
+                    <div data-type="popup" data-height="400" data-width="200">
                         <div data-type="link" class="large thin">Show Temperatur</div>
-                        <div class="dialog vbox bg-green">
+                        <div class="dialog vbox">
                             <header>DIALOG</header>
                             <div class="vbox  grow-2">
                                 <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin"></div>
@@ -129,8 +139,29 @@
                                 <div data-type="label" class="cell">Luftfeuchte</div>
                             </div>
                             <div class="vbox  grow-1">
-                                <div data-type="link" class="round bottom-space" data-width="130" data-height="50" data-color="white" data-background-color="green" data-icon="fa-check" onclick="$('.dialog-close').trigger('click');">OK</div>
+                                <div data-type="link" class="round bottom-space  bg-green" data-width="130" data-height="50" data-color="white" data-background-color="green" data-icon="fa-check" onclick="$('.dialog-close').trigger('click');">OK</div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="5" data-col="1" data-sizex="3" data-sizey="3">
+                <header>EXAMPLE2</header>
+                <!-- place your widget here -->
+                <div class="center" data-type="popup" data-height="400px" data-width="200px">
+                    <div data-type="link" class="large thin">Show Temperatur</div>
+                    <div class="dialog">
+                        <header>DIALOG</header>
+                        <div class="top-space">
+                            <div class="newline">
+                                <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin"></div>
+                                <div data-type="label" class="cell">Temperatur</div>
+                            </div>
+                            <div class="newline">
+                                <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="bigger thin"></div>
+                                <div data-type="label" class="cell">Luftfeuchte</div>
+                            </div>
+                            <div data-type="link" class="round top-space-3x left-space-2x" data-width="130" data-height="50" data-color="white" data-background-color="green" data-icon="fa-check" onclick="$('.dialog-close').trigger('click');">OK</div>
                         </div>
                     </div>
                 </div>

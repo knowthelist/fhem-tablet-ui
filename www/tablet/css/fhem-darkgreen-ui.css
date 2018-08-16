@@ -1,0 +1,203 @@
+/*  color theme style addon for FTUI
+    Copyright (c) 2018 Mario Stephan <mstephan@shared-files.de>
+    URL: https://github.com/knowthelist/fhem-tablet-ui
+*/
+
+
+/* colors */
+
+.gray {
+    color: #6a6a6a;
+}
+.green {
+    color: #6DE08E;
+}
+.cold {
+    color: #6DE08E;
+}
+.warm {
+    color: #6DE08E;
+}
+
+
+body {
+    background-color: #222222;
+}
+
+.gridster > ul > li,
+.card {
+    background-color: #2B445A;
+}
+
+.gridster li header,
+.dialog > header,
+.card > header {
+    background: #2B445A;
+    color: #D7D9E1;
+}
+
+
+/* color theme classes for widgets */
+
+/* Slider colors */
+.range-handle {
+  background-color: #eee !important;
+}
+[data-type="slider"]:not([data-background-color]) .range-bar {
+  background-color: #495C70 !important;
+}
+[data-type="slider"]:not([data-color]) .range-quantity {
+    background-color: #6DE08E !important;
+}
+
+/* spinner colors */
+[data-type="spinner"]:not([data-color]) .spinner {
+  color: #337ab7;
+}
+[data-type="spinner"]:not([data-background-color]) .spinner {
+  background-color: #4f687b  !important;
+}
+[data-type="spinner"]:not([data-background-color]) .spinner .levelRange {
+  background-color: #6DE08E !important;
+}
+[data-type="spinner"]:not([data-background-color]) .spinner .levelArea {
+  background-color: #1B344A !important;
+}
+
+/* label widget */
+[data-type="label"].active {
+  color: #6DE08E !important;
+}
+
+polyline {
+    stroke: #32a054 !important;
+}
+
+/* circlemenu widget */
+div[data-type="circlemenu"] > .circlemenu-wrapper > .circlemenu > li {
+    background-color: #333;
+}
+div[data-type="circlemenu"] > .circlemenu-wrapper > .circlemenu li div[data-type="push"] {
+    color: #697C90;
+}
+
+/* symbol  widget */
+/* foreground on */
+[data-type="symbol"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
+    color: #6DE08E !important;
+}
+/* foreground off */
+[data-type="symbol"]:not([data-colors]):not([data-off-color]):not([data-color]) :not(.active) i#fg {
+    color: #495C70 !important;
+}
+
+/* switch  widget */
+/* foreground on */
+[data-type="switch"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg,
+[data-type="dimmer"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg,
+[data-type="button"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
+    color: #2B445A !important;
+}
+/* foreground off */
+[data-type="switch"]:not([data-colors]):not([data-on-color]):not([data-color]) :not(.active) i#fg,
+[data-type="dimmer"]:not([data-colors]):not([data-on-color]):not([data-color]) :not(.active) i#fg,
+[data-type="button"]:not([data-colors]):not([data-on-color]):not([data-color]) :not(.active) i#fg{
+    color:  #2B445A !important;
+}
+/* background on */
+[data-type="switch"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg,
+[data-type="dimmer"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg,
+[data-type="button"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg{
+    color: #6DE08E !important;
+}
+/* background off */
+[data-type="switch"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg,
+[data-type="dimmer"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg,
+[data-type="button"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg {
+    color: #495C70 !important;
+}
+
+/* switch  widget invert */
+/* foreground on */
+[data-type="switch"]:not([data-colors]):not([data-on-color]):not([data-color]).invert .active i#fg, 
+[data-type="dimmer"]:not([data-colors]):not([data-on-color]):not([data-color]).invert .active i#fg, 
+[data-type="button"]:not([data-colors]):not([data-on-color]):not([data-color]).invert .active i#fg {
+    color: #6DE08E !important;
+}
+/* foreground off */
+[data-type="switch"]:not([data-colors]):not([data-on-color]):not([data-color]).invert :not(.active) i#fg,
+[data-type="dimmer"]:not([data-colors]):not([data-on-color]):not([data-color]).invert :not(.active) i#fg,
+[data-type="button"]:not([data-colors]):not([data-on-color]):not([data-color]).invert :not(.active) i#fg {
+    color: #495C70 !important;
+}
+/* background on */
+[data-type="switch"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]).invert .active i#bg,
+[data-type="dimmer"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]).invert .active i#bg,
+[data-type="button"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]).invert .active i#bg {
+    color: #2B445A !important;
+}
+/* background off */
+[data-type="switch"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]).invert :not(.active) i#bg,
+[data-type="dimmer"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]).invert :not(.active) i#bg,
+[data-type="button"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]).invert :not(.active) i#bg {
+    color: #2B445A !important;
+}
+
+
+/* push  widget */
+/* foreground on */
+[data-type="push"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
+    color: #6DE08E !important;
+}
+/* foreground off */
+[data-type="push"]:not([data-colors]):not([data-on-color]):not([data-color]) :not(.active) i#fg {
+    color: #4d6f7b !important;
+}
+/* background on */
+[data-type="push"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg {
+    color: #6DE08E !important;
+}
+/* background off */
+[data-type="push"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg {
+    color: #4d6f7b !important;
+}
+
+/* pagebutton  widget */
+/* foreground on */
+[data-type="pagebutton"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
+    color: rgba(206, 206, 206, 0.6) !important;
+}
+/* foreground off */
+[data-type="pagebutton"]:not([data-colors]):not([data-off-color]):not([data-color]) :not(.active) i#fg {
+    color: #566d84 !important;
+}
+/* background on */
+[data-type="pagebutton"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg {
+    color: #495C70 !important;
+}
+/* background off */
+[data-type="pagebutton"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg {
+    color: rgba(21, 21, 21, 0.2) !important;
+}
+
+
+/* pseudo classes for canvas painted widgets
+   read by ftui.getStyle() in init and reinit function  */
+
+.checkbox.on{color:#eee; background-color:#6DE08E; }
+.checkbox.off{color:#eee; background-color:#505050; }
+
+.volume.handle{color:#6DE08E;}
+.volume.nominal{color:#eee;}
+.volume{background-color:#2B445A;color:#667d94;}
+
+.wind_direction.handle{color:#6DE08E;}
+.wind_direction{background-color:#2B445A;color:#667d94;}
+.wind_direction.nominal{color:#eee;}
+
+.homestatus{background-color:#768da4;color:#6DE08E;}
+.homestatus.icon{background-color:#768da4;color:#222;}
+
+.thermostat{background-color:#2B445A;color:#667d94;}
+.thermostat.max{color:#f00;}
+.thermostat.min{color:#aae;}

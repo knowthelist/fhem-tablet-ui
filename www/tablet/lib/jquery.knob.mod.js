@@ -113,11 +113,11 @@
                 lineCap: this.$.data('linecap') || 'butt',
                 width: this.$.data('width') || 200,
                 height: this.$.data('height') || 200,
-                displayInput: this.$.data('displayinput') == null || this.$.data('displayinput'),
+                displayNominal: this.$.data('displayNominal') == null || this.$.data('displaynominal'),
                 displayPrevious: this.$.data('displayprevious'),
                 touchPosition: this.$.data('touchPosition') || '',
                 fgColor: this.$.data('fgcolor') || '#87CEEB',
-                inputColor: this.$.data('inputcolor'),
+                nomColor: this.$.data('nomcolor'),
                 font: this.$.data('font') || 'Arial',
                 fontWeight: this.$.data('font-weight') || 'bold',
                 inline: false,
@@ -141,8 +141,8 @@
 
             // finalize options
             this.o.flip = this.o.rotation === 'anticlockwise' || this.o.rotation === 'acw';
-            if (!this.o.inputColor) {
-                this.o.inputColor = this.o.fgColor;
+            if (!this.o.nomColor) {
+                this.o.nomColor = this.o.fgColor;
             }
 
             // routing value
@@ -181,7 +181,7 @@
 
             }
 
-            !this.o.displayInput && this.$.hide();
+            !this.o.displayNominal && this.$.hide();
 
             // adds needed DOM elements (canvas, div)
             this.$c = $(document.createElement('canvas')).attr({
@@ -738,7 +738,7 @@
                 2
             ) + 2;
 
-            this.o.displayInput && this.i.css({
+            this.o.displayNominal && this.i.css({
                 'width': ((this.w / 2 + 4) >> 0) + 'px',
                 'height': ((this.w / 3) >> 0) + 'px',
                 'position': 'absolute',
@@ -749,7 +749,7 @@
                 'background': 'none',
                 'font': this.o.fontWeight + ' ' + ((this.w / s) >> 0) + 'px ' + this.o.font,
                 'text-align': 'center',
-                'color': this.o.inputColor || this.o.fgColor,
+                'color': this.o.nomColor || this.o.fgColor,
                 'padding': '0px',
                 '-webkit-appearance': 'none'
             }) || this.i.css({

@@ -8,7 +8,7 @@
 "use strict";
 
 function depends_symbol() {
-    if (typeof Module_famultibutton == 'undefined' || !$.fn.famultibutton) {
+    if (typeof window["Modul_famultibutton"] === 'undefined' || !$.fn.famultibutton) {
         return ["famultibutton"];
     }
 }
@@ -17,13 +17,17 @@ var Modul_symbol = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
-            elem.initData('off-color', elem.data('color') || ftui.getStyle('.symbol.off', 'color') || '#505050');
-            elem.initData('off-background-color', elem.data('background-color') || ftui.getStyle('.symbol.off', 'background-color') || '#505050');
-            elem.initData('on-color', elem.data('color') || ftui.getClassColor(elem) || ftui.getStyle('.symbol.on', 'color') || '#aa6900');
-            elem.initData('on-background-color', elem.data('background-color') || ftui.getStyle('.symbol.on', 'background-color') || '#aa6900');
+            elem.attr("data-ready", "");
+            
+            elem.initClassColor('on-color'); 
+
+            elem.initData('on-color', elem.data('color') || '#aa6900');
+            elem.initData('off-color', elem.data('color') || '#505050');
+            elem.initData('on-background-color', elem.data('background-color') || '#aa6900');
+            elem.initData('off-background-color', elem.data('background-color') || '#505050');
             elem.initData('background-icon', null);
             elem.initData('icon', (($.isArray(elem.data('icons'))) ? elem.data('icons')[0] : 'ftui-window'));
             elem.initData('get-warn', -1);

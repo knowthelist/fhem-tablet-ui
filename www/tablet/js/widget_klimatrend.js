@@ -12,9 +12,11 @@ var Modul_klimatrend = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
+            
             elem.initData('get', elem.data('get') || 'statTemperatureTendency');
             me.addReading(elem, 'get');
         });

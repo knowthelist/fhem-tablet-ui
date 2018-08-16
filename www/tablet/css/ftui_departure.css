@@ -2,12 +2,16 @@
 
 }
 
+.departure-wrapper{
+
+}
+
 .departure{
     position: relative;
     border-radius: 10px;
-    margin: 3px;
     cursor: default !important;
 }
+
 .departure .icon {
     position: absolute;
     top: 6px;

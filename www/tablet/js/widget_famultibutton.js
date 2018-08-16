@@ -8,12 +8,37 @@
 "use strict";
 
 function depends_famultibutton() {
+
+    var deps = [];
     if (!$.fn.famultibutton) {
-        return [ftui.config.basedir + "lib/fa-multi-button.min.js"];
+        deps.push(ftui.config.basedir + "lib/fa-multi-button.min.js");
     }
+    if (!$.fn.draggable) {
+        deps.push(ftui.config.basedir + "lib/jquery-ui.min.js");
+    }
+    return deps;
+
 }
 
 var Modul_famultibutton = function () {
+
+
+    // Notification from other widgets
+    $(document).on("onforTimerStarted", function (event, wgtId) {
+        if (me.elements.length > 0) {
+            me.elements.filter('div[data-timer-id="' + wgtId + '"]').each(function (index) {
+                checkForRunningTimer($(this), wgtId);
+            });
+        }
+    });
+
+    $(document).on("onforTimerStopped", function (event, wgtId) {
+        if (me.elements.length > 0) {
+            me.elements.filter('div[data-timer-id="' + wgtId + '"]').each(function (index) {
+                stopRunningTimer($(this));
+            });
+        }
+    });
 
     function getSecondes(elem) {
         var seton = elem.data("set-on");
@@ -31,45 +56,60 @@ var Modul_famultibutton = function () {
     function startTimer(elem) {
         var id = elem.data("device") + "_" + elem.data('get');
         var now = new Date();
-        var til = new Date(localStorage.getItem("ftui_timer_til_" + id));
-        var secondes = localStorage.getItem("ftui_timer_sec_" + id);
+        var til = new Date(sessionStorage.getItem("ftui.timer_til." + id));
         var count = (til - now) / 1000;
+        var secondes = count;
 
         var faelem = elem.data('famultibutton');
-        if (faelem) {
+        if (faelem && count > 0) {
             clearTimeout(elem.data('timer'));
             faelem.setProgressValue(1);
             elem.data('timer', setInterval(function () {
                 if (count-- <= 0) {
                     clearInterval(elem.data('timer'));
-                    localStorage.removeItem("ftui_timer_sec_" + id);
-                    localStorage.removeItem("ftui_timer_til_" + id);
+                    sessionStorage.removeItem("ftui.timer_sec." + id);
+                    sessionStorage.removeItem("ftui.timer_til." + id);
                 }
                 faelem.setProgressValue(count / secondes);
             }, 1000));
         }
     }
 
-    function checkForTimer(elem) {
-        var secondes = getSecondes(elem);
+    function checkForTimer(elem, force) {
+        var id = elem.data("device") + "_" + elem.data('get');
+        var secondes = sessionStorage.getItem("ftui.timer_sec." + id);
+        if (!secondes) {
+            secondes = getSecondes(elem);
+        }
         if (secondes && $.isNumeric(secondes)) {
-            var now = new Date();
-            var til = new Date();
-            var id = elem.data("device") + "_" + elem.data('get');
-            til.setTime(now.getTime() + (parseInt(secondes) * 1000));
-            localStorage.setItem("ftui_timer_sec_" + id, secondes);
-            localStorage.setItem("ftui_timer_til_" + id, til);
-            startTimer(elem);
+            var ts = elem.getReading('get').date;
 
-            //inform other widgets to check their timer
-            $(document).trigger('onforTimerStarted', [id]);
+            if (ts || force) {
+                var now = (ts && !force) ? ts.toDate() : new Date();
+                var til = now;
+
+                til.setTime(now.getTime() + (parseInt(secondes) * 1000));
+
+                if (force) {
+                    sessionStorage.setItem("ftui.timer_sec." + id, secondes);
+                }
+
+                sessionStorage.setItem("ftui.timer_til." + id, til);
+                startTimer(elem);
+
+                if (force) {
+                    //inform other widgets to check their timer
+                    $(document).trigger('onforTimerStarted', [id]);
+                }
+            }
         }
     }
 
     function checkForRunningTimer(elem, id) {
-        var secondes = getSecondes(elem);
-        if (localStorage.getItem("ftui_timer_til_" + id)) {
-            if (localStorage.getItem("ftui_timer_sec_" + id) == secondes || !secondes) {
+
+        if (sessionStorage.getItem("ftui.timer_til." + id)) {
+            var secondes = getSecondes(elem);
+            if (sessionStorage.getItem("ftui.timer_sec." + id) == secondes) {
                 startTimer(elem);
             } else {
                 stopRunningTimer(elem);
@@ -114,37 +154,33 @@ var Modul_famultibutton = function () {
     }
 
     function showOverlay(elem, value) {
-        elem.find('#warn-back').remove();
         elem.find('#warn').remove();
         if (ftui.isValid(value) && value !== "") {
-            var val = ($.isNumeric(value) && value < 100) ? Number(value).toFixed(0) : '!';
+            var val = ($.isNumeric(value)) ? Number(value).toFixed(0) : '!';
+            if (elem.isValidData('warn-icon')) {
+                val = '<i class="fa ' + elem.data('warn-icon') + '"><i/>';
+            }
+            var digits = val.toString().length;
             var faElem = elem.find('.famultibutton');
-            var bgWarnElem = $('<i/>', {
-                id: 'warn-back',
-                class: 'fa fa-stack-1x fa-circle'
-            }).appendTo(faElem);
-
-            var fgWarnElem = $('<i/>', {
+            var warnElem = $('<i/>', {
                 id: 'warn',
-                class: 'fa fa-stack-1x '
+                class: 'digits' + digits
             }).html(val).appendTo(faElem);
 
             if (elem.isValidData('warn-color')) {
-                fgWarnElem.css({
+                warnElem.css({
                     color: elem.data('warn-color')
                 });
             }
             if (elem.isValidData('warn-background-color')) {
-                bgWarnElem.css({
-                    color: elem.data('warn-background-color')
+                warnElem.css({
+                    backgroundColor: elem.data('warn-background-color')
                 });
             }
             if (elem.hasClass('warnsamecolor')) {
-                fgWarnElem.css({
-                    color: '#000'
-                });
-                bgWarnElem.css({
-                    color: elem.data('on-color')
+                warnElem.css({
+                    color: '#000',
+                    backgroundColor: elem.data('on-color')
                 });
             }
         }
@@ -156,69 +192,49 @@ var Modul_famultibutton = function () {
         if (idx > -1) {
             var faelem = elem.data('famultibutton');
             if (faelem) {
-                
-                idxOn = idxOn || idx;
-                if (idx === idxOn) {
+
+                if (idx === idxOn || state == elem.data('set-on')) {
                     faelem.setOn();
                 } else {
                     faelem.setOff();
                 }
-            }
 
-            var icons = elem.data('icons');
-            var bgicons = elem.data('background-icons');
-            var colors = elem.data('colors') || elem.data('on-colors');
-            var bgcolors = elem.data('background-colors') || elem.data('on-background-colors');
+                /*jshint -W030*/
+                var icons = elem.data("icons"),
+                    classes = elem.data("classes"),
+                    bgicons = elem.data("background-icons"),
+                    colors = elem.data("colors"),
+                    bgcolors = elem.data("background-colors");
 
+                void 0 === icons && (icons = new Array(elem.data("icon") || "fa-power-off"));
+                void 0 === classes && (classes = new Array(""));
+                void 0 === bgicons && (bgicons = new Array(elem.data("background-icon") || ""));
+                void 0 === colors && (colors = new Array(((faelem.getState()) ? elem.data("on-color") : elem.data("off-color")) || "#505050"));
+                void 0 === bgcolors && (bgcolors = new Array(((faelem.getState()) ? elem.data("on-background-color") : elem.data("off-background-color")) || "#505050"));
 
-            // if data-icons isn't set, try using data-icon or fa-power-off instead
-            if (typeof icons == 'undefined') {
-                icons = new Array(elem.data('icon') || 'fa-power-off');
-            }
-            // if data-background-icons isn't set, try using data-background-icon or '' instead
-            if (typeof bgicons == 'undefined') {
-                bgicons = new Array(elem.data('background-icon') || '');
-            }
-            // if data-colors isn't set, try using data-on-color, data-off-color or #505050 instead
-            if (typeof colors == 'undefined') {
-                colors = new Array(elem.data('on-color') || elem.data('off-color') || '#505050');
-            }
-            // if data-background-colors isn't set, try using data-on-background-color, data-off-background-color or #505050 instead
-            if (typeof bgcolors == 'undefined') {
-                bgcolors = new Array(elem.data('on-background-color') || elem.data('off-background-color') || '#505050');
-            }
-
-            // fill up colors and icons to states.length
-            // if an index s isn't set, use the value of s-1
-            for (var s = 0, len = states.length; s < len; s++) {
-                if (typeof icons[s] == 'undefined') {
-                    icons[s] = icons[s > 0 ? s - 1 : 0];
+                for (var i = 0, len = states.length; i < len; i++) {
+                    void 0 === icons[i] && (icons[i] = icons[i > 0 ? i - 1 : 0]);
+                    void 0 === classes[i] && (classes[i] = classes[i > 0 ? i - 1 : 0]);
+                    void 0 === bgicons[i] && (bgicons[i] = bgicons[i > 0 ? i - 1 : 0]);
+                    void 0 === colors[i] && (colors[i] = colors[i > 0 ? i - 1 : 0]);
+                    void 0 === bgcolors[i] && (bgcolors[i] = bgcolors[i > 0 ? i - 1 : 0]);
                 }
-                if (typeof bgicons[s] == 'undefined') {
-                    bgicons[s] = bgicons[s > 0 ? s - 1 : 0];
-                }
-                if (typeof colors[s] == 'undefined') {
-                    colors[s] = colors[s > 0 ? s - 1 : 0];
-                }
-                if (typeof bgcolors[s] == 'undefined') {
-                    bgcolors[s] = bgcolors[s > 0 ? s - 1 : 0];
-                }
+
+                //elem.children().children('#fg');
+                sessionStorage.setItem(['ftui', elem.widgetId(), 'idx'].join('.'), idx);
+                var faElem = elem.find('.famultibutton');
+                faElem.removeClass(classes.join(" "));
+                faElem.addClass(classes[idx]);
+
+                // Get color values from reading or from fix array
+                var colorValue = (colors[idx].match(/:/)) ? elem.getReading("colors",idx).val : colors[idx];
+                var bgColorValue = (bgcolors[idx].match(/:/)) ? elem.getReading("background-colors",idx).val : bgcolors[idx];
+                
+                faelem.setForegroundIcon(icons[idx]);
+                faelem.setForegroundColor(ftui.getStyle('.' + colorValue, 'color') || colorValue);
+                faelem.setBackgroundIcon(bgicons[idx]);
+                faelem.setBackgroundColor(ftui.getStyle('.' + bgColorValue, 'color') || bgColorValue);
             }
-
-            var elm = elem.children().children('#fg');
-            var id = elem.uuid();
-            localStorage.setItem(me.widgetname + '_' + id + '_index', idx);
-
-            // Get color values from reading or from fix array
-            var colorValue = (colors[idx].match(/:/)) ? elem.getReading(colors[idx]).val : colors[idx];
-            var bgColorValue = (bgcolors[idx].match(/:/)) ? elem.getReading('on-background-color').val : bgcolors[idx];
-
-            faelem.setForegroundIcon(icons[idx]);
-            faelem.setForegroundColor(ftui.getStyle('.' + colorValue, 'color') || colorValue);
-
-            faelem.setBackgroundIcon(bgicons[idx]);
-            faelem.setBackgroundColor(ftui.getStyle('.' + bgColorValue, 'color') || bgColorValue);
-
         }
     }
 
@@ -238,7 +254,7 @@ var Modul_famultibutton = function () {
         if (doubleclicked(elem, 'on')) {
             me.clicked(elem, 'on');
             elem.trigger("toggleOn");
-            checkForTimer(elem);
+            checkForTimer(elem, 'force');
             var blink = elem.data('blink');
             // blink=on     -> always reset state after 200ms
             // blink=off    -> never reset state after 200ms
@@ -272,8 +288,8 @@ var Modul_famultibutton = function () {
             elem.trigger("toggleOff");
             var id = elem.data("device") + "_" + elem.data('get');
             stopRunningTimer(elem);
-            localStorage.removeItem("ftui_timer_sec_" + id);
-            localStorage.removeItem("ftui_timer_til_" + id);
+            sessionStorage.removeItem("ftui.timer_sec." + id);
+            sessionStorage.removeItem("ftui.timer_til." + id);
 
             //inform other widgets to check their timer
             $(document).trigger('onforTimerStopped', [id]);
@@ -301,6 +317,9 @@ var Modul_famultibutton = function () {
         } else if (elem.attr('data-fhem-cmd')) {
             target = elem.attr('data-fhem-cmd');
             type = 'fhem-cmd';
+        } else if (elem.attr('data-js-cmd')) {
+            target = elem.attr('data-js-cmd');
+            type = 'js-cmd';
         } else {
             var sets = elem.data('set-states') || elem.data('set-' + onoff);
             // no value given means don't send it and keep current state
@@ -314,8 +333,7 @@ var Modul_famultibutton = function () {
             if (!$.isArray(sets)) {
                 sets = new Array(String(sets));
             }
-            var id = elem.uuid();
-            var s = localStorage.getItem(me.widgetname + '_' + id + '_index') || 0;
+            var s = sessionStorage.getItem(['ftui', elem.widgetId(), 'idx'].join('.')) || 0;
             var set = typeof sets[s] != 'undefined' ? sets[s] : sets[0];
             //supress sending possible
 
@@ -323,26 +341,26 @@ var Modul_famultibutton = function () {
             if (set !== '') {
                 s++;
                 if (s >= sets.length) s = 0;
-                localStorage.setItem(me.widgetname + '_' + id + '_index', s);
+                sessionStorage.setItem(['ftui', elem.widgetId(), 'idx'].join('.'), s);
 
                 // update widgets with multistate mode directly on click
-                
+
                 if ($.isArray(states)) {
                     me.showMultiStates(elem, states, set);
                 }
 
                 target = [elem.data('cmd'), device, elem.data('set'), set].join(' ');
                 type = 'fhem-cmd';
-                
+
             } else {
                 // keep current state
                 if ($.isArray(states)) {
                     me.showMultiStates(elem, states, elem.data('value'));
                 } else {
-                if (onoff === 'off')
-                    elem.setOn();
-                else
-                    elem.setOff();
+                    if (onoff === 'off')
+                        elem.setOn();
+                    else
+                        elem.setOff();
                 }
             }
         }
@@ -360,6 +378,9 @@ var Modul_famultibutton = function () {
                 }
                 $.get(target);
                 break;
+            case 'js-cmd':
+                eval(target);
+                break;                
             case 'fhem-cmd':
                 if (device && typeof device != "undefined" && device !== " ") {
                     ftui.toast(target);
@@ -389,7 +410,7 @@ var Modul_famultibutton = function () {
 
         // init embedded widgets
         if (elem.find('[data-type]').length > 0) {
-            ftui.initWidgets('[data-uuid="' + elem.uuid() + '"]');
+            ftui.initWidgets('[data-wgid="' + elem.wgid() + '"]');
         }
 
         var size = elem.data('size');
@@ -402,23 +423,33 @@ var Modul_famultibutton = function () {
 
         var id = elem.data('device') + "_" + elem.data('get');
 
-        if (id !== ' _STATE' && id !== ' _') {
+        if (id !== 'undefined_STATE' && id !== ' _STATE' && id !== ' _') {
 
-            // Notification from other widgets
-            $(document).on("onforTimerStarted", function (event, wgtId) {
-                checkForRunningTimer(elem, id);
-            });
-
-            $(document).on("onforTimerStopped", function (event, wgtId) {
-                if (wgtId == id) {
-                    stopRunningTimer(elem);
-                }
-            });
+            elem.attr('data-timer-id', id);
 
             // any old on-for-timer still active ?
             checkForRunningTimer(elem, id);
         }
 
+        if (elem.hasClass('drag')) {
+            elem.draggable();
+            elem.draggable();
+        }
+
+        if (elem.hasClass('drop')) {
+            elem.droppable({
+                hoverClass: "drop-hover",
+                accept: ".drag",
+                drop: function (event, ui) {
+                    elem.data('value', ui.draggable.data('device'));
+                    ui.draggable.animate({
+                        top: "0px",
+                        left: "0px"
+                    });
+                    elem.transmitCommand();
+                }
+            });
+        }
         return elem;
     }
 
@@ -427,12 +458,12 @@ var Modul_famultibutton = function () {
         elem.initData('set', '');
         elem.initData('cmd', 'set');
         elem.initData('get-on', '(true|1|on|open|ON)');
-        elem.initData('get-off', '(false|0|off|closed|OFF)');
+        elem.initData('get-off', '!on');
 
         var getOn = elem.data('get-on');
         var getOff = elem.data('get-off');
         elem.initData('set-on', (getOn !== '(true|1|on|open|ON)' && getOn !== '!off') ? elem.data('get-on') : 'on');
-        elem.initData('set-off', (getOff !== '(false|0|off|closed|OFF)' && getOff !== '!on') ? elem.data('get-off') : 'off');
+        elem.initData('set-off', (getOff !== '!on') ? elem.data('get-off') : 'off');
         elem.initData('mode', 'toggle');
         elem.initData('doubleclick', 0);
         elem.initData('firstclick-background-color', '#6F4500');
@@ -500,58 +531,59 @@ var Modul_famultibutton = function () {
         elem.initData('warn-off', '(false|off|0)');
         me.addReading(elem, 'warn');
 
-        elem.initData('off-color', elem.data('color') || ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#505050');
-        elem.initData('off-background-color', elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.off',
-            'background-color') || '#505050');
-        elem.initData('on-color', elem.data('color') || ftui.getStyle('.' + me.widgetname + '.on', 'color') || '#aa6900');
-        elem.initData('on-background-color', elem.data('color') || elem.data('background-color') || ftui.getStyle('.' + me.widgetname +
-            '.on', 'background-color') || '#aa6900');
+        var elemData = elem.data();
+        elem.initData("off-color", elemData.color || "#505050");
+        elem.initData("off-background-color", elemData.backgroundColor || "#505050");
+        elem.initData("on-color", elemData.color || "#aa6900");
+        elem.initData("on-background-color", elemData.backgroundColor || "#aa6900");
 
-        if (elem.hasClass('invert')) {
-            var c1 = elem.data('off-background-color');
-            elem.data('off-background-color', elem.data('off-color'));
-            elem.data('off-color', c1);
-            var c2 = elem.data('on-background-color');
-            elem.data('on-background-color', elem.data('on-color'));
-            elem.data('on-color', c2);
+        // change back with front colors
+        if (elem.hasClass("invert")) {
+            var c1 = elemData.offBackgroundColor;
+            elem.data("off-background-color", elemData.offColor);
+            elem.data("off-color", c1);
+            var c2 = elemData.onBackgroundColor;
+            elem.data("on-background-color", elemData.onColor);
+            elem.data("on-color", c2);
         }
 
         // translate html color names into FTUI colors
-        elem.data('off-color', ftui.getStyle('.' + elem.data('off-color'), 'color') || elem.data('off-color'));
-        elem.data('on-color', ftui.getStyle('.' + elem.data('on-color'), 'color') || elem.data('on-color'));
-        elem.data('off-background-color', ftui.getStyle('.' + elem.data('off-background-color'), 'color') || elem.data(
-            'off-background-color'));
-        elem.data('on-background-color', ftui.getStyle('.' + elem.data('on-background-color'), 'color') || elem.data(
-            'on-background-color'));
+        elem.data("off-color", ftui.getStyle("." + elemData.offColor, "color") || elemData.offColor);
+        elem.data("on-color", ftui.getStyle("." + elemData.onColor, "color") || elemData.onColor);
+        elem.data("off-background-color", ftui.getStyle("." + elemData.offBackgroundColor, "color") || elemData.offBackgroundColor);
+        elem.data("on-background-color", ftui.getStyle("." + elemData.onBackgroundColor, "color") || elemData.onBackgroundColor);
 
-        if (elem.isDeviceReading('on-color')) {
-            me.addReading(elem, 'on-color');
+        if (elem.isDeviceReading("on-color")) {
+            me.addReading(elem, "on-color");
         }
-        if (elem.isDeviceReading('on-background-color')) {
-            me.addReading(elem, 'on-background-color');
+        if (elem.isDeviceReading("on-background-color")) {
+            me.addReading(elem, "on-background-color");
         }
-        if (elem.isDeviceReading('off-color')) {
-            me.addReading(elem, 'off-color');
+        if (elem.isDeviceReading("off-color")) {
+            me.addReading(elem, "off-color");
         }
-        if (elem.isDeviceReading('off-background-color')) {
-            me.addReading(elem, 'off-background-color');
+        if (elem.isDeviceReading("off-background-color")) {
+            me.addReading(elem, "off-background-color");
         }
+        
+        me.extractReadings(elem, "background-colors");
     }
 
     function update_cb(elem) {}
 
     function update(dev, par) {
 
-        // update from normal state reading
-        $.each(['get', 'get-on', 'get-off'], function (idx, key) {
-            me.elements.filterDeviceReading(key, dev, par)
-                .each(function (index) {
-                    var elem = $(this);
+        me.elements.each(function (index) {
+            var elem = $(this);
+
+            // update from normal state reading
+            $.each(['get', 'get-on', 'get-off'], function (idx, key) {
+                if (elem.matchDeviceReading(key, dev, par)) {
                     var value = elem.getReading('get').val;
                     var state = ftui.getPart(value, elem.data('part'));
                     //ftui.log(2, 'famultibutton.update for "get": state=' + state + ' dev=' + dev + ' par=' + par + ' key=' + key + ' index=' + index + ' idx=' +idx);
                     if (ftui.isValid(state)) {
-                        elem.data('value',state);
+                        elem.data('value', state);
                         var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
                         if ($.isArray(states)) {
                             me.showMultiStates(elem, states, state);
@@ -571,18 +603,16 @@ var Modul_famultibutton = function () {
                             me.update_cb(elem, state);
                         }
                     }
-                });
+                }
+            });
 
-        });
 
-        // update from extra reading for colorize
-        var oparm = ['offColor', 'onColor', 'onBackgroundColor', 'offBackgroundColor'];
-        var selec = ['#fg', '#fg', '#bg', '#bg'];
-        var estat = [false, true, true, false];
-        $.each(['off-color', 'on-color', 'on-background-color', 'off-background-color'], function (index, key) {
-            me.elements.filterDeviceReading(key, dev, par)
-                .each(function (idx) {
-                    var elem = $(this);
+            // update from extra reading for colorize
+            var oparm = ['offColor', 'onColor', 'onBackgroundColor', 'offBackgroundColor'];
+            var selec = ['#fg', '#fg', '#bg', '#bg'];
+            var estat = [false, true, true, false];
+            $.each(['off-color', 'on-color', 'on-background-color', 'off-background-color'], function (index, key) {
+                if (elem.matchDeviceReading(key, dev, par)) {
                     var val = elem.getReading(key).val;
                     if (ftui.isValid(val)) {
                         val = '#' + val.replace('#', '');
@@ -596,23 +626,11 @@ var Modul_famultibutton = function () {
                             }
                         }
                     }
-                });
-        });
+                }
+            });
 
-        //extra reading for lock
-        me.update_lock(dev, par);
-
-        //extra reading for hide
-        me.update_hide(dev, par);
-
-        //extra reading for reachable
-        me.update_reachable(dev, par);
-
-
-        //extra reading for warn
-        me.elements.filterDeviceReading('warn', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
+            //extra reading for warn
+            if (elem.matchDeviceReading('warn', dev, par)) {
                 var warn = elem.getReading('warn').val;
                 if (elem.matchingState('warn', warn) === 'on') {
                     me.showOverlay(elem, ftui.getPart(warn, elem.data('get-warn')));
@@ -620,14 +638,24 @@ var Modul_famultibutton = function () {
                 if (elem.matchingState('warn', warn) === 'off') {
                     me.showOverlay(elem, "");
                 }
-            });
+            }
 
-        //extra reading for countdown
-        me.elements.filterDeviceReading('countdown', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
+            //extra reading for countdown
+            if (elem.matchDeviceReading('countdown', dev, par)) {
                 elem.data('secondes', elem.getReading('countdown').val);
-            });
+            }
+
+            //extra reading for reachable
+            me.updateReachable(elem, dev, par);
+
+            //extra reading for hide
+            me.updateHide(elem, dev, par);
+
+            //extra reading for lock
+            me.updateLock(elem, dev, par);
+
+        });
+
     }
 
     // public

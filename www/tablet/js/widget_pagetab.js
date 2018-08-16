@@ -8,7 +8,7 @@
 "use strict";
 
 function depends_pagetab() {
-    if (typeof Module_famultibutton == 'undefined' || !$.fn.famultibutton) {
+    if (typeof window["Modul_famultibutton"] === 'undefined' || !$.fn.famultibutton) {
         return ["famultibutton"];
     }
 }
@@ -45,8 +45,9 @@ var Modul_pagetab = function () {
             history.replaceState(history.state, history.title, '#' + goUrl);
         }
         $('div.gridster').fadeTo(200, 0);
-        if (ftui.isValid(goUrl)) {
+        if (goUrl !== 'undefined' && ftui.isValid(goUrl)) {
             $.get(goUrl, function (data_html) {
+                console.log('sss'+typeof goUrl);
                 $('div.gridster')
                     .html($(data_html).closest('div.gridster').html())
                     .fadeTo(600, 1);
@@ -73,7 +74,7 @@ var Modul_pagetab = function () {
     function init() {
 
         ftui.log(3, 'init is executed / currently at : ' + window.location);
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
 
         ftui.log(3, 'get localStore pagetab_doload (init) to: ' + localStorage.getItem('pagetab_doload'));
         var dl = localStorage.getItem('pagetab_doload');
@@ -100,6 +101,8 @@ var Modul_pagetab = function () {
 
             me.elements.each(function (index) {
                 var elem = $(this);
+                elem.attr("data-ready", "");
+                
                 elem.initData('off-color', ftui.getStyle('.' + me.widgetname + '.off', 'color') || '#606060');
                 elem.initData('off-background-color', elem.data('background-color') || ftui.getStyle('.' + me.widgetname + '.off', 'background-color') || 'transparent');
                 elem.initData('on-color', ftui.getStyle('.' + me.widgetname + '.on', 'color') || '#222222');

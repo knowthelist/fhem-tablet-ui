@@ -83,7 +83,7 @@ function depends_weekprofile (){
 	    deps.push(ftui.config.basedir + "lib/jquery-ui.min.js");
 	}
 	return deps;
-};
+}
 
 var Modul_weekprofile = function () {
 	
@@ -111,7 +111,7 @@ var Modul_weekprofile = function () {
                 },
                 "Speichern": function(){
                     var canClose = weekprofile_saveProfile( $('.weekprofile_'+device.replace(/\./g,'\\.')), device , elem.data('profile'));
-                    if (canClose == true) {
+                    if (canClose === true) {
 						weekprofile_closeDialog(elem,device);
                     }
                 },
@@ -122,7 +122,7 @@ var Modul_weekprofile = function () {
                 }
             },
             create: function (e, ui) {
-                var pane = $('.weekprofile_'+device.replace(/\./g,'\\.')).find(".ui-dialog-buttonpane")
+                var pane = $('.weekprofile_'+device.replace(/\./g,'\\.')).find(".ui-dialog-buttonpane");
                 $('.weekprofile_'+device.replace(/\./g,'\\.')).find('.ui-dialog-titlebar-close').remove();                
             }, 
             open: function () {
@@ -152,7 +152,7 @@ var Modul_weekprofile = function () {
 			elem.data('dialog_visible', false);
         }); 
         
-    };
+    }
 	function weekprofile_setActions(elem,device,style,hprofile){
 // versuch: config hier holen:
 		var config = weekprofile_loadLocal(device, hprofile);
@@ -164,7 +164,7 @@ var Modul_weekprofile = function () {
         weekprofile_setDeleteLineAction(elem, device, hprofile); //"Minus"-Schalter Aktion     
 		weekprofile_setTimeChangedAction(elem, device, hprofile); // Zeit geaendert	
 		weekprofile_setTempChangedAction(elem, device, hprofile); // Temperatur geaendert	
-	};
+	}
 	function weekprofile_closeDialog(elem,device) {
 		// localStorage-Kopie loeschen
 		localStorage.removeItem(me.widgetname+"_sav_"+device+elem.data('profile'));
@@ -175,7 +175,7 @@ var Modul_weekprofile = function () {
 		elem.children('.weekprofile_dialog').remove();
 		// elem.dialog_visible = false;
 		elem.data('dialog_visible', false);
-	};
+	}
     function weekprofile_buildweekprofilecmddropdown(list, selectedval, theme,style,profileid,lineno) {
         var result = "";
 		
@@ -189,14 +189,14 @@ var Modul_weekprofile = function () {
         }
         result += "</select>";   
         return result;        
-    };   
+    }   
     function weekprofile_buildlines(times, temps, cmds, profileid, theme, style) {
         var result = "<div class='weekprofile_lines'>"; 
 		var starttime = "00:00";
 		for (var lineno = 0; lineno < times.length; lineno++) {
 			if(lineno > 0) {
 				starttime = times[lineno-1];
-			};		
+			}
 			result += "<div>" +			
 		 		  "   <div class='weekprofile_profiletime inline  text'>" +
                   "       <div class='weekprofile_starttime "+theme+" "+style+"' type='text' style='visibility: visible;'>"+starttime+"</div>" +
@@ -206,7 +206,7 @@ var Modul_weekprofile = function () {
 				result += 	"<div class='weekprofile_starttime "+theme+" "+style+"' type='text' style='visibility: visible;'>"+times[lineno]+"</div>";
 			}else{
 				result +=   "<input data-profile='"+profileid+"' data-line='"+lineno+"' class='weekprofile_time "+theme+" "+style+"' type='text' style='visibility: visible;' value='"+times[lineno]+"'>";
-			};
+			}
 			result +=       "   </div>" +
                         "   <div class='weekprofile_profilecmd inline  input-control text'>";
 			result += weekprofile_buildweekprofilecmddropdown(cmds, temps[lineno], theme, style, profileid, lineno); 
@@ -215,12 +215,12 @@ var Modul_weekprofile = function () {
 			if(lineno != times.length-1) {
 				result +=   "<div class='weekprofile_deletelinediv inline '>" +
 						"     <button data-profile='"+profileid+"' data-line='"+lineno+"' id='addline"+profileid+"_"+lineno+"' class='fa weekprofile_deleteline weekprofile_button "+theme+" "+style+"' type='button'>-</button></div>";
-			};
+			}
 			result += "</div>";
-		};
+		}
 		result += "</div>";
         return result;          
-    }; 	
+    }
 	// Zeile mit Wochentagen
     function weekprofile_buildprofile(profile, cmds, id, theme, style) {
         var result = "";  
@@ -240,7 +240,7 @@ var Modul_weekprofile = function () {
 		result += weekprofile_buildlines(profile.times, profile.temps, cmds, id, theme, style);
 		result += "   </div>";	
         return result;          
-    }; 
+    } 
     function weekprofile_buildweekprofilelist(config,device) {
         var result = "";        
         result += 	"   <div class='weekprofile_profilelist'>";       
@@ -249,28 +249,28 @@ var Modul_weekprofile = function () {
         }       
         result += 	"   </div>";
         return result;
-    };
+    }
     function weekprofile_buildweekprofile(config,device) { 
         return "<div class='weekprofile_dialog "+config.theme+"'>"+
 		  weekprofile_buildweekprofilelist(config,device) +
                "</div>";
-    };
+    }
     function weekprofile_deleteProfile(elem, device,hprofile) {
         var config = weekprofile_loadLocal(device,hprofile);
 		weekprofile_getWeekdayFlags($('.weekprofile_'+device.replace(/\./g,'\\.')),config.profiles);	// Tages-Flags holen
         var currProfile = elem.data('profile');
 		if(config.profiles.length > 1) {		//letztes Profil nicht loeschen
-			weekprofile_moveweekdays(config,currProfile)
+			weekprofile_moveweekdays(config,currProfile);
 			config.profiles.splice(currProfile,1);
 			var newElem = $(weekprofile_buildweekprofilelist(config,device));
 			weekprofile_setActions(newElem, config.name, config.style, hprofile); 
 			elem.parent().parent().parent().parent().replaceWith(newElem);        
 			weekprofile_saveLocal(config);			
 		}
-    };
+    }
 	function weekprofile_moveweekdays(config,currProfile) {
 		// Wochentage von geloeschter Konfiguration auf vorhergehendes uebertragen
-		if(currProfile != 0) {
+		if(currProfile !== 0) {
 			targetprofile = currProfile - 1;
 		} else {
 			targetprofile = 1;
@@ -280,7 +280,7 @@ var Modul_weekprofile = function () {
 				config.profiles[targetprofile].weekdays[dayNum] = true;
 			}
 		}
-	};
+	}
     function weekprofile_addProfile(elem, device, hprofile) {
         var config = weekprofile_loadLocal(device, hprofile);   
 		var newprofile = {};
@@ -295,7 +295,7 @@ var Modul_weekprofile = function () {
         $('.weekprofile_'+device.replace(/\./g,'\\.')).find('.weekprofile_profilelist').append(jqRow);
         weekprofile_setActions(jqRow, config.name, config.style, hprofile); 
         weekprofile_saveLocal(config); //Aktuelle Profile lokal speichern
-    };
+    }
 	function weekprofile_addLine(elem, device, hprofile) {
 		// Profile und Zeile finden
 		var config = weekprofile_loadLocal(device, hprofile);
@@ -314,7 +314,7 @@ var Modul_weekprofile = function () {
 		weekprofile_setActions(jqNewLines, device, config.style, hprofile); 
 		elem.parent().parent().parent().replaceWith(jqNewLines);
         weekprofile_saveLocal(config); //Aktuelle Profile lokal speichern		
-    };
+    }
 	function weekprofile_deleteLine(elem, device, hprofile) {
 		// Zeile finden
 		var config = weekprofile_loadLocal(device, hprofile);
@@ -329,7 +329,7 @@ var Modul_weekprofile = function () {
 		weekprofile_setActions(jqNewLines, device, config.style, hprofile); 		
 		elem.parent().parent().parent().replaceWith(jqNewLines);
 		weekprofile_saveLocal(config); //Aktuelle Profile lokal speichern
-    };	
+    }	
 	function weekprofile_timeChanged(elem, device, hprofile) {
 		ftui.log(3, "changed");
 		// Zeile finden
@@ -339,7 +339,7 @@ var Modul_weekprofile = function () {
 		// Gibt es eine naechste Zeile?
 		if(currLine >= config.profiles[currProfile].times.length -1) {
 			return;  // nein 
-		};
+		}
 		// in profile uebernehmen
 		config.profiles[currProfile].times[currLine] = elem.val();
 		// ja, also naechste Zeile suchen
@@ -347,7 +347,7 @@ var Modul_weekprofile = function () {
 		// Die Startzeit ist das erste erste Element
 		nextLine.children().first().children().first().html(elem.val());
 		weekprofile_saveLocal(config); //Aktuelle Profile lokal speichern
-    };	
+    }	
 	function weekprofile_tempChanged(elem, device, hprofile) {
 		// Zeile finden
 		var config = weekprofile_loadLocal(device, hprofile);
@@ -356,7 +356,7 @@ var Modul_weekprofile = function () {
 		// in profile uebernehmen
 		config.profiles[currProfile].temps[currLine] = config.templist[elem.val()];
 		weekprofile_saveLocal(config); //Aktuelle Profile lokal speichern
-	};
+	}
     function weekprofile_saveProfile(elem, device, hprofile) { // Ins weekprofile Device schreiben
         var config = weekprofile_loadLocal(device, hprofile);
         // Im Prinzip steht alles in arr_config, ausser den Tages-Flags
@@ -388,57 +388,58 @@ var Modul_weekprofile = function () {
         weekprofile_saveLocal(config); 
         //--------------------------------------------------  
         return true;
-    };
+    }
     function weekprofile_saveLocal(config) { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         var dataToStore = JSON.stringify(config);
         //localStorage.setItem(this.widgetname+"_"+config.name, dataToStore);
         //variante mit Profilen
         localStorage.setItem(me.widgetname+"_"+config.name+config.profile, dataToStore);
-    };    
+    }    
     function weekprofile_loadLocal(device, hprofile) {
         return JSON.parse(localStorage.getItem(me.widgetname+"_"+device+hprofile));        
-    };         
+    }         
     function weekprofile_setDeleteAction(elem,device, hprofile) {
         elem.find('.weekprofile_deleteprofile').each(function(){       
             $(this).on('click', function(event) {
                 weekprofile_deleteProfile( $(this), device, hprofile );
             });
         });        
-    };    
+    }    
     function weekprofile_setAddLineAction(elem,device, hprofile) {
         elem.find('.weekprofile_addline').each(function(){       
             $(this).on('click', function(event) {
                 weekprofile_addLine( $(this), device, hprofile );
             });
         });        
-    };           
+    }           
     function weekprofile_setDeleteLineAction(elem,device, hprofile) {
         elem.find('.weekprofile_deleteline').each(function(){       
             $(this).on('click', function(event) {
                 weekprofile_deleteLine( $(this), device, hprofile );
             });
         });        
-    };          
+    }          
     function weekprofile_setTimeChangedAction(elem,device, hprofile) {
         elem.find('.weekprofile_time').each(function(){       
             $(this).on('input change', function(event) {
 				weekprofile_timeChanged( $(this), device, hprofile );
             });
         });        
-    };      
+    }      
     function weekprofile_setTempChangedAction(elem,device, hprofile) {
         elem.find('.weekprofile_cmd').each(function(){  
             $(this).on('input change', function(event) {
 				weekprofile_tempChanged( $(this), device, hprofile );
             });
         });        
-    };           
-    function weekprofile_setDateTimePicker(elem,device,style,timesteps) {      
+    }           
+    function weekprofile_setDateTimePicker(elem,device,style,timesteps) {   
+        var dtp_style;
         elem.find('.weekprofile_time').each(function(){     
             if (style != 'dark' ) {
-				var dtp_style = 'default';
+				dtp_style = 'default';
 			}else{
-				var dtp_style ='dark'; 
+				dtp_style ='dark'; 
 			}
             $(this).datetimepicker({
                 step:timesteps, 
@@ -450,11 +451,11 @@ var Modul_weekprofile = function () {
                 className:  "weekprofile_datetimepicker "+"weekprofile_datetimepicker_"+device, 
             });           
         });        
-    };         
+    }         
     function weekprofile_getCheckedString(val) {
         if (val) {return "checked";}        
         return "";
-    };       
+    }       
     function weekprofile_getProfiles(elem) { /*Erstellt den localStore, verankert den Aufruf des PopUps*/
         var attr_device = elem.data('device');  
         var attr_title = elem.data('title');
@@ -465,10 +466,11 @@ var Modul_weekprofile = function () {
         ftui.sendFhemCommand(cmd)
         .done(function(data ) {
 			var config = {};
+            var weekprofile_title;
             if (attr_title == 'NAME') { 
-				var weekprofile_title = attr_device; 
+				weekprofile_title = attr_device; 
 			}else{ 
-				var weekprofile_title = attr_title; 
+				weekprofile_title = attr_title; 
 			}            
                     
 			var parsedData = JSON.parse(data);   
@@ -480,10 +482,10 @@ var Modul_weekprofile = function () {
 				 profile.times = parsedData[days[dayNum]].time;
 				 profile.temps = parsedData[days[dayNum]].temp;
 				 // es kam vor, dass die Zeiten und Temperaturen leer sind
-				 if(profile.times.length == 0 || profile.temps.length == 0) {
+				 if(profile.times.length === 0 || profile.temps.length === 0) {
 					profile.times = ["24:00"];
 					profile.temps = ["5.0"];
-				 };
+				 }
 				 // check whether this is basically the same as one
 				 // which already exists
 				 var found = false;
@@ -494,14 +496,14 @@ var Modul_weekprofile = function () {
 						config.profiles[j].weekdays[dayNum] = true;
 						break;
 					} 
-				 };
+				 }
 				 if(found) continue;
 				 // neues Profil 
 				 profile.weekdays = [false,false,false,false,false,false,false];
 				 profile.weekdays[dayNum] = true;
 				 profile.valid = true;			
 				 config.profiles.push(profile); 
-			};
+			}
 			
             config.templist = []; //Verfuegbare Temperaturen (Dropdown)
 			for(var t = 5; t <= 29; t++) {
@@ -565,9 +567,11 @@ var Modul_weekprofile = function () {
 				return element === a2[index]; } );
 	};
     function init() {
-		me.elements = $('div[data-type="'+me.widgetname+'"]',this.area);
-        me.elements.each(function(index) {            
-            var elem=$(this);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
+        me.elements.each(function (index) {
+            var elem = $(this);
+            elem.attr("data-ready", "");
+            
             elem.data('dialog_visible', false);
             //Setzten der Standartattribute falls diese nicht angegeben wurden  
             elem.initData('width',    $(this).data('width') 	|| '400');

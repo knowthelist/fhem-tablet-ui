@@ -90,6 +90,7 @@ var Modul_simplechart = function () {
         }
         if (!column_spec.match(/.+:.+/)) {
             console.log('columnspec ' + column_spec + ' is not ok in simplechart' + (elem.attr('data-device') ? ' for device ' + elem.attr('data-device') : ''));
+            return;
         }
 
         var logdevice = elem.attr("data-logdevice");
@@ -117,6 +118,7 @@ var Modul_simplechart = function () {
                                 len = 0;
                             if (val > max && $.isArray(maxarray)) {
                                 for (j = maxarray.length-1; j > 0; j--) {
+                                    console.log('------------------------j:',j);
                                     if (maxarray[j] > val) {
                                         max = maxarray[j];
                                         break;

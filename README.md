@@ -13,17 +13,14 @@ Requires
 * font-awesome http://fortawesome.github.io/Font-Awesome
 * jquery.gridster  http://gridster.net
 * jquery.toast
+* and more
 All requires are included in the lib folder.
 
 Install
 -------
  * copy the whole tree into the corresponding folder of your FHEM server /\<fhem-path\>/www/tablet
- * add 'define TABLETUI HTTPSRV ftui/ ./www/tablet/ Tablet-UI' in fhem.cfg
  * rename the index-example.html to index.html or create your own index.html
- * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/ftui/
- 
- Depending on the HTTPSRV version, only this cfg works:
- 'define TABLETUI HTTPSRV ftui ./www/tablet/ Tablet-UI'
+ * Tadaaa! A new fhem ui in http://\<fhem-url\>:8083/fhem/tablet/index.html
  
  or just use 'update all https://raw.githubusercontent.com/knowthelist/fhem-tablet-ui/master/controls_fhemtabletui.txt'
  on the FHEM commandline (or input field of FHEMWEB)
@@ -105,6 +102,7 @@ Currently there are more then 20 types of widgets in the base installation.
 - **slideout** : a slide out menu plugin, usable for mobile phone pages.
 - **medialist** : a list of media elements e.g. songs in a playlist
 - **notify** : popup browser notifications for reading changes
+- **theme**  : plugin to actives css stylesheet themes
 
 
 By default the ui gets/sets the fhem parameter 'STATE' (not 'state').
@@ -149,6 +147,7 @@ General attribute meaning
 - **data-warn-off**   : value(s) that hide the warn badge (default 'false|off|0')
 - **data-warn-color**  : forecolor for warn badge (default '#aaa')
 - **data-warn-background-color**  : background color for warn badge (default '#aa2200')
+- **data-warn-icon**  : name of the font-awesome icon to be shown instead of the warn text. (default: '')
 - **data-hide**   : name of the reading to hide/show the widget (default 'STATE')
 - **data-hide-on**   : value for HIDE (default 'true|1|on')
 - **data-hide-off**   : value for SHOW (default '!on')
@@ -237,6 +236,7 @@ See [examples](#symbol) of Symbol
 - **data-get**  : name of the reading containing label text
 - **data-part** : RegEx or number (which word) for filtering shown text
 - **data-fix**  : keeping a specified number of decimals. (default '-1' -> non-numeric)
+- **data-factor**  : a numbers to be multiplied by the numeric reading value (default '' )
 - **data-color**  : fix color attribute or DEVICE:READING for dynamic setting of label color (default '')
 - **data-colors** : a array of color values. The used element for the label color defines the matching element of the limits array
 - **data-classes**: a array of class names. The used element class defines the matching element of the limits array
@@ -284,6 +284,12 @@ Functions for data-substitution:
     e.g.: data-substitution='["on","Lampe ist an","off","Lampe ist aus"]'
 2. RegEx-substitution to apply on the value. Standard regex notation (s/regex/subst/modifier) is expected
    e.g. data-substitution="s/no soundplayer active//g"
+   
+   data-substitution="s/(:00)$//g"                  -  20:15 instead of 20:15:00
+   
+   data-substitution="s/\b0*([1-9][0-9]*|0)\b/$1/g" -  4 instead of 0004 (removes leading zeros)
+   
+   
 3. data-substitution="weekdayshort"
 4. JS functions
 data-substitution="toDate().ddmm()"             -  convert to day:month
@@ -298,10 +304,10 @@ data-substitution="toDate().ago()"              -  convert to time span (long fo
 
 data-substitution="toDate().ago('hh:mm:ss')"    -  convert to time span (short format)
 
-data-substitution="s/(:00)$//g"                 -  20:15 instead of 20:15:00
-
 If you use class="timestamp" together with data-substitution="toDate().ago()" it is recommended to define data-refresh="xx" in secondes to refresh the value
 from time to time, in case the reading timestamp refresh rate is low.
+
+The use the label features only with a fixed label text, then use class="fixedlabel"
 
 See [examples](#label) of Label
 
@@ -324,7 +330,7 @@ See [examples](#label) of Label
 - **data-set**  : name of the reading to set on FHEM (\<command\> \<device\> **\<reading\>** \<value\>) (default '')
 - **data-cmd**  : name of the command to send to FHEM (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set'
 - **data-value**: default value
-- **class**     : wider, w1x, w2x, w3x, large, big, notransmit
+- **class**     : wider, w1x, w2x, w3x, large, big, notransmit, autoclear, autoselect
 
 data-device, data-get can be references (jQuery seletor) to select-widgets to change the source dynamically
 
@@ -362,9 +368,8 @@ data-device, data-get can be references (jQuery seletor) to select-widgets to ch
 - **data-anglearc**  : (default 240);
 - **data-bgcolor**      : Color of background (default '#505050');
 - **data-fgcolor**      : Color of ticks (default '#666');
-- **data-inputcolor**   : Color of value  (default '#ffffff');
-- **data-hdcolor**      : Color of handle  (default '#666');
-- **data-displayInput**  : Show the value (default true);
+- **data-nomcolor**   : Color of value  (default '#ffffff');
+- **data-displayNominal**  : Show the value (default true);
 - **data-font**  :  (default '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
 - **data-font-weight**
 - **data-unit** : add a unit after the center value.
@@ -385,7 +390,8 @@ all parameters from knob widget plus following additional parameters
 - **data-max**   : maximal value to set (default 30)
 - **data-mincolor**   : Color of min temp (default '#4477ff');
 - **data-maxcolor**   : Color of max temp (default '#ff0000');
-- **data-tempcolor**   : Color of current temp text (default '#999');
+- **data-actcolor**   : Color of current temp text (default '#999');
+- **data-nomcolor**   : Color of value  (default '#ffffff');
 - **data-step**  : step size for value adjustment e.g. 0.5 (default 1)
 - **data-off**   : value to send to get the thermostat switch off (for this, dial the knob to then minimum value)
 - **data-boost** : value to send to force boost mode (for this, dial the knob to then maximum value)
@@ -411,6 +417,9 @@ all parameters from knob widget plus following additional parameters
 - **data-set-value** : Format of the value to send to FHEM (default '$v': the value only)
 - **data-min**  : minimal value to set (default 0)
 - **data-max**  : maximal value to set (default 70)
+- **data-bgcolor**      : Color of background (default '#505050');
+- **data-fgcolor**      : Color of ticks (default '#666');
+- **data-nomcolor**   : Color of value  (default '#ffffff');
 - **data-tickstep** : distance between ticks (default 4|20)
 - **data-unit** : add a unit after the desired value.
 - **class**		: mini, small, big, bigger, hue-tick, hue-front, hue-back, dim-tick ,dim-front, dim-back, readonly
@@ -431,6 +440,11 @@ all parameters from knob widget plus following additional parameters
 - **data-set-on**   : array of states using for set. (default: value of data-get-on)
 - **data-alias**	: array of fix names to show only in the UI as an alias to the real states
 - **data-icons**    : array of icons related to the data-get-on array
+- **data-bgcolor**      : Color of background (default '#505050');
+- **data-fgcolor**      : Color of ticks (default '#666');
+- **data-nomcolor**   : Color of value  (default '#ffffff');
+- **data-mincolor**   : Color of background icons (default '#4477ff');
+- **data-maxcolor**   : Color of the active icon (default '#ff0000');
 - **data-version**  : name of the status model e.g. 'residents','roommate','guest' (default NULL)
 - **class**			: small, readonly
 
@@ -581,6 +595,7 @@ data-return-time has to be placed on the main pagetab (the first one > index 0)
 ####Pagebutton widget
 - **data-url**              : URL of the new page to show
 - **data-active-pattern**   : RegEx to define active state  (default null)
+- **data-parent**           : selector (e.g. id) of the element, which must be loaded before 
 - **data-fade-duration**    : time in millisecondes or 'slow'/'fast' to fade to next page (default 'slow')
 all other parameters like switch widget
  -**class**                 : blank,nocache,default,prefetch,
@@ -793,7 +808,7 @@ class 'blank' force to open the given URL on a new window
 - **data-off**                     : value which represents the OFF mode
 - **data-on**                      : value which represents the ON mode
 - **data-lock**                    : name of the reading containing the boolean value for the lock (readonly) parameter (default <null>)
-- **class**                        : valueonly,value,circulate,positiononly
+- **class**                        : valueonly,value,circulate,positiononly, small,large
 
 ####Departure widget
 - **data-color**                   :
@@ -900,7 +915,24 @@ data-get JSON-Object:
 - **data-on-color** 			: color for ON state or DEVICE:READING for dynamic setting (default '#aa6900')
 - **data-off-color**			: color for Off state or DEVICE:READING for dynamic setting (default '#505050')
 
+####scale widget
+- **data-orientation**   :  'horizontal'
+- **data-width**   : 
+- **data-height**   : 
+- **data-min**   :  0
+- **data-max**   : 100
+- **data-font-size**   : 12
+- **data-tick**   : 1
+- **data-value-interval**   : 50
+- **data-extra-tick**   :  10
+- **data-tick-color**   :  '#eee'
+- **data-limits-get**   : 
+- **data-limits**   : 
+- **data-colors**   : 
+- **data-color**   : #aa6900
 
+- **class**         : 'notext' -> prevent scale text
+        
 Format
 -------
 The layout, look and behavior can be influenced by the class attribute.
@@ -974,9 +1006,9 @@ The height of the row is determined by the largest element.
 - grow-1        : standard box grow
 - grow-2        : let the box grow twice
 - grow-3 ...9   : let the box grow 3 ...9 times
-- items-top     : how to align items in a hbox
-- items-center  : how to align items in a hbox
-- items-bottom  : how to align items in a hbox
+- items-top     : how to align items in a hbox/vbox
+- items-center  : how to align items in a hbox/vbox
+- items-bottom  : how to align items in a hbox/vbox
 - items-space-between  : how to align items in a hbox
 - items-space-around  : how to align items in a hbox
 
@@ -1392,6 +1424,15 @@ temperature	20.1
      data-unit="&deg;C"
      class="big">
 </div>
+```
+
+Fixed label
+```html
+<div class="fixedlabel" 
+     data-type="label" 
+     data-device="BadWandlicht" 
+     data-states='["on","off"]' 
+     data-colors='["orange","gray"]'>Bad</div>
 ```
 
 **Example** for how to create a widget for shutter via push: show state and set up/down
@@ -2196,6 +2237,15 @@ Example for a special value spinner. The value is visualized as numeric text wit
 ```
 ![](http://knowthelist.github.io/fhem-tablet-ui/ftui_spinner3.png)
 
+###Theme
+-------
+
+
+ <link rel="stylesheet" href="css/fhem-darkgreen-ui.css" data-type="theme" data-device="dummy1" data-get="state" data-get-on="5" data-get-off="!on">
+
+If you use themes, you have to avoid fix color definition. Use classes instead:
+
+<div class="fixedlabel" data-type="label" data-device="BadWandlicht" data-states='["on","off"]' data-classes='["active","gray"]'>Bad</div>
 
 Specials
 -------

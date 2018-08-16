@@ -23,8 +23,6 @@ var Modul_html = function () {
 
     function onClicked(elem) {
 
-        console.log('onClicked', elem);
-
         elem.addClass("flashNow");
         setTimeout(function () {
             elem.removeClass("flashNow");
@@ -77,7 +75,6 @@ var Modul_html = function () {
 
     function onChanged(elem) {
 
-        console.log('onChanged', elem);
         //re-map current state of the control into value
         var value = '';
         var map = elem.data('map-changed');
@@ -99,13 +96,11 @@ var Modul_html = function () {
             value = elem.val();
         }
         elem.data('value', value);
-
         changed(elem);
     }
 
     function changed(elem) {
 
-        console.log('changed', elem);
 
         var device = elem.data('device');
         var reading = elem.data('clicked') || elem.data('changed') || '';
@@ -126,10 +121,11 @@ var Modul_html = function () {
 
     function init() {
 
-        me.elements = $('[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
-
             var elem = $(this);
+            elem.attr("data-ready", "");
+            
             elem.initData('val', elem.data('value')); // value is reserved for widget intern usage, therefore we switch to val
             elem.initData('value', elem.val());
             elem.initData('set', '');

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.7.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="css/fhem-blue-ui.css" data-type="theme" data-device="dummy1" data-get="state" data-get-on="1" data-get-off="!on"> -->
+    <link rel="stylesheet" href="css/fhem-green-ui.css" data-type="theme" data-device="dummy1" data-get="state" data-get-on="2" data-get-off="!on">
+    <link rel="stylesheet" href="css/fhem-mobil-ui.css" data-type="theme" data-device="dummy1" data-get="state" data-get-on="3" data-get-off="!on">
+    <link rel="stylesheet" href="css/fhem-darkblue-ui.css" data-type="theme" data-device="dummy1" data-get="state" data-get-on="4" data-get-off="!on">
+    <link rel="stylesheet" href="css/fhem-darkgreen-ui.css" data-type="theme" data-device="dummy1" data-get="state" data-get-on="5" data-get-off="!on">
+
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizey="6" data-sizex="1">
+                <header>THEMES</header>
+                <!-- place your widget here -->
+                <div class="vbox items-space-around">
+                    <div class="hbox">
+                        <div data-type="push" data-device="dummy1" data-set-on="0" data-background-icon="fa-square" data-background-color="orange"></div>
+                        <div data-type="symbol" data-device="dummy1" data-get-on="0" data-icon="fa-circle" class="round white mini"></div>
+                    </div>
+                    <div class="hbox">
+                        <div data-type="push" data-device="dummy1" data-set-on="1" data-background-icon="fa-square" data-background-color="blue"></div>
+                        <div data-type="symbol" data-device="dummy1" data-get-on="1" data-icon="fa-circle" class="round white mini"></div>
+                    </div>
+                    <div class="hbox">
+                        <div data-type="push" data-device="dummy1" data-set-on="2" data-background-icon="fa-square" data-background-color="green"></div>
+                        <div data-type="symbol" data-device="dummy1" data-get-on="2" data-icon="fa-circle" class="round white mini"></div>
+                    </div>
+                    <div class="hbox">
+                        <div data-type="push" data-device="dummy1" data-set-on="3" data-background-icon="fa-square" data-background-color="#efefef"></div>
+                        <div data-type="symbol" data-device="dummy1" data-get-on="3" data-icon="fa-circle" class="round blue mini"></div>
+                    </div>
+                    <div class="hbox">
+                        <div data-type="push" data-device="dummy1" data-set-on="4" data-background-icon="fa-square" data-color="#eee" data-background-color="rgb(59, 47, 201);"></div>
+                        <div data-type="symbol" data-device="dummy1" data-get-on="4" data-icon="fa-circle" class="round white mini"></div>
+                    </div>
+                    <div class="hbox">
+                        <div data-type="push" data-device="dummy1" data-set-on="5" data-background-icon="fa-square" data-color="#eee" data-background-color="darkgreen"></div>
+                        <div data-type="symbol" data-device="dummy1" data-get-on="5" data-icon="fa-circle" class="round white mini"></div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="2" data-sizey="3" data-sizex="4">
+                <header>Theme Color</header>
+                <!-- Widgets get changed by the theme -->
+                <div class="vbox">
+                    <div class="hbox items-space-around">
+                        <div data-type="switch" data-device="ftuitest"></div>
+                        <div data-type="checkbox" data-device="ftuitest"></div>
+                        <div data-type="symbol" data-device="ftuitest"></div>
+                    </div>
+                    <div class="hbox items-space-around">
+                        <div data-type="button" data-device="ftuitest"></div>
+                        <div data-type="checkbox" data-device="ftuitest"></div>
+                        <div data-type="circlemenu" data-device="ftuitest">
+                            <ul>
+                                <li>
+                                    <div data-type="push" data-icon="">
+                                        <div data-type="label" data-device="AvReceiver" data-get="subwoofer-temporary-level" class="small"></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level -15" data-get="subwoofer-temporary-level" data-get-on="-15" data-icon="">
+                                        <div class="small">-15</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level -10" data-get="subwoofer-temporary-level" data-get-on="-10" data-icon="">
+                                        <div class="small">-10</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level -5" data-get="subwoofer-temporary-level" data-get-on="-5" data-icon="">
+                                        <div class="small">-5</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level 0" data-get="subwoofer-temporary-level" data-get-on="0" data-icon="">
+                                        <div class="small">0</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level 5" data-get="subwoofer-temporary-level" data-get-on="5" data-icon="">
+                                        <div class="small">5</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level 10" data-get="subwoofer-temporary-level" data-get-on="10" data-icon="">
+                                        <div class="small">10</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div data-type="push" data-device="AvReceiver" data-set-on="subwoofer-temporary-level 12" data-get="subwoofer-temporary-level" data-get-on="12" data-icon="">
+                                        <div class="small">12</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="6" data-sizey="3" data-sizex="3">
+                <header>Class Blue</header>
+                <!-- Main color of the widget comes from class -->
+                <div class="center">
+                    <div data-type="volume" data-device="ftuitest" data-step="2" class="blue"></div>
+                </div>
+            </li>
+            <li data-row="1" data-col="6" data-sizey="3" data-sizex="3">
+                <header>Theme Color</header>
+                <div class="center">
+                    <div data-type="volume" data-device="ftuitest" data-step="2"></div>
+                </div>
+            </li>
+            <li data-row="4" data-col="6" data-sizey="3" data-sizex="3">
+                <header>Thermo</header>
+                <div class="center">
+                    <div data-type="thermostat" data-tempcolor="#999" data-device="BadHeizung" data-get="soll-get" data-temp="ist-get" data-valve="stellgroesse-get"></div>
+                </div>
+            </li>
+            <li data-row="4" data-col="2" data-sizey="3" data-sizex="4">
+                <header>Class Blue</header>
+                <!-- Main color of the widget comes from class -->
+                <div class="vbox">
+                    <div class="hbox items-space-around">
+                        <div data-type="switch" data-device="ftuitest" class="blue"></div>
+                        <div data-type="checkbox" data-device="ftuitest" class="blue"></div>
+                        <div data-type="symbol" data-device="ftuitest" class="blue"></div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="5" data-col="1" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE4</header>
+                <div class="vbox items-space-around">
+                    <div data-type="spinner" data-device="ftuitest" data-cmd="setreading" data-get="spin" class=""></div>
+                    <div data-type="spinner" data-device="ftuitest" data-cmd="setreading" data-get="spin" class="value"></div>
+                </div>
+            </li>
+            <li data-row="8" data-col="4" data-sizey="3" data-sizex="6">
+                <header>EXAMPLE5</header>
+                <!-- place your widget here -->
+                <div data-type="homestatus" data-device="ftuitest" data-cmd="setreading" data-get="home" class=""></div>
+            </li>
+            <li data-row="5" data-col="9" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE6</header>
+                <div class="hbox items-space-around">
+                    <div data-type="dimmer" data-device="ftuitest" data-cmd="setreading" data-get="dim" class=""></div>
+                    <div data-type="wind_direction" data-device="ftuitest" data-get="windDir" data-speed="wind" class=""></div>
+                </div>
+            </li>
+            <li data-row="1" data-col="12" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE7</header>
+                <div class="hbox items-space-around">
+                    <div data-type="slider" data-device="dummy2" data-max="100" data-height="50%" class="vertical top-align"></div>
+                    <div data-type="slider" data-device="dummy2" data-max="100" data-height="100%" class="vertical blue"></div>
+                    <div data-type="slider" data-device="dummy2" data-max="100" data-height="50%" class="vertical bottom-align"></div>
+                </div>
+            </li>
+            <li data-row="5" data-col="12" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE8</header>
+                <div class="center">
+                    <div data-type="level" data-device="dummy2" data-max="100" data-width="80%" class="horizontal"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

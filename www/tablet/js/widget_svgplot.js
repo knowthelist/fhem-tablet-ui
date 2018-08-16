@@ -14,7 +14,7 @@ function depends_svgplot() {
     if (!$.fn.famultibutton) {
         deps.push(ftui.config.basedir + "lib/fa-multi-button.min.js");
     }
-    if (typeof Modul_image == 'undefined') {
+    if (typeof window["Modul_image"] === 'undefined') {
         deps.push('image');
     }
     return deps;
@@ -31,9 +31,11 @@ var Modul_svgplot = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
+            
             me.init_attr(elem);
             var spinner = $('<div />').appendTo(elem);
             spinner.famultibutton({

@@ -7,7 +7,7 @@ function depends_uwz() {
     var deps = ["lib/swiper.jquery.min.js"];
 	$('head').append('<link rel="stylesheet" href="lib/swiper.min.css" type="text/css" />');
     return deps;
-};
+}
 
 var Modul_uwz = function () {
 	
@@ -28,10 +28,11 @@ var Modul_uwz = function () {
     };
 	
     function init () {
-        me.elements = $('div[data-type="'+me.widgetname+'"]',me.area);
-        me.elements.each(function(index) {
-			
-			var elem = $(this);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
+        me.elements.each(function (index) {
+            var elem = $(this);
+            elem.attr("data-ready", "");
+            
 			elem.initData('max'			, 10);
 			elem.initData('detail'		, ["WarnUWZLevel_Color", "uwzLevel", "IconURL", "ShortText", "LongText", "Start", "End", "WarnTime",]);
 			elem.initData('fontcolor'	, '#222222');
@@ -89,7 +90,7 @@ var Modul_uwz = function () {
 					}
 				}
 		});
-	};
+	}
 	
 	function update(dev,par) {
 		

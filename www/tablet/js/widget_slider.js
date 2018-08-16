@@ -8,35 +8,48 @@
 "use strict";
 
 function depends_slider() {
-    if (!$.fn.Powerange) {
-        if (!$('link[href$="lib/powerange.min.css"]').length)
-            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/powerange.min.css" type="text/css" />');
-        if (!$('link[href$="css/ftui_slider.css"]').length)
-            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'css/ftui_slider.css" type="text/css" />');
-        return [ftui.config.basedir + "lib/powerange.min.js"];
+
+    var deps = [];
+    if (!$('link[href$="lib/powerange.min.css"]').length) {
+        deps.push(ftui.config.basedir + "lib/powerange.min.css");
     }
+    if (!$('link[href$="css/ftui_slider.css"]').length) {
+        deps.push(ftui.config.basedir + "css/ftui_slider.css");
+    }
+    if (!$.fn.Powerange) {
+        deps.push(ftui.config.basedir + "lib/powerange.min.js");
+    }
+    return deps;
 }
 
 var Modul_slider = function () {
 
-    function elemID(elem) {
-        return me.widgetname + "_" + elem.data("device") + "_" + elem.data('get');
-    }
+    $(document).on('changedSelection', function () {
+        onResize();
+    });
+
+    $(window).resize(function () {
+        onResize();
+    });
 
     function setTimer(elem, state) {
 
+        ftui.log(2, me.widgetname + " - set timer to " + state);
         if (state === 'on' && !elem.isValidData('timer-id')) {
             var timerInterval = elem.data('timer-interval');
+            ftui.log(2, me.widgetname + " - timerInterval=" + timerInterval);
             if (timerInterval > 0) {
                 var tid = setInterval(function () {
                     if (elem && elem.data('timer-step')) {
-                        var id = elemID(elem);
-                        var storeval = parseFloat(localStorage.getItem(id));
+                        var id = elem.widgetId();
+                        var storeval = parseFloat(sessionStorage.getItem(id));
+
                         var pwrng = elem.data('Powerange');
                         storeval = storeval + parseFloat(elem.data('timer-step'));
                         if (pwrng && storeval <= pwrng.options.max) {
-                            pwrng.setStart(storeval);
-                            localStorage.setItem(id, storeval);
+                            ftui.log(3, me.widgetname + ": id=" + id + ' / storeval=' + storeval);
+                            pwrng.setStart(parseFloat(storeval));
+                            sessionStorage.setItem(id, storeval);
                         }
                     } else {
                         clearInterval(tid);
@@ -54,7 +67,7 @@ var Modul_slider = function () {
     function onChange(elem) {
 
         var pwrng = elem.data('Powerange');
-        var id = elemID(elem);
+        var id = elem.widgetId();
 
         var selMode = elem.data('selection');
         var v = 0,
@@ -72,7 +85,7 @@ var Modul_slider = function () {
         if (elem.hasClass('value')) {
             elem.find('#slidervalue').text(v);
         }
-        var storeval = localStorage.getItem(id);
+        var storeval = sessionStorage.getItem(id);
 
         // isunsel == false (0) means drag is over
         if (pwrng && (!isunsel) && (selMode) && (sliVal != storeval)) {
@@ -93,7 +106,7 @@ var Modul_slider = function () {
             elem.data('value', elem.data('set-value').toString().replace('$v', v.toString()));
 
             // write visible value (from pwrng) to local storage NOT the fhem exposed value)
-            localStorage.setItem(elemID(elem), sliVal);
+            sessionStorage.setItem(elem.widgetId(), sliVal);
             elem.transmitCommand();
 
             elem.data('selection', 0);
@@ -101,10 +114,28 @@ var Modul_slider = function () {
         }
     }
 
+    function onResize() {
+        if (me.elements.length > 0) {
+            me.elements.each(function (index) {
+                var elem = $(this);
+                var id = elem.widgetId();
+                var storeval = sessionStorage.getItem(id);
+                var pwrng = elem.data('Powerange');
+                if (pwrng) {
+                    pwrng.setStart(parseFloat(storeval));
+                    // second call necessary
+                    pwrng.setStart(parseFloat(storeval));
+                }
+            });
+        }
+    }
+
     function init_attr(elem) {
 
         //init standard attributes 
-        _base.init_attr.call(me, elem);
+        base.init_attr.call(me, elem);
+
+        elem.initClassColor('color'); 
         
         elem.initData('on', 'on');
         elem.initData('off', 'off');
@@ -119,8 +150,8 @@ var Modul_slider = function () {
         elem.initData('touch-diameter', elem.data('handle-diameter'));
         elem.initData('set-value', '$v');
         elem.initData('get-value', elem.data('part') || -1);
-        elem.initData('color', ftui.getClassColor(elem) || ftui.getStyle('.slider', 'color') || '#aa6900');
-        elem.initData('background-color', ftui.getStyle('.slider', 'background-color') || '#404040');
+        elem.initData('color', '#aa6900');
+        elem.initData('background-color', '#404040');
         elem.initData('timer-state', '');
         elem.initData('timer-step', '1');
         elem.initData('timer-interval', '1000');
@@ -144,9 +175,8 @@ var Modul_slider = function () {
 
     function init_ui(elem) {
 
-        var id = elemID(elem);
-
-        var storeval = localStorage.getItem(id);
+        var id = elem.widgetId();
+        var storeval = sessionStorage.getItem(id);
         storeval = (storeval) ? storeval : '5';
 
         // prepare container element
@@ -200,7 +230,7 @@ var Modul_slider = function () {
             });
         }
 
-        localStorage.setItem(id, storeval);
+        sessionStorage.setItem(id, storeval);
         var width = elem.data('width');
         var widthUnit = ($.isNumeric(width)) ? 'px' : '';
         var height = elem.data('height');
@@ -295,12 +325,6 @@ var Modul_slider = function () {
         // set initial value
         pwrng.setStart(parseFloat(storeval));
 
-        function onResize() {
-            var storeval = localStorage.getItem(id);
-            pwrng.setStart(parseFloat(storeval));
-            // second call necessary
-            pwrng.setStart(parseFloat(storeval));
-        }
 
         // Refresh slider position after it became visible
         elem.closest('[data-type="popup"]').on("fadein", function (event) {
@@ -308,14 +332,6 @@ var Modul_slider = function () {
                 onResize();
 
             }, 500);
-        });
-
-        $(document).on('changedSelection', function () {
-            onResize();
-        });
-
-        $(window).resize(function () {
-            onResize();
         });
 
         if (elem.data('timer-state') === 'on') {
@@ -354,11 +370,11 @@ var Modul_slider = function () {
                         val = pwrng.options.max;
                     if (new RegExp('^' + elem.data('off') + '$').test(txtValue))
                         val = pwrng.options.min;
-                    if ($.isNumeric(val) && input_elem  && pwrng.options.min < pwrng.options.max) {
+                    if ($.isNumeric(val) && input_elem && pwrng.options.min < pwrng.options.max) {
                         var v = elem.hasClass('negated') ? pwrng.options.max + pwrng.options.min - parseFloat(val) : parseFloat(val);
                         pwrng.setStart(parseFloat(v));
 
-                        localStorage.setItem(elemID(elem), v);
+                        sessionStorage.setItem(elem.widgetId(), v);
                         ftui.log(1, 'slider dev:' + dev + ' par:' + par + ' changed to:' + v);
 
                         //set colors according matches for values
@@ -427,10 +443,11 @@ var Modul_slider = function () {
 
     // public
     // inherit members from base class
-    var base = new Modul_widget();
-    var _base = {};
-    _base.init_attr = base.init_attr;
-    var me = $.extend(base, {
+    var parent = new Modul_widget();
+    var base = {
+        init_attr: parent.init_attr
+    };
+    var me = $.extend(parent, {
         //override or own public members
         widgetname: 'slider',
         init_ui: init_ui,

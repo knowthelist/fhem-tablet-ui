@@ -16,14 +16,16 @@ var Modul_circlemenu = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
             var ulElem = elem.find('ul');
             ulElem.circleMenu({
                     item_diameter: elem.data('item-diameter') || '4em',
                     item_width: elem.data('item-width'),
                     item_height: elem.data('item-height'),
+                    transition_function: elem.data('transition'),
                     trigger: 'click',
                     circle_radius: elem.data('circle-radius') || 70,
                     direction: elem.data('direction') || 'full',
@@ -62,7 +64,7 @@ var Modul_circlemenu = function () {
             ulElem.wrapAll('<div class="circlemenu-wrapper"></div>');
             elem.find('circlemenu-wrapper').css({
                     minWidth: elem.data('item-width')
-                })
+                });
         });
         
         $('.menu li:not(:first-child)').on('click', function () {

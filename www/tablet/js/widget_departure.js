@@ -15,14 +15,19 @@ var Modul_departure = function () {
     function startTimer(elem) {
         var interval = elem.data('refresh');
         if ($.isNumeric(interval) && interval > 0) {
-            setInterval(function () {
-                requestUpdate(elem);
+            var tid = setInterval(function () {
+                if (elem && elem.data('get')) {
+                    requestUpdate(elem);
+                } else {
+                    clearInterval(tid);
+                }
             }, Number(interval) * 1000);
         }
     }
 
     function requestUpdate(elem) {
-        if (elem.is(':visible') || elem.hasClass('hiddenrefresh')) {
+        var ltime = new Date().getTime() / 1000;
+        if ((ltime - elem.data('lastRefresh') > 15) && (elem.is(':visible') || elem.hasClass('hiddenrefresh'))) {
 
             var cmdl = [elem.data('cmd'), elem.data('device'), elem.data('get')].join(' ');
             ftui.log(2, 'departure - send request: ' + cmdl);
@@ -30,6 +35,7 @@ var Modul_departure = function () {
             if (ftui.config.DEBUG) {
                 ftui.toast(cmdl);
             }
+            elem.data('lastRefresh', ltime);
         }
     }
 
@@ -44,6 +50,7 @@ var Modul_departure = function () {
         elem.initData('width', '200');
         elem.initData('height', '250');
         elem.initData('refresh', elem.data('interval') || '120');
+        elem.initData('lastRefresh', 0);
 
         me.addReading(elem, 'get');
     }
@@ -58,13 +65,18 @@ var Modul_departure = function () {
             class: 'departure-wrapper'
         });
 
+        var width = elem.data('width');
+        var widthUnit = ($.isNumeric(width)) ? 'px' : '';
+        var height = elem.data('height');
+        var heightUnit = ($.isNumeric(height)) ? 'px' : '';
+        
         var innerElem = $('<div/>', {
                 class: 'departure'
             })
             .css({
-                width: elem.data('width') + 'px',
-                maxWidth: elem.data('width') + 'px',
-                height: elem.data('height') + 'px',
+                width: width + widthUnit,
+                //maxWidth: elem.data('width') + 'px',
+                height: height + heightUnit,
                 color: elem.mappedColor('text-color'),
                 backgroundColor: elem.mappedColor('background-color'),
             }).prependTo(contElem);
@@ -130,7 +142,7 @@ var Modul_departure = function () {
             requestUpdate(elem);
 
 
-            // Refresh slider position after it became visible
+            // Refresh infos after it became visible
             elem.closest('[data-type="popup"]').on("fadein", function (event) {
                 requestUpdate(elem);
             });
@@ -157,7 +169,7 @@ var Modul_departure = function () {
                     var text = '';
                     var n = 0;
                     var collection = JSON.parse(list);
-                    for (var idx in collection) {
+                    for (var idx = 0, len = collection.length; idx < len; idx++) {
                         n++;
                         var line = collection[idx];
                         var when = line[2];

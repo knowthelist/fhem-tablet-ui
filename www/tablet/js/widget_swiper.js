@@ -8,10 +8,17 @@
 "use strict";
 
 function depends_swiper() {
-    if (!$.fn.Swiper) {
-        $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/swiper.min.css" type="text/css" />');
-        return [ftui.config.basedir + "lib/swiper.jquery.min.js"];
+
+    var deps = [];
+    if (!$('link[href$="lib/swiper.min.css"]').length) {
+        deps.push(ftui.config.basedir + 'lib/swiper.min.css');
     }
+
+    if (!$.fn.Swiper) {
+        deps.push(ftui.config.basedir + "lib/swiper.jquery.min.js");
+    }
+
+    return deps;
 }
 
 var Modul_swiper = function () {

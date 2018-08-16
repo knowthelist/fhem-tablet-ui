@@ -19,7 +19,7 @@ function depends_example() {
         $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/jquery.datetimepicker.css" type="text/css" />');
         deps.push(ftui.config.basedir + "lib/jquery.datetimepicker.js");
     }
-    if(typeof Module_label == 'undefined'){
+    if(typeof window["Modul_label"] === 'undefined'){
         deps.push('label');
     }
     */
@@ -41,10 +41,11 @@ var Modul_example = function () {
     // mandatory function, get called on start up
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
-
             var elem = $(this);
+            elem.attr("data-ready", "");
+            
             elem.initData('get', 'STATE');
             elem.initData('color', '#aa6633');
 

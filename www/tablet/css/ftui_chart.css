@@ -10,16 +10,8 @@
 }
 /* Definition of the axes generally*/
 .text.axes {
-	fill: #bbb;
-}
-.big .text.axes {
-	font-size: 15px;
-}
-.small .text.axes {
+	fill: #888;
 	font-size: 10px;
-}
-.normal .text.axes {
-	font-size: 12px;
 }
 /* Definition of specialities for x-axis */
 .xaxis {
@@ -31,7 +23,7 @@
 }
 /* Definition of the gridlines generally */
 .gridlines {
-	stroke: #bbb;
+	stroke: #888;
 }
 /* Definition of specialities for x-axis */
 .xticks {
@@ -61,36 +53,40 @@
 }
 /* Definition for caption texts ('legend' and 'cursor') */
 .caption {
+	font-size: 11px;
 	font-weight: bold;
 	fill-opacity: 1;
 }
-.normal .caption {
-	font-size: 12px;
+/* Definition for pulldown menus */
+.pulldownmenu {
+	background: #555;
 }
-.small .caption {
-	font-size: 10px;
+.pdentry {
+	margin: 4px;
 }
-.big .caption {
-	font-size: 15px;
+.pdentry.line {
+	margin: 0px;
+	border-bottom-style: solid;
+	border-bottom-color: #888;
+	border-bottom-width: 2px;
+}
+.pdentry.mouseover {
+	background: #AA6900
 }
 /* Definition for legend window */
 .legend {
 	stroke: #baabba;
+	font-size: 11px;
 	stroke-width: 0;
 	fill: #aaa;
 	fill-opacity: 0.7;
 }
-.normal .legend {
-	font-size: 12px;
-}
-.small .legend {
-	font-size: 10px;
-}
-.big .legend {
-	font-size: 15px;
-}
 .text.legend {
 	fill-opacity: 1;
+}
+ 
+.fullsize {
+    height: calc(100% - 2em) !important;
 }
 
 /* Definition for styles to be used for graphs (as alternative to the standard FHEM plot styles */
@@ -111,15 +107,6 @@
 .ftui.l5sym		{ stroke:#33CCCC; stroke-width:12px; fill:none; }
 .ftui.l6sym		{ stroke:#3333CC; stroke-width:12px; fill:none; }
 
-/* icon lines */
-.ftui.l0icon	{ stroke:#DDA400; stroke-width:32px; fill:none; }
-.ftui.l1icon	{ stroke:#BBBBBB; stroke-width:32px; fill:none; }
-.ftui.l2icon	{ stroke:#CC0000; stroke-width:32px; fill:none; }
-.ftui.l3icon	{ stroke:#CCCC00; stroke-width:32px; fill:none; }
-.ftui.l4icon	{ stroke:#33CC33; stroke-width:32px; fill:none; }
-.ftui.l5icon	{ stroke:#33CCCC; stroke-width:32px; fill:none; }
-.ftui.l6icon	{ stroke:#3333CC; stroke-width:32px; fill:none; }
-
 /* Dashed lines */
 .ftui.l0dash	{ stroke:#DDA400; stroke-width:2px; fill:none; stroke-dasharray:5px,3px; }
 .ftui.l1dash	{ stroke:#BBBBBB; stroke-width:2px; fill:none; stroke-dasharray:5px,3px; }
@@ -139,23 +126,17 @@
 .ftui.l6dot		{ stroke:#3333CC; stroke-width:2px; fill:none; stroke-dasharray:2px,2px; }
 
 /* Filled graphs */
-.ftui.l0fill		{ stroke:#DDA400; fill:url(#gr_ftui0); stroke-width:2px; fill-opacity:0.8 }
-.ftui.l0fill_gyr	{ stroke:red; fill:url(#gr0_gyr); stroke-width:2px; fill-opacity:0.8 }
-.ftui.l0fill_stripe	{ stroke:red; fill:url(#gr0_stripe); stroke-width:2px; fill-opacity:0.8 }
-.ftui.l1fill		{ stroke:#BBBBBB; fill:url(#gr_ftui1); stroke-width:2px; fill-opacity:0.8 }
-.ftui.l1fill_stripe	{ stroke:green; fill:url(#gr1_stripe); stroke-width:2px; fill-opacity:0.8 }
-.ftui.l2fill		{ stroke:#CC0000; fill:url(#gr_ftui2); stroke-width:2px; fill-opacity:0.8 }
-.ftui.l3fill		{ stroke:#CCCC00; fill:url(#gr_ftui3); stroke-width:2px; fill-opacity:0.8 }
-.ftui.l4fill		{ stroke:#33CC33; fill:url(#gr_ftui4); stroke-width:2px; fill-opacity:0.8 }
-.ftui.l5fill		{ stroke:#33CCCC; fill:url(#gr_ftui5); stroke-width:2px; fill-opacity:0.8 }
-.ftui.l6fill		{ stroke:#3333CC; fill:url(#gr_ftui6); stroke-width:2px; fill-opacity:0.8 }
-.ftui.l6fill		{ stroke:#3333CC; fill:url(#gr_ftui6); stroke-width:2px; fill-opacity:0.8 }
+.ftui.l0fill	{ stroke:#DDA400; fill:url(#gr_ftui0); stroke-width:2px; fill-opacity:0.8 }
+.ftui.l1fill	{ stroke:#BBBBBB; fill:url(#gr_ftui1); stroke-width:2px; fill-opacity:0.8 }
+.ftui.l2fill	{ stroke:#CC0000; fill:url(#gr_ftui2); stroke-width:2px; fill-opacity:0.8 }
+.ftui.l3fill	{ stroke:#CCCC00; fill:url(#gr_ftui3); stroke-width:2px; fill-opacity:0.8 }
+.ftui.l4fill	{ stroke:#33CC33; fill:url(#gr_ftui4); stroke-width:2px; fill-opacity:0.8 }
+.ftui.l5fill	{ stroke:#33CCCC; fill:url(#gr_ftui5); stroke-width:2px; fill-opacity:0.8 }
+.ftui.l6fill	{ stroke:#3333CC; fill:url(#gr_ftui6); stroke-width:2px; fill-opacity:0.8 }
 
 /* additional settings for the text (mainly for legend window) */
 text.ftui.l0, text.ftui.l0sym, text.ftui.l0dot, text.ftui.l0dash, text.ftui.l0fill { stroke:none; fill:#DDA400; } 
-text.ftui.l0fill_stripe, text.ftui.l0fill_gyr { stroke:none; fill:red; } 
-text.ftui.l1, text.ftui.l1sym, text.ftui.l1dot, text.ftui.l1dash, text.ftui.l1fill, text.ftui.l1fill_stripe { stroke:none; fill:#BBBBBB; } 
-text.ftui.l1fill_stripe { stroke:none; fill:green; } 
+text.ftui.l1, text.ftui.l1sym, text.ftui.l1dot, text.ftui.l1dash, text.ftui.l1fill { stroke:none; fill:#BBBBBB; } 
 text.ftui.l2, text.ftui.l2sym, text.ftui.l2dot, text.ftui.l2dash, text.ftui.l2fill { stroke:none; fill:#CC0000; }
 text.ftui.l3, text.ftui.l3sym, text.ftui.l3dot, text.ftui.l3dash, text.ftui.l3fill { stroke:none; fill:#CCCC00; }
 text.ftui.l4, text.ftui.l4sym, text.ftui.l4dot, text.ftui.l4dash, text.ftui.l4fill { stroke:none; fill:#33CC33; }

@@ -8,8 +8,10 @@
 "use strict";
 
 function depends_knob() {
-    if (!$.fn.knob)
+
+    if (!$.fn.knob) {
         return [ftui.config.basedir + "lib/jquery.knob.mod.min.js"];
+    }
 }
 
 var Modul_knob = function () {
@@ -37,11 +39,33 @@ var Modul_knob = function () {
         return (this.unit) ? ret + window.unescape(this.unit) : ret;
     }
 
+    function actualSettings(elem) {
+
+        elem.reinitData('bgcolor', ftui.getStyle('.' + me.widgetname, 'background-color') || '#505050');
+        elem.reinitData('fgcolor', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname, 'color') || '#aa6900');
+
+        return {
+            'bgColor': elem.data('bgcolor'),
+            'fgColor': elem.data('fgcolor')
+        };
+    }
+
+    function reinit() {
+        me.elements.each(function (index) {
+            var elem = $(this);
+            var knob_elem = elem.find('input');
+
+            if (knob_elem) {
+                knob_elem.trigger('configure', me.actualSettings(elem));
+            }
+        });
+    }
+
     function init_attr(elem) {
 
         //init standard attributes 
-        _base.init_attr.call(me, elem);
-        
+        base.init_attr.call(me, elem);
+
         elem.initData('set-value', '$v');
         elem.initData('get-value', elem.data('part') || '-1');
 
@@ -82,8 +106,7 @@ var Modul_knob = function () {
 
         elem.initData('bgcolor', ftui.getStyle('.' + me.widgetname, 'background-color') || '#505050');
         elem.initData('fgcolor', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname, 'color') || '#aa6900');
-        elem.initData('inputcolor', ftui.getStyle('.' + me.widgetname + '.input', 'color') || '#ffffff');
-        elem.initData('hdcolor', ftui.getStyle('.' + me.widgetname + '.handle', 'color') || '#666');
+        elem.initData('nomcolor', ftui.getStyle('.' + me.widgetname + '.nominal', 'color') || '#999');
 
         elem.initData('font', ftui.getStyle('.' + me.widgetname, 'font-family') || '"Helvetica Neue", "Helvetica", "Open Sans", "Arial", sans-serif');
         elem.initData('font-weight', ftui.getStyle('.' + me.widgetname, 'font') || 'normal');
@@ -110,16 +133,15 @@ var Modul_knob = function () {
                 'origmax': elem.data('origmax'),
                 'bgColor': elem.data('bgcolor'),
                 'fgColor': elem.data('fgcolor'),
-                'tempColor': elem.data('tempcolor'),
+                'actColor': elem.data('actcolor'),
                 'hdColor': elem.data('hdcolor'),
-                'tkColor': elem.data('tkcolor'),
-                'inputColor': elem.data('inputcolor'),
+                'nomColor': elem.data('nomcolor'),
                 'minColor': elem.data('mincolor'),
                 'maxColor': elem.data('maxcolor'),
                 'thickness': elem.data('thickness'),
                 'tickdistance': elem.data('tickstep'),
                 'lastvalue': 0,
-                'displayInput': elem.data('displayinput'),
+                'displayNominal': elem.data('displaynominal'),
                 'angleOffset': elem.data('angleoffset'),
                 'angleArc': elem.data('anglearc'),
                 'cmd': elem.data('cmd'),
@@ -144,10 +166,9 @@ var Modul_knob = function () {
         return elem;
     }
 
-    function update_lock(dev, par) {
-        me.elements.filterDeviceReading('lock', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
+    function updateLock(elem, dev, par) {
+        $.each(['lock', 'lock-on', 'lock-off'], function (index, key) {
+            if (elem.matchDeviceReading(key, dev, par)) {
                 var value = elem.getReading('lock').val;
                 var knob_elem = elem.find('input');
                 if (knob_elem) {
@@ -162,20 +183,24 @@ var Modul_knob = function () {
                         });
                     }
                 }
-            });
+            }
+        });
+
     }
 
 
     function update(dev, par) {
         isUpdating = true;
 
-        // update from desired temp reading
-        me.elements.filterDeviceReading('get', dev, par)
-            .each(function (index) {
-                var elem = $(this);
+        me.elements.each(function (index) {
+            var elem = $(this);
+            var knob_elem = elem.find('input');
+            var knob_obj = knob_elem.data('knob');
+
+            // update from desired temp reading
+            if (elem.matchDeviceReading('get', dev, par)) {
                 var value = elem.getReading('get').val;
                 if (value) {
-                    var knob_elem = elem.find('input');
                     if (knob_elem) {
                         var part = elem.data('get-value');
                         var val = ftui.getPart(value, part);
@@ -188,30 +213,33 @@ var Modul_knob = function () {
                         });
                     }
                 }
-            });
+            }
+            //extra reading for lock
+            me.updateLock(elem, dev, par);
 
-        // update from lock reading
-        me.update_lock(dev, par);
-
-        //extra reading for reachable
-        me.update_reachable(dev, par);
-
+            //extra reading for reachable
+            me.updateReachable(elem, dev, par);
+        });
         isUpdating = false;
     }
 
 
     // public
     // inherit all public members from base class
-    var base = new Modul_widget();
-    var _base = {};
-    _base.init_attr = base.init_attr;
-    var me = $.extend(base, {
+
+    var parent = new Modul_widget();
+    var base = {
+        init_attr: parent.init_attr,
+    };
+    var me = $.extend(parent, {
         //override or own public members
         widgetname: 'knob',
         init_attr: init_attr,
+        reinit: reinit,
+        actualSettings: actualSettings,
         init_ui: init_ui,
         update: update,
-        update_lock: update_lock,
+        updateLock: updateLock,
         onRelease: onRelease,
         onChange: onChange,
         onFormat: onFormat

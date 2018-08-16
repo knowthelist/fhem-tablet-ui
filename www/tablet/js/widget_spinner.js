@@ -14,13 +14,13 @@ var Modul_spinner = function () {
     function getValueNumeric(elem) {
         var value = elem.data('value');
         switch (value) {
-        case elem.data('off'):
-            return parseFloat(elem.data('min')) - parseFloat(elem.data('step'));
-        case elem.data('on'):
-            return parseFloat(elem.data('max')) + parseFloat(elem.data('step'));
-        default:
-            value = parseFloat(value);
-            return (isNaN(value)) ? elem.data('min') : value;
+            case elem.data('off'):
+                return parseFloat(elem.data('min')) - parseFloat(elem.data('step'));
+            case elem.data('on'):
+                return parseFloat(elem.data('max')) + parseFloat(elem.data('step'));
+            default:
+                value = parseFloat(value);
+                return (isNaN(value)) ? elem.data('min') : value;
         }
     }
 
@@ -128,16 +128,27 @@ var Modul_spinner = function () {
     }
 
     function init_attr(elem) {
-        
+
         //init standard attributes 
         _base.init_attr.call(me, elem);
         
-        elem.initData('color', ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname, 'color') || '#aa6900');
+        elem.initClassColor('color'); 
+        
+       if (elem.hasClass('large')) {
+            elem.data('height', 70);
+            elem.data('width', 300);
+        }
+        if (elem.hasClass('small')) {
+            elem.data('height', 35);
+            elem.data('width', 150);
+        }
+
+        elem.initData('color', '#aa6900');
         elem.initData('gradient-color', []);
-        elem.initData('background-color', ftui.getStyle('.' + me.widgetname, 'background-color') || '#4a4a4a');
-        elem.initData('icon-left-color', ftui.getStyle('.' + me.widgetname, 'icon-left-color') || '#aaa');
-        elem.initData('icon-right-color', ftui.getStyle('.' + me.widgetname, 'icon-right-color') || '#aaa');
-        elem.initData('text-color', ftui.getStyle('.' + me.widgetname, 'text-color') || '#ccc');
+        elem.initData('background-color', '#4a4a4a');
+        elem.initData('icon-left-color', '#aaa');
+        elem.initData('icon-right-color', '#aaa');
+        elem.initData('text-color', '#ccc');
         elem.initData('icon-left', elem.data('icon') || null);
         elem.initData('icon-right', null);
         elem.initData('shortdelay', 80);
@@ -170,8 +181,9 @@ var Modul_spinner = function () {
         var heightUnit = ($.isNumeric(height)) ? 'px' : '';
 
         // prepare container element
-        elem.html('')
-            .addClass('spinner')
+        var elemWrappern = $('<div/>', {
+                class: 'spinner',
+            })
             .css({
                 width: width + widthUnit,
                 maxWidth: width + widthUnit,
@@ -188,11 +200,11 @@ var Modul_spinner = function () {
             .css({
                 color: elem.mappedColor('icon-left-color'),
             })
-            .prependTo(elem);
+            .prependTo(elemWrappern);
         if (leftIcon)
             elemLeftIcon.addClass('fa ' + leftIcon + ' fa-lg fa-fw');
         else {
-            elemLeftIcon.html('-');
+            elemLeftIcon.html('&minus;');
             elemLeftIcon.css({
                 fontSize: elem.data('height') * 0.9 + 'px',
                 fontFamily: 'sans serif',
@@ -205,7 +217,7 @@ var Modul_spinner = function () {
             }).css({
                 width: '50%',
             })
-            .appendTo(elem);
+            .appendTo(elemWrappern);
 
         //levelRange
         $('<div/>', {
@@ -219,7 +231,7 @@ var Modul_spinner = function () {
             .css({
                 color: elem.mappedColor('icon-right-color'),
             })
-            .appendTo(elem);
+            .appendTo(elemWrappern);
         if (rightIcon)
             elemRightIcon.addClass('fa ' + rightIcon + ' fa-lg fa-fw');
         else {
@@ -236,7 +248,7 @@ var Modul_spinner = function () {
                 class: 'spinnerText',
             }).css({
                 width: '50%',
-            }).appendTo(elem);
+            }).appendTo(elemWrappern);
             if (elem.hasClass('valueonly') || elem.hasClass('plain'))
                 elemText.css({
                     fontSize: elem.data('height') * 0.6 + 'px',
@@ -267,7 +279,7 @@ var Modul_spinner = function () {
         // DOWN button
         elemLeftIcon.on(ftui.config.clickEventType, function (e) {
             elemLeftIcon.fadeTo("fast", 0.5);
-                        e.preventDefault();
+            e.preventDefault();
             e.stopPropagation();
             onClicked(elem, -1);
         });
@@ -287,17 +299,19 @@ var Modul_spinner = function () {
         elem.append($('<div/>', {
             class: 'overlay'
         }));
-        
+
         //Wrapper
-        elem.wrapAll('<div class="spinner-wrapper"></div>');
+        //elem.wrapAll('<div class="spinner-wrapper"></div>');
+        elemWrappern.appendTo(elem);
     }
 
     function update(dev, par) {
 
-        // update from normal state reading
-        me.elements.filterDeviceReading('get', dev, par)
-            .each(function (index) {
-                var elem = $(this);
+        me.elements.each(function (index) {
+            var elem = $(this);
+
+            // update from normal state reading
+            if (elem.matchDeviceReading('get', dev, par)) {
                 var state = elem.getReading('get').val;
                 if (state) {
                     var part = elem.data('get-value');
@@ -305,27 +319,27 @@ var Modul_spinner = function () {
                     elem.data('value', val);
                     drawLevel(elem);
                 }
-            });
+            }
 
-        //extra reading for dynamic color of text
-        me.elements.filterDeviceReading('text-color', dev, par)
-            .each(function (idx) {
-                var elem = $(this);
-                var val = elem.getReading('text-color').val;
-                if (val) {
-                    val = '#' + val.replace('#', '');
-                    elem.find('.spinnerText').css("color", val);
+            //extra reading for dynamic color of text
+            if (elem.matchDeviceReading('text-color', dev, par)) {
+                var valColor = elem.getReading('text-color').val;
+                if (valColor) {
+                    valColor = '#' + valColor.replace('#', '');
+                    elem.find('.spinnerText').css("color", valColor);
                 }
-            });
+            }
 
-        //extra reading for lock
-        me.update_lock(dev, par);
+            //extra reading for reachable
+            me.updateReachable(elem, dev, par);
 
-        //extra reading for hide
-        me.update_hide(dev, par);
+            //extra reading for hide
+            me.updateHide(elem, dev, par);
 
-        //extra reading for reachable
-        me.update_reachable(dev, par);
+            //extra reading for lock
+            me.updateLock(elem, dev, par);
+
+        });
     }
 
     // public

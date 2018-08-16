@@ -8,9 +8,7 @@
 "use strict";
 
 function depends_volume() {
-    if (typeof Modul_knob == 'undefined' || !$.fn.knob) {
-        return ["knob"];
-    }
+    return ["knob"];
 }
 
 var Modul_volume = function () {
@@ -136,19 +134,43 @@ var Modul_volume = function () {
         return (this.unit) ? ret + window.unescape(this.unit) : ret;
     }
 
+    function actualSettings(elem) {
+
+            var hdDefaultColor = ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname + '.handle', 'color') || '#aa6900';
+            if (elem.hasClass('hue-back')) {
+                hdDefaultColor = '#cccccc';
+            }
+            if (elem.hasClass('hue-tick')) {
+                hdDefaultColor = '#bbbbbb';
+            }
+            elem.reinitData('fgcolor', ftui.getStyle('.' + me.widgetname, 'color') || '#666');
+            elem.reinitData('bgcolor', ftui.getStyle('.' + me.widgetname, 'background-color') || 'none');
+            elem.reinitData('nomcolor', ftui.getStyle('.' + me.widgetname + '.nominal', 'color') || '#999');
+            elem.reinitData('hdcolor', hdDefaultColor);
+        
+        return {
+            'fgColor': elem.data('fgcolor'),
+            'bgColor': elem.data('bgcolor'),
+            'hdColor': elem.data('hdcolor'),
+            'nomColor': elem.data('nomcolor')
+        };
+    }
+
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
+
             var maxval = elem.isValidData('max') ? elem.data('max') : 70;
             elem.data('origmax', maxval);
             elem.data('max', (maxval > 360) ? 360 : maxval);
-            elem.data('fgcolor', elem.data('fgcolor') || ftui.getStyle('.' + ftui.widgetname, 'color') || '#666');
-            elem.data('get-value', elem.data('get-value') || elem.data('part') || '-1');
+            elem.initData('fgcolor', ftui.getStyle('.' + me.widgetname, 'color') || '#666');
+            elem.initData('get-value', elem.data('get-value') || elem.data('part') || '-1');
 
             var mode = 0; //no hue colors
-            var hdDefaultColor = ftui.getClassColor(elem) || ftui.getStyle('.volume.hdcolor', 'color') || '#aa6900';
+            var hdDefaultColor = ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname + '.handle', 'color') || '#aa6900';
             if (elem.hasClass('hue-back')) {
                 mode = mode | 1 << 0;
                 hdDefaultColor = '#cccccc';
@@ -174,10 +196,11 @@ var Modul_volume = function () {
                 mode = mode | 1 << 6;
             }
             elem.data('mode', mode);
-            elem.data('bgcolor', elem.data('bgcolor') || ftui.getStyle('.' + me.widgetname, 'background-color') || 'none');
-            elem.data('hdcolor', elem.data('hdcolor') || hdDefaultColor);
-            elem.data('tickstep', elem.data('tickstep') || (((mode >> 1) % 2 !== 0) ? 4 : 20));
-            elem.data('cursor', elem.data('cursor') || 6);
+            elem.initData('fgcolor', ftui.getStyle('.' + me.widgetname, 'color') || '#666');
+            elem.initData('bgcolor', ftui.getStyle('.' + me.widgetname, 'background-color') || 'none');
+            elem.initData('hdcolor', hdDefaultColor);
+            elem.initData('tickstep', (((mode >> 1) % 2 !== 0) ? 4 : 20));
+            elem.initData('cursor', 6);
             elem.initData('height', 160);
             elem.initData('width', 160);
 
@@ -189,10 +212,12 @@ var Modul_volume = function () {
     function update(dev, par) {
 
         isUpdating = true;
-        // update from desired temp reading
-        me.elements.filterDeviceReading('get', dev, par)
-            .each(function (index) {
-                var elem = $(this);
+
+        me.elements.each(function (index) {
+            var elem = $(this);
+
+            // update from desired temp reading
+            if (elem.matchDeviceReading('get', dev, par)) {
                 var value = elem.getReading('get').val;
                 if (ftui.isValid(value)) {
                     var knob_elem = elem.find('input');
@@ -218,13 +243,17 @@ var Modul_volume = function () {
                         });
                     }
                 }
-            });
+            }
 
-        // update from lock reading
-        me.update_lock(dev, par);
+            //extra reading for reachable
+            me.updateReachable(elem, dev, par);
 
-        //extra reading for reachable
-        me.update_reachable(dev, par);
+            //extra reading for hide
+            me.updateHide(elem, dev, par);
+
+            //extra reading for lock
+            me.updateLock(elem, dev, par);
+        });
 
         isUpdating = false;
     }
@@ -235,6 +264,7 @@ var Modul_volume = function () {
         //override or own public members
         widgetname: 'volume',
         init: init,
+        actualSettings: actualSettings,
         update: update,
         drawDial: drawDial,
         onRelease: onRelease,

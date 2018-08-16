@@ -47,7 +47,6 @@
         // setup options
         var defaultOptions = {
             backgroundIcon: 'fa-circle',
-            classes: ['fa-2x'],
             icon: 'fa-power-off',
             offColor: '#2A2A2A',
             offBackgroundColor: '#505050',
@@ -72,39 +71,36 @@
             options = $.extend({}, options, elem.data());
 
             var content = (elem.html() !== elem.text()) ?
-                jQuery('<div>', {}).html(elem.html()).children().detach() :
+                elem.children().detach() :
                 jQuery('<div>', {}).text(elem.text());
             if (options['onColor'] !== 'none' && options['offColor'] !== 'none') {
                 content.attr('id', 'fg');
             }
+            //content.removeAttr('data-ready');
             content.addClass('fa-stack-1x');
 
             elem.html('');
             elem.bi = options['backgroundIcon'];
             elem.fi = options['icon'];
 
-            faElem = $('<div/>', {
+            faElem = $('<div>', {
                 class: 'famultibutton'
             });
 
             faElem.addClass('fa-stack');
 
-            elem.bg = jQuery('<i/>', {
+            elem.bg = jQuery('<i>', {
                 'id': 'bg',
                 'class': 'fa fa-stack-2x'
             }).addClass(elem.bi);
 
-            elem.fg = jQuery('<i/>', {
+            elem.fg = jQuery('<i>', {
                 'id': 'fg',
                 'class': 'fa fa-stack-1x'
             }).addClass(elem.fi);
 
 
-            if (options['classes'] && options['classes'].length > 0) {
-                for (var i = 0, len = options['classes'].length; i < len; i++) {
-                    faElem.addClass(options['classes'][i]);
-                }
-            }
+            faElem.addClass('fa-2x');
 
             elem.bg.appendTo(faElem);
             elem.fg.appendTo(faElem);
@@ -163,6 +159,7 @@
 
         function setBackgroundColor(color) {
 
+            console.log('c:'+color);
             elem.bg.css("color", color);
         }
 
@@ -202,6 +199,8 @@
                 complete: function () {
                     if (state === true) {
                         setOn();
+                    } else {
+                        setOff();
                     }
                 }
             });

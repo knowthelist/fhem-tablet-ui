@@ -8,7 +8,6 @@
 "use strict";
 
 function depends_popup() {
-    if (!$.fn.draggable)
         return [ftui.config.basedir + "lib/jquery-ui.min.js"];
 }
 
@@ -102,13 +101,15 @@ var Modul_popup = function () {
 
     function init() {
 
-        me.elements = $('div[data-type="' + me.widgetname + '"]', me.area);
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
+            elem.attr("data-ready", "");
+            
             me.init_attr(elem);
 
             var id = [me.widgetname, me.area, index].join('_');
-            var dialog = elem.find('.dialog');
+            var dialog = elem.find('.dialog').first();
             var starter = (elem.data('starter')) ? $(document).find(elem.data('starter')) : elem.children(":first");
             if (starter.hasClass('dialog')) {
                 starter = $('<div/>', {
@@ -193,7 +194,7 @@ var Modul_popup = function () {
                     }
                 });
 
-                close.on('click', function () {
+                close.on('click', function (e) {
                     hide(dialog, elem.data('mode'));
                 });
 

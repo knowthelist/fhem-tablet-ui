@@ -1611,6 +1611,14 @@ var defaults = {
  * @param {Object} options
  * @api public
  */
+    
+function extend(){
+    for(var i=1; i<arguments.length; i++)
+        for(var key in arguments[i])
+            if(arguments[i].hasOwnProperty(key))
+                arguments[0][key] = arguments[i][key];
+    return arguments[0];
+}
 
 function Switchery(element, options) {
   if (!(this instanceof Switchery)) return new Switchery(element, options);
@@ -1628,6 +1636,10 @@ function Switchery(element, options) {
   if (this.isDisabled() === true) this.disable();
 }
 
+Switchery.prototype.reinit = function(config) {
+    this.options = $.extend({}, this.options, config);
+};
+    
 /**
  * Hide the target element.
  *

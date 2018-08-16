@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.6.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     */
+    -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="gridster_base_width" content="70">
+    <meta name="gridster_base_height" content="70">
+    <meta name="gridster_margin" content="5">
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FTUI-Control</title>
+</head>
+
+<body style="background-image:url(bgimage-tablet.jpg)">
+    <div class="gridster bg-transparent">
+        <ul>
+
+            <!-- ROW 1-2 Left -->
+
+            <li data-row="1" data-col="1" data-sizey="2" data-sizex="2" class="bg-gray-trans round">
+                <div class="row-5"></div>
+                <div class="row-45">
+                    <div class="col-5"></div>
+                    <div class="col-45 center smallicon" data-type="switch" data-device="dummy1" data-color="white" data-size="130" data-on-background-color="blue" data-icon="fa-wifi"></div>
+                    <div class="col-45 center smallicon" data-type="switch" data-device="dummy2" data-color="white" data-size="130" data-on-background-color="green" data-icon="fa-lock"></div>
+                    <div class="col-5"></div>
+                </div>
+                <div class="row-45">
+                    <div class="col-5"></div>
+                    <div class="col-45 center smallicon" data-type="switch" data-device="dummy1" data-color="white" data-size="130" data-on-background-color="blue" data-icon="fa-bluetooth-b"></div>
+                    <div class="col-45 center smallicon" data-type="switch" data-device="dummy3" data-color="white" data-size="130" data-on-background-color="blue" data-icon="fa-podcast"></div>
+                    <div class="col-5"></div>
+                </div>
+                <div class="row-5"></div>
+            </li>
+
+            <!-- ROW 1-2 Right -->
+
+            <li data-row="1" data-col="3" data-sizey="2" data-sizex="2" class="bg-gray-trans round">
+                <div class="row-10"></div>
+                <div class="row-20">
+                    <div class="bold center " data-type="label" data-device="MPD1" data-get="Artist"></div>
+                </div>
+                <div class="row-20">
+                    <div class="center" data-type="label" data-device="MPD1" data-get="Title"></div>
+                </div>
+                <div class="row-50">
+                    <div class="col center" data-type="push" data-device="MPD1" data-icon="fa-step-backward" data-background-icon="-" data-set-on="previous" data-off-color="#000" data-on-color="white">
+                    </div>
+                    <div class="col center" data-type="switch" data-device="MPD1" data-states='["play","pause","stop"]' data-set-states='["pause","play","play"]' data-background-icon="none" data-colors='["#000","#ddd","#ddd"]' data-icons='["fa-pause","fa-play","fa-play"]'>
+                    </div>
+                    <div class="col center" data-type="push" data-device="MPD1" data-icon="fa-step-forward" data-background-icon="-" data-set-on="next" data-off-color="#000" data-on-color="white">
+                    </div>
+                </div>
+            </li>
+
+            <!-- ROW 3-->
+
+            <li data-row="3" data-col="3" data-sizey="2" data-sizex="1" class="bg-gray-trans round">
+                <div class="row-100">
+                    <div class="fullsize" data-type="controller" data-device="EsstischLampe" data-background-color="transparent" data-get="state" data-set="value"></div>
+                </div>
+            </li>
+            <li data-row="3" data-col="4" data-sizey="2" data-sizex="1" class="bg-gray-trans round">
+                <div class="row-100">
+                    <div class="fullsize" data-type="controller" data-device="AvReceiver" data-get="volume" data-background-color="transparent" data-set="volume" data-icon="fa-volume-up" data-max="60"></div>
+                </div>
+            </li>
+            <li data-row="3" data-col="1" data-sizey="1" data-sizex="1" class="bg-gray-trans round">
+                <div class="fullsize" data-type="controlbutton" data-device="SchrankLicht_Sw" data-icon="fa-book"></div>
+            </li>
+            <li data-row="3" data-col="2" data-sizey="1" data-sizex="1" class="bg-gray-trans round">
+                <div class="fullsize" data-type="controlbutton" data-device="KuechenArbeitsLicht" data-icon="fa-beer"></div>
+            </li>
+            <li data-row="4" data-col="1" data-sizey="1" data-sizex="2" class="bg-gray-trans round">
+                <div class="row">
+                    <div class="col-30 center"><i class="fa fa-2x fa-sign-in"></i></div>
+                    <div class="col-70 center" data-type="label" data-device="AvReceiver" data-get="input"></div>
+                </div>
+            </li>
+
+            <!-- ROW 5 -->
+
+            <li data-row="5" data-col="1" data-sizey="1" data-sizex="1" class="bg-gray-trans round">
+                <div class="fullsize" data-type="controlbutton" data-device="BadWandlicht" data-icon="fa-shower"></div>
+            </li>
+            <li data-row="5" data-col="2" data-sizey="1" data-sizex="1" class="bg-gray-trans round">
+                <div class="fullsize" data-type="controlbutton" data-device="SchlafzimmerLicht" data-icon="fa-bed"></div>
+            </li>
+            <li data-row="5" data-col="3" data-sizey="1" data-sizex="1" class="bg-gray-trans round">
+                <div class="fullsize" data-type="controlbutton" data-device="WohnenDeckenLicht" data-icon="fa-tv"></div>
+            </li>
+            <li data-row="5" data-col="4" data-sizey="1" data-sizex="1" class="bg-gray-trans round">
+                <div class="fullsize" data-type="controlbutton" data-device="GartenLicht" data-icon="fa-envira"></div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -12,9 +12,9 @@ find ./www/tablet -type f \( ! -iname ".*" \) -print0 | while IFS= read -r -d ''
 done
 
 # CHANGED file
-echo "FHEM Tablet UI last change:" > CHANGED
-echo $(date +"%Y-%m-%d") >> CHANGED
-echo " - $(git log -1 --pretty=%B)" >> CHANGED
+#echo "FHEM Tablet UI last change:" > CHANGED
+#echo $(date +"%Y-%m-%d") >> CHANGED
+#echo " - $(git log -1 --pretty=%B)" >> CHANGED
 
 
 
