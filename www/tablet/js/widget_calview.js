@@ -26,7 +26,7 @@ var Modul_calview = function () {
         me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
         me.elements.each(function (index) {
             var elem = $(this);
-	    elem.attr("data-ready", ""
+	    elem.attr("data-ready", "");
             // Standardwerte fuer Parameter
             elem.initData('max', 10);
             elem.initData('get', 'STATE');
