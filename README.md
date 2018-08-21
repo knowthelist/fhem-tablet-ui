@@ -563,6 +563,7 @@ Use data-url + data-refresh or data-device + data-get, not both.
 ####CircleMenu widget
 - **data-item-diameter** : diameter of the circle (default 52)
 - **data-circle-radius** : radius of each item, in pixel (default 70)
+- **data-speed** : time to fade (default 500)
 - **data-border**        : style of border - 'round','square' (default 'round')
 - **data-item-width**    : fixed size for width in px (default value of data-item-diameter)
 - **data-item-height**   : fixed size for height in px (default value of data-item-diameter)

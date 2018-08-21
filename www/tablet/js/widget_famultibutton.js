@@ -98,7 +98,7 @@ var Modul_famultibutton = function () {
                 startTimer(elem);
 
                 if (force) {
-                    //inform other widgets to check their timer
+                    // inform other widgets to check their timer
                     $(document).trigger('onforTimerStarted', [id]);
                 }
             }
@@ -291,7 +291,7 @@ var Modul_famultibutton = function () {
             sessionStorage.removeItem("ftui.timer_sec." + id);
             sessionStorage.removeItem("ftui.timer_til." + id);
 
-            //inform other widgets to check their timer
+            // inform other widgets to check their timer
             $(document).trigger('onforTimerStopped', [id]);
 
             var blink = elem.data('blink');
@@ -566,6 +566,7 @@ var Modul_famultibutton = function () {
             me.addReading(elem, "off-background-color");
         }
         
+        me.extractReadings(elem, "colors");
         me.extractReadings(elem, "background-colors");
     }
 
@@ -629,7 +630,7 @@ var Modul_famultibutton = function () {
                 }
             });
 
-            //extra reading for warn
+            // extra reading for warn
             if (elem.matchDeviceReading('warn', dev, par)) {
                 var warn = elem.getReading('warn').val;
                 if (elem.matchingState('warn', warn) === 'on') {
@@ -640,18 +641,18 @@ var Modul_famultibutton = function () {
                 }
             }
 
-            //extra reading for countdown
+            // extra reading for countdown
             if (elem.matchDeviceReading('countdown', dev, par)) {
                 elem.data('secondes', elem.getReading('countdown').val);
             }
 
-            //extra reading for reachable
+            // extra reading for reachable
             me.updateReachable(elem, dev, par);
 
-            //extra reading for hide
+            // extra reading for hide
             me.updateHide(elem, dev, par);
 
-            //extra reading for lock
+            // extra reading for lock
             me.updateLock(elem, dev, par);
 
         });

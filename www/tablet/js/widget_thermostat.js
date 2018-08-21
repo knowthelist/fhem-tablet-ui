@@ -38,8 +38,8 @@ var Modul_thermostat = function () {
         var step = (this.o.max - this.o.min) / this.angleArc;
         var acAngle = ((this.o.isValue - this.o.min) / step) + this.startAngle;
         var dist = this.o.tickdistance || 4;
-        var mincolor = this.o.minColor || '#ff0000';
-        var maxcolor = this.o.maxColor || '#4477ff';
+        var mincolor = (this.i.val() !== this.o.off) ? this.o.minColor || '#ff0000' : this.o.fgColor;
+        var maxcolor = (this.i.val() !== this.o.off) ? this.o.maxColor || '#4477ff' : this.o.fgColor;
         var actcolor = this.o.actColor;
 
         // draw ticks
@@ -162,7 +162,6 @@ var Modul_thermostat = function () {
         elem.reinitData('actcolor', ftui.getStyle('.' + me.widgetname + '.actual', 'color') || '#999');
         elem.reinitData('mincolor', ftui.getStyle('.' + me.widgetname + '.min', 'color') || '#4477ff');
         elem.reinitData('maxcolor', ftui.getStyle('.' + me.widgetname + '.max', 'color') || '#ff0000');
-
 
         return {
             'fgColor': elem.data('fgcolor'),
