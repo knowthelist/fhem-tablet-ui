@@ -55,7 +55,7 @@
                 'bottom-right':[0,90]
             },
             dir;
-
+        
         self._state = 'closed';
         self._locked = false;
         self.element.addClass(pluginName+'-closed');
@@ -84,6 +84,7 @@
 
             $item.data('plugin_'+pluginName+'-pos-x', x);
             $item.data('plugin_'+pluginName+'-pos-y', y);
+            
             $item.on(self.options.close_event, function(){
                 self.select(index+2);
             });

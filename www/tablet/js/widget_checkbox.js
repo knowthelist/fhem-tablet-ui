@@ -1,5 +1,5 @@
 /* FTUI Plugin
- * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
@@ -18,7 +18,7 @@ function depends_checkbox() {
         deps.push(ftui.config.basedir + "lib/switchery.min.js");
     }
 
-    if (typeof window["Modul_famultibutton"] === 'undefined' || !$.fn.famultibutton) {
+    if (window["Modul_famultibutton"] === void 0 || !$.fn.famultibutton) {
         deps.push('famultibutton');
     }
     return deps;
@@ -32,22 +32,34 @@ var Modul_checkbox = function () {
         elem.transmitCommand();
     }
 
+    function switcheryConfig(elem) {
+        
+        var elemData = elem.data();
+        var ret = {
+            size: elem.hasClass('small') ? 'small' : elem.hasClass('large') ? 'large' : 'default',
+            color: ftui.getStyle("." + elemData.onBackgroundColor, "color") || elemData.onBackgroundColor,
+            secondaryColor: ftui.getStyle("." + elemData.offBackgroundColor, "color") || elemData.offBackgroundColor,
+            jackColor: ftui.getStyle("." + elemData.onColor, "color") || elemData.onColor,
+            jackSecondaryColor: ftui.getStyle("." + elemData.offColor, "color") || elemData.offColor,
+        };
+        return ret;
+    }
+
     function reinit() {
+        
         me.elements.each(function (index) {
             var elem = $(this);
             var switchery = elem.data('switchery');
 
             if (switchery) {
-                //console.log(ftui.getStyle('.' + me.widgetname + '.on', 'color'));
-                switchery.reinit({
-                    color: ftui.getClassColor(elem) || ftui.getStyle('.' + me.widgetname + '.on', 'background-color'),
-                    secondaryColor: ftui.getStyle('.' + me.widgetname + '.off', 'background-color'),
-                    jackColor: ftui.getStyle('.' + me.widgetname + '.on', 'color'),
-                    jackSecondaryColor: ftui.getStyle('.' + me.widgetname + '.off', 'color')
-                });
-                //switchery.setPosition(true);
-                switchery.handleOnchange(true);
 
+                elem.reinitData('on-color', ftui.getStyle('.checkbox.on', 'color') || '#bfbfbf');
+                elem.reinitData('off-color', ftui.getStyle('.checkbox.off', 'color') || '#bfbfbf');
+                elem.reinitData('on-background-color', ftui.getStyle('.checkbox.on', 'background-color') || '#aa6900');
+                elem.reinitData('off-background-color', ftui.getStyle('.checkbox.off', 'background-color') || '#505050');
+
+                switchery.reinit(switcheryConfig(elem));
+                switchery.handleOnchange(true);
             }
         });
     }
@@ -66,8 +78,6 @@ var Modul_checkbox = function () {
             elem.initData('on-background-color', ftui.getStyle('.checkbox.on', 'background-color') || '#aa6900');
             elem.initData('off-background-color', ftui.getStyle('.checkbox.off', 'background-color') || '#505050');
 
-
-
             me.init_attr(elem);
 
             // base element that becomes a Switchery
@@ -77,13 +87,7 @@ var Modul_checkbox = function () {
             }).appendTo(elem);
 
             // transform the input element into a Switchery
-            var switchery = new Switchery(input[0], {
-                size: elem.hasClass('small') ? 'small' : elem.hasClass('large') ? 'large' : 'default',
-                color: elem.data('on-background-color'),
-                secondaryColor: elem.data('off-background-color'),
-                jackColor: elem.data('on-color'),
-                jackSecondaryColor: elem.data('off-color'),
-            });
+            var switchery = new Switchery(input[0], switcheryConfig(elem));
 
             elem.data('switchery', switchery);
 
@@ -114,7 +118,6 @@ var Modul_checkbox = function () {
                     switchery.setPosition(true);
                     switchery.handleOnchange(true);
                 }
-
             };
 
             // store input object for usage in update function of base class

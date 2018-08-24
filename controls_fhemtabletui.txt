@@ -81,9 +81,9 @@ UPD 2017-02-11_14:27:26 6503 www/tablet/js/widget_agenda.js
 UPD 2018-01-21_14:49:42 1769 www/tablet/js/widget_button.js
 UPD 2018-08-21_23:58:12 18187 www/tablet/js/widget_calview.js
 UPD 2018-06-04_23:00:50 262029 www/tablet/js/widget_chart.js
-UPD 2018-03-29_00:15:42 5017 www/tablet/js/widget_checkbox.js
+UPD 2018-08-24_23:15:53 5252 www/tablet/js/widget_checkbox.js
 UPD 2018-02-06_11:06:22 3390 www/tablet/js/widget_checklist.js
-UPD 2018-08-20_20:26:58 3131 www/tablet/js/widget_circlemenu.js
+UPD 2018-08-23_21:25:06 3143 www/tablet/js/widget_circlemenu.js
 UPD 2018-01-21_14:50:26 1684 www/tablet/js/widget_classchanger.js
 UPD 2018-03-12_23:10:34 5829 www/tablet/js/widget_clock.js
 UPD 2018-01-13_16:41:02 3312 www/tablet/js/widget_colorwheel.js
@@ -171,8 +171,8 @@ UPD 2017-02-11_14:27:26 1794 www/tablet/lib/highcharts/themes/grid.js
 UPD 2017-02-11_14:27:26 1684 www/tablet/lib/highcharts/themes/sand-signika.js
 UPD 2017-02-11_14:27:26 1764 www/tablet/lib/highcharts/themes/skies.js
 UPD 2016-09-14_17:34:06 253669 www/tablet/lib/jquery-ui.min.js
-UPD 2017-12-01_22:56:03 11287 www/tablet/lib/jquery.circlemenu.js
-UPD 2017-12-27_22:02:52 5746 www/tablet/lib/jquery.circlemenu.min.js
+UPD 2018-08-23_21:24:32 11308 www/tablet/lib/jquery.circlemenu.js
+UPD 2018-08-23_21:24:47 5746 www/tablet/lib/jquery.circlemenu.min.js
 UPD 2017-02-11_14:27:26 18412 www/tablet/lib/jquery.datetimepicker.css
 UPD 2017-02-11_14:27:26 80573 www/tablet/lib/jquery.datetimepicker.js
 UPD 2017-12-27_22:02:52 16080 www/tablet/lib/jquery.datetimepicker.min.css

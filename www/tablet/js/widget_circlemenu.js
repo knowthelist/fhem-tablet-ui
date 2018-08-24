@@ -9,7 +9,7 @@
 
 function depends_circlemenu() {
     if (!$.fn.circleMenu)
-        return [ftui.config.basedir + "lib/jquery.circlemenu.js"];
+        return [ftui.config.basedir + "lib/jquery.circlemenu.min.js"];
 }
 
 var Modul_circlemenu = function () {
@@ -31,7 +31,7 @@ var Modul_circlemenu = function () {
                     circle_radius: elem.data('circle-radius') || 70,
                     direction: elem.data('direction') || 'full',
                     border: elem.data('border') || 'round',
-                    close_event: (ulElem.hasClass("keepopen") || elem.hasClass("keepopen")) ? '' : 'click',
+                    close_event: (ulElem.hasClass("keepopen") || elem.hasClass("keepopen")) ? '' : 'click clicked',
                     close: function () {
                         ftui.showModal(false);
                     },
