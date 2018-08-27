@@ -109,7 +109,7 @@ UPD 2018-01-18_21:41:36 3060 www/tablet/js/widget_input.js
 UPD 2017-02-11_14:27:26 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2018-01-09_20:25:53 2978 www/tablet/js/widget_joinedlabel.js
 UPD 2018-01-21_14:54:44 4568 www/tablet/js/widget_klimatrend.js
-UPD 2018-04-07_08:32:16 8338 www/tablet/js/widget_knob.js
+UPD 2018-08-28_01:16:57 8382 www/tablet/js/widget_knob.js
 UPD 2018-03-21_11:15:32 5857 www/tablet/js/widget_label.js
 UPD 2017-12-26_20:30:09 806 www/tablet/js/widget_level.js
 UPD 2017-12-19_10:29:00 11044 www/tablet/js/widget_link.js
@@ -120,7 +120,7 @@ UPD 2018-03-14_00:09:15 3530 www/tablet/js/widget_multistatebutton.js
 UPD 2018-01-21_14:55:44 3841 www/tablet/js/widget_notify.js
 UPD 2018-03-12_23:10:22 11332 www/tablet/js/widget_pagebutton.js
 UPD 2018-03-24_10:12:21 8748 www/tablet/js/widget_pagetab.js
-UPD 2018-01-21_15:59:19 5335 www/tablet/js/widget_playstream.js
+UPD 2018-08-27_22:21:48 5772 www/tablet/js/widget_playstream.js
 UPD 2018-08-16_07:43:39 9665 www/tablet/js/widget_popup.js
 UPD 2017-12-30_19:57:22 3564 www/tablet/js/widget_progress.js
 UPD 2018-03-28_23:46:50 1785 www/tablet/js/widget_push.js
@@ -139,7 +139,7 @@ UPD 2017-12-30_19:39:40 4299 www/tablet/js/widget_swiper.js
 UPD 2018-03-29_00:09:31 1557 www/tablet/js/widget_switch.js
 UPD 2018-03-28_23:04:46 1931 www/tablet/js/widget_symbol.js
 UPD 2018-03-28_20:05:24 1458 www/tablet/js/widget_theme.js
-UPD 2018-08-20_18:52:20 11495 www/tablet/js/widget_thermostat.js
+UPD 2018-08-28_01:08:30 11506 www/tablet/js/widget_thermostat.js
 UPD 2017-02-23_20:23:39 2609 www/tablet/js/widget_tts.js
 UPD 2018-01-21_15:01:52 9506 www/tablet/js/widget_uwz.js
 UPD 2018-04-02_22:16:32 9888 www/tablet/js/widget_volume.js

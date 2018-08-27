@@ -115,7 +115,7 @@ var Modul_thermostat = function () {
 
     function onFormat(v) {
         /*jshint validthis: true */
-        v = base.onFormat(v);
+        v = base.onFormat.call(this, v);
         return checkExtreme.call(this, v);
     }
 

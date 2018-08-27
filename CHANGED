@@ -5,3 +5,6 @@ FHEM Tablet UI last change:
  - widget_checkbox: Fixed wrong colors after switch the css theme
  2018-08-27
  - widget_weather: Added DWD_OpenData map (by somansch)
+ 2018-08-28
+ - widget_playstream: Improved pause state for better restart
+ - widget_thermostat: Fixed missing unit after switch the css theme

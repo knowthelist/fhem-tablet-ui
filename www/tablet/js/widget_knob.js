@@ -54,9 +54,9 @@ var Modul_knob = function () {
         me.elements.each(function (index) {
             var elem = $(this);
             var knob_elem = elem.find('input');
-
             if (knob_elem) {
                 knob_elem.trigger('configure', me.actualSettings(elem));
+                knob_elem.trigger('change');
             }
         });
     }
