@@ -1,10 +1,3 @@
 FHEM Tablet UI last change:
- 2018-08-23
- - widget_circlemenu: Fixed close on click issue on some touch devices
- 2018-08-24
- - widget_checkbox: Fixed wrong colors after switch the css theme
- 2018-08-27
- - widget_weather: Added DWD_OpenData map (by somansch)
- 2018-08-28
- - widget_playstream: Improved pause state for better restart
- - widget_thermostat: Fixed missing unit after switch the css theme
+ 2018-08-31
+ - switched to Font Awesome 5 Free

@@ -2719,7 +2719,18 @@ img.mini,
     top: -5px;
 }
 
-/*Correction for fa-square-o which is smaller then fa-square */
+/* FA 5.* circle is bigger */
+.famultibutton .fa-stack-2x:not(.fa-v5)  {
+    font-size: 1.8em;
+    margin-top: 0.05em;
+}
+.famultibutton .fa-stack-1x:not(.fa-v5) {
+    font-size: 0.9em;
+    margin-top: 0.05em;
+}
+
+
+/* Correction for fa-square-o which is smaller then fa-square */
 
 i#bg.fa.fa-stack-2x.fa-square-o {
     font-size: 2.2em;
@@ -3072,9 +3083,9 @@ select::-ms-expand {
     position: absolute;
     right: 6px;
     content: "\f107";
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-style: normal;
-    font-weight: normal;
+    font-weight: 900;
     text-decoration: inherit;
     font-size: 150%;
     top: 50%;
@@ -3104,7 +3115,7 @@ select::-ms-expand {
 .unreachable[data-type="thermostat"] > .overlay:before,
 .unreachable[data-type="spinner"] > .overlay:before {
     content: "\f128";
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 4em;
     color: beige;
 }

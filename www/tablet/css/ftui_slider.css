@@ -22,6 +22,17 @@
     text-align: center;
 }
 
+.range-container {
+    position: relative;
+}
+
+.slider_horizontal .slidertext-right,
+.level_horizontal .slidertext-right {
+position: absolute;
+right: -30px;
+
+}
+
 .level_vertical .slider-wrapper,
 .slider_vertical .slider-wrapper {
     height: 100%;
