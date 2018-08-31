@@ -9,6 +9,21 @@
 
 var Modul_label = function () {
 
+/*    function formatValue(elem, val) {
+        if (elem.isValidData('format')) {
+            var pipe = elem.data('format'),
+                functs = pipe.split('|');
+            console.log(functs);
+            for (var i=0,len=functs.length;i<len;i++){
+                var func = functs[i].replace(')','').trim().split('('),
+                    params = func[1].split(',');
+                console.log(func[0],params); 
+                val = window[func[0]](params)
+            }
+        }
+        return val;
+    }*/
+
     function update_value(elem) {
 
         var value = (elem.hasClass('timestamp')) ? elem.getReading('get').date : elem.getReading('get').val;
@@ -18,6 +33,8 @@ var Modul_label = function () {
             var unit = elem.data('unit');
             val = me.substitution(val, elem.data('substitution'));
             val = me.map(elem.data('map-get'), val, val);
+            //val = me.round(val, elem.data('round'));
+            //val = formatValue(elem, val);
             val = me.factor(val, elem.data('factor'));
             val = me.fix(val, elem.data('fix'));
             val = elem.data('pre-text') + val + elem.data('post-text');

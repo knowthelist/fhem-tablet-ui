@@ -82,7 +82,7 @@ var Modul_slider = function () {
             v = elem.hasClass('negated') ? pwrng.options.max + pwrng.options.min - sliVal : sliVal;
         }
 
-        if (elem.hasClass('value')) {
+        if (elem.hasClass('value') || elem.hasClass('value-right')) {
             elem.find('#slidervalue').text(v);
         }
         var storeval = sessionStorage.getItem(id);
@@ -135,8 +135,8 @@ var Modul_slider = function () {
         //init standard attributes 
         base.init_attr.call(me, elem);
 
-        elem.initClassColor('color'); 
-        
+        elem.initClassColor('color');
+
         elem.initData('on', 'on');
         elem.initData('off', 'off');
         elem.initData('width', null);
@@ -306,9 +306,16 @@ var Modul_slider = function () {
         }
 
         if (elem.hasClass('value')) {
-            var lbl = $('<div/>', {
+            $('<div/>', {
                 id: 'slidervalue',
                 class: 'slidertext normal',
+            }).appendTo(rangeContainer);
+        }
+
+        if (elem.hasClass('value-right')) {
+            $('<span/>', {
+                id: 'slidervalue',
+                class: 'slidertext-right',
             }).appendTo(rangeContainer);
         }
 
@@ -402,7 +409,7 @@ var Modul_slider = function () {
                         }
                         elem.attr('title', val);
                     }
-                    if (elem.hasClass('value')) {
+                    if (elem.hasClass('value') || elem.hasClass('value-right')) {
                         var slidervalue = elem.find('#slidervalue');
                         if (slidervalue) {
                             if (elem.hasClass('textvalue')) {

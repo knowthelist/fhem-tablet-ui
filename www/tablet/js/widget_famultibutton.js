@@ -334,7 +334,7 @@ var Modul_famultibutton = function () {
                 sets = new Array(String(sets));
             }
             var s = sessionStorage.getItem(['ftui', elem.widgetId(), 'idx'].join('.')) || 0;
-            var set = typeof sets[s] != 'undefined' ? sets[s] : sets[0];
+            var set = sets[s] !== void 0 ? sets[s] : sets[0];
             //supress sending possible
 
             var states = elem.data('states') || elem.data('limits') || elem.data('get-on');
@@ -373,7 +373,7 @@ var Modul_famultibutton = function () {
                 }
                 break;
             case 'url-xhr':
-                if (device && typeof device != "undefined" && device !== " ") {
+                if (device && device !== void 0 && device !== " ") {
                     ftui.toast(target);
                 }
                 $.get(target);
@@ -382,7 +382,7 @@ var Modul_famultibutton = function () {
                 eval(target);
                 break;                
             case 'fhem-cmd':
-                if (device && typeof device != "undefined" && device !== " ") {
+                if (device &&  device !== void 0 && device !== " ") {
                     ftui.toast(target);
                 }
                 ftui.setFhemStatus(target);

@@ -103,13 +103,13 @@ UPD 2018-01-13_21:05:02 6777 www/tablet/js/widget_departure.js
 UPD 2018-03-20_14:38:04 6100 www/tablet/js/widget_dimmer.js
 UPD 2017-02-11_14:27:26 3298 www/tablet/js/widget_eventmonitor.js
 UPD 2018-01-21_14:51:58 2931 www/tablet/js/widget_example.js
-UPD 2018-08-20_22:28:05 25232 www/tablet/js/widget_famultibutton.js
+UPD 2018-08-24_20:45:30 25200 www/tablet/js/widget_famultibutton.js
 UPD 2017-11-16_18:41:57 5018 www/tablet/js/widget_filelog.js
 UPD 2018-01-21_14:53:01 8691 www/tablet/js/widget_fullcalview.js
 UPD 2018-01-21_14:52:43 5415 www/tablet/js/widget_gds.js
 UPD 2017-02-28_22:02:28 8689 www/tablet/js/widget_highchart.js
 UPD 2017-02-28_22:04:09 8209 www/tablet/js/widget_highchart3d.js
-UPD 2018-04-02_22:58:21 11883 www/tablet/js/widget_homestatus.js
+UPD 2018-07-12_08:08:48 11893 www/tablet/js/widget_homestatus.js
 UPD 2018-02-04_14:05:00 10142 www/tablet/js/widget_html.js
 UPD 2017-12-26_20:31:09 5013 www/tablet/js/widget_iframe.js
 UPD 2018-08-16_21:35:22 5689 www/tablet/js/widget_image.js
@@ -119,7 +119,7 @@ UPD 2017-02-11_14:27:26 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2018-01-09_20:25:53 2978 www/tablet/js/widget_joinedlabel.js
 UPD 2018-01-21_14:54:44 4568 www/tablet/js/widget_klimatrend.js
 UPD 2018-08-28_01:16:57 8382 www/tablet/js/widget_knob.js
-UPD 2018-03-21_11:15:32 5857 www/tablet/js/widget_label.js
+UPD 2018-04-09_21:33:59 6478 www/tablet/js/widget_label.js
 UPD 2017-12-26_20:30:09 806 www/tablet/js/widget_level.js
 UPD 2017-12-19_10:29:00 11044 www/tablet/js/widget_link.js
 UPD 2017-02-11_14:27:26 1493 www/tablet/js/widget_loading.js
@@ -141,7 +141,7 @@ UPD 2017-12-22_09:57:40 5722 www/tablet/js/widget_select.js
 UPD 2018-01-21_14:59:59 9875 www/tablet/js/widget_settimer.js
 UPD 2018-03-24_10:28:08 12991 www/tablet/js/widget_simplechart.js
 UPD 2017-02-20_22:59:41 3118 www/tablet/js/widget_slideout.js
-UPD 2018-03-29_00:59:08 16060 www/tablet/js/widget_slider.js
+UPD 2018-08-15_22:43:29 16306 www/tablet/js/widget_slider.js
 UPD 2018-04-05_17:32:57 12476 www/tablet/js/widget_spinner.js
 UPD 2018-01-21_15:00:48 3083 www/tablet/js/widget_svgplot.js
 UPD 2017-12-30_19:39:40 4299 www/tablet/js/widget_swiper.js

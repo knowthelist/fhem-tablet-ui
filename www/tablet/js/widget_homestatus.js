@@ -223,7 +223,7 @@ var Modul_homestatus = function () {
             }
             elem.data('texts', texts);
             elem.data('icons', icons);
-            elem.data('icon-font', elem.data('icon-font') || 'FontAwesome');
+            elem.data('icon-font', elem.data('icon-font') || "'Font Awesome 5 Free'");
             elem.data('min', 0);
             elem.data('max', 2 * Math.PI);
             elem.data('step', 0.01);
