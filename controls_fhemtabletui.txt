@@ -12,8 +12,8 @@ UPD 2018-04-03_01:31:38 7326 www/tablet/css/fhem-darkgreen-ui.css
 UPD 2018-04-02_23:22:10 2658 www/tablet/css/fhem-green-ui.css
 UPD 2018-04-02_23:24:25 7123 www/tablet/css/fhem-mobil-ui.css
 UPD 2017-02-05_13:50:40 6916 www/tablet/css/fhem-tablet-ui-wdtimer.css
-UPD 2018-08-31_23:11:21 63321 www/tablet/css/fhem-tablet-ui.css
-UPD 2018-02-22_07:51:24 46091 www/tablet/css/fhem-tablet-ui.min.css
+UPD 2018-09-01_20:51:03 63407 www/tablet/css/fhem-tablet-ui.css
+UPD 2018-09-01_21:00:54 47682 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2017-02-11_14:27:26 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2018-03-17_21:48:45 5632 www/tablet/css/ftui_chart.css
 UPD 2017-10-03_08:03:02 1132 www/tablet/css/ftui_checklist.css

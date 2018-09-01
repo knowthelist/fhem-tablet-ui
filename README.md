@@ -1269,6 +1269,11 @@ To change the folder where FHEM can be reached for sending
 <meta name='fhemweb_url' content='/fhem/'>
 ```
 
+To change the time for jQuery animation. 0 is usfull for slow devices.  
+```html
+<meta name='fade_time' content='0'>
+```
+
 To change the language for time/date functions
 ```html
 <meta name='lang' content='de'>

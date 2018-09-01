@@ -2728,13 +2728,14 @@ img.mini,
     font-size: 0.9em;
     margin-top: 0.05em;
 }
-
+/* FA 5.* normal and inverted */
+.famultibutton .fa-stack-1x:not(.fa-v5).invert {
+    font-weight: 100;
+}
 
 /* Correction for fa-square-o which is smaller then fa-square */
-
 i#bg.fa.fa-stack-2x.fa-square-o {
-    font-size: 2.2em;
-    top: -0.01em;
+    font-size: 1.9em;
 }
 
 * {
