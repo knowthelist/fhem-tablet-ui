@@ -2720,16 +2720,16 @@ img.mini,
 }
 
 /* FA 5.* circle is bigger */
-.famultibutton .fa-stack-2x:not(.fa-v5)  {
+.famultibutton .fa-stack-2x:not(.fa-v5) {
     font-size: 1.8em;
-    margin-top: 0.05em;
+    margin-top: 0.01em;
 }
-.famultibutton .fa-stack-1x:not(.fa-v5) {
-    font-size: 0.9em;
-    margin-top: 0.05em;
+.famultibutton [class^="fa fa-stack-1x fa-"]:not(.fa-v5) {
+    font-size: 0.95em;
+    margin-top: -0.05em;
 }
 /* FA 5.* normal and inverted */
-.famultibutton .fa-stack-1x:not(.fa-v5).invert {
+.famultibutton .fa-stack-1x.invert {
     font-weight: 100;
 }
 
