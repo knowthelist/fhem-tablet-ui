@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.7.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <meta name='debug' content='3'>
+
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizey="4" data-sizex="3">
+                <header>EXAMPLE1</header>
+                <!-- place your widget here -->
+                <div class="vbox">
+                    <div data-type="symbol" data-device="AgroWeather" data-get="windDir" data-color="gray" data-states='["0","23","45","68","90","113","135","158","180","203","225","248","270","293","313","336"]' data-icons='["wi wi-wind towards-0-deg","wi wi-wind towards-23-deg","wi wi-wind towards-45-deg","wi wi-wind towards-68-deg","wi wi-wind towards-90-deg","wi wi-wind towards-113-deg","wi wi-wind towards-135-deg","wi wi-wind towards-158-deg","wi wi-wind towards-180-deg","wi wi-wind towards-203-deg","wi wi-wind towards-225-deg","wi wi-wind towards-248-deg","wi wi-wind towards-270-deg","wi wi-wind towards-293-deg","wi wi-wind towards-313-deg","wi wi-wind towards-336-deg"]' class="compressed top-narrow tall"></div>
+                    <div data-type="label" data-device="AgroWeather" data-get="windDir"></div>
+                </div>
+            </li>
+            <li data-row="1" data-col="4" data-sizey="4" data-sizex="6">
+                <header>Proplanta-WeatherIcons</header>
+                <div class="hbox items-space-around">
+                    <div class="vbox items-space-around">
+                        <div class="darker">Day</div>
+                        <div data-type="weather" 
+                             data-device="AgroWeather" 
+                             data-get="fc0_weatherDay" 
+                             data-imageset="weathericons" 
+                             data-device-type="Proplanta"
+                             class="bigger"></div>
+                        <div data-type="label" 
+                             data-device="AgroWeather" 
+                             data-get="fc0_weatherDay" 
+                             class="bigger"></div>
+                    </div>
+                    <div class="vbox items-space-around">
+                        <div class="darker">Night</div>
+                        <div data-type="weather" 
+                             data-device="AgroWeather" 
+                             data-get="fc0_weatherNight" 
+                             data-imageset="weathericons" 
+                             data-device-type="Proplanta"
+                             class="bigger"></div>
+                        <div data-type="label" 
+                             data-device="AgroWeather" 
+                             data-get="fc0_weatherNight" 
+                             class="bigger"></div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="10" data-sizey="4" data-sizex="3">
+                <header>Static icons</header>
+                <div class="vbox">
+                <div class="weather">
+                    <div data-type="label" data-icon="J" class="bigger weather-icon meteocons"></div>
+                </div>
+
+                <div class="huge wi wi-day-sunny"></div>
+
+                </div>
+
+
+            </li>
+            <li data-row="5" data-col="1" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE4</header>
+                <!-- place your widget here -->
+                <div class="vbox">
+                    <div data-type="weather" data-device="AgroWeather" data-get="windDir" data-device-type="WindDirection" data-imageset="weathericons" class="bigger"></div>
+                    <div data-type="label" data-device="AgroWeather" data-get="windDir" data-post-text="°" class="big"></div>
+                </div>
+            </li>
+            <li data-row="5" data-col="4" data-sizey="3" data-sizex="6">
+                <header>EXAMPLE5</header>
+                <!-- place your widget here -->
+                <div class="hbox items-space-around">
+                    <div class="vbox items-space-around">
+                        <div class="darker">Heute</div>
+                        <div data-type="weather" data-device="AgroWeather" data-get="fc0_weatherDay" data-color="ftuitest:color" class="big"></div>
+                    </div>
+                    <div class="vbox items-space-around">
+                        <div class="darker">Morgen</div>
+                        <div data-type="weather" data-device="AgroWeather" data-get="fc1_weatherDay" data-warn="dummy1:state" class="bigger"></div>
+                    </div>
+                    <div class="vbox items-space-around">
+                        <div class="darker">Morgen</div>
+                        <div data-type="weather" data-device="AgroWeather" data-get="fc2_weatherDay" data-warn="dummy1:state" class="tall"></div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="5" data-col="10" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE6</header>
+                <div class="vbox">
+                    <div data-type="weather" data-device="ftuitest" data-get="weathercode" data-device-type="YahooCode" data-imageset="weathericons" class="big"></div>
+                    <div data-type="weather" data-device="ftuitest" data-get="weathercode" data-device-type="YahooCode" data-imageset="kleinklima" class="mini"></div>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

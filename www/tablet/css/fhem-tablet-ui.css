@@ -946,12 +946,12 @@ main > .box.horizontal {
 
 .box.vertical.items-top,
 .vbox.items-top {
-    justify-content:  flex-start;
+    justify-content: flex-start;
 }
 
 .box.vertical.items-top,
 .vbox.items-bottom {
-    justify-content:  flex-end;
+    justify-content: flex-end;
 }
 
 
@@ -1981,6 +1981,11 @@ div[data-type="link"] > div.fa {
     font-size: 1em !important;
 }
 
+/* label in fa-multibutton */
+.famultibutton div {
+    margin-top: -5%;
+}
+
 .wider {
     margin: 1em 1em 1em 1em !important;
     width: auto;
@@ -2715,25 +2720,26 @@ img.mini,
     display: inline-block;
 }
 
-.fa-square-o + .fa-chevron-up {
-    top: -5px;
-}
-
 /* FA 5.* circle is bigger */
+
 .famultibutton .fa-stack-2x:not(.fa-v5) {
     font-size: 1.8em;
     margin-top: 0.01em;
 }
+
 .famultibutton [class^="fa fa-stack-1x fa-"]:not(.fa-v5) {
     font-size: 0.95em;
     margin-top: -0.05em;
 }
+
 /* FA 5.* normal and inverted */
+
 .famultibutton .fa-stack-1x.invert {
     font-weight: 100;
 }
 
 /* Correction for fa-square-o which is smaller then fa-square */
+
 i#bg.fa.fa-stack-2x.fa-square-o {
     font-size: 1.9em;
 }
@@ -3539,12 +3545,15 @@ img.faded {
 .gray {
     color: #6a6a6a;
 }
+
 .green {
     color: #6DE08E;
 }
+
 .cold {
     color: #6DE08E;
 }
+
 .warm {
     color: #aa6900;
 }
@@ -3552,35 +3561,45 @@ img.faded {
 /* color theme classes for widgets */
 
 /* Slider colors */
+
 .range-handle {
-  background-color: #bcbcbc !important;
+    background-color: #bcbcbc !important;
 }
+
 [data-type="slider"]:not([data-background-color]) .range-bar {
-  background-color: #404040 !important;
+    background-color: #404040 !important;
 }
+
 [data-type="slider"]:not([data-color]) .range-quantity {
     background-color: #aa6900 !important;
 }
 
 /* label widget */
+
 [data-type="label"].active {
-  color: #aa6900 !important;
+    color: #aa6900 !important;
 }
 
 /* symbol  widget */
+
 /* foreground on */
+
 [data-type="symbol"]:not([data-colors]):not([data-on-color]) .active i#fg {
     color: #aa6900 !important;
 }
 
 /* switch  widget */
+
 /* background on */
+
 [data-type="switch"]:not([data-background-colors]):not([data-on-background-color]) .active i#bg {
     color: #aa6900 !important;
 }
 
 /* switch  widget invert */
+
 /* foreground on */
+
 [data-type="switch"]:not([data-colors]):not([data-on-color]).invert .active i#fg {
     color: #aa6900 !important;
 }
@@ -3588,24 +3607,61 @@ img.faded {
 /* pseudo classes for canvas painted widgets
    read by ftui.getStyle() in init and reinit function  */
 
-.checkbox.on{color:#bfbfbf; background-color:#aa6900; }
-.checkbox.off{color:#bfbfbf; background-color:#505050; }
+.checkbox.on {
+    color: #bfbfbf;
+    background-color: #aa6900;
+}
 
-.slider{color:#aa6900;}
+.checkbox.off {
+    color: #bfbfbf;
+    background-color: #505050;
+}
 
-.homestatus{background-color:#666;color:#aa6900;}
-.homestatus.icon{background-color:#777;color:#222;}
+.slider {
+    color: #aa6900;
+}
 
-.volume.handle{color:#aa6900;}
-.volume{background-color:#2A2A2A;color:#555;}
+.homestatus {
+    background-color: #666;
+    color: #aa6900;
+}
+
+.homestatus.icon {
+    background-color: #777;
+    color: #222;
+}
+
+.volume.handle {
+    color: #aa6900;
+}
+
+.volume {
+    background-color: #2A2A2A;
+    color: #555;
+}
 
 
-.wind_direction.handle{color:#aa6900;}
-.wind_direction{background-color:#2A2A2A;color:#555;}
+.wind_direction.handle {
+    color: #aa6900;
+}
 
-.thermostat{background-color:#222;color:#7a7a7a;}
-.thermostat.actual{color:#eee;}
-.thermostat.nominal{color:#eee;}
+.wind_direction {
+    background-color: #2A2A2A;
+    color: #555;
+}
+
+.thermostat {
+    background-color: #222;
+    color: #7a7a7a;
+}
+
+.thermostat.actual {
+    color: #eee;
+}
+
+.thermostat.nominal {
+    color: #eee;
+}
 
 
 .progress.value {

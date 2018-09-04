@@ -1,5 +1,5 @@
 /* FTUI Plugin
- * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
  * originally created by Thomas Nesges
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
@@ -9,6 +9,48 @@
 "use strict";
 
 var Modul_weather = function () {
+
+    var weathericonsmap = {
+        "day": {
+            "sonnig": "day-sunny",
+            "heiter": "day-sunny-overcast",
+            "wolkig": "cloudy",
+            "Regenschauer": "day-showers",
+            "stark bewoelkt": "wi-cloudy",
+            "stark bew\u00F6lkt": "wi-cloudy",
+            "Regen": "day-rain",
+            "bedeckt": "wi-cloud",
+            "Schnee": "day-snow",
+            'Schneefall': 'U',
+            'Schneeregen': 'day-sleet',
+            'Schneeschauer': 'storm-showers',
+            'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'day-storm-showers',
+            'unterschiedlich bew\u00F6lkt, vereinzelt Schauer und Gewitter': 'day-storm-showers',
+            'Nebel': 'day-fog',
+            'klar': 'day-sunny',
+            'Spruehregen': 'day-rain-mix',
+            'Regen m\u00f6glich': 'day-rain-mix'
+        },
+        "night": {
+            "heiter": "night-clear",
+            "wolkig": "wi-night-alt-partly-cloudy",
+            "Regenschauer": "night-alt-showers",
+            "stark bewoelkt": "night-alt-cloudy",
+            "stark bew\u00F6lkt": "night-alt-cloudy",
+            "Regen": "night-alt-rain",
+            "bedeckt": "N",
+            "Schnee": "snow",
+            'Schneefall': 'U',
+            'Schneeregen': 'night-alt-sleet',
+            'Schneeschauer': 'storm-showers',
+            'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'night-alt-sleet-storm',
+            'unterschiedlich bew\u00F6lkt, vereinzelt Schauer und Gewitter': 'night-alt-sleet-storm',
+            'Nebel': 'night-fog',
+            'klar': 'night-clear',
+            'Spruehregen': 'night-alt-rain-mix',
+            'Regen m\u00f6glich': 'night-alt-rain-mix'
+        }
+    };
 
     var meteoconsmap = {
         // Weather (YAHOO) en
@@ -272,61 +314,61 @@ var Modul_weather = function () {
         'chance of storm night': 'chance_of_storm_night.png',
         'haze night': 'haze_night.png',
         // DWD_OpenData (by somansch)
-		'äußerst heftiger Regenschauer': 'showers.png',
-		'Bewölkung abnehmend': 'partly_cloudy.png',
-		'Bewölkung unverändert': 'cloudy.png',
-		'Bewölkung zunehmend': 'overcast.png',
-		'Bewölkungsentwicklung nicht beobachtet': 'sunny.png',
-		'durchgehend leichter Regen': 'rain.png',
-		'durchgehend leichter Schneefall': 'snow.png',
-		'durchgehend leichter Sprühregen': 'drizzle.png',
-		'durchgehend mäßiger Regen': 'rain.png',
-		'durchgehend mäßiger Schneefall': 'snow.png',
-		'durchgehend mäßiger Sprühregen': 'drizzle.png',
-		'durchgehend starker Regen': 'rain.png',
-		'durchgehend starker Schneefall': 'snow.png',
-		'durchgehend starker Sprühregen': 'drizzle.png',
-		'leichter gefrierender Regen': 'rainsnow.png',
-		'leichter gefrierender Sprühregen': 'rainsnow.png',
-		'leichter Regenschauer': 'scatteredshowers.png',
-		'leichter Schneeregen': 'rainsnow.png',
-		'leichter Schneeregenschauer': 'rainsnow.png',
-		'leichter Schneeschauer': 'snow.png',
-		'leichter Sprühregen mit Regen': 'rain.png',
-		'leichtes oder mäßiges Gewitter mit Graupel oder Hagel': 'scatteredthunderstorms.png',
-		'leichtes oder mäßiges Gewitter mit Regen oder Schnee': 'scatteredthunderstorms.png',
-		'mäßiger oder starker gefrierender Regen': 'rainsnow.png',
-		'mäßiger oder starker gefrierender Sprühregen': 'rainsnow.png',
-		'mäßiger oder starker Graupelschauer': 'storm.png',
-		'mäßiger oder starker Hagelschauer': 'storm.png',
-		'mäßiger oder starker Regenschauer': 'showers.png',
-		'mäßiger oder starker Schneeregen': 'rainsnow.png',
-		'mäßiger oder starker Schneeregenschauer': 'rainsnow.png',
-		'mäßiger oder starker Schneeschauer': 'snow.png',
-		'mäßiger oder starker Sprühregen mit Regen': 'rain.png',
-		'Nebel in einiger Entfernung': 'fog.png',
-		'Nebel in Schwaden oder Bänken': 'fog.png',
-		'Nebel mit Reifansatz, Himmel erkennbar': 'fog.png',
-		'Nebel mit Reifansatz, Himmel nicht erkennbar': 'fog.png',
-		'Nebel, Himmel erkennbar, dichter werdend': 'fog.png',
-		'Nebel, Himmel erkennbar, dünner werdend': 'fog.png',
-		'Nebel, Himmel erkennbar, unverändert': 'fog.png',
-		'Nebel, Himmel nicht erkennbar, dichter werdend': 'fog.png',
-		'Nebel, Himmel nicht erkennbar, dünner werdend': 'fog.png',
-		'Nebel, Himmel nicht erkennbar, unverändert': 'fog.png',
-		'Sicht durch Rauch oder Asche vermindert': 'fog.png',
-		'starkes Gewitter mit Graupel oder Hagel': 'thunderstorms.png',
-		'starkes Gewitter mit Regen oder Schnee': 'thunderstorms.png',
-		'starkes Gewitter mit Sandsturm': 'thunderstorms.png',
-		'unterbrochener leichter Regen oder einzelne Regentropfen': 'rain.png',
-		'unterbrochener leichter Schneefall oder einzelne Schneeflocken': 'snow.png',
-		'unterbrochener leichter Sprühregen': 'drizzle.png',
-		'unterbrochener mäßiger Regen': 'rain.png',
-		'unterbrochener mäßiger Schneefall': 'snow.png',
-		'unterbrochener mäßiger Sprühregen': 'drizzle.png',
-		'unterbrochener starker Regen': 'rain.png',
-		'unterbrochener starker Schneefall': 'snow.png',
-		'unterbrochener starker Sprühregen': 'drizzle.png',
+        'äußerst heftiger Regenschauer': 'showers.png',
+        'Bewölkung abnehmend': 'partly_cloudy.png',
+        'Bewölkung unverändert': 'cloudy.png',
+        'Bewölkung zunehmend': 'overcast.png',
+        'Bewölkungsentwicklung nicht beobachtet': 'sunny.png',
+        'durchgehend leichter Regen': 'rain.png',
+        'durchgehend leichter Schneefall': 'snow.png',
+        'durchgehend leichter Sprühregen': 'drizzle.png',
+        'durchgehend mäßiger Regen': 'rain.png',
+        'durchgehend mäßiger Schneefall': 'snow.png',
+        'durchgehend mäßiger Sprühregen': 'drizzle.png',
+        'durchgehend starker Regen': 'rain.png',
+        'durchgehend starker Schneefall': 'snow.png',
+        'durchgehend starker Sprühregen': 'drizzle.png',
+        'leichter gefrierender Regen': 'rainsnow.png',
+        'leichter gefrierender Sprühregen': 'rainsnow.png',
+        'leichter Regenschauer': 'scatteredshowers.png',
+        'leichter Schneeregen': 'rainsnow.png',
+        'leichter Schneeregenschauer': 'rainsnow.png',
+        'leichter Schneeschauer': 'snow.png',
+        'leichter Sprühregen mit Regen': 'rain.png',
+        'leichtes oder mäßiges Gewitter mit Graupel oder Hagel': 'scatteredthunderstorms.png',
+        'leichtes oder mäßiges Gewitter mit Regen oder Schnee': 'scatteredthunderstorms.png',
+        'mäßiger oder starker gefrierender Regen': 'rainsnow.png',
+        'mäßiger oder starker gefrierender Sprühregen': 'rainsnow.png',
+        'mäßiger oder starker Graupelschauer': 'storm.png',
+        'mäßiger oder starker Hagelschauer': 'storm.png',
+        'mäßiger oder starker Regenschauer': 'showers.png',
+        'mäßiger oder starker Schneeregen': 'rainsnow.png',
+        'mäßiger oder starker Schneeregenschauer': 'rainsnow.png',
+        'mäßiger oder starker Schneeschauer': 'snow.png',
+        'mäßiger oder starker Sprühregen mit Regen': 'rain.png',
+        'Nebel in einiger Entfernung': 'fog.png',
+        'Nebel in Schwaden oder Bänken': 'fog.png',
+        'Nebel mit Reifansatz, Himmel erkennbar': 'fog.png',
+        'Nebel mit Reifansatz, Himmel nicht erkennbar': 'fog.png',
+        'Nebel, Himmel erkennbar, dichter werdend': 'fog.png',
+        'Nebel, Himmel erkennbar, dünner werdend': 'fog.png',
+        'Nebel, Himmel erkennbar, unverändert': 'fog.png',
+        'Nebel, Himmel nicht erkennbar, dichter werdend': 'fog.png',
+        'Nebel, Himmel nicht erkennbar, dünner werdend': 'fog.png',
+        'Nebel, Himmel nicht erkennbar, unverändert': 'fog.png',
+        'Sicht durch Rauch oder Asche vermindert': 'fog.png',
+        'starkes Gewitter mit Graupel oder Hagel': 'thunderstorms.png',
+        'starkes Gewitter mit Regen oder Schnee': 'thunderstorms.png',
+        'starkes Gewitter mit Sandsturm': 'thunderstorms.png',
+        'unterbrochener leichter Regen oder einzelne Regentropfen': 'rain.png',
+        'unterbrochener leichter Schneefall oder einzelne Schneeflocken': 'snow.png',
+        'unterbrochener leichter Sprühregen': 'drizzle.png',
+        'unterbrochener mäßiger Regen': 'rain.png',
+        'unterbrochener mäßiger Schneefall': 'snow.png',
+        'unterbrochener mäßiger Sprühregen': 'drizzle.png',
+        'unterbrochener starker Regen': 'rain.png',
+        'unterbrochener starker Schneefall': 'snow.png',
+        'unterbrochener starker Sprühregen': 'drizzle.png',
         '---': 'na.png',
         'bew\u00f6lkt': 'mostlycloudy.png',
         'Dunst oder flacher Nebel': 'haze.png',
@@ -702,7 +744,7 @@ var Modul_weather = function () {
                         }
                     }
                     var translate = true;
-                    if (device_type == 'PROPLANTA') {
+                    if (device_type === 'PROPLANTA') {
                         var matches = val.match('^https://www\.proplanta\.de/wetterdaten/images/symbole/([tn][0-9]+)\.gif');
                         if (matches) {
                             val = matches[1];
@@ -721,15 +763,15 @@ var Modul_weather = function () {
                     }
 
                     var mapped = typeof translation == "undefined" ? val : translation;
-                    if (elem.data('imageset') == "kleinklima") {
+                    if (elem.data('imageset') === "kleinklima") {
                         mapped = kleinklimamap[mapped.replace(/^:/, '')];
                         icon.prepend('<img style="width:100%" src="' + elem.data('image-path') + mapped + '" title="' + val + '">');
-                    } else if (elem.data('imageset') == "reading") {
+                    } else if (elem.data('imageset') === "reading") {
                         icon.prepend('<img style="width:100%" src="' + _val + '">');
-                    } else if (elem.data('imageset') == "meteoconsdirect") {
+                    } else if (elem.data('imageset') === "meteoconsdirect") {
                         icon.attr('data-icon', val);
                         ftui.log(3, 'weather: set meteoconsdirect val:', val);
-                    } else if (elem.data('imageset') == "weathericons") {
+                    } else if (elem.data('imageset') === "weathericons") {
                         icon.addClass('weathericons');
                         switch (elem.data('device-type')) {
                             case "YahooCode":
@@ -739,6 +781,16 @@ var Modul_weather = function () {
                             case "WindDirection":
                                 icon.addClass('wi wi-wind from-' + val + '-deg');
                                 ftui.log(3, 'weather: set weathericons WindDirection: wi wi-wind towards-' + val + '-deg');
+                                break;
+                            case "PROPLANTA":
+                            case "Proplanta":
+                                var dayTime = 'day';
+                                if (par.match(/^fc\d+_weather(Evening|Night|00|03|06|18|21)(?:Icon)?$/)) {
+                                    dayTime = 'night';
+                                }
+                                mapped = weathericonsmap[dayTime][val];
+                                icon.addClass('wi wi-' + mapped);
+                                ftui.log(3, 'weather: set weathericons to: wi-' + dayTime + '-' + mapped);
                                 break;
                             default:
                                 icon.addClass('wi wi-' + val);

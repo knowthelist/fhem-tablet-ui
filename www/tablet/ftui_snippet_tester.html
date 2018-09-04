@@ -18,23 +18,12 @@
      * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
      */
     -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="widget_base_width" content="74">
-    <meta name="widget_base_height" content="71">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="gridster_disable" content="1">
-    <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+
+
     <meta name="debug" content="4"> <!-- verbose level 1-6 = output to console;0 = not output -->
 
-    <link rel="stylesheet" href="lib/jquery.gridster.min.css" />
-    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
-    <link rel="stylesheet" href="lib/font-awesome.min.css" />
-    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
 
-    <script src="../pgm2/jquery.min.js"></script>
-    <script src="lib/jquery.toast.min.js"></script>
-    <script src="lib/jquery.gridster.min.js"></script>
+    <script src="lib/jquery.min.js"></script>
     <script src="js/fhem-tablet-ui.js" defer></script>
 
     <title>FHEM-Tablet-UI</title>
@@ -53,6 +42,8 @@
 <script>
     $(document).ready(function(){
 
+        $("#snippet").val(localStorage.getItem('ftui_snippet_tester'));
+        
         var old = console.log;
         var logger = document.getElementById('log');
         console.log = function (message) {
@@ -65,7 +56,9 @@
         }
 
         $("button").click(function(){
-            $("#result").html($("#snippet").val());
+            var value = $("#snippet").val();
+            $("#result").html(value);
+            localStorage.setItem('ftui_snippet_tester', value);
             ftui.initWidgets("#result");
         });
     });
@@ -78,13 +71,15 @@
 
     <li data-row="1" data-col="1" data-sizex="6" data-sizey="4">
        <header>SNIPPET</header>
-       <textarea id="snippet" name="Text1" cols="45" rows="15" class="top-space-2x"></textarea>
+        <div class="hbox">
+       <textarea id="snippet" name="Text1" cols="65" rows="25" class="top-space-2x"></textarea>
        <button id="submit" type="submit" name="Submit" value="Init" class="left-space">Init</button>
+	</div>
     </li>
 
     <li data-row="1" data-col="7" data-sizex="6" data-sizey="4" class="result-container">
         <header>RESULT</header>
-        <div id="result" class="squareborder center"></div>
+        <div id="result" class="center"></div>
     </li>
 
     <li data-row="5" data-col="1" data-sizex="12" data-sizey="3">
