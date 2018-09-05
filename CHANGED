@@ -1,3 +1,4 @@
 FHEM Tablet UI last change:
  2018-09-05
  - widget_weather: added Proplanta-WeatherIcons map
+ - widget_homestatus: fix for Fontawesome 5 icons

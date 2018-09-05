@@ -109,7 +109,7 @@ UPD 2018-01-21_14:53:01 8691 www/tablet/js/widget_fullcalview.js
 UPD 2018-01-21_14:52:43 5415 www/tablet/js/widget_gds.js
 UPD 2017-02-28_22:02:28 8689 www/tablet/js/widget_highchart.js
 UPD 2017-02-28_22:04:09 8209 www/tablet/js/widget_highchart3d.js
-UPD 2018-07-12_08:08:48 11893 www/tablet/js/widget_homestatus.js
+UPD 2018-09-05_07:28:05 12075 www/tablet/js/widget_homestatus.js
 UPD 2018-02-04_14:05:00 10142 www/tablet/js/widget_html.js
 UPD 2017-12-26_20:31:09 5013 www/tablet/js/widget_iframe.js
 UPD 2018-08-16_21:35:22 5689 www/tablet/js/widget_image.js

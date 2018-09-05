@@ -27,6 +27,7 @@ var Modul_homestatus = function () {
         var r = this.radius * 0.4;
         var texts = this.$.data('texts');
         var icons = this.$.data('icons');
+        var fontWeight = (this.$.data('icon-font') === "'Font Awesome 5 Free'") ? "900 " : "";
 
         //Assign sector 1 for center pressed or value is 0
         if (Math.pow((mx - x), 2) + Math.pow((my - y), 2) < Math.pow(r, 2) || this.cv === 0)
@@ -109,14 +110,14 @@ var Modul_homestatus = function () {
         //cavans font
         var ratio = window.devicePixelRatio;
         var cfont = 10 * ratio + "px sans-serif";
-        var cfafont = 22 * ratio + "px " + this.$.data("icon-font");
+        var cfafont = fontWeight + 22 * ratio + "px " + this.$.data("icon-font");
 
         c.fillStyle = (sector == 1) ? this.o.maxColor : this.o.minColor;
         c.font = cfont;
-        c.fillText(texts[0], this.xy - 14 * ratio, this.xy + 16 * ratio);
+        c.fillText(texts[0], this.xy - 18 * ratio, this.xy + 16 * ratio);
         c.font = cfafont;
         c.fillText(ftui.getIconId(icons[0]), this.xy - 12 * ratio, this.xy + 2);
-
+        
         c.fillStyle = (sector == 2) ? this.o.maxColor : this.o.minColor;
         c.font = cfafont;
         c.fillText(ftui.getIconId(icons[1]), this.xy - this.radius * 1.1, this.xy - this.radius * 0.8);
@@ -131,15 +132,17 @@ var Modul_homestatus = function () {
 
         if (texts.length > 4) {
             c.fillStyle = (sector == 3) ? this.o.maxColor : this.o.minColor;
+            // 2 right bottom
             c.font = cfafont;
             c.fillText(ftui.getIconId(icons[2]), this.xy + this.radius * 0.6, this.xy + this.radius * 1.2);
             c.font = cfont;
-            c.fillText(texts[2], this.xy + this.radius, this.xy + 20 * ratio);
+            c.fillText(texts[2], this.xy + this.radius * 0.75, this.xy + 30 * ratio);
             c.fillStyle = (sector == 5) ? this.o.maxColor : this.o.minColor;
+            // 4 left bottom
             c.font = cfafont;
             c.fillText(ftui.getIconId(icons[4]), this.xy - this.radius * 0.9, this.xy + this.radius * 1.2);
             c.font = cfont;
-            c.fillText(texts[4], this.xy - this.radius * 1.5, this.xy + 20 * ratio);
+            c.fillText(texts[4], this.xy - this.radius * 1.5, this.xy + 30 * ratio);
         } else {
             c.fillStyle = (sector == 3) ? this.o.maxColor : this.o.minColor;
             c.font = cfafont;
