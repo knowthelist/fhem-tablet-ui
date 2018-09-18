@@ -18,6 +18,8 @@ var Modul_reload = function () {
         base.init_attr.call(me, elem);
     }
 
+    function init_ui(elem) {}
+
     function update(dev, par) {
         me.elements.filterDeviceReading('get', dev, par)
             .each(function (index) {
@@ -42,6 +44,7 @@ var Modul_reload = function () {
         //override or own public members
         widgetname: 'reload',
         init_attr: init_attr,
+        init_ui: init_ui,
         update: update,
     });
 
