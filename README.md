@@ -934,6 +934,13 @@ data-get JSON-Object:
 
 - **class**         : 'notext' -> prevent scale text
         
+####reload widget
+- **data-get**      : name of the reading to get from FHEM (default 'STATE')
+- **data-set**      : name of the reading to set from FHEM (default '')
+- **data-cmd**      : name of the command (**\<command\>** \<device\> \<reading\> \<value\>) (e.g. setstate, set, setreading, trigger) default: 'set' 
+- **data-get-on**   : value for reload (default '1')
+- **data-set-off**  : value to reset to (default: '0')
+
 Format
 -------
 The layout, look and behavior can be influenced by the class attribute.

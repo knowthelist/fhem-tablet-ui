@@ -21,7 +21,7 @@ var Modul_weather = function () {
             "Regen": "day-rain",
             "bedeckt": "wi-cloud",
             "Schnee": "day-snow",
-            'Schneefall': 'U',
+            'Schneefall': 'day-snow',
             'Schneeregen': 'day-sleet',
             'Schneeschauer': 'storm-showers',
             'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'day-storm-showers',
@@ -38,9 +38,9 @@ var Modul_weather = function () {
             "stark bewoelkt": "night-alt-cloudy",
             "stark bew\u00F6lkt": "night-alt-cloudy",
             "Regen": "night-alt-rain",
-            "bedeckt": "N",
+            "bedeckt": "night-alt-cloudy",
             "Schnee": "snow",
-            'Schneefall': 'U',
+            'Schneefall': 'night-alt-snow',
             'Schneeregen': 'night-alt-sleet',
             'Schneeschauer': 'storm-showers',
             'unterschiedlich bewoelkt, vereinzelt Schauer und Gewitter': 'night-alt-sleet-storm',
@@ -51,7 +51,6 @@ var Modul_weather = function () {
             'Regen m\u00f6glich': 'night-alt-rain-mix'
         }
     };
-
     var meteoconsmap = {
         // Weather (YAHOO) en
         'tornado': '9',

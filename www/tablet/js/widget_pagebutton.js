@@ -8,7 +8,7 @@
 "use strict";
 
 function depends_pagebutton() {
-    if (typeof window["Modul_famultibutton"] === 'undefined' || !$.fn.famultibutton) {
+    if (window["Modul_famultibutton"] === void 0 || !$.fn.famultibutton) {
         return ["famultibutton"];
     }
 }
@@ -16,39 +16,45 @@ function depends_pagebutton() {
 var Modul_pagebutton = function () {
 
     var fetchCount = 1;
-    var hasHash = (window.location.hash.length > 0);
-    var lastUrl = "";
+    var returnElem = null;
+    var hasHash = (window.location.hash.length);
+    var lastUrl = [];
 
     $(document).one("initWidgetsDone", function (e, area) {
-        var defaultElem = me.elements.filter('.default');
-        if (defaultElem.length > 0) {
+        var defaultElem = me.elements.filter('.default').first();
+        if (!defaultElem.length) {
+            defaultElem = me.returnElem || me.elements.first();
+        }
+        if (defaultElem.length) {
+            changeState(defaultElem, true);
             changePage(defaultElem);
         }
     });
 
-    $(document).on("initWidgetsDone", function (e, area) {
-        me.elements.each(function (index) {
-            var elem = $(this);
-            if (elem.data('load') === area) {
-                sessionStorage.removeItem(elem.data('lock-id'));
-                startReturnTimer(me.elements.eq(0));
-            }
-        });
-    });
-
     // activate element after browser navigation
-    $(window).bind('hashchange', function (e) {
-        var url = window.location.href;
-        if (lastUrl !== url) {
-            me.elements.each(function (index) {
-                var elem = $(this);
-                var isActive = url.match(new RegExp('^' + elem.data('active-pattern') + '$'));
-                changeState(elem, isActive);
-                if (isActive) {
-                    changePage(elem);
-                }
-            });
+    $(window).on('hashchange', function (e) {
+        var url = window.location.href,
+            isUrlInGroup = me.elements.filter(function (index) {
+                return (url.match(new RegExp('^' + $(me.elements[index]).data('active-pattern') + '$')) !== null);
+            }).length;
+
+        ftui.log(2, [me.widgetname, 'hashchange', me.area, url, 'isUrlInGroup', isUrlInGroup].join(' '));
+        if (isUrlInGroup) {
+            if (me.lastUrl !== url) {
+
+                me.elements.each(function (index) {
+                    var elem = $(this);
+                    var isActive = url.match(new RegExp('^' + elem.data('active-pattern') + '$')) !== null;
+
+                    changeState(elem, isActive);
+                    if (isActive) {
+                        changePage(elem);
+                    }
+                });
+            }
         }
+
+
     });
 
     function loadPage(elem) {
@@ -118,14 +124,18 @@ var Modul_pagebutton = function () {
             });
         });
 
-        lastUrl = window.location.href;
-        sessionStorage.setItem('ftui.pagebutton.lastSel', page);
-        startReturnTimer(me.elements.eq(0));
+        me.lastUrl = window.location.href;
+
+        sessionStorage.setItem('ftui.pagebutton.' + me.area + '.lastSel', me.lastUrl);
+        if (me.returnElem && !me.returnElem.data('active')) {
+            startReturnTimer(me.returnElem);
+
+        }
     }
 
     function showPage(elemPage, duration) {
 
-        if (elemPage.length > 0) {
+        if (elemPage.length) {
             if (duration === 0) {
                 elemPage.siblings().filter('.page.active').removeClass("active").hide();
                 elemPage.addClass('active').show();
@@ -146,35 +156,30 @@ var Modul_pagebutton = function () {
     function startReturnTimer(elem) {
 
         var waitUntilReturn = elem.data('return-time');
-        var lastUrl = sessionStorage.getItem('ftui.pagebutton.lastSel');
-        var returnTimer = sessionStorage.getItem('ftui.pagebutton.returnTimer');
+        var lastUrl = sessionStorage.getItem('ftui.pagebutton.' + me.area + '.lastSel');
+        var returnTimer = sessionStorage.getItem('ftui.pagebutton.' + me.area + '.returnTimer');
         clearTimeout(returnTimer);
         if (waitUntilReturn > 0 && lastUrl !== elem.data('load')) {
-            ftui.log(1, 'Reload main page in : ' + waitUntilReturn + ' seconds');
             returnTimer = setTimeout(function () {
                 // back to first page
+                ftui.log(2, [me.widgetname, 'ReturnTimer go back in', waitUntilReturn, 'sec'].join(' '));
                 me.toggleOn(elem);
             }, waitUntilReturn * 1000);
-            sessionStorage.setItem('ftui.pagebutton.returnTimer', returnTimer);
+            sessionStorage.setItem('ftui.pagebutton.' + me.area + '.returnTimer', returnTimer);
         }
     }
 
     function changeState(elem, isOn) {
+        elem.data('active', isOn);
         var faelem = elem.data('famultibutton');
         if (isOn) {
             if (faelem) {
                 faelem.setOn();
             }
-            // overwrite default colors for showMultiStates
-            elem.data('on-colors', [elem.data('on-color')]);
-            elem.data('on-background-colors', [elem.data('on-background-color')]);
         } else {
             if (faelem) {
                 faelem.setOff();
             }
-            // overwrite default colors for showMultiStates
-            elem.data('on-colors', [elem.data('off-color')]);
-            elem.data('on-background-colors', [elem.data('off-background-color')]);
         }
         var state = elem.getReading('get').val;
         if (ftui.isValid(state)) {
@@ -185,26 +190,25 @@ var Modul_pagebutton = function () {
         }
     }
 
-
-
     function init_attr(elem) {
 
         elem.initData('off-color', '#505050');
         elem.initData('off-background-color', elem.data('background-color') || 'transparent');
         elem.initData('on-color', ftui.getClassColor(elem) || '#2A2A2A');
         elem.initData('on-background-color', elem.data('background-color') || '#505050');
-        
+
         //init standard attributes 
         base.init_attr.call(me, elem);
-
 
         elem.initData('background-icon', 'fa-circle');
         elem.initData('active-pattern', '.*/' + elem.data('url'));
         elem.initData('get-warn', -1);
         elem.initData('blink', 'off');
         elem.initData('fade-duration', 'slow');
-        elem.initData('return-time', 0);
 
+        if (elem.isValidData('return-time')) {
+            me.returnElem = elem;
+        }
     }
 
     function init_ui(elem) {
@@ -215,13 +219,12 @@ var Modul_pagebutton = function () {
         var sel = elem.data('load');
         var dataUrl = elem.data('url');
         var hashUrl = (ftui.isValid(dataUrl)) ? dataUrl.replace('#', '') : '';
+        var url = window.location.pathname + (hasHash ? window.location.hash : '');
         if (hasHash) {
             elem.removeClass('default');
         }
 
-
         // is-current-button detection
-        var url = window.location.pathname + (hasHash ? window.location.hash : '');
         var isActive = url.match(new RegExp('^' + elem.data('active-pattern') + '$'));
         if (isActive || (ftui.config.filename === '' && dataUrl === 'index.html')) {
             elem.siblings().removeClass('default');
@@ -229,22 +232,13 @@ var Modul_pagebutton = function () {
         }
         changeState(elem, isActive);
 
-        // multi state support
-        var states = elem.data('states') || elem.data('get-on');
-        if ($.isArray(states)) {
-            var idx = ftui.indexOfGeneric(states, url);
-            me.showMultiStates(elem, states, url, idx);
-        }
-
         // remove all left locks
         var lockID = ['ftui', me.widgetname, hashUrl, sel].join('.');
         sessionStorage.removeItem(lockID);
 
 
-        isActive = false;
         // prefetch page if necessary
-        if (elem.isValidData('load') && elem.isValidData('url') && (elem.hasClass('prefetch')) &&
-            (!isActive)) {
+        if (elem.isValidData('load') && elem.isValidData('url') && (elem.hasClass('prefetch'))) {
             // pre fetch sub pages delayed
             var delay = fetchCount * ftui.poll.shortPollDuration;
             fetchCount++;
@@ -258,31 +252,15 @@ var Modul_pagebutton = function () {
         }
 
         // start return timer after last activity
-        if (me.elements.eq(0).data('return-time') > 0) {
+        if (me.returnElem && me.returnElem.data('return-time') > 0) {
             $('body').once('touchend mouseup', function (e) {
-                startReturnTimer(me.elements.eq(0));
+                startReturnTimer(me.returnElem);
             });
         }
 
         if (!elem.hasClass('notitle')) {
             elem.attr('title', elem.data('url'));
         }
-
-        elem.on("toggleOn", function (event) {
-
-            // only set this button to active just before switching page
-            me.elements.each(function (index) {
-                changeState($(this), false);
-            });
-            changeState(elem, true);
-
-            // delay next action to render changes
-            setTimeout(function () {
-                changePage(elem);
-            }, 10);
-        });
-
-
     }
 
     function toggleOff(elem) {

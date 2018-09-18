@@ -186,14 +186,14 @@ var Modul_famultibutton = function () {
         }
     }
 
-    function showMultiStates(elem, states, state, idxOn) {
+    function showMultiStates(elem, states, state) {
 
         var idx = ftui.indexOfGeneric(states, state);
         if (idx > -1) {
             var faelem = elem.data('famultibutton');
             if (faelem) {
-
-                if (idx === idxOn || state == elem.data('set-on')) {
+                var isOn = elem.isValidData('active') ? elem.data('active') : (state == elem.data('set-on'));
+                if (isOn) {
                     faelem.setOn();
                 } else {
                     faelem.setOff();
@@ -206,34 +206,32 @@ var Modul_famultibutton = function () {
                     colors = elem.data("colors"),
                     bgcolors = elem.data("background-colors");
 
-                void 0 === icons && (icons = new Array(elem.data("icon") || "fa-power-off"));
-                void 0 === classes && (classes = new Array(""));
-                void 0 === bgicons && (bgicons = new Array(elem.data("background-icon") || ""));
-                void 0 === colors && (colors = new Array(((faelem.getState()) ? elem.data("on-color") : elem.data("off-color")) || "#505050"));
-                void 0 === bgcolors && (bgcolors = new Array(((faelem.getState()) ? elem.data("on-background-color") : elem.data("off-background-color")) || "#505050"));
-
-                for (var i = 0, len = states.length; i < len; i++) {
-                    void 0 === icons[i] && (icons[i] = icons[i > 0 ? i - 1 : 0]);
-                    void 0 === classes[i] && (classes[i] = classes[i > 0 ? i - 1 : 0]);
-                    void 0 === bgicons[i] && (bgicons[i] = bgicons[i > 0 ? i - 1 : 0]);
-                    void 0 === colors[i] && (colors[i] = colors[i > 0 ? i - 1 : 0]);
-                    void 0 === bgcolors[i] && (bgcolors[i] = bgcolors[i > 0 ? i - 1 : 0]);
-                }
-
-                //elem.children().children('#fg');
                 sessionStorage.setItem(['ftui', elem.widgetId(), 'idx'].join('.'), idx);
                 var faElem = elem.find('.famultibutton');
-                faElem.removeClass(classes.join(" "));
-                faElem.addClass(classes[idx]);
 
-                // Get color values from reading or from fix array
-                var colorValue = (colors[idx].match(/:/)) ? elem.getReading("colors",idx).val : colors[idx];
-                var bgColorValue = (bgcolors[idx].match(/:/)) ? elem.getReading("background-colors",idx).val : bgcolors[idx];
-                
-                faelem.setForegroundIcon(icons[idx]);
-                faelem.setForegroundColor(ftui.getStyle('.' + colorValue, 'color') || colorValue);
-                faelem.setBackgroundIcon(bgicons[idx]);
-                faelem.setBackgroundColor(ftui.getStyle('.' + bgColorValue, 'color') || bgColorValue);
+
+                if (classes !== void 0 && classes[idx] !== void 0) {
+                    faElem.removeClass(classes.join(" "));
+                    faElem.addClass(classes[idx]);
+                }
+
+                if (colors !== void 0 && colors[idx] !== void 0) {
+                    var colorValue = (colors[idx].match(/:/)) ? elem.getReading("colors", idx).val : colors[idx];
+                    faelem.setForegroundColor(ftui.getStyle('.' + colorValue, 'color') || colorValue);
+                }
+
+                if (bgcolors !== void 0 && bgcolors[idx] !== void 0) {
+                    var bgColorValue = (bgcolors[idx].match(/:/)) ? elem.getReading("background-colors", idx).val : bgcolors[idx];
+                    faelem.setBackgroundColor(ftui.getStyle('.' + bgColorValue, 'color') || bgColorValue);
+                }
+
+                if (icons !== void 0 && icons[idx] !== void 0) {
+                    faelem.setForegroundIcon(icons[idx]);
+                }
+
+                if (bgicons !== void 0 && bgicons[idx] !== void 0) {
+                    faelem.setBackgroundIcon(bgicons[idx]);
+                }
             }
         }
     }
@@ -380,9 +378,9 @@ var Modul_famultibutton = function () {
                 break;
             case 'js-cmd':
                 eval(target);
-                break;                
+                break;
             case 'fhem-cmd':
-                if (device &&  device !== void 0 && device !== " ") {
+                if (device && device !== void 0 && device !== " ") {
                     ftui.toast(target);
                 }
                 ftui.setFhemStatus(target);
@@ -565,7 +563,7 @@ var Modul_famultibutton = function () {
         if (elem.isDeviceReading("off-background-color")) {
             me.addReading(elem, "off-background-color");
         }
-        
+
         me.extractReadings(elem, "colors");
         me.extractReadings(elem, "background-colors");
     }

@@ -3,7 +3,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.7.2
+ * Version: 2.7.3
  *
  * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -451,7 +451,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.7.2',
+    version: '2.7.3',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -885,10 +885,15 @@ var ftui = {
         var defer = new $.Deferred();
         area = (ftui.isValid(area)) ? area : 'html';
         var types = [];
-        ftui.log(3, plugins);
+        ftui.log(2, 'initWidgets before- area=' + area);
+        ftui.log(2, $.map(plugins.modules, function (m) {
+            return (m.area + ':' + m.widgetname);
+        }).join('  '));
         plugins.removeArea(area);
-        ftui.log(3, plugins);
-        ftui.log(2, 'initWidgets - area=' + area);
+        ftui.log(2, 'initWidgets after removed- area=' + area);
+        ftui.log(2, $.map(plugins.modules, function (m) {
+            return (m.area + ':' + m.widgetname);
+        }).join('  '));
 
         // collect required widgets types
         $('[data-type] ', area).each(function (index) {
@@ -1091,7 +1096,9 @@ var ftui = {
                             paramCount + " parameter(s)");
                     }
                     ftui.log(1, 'shortPoll: Done');
-                    if (ftui.poll.short.lastErrorToast) { ftui.poll.short.lastErrorToast.reset(); }
+                    if (ftui.poll.short.lastErrorToast) {
+                        ftui.poll.short.lastErrorToast.reset();
+                    }
                     ftui.states.lastShortpoll = ltime;
                     ftui.poll.short.duration = duration * 1000;
                     ftui.poll.short.lastTimestamp = new Date();
@@ -1149,7 +1156,9 @@ var ftui = {
                 ftui.log(3, 'valid ftui.poll.long.websocket found');
                 return;
             }
-            if (ftui.poll.long.lastErrorToast) { ftui.poll.long.lastErrorToast.reset(); }
+            if (ftui.poll.long.lastErrorToast) {
+                ftui.poll.long.lastErrorToast.reset();
+            }
             if (ftui.config.debuglevel > 1) {
                 ftui.toast("Longpoll (WebSocket) started");
             }
@@ -1231,7 +1240,9 @@ var ftui = {
                 return;
             }
             ftui.poll.long.currLine = 0;
-            if (ftui.poll.long.lastErrorToast) { ftui.poll.long.lastErrorToast.reset(); }
+            if (ftui.poll.long.lastErrorToast) {
+                ftui.poll.long.lastErrorToast.reset();
+            }
             if (ftui.config.DEBUG) {
                 if (ftui.states.longPollRestart)
                     ftui.toast("Longpoll (AJAX) re-started");
@@ -1420,7 +1431,7 @@ var ftui = {
                 XHR: "1"
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                ftui.toast("<u>FHEM Command failed</u><br>" + textStatus + ": " + errorThrown, 'error');
+                ftui.toast("<u>FHEM Command failed</u><br>" + textStatus + ": " + errorThrown + " cmd=" + cmdline, 'error');
             }
         });
 

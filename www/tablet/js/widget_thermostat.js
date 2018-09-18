@@ -8,7 +8,7 @@
 "use strict";
 
 function depends_thermostat() {
-    if (typeof window["Modul_knob"] === 'undefined' || !$.fn.knob) {
+    if (window["Modul_knob"] === void 0|| !$.fn.knob) {
         return ["knob"];
     }
 }
