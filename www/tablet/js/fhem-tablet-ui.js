@@ -3,7 +3,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.7.3
+ * Version: 2.7.4
  *
  * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -400,8 +400,8 @@ var plugins = {
         }
 
         // build filter
-        var devicelist = (ftui.devs.length > 0) ? $.map(ftui.devs, $.trim).join() : '.*';
-        var readinglist = (ftui.reads.length > 0) ? $.map(ftui.reads, $.trim).join(' ') : '';
+        var devicelist = (ftui.devs.length) ? $.map(ftui.devs, $.trim).join() : '.*';
+        var readinglist = (ftui.reads.length) ? $.map(ftui.reads, $.trim).join(' ') : '';
 
         if (!ftui.config.longPollFilter) {
             ftui.poll.long.filter = devicelist + ', ' + readinglist;
@@ -451,7 +451,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.7.3',
+    version: '2.7.4',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -812,7 +812,7 @@ var ftui = {
 
         }
 
-        if ($('.gridster', area).length > 0) {
+        if ($('.gridster', area).length) {
 
             if (!$('link[href$="lib/jquery.gridster.min.css"]').length)
                 $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir +
@@ -920,23 +920,23 @@ var ftui = {
 
     initHeaderLinks: function () {
 
-        if (($('[class*=fa-]').length > 0 ||
-                $('[data-type="select"]').length > 0 ||
-                $('[data-type="homestatus"]').length > 0) &&
+        if (($('[class*=fa-]').length ||
+                $('[data-type="select"]').length ||
+                $('[data-type="homestatus"]').length) &&
             !$('link[href$="lib/font-awesome.min.css"]').length
         )
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/font-awesome.min.css" type="text/css" />');
-        if ($('[class*=oa-]').length > 0 && !$('link[href$="lib/openautomation.css"]').length)
+        if ($('[class*=oa-]').length && !$('link[href$="lib/openautomation.css"]').length)
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/openautomation.css" type="text/css" />');
-        if ($('[class*=fs-]').length > 0 && !$('link[href$="lib/fhemSVG.css"]').length)
+        if ($('[class*=fs-]').length && !$('link[href$="lib/fhemSVG.css"]').length)
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/fhemSVG.css" type="text/css" />');
-        if ($('[class*=mi-]').length > 0 && !$('link[href$="lib/material-icons.min.css"]').length)
+        if ($('[class*=mi-]').length && !$('link[href$="lib/material-icons.min.css"]').length)
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir +
                 'lib/material-icons.min.css" type="text/css" />');
-        if ($('[class*=wi-]').length > 0 && !$('link[href$="lib/weather-icons.min.css"]').length)
+        if ($('[class*=wi-]').length && !$('link[href$="lib/weather-icons.min.css"]').length)
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir +
                 'lib/weather-icons.min.css" type="text/css" />');
-        if ($('[class*=wi-wind]').length > 0 && !$('link[href$="lib/weather-icons-wind.min.css"]').length)
+        if ($('[class*=wi-wind]').length && !$('link[href$="lib/weather-icons-wind.min.css"]').length)
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir +
                 'lib/weather-icons-wind.min.css" type="text/css" />');
     },
@@ -1455,7 +1455,7 @@ var ftui = {
                                 '!important', ''));
                         }
                     }
-                    if (Object.keys(params).length > 0)
+                    if (Object.keys(params).length)
                         ftui.config.styleCollection[elmName] = params;
                 }
             }
@@ -1572,7 +1572,7 @@ var ftui = {
     },
 
     getDeviceParameter: function (devname, paraname) {
-        if (devname && devname.length > 0) {
+        if (devname && devname.length) {
             var params = ftui.deviceStates[devname];
             return (params && params[paraname]) ? params[paraname] : null;
         }
@@ -2462,7 +2462,7 @@ function onjQueryLoaded() {
             devname = temp[0].replace('[', '');
             paraname = temp[1].replace(']', '');
         }
-        if (devname && devname.length > 0) {
+        if (devname && devname.length) {
             var params = ftui.deviceStates[devname];
             return (params && params[paraname]) ? params[paraname] : {};
         }

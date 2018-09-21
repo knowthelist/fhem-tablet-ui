@@ -797,6 +797,12 @@ main > .box.horizontal {
     height: 100%;
 }
 
+.vbox {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+}
+
 .vbox,
 .card,
 .box.vertical,
@@ -963,6 +969,11 @@ main > .box.horizontal {
 .box.vertical.items-left,
 .vbox.items-left {
     align-items: flex-start;
+}
+
+.box.vertical.items-center,
+.vbox.items-center {
+    align-items: center;
 }
 
 .card {
@@ -2081,81 +2092,101 @@ div[data-type="link"] > div.fa {
     margin-right: -4em !important;
 }
 
+.mt,
+.mt-1,
 .top-space,
 .top-space-50 {
     margin-top: 1em !important;
 }
 
+.mt-2,
 .top-space-2x,
 .top-space-2,
 .top-space-100 {
     margin-top: 2em !important;
 }
 
+.mt-3,
 .top-space-3x,
 .top-space-3,
 .top-space-150 {
     margin-top: 3em !important;
 }
 
+.mt-4,
 .top-space-4x,
 .top-space-4,
 .top-space-200 {
     margin-top: 4em !important;
 }
 
+.ml,
+.ml-1,
 .left-space {
     margin-left: 1em !important;
 }
 
+.ml-2,
 .left-space-2x,
 .left-space-2 {
     margin-left: 2em !important;
 }
 
+.ml-3,
 .left-space-3x,
 .left-space-3 {
     margin-left: 3em !important;
 }
 
+.ml-4,
 .left-space-4x,
 .left-space-4 {
     margin-left: 4em !important;
 }
 
+.mr,
+.mr-1,
 .right-space {
     margin-right: 1em !important;
 }
 
+.mr-2,
 .right-space-2x,
 .right-space-2 {
     margin-right: 2em !important;
 }
 
+.mr-3,
 .right-space-3x,
 .right-space-3 {
     margin-right: 3em !important;
 }
 
+.mr-4,
 .right-space-4x,
 .right-space-4 {
     margin-right: 4em !important;
 }
 
+.mb,
+.mb-1,
 .bottom-space {
     margin-bottom: 1em !important;
 }
 
+.mb-2,
 .bottom-space-2x,
 .bottom-space-2 {
     margin-bottom: 2em !important;
 }
 
+.mb-3,
 .bottom-space-3x,
 .bottom-space-3 {
     margin-bottom: 3em !important;
 }
 
+.mb-4,
 .bottom-space-4x,
 .bottom-space-4 {
     margin-bottom: 4em !important;
@@ -2729,7 +2760,7 @@ img.mini,
 
 .famultibutton [class^="fa fa-stack-1x fa-"]:not(.fa-v5) {
     font-size: 0.95em;
-    margin-top: -0.05em;
+    margin-top: -0.1em;
 }
 
 /* FA 5.* normal and inverted */

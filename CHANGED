@@ -1,6 +1,5 @@
 FHEM Tablet UI last change:
  2018-09-19
- - widget_weather: extented Proplanta-WeatherIcons map
- - widget_homestatus: optimized position for text and icons
- - widget_pagebutton: optimized return-timer and multistate support
- - widget_reload: new widget
+ - jQuery 3.3.1
+ - Font Awesome 5.3
+ - JQuery-ui minimal

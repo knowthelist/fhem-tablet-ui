@@ -201,7 +201,7 @@ var Modul_pagebutton = function () {
         base.init_attr.call(me, elem);
 
         elem.initData('background-icon', 'fa-circle');
-        elem.initData('active-pattern', '.*/' + elem.data('url'));
+        elem.initData('active-pattern', '.*' + elem.data('url'));
         elem.initData('get-warn', -1);
         elem.initData('blink', 'off');
         elem.initData('fade-duration', 'slow');
