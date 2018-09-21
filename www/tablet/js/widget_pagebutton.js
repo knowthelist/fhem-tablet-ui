@@ -86,7 +86,6 @@ var Modul_pagebutton = function () {
                             $(page).addClass('loaded');
                             ftui.initPage(page);
                             deferred.resolve();
-
                         });
                     } else {
                         ftui.log(1, me.widgetname + ': load is locked. ID=' + lockID);
