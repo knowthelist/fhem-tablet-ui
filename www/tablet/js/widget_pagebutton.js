@@ -33,28 +33,21 @@ var Modul_pagebutton = function () {
 
     // activate element after browser navigation
     $(window).on('hashchange', function (e) {
-        var url = window.location.href,
-            isUrlInGroup = me.elements.filter(function (index) {
-                return (url.match(new RegExp('^' + $(me.elements[index]).data('active-pattern') + '$')) !== null);
-            }).length;
+        var url = window.location.href;
 
-        ftui.log(2, [me.widgetname, 'hashchange', me.area, url, 'isUrlInGroup', isUrlInGroup].join(' '));
-        if (isUrlInGroup) {
-            if (me.lastUrl !== url) {
+        ftui.log(2, [me.widgetname, 'hashchange', me.area, url].join(' '));
 
-                me.elements.each(function (index) {
-                    var elem = $(this);
-                    var isActive = url.match(new RegExp('^' + elem.data('active-pattern') + '$')) !== null;
+        me.elements.each(function (index) {
+            var elem = $(this);
+            var isActive = url.match(new RegExp('^' + elem.data('active-pattern') + '$')) !== null;
 
-                    changeState(elem, isActive);
-                    if (isActive) {
-                        changePage(elem);
-                    }
-                });
+            if (isActive !== elem.data('active')) {
+                changeState(elem, isActive);
+                if (isActive) {
+                    changePage(elem);
+                }
             }
-        }
-
-
+        });
     });
 
     function loadPage(elem) {
