@@ -23,7 +23,7 @@ var Modul_pagebutton = function () {
     $(document).one("initWidgetsDone", function (e, area) {
         var defaultElem = me.elements.filter('.default').first();
         if (!defaultElem.length) {
-            defaultElem = me.returnElem || me.elements.first();
+            defaultElem = me.returnElem || me.elements.filter('[data-load]').first();
         }
         if (defaultElem.length) {
             changeState(defaultElem, true);

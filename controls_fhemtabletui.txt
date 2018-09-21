@@ -94,7 +94,7 @@ UPD 2018-08-24_23:15:53 5252 www/tablet/js/widget_checkbox.js
 UPD 2018-02-06_11:06:22 3390 www/tablet/js/widget_checklist.js
 UPD 2018-08-23_21:25:06 3143 www/tablet/js/widget_circlemenu.js
 UPD 2018-01-21_14:50:26 1684 www/tablet/js/widget_classchanger.js
-UPD 2018-03-12_23:10:34 5829 www/tablet/js/widget_clock.js
+UPD 2018-09-21_22:34:06 5954 www/tablet/js/widget_clock.js
 UPD 2018-01-13_16:41:02 3312 www/tablet/js/widget_colorwheel.js
 UPD 2018-01-21_14:50:53 5053 www/tablet/js/widget_controlbutton.js
 UPD 2017-09-22_08:48:55 7740 www/tablet/js/widget_controller.js
@@ -127,7 +127,7 @@ UPD 2017-12-30_20:03:28 5596 www/tablet/js/widget_medialist.js
 UPD 2017-11-19_14:35:00 2975 www/tablet/js/widget_meteogram.js
 UPD 2018-03-14_00:09:15 3530 www/tablet/js/widget_multistatebutton.js
 UPD 2018-01-21_14:55:44 3841 www/tablet/js/widget_notify.js
-UPD 2018-09-21_07:26:39 10675 www/tablet/js/widget_pagebutton.js
+UPD 2018-09-21_23:11:41 10697 www/tablet/js/widget_pagebutton.js
 UPD 2018-03-24_10:12:21 8748 www/tablet/js/widget_pagetab.js
 UPD 2018-08-27_22:21:48 5772 www/tablet/js/widget_playstream.js
 UPD 2018-08-16_07:43:39 9665 www/tablet/js/widget_popup.js

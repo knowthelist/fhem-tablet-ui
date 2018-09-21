@@ -1,5 +1,4 @@
 FHEM Tablet UI last change:
- 2018-09-19
- - jQuery 3.3.1
- - Font Awesome 5.3
- - JQuery-ui minimal
+ 2018-09-21
+ - widget_pagebutton: bugfix for just url buttons
+ - widget_clock: corrects intervals < 100ms to 1000ms

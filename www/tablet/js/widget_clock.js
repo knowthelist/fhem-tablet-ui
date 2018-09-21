@@ -18,6 +18,10 @@ var Modul_clock = function () {
         elem.initData('shortmonth-length', 3);
         elem.initData('months', ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]);
 
+        // avoid extrem values
+        if (elem.data('interval') < 100) {
+           elem.data('interval', 1000); 
+        }
 
         if (!$.isArray(elem.data('days'))) {
             if (elem.data('days').match(/englisc?h/)) {
