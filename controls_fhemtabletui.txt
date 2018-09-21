@@ -191,6 +191,7 @@ UPD 2017-02-11_14:27:26 3021 www/tablet/lib/jquery.gridster.min.css
 UPD 2017-02-11_14:27:26 44235 www/tablet/lib/jquery.gridster.min.js
 UPD 2018-03-23_21:12:27 27376 www/tablet/lib/jquery.knob.mod.js
 UPD 2018-03-23_23:10:33 11139 www/tablet/lib/jquery.knob.mod.min.js
+UPD 2018-09-20_23:38:37 86926 www/tablet/lib/jquery.min.js
 UPD 2017-02-11_14:27:26 4508 www/tablet/lib/jquery.toast.min.css
 UPD 2017-02-11_14:27:26 6255 www/tablet/lib/jquery.toast.min.js
 UPD 2017-12-27_21:52:03 1793 www/tablet/lib/jquery.unveil.js
