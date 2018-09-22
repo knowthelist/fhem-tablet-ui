@@ -180,7 +180,7 @@ UPD 2017-02-11_14:27:26 1211 www/tablet/lib/highcharts/themes/grid-light.js
 UPD 2017-02-11_14:27:26 1794 www/tablet/lib/highcharts/themes/grid.js
 UPD 2017-02-11_14:27:26 1684 www/tablet/lib/highcharts/themes/sand-signika.js
 UPD 2017-02-11_14:27:26 1764 www/tablet/lib/highcharts/themes/skies.js
-UPD 2018-09-21_00:14:36 93307 www/tablet/lib/jquery-ui.min.js
+UPD 2018-09-22_08:35:20 228509 www/tablet/lib/jquery-ui.min.js
 UPD 2018-08-23_21:24:32 11308 www/tablet/lib/jquery.circlemenu.js
 UPD 2018-08-23_21:24:47 5746 www/tablet/lib/jquery.circlemenu.min.js
 UPD 2017-02-11_14:27:26 18412 www/tablet/lib/jquery.datetimepicker.css
