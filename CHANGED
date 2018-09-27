@@ -1,5 +1,3 @@
 FHEM Tablet UI last change:
- 2018-09-21
- - widget_pagebutton: bugfix for just url buttons
- - widget_clock: corrects intervals < 100ms to 1000ms
- - widget_chart: corrections for fa-5 icons and more
+ 2018-09-27
+ - added toHoursFromMin() function

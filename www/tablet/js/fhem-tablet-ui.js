@@ -3,7 +3,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.7.4
+ * Version: 2.7.5
  *
  * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -451,7 +451,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.7.4',
+    version: '2.7.5',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -2124,6 +2124,13 @@ String.prototype.toMinFromSec = function () {
     return mm + ":" + (ss[1] ? ss : "0" + ss[0]);
 };
 
+String.prototype.toHoursFromMin = function () {
+    var x = Number(this);
+    var hh = (Math.floor(x / 60)).toString();
+    var mm = (x  - (hh * 60)).toString();
+    return hh + ":" + (mm[1] ? mm : "0" + mm[0]);
+};
+
 String.prototype.toHoursFromSec = function () {
     var x = Number(this);
     var hh = (Math.floor(x / 3600)).toString();
@@ -2430,6 +2437,12 @@ function onjQueryLoaded() {
         }
     };
 
+    $.fn.isUrlData = function (key) {
+        var data = $(this).data(key);
+        var regExURL=/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+        return data && data.match(regExURL);
+    };
+    
     $.fn.isDeviceReading = function (key) {
         var reading = $(this).data(key);
         return reading && !$.isNumeric(reading) && typeof reading === 'string' && reading.match(/^[\w\s-.]+:[\w\s-]+$/);

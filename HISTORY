@@ -1,5 +1,8 @@
 FHEM Tablet UI change history:
 
+ 2018-09-27
+ - added toHoursFromMin() function
+ 
  2018-09-21
  - widget_pagebutton: bugfix for just url buttons
  - widget_clock: corrects intervals < 100ms to 1000ms
