@@ -2,8 +2,8 @@
  * Copyright (c) 2015-2017 Kurt Eckert
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-/* Version 2.8
-/* Compatible FTUI Version >= 2.7.2
+/* Version 2.7
+/* Compatible FTUI Version >= 2.6
 
 /* global ftui:true, Modul_widget:true, Powerange:true */
 
@@ -351,9 +351,11 @@ var widget_chart = {
 		var defs = $(document).find('body').children('svg');
 		if (defs.length <= 0) defs = $(document).find('body').children().first();
 		var offset;
-		var scale = (max-min)/(maxgraph-mingraph);
-		var y1 = 0-(max-maxgraph)/(max-min)*scale*100;
-		var y2 = 100+(mingraph-min)/(max-min)*scale*100;
+		var mingr = (style&&style.length&&style[0]=='fill')?Math.min(min,mingraph):mingraph;
+		var maxgr = maxgraph;
+		var scale = (max-min)/(maxgr-mingr);
+		var y1 = 0-(max-maxgr)/(max-min)*scale*100;
+		var y2 = 100+(mingr-min)/(max-min)*scale*100;
 		var grID = instance+'_'+(k+1); // gradient ID, assuming that there are not more than 10000 instances of chart widgets per page.
 		var styledef, styledeftext;
 		var newdef = '<svg class="dyndefs" style="position: absolute; height: 0px;"><defs><linearGradient id="gr_ftui'+(grID)+'" x1="0%" y1="'+y1+'%" x2="0%" y2="'+y2+'%">';
@@ -2432,6 +2434,8 @@ var widget_chart = {
 	},
 
 	show_busy: function(elem,show) {
+		if (!elem.hasClass('showbusy')) return;
+
 		var data = elem.data();
 
 		if (elem.find('svg.basesvg'+data.instance).find('[id=baseforDDD]').length < 1) return;
@@ -2719,7 +2723,7 @@ var widget_chart = {
 		if ($.isArray(data.y_margin_sec)) y_margin_sec=[parseInt(data.y_margin_sec[0]),parseInt(data.y_margin_sec[data.y_margin_sec.length-1])]; else y_margin_sec=[parseInt(data.y_margin_sec),parseInt(data.y_margin_sec)];
 		var xticks = parseFloat( (data.xticks!="auto") ? data.xticks : -1 );
 		
-		var style_array = data.style;
+		var style_array_prep = data.style;
 		var ptype_array = data.ptype;
 		var uaxis_array = data.uaxis;
 		var legend_array = data.legend;
@@ -2909,7 +2913,7 @@ var widget_chart = {
 			ptype = widget_chart.getArrayValue(ptype_array,k,'lines');
 
 			legend = widget_chart.getArrayValue(legend_array,k,'Graph '+k);
-			style = widget_chart.getArrayValue(style_array,k,'');
+			style = widget_chart.getArrayValue(style_array_prep,k,'');
 			points = pointsarray[k].clone();
 			points_str = pointsstr[k].clone();
 
@@ -3075,6 +3079,7 @@ var widget_chart = {
 		data.textWidth_sec = [];
 
 		var aiDone = {primary: [], secondary: []};
+		var style_array = style_array_prep.clone(false);
 		
 		for (k=0; k<data.nGraphs; k++) {	// main loop for initializing value for different y-Axes
 			uaxis = widget_chart.getArrayValue(uaxis_array,k,'primary');
@@ -3107,7 +3112,7 @@ var widget_chart = {
 				data.textWidth_sec[AI] += ((noticks)?0:data.textHeight+2); // additional offset for axes descrption (text 90 deg)
 			}
 
-			style = widget_chart.getArrayValue(style_array,k,''); // set dynamic gradients
+			style = widget_chart.getArrayValue(style_array_prep,k,''); // set dynamic gradients
 			if ($.isArray(style)) {
 				style = widget_chart.generateGradient((!data.isPrimary(uaxis))?data.yLimits[AI].secondary.min:data.yLimits[AI].primary.min,(!data.isPrimary(uaxis))?data.yLimits[AI].secondary.max:data.yLimits[AI].primary.max,minvals[k],maxvals[k],style,instance,k);
 				style_array[k] = style;
@@ -4709,6 +4714,7 @@ function init () { // initialization of widget, run at widget creation/reload
 
 		data.getDefaultSize(elem);
 
+		function showDone(e) {e.data('initialized',true);} // set initialized value on return of show() function we have to wait for this before doing the refresh
 		if (elem.find("[class^=basesvg]").length <= 0) { // there is no basesvg for this instance existing yet, create one
 			widget_chart.instance++;
 
@@ -4719,7 +4725,6 @@ function init () { // initialization of widget, run at widget creation/reload
 			svgElement.appendTo(elem)
 				.css("width",elem.data('width') || data.defaultWidth)
 				.css("height",elem.data('height') || data.defaultHeight);
-			function showDone(e) {e.data('initialized',true);} // set initialized value on return of show() function we have to wait for this before doing the refresh
 			svgElement.show(10,showDone(elem));
 
 			data.timers={'running':false};

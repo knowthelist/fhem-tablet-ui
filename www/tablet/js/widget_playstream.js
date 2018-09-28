@@ -8,7 +8,7 @@
 "use strict";
 
 function depends_playstream() {
-    if (typeof Module_famultibutton == 'undefined' || !$.fn.famultibutton) {
+    if (window['Module_famultibutton'] === void 0 || !$.fn.famultibutton) {
         return ["famultibutton"];
     }
 }
@@ -16,10 +16,29 @@ function depends_playstream() {
 var Modul_playstream = function () {
 
     function startStream(elem) {
-        elem.data('audio').src = elem.data('url');
-        elem.data('audio').play().catch(function (error) {
+
+        var faElem = elem.data('famultibutton');
+
+        //stop all streams
+        me.elements.each(function (index, el) {
+            stopStream($(this));
+        });
+
+        faElem.setOn();
+
+        var audio = elem.data('audio');
+        var volume = elem.data('volume');
+
+        audio.src = elem.data('url');
+        audio.type = elem.data('type');
+        audio.load();
+        audio.play().catch(function (error) {
             ftui.log(1, "Error: " + error);
         });
+        if ($.isNumeric(volume)) {
+            audio.volume = parseInt(volume) / 100.0;
+        }
+
         var elemFgIcon = elem.children().children('#fg');
         elemFgIcon.removeClass();
         elemFgIcon.addClass('fa fa-stack-1x');
@@ -27,17 +46,16 @@ var Modul_playstream = function () {
     }
 
     function stopStream(elem) {
+
         var audio = elem.data('audio');
         audio.pause();
-        setTimeout(function () {
-            //This stops the stream from downloading
-            audio.src = null;
-            audio.load();
-        }, 0);
+        audio.src = null;
+        audio.load();
         var elemFgIcon = elem.children().children('#fg');
         elemFgIcon.removeClass();
         elemFgIcon.addClass('fa fa-stack-1x');
         elemFgIcon.addClass(elem.data('icon'));
+        elem.data('famultibutton').setOff();
     }
 
     function init() {
@@ -58,11 +76,17 @@ var Modul_playstream = function () {
             elem.initData('set-off', '');
             elem.initData('volume', 'volume');
             elem.initData('audio', new Audio());
+            elem.initData('type', 'audio/mpeg');
 
             elem.data('mode', 'toggle');
 
-            me.addReading(elem, 'url');
-            me.addReading(elem, 'volume');
+            if (!elem.isUrlData('url')) {
+                me.addReading(elem, 'url');
+            }
+
+            if (!$.isNumeric(elem.data('volume'))) {
+                me.addReading(elem, 'volume');
+            }
             me.init_attr(elem);
             me.init_ui(elem);
         });
@@ -70,30 +94,22 @@ var Modul_playstream = function () {
 
     function toggleOn(elem) {
 
-        //stop all streams
-        me.elements.each(function (index, el) {
-            var audio = elem.data('audio');
-            audio.pause();
-        });
-
-        //switch all paused buttons to OFF after 500ms
-        setTimeout(function () {
-            me.elements.each(function (index, el) {
-                if ($(this).data('audio').paused) {
-                    $(this).data('famultibutton').setOff();
-                    $(this).data('audio').src = null;
-                    $(this).data('audio').load();
-                }
-            });
-        }, 500);
-        
-        //start stream
         startStream(elem);
+        var setOn = elem.data('set-on');
+        if (setOn !== '') {
+            elem.data('value', setOn);
+            elem.transmitCommand();
+        }
     }
 
     function toggleOff(elem) {
-        //stop this streams
+
         stopStream(elem);
+        var setOff = elem.data('set-off');
+        if (setOff !== '') {
+            elem.data('value', setOff);
+            elem.transmitCommand();
+        }
     }
 
     function update(dev, par) {
@@ -104,18 +120,16 @@ var Modul_playstream = function () {
                 var elem = $(this);
                 var value = elem.getReading('get').val;
                 var state = ftui.getPart(value, elem.data('part'));
-                if (state) {
-                    var faelem = elem.data('famultibutton');
-                    if (faelem) {
+                var faElem = elem.data('famultibutton');
 
-                        if (elem.matchingState('get', state) === 'on') {
-                            faelem.setOn();
-                            startStream(elem);
-                        }
-                        if (elem.matchingState('get', state) === 'off') {
-                            faelem.setOff();
-                            stopStream(elem);
-                        }
+                if (elem.matchingState('get', state) === 'on') {
+                    if (faElem.getState() !== true) {
+                        startStream(elem);
+                    }
+                }
+                if (elem.matchingState('get', state) === 'off') {
+                    if (faElem.getState() !== false) {
+                        stopStream(elem);
                     }
                 }
             });
@@ -126,7 +140,7 @@ var Modul_playstream = function () {
                 var elem = $(this);
                 var volume = elem.getReading('volume').val;
                 if ($.isNumeric(volume)) {
-                    ftui.log(3, 'playstream - set volume to :', parseInt(volume) / 100.0);
+                    ftui.log(3, ['playstream - set volume to :', parseInt(volume) / 100.0].join(''));
                     elem.data('audio').volume = parseInt(volume) / 100.0;
                 }
             });
@@ -137,7 +151,7 @@ var Modul_playstream = function () {
                 var elem = $(this);
                 var url = elem.getReading('url').val;
                 if (ftui.isValid(url)) {
-                    ftui.log(3, 'playstream - set url to :', url);
+                    ftui.log(3, ['playstream - set url to :', url].join(''));
                     var isPlaying = !elem.data('audio').paused;
                     elem.data('audio').src = url;
                     elem.data('audio').load();

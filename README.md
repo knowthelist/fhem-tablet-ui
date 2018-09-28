@@ -304,6 +304,10 @@ data-substitution="toDate().ago()"              -  convert to time span (long fo
 
 data-substitution="toDate().ago('hh:mm:ss')"    -  convert to time span (short format)
 
+data-substitution="toString().toHoursFromSec()" -  convert to hours from secondes
+
+data-substitution="addFactor(x)" - calculation (e.g. "addFactor(0.0001).toFixed(1)")
+
 If you use class="timestamp" together with data-substitution="toDate().ago()" it is recommended to define data-refresh="xx" in secondes to refresh the value
 from time to time, in case the reading timestamp refresh rate is low.
 

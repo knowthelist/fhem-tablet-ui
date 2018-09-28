@@ -3,7 +3,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.7.5
+ * Version: 2.7.6
  *
  * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -172,7 +172,7 @@ var Modul_widget = function () {
                 return (value) ? value.replace(new RegExp(sub[1], sub[3]), sub[2]) : '';
             } else if (subst.match(/weekdayshort/))
                 return ftui.dateFromString(value).ee();
-            else if (subst.match(/.*\(\)/))
+            else if (subst.match(/.*\(.*\)/))
                 return eval('value.' + subst);
         }
         return value;
@@ -451,7 +451,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.7.5',
+    version: '2.7.6',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -2127,7 +2127,7 @@ String.prototype.toMinFromSec = function () {
 String.prototype.toHoursFromMin = function () {
     var x = Number(this);
     var hh = (Math.floor(x / 60)).toString();
-    var mm = (x  - (hh * 60)).toString();
+    var mm = (x - (hh * 60)).toString();
     return hh + ":" + (mm[1] ? mm : "0" + mm[0]);
 };
 
@@ -2137,6 +2137,11 @@ String.prototype.toHoursFromSec = function () {
     var ss = (Math.floor(x % 60)).toString();
     var mm = (Math.floor(x / 60) - (hh * 60)).toString();
     return hh + ":" + (mm[1] ? mm : "0" + mm[0]) + ":" + (ss[1] ? ss : "0" + ss[0]);
+};
+
+String.prototype.addFactor = function (factor) {
+    var x = Number(this);
+    return x * factor;
 };
 
 Date.prototype.addMinutes = function (minutes) {
@@ -2439,10 +2444,10 @@ function onjQueryLoaded() {
 
     $.fn.isUrlData = function (key) {
         var data = $(this).data(key);
-        var regExURL=/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+        var regExURL = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
         return data && data.match(regExURL);
     };
-    
+
     $.fn.isDeviceReading = function (key) {
         var reading = $(this).data(key);
         return reading && !$.isNumeric(reading) && typeof reading === 'string' && reading.match(/^[\w\s-.]+:[\w\s-]+$/);
@@ -2494,6 +2499,14 @@ function onjQueryLoaded() {
             this).valOfData('value')].join(' ');
         ftui.setFhemStatus(cmdl);
         ftui.toast(cmdl);
+    };
+
+    $.fn.otherThen = function (elem) {
+        return $(this).filter(function () {
+            var eq1 = $(this).wgid(),
+                eq2 = elem.wgid();
+            return eq1 !== eq2;
+        });
     };
 
 }
