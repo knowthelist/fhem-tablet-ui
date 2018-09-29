@@ -29,7 +29,7 @@ var Modul_playstream = function () {
         var audio = elem.data('audio');
         var volume = elem.data('volume');
 
-        audio.src = elem.data('url');
+        audio.src = elem.data('src');
         audio.type = elem.data('type');
         audio.load();
         audio.play().catch(function (error) {
@@ -82,6 +82,8 @@ var Modul_playstream = function () {
 
             if (!elem.isUrlData('url')) {
                 me.addReading(elem, 'url');
+            } else {
+                elem.data('src',elem.data('url'));
             }
 
             if (!$.isNumeric(elem.data('volume'))) {
@@ -152,12 +154,10 @@ var Modul_playstream = function () {
                 var url = elem.getReading('url').val;
                 if (ftui.isValid(url)) {
                     ftui.log(3, ['playstream - set url to :', url].join(''));
-                    var isPlaying = !elem.data('audio').paused;
-                    elem.data('audio').src = url;
-                    elem.data('audio').load();
-                    if (isPlaying) elem.data('audio').play().catch(function (error) {
-                        ftui.log(1, "Error: " + error);
-                    });
+                    elem.data('src', url);
+                    if ( !elem.data('audio').paused) {
+                        startStream(elem);
+                    }
                 }
             });
     }

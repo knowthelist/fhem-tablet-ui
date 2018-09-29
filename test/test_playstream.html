@@ -26,7 +26,7 @@
     <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
     <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
 
-    <script src="js/fhem-tablet-ui.js" defer></script>
+    <script src="js/fhem-tablet-ui.min.js" defer></script>
 
     <title>TEST-playstream</title>
 </head>
@@ -43,10 +43,13 @@
                             <div data-type="push" data-device="playstream" data-set-on="1" data-icon="none">1</div>
                             <div data-type="push" data-device="playstream" data-set-on="2" data-icon="none">2</div>
                             <div data-type="push" data-device="playstream" data-set-on="3" data-icon="none">3</div>
+                            <div data-type="push" data-device="playstream" data-set-on="4" data-icon="none">4</div>
                         </div>
-                        <div data-type="label" data-get="playstream:state" class="bigger hbox"></div>
+                        <div class="hbox">
+                            <div data-type="label" data-get="playstream:state" class="bigger hbox"></div>
+                            <div data-type="slider" data-device="playstream" data-get="volume" data-set="volume" class="grow-2"></div>
+                        </div>
                     </div>
-                    <div data-type="slider" data-device="playstream" data-get="volume" data-set="volume" class="grow-2"></div>
                 </div>
             </li>
             <li data-row="1" data-col="4" data-sizey="4" data-sizex="6">
@@ -87,8 +90,13 @@
             <li data-row="5" data-col="4" data-sizey="3" data-sizex="6">
                 <header>URL from Reading</header>
                 <div class="vbox">
-                    <div data-type="playstream" data-url="playstream:url" data-volume="50"></div>
+                    <div class="hbox items-space-around">
+                        <div data-type="playstream" data-url="playstream:url" data-volume="50"></div>
+                        <div data-type="playstream" data-device="playstream" data-get="state" data-get-on="4" data-set-on="4" data-url="url" data-volume="50"></div>
+                        </div>
+                    <div class="hbox">
                     <div data-type="label" data-get="playstream:url"></div>
+                        </div>
                 </div>
             </li>
             <li data-row="5" data-col="10" data-sizey="3" data-sizex="3">
