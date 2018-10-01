@@ -1,6 +1,3 @@
 FHEM Tablet UI last change:
- 2018-09-27 (v2.7.5)
- - added toHoursFromMin() function
- 2018-09-28  (v2.7.6)
- - widget_playstream: improved
- - added addFactor() function
+ 2018-10-01
+ - corrected fa-icon justage 
