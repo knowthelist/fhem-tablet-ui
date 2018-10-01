@@ -117,7 +117,7 @@ UPD 2018-01-21_14:54:12 1113 www/tablet/js/widget_include.js
 UPD 2018-01-18_21:41:36 3060 www/tablet/js/widget_input.js
 UPD 2017-02-11_14:27:26 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2018-01-09_20:25:53 2978 www/tablet/js/widget_joinedlabel.js
-UPD 2018-01-21_14:54:44 4568 www/tablet/js/widget_klimatrend.js
+UPD 2018-10-01_18:13:16 4777 www/tablet/js/widget_klimatrend.js
 UPD 2018-08-28_01:16:57 8382 www/tablet/js/widget_knob.js
 UPD 2018-04-09_21:33:59 6478 www/tablet/js/widget_label.js
 UPD 2017-12-26_20:30:09 806 www/tablet/js/widget_level.js
@@ -140,7 +140,7 @@ UPD 2018-01-21_14:59:28 1612 www/tablet/js/widget_rotor.js
 UPD 2017-12-01_22:36:55 7249 www/tablet/js/widget_scale.js
 UPD 2017-12-22_09:57:40 5722 www/tablet/js/widget_select.js
 UPD 2018-01-21_14:59:59 9875 www/tablet/js/widget_settimer.js
-UPD 2018-03-24_10:28:08 12991 www/tablet/js/widget_simplechart.js
+UPD 2018-10-01_18:04:53 13743 www/tablet/js/widget_simplechart.js
 UPD 2017-02-20_22:59:41 3118 www/tablet/js/widget_slideout.js
 UPD 2018-08-15_22:43:29 16306 www/tablet/js/widget_slider.js
 UPD 2018-04-05_17:32:57 12476 www/tablet/js/widget_spinner.js
