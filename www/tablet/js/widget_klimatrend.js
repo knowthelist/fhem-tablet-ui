@@ -59,6 +59,10 @@ var Modul_klimatrend = function () {
                     var sign = text.replace(/^([+-]).*/, '$1');
                     var reading = $(this).data('get');
                     var highmark = 99;
+                    var chop = 1 * $(this).data('data-chop') || 0;
+                    if ( chop > 0 ) {
+                      number = 1 * text.replace(/^([0-9]*).([0-9]).*/, '$1.$2');
+                    }
                     if ($(this).data('highmark')) {
                         highmark = $(this).data('highmark');
                     } else {
