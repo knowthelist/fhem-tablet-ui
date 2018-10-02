@@ -12,8 +12,8 @@ UPD 2018-04-03_01:31:38 7326 www/tablet/css/fhem-darkgreen-ui.css
 UPD 2018-04-02_23:22:10 2658 www/tablet/css/fhem-green-ui.css
 UPD 2018-04-02_23:24:25 7123 www/tablet/css/fhem-mobil-ui.css
 UPD 2017-02-05_13:50:40 6916 www/tablet/css/fhem-tablet-ui-wdtimer.css
-UPD 2018-10-01_17:55:56 63934 www/tablet/css/fhem-tablet-ui.css
-UPD 2018-10-01_17:56:47 47965 www/tablet/css/fhem-tablet-ui.min.css
+UPD 2018-10-03_01:02:59 64237 www/tablet/css/fhem-tablet-ui.css
+UPD 2018-10-03_01:06:51 48206 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2017-02-11_14:27:26 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2018-09-21_20:59:49 6600 www/tablet/css/ftui_chart.css
 UPD 2017-10-03_08:03:02 1132 www/tablet/css/ftui_checklist.css
@@ -48,9 +48,9 @@ UPD 2017-11-09_19:58:14 979105 www/tablet/fonts/fhemSVG.svg
 UPD 2017-10-03_19:36:50 226532 www/tablet/fonts/fhemSVG.ttf
 UPD 2017-10-03_19:36:50 226608 www/tablet/fonts/fhemSVG.woff
 UPD 2018-08-31_23:24:32 1076 www/tablet/fonts/fontawesome-License.txt
-UPD 2018-10-02_22:14:12 7352 www/tablet/fonts/FTUI-icons.svg
-UPD 2018-10-02_22:14:12 2892 www/tablet/fonts/FTUI-icons.ttf
-UPD 2018-10-02_22:14:12 2968 www/tablet/fonts/FTUI-icons.woff
+UPD 2018-10-03_00:31:48 6874 www/tablet/fonts/FTUI-icons.svg
+UPD 2018-10-03_00:31:48 2900 www/tablet/fonts/FTUI-icons.ttf
+UPD 2018-10-03_00:31:48 2976 www/tablet/fonts/FTUI-icons.woff
 UPD 2017-02-11_14:27:26 143258 www/tablet/fonts/MaterialIcons-Regular.eot
 UPD 2017-02-11_14:27:26 28416 www/tablet/fonts/MaterialIcons-Regular.ijmap
 UPD 2017-02-11_14:27:26 281658 www/tablet/fonts/MaterialIcons-Regular.svg

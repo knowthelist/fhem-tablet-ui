@@ -112,6 +112,21 @@ body {
 .ftui-window:before {
     content: "\ea01";
 }
+.ftui-circle-thin:before {
+    content: "\e906";
+}
+i#bg.fa.fa-stack-2x.ftui-circle-thin {
+    margin-top: -0.005em;
+    margin-left: 0.005em;
+}
+.ftui-square-o:before {
+    content: "\e907";
+}
+i#bg.fa.fa-stack-2x.ftui-square-o {
+    font-size: 2.2em;
+    margin-top: -0.035em;
+    margin-left: 0.01em;
+}
 
 a:link {
     text-decoration: none;
