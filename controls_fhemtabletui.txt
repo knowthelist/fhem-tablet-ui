@@ -48,9 +48,9 @@ UPD 2017-11-09_19:58:14 979105 www/tablet/fonts/fhemSVG.svg
 UPD 2017-10-03_19:36:50 226532 www/tablet/fonts/fhemSVG.ttf
 UPD 2017-10-03_19:36:50 226608 www/tablet/fonts/fhemSVG.woff
 UPD 2018-08-31_23:24:32 1076 www/tablet/fonts/fontawesome-License.txt
-UPD 2017-02-11_14:27:26 3165 www/tablet/fonts/FTUI-icons.svg
-UPD 2017-02-11_14:27:26 1688 www/tablet/fonts/FTUI-icons.ttf
-UPD 2017-02-11_14:27:26 1764 www/tablet/fonts/FTUI-icons.woff
+UPD 2018-10-02_22:14:12 7352 www/tablet/fonts/FTUI-icons.svg
+UPD 2018-10-02_22:14:12 2892 www/tablet/fonts/FTUI-icons.ttf
+UPD 2018-10-02_22:14:12 2968 www/tablet/fonts/FTUI-icons.woff
 UPD 2017-02-11_14:27:26 143258 www/tablet/fonts/MaterialIcons-Regular.eot
 UPD 2017-02-11_14:27:26 28416 www/tablet/fonts/MaterialIcons-Regular.ijmap
 UPD 2017-02-11_14:27:26 281658 www/tablet/fonts/MaterialIcons-Regular.svg
@@ -132,7 +132,7 @@ UPD 2018-03-24_10:12:21 8748 www/tablet/js/widget_pagetab.js
 UPD 2018-09-29_22:33:53 5838 www/tablet/js/widget_playstream.js
 UPD 2018-08-16_07:43:39 9665 www/tablet/js/widget_popup.js
 UPD 2017-12-30_19:57:22 3564 www/tablet/js/widget_progress.js
-UPD 2018-03-28_23:46:50 1785 www/tablet/js/widget_push.js
+UPD 2018-10-02_23:13:57 1776 www/tablet/js/widget_push.js
 UPD 2017-02-06_03:22:08 6051 www/tablet/js/widget_range.js
 UPD 2017-03-03_17:46:38 2323 www/tablet/js/widget_readingsgroup.js
 UPD 2018-09-19_01:16:29 1311 www/tablet/js/widget_reload.js

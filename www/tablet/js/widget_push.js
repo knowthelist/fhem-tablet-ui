@@ -8,7 +8,7 @@
 "use strict";
 
 function depends_push() {
-    if (typeof window["Modul_famultibutton"] === 'undefined' || !$.fn.famultibutton) {
+    if (window['Module_famultibutton'] === void 0 || !$.fn.famultibutton) {
         return ["famultibutton"];
     }
 }
@@ -30,7 +30,7 @@ var Modul_push = function () {
             elem.initData('off-background-color', elem.data('background-color') || '#505050');
             elem.initData('on-color', '#aa6900');
             elem.initData('on-background-color', '#aa6900');
-            elem.initData('background-icon', 'fa-circle-thin');
+            elem.initData('background-icon', 'ftui-circle-thin');
             elem.initData('set-on', 'on');
             elem.initData('set-off', '');
             elem.initData('get', '');
