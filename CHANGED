@@ -1,7 +1,6 @@
-FHEM Tablet UI last change:
- 2018-10-01
- - corrected fa-icon justage
- - merged pull requests
-  2018-10-02
+FHEM Tablet UI last changes:
+ 2018-10-02
  - ftui-circle-o
  - ftui-square-thin
+ 2018-10-04
+ - added minTime, maxTime to datetimepicker

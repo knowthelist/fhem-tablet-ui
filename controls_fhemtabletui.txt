@@ -48,9 +48,9 @@ UPD 2017-11-09_19:58:14 979105 www/tablet/fonts/fhemSVG.svg
 UPD 2017-10-03_19:36:50 226532 www/tablet/fonts/fhemSVG.ttf
 UPD 2017-10-03_19:36:50 226608 www/tablet/fonts/fhemSVG.woff
 UPD 2018-08-31_23:24:32 1076 www/tablet/fonts/fontawesome-License.txt
-UPD 2018-10-03_00:31:48 6874 www/tablet/fonts/FTUI-icons.svg
-UPD 2018-10-03_00:31:48 2900 www/tablet/fonts/FTUI-icons.ttf
-UPD 2018-10-03_00:31:48 2976 www/tablet/fonts/FTUI-icons.woff
+UPD 2018-10-03_11:25:34 6811 www/tablet/fonts/FTUI-icons.svg
+UPD 2018-10-03_11:25:34 2904 www/tablet/fonts/FTUI-icons.ttf
+UPD 2018-10-03_11:25:34 2980 www/tablet/fonts/FTUI-icons.woff
 UPD 2017-02-11_14:27:26 143258 www/tablet/fonts/MaterialIcons-Regular.eot
 UPD 2017-02-11_14:27:26 28416 www/tablet/fonts/MaterialIcons-Regular.ijmap
 UPD 2017-02-11_14:27:26 281658 www/tablet/fonts/MaterialIcons-Regular.svg
@@ -98,7 +98,7 @@ UPD 2018-09-21_22:34:06 5954 www/tablet/js/widget_clock.js
 UPD 2018-01-13_16:41:02 3312 www/tablet/js/widget_colorwheel.js
 UPD 2018-01-21_14:50:53 5053 www/tablet/js/widget_controlbutton.js
 UPD 2017-09-22_08:48:55 7740 www/tablet/js/widget_controller.js
-UPD 2018-01-21_14:51:13 2650 www/tablet/js/widget_datetimepicker.js
+UPD 2018-10-04_19:13:06 2844 www/tablet/js/widget_datetimepicker.js
 UPD 2018-01-13_21:05:02 6777 www/tablet/js/widget_departure.js
 UPD 2018-03-20_14:38:04 6100 www/tablet/js/widget_dimmer.js
 UPD 2017-02-11_14:27:26 3298 www/tablet/js/widget_eventmonitor.js
@@ -185,8 +185,8 @@ UPD 2018-08-23_21:24:32 11308 www/tablet/lib/jquery.circlemenu.js
 UPD 2018-08-23_21:24:47 5746 www/tablet/lib/jquery.circlemenu.min.js
 UPD 2017-02-11_14:27:26 18412 www/tablet/lib/jquery.datetimepicker.css
 UPD 2017-02-11_14:27:26 80573 www/tablet/lib/jquery.datetimepicker.js
-UPD 2017-12-27_22:02:52 16080 www/tablet/lib/jquery.datetimepicker.min.css
-UPD 2017-12-27_22:02:52 49369 www/tablet/lib/jquery.datetimepicker.min.js
+UPD 2018-10-04_19:06:39 16502 www/tablet/lib/jquery.datetimepicker.min.css
+UPD 2018-10-04_19:07:56 60579 www/tablet/lib/jquery.datetimepicker.min.js
 UPD 2017-02-11_14:27:26 3021 www/tablet/lib/jquery.gridster.min.css
 UPD 2017-02-11_14:27:26 44235 www/tablet/lib/jquery.gridster.min.js
 UPD 2018-03-23_21:12:27 27376 www/tablet/lib/jquery.knob.mod.js

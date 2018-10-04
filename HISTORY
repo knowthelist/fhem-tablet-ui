@@ -1,5 +1,12 @@
 FHEM Tablet UI change history:
 
+ 2018-10-04
+ - added minTime, maxTime to datetimepicker
+ 
+ 2018-10-02
+ - ftui-circle-o
+ - ftui-square-thin
+ 
  2018-09-28  (v2.7.6)
  - widget_playstream: improved
  - added addFactor() function

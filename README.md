@@ -713,8 +713,10 @@ It's important that a ```<div class="dialog">``` inside the widget can be found.
 All parameters like Label Widgets plus these:
 - **data-format**      : date and time format of the output  (default 'Y-m-d H:i')
 - **data-theme**       : color scheme: normal, dark (default 'dark')
-- **data-timepicker**  : show the time picker (default 'true')
-- **data-datepicker**  : show the date picker (default 'true')
+- **data-timepicker**  : show the time picker (default: true)
+- **data-datepicker**  : show the date picker (default: true)
+- **data-min-time**    : e.g. '12:00' (default: false)
+- **data-max-time**    : e.g. '18:00' (default: false)
 - **data-step**        : step for time in minutes (default '60')
 - **data-set-value**   : Format of the value to send to FHEM (default '$v': the value only)
 

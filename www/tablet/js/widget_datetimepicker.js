@@ -1,6 +1,8 @@
 /* FTUI Plugin
- * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * 
+ * https://github.com/xdan/datetimepicker
  */
 
 /* global ftui:true, Modul_label:true, Switchery:true */
@@ -13,7 +15,9 @@ function depends_datetimepicker() {
         $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/jquery.datetimepicker.css" type="text/css" />');
         deps.push(ftui.config.basedir + "lib/jquery.datetimepicker.min.js");
     }
-    deps.push('label');
+    if ( window['Modul_label'] === void 0) {
+        deps.push('label');
+    }
     return deps;
 }
 
@@ -26,15 +30,20 @@ var Modul_datetimepicker = function () {
             var elem = $(this);
             elem.attr("data-ready", "");
             
-            elem.data('cmd', elem.isValidData('cmd') ? elem.data('cmd') : 'set');
+            elem.initData('cmd', 'set');
             elem.data('set-value', elem.data('set-value') || '$v');
-            elem.data('unit', elem.isValidData('unit') ? elem.data('unit') : '<span style="font-size: 180%;">&#32;&#9660;</span>');
-            elem.data('format', elem.isValidData('format') ? elem.data('format') : 'Y-m-d H:i');
-            elem.data('theme', elem.isValidData('theme') ? elem.data('theme') : 'dark');
-            elem.data('timepicker', elem.isValidData('timepicker') ? elem.data('timepicker') : 'true');
-            elem.data('datepicker', elem.isValidData('datepicker') ? elem.data('datepicker') : 'true');
-            elem.data('step', elem.isValidData('step') ? elem.data('step') : '60');
+            elem.initData('unit', '<span style="font-size: 180%;">&#32;&#9660;</span>');
+            elem.initData('format', 'Y-m-d H:i');
+            elem.initData('theme', 'dark');
+            elem.initData('timepicker', true);
+            elem.initData('datepicker', true);
+            elem.initData('minTime', false);
+            elem.initData('maxTime', false);
+            elem.initData('minDate', false);
+            elem.initData('maxDate', false);
+            elem.initData('step', '60');
             me.init_attr(elem);
+            console.log('minTime:',elem.data('minTime'));
             var picker = elem.datetimepicker({
                 lang: 'de',
                 theme: elem.data('theme'),
@@ -42,6 +51,10 @@ var Modul_datetimepicker = function () {
                 timepicker: elem.data('timepicker'),
                 datepicker: elem.data('datepicker'),
                 step: elem.data('step'),
+                minTime: elem.data('minTime'),
+                maxTime: elem.data('maxTime'),
+                minDate: elem.data('minDate'),
+                maxDate: elem.data('maxDate'),
                 onChangeDateTime: function (dp, $input) {
                     var val = elem.data('set-value').replace('$v', $input.val().toString());
                     elem.text(val);
