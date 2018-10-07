@@ -25,9 +25,6 @@ Install
  or just use 'update all https://raw.githubusercontent.com/knowthelist/fhem-tablet-ui/master/controls_fhemtabletui.txt'
  on the FHEM commandline (or input field of FHEMWEB)
 
-A lot more plugins are available on addiational sources [Widgets-for-fhem-tablet-ui](https://github.com/nesges/Widgets-for-fhem-tablet-ui)
-* copy additional widgets **widget_xxx.js** into js folder
-
 Demos
 -------
 [Widgets](http://knowthelist.github.io/fhem/tablet/demo_widgets.html)

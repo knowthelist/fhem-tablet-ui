@@ -1,5 +1,8 @@
 FHEM Tablet UI change history:
 
+ 2018-10-07
+ - clock: get time from FHEM, added data-offset
+ 
  2018-10-04
  - added minTime, maxTime to datetimepicker
  

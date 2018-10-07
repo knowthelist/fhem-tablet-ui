@@ -159,7 +159,6 @@
 
         function setBackgroundColor(color) {
 
-            console.log('c:'+color);
             elem.bg.css("color", color);
         }
 
@@ -282,7 +281,7 @@
                         var c = canvas.getContext('2d');
                         c.beginPath();
                         c.strokeStyle = options.onColor;
-                        c.arc(x, y, x * ((-0.4 / 90) * Number(options.progressWidth) + 0.8), -0.5 * Math.PI, (-0.5 + value * 2) *
+                        c.arc(x, y, x * ((-0.4 / 90) * Number(options.progressWidth) + 0.9), -0.5 * Math.PI, (-0.5 + value * 2) *
                             Math.PI, false);
                         c.lineWidth = x * 0.80 * options.progressWidth / 100;
                         c.stroke();
@@ -332,7 +331,7 @@
                 }
 
                 context.strokeStyle = (state) ? options['onBackgroundColor'] :
-                    getGradientColor(options['offBackgroundColor'], '#ffffff', 0.4);
+                getGradientColor(options['offBackgroundColor'], '#ffffff', 0.4);
                 context.lineWidth = 3;
                 context.beginPath();
                 context.moveTo(5, valPosition);
@@ -468,7 +467,6 @@
 
                     if (Math.abs(touch_pos_y - $(window).scrollTop()) > 3 ||
                         (Math.abs(touch_pos_x - $(window).scrollLeft()) > 3)) return;
-
                     if (state) {
 
                         setOff();

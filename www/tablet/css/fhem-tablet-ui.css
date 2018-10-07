@@ -116,7 +116,8 @@ body {
     content: "\e906";
 }
 i#bg.fa.fa-stack-2x.ftui-circle-thin {
-    margin-top: -0.005em;
+    font-size: 1.8em;
+    margin-top: 0.055em;
     margin-left: 0.005em;
 }
 .ftui-square-o:before {
@@ -2700,6 +2701,20 @@ img.mini,
     padding-left: 52px;
 }
 
+.badge {
+    position: absolute;
+    min-width: 1.5em;
+    padding: 0.25em 0.3em;
+    font-weight: 300;
+    font-style: normal;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #aa2200;
+    border-radius: 1em;
+}
 .famultibutton #warn,
 .weather #warn {
     position: absolute;
@@ -2771,7 +2786,7 @@ img.mini,
 
 .famultibutton .fa-stack-2x:not(.fa-v5) {
     font-size: 1.92em;
-    margin-top: 0.01em;
+    margin-top: 0.02em;
 }
 
 .famultibutton [class^="fa fa-stack-1x fa-"]:not(.fa-v5) {

@@ -12,16 +12,19 @@ var Modul_clock = function () {
 
     function init_attr(elem) {
         elem.initData('format', 'H:i:s');
-        elem.initData('interval', 1000);
+        elem.initData('offset', 0);
+        elem.initData('serverDiff', 0);
         elem.initData('shortday-length', 3);
         elem.initData('days', ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]);
         elem.initData('shortmonth-length', 3);
         elem.initData('months', ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]);
 
-        // avoid extrem values
-        if (elem.data('interval') < 100) {
-           elem.data('interval', 1000); 
-        }
+        ftui.sendFhemCommand('{localtime}')
+            .done(function (fhemResult) {
+                var now = new Date();
+                var ft = new Date(fhemResult);
+                elem.data('serverDiff', now.getTime() - ft.getTime());
+            });
 
         if (!$.isArray(elem.data('days'))) {
             if (elem.data('days').match(/englisc?h/)) {
@@ -30,7 +33,6 @@ var Modul_clock = function () {
                 console.log(me.widgetname, 'init_attr', 'ERROR: data-days must be an array');
             }
         }
-
 
         if (!$.isArray(elem.data('months'))) {
             if (elem.data('months').match(/englisc?h/)) {
@@ -42,9 +44,17 @@ var Modul_clock = function () {
 
     }
 
-    function init_datearray(elem) {
-        var d = [];
+    function getDateTime(elem) {
         var now = new Date();
+        var now_msec = now.getTime();
+        return new Date(now_msec + elem.data('serverDiff') + 3600000 * Number(elem.data('offset')));
+
+    }
+
+    function createDateArray(elem) {
+        var d = [];
+        var now = getDateTime(elem);
+
         // Y: Jahreszahl, vierstellig
         // y: Jahreszahl, zweistellig
         // m: Monatszahl, mit f¸hrender Null
@@ -84,14 +94,13 @@ var Modul_clock = function () {
         d['u'] = now.getMilliseconds();
         d['O'] = now.getTimezoneOffset() / 60;
         d['U'] = Math.floor(now.getTime() / 1000);
-
         d['y'] = d['Y'] - 2000;
         d['d'] = d['j'] < 10 ? '0' + d['j'] : d['j'];
         d['m'] = d['n'] < 10 ? '0' + d['n'] : d['n'];
         d['H'] = d['G'] < 10 ? '0' + d['G'] : d['G'];
         d['i'] = d['i'] < 10 ? '0' + d['i'] : d['i'];
         d['s'] = d['s'] < 10 ? '0' + d['s'] : d['s'];
-        d['u'] = d['u'] < 10 ? '000' + d['u'] : d['u'] < 100 ? '00' + d['u'] : d['u'] < 1000 ? '0' + d['u'] : d['u'];
+        d['u'] = parseInt(d['u'] / 100);
         d['N'] = d['w'] === 0 ? 7 : d['w'];
         d['l'] = elem.data('days')[(Number(d['N']) - 1)];
         d['D'] = d['l'].substr(0, elem.data('shortday-length'));
@@ -110,7 +119,7 @@ var Modul_clock = function () {
         return d;
     }
 
-    function init_datetext(format, d) {
+    function createDateText(format, d) {
         // split formatstring into it's letters and replace one after the other
         var datearr = format.split('');
         for (var l = 0; l < datearr.length; l++) {
@@ -125,19 +134,46 @@ var Modul_clock = function () {
         return datearr.join('');
     }
 
-    function init_ui(elem) {
+    function updateText(elem) {
+        var d = createDateArray(elem);
+        var text = createDateText(elem.data('format'), d);
+        elem.text(text);
+    }
 
-        var tid = setInterval(function () {
+    function startRefreshTimer(elem, interval) {
+
+        var now = getDateTime(elem),
+            s = now.getSeconds(),
+            ms = now.getMilliseconds();
+
+        var waitMs = (interval === 'ms') ?
+            100 :
+            (interval === 's') ?
+            1000 - ms * 1 :
+            60000 - s * 1000 - ms * 1;
+
+        var tid = setTimeout(function () {
             if (elem && elem.data('days')) {
 
-                var d = init_datearray(elem);
-                var text = init_datetext(elem.data('format'), d);
-                elem.text(text);
+                updateText(elem);
+                startRefreshTimer(elem, interval);
 
             } else {
-                clearInterval(tid);
+                clearTimeout(tid);
             }
-        }, elem.data('interval'));
+        }, waitMs);
+
+    }
+
+    function init_ui(elem) {
+        updateText(elem);
+        if (elem.data('format').indexOf('u') > -1) {
+            startRefreshTimer(elem, 'ms');
+        } else if (elem.data('format').indexOf('s') > -1) {
+            startRefreshTimer(elem, 's');
+        } else {
+            startRefreshTimer(elem, 'm');
+        }
     }
 
     function update(dev, par) {}
