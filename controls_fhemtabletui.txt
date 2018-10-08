@@ -94,7 +94,7 @@ UPD 2018-08-24_23:15:53 5252 www/tablet/js/widget_checkbox.js
 UPD 2018-02-06_11:06:22 3390 www/tablet/js/widget_checklist.js
 UPD 2018-08-23_21:25:06 3143 www/tablet/js/widget_circlemenu.js
 UPD 2018-01-21_14:50:26 1684 www/tablet/js/widget_classchanger.js
-UPD 2018-10-06_20:25:02 6973 www/tablet/js/widget_clock.js
+UPD 2018-10-08_22:27:44 7050 www/tablet/js/widget_clock.js
 UPD 2018-01-13_16:41:02 3312 www/tablet/js/widget_colorwheel.js
 UPD 2018-01-21_14:50:53 5053 www/tablet/js/widget_controlbutton.js
 UPD 2017-09-22_08:48:55 7740 www/tablet/js/widget_controller.js

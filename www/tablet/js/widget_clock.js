@@ -19,12 +19,14 @@ var Modul_clock = function () {
         elem.initData('shortmonth-length', 3);
         elem.initData('months', ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]);
 
-        ftui.sendFhemCommand('{localtime}')
-            .done(function (fhemResult) {
-                var now = new Date();
-                var ft = new Date(fhemResult);
-                elem.data('serverDiff', now.getTime() - ft.getTime());
-            });
+        if (!elem.hasClass("localonly")) {
+            ftui.sendFhemCommand('{localtime}')
+                .done(function (fhemResult) {
+                    var now = new Date();
+                    var ft = new Date(fhemResult);
+                    elem.data('serverDiff', now.getTime() - ft.getTime());
+                });
+        }
 
         if (!$.isArray(elem.data('days'))) {
             if (elem.data('days').match(/englisc?h/)) {
