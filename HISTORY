@@ -1,5 +1,8 @@
 FHEM Tablet UI change history:
 
+ 2018-10-19
+ - svgplot: fixed the src path
+ 
  2018-10-08
  - clock: added class check 'localonly'
  

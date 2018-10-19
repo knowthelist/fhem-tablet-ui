@@ -144,7 +144,7 @@ UPD 2018-10-01_18:04:53 13743 www/tablet/js/widget_simplechart.js
 UPD 2017-02-20_22:59:41 3118 www/tablet/js/widget_slideout.js
 UPD 2018-08-15_22:43:29 16306 www/tablet/js/widget_slider.js
 UPD 2018-04-05_17:32:57 12476 www/tablet/js/widget_spinner.js
-UPD 2018-01-21_15:00:48 3083 www/tablet/js/widget_svgplot.js
+UPD 2018-10-19_11:15:31 3096 www/tablet/js/widget_svgplot.js
 UPD 2017-12-30_19:39:40 4299 www/tablet/js/widget_swiper.js
 UPD 2018-03-29_00:09:31 1557 www/tablet/js/widget_switch.js
 UPD 2018-03-28_23:04:46 1931 www/tablet/js/widget_symbol.js

@@ -1,5 +1,5 @@
 /* FTUI Plugin
- * Copyright (c) 2016 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2016-2018 Mario Stephan <mstephan@shared-files.de>
  * originally created by Thomas Nesges
  * https://raw.githubusercontent.com/nesges/Widgets-for-fhem-tablet-ui/master/www/tablet/js/widget_svgplot.js
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -35,7 +35,7 @@ var Modul_svgplot = function () {
         me.elements.each(function (index) {
             var elem = $(this);
             elem.attr("data-ready", "");
-            
+
             me.init_attr(elem);
             var spinner = $('<div />').appendTo(elem);
             spinner.famultibutton({
@@ -51,7 +51,8 @@ var Modul_svgplot = function () {
             var logfile = elem.data('logfile');
             if (gplot && logdev && logfile) {
                 elem.empty();
-                var src = ftui.config.fhemDir + '/SVG_showLog?dev=' + device + '&logdev=' + logdev + '&gplotfile=' + gplot + '&logfile=' + logfile + '&_=1';
+                var src = ftui.config.fhemDir + 'SVG_showLog?dev=' + device + '&logdev=' +
+                    logdev + '&gplotfile=' + gplot + '&logfile=' + logfile + '&_=1';
                 var img = $('<img/>', {
                     alt: logfile,
                     src: src,
