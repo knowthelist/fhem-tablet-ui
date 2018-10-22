@@ -361,6 +361,10 @@ a:active {
     height: 100%;
 }
 
+.display > [class*='display-'] {
+    text-align: initial;
+}
+
 .display-topleft {
     position: absolute;
     top: 0px;
@@ -972,7 +976,7 @@ main > .box.horizontal {
     justify-content: flex-start;
 }
 
-.box.vertical.items-top,
+.box.vertical.items-bottom,
 .vbox.items-bottom {
     justify-content: flex-end;
 }
@@ -2232,6 +2236,7 @@ div[data-type="link"] > div.fa {
 .row > [class*='cell-'].top-space,
 .row > [class*='col-'].top-space,
 .row > .col.top-space,
+.display > .top-space,
 [class*='row-'] > .cell.top-space,
 [class*='row-'] > [class*='cell-'].top-space,
 [class*='row-'] > .col.top-space,
@@ -2244,6 +2249,7 @@ div[data-type="link"] > div.fa {
 .row > [class*='cell-'][class*='top-space-2'],
 .row > [class*='col-'][class*='top-space-2'],
 .row > .col[class*='top-space-2'],
+.display > .top-space-2,
 [class*='row-'] > .cell[class*='top-space-2'],
 [class*='row-'] > [class*='cell-'][class*='top-space-2'],
 [class*='row-'] > .col[class*='top-space-2'],
@@ -2256,6 +2262,7 @@ div[data-type="link"] > div.fa {
 .row > [class*='cell-'][class*='top-space-3'],
 .row > [class*='col-'][class*='top-space-3'],
 .row > .col[class*='top-space-3'],
+.display > .top-space-3,
 [class*='row-'] > .cell[class*='top-space-3'],
 [class*='row-'] > [class*='cell-'][class*='top-space-3'],
 [class*='row-'] > .col[class*='top-space-3'],
@@ -2268,6 +2275,7 @@ div[data-type="link"] > div.fa {
 .row > [class*='cell-'][class*='top-space-4'],
 .row > [class*='col-'][class*='top-space-4'],
 .row > .col[class*='top-space-4'],
+.display > .top-space-4,
 [class*='row-'] > .cell[class*='top-space-4'],
 [class*='row-'] > [class*='cell-'][class*='top-space-4'],
 [class*='row-'] > .col[class*='top-space-4'],
