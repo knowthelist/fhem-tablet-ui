@@ -2449,8 +2449,19 @@ function onjQueryLoaded() {
     };
 
     $.fn.isDeviceReading = function (key) {
-        var reading = $(this).data(key);
-        return reading && !$.isNumeric(reading) && typeof reading === 'string' && reading.match(/^[\w\s-.]+:[\w\s-]+$/);
+        var reading = $(this).data(key),
+            result = false;
+
+        if (reading) {
+            if (!$.isArray(reading)) {
+                reading = [reading];
+            }
+            result = true;
+            for (var i = 0, len = reading.length; i < len; i++) {
+                result = result && !$.isNumeric(reading[i]) && typeof reading[i] === 'string' && reading[i].match(/^[\w\s-.]+:[\w\s-]+$/);
+            }
+        }
+        return result;
     };
 
     $.fn.isExternData = function (key) {
@@ -2486,7 +2497,7 @@ function onjQueryLoaded() {
         }
         return {};
     };
-
+    
     $.fn.valOfData = function (key) {
         var data = $(this).data(key);
         if (!ftui.isValid(data)) return '';

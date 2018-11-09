@@ -156,11 +156,11 @@ var Modul_famultibutton = function () {
     function showOverlay(elem, value) {
         elem.find('#warn').remove();
         if (ftui.isValid(value) && value !== "") {
-            var val = ($.isNumeric(value)) ? Number(value).toFixed(0) : '!';
+            var val = ($.isNumeric(value)) ? Number(value).toFixed(elem.data('warn-fixed')) : '!';
+            var digits = val.toString().length;
             if (elem.isValidData('warn-icon')) {
                 val = '<i class="fa ' + elem.data('warn-icon') + '"><i/>';
             }
-            var digits = val.toString().length;
             var faElem = elem.find('.famultibutton');
             var warnElem = $('<i/>', {
                 id: 'warn',
@@ -527,6 +527,7 @@ var Modul_famultibutton = function () {
         // warn parameter
         elem.initData('warn-on', '(true|on|[1-9]{1}[0-9]*)');
         elem.initData('warn-off', '(false|off|0)');
+        elem.initData('warn-fixed', '0');
         me.addReading(elem, 'warn');
 
         var elemData = elem.data();

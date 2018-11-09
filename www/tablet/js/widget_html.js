@@ -30,25 +30,13 @@ var Modul_html = function () {
 
         if (elem.isValidData('url')) {
             document.location.href = elem.data('url');
-            var hashUrl = window.location.hash.replace('#', '');
-            if (hashUrl && elem.isValidData('load')) {
-                elem.closest('nav').trigger('changedSelection', [elem.text()]);
-                var sel = elem.data('load');
-                if (sel) {
-                    $(sel).siblings().removeClass('active');
-                    //load page if not done until now
-                    if ($(sel + " > *").children().length === 0 || elem.hasClass('nocache'))
-                    //loadPage(elem);
-                        $(sel).addClass('active');
-                }
-            }
         } else if (elem.isValidData('url-xhr')) {
             ftui.toast(elem.data('url-xhr'));
             $.get(elem.data('url-xhr'));
         } else if (elem.isValidData('fhem-cmd')) {
             ftui.toast(elem.data('fhem-cmd'));
             ftui.setFhemStatus(elem.data('fhem-cmd'));
-        } else {
+        } else if (elem.isValidData('clicked')) {
 
             var value = '';
             var map = elem.data('map-clicked');
@@ -125,7 +113,7 @@ var Modul_html = function () {
         me.elements.each(function (index) {
             var elem = $(this);
             elem.attr("data-ready", "");
-            
+
             elem.initData('val', elem.data('value')); // value is reserved for widget intern usage, therefore we switch to val
             elem.initData('value', elem.val());
             elem.initData('set', '');
@@ -166,25 +154,22 @@ var Modul_html = function () {
                         elem.trigger("enterKey");
                 });
             } else {
-                if (elem.isValidData('clicked')) {
+                elem.on(ftui.config.clickEventType, function (e) {
+                    //e.preventDefault();
+                    e.stopImmediatePropagation();
+                    elem.data('touch_pos_y', $(window).scrollTop());
+                    elem.data('touch_pos_x', $(window).scrollLeft());
+                });
+                elem.on(ftui.config.releaseEventType, function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    //ftui.toast(elem.data('touch_pos_y'));
+                    if (Math.abs(elem.data('touch_pos_y') - $(window).scrollTop()) > 3 ||
+                        (Math.abs(elem.data('touch_pos_x') - $(window).scrollLeft()) > 3)) return;
 
-                    elem.on(ftui.config.clickEventType, function (e) {
-                        //e.preventDefault();
-                        e.stopImmediatePropagation();
-                        elem.data('touch_pos_y', $(window).scrollTop());
-                        elem.data('touch_pos_x', $(window).scrollLeft());
-                    });
-                    elem.on(ftui.config.releaseEventType, function (e) {
-                        e.preventDefault();
-                        e.stopImmediatePropagation();
-                        //ftui.toast(elem.data('touch_pos_y'));
-                        if (Math.abs(elem.data('touch_pos_y') - $(window).scrollTop()) > 3 ||
-                            (Math.abs(elem.data('touch_pos_x') - $(window).scrollLeft()) > 3)) return;
+                    onClicked(elem);
 
-                        onClicked(elem);
-
-                    });
-                }
+                });
             }
         });
     }
@@ -235,8 +220,16 @@ var Modul_html = function () {
         //reading for class
         me.elements.filterDeviceReading('class', dev, par)
             .each(function (idx) {
-                var elem = $(this);
-                var read = elem.getReading('class').val;
+                var elem = $(this),
+                    read = '';
+                var paraname = elem.data('class');
+                if ($.isArray(paraname)) {
+                    for (var i = 0, len = paraname.length; i < len; i++) {
+                        read = read + elem.getReading('class', i).val;
+                    }
+                } else {
+                    read = elem.getReading('class').val;
+                }
                 if (ftui.isValid(read)) {
                     var map = elem.data('map-class');
                     if ((typeof map === "object") && (map !== null)) {
