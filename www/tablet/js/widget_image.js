@@ -106,12 +106,14 @@ var Modul_image = function () {
                 setInterval(function () {
                     counter++;
                     if (counter >= refresh) {
-                        counter = 0;
                         if (url.match(/_=\d+/)) {
                             url = addurlparam(url, '_', new Date().getTime());
                         }
                         ftui.log(2, 'Update image widget source. URL=' + url);
-                        elemImg.attr('src', url);
+                        if (elemImg.is(":visible") == true) { 
+					elemImg.attr('src', url);
+					counter = 0;
+			}
                     }
                 }, 1000);
             }
