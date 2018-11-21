@@ -92,7 +92,7 @@ var Modul_calview = function () {
 				var zeitrahmen = {
 					"today": "Heute ",
 					"tomorrow": "Morgen ",
-					"all": "" };
+					"t": "" }; // "all"
             
                 if (elem.data('get') == 'all') { var readingPrefix = "t"; var count = elem.getReading('c-term').val;}
 				else if (elem.data('get') == 'today') { var readingPrefix = "today"; var count = elem.getReading('c-' + elem.data('get')).val;}
@@ -108,6 +108,8 @@ var Modul_calview = function () {
                     if (count > elem.data('max')) {
                         count = elem.data('max');
                     }
+					var colCounter = 0;
+					elem.data('detail').forEach(function (spalte) { if (spalte != 'sourcecolor') {colCounter += 1} });
 					if(elem.data('swiperstyle') == 'no'){
 						for (var i = beginn; i <= count; i++) {
 							num = "00" + i;
@@ -117,12 +119,6 @@ var Modul_calview = function () {
 							else {datesubstr = 10;}
 							if (elem.data('timeformat') == 'short'){ timesubstr = 5;}
 							else {timesubstr = 8;}
-							var onelinesum = "";
-							if (elem.data('onelinesum') === "yes") { onelinesum = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
-							var onelinedesc   = "";
-							if (elem.data('onelinedesc') === "yes") { onelinedesc = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
-							var onelineloc   = "";
-							if (elem.data('onelineloc') === "yes") { onelineloc = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
 							var onelinestyle   = "";
 							if (elem.data('oneline') === "yes") { onelinestyle = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
 							if(elem.data('detailwidth').length > 0) {
@@ -131,7 +127,7 @@ var Modul_calview = function () {
 								elem.data('detail').forEach(function(spalte) {
 									if ( typeof elem.getReading(readingPrefix+'_'+num+'_'+spalte).val != "undefined" ) {
 										if(elem.data('sourcecolor') == 'yes'){color = elem.getReading(readingPrefix+'_'+num+'_sourcecolor').val;}
-										if(spalte == 'age'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
+										if(spalte == 'age'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'bdate'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
 										if(spalte == 'btime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
 										if(spalte == 'bdatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
@@ -153,25 +149,28 @@ var Modul_calview = function () {
 								});
 								mytext += "</div>";
 							} else {
-								var $width = 100 / elem.data('detail').length;					
+								var $width = 100 / colCounter;					
 								//alert($width);
-								mytext += "<div class=\"hbox cell\">";
+								mytext += "<div class=\"hbox cell\" style=\"height:auto;\">";
 								elem.data('detail').forEach(function(spalte) {
 									if ( typeof elem.getReading(readingPrefix+'_'+num+'_'+spalte).val != "undefined" ) {
 										if(elem.data('sourcecolor') == 'yes'){color = elem.getReading(readingPrefix+'_'+num+'_sourcecolor').val; }
-										if(spalte == 'bdate'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
-										if(spalte == 'btime'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
-										if(spalte == 'bdatetimeiso'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'timeshort'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'summary'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'location'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'edate'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
-										if(spalte == 'etime'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
-										if(spalte == 'edatetimeiso'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'source'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'description'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'daysleft'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'daysleftLong'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'age'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'bdate'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
+										if(spalte == 'btime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
+										if(spalte == 'bdatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'timeshort'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'summary'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'location'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'edate'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
+										if(spalte == 'etime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
+										if(spalte == 'edatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'source'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'description'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'categories'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'daysleft'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'daysleftLong'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'weekdayname'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+$width+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 									}
 								});
 								mytext += "</div>";
@@ -185,7 +184,7 @@ var Modul_calview = function () {
 						for (var i = beginn; i <= count; i++) {
 							num = "00" + i;
 							num = num.slice(-3);
-							var $width = 100 / elem.data('detail').length;
+							var $width = 100 / colCounter;
 							//alert($width);
 							mytext += "<div class=\"swiper-slide\" data-hash=\"slide"+i+"\";>";
 							mytext += "<div class=\"hbox\">";
