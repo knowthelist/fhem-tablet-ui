@@ -40,7 +40,7 @@ UPD 2018-03-28_20:05:24 1458 www/tablet/js/widget_theme.js
 UPD 2018-08-15_22:43:29 16306 www/tablet/js/widget_slider.js
 UPD 2018-04-02_22:16:32 9888 www/tablet/js/widget_volume.js
 UPD 2018-01-21_14:51:58 2931 www/tablet/js/widget_example.js
-UPD 2018-08-24_23:15:53 5252 www/tablet/js/widget_checkbox.js
+UPD 2018-11-21_21:34:48 5290 www/tablet/js/widget_checkbox.js
 UPD 2018-10-01_18:04:53 13743 www/tablet/js/widget_simplechart.js
 UPD 2017-12-19_10:29:00 11044 www/tablet/js/widget_link.js
 UPD 2018-01-13_16:41:02 3312 www/tablet/js/widget_colorwheel.js
@@ -135,7 +135,7 @@ UPD 2017-02-11_14:27:26 1211 www/tablet/lib/highcharts/themes/grid-light.js
 UPD 2017-02-11_14:27:26 4323 www/tablet/lib/highcharts/themes/dark-green.js
 UPD 2017-02-11_14:27:26 4336 www/tablet/lib/highcharts/themes/dark-blue.js
 UPD 2017-11-03_20:18:42 26645 www/tablet/lib/weather-icons.min.css
-UPD 2018-03-28_22:00:00 51109 www/tablet/lib/switchery.js
+UPD 2018-11-21_21:38:47 50861 www/tablet/lib/switchery.js
 UPD 2017-02-11_14:27:26 4508 www/tablet/lib/jquery.toast.min.css
 UPD 2017-12-27_21:52:03 1793 www/tablet/lib/jquery.unveil.js
 UPD 2017-02-11_14:27:26 17041 www/tablet/lib/farbtastic.js
@@ -162,7 +162,7 @@ UPD 2018-10-04_19:07:56 60579 www/tablet/lib/jquery.datetimepicker.min.js
 UPD 2018-09-20_23:29:47 75289 www/tablet/lib/font-awesome.min.css
 UPD 2018-03-23_21:12:27 27376 www/tablet/lib/jquery.knob.mod.js
 UPD 2017-02-11_14:27:26 3021 www/tablet/lib/jquery.gridster.min.css
-UPD 2018-03-28_22:00:10 18334 www/tablet/lib/switchery.min.js
+UPD 2018-11-21_21:38:55 18353 www/tablet/lib/switchery.min.js
 UPD 2018-08-23_21:24:47 5746 www/tablet/lib/jquery.circlemenu.min.js
 UPD 2017-02-11_14:27:26 6255 www/tablet/lib/jquery.toast.min.js
 UPD 2017-10-03_20:01:46 72785 www/tablet/lib/fhemSVG.css

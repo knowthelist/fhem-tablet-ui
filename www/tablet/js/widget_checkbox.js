@@ -33,7 +33,7 @@ var Modul_checkbox = function () {
     }
 
     function switcheryConfig(elem) {
-        
+
         var elemData = elem.data();
         var ret = {
             size: elem.hasClass('small') ? 'small' : elem.hasClass('large') ? 'large' : 'default',
@@ -46,7 +46,7 @@ var Modul_checkbox = function () {
     }
 
     function reinit() {
-        
+
         me.elements.each(function (index) {
             var elem = $(this);
             var switchery = elem.data('switchery');
@@ -130,9 +130,11 @@ var Modul_checkbox = function () {
             input.setOff = function () {
                 switchery.setState(false);
             };
+            input.setProgressValue = function () {};
 
             // init state is off
             switchery.setState(false);
+
         });
     }
 
