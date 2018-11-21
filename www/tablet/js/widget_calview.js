@@ -8,7 +8,7 @@
 // Modifications chris1284 11.10.2017 - new reading weekdayname 
 // Modifications chris1284 29.01.2018 - fixed showempty 
 // Modifications OdfFhem 28.10.2018 - fixed showempty 
-//                                  - cleanup code for unsupported onlinesum/desc/loc
+//                                  - removed code for unsupported onlinesum/desc/loc
 //                                  - introduced colCounter (sourcecolor isn't a real column)
 //                                  - no substr for column 'age'
 //                                  - corrected class for row in case of automatic width calculation
