@@ -7,6 +7,14 @@
 // Modifications chris1284 13.09.2017 19:05 - nur noch oneline yes/no , onlinesum/desc/loc entfernt)
 // Modifications chris1284 11.10.2017 - new reading weekdayname 
 // Modifications chris1284 29.01.2018 - fixed showempty 
+// Modifications OdfFhem 28.10.2018 - fixed showempty 
+//                                  - cleanup code for unsupported onlinesum/desc/loc
+//                                  - introduced colCounter (sourcecolor isn't a real column)
+//                                  - no substr for column 'age'
+//                                  - corrected class for row in case of automatic width calculation
+//                                  - added missing fields in case of automatic width calculation
+//                                  - added support for data-class in case of automatic width calculation
+//                                  - added support for data-oneline in case of automatic width calculation
 // data-get			all|today|tomorrow 
 // data-start		none|notoday|notomorrow		(only for data-get="all" -> dont show Entrys from today or today and tomorrow)
 // data-max			number how much Entries are maximal listed
