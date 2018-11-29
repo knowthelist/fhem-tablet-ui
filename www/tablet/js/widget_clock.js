@@ -49,7 +49,7 @@ var Modul_clock = function () {
     function getDateTime(elem) {
         var now = new Date();
         var now_msec = now.getTime();
-        return new Date(now_msec + elem.data('serverDiff') + 3600000 * Number(elem.data('offset')));
+        return new Date(now_msec - elem.data('serverDiff') + 3600000 * Number(elem.data('offset')));
 
     }
 

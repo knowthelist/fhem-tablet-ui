@@ -60,7 +60,7 @@ UPD 2018-04-05_17:32:57 12476 www/tablet/js/widget_spinner.js
 UPD 2017-11-16_18:41:57 5018 www/tablet/js/widget_filelog.js
 UPD 2018-08-23_21:25:06 3143 www/tablet/js/widget_circlemenu.js
 UPD 2017-02-06_03:22:08 6051 www/tablet/js/widget_range.js
-UPD 2018-10-08_22:27:44 7050 www/tablet/js/widget_clock.js
+UPD 2018-11-29_22:07:11 7050 www/tablet/js/widget_clock.js
 UPD 2017-12-26_20:30:09 806 www/tablet/js/widget_level.js
 UPD 2017-02-11_14:27:26 6503 www/tablet/js/widget_agenda.js
 UPD 2017-12-30_19:39:40 4299 www/tablet/js/widget_swiper.js

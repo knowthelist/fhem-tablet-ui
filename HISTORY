@@ -1,5 +1,8 @@
 FHEM Tablet UI change history:
 
+ 2018-11-29
+ - clock: corrected the serverDiff
+ 
  2018-11-21
  - checkbox: fixed the jack position issue
  
