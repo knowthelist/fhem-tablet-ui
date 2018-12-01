@@ -31,6 +31,15 @@ var Modul_pagebutton = function () {
         }
     });
 
+    $(document).on("initWidgetsDone", function (e, area) {
+        me.elements.each(function (index) {
+            var elem = $(this);
+            if (elem.data('load') === area) {
+                sessionStorage.removeItem(elem.data('lock-id'));
+            }
+        });
+    });
+
     // activate element after browser navigation
     $(window).on('hashchange', function (e) {
         var url = window.location.href;
@@ -58,14 +67,11 @@ var Modul_pagebutton = function () {
         if (elemData) {
             var page = elemData.load;
             var url = elemData.url;
-
             // is the content already loaded
             if (!$(page).hasClass('loaded') || elem.hasClass('nocache')) {
-
                 if (ftui.isValid(url)) {
-                    var hashUrl = url.replace('#', '');
+                    var hashUrl = url.substring(url.indexOf('#') + 1);
                     var lockID = ['ftui', me.widgetname, hashUrl, page].join('.');
-
                     if (!sessionStorage.getItem(lockID)) {
 
                         sessionStorage.setItem(lockID, 'locked');
@@ -73,7 +79,6 @@ var Modul_pagebutton = function () {
                         ftui.log(1, me.widgetname + ': start to load ' + hashUrl + ' content into $("' + page + '")');
 
                         $(page).load(hashUrl + " " + page + " > *", function () {
-
                             ftui.log(1, me.widgetname + ': new content from $("' + page + '") loaded');
 
                             $(page).addClass('loaded');

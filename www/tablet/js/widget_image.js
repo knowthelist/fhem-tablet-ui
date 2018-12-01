@@ -80,9 +80,9 @@ var Modul_image = function () {
         me.elements.each(function (index) {
             var elem = $(this);
             elem.attr("data-ready", "");
-            
+
             me.init_attr(elem);
-            $('img',elem).remove();  
+            $('img', elem).remove();
             var elemImg = $('<img/>', {
                 alt: 'img',
             }).appendTo(elem);
@@ -92,6 +92,7 @@ var Modul_image = function () {
                 'width': elem.data('width'),
                 'max-width': elem.data('size'),
             });
+
 
             //3rd party source refresh
             if (elem.data('url')) {
@@ -104,24 +105,25 @@ var Modul_image = function () {
                 var counter = 0;
                 var refresh = elem.data('refresh');
                 setInterval(function () {
+                    var isVisible = (elem[0].offsetParent !== null);
                     counter++;
                     if (counter >= refresh) {
                         counter = 0;
-                        if (url.match(/_=\d+/)) {
-                            url = addurlparam(url, '_', new Date().getTime());
+                        if (isVisible) {
+                            if (url.match(/_=\d+/)) {
+                                url = addurlparam(url, '_', new Date().getTime());
+                            }
+                            ftui.log(2, 'Update image widget source. URL=' + url);
+                            elemImg.attr('src', url);
                         }
-                        ftui.log(2, 'Update image widget source. URL=' + url);
-                        elemImg.attr('src', url);
                     }
                 }, 1000);
             }
             // onClick events
             elem.on('click', function (e) {
                 var cmd = elem.data('fhem-cmd');
-                if (cmd) {
+                if (cmd)
                     ftui.setFhemStatus(cmd);
-                    ftui.toast(cmd);
-                }
             });
         });
     }

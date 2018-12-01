@@ -1,5 +1,9 @@
 FHEM Tablet UI change history:
 
+ 2018-12-01
+ - image: refresh only if visible
+ - pagebutton: fixed a bug which prevented forced reload
+ 
  2018-11-29
  - clock: corrected the serverDiff
  
