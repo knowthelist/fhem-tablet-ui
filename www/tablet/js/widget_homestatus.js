@@ -50,17 +50,6 @@ var Modul_homestatus = function () {
         }
         var icons = this.$.data('iconIDs');
 
-        function iconFillLevel() {
-            var imgd = c.getImageData(xy - radius * 0.05 - 12, xy - 14, 10, 10);
-            var pix = imgd.data,
-                level = 0;
-            for (var i = 0, n = pix.length; i < n; i++) {
-                level += pix[i];
-            }
-            console.log(level);
-            return level;
-        }
-
         //Assign sector 1 for center pressed or value is 0
         if (Math.pow((mx - x), 2) + Math.pow((my - y), 2) < Math.pow(radius * 0.4, 2) || this.cv === 0)
             sector = 1;
@@ -142,13 +131,9 @@ var Modul_homestatus = function () {
         c.fillStyle = (sector == 1) ? this.o.maxColor : this.o.minColor;
         c.font = cfont;
         c.fillText(texts[0], xy - textWidth[0], xy + 16 * ratio);
-        
-        this.$.attr('data-iconsLoaded1', (iconFillLevel()));
+
         c.font = cfafont;
         c.fillText(icons[0], xy - radius * 0.05 - fontSize, xy + radius * 0.05);
-        
-        // Check if icon has been drawn
-        this.$.attr('data-iconsLoaded2', (iconFillLevel()));
 
         // 1 - left top
         c.fillStyle = (sector == 2) ? this.o.maxColor : this.o.minColor;
@@ -289,14 +274,6 @@ var Modul_homestatus = function () {
                 isUpdating = true;
                 knob_elem.val(elem.data('curval')).trigger('change');
                 isUpdating = false;
-/*                count++;
-                var iconsLoaded = (knob_elem.attr('data-iconsLoaded1') === knob_elem.attr('data-iconsLoaded2'));
-                console.log((count < 20), !iconsLoaded,knob_elem.attr('data-iconsLoaded1'),knob_elem.attr('data-iconsLoaded2'));
-                if ((count < 10) && !iconsLoaded) {
-                    console.log('reload homestatus due to icons has not correctly been drawn ' + index);
-                } else {
-                    clearInterval(refreshTimer);
-                }*/
             }, 300);
         });
     }

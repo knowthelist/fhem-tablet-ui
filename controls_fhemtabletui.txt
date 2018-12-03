@@ -50,7 +50,7 @@ UPD 2018-09-09_19:57:26 11493 www/tablet/js/widget_thermostat.js
 UPD 2018-09-28_01:17:14 272177 www/tablet/js/widget_chart.js
 UPD 2017-12-22_09:57:40 5722 www/tablet/js/widget_select.js
 UPD 2018-08-16_07:43:39 9665 www/tablet/js/widget_popup.js
-UPD 2017-02-23_20:23:39 2609 www/tablet/js/widget_tts.js
+UPD 2018-12-03_21:14:03 2672 www/tablet/js/widget_tts.js
 UPD 2018-11-06_22:35:11 9772 www/tablet/js/widget_html.js
 UPD 2018-09-28_03:09:44 50163 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2017-09-22_08:48:55 7740 www/tablet/js/widget_controller.js
@@ -65,7 +65,7 @@ UPD 2017-12-26_20:30:09 806 www/tablet/js/widget_level.js
 UPD 2017-02-11_14:27:26 6503 www/tablet/js/widget_agenda.js
 UPD 2017-12-30_19:39:40 4299 www/tablet/js/widget_swiper.js
 UPD 2017-02-20_22:59:41 3118 www/tablet/js/widget_slideout.js
-UPD 2018-09-19_00:49:29 13766 www/tablet/js/widget_homestatus.js
+UPD 2018-12-03_21:49:15 12717 www/tablet/js/widget_homestatus.js
 UPD 2017-02-28_22:02:28 8689 www/tablet/js/widget_highchart.js
 UPD 2018-01-18_21:41:36 3060 www/tablet/js/widget_input.js
 UPD 2018-04-09_21:33:59 6478 www/tablet/js/widget_label.js
@@ -147,7 +147,7 @@ UPD 2017-02-11_13:12:52 1156 www/tablet/lib/powerange.min.css
 UPD 2017-08-23_05:42:46 86923 www/tablet/lib/swiper.jquery.min.js
 UPD 2018-10-06_20:55:37 21397 www/tablet/lib/fa-multi-button.js
 UPD 2017-02-11_14:27:26 2396 www/tablet/lib/jquery.wakeup.js
-UPD 2017-02-11_14:27:26 31889 www/tablet/lib/responsivevoice.js
+UPD 2018-12-02_23:35:04 64814 www/tablet/lib/responsivevoice.js
 UPD 2017-02-11_14:27:26 71950 www/tablet/lib/material-icons.min.css
 UPD 2018-09-20_23:38:37 86926 www/tablet/lib/jquery.min.js
 UPD 2017-12-27_22:02:52 24968 www/tablet/lib/genericons.min.css
