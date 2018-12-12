@@ -159,7 +159,7 @@ UPD 2017-12-27_22:02:52 21144 www/tablet/lib/fhemSVG.min.css
 UPD 2017-12-27_22:02:52 19833 www/tablet/lib/powerange.min.js
 UPD 2017-12-27_22:02:52 678 www/tablet/lib/jquery.unveil.min.js
 UPD 2018-10-04_19:07:56 60579 www/tablet/lib/jquery.datetimepicker.min.js
-UPD 2018-09-20_23:29:47 75289 www/tablet/lib/font-awesome.min.css
+UPD 2018-12-12_17:46:21 75304 www/tablet/lib/font-awesome.min.css
 UPD 2018-03-23_21:12:27 27376 www/tablet/lib/jquery.knob.mod.js
 UPD 2017-02-11_14:27:26 3021 www/tablet/lib/jquery.gridster.min.css
 UPD 2018-11-21_21:38:55 18353 www/tablet/lib/switchery.min.js
