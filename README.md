@@ -780,6 +780,7 @@ See [examples](#range) of Range
 - **data-height**                  : height of the link (default 'auto')
 - **data-url**                     : URL as a adress to jump to (default '')
 - **data-get**                     : name of the reading where to get the url from (default null)
+- **data-lock**                    : name of the reading containing the boolean value for the lock (readonly) parameter (default <null>)
 - **data-url-xhr**                 : URL as a adress to call in background (default '')
 - **data-fhem-cmd**                : a FHEM command to call (default '')
 - **data-text-align**              : alignment of text ['left','center','right']  (default 'center')
