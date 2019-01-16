@@ -112,17 +112,21 @@ body {
 .ftui-window:before {
     content: "\ea01";
 }
+
 .ftui-circle-thin:before {
     content: "\e906";
 }
+
 i#bg.fa.fa-stack-2x.ftui-circle-thin {
     font-size: 1.8em;
     margin-top: 0.055em;
     margin-left: 0.005em;
 }
+
 .ftui-square-o:before {
     content: "\e907";
 }
+
 i#bg.fa.fa-stack-2x.ftui-square-o {
     font-size: 2.2em;
     margin-top: -0.035em;
@@ -185,6 +189,10 @@ a:active {
 
 .red {
     color: #ad3333 !important;
+}
+
+.lightred {
+    color: rgb(219, 72, 70);
 }
 
 .green {
@@ -283,6 +291,10 @@ a:active {
     margin: 1em;
 }
 
+.hbox > .margin {
+    height: calc(100% - 2em);
+    width: calc(100% - 2em);
+}
 
 /* position of a inner div */
 
@@ -361,7 +373,7 @@ a:active {
     height: 100%;
 }
 
-.display > [class*='display-'] {
+.display > [class*='display-']:not(.badge) {
     text-align: initial;
 }
 
@@ -376,6 +388,10 @@ a:active {
     left: 50%;
     top: 0;
     transform: translate(-50%, 0%);
+    -webkit-transform: translate(-50%, 0%);
+    -moz-transform: translate(-50%, 0%);
+    -ms-transform: translate(-50%, 0%);
+    -o-transform: translate(-50%, 0%);
 }
 
 .display-topright {
@@ -390,6 +406,10 @@ a:active {
     top: 50%;
     left: 0%;
     transform: translate(0%, -50%);
+    -webkit-transform: translate(0%, -50%);
+    -moz-transform: translate(0%, -50%);
+    -ms-transform: translate(0%, -50%);
+    -o-transform: translate(0%, -50%);
 }
 
 .display-center {
@@ -397,6 +417,10 @@ a:active {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
 }
 
 .display-centerright,
@@ -405,6 +429,10 @@ a:active {
     top: 50%;
     right: 0%;
     transform: translate(0%, -50%);
+    -webkit-transform: translate(0%, -50%);
+    -moz-transform: translate(0%, -50%);
+    -ms-transform: translate(0%, -50%);
+    -o-transform: translate(0%, -50%);
 }
 
 .display-bottomleft {
@@ -418,6 +446,10 @@ a:active {
     left: 50%;
     bottom: 0;
     transform: translate(-50%, 0%);
+    -webkit-transform: translate(-50%, 0%);
+    -moz-transform: translate(-50%, 0%);
+    -ms-transform: translate(-50%, 0%);
+    -o-transform: translate(-50%, 0%);
 }
 
 .display-bottomright {
@@ -2014,6 +2046,7 @@ div[data-type="link"] > div.fa {
 }
 
 /* label in fa-multibutton */
+
 .famultibutton div {
     margin-top: -0.03em;
 }
@@ -2710,19 +2743,15 @@ img.mini,
 }
 
 .badge {
-    position: absolute;
-    min-width: 1.5em;
-    padding: 0.25em 0.3em;
-    font-weight: 300;
-    font-style: normal;
-    line-height: 1;
-    color: #fff;
-    text-align: center;
-    white-space: nowrap;
+    display: inline-block;
+    height: 1.5em;
+    line-height: 1.5em;
     vertical-align: middle;
+    width: 1.5em;
     background-color: #aa2200;
     border-radius: 1em;
 }
+
 .famultibutton #warn,
 .weather #warn {
     position: absolute;
@@ -2752,6 +2781,14 @@ img.mini,
 
 #warn.digits4 {
     right: -1.2em;
+}
+
+#warn.digits5 {
+    right: -1.5em;
+}
+
+#warn.digits6 {
+    right: -1.8em;
 }
 
 .doublebox-v {
@@ -2804,6 +2841,10 @@ img.mini,
 /* FA 5.* normal and inverted */
 
 .famultibutton .fa-stack-1x.invert {
+    font-weight: 100;
+}
+
+.fa.thin {
     font-weight: 100;
 }
 
