@@ -3271,6 +3271,28 @@ img.faded {
     opacity: .2 !important;
 }
 
+[data-type="image"].white > img {
+     filter: invert(1);
+}
+[data-type="image"].blue > img {
+    filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
+}
+[data-type="image"].green > img {
+    filter: invert(.5) sepia(1) saturate(5) hue-rotate(125deg);
+}
+[data-type="image"].yellow > img {
+    filter: invert(.5) sepia(1) saturate(5) hue-rotate(25deg);
+}
+[data-type="image"].orange > img {
+    filter: invert(.5) sepia(1) saturate(5) hue-rotate(0deg);
+}
+[data-type="image"].red > img {
+    filter: invert(.5) sepia(1) saturate(5) hue-rotate(-45deg);
+}
+[data-type="image"].gray > img {
+    filter: invert(0.5) sepia(1) saturate(0);
+}
+
 .autohide.invalid,
 .hide,
 .widget-hide {
