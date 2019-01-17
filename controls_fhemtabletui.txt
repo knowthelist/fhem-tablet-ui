@@ -7,7 +7,7 @@ DIR www/tablet/lib/highcharts/graphics
 DIR www/tablet/lib/highcharts/themes
 DIR www/tablet/fonts
 UPD 2018-09-27_07:35:03 705403 www/tablet/icons_table.html
-UPD 2018-09-04_21:25:28 2646 www/tablet/ftui_snippet_tester.html
+UPD 2019-01-18_00:43:55 3742 www/tablet/ftui_snippet_tester.html
 UPD 2017-02-11_14:27:26 1079 www/tablet/css/ftui_medialist.css
 UPD 2018-09-21_20:59:49 6600 www/tablet/css/ftui_chart.css
 UPD 2017-09-17_10:30:03 647 www/tablet/css/ftui_controller.css
