@@ -3271,25 +3271,32 @@ img.faded {
     opacity: .2 !important;
 }
 
-[data-type="image"].white > img {
+[data-type="image"].white > img
+[data-type="image"] > img.white {
      filter: invert(1);
 }
-[data-type="image"].blue > img {
+[data-type="image"].blue > img,
+[data-type="image"] > img.blue {
     filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
 }
-[data-type="image"].green > img {
+[data-type="image"].green > img,
+[data-type="image"] > img.green {
     filter: invert(.5) sepia(1) saturate(5) hue-rotate(125deg);
 }
-[data-type="image"].yellow > img {
+[data-type="image"].yellow > img,
+[data-type="image"] > img.yellow {
     filter: invert(.5) sepia(1) saturate(5) hue-rotate(25deg);
 }
-[data-type="image"].orange > img {
+[data-type="image"].orange > img,
+[data-type="image"] > img.orange {
     filter: invert(.5) sepia(1) saturate(5) hue-rotate(0deg);
 }
-[data-type="image"].red > img {
+[data-type="image"].red > img,
+[data-type="image"] > img.red {
     filter: invert(.5) sepia(1) saturate(5) hue-rotate(-45deg);
 }
-[data-type="image"].gray > img {
+[data-type="image"].gray > img,
+[data-type="image"] > img.gray {
     filter: invert(0.5) sepia(1) saturate(0);
 }
 
