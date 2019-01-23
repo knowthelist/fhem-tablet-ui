@@ -50,7 +50,6 @@ var Modul_clock = function () {
         var now = new Date();
         var now_msec = now.getTime();
         return new Date(now_msec - elem.data('serverDiff') + 3600000 * Number(elem.data('offset')));
-
     }
 
     function createDateArray(elem) {
@@ -81,10 +80,10 @@ var Modul_clock = function () {
         // h: Stunde im 12-Stunden-Format, mit f?hrenden Nullen
         // a: am/pm
         // A: AM/PM
+        // W: ISO-8601 Wochennummer des Jahres
 
         // TODO:
         // z: Der Tag des Jahres
-        // W: ISO-8601 Wochennummer des Jahres
 
         d['Y'] = now.getFullYear();
         d['n'] = now.getMonth() + 1;
@@ -113,10 +112,9 @@ var Modul_clock = function () {
         d['h'] = d['g'] < 10 ? '0' + d['g'] : d['g'];
         d['a'] = d['G'] <= 12 ? 'am' : 'pm';
         d['A'] = d['a'].toUpperCase();
-        // 'W' by mc-hollin http://forum.fhem.de/index.php/topic,34233.msg304630.html#msg304630
-        var onejan = new Date(now.getFullYear(), 0, 1);
-        var kw = Math.ceil((((now - onejan) / 86400000) + onejan.getDay() + 1) / 7);
-        d['W'] = kw < 10 ? '0' + kw : kw;
+        now.setUTCDate(now.getUTCDate() + 4 - (now.getUTCDay()||7));
+        var yearStart = new Date(Date.UTC(now.getUTCFullYear(),0,1));
+        d['W'] = Math.ceil(( ( (now - yearStart) / 86400000) + 1)/7);
 
         return d;
     }

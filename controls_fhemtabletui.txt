@@ -60,7 +60,7 @@ UPD 2018-04-05_17:32:57 12476 www/tablet/js/widget_spinner.js
 UPD 2017-11-16_18:41:57 5018 www/tablet/js/widget_filelog.js
 UPD 2018-08-23_21:25:06 3143 www/tablet/js/widget_circlemenu.js
 UPD 2017-02-06_03:22:08 6051 www/tablet/js/widget_range.js
-UPD 2018-11-29_22:07:11 7050 www/tablet/js/widget_clock.js
+UPD 2019-01-23_18:33:07 6979 www/tablet/js/widget_clock.js
 UPD 2017-12-26_20:30:09 806 www/tablet/js/widget_level.js
 UPD 2017-02-11_14:27:26 6503 www/tablet/js/widget_agenda.js
 UPD 2017-12-30_19:39:40 4299 www/tablet/js/widget_swiper.js
@@ -151,7 +151,7 @@ UPD 2018-12-02_23:35:04 64814 www/tablet/lib/responsivevoice.js
 UPD 2017-02-11_14:27:26 71950 www/tablet/lib/material-icons.min.css
 UPD 2018-09-20_23:38:37 86926 www/tablet/lib/jquery.min.js
 UPD 2017-12-27_22:02:52 24968 www/tablet/lib/genericons.min.css
-UPD 2017-02-13_21:44:49 126817 www/tablet/lib/weather-icons-wind.min.css
+UPD 2019-01-22_21:52:50 126802 www/tablet/lib/weather-icons-wind.min.css
 UPD 2017-12-27_22:02:52 448 www/tablet/lib/jquery.wakeup.min.js
 UPD 2017-02-11_14:27:26 44235 www/tablet/lib/jquery.gridster.min.js
 UPD 2017-08-23_05:42:46 17759 www/tablet/lib/swiper.min.css
