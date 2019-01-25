@@ -3,7 +3,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.7.6
+ * Version: 2.7.8
  *
  * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -273,7 +273,8 @@ var Modul_widget = function () {
                 if (!$.isArray(data)) {
                     data = new Array(data.toString());
                 }
-                for (var i = data.length - 1; i >= 0; i -= 1) {
+                var i = data.length;
+                while (i--) {
                     var reading = data[i];
                     // fully qualified readings => DEVICE:READING
                     if (reading.match(/:/)) {
@@ -306,7 +307,8 @@ var Modul_widget = function () {
                 if (!$.isArray(data)) {
                     data = new Array(data.toString());
                 }
-                for (var i = data.length - 1; i >= 0; i -= 1) {
+                var i = data.length;
+                while (i--) {
                     var device, reading, item = data[i];
                     // only fully qualified readings => DEVICE:READING
                     if (item.match(/:/)) {
@@ -371,7 +373,8 @@ var plugins = {
     },
 
     removeArea: function (area) {
-        for (var i = this.modules.length - 1; i >= 0; i -= 1) {
+        var i = this.modules.length;
+        while (i--) {
             if (this.modules[i].area === area) {
                 this.modules.splice(i, 1);
             }
@@ -383,7 +386,8 @@ var plugins = {
         ftui.subscriptionTs = {};
         ftui.devs = [ftui.config.webDevice];
         ftui.reads = ['STATE', 'longpoll'];
-        for (var i = this.modules.length - 1; i >= 0; i -= 1) {
+        var i = this.modules.length;
+        while (i--) {
             var module = this.modules[i];
             for (var key in module.subscriptions) {
                 ftui.subscriptions[key] = module.subscriptions[key];
@@ -425,21 +429,23 @@ var plugins = {
     },
 
     reinit: function () {
-        $.each(this.modules, function (index, module) {
-            // Iterate each module and run update function if module is available
-            if (typeof module === 'object') {
-                module.reinit();
+        var i = this.modules.length;
+        while (i--) {
+            // Iterate each module and run reinit function if module is available
+            if (typeof this.modules[i] === 'object') {
+                this.modules[i].reinit();
             }
-        });
+        }
     },
 
     update: function (dev, par) {
-        $.each(this.modules, function (index, module) {
+        var i = this.modules.length;
+        while (i--) {
             // Iterate each module and run update function if module is available
-            if (typeof module === 'object') {
-                module.update(dev, par);
+            if (typeof this.modules[i] === 'object') {
+                this.modules[i].update(dev, par);
             }
-        });
+        }
         // update data-bind elements
         ftui.updateBindElements('ftui.deviceStates');
 
@@ -451,7 +457,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.7.6',
+    version: '2.7.8',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -560,8 +566,13 @@ var ftui = {
         ftui.devs = [ftui.config.webDevice];
         ftui.reads = ['STATE'];
 
+        var cssReadyDeferred = $.Deferred();
+        var initDeferreds = [cssReadyDeferred];
+
         // Get CSFS Token
-        ftui.getCSrf();
+        initDeferreds.push(
+            ftui.getCSrf()
+        );
 
         // init Toast
         function configureToast() {
@@ -616,17 +627,6 @@ var ftui = {
             $(document).trigger("shadeClicked");
         });
 
-        //remove old storages
-        var arr = [];
-        for (var i = 0; i < localStorage.length; i++) {
-            if (localStorage.key(i).match(/[0-9abcdef]{4}-[0-9abcdef]{4}-[0-9abcdef]{4}/)) {
-                arr.push(localStorage.key(i));
-            }
-        }
-        for (i = 0; i < arr.length; i++) {
-            localStorage.removeItem(arr[i]);
-        }
-
         ftui.readStatesLocal();
 
 
@@ -648,8 +648,7 @@ var ftui = {
                     if ($("body").css("text-align") === "center") {
                         ftui.log(1, 'fhem-tablet-ui.css is ready to use.');
                         clearInterval(cssListener);
-                        ftui.loadStyleSchema();
-                        ftui.initPage();
+                        cssReadyDeferred.resolve();
                     }
                     ii++;
                     if (ii > 120) {
@@ -659,9 +658,14 @@ var ftui = {
                 }, 50);
             });
         } else {
+            cssReadyDeferred.resolve();
+        }
+
+        // init Page after css is ready and CSFS Token has been retrieved
+        $.when(initDeferreds).done(function () {
             ftui.loadStyleSchema();
             ftui.initPage();
-        }
+        });
 
         $(document).on("changedSelection", function () {
 
@@ -800,9 +804,7 @@ var ftui = {
                 var gridgrid = $(this);
                 gridgrid.css({
                     'background-color': 'transparent',
-                    'margin': '-' + ftui.gridster.margins + 'px',
-                    //                    'width': gridgrid.parent().width() - gridgrid.position().left,
-                    //                    'height': '100%'
+                    'margin': '-' + ftui.gridster.margins + 'px'
                 });
             });
 
@@ -904,12 +906,12 @@ var ftui = {
         });
 
         // init widgets
-        var deferredArr = $.map(types, function (type, i) {
+        var allWidgetsDeferred = $.map(types, function (type, i) {
             return plugins.load(type, area);
         });
 
         // get current values of readings not before all widgets are loaded
-        $.when.apply(this, deferredArr).then(function () {
+        $.when.apply(this, allWidgetsDeferred).then(function () {
             plugins.updateParameters();
             ftui.log(1, 'initWidgets - Done');
             $(document).trigger("initWidgetsDone", [area]);
@@ -1011,7 +1013,8 @@ var ftui = {
         var startTime = new Date();
 
         // invalidate all readings for detection of outdated ones
-        for (var i = 0, len = ftui.devs.length; i < len; i++) {
+        var i = ftui.devs.length;
+        while (i--) {
             var params = ftui.deviceStates[ftui.devs[i]];
             for (var reading in params) {
                 params[reading].valid = false;
@@ -1024,6 +1027,7 @@ var ftui = {
             .done(function (fhemJSON) {
                 console.timeEnd('get jsonlist2');
                 console.time('read jsonlist2');
+
                 ftui.log(3, 'fhemJSON: 0=' + Object.keys(fhemJSON)[0] + ' 1=' + Object.keys(fhemJSON)[1]);
 
                 // function to import data
@@ -1074,10 +1078,10 @@ var ftui = {
 
                 // import the whole fhemJSON
                 if (fhemJSON && fhemJSON.Results) {
-                    var len = fhemJSON.Results.length;
-                    ftui.log(2, 'shortpoll: fhemJSON.Results.length=' + len);
+                    var i = fhemJSON.Results.length;
+                    ftui.log(2, 'shortpoll: fhemJSON.Results.length=' + i);
                     var results = fhemJSON.Results;
-                    for (var i = len - 1; i >= 0; i -= 1) {
+                    while (i--) {
                         var res = results[i];
                         var devName = res.Name;
                         if (devName.indexOf('FHEMWEB') < 0 && !devName.match(/WEB_\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}_\d{5}/)) {
@@ -1347,7 +1351,7 @@ var ftui = {
                         params[pmap.reading] = param;
                         ftui.deviceStates[pmap.device] = params;
                         // dont wait for timestamp for STATE paramters
-                        if (isSTATE && ftui.subscriptions[dataJSON[0]]) {
+                        if (isSTATE && subscription) {
                             ftui.poll.long.lastDevice = pmap.device;
                             ftui.poll.long.lastReading = pmap.reading;
                             ftui.poll.long.lastValue = param.val;
@@ -1364,7 +1368,7 @@ var ftui = {
                         ftui.poll.long.lastUpdateTimestamp = param.date.toDate();
                         ftui.deviceStates[tmap.device] = params;
                         // paramter + timestamp update now completed -> update widgets
-                        if (ftui.subscriptionTs[dataJSON[0]]) {
+                        if (subscription) {
                             ftui.poll.long.lastDevice = tmap.device;
                             ftui.poll.long.lastReading = tmap.reading;
                             ftui.poll.long.lastValue = param.val;
@@ -1557,7 +1561,8 @@ var ftui = {
                     break;
                 case "modules":
                     var checkModule = [];
-                    for (var i = 0, len = plugins.modules.length; i < len; i++) {
+                    var i = plugins.modules.length;
+                    while (i--) {
                         var name = plugins.modules[i].widgetname,
                             area = plugins.modules[i].area;
                         checkModule.push({
@@ -1658,7 +1663,8 @@ var ftui = {
         var isAdded = false;
 
         // check if it is already included
-        for (var i = 0, len = ftui.scripts.length; i < len; i++) {
+        var i = ftui.scripts.length;
+        while (i--) {
             if (ftui.scripts[i].url === url) {
                 isAdded = true;
                 break;
@@ -1703,7 +1709,7 @@ var ftui = {
 
     getCSrf: function () {
 
-        $.ajax({
+        return $.ajax({
             'url': ftui.config.fhemDir,
             'type': 'GET',
             cache: false,
@@ -1711,16 +1717,14 @@ var ftui = {
             password: ftui.config.password,
             data: {
                 XHR: "1"
-            },
-            'success': function (data, textStatus, jqXHR) {
-                ftui.config.csrf = jqXHR.getResponseHeader('X-FHEM-csrfToken');
-                ftui.log(1, 'Got csrf from FHEM:' + ftui.config.csrf);
             }
+        }).done(function (data, textStatus, jqXHR) {
+            ftui.config.csrf = jqXHR.getResponseHeader('X-FHEM-csrfToken');
+            ftui.log(1, 'Got csrf from FHEM:' + ftui.config.csrf);
         }).fail(function (jqXHR, textStatus, errorThrown) {
             ftui.log(1, "Failed to get csrfToken: " + textStatus + ": " + errorThrown);
             ftui.config.shortPollDelay = 30000;
         });
-
     },
 
     healthCheck: function () {
@@ -1866,7 +1870,8 @@ var ftui = {
                 if (ftui.isValid(value)) {
                     var matches = value.match(new RegExp('^' + part + '$'));
                     if (matches) {
-                        for (var i = 1, len = matches.length; i < len; i++) {
+                        var i = matches.length;
+                        while (i--) {
                             ret += matches[i];
                         }
                     }
@@ -2009,7 +2014,8 @@ var ftui = {
     },
 
     getClassColor: function (elem) {
-        for (var i = ftui.config.stdColors.length - 1; i >= 0; i -= 1) {
+        var i = ftui.config.stdColors.length;
+        while (i--) {
             if (elem.hasClass(ftui.config.stdColors[i])) {
                 return ftui.getStyle('.' + ftui.config.stdColors[i], 'color');
             }
@@ -2457,7 +2463,8 @@ function onjQueryLoaded() {
                 reading = [reading];
             }
             result = true;
-            for (var i = 0, len = reading.length; i < len; i++) {
+            var i = reading.length;
+            while (i--) {
                 result = result && !$.isNumeric(reading[i]) && typeof reading[i] === 'string' && reading[i].match(/^[\w\s-.]+:[\w\s-]+$/);
             }
         }
@@ -2480,24 +2487,24 @@ function onjQueryLoaded() {
     };
 
     $.fn.getReading = function (key, idx) {
-        var devname = String($(this).data('device')),
-            paraname = $(this).data(key);
-        if ($.isArray(paraname)) {
-            paraname = paraname[idx];
+        var devName = String($(this).data('device'));
+        var paraName = $(this).data(key);
+        if ($.isArray(paraName)) {
+            paraName = paraName[idx];
         }
-        paraname = String(paraname);
-        if (paraname && paraname.match(/:/)) {
-            var temp = paraname.split(':');
-            devname = temp[0].replace('[', '');
-            paraname = temp[1].replace(']', '');
+        paraName = String(paraName);
+        if (paraName && paraName.match(/:/)) {
+            var temp = paraName.split(':');
+            devName = temp[0].replace('[', '');
+            paraName = temp[1].replace(']', '');
         }
-        if (devname && devname.length) {
-            var params = ftui.deviceStates[devname];
-            return (params && params[paraname]) ? params[paraname] : {};
+        if (devName && devName.length) {
+            var params = ftui.deviceStates[devName];
+            return (params && params[paraName]) ? params[paraName] : {};
         }
         return {};
     };
-    
+
     $.fn.valOfData = function (key) {
         var data = $(this).data(key);
         if (!ftui.isValid(data)) return '';
