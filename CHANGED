@@ -1,3 +1,7 @@
 FHEM Tablet UI last changes:
- 2018-12-12
- - fa-napster fixed
+ 2019-01-25
+ - Fixed a bug that started initPage before getCSrf was finished
+ 2019-01-23
+ - Fixed KW bug in clock widget
+ 2019-01-15
+ - widget_link: added link parameter
