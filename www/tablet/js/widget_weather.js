@@ -697,6 +697,16 @@ var Modul_weather = function () {
         elem.initData('warn-off', 'false|off|0');
         me.addReading(elem, 'warn');
 
+        // if hide reading is defined, set defaults for comparison
+        if (elem.isValidData('hide')) {
+            elem.initData('hide-on', '(true|1|on)');
+        }
+        elem.initData('hide', elem.data('get'));
+        if (elem.isValidData('hide-on')) {
+            elem.initData('hide-off', '!on');
+        }
+        me.addReading(elem, 'hide');
+
         var fhem_path = ftui.config.fhemDir;
         fhem_path = fhem_path.replace(/\/$/, '');
         var image_path = $("meta[name='weather_image_path']").attr("content") || fhem_path + '/images/default/weather/';
@@ -824,6 +834,8 @@ var Modul_weather = function () {
                     showOverlay(elem, "");
                 }
             }
+
+            me.updateHide(elem, dev, par);
 
         });
 
