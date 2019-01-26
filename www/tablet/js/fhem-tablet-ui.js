@@ -3,7 +3,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.7.9
+ * Version: 2.7.10
  *
  * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -457,7 +457,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.7.9',
+    version: '2.7.10',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -662,7 +662,7 @@ var ftui = {
         }
 
         // init Page after css is ready and CSFS Token has been retrieved
-        $.when(initDeferreds).done(function () {
+        $.when.apply(this, initDeferreds).then(function () {
             ftui.loadStyleSchema();
             ftui.initPage();
         });

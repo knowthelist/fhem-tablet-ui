@@ -52,7 +52,7 @@ UPD 2017-12-22_09:57:40 5722 www/tablet/js/widget_select.js
 UPD 2018-08-16_07:43:39 9665 www/tablet/js/widget_popup.js
 UPD 2018-12-03_21:14:03 2672 www/tablet/js/widget_tts.js
 UPD 2018-11-06_22:35:11 9772 www/tablet/js/widget_html.js
-UPD 2019-01-26_00:47:39 50047 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2019-01-26_15:44:46 50059 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2017-09-22_08:48:55 7740 www/tablet/js/widget_controller.js
 UPD 2017-02-28_22:04:09 8209 www/tablet/js/widget_highchart3d.js
 UPD 2017-11-19_14:35:00 21234 www/tablet/js/highcharts-meteogram.js
@@ -79,11 +79,11 @@ UPD 2017-02-11_14:27:26 988 www/tablet/js/widget_wakeup.js
 UPD 2018-09-19_01:16:29 1311 www/tablet/js/widget_reload.js
 UPD 2018-01-09_20:25:53 2978 www/tablet/js/widget_joinedlabel.js
 UPD 2017-03-03_17:46:38 2323 www/tablet/js/widget_readingsgroup.js
-UPD 2018-08-21_23:58:12 18187 www/tablet/js/widget_calview.js
+UPD 2019-01-26_12:37:48 19744 www/tablet/js/widget_calview.js
 UPD 2017-02-11_14:27:26 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2017-02-11_14:27:26 1493 www/tablet/js/widget_loading.js
 UPD 2018-01-21_14:59:59 9875 www/tablet/js/widget_settimer.js
-UPD 2019-01-26_00:40:29 97764 www/tablet/js/fhem-tablet-ui.js
+UPD 2019-01-26_15:41:14 97778 www/tablet/js/fhem-tablet-ui.js
 UPD 2018-01-21_14:50:53 5053 www/tablet/js/widget_controlbutton.js
 UPD 2018-10-02_23:13:57 1776 www/tablet/js/widget_push.js
 UPD 2018-09-29_22:33:53 5838 www/tablet/js/widget_playstream.js
@@ -91,7 +91,7 @@ UPD 2018-12-01_10:25:20 5776 www/tablet/js/widget_image.js
 UPD 2018-01-21_14:50:26 1684 www/tablet/js/widget_classchanger.js
 UPD 2017-12-01_22:36:55 7249 www/tablet/js/widget_scale.js
 UPD 2018-11-08_21:24:13 24542 www/tablet/js/widget_famultibutton.js
-UPD 2018-09-19_00:45:42 32840 www/tablet/js/widget_weather.js
+UPD 2019-01-26_12:43:39 33240 www/tablet/js/widget_weather.js
 UPD 2018-01-21_15:06:55 31168 www/tablet/js/widget_weekprofile.js
 UPD 2018-01-21_14:59:28 1612 www/tablet/js/widget_rotor.js
 UPD 2018-03-24_10:12:21 8748 www/tablet/js/widget_pagetab.js
