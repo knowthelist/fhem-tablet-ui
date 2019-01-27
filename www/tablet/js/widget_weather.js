@@ -99,6 +99,18 @@ var Modul_weather = function () {
         'snow showers': '$',
         'isolated thundershowers': 'R',
 
+        // Dark Sky (IconAPI, see https://darksky.net/dev/docs#data-point-object)
+        'clear-day': 'B',
+        'clear-night': '2',
+        // 'rain': 'R',      // already defined
+        // 'snow': 'W',      // already defined
+        // 'sleet': 'X',     // already defined
+        'wind': 'S',
+        // 'fog': 'F',       // already defined
+        // 'cloudy': '5',    // already defined
+        'partly-cloudy-day': 'H',
+        'partly-cloudy-night': '5',
+
         // PROPLANTA (most likely incomplete)
         "heiter": "H",
         "wolkig": "N",
@@ -269,6 +281,18 @@ var Modul_weather = function () {
         'thundershowers': 'heavyrain.png',
         'snow showers': 'chance_of_snow.png',
         'isolated thundershowers': 'scatteredshowers.png',
+
+        // Dark Sky (IconAPI, see https://darksky.net/dev/docs#data-point-object)
+        'clear-day': 'clear.png',
+        'clear-night': 'mostly_clear_night.png',
+        // 'rain': 'rain.png',      // already defined
+        // 'snow': 'snow.png',      // already defined
+        // 'sleet': 'sleet.png',    // already defined
+        'wind': 'windy.png',
+        // 'fog': 'fog.png',        // already defined
+        // 'cloudy': 'cloudy.png',  // already defined
+        'partly-cloudy-day': 'partly_cloudy.png',
+        'partly-cloudy-night': 'partly_cloudy_night.png',
 
         // PROPLANTA
         "heiter": 'partly_cloudy.png',
