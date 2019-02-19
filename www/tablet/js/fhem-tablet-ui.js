@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.7.11
+ * Version: 2.7.12
  *
  * Copyright (c) 2015-2019 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -48,7 +48,7 @@ var Modul_widget = function () {
     var elements = [];
 
     function update_lock(dev, par) {
-        ['lock', 'lock-on', 'lock-off'].forEach( function (key) {
+        ['lock', 'lock-on', 'lock-off'].forEach(function (key) {
             me.elements.filterDeviceReading(key, dev, par)
                 .each(function (idx) {
                     var elem = $(this);
@@ -64,7 +64,7 @@ var Modul_widget = function () {
     }
 
     function update_hide(dev, par) {
-        ['hide', 'hide-on', 'hide-off'].forEach( function (key) {
+        ['hide', 'hide-on', 'hide-off'].forEach(function (key) {
             me.elements.filterDeviceReading(key, dev, par)
                 .each(function (idx) {
                     var elem = $(this);
@@ -88,7 +88,7 @@ var Modul_widget = function () {
     }
 
     function updateHide(elem, dev, par) {
-        ['hide', 'hide-on', 'hide-off'].forEach( function (key) {
+        ['hide', 'hide-on', 'hide-off'].forEach(function (key) {
             if (elem.matchDeviceReading(key, dev, par)) {
                 var value = elem.getReading('hide').val;
                 if (elem.matchingState('hide', value) === 'on') {
@@ -111,7 +111,7 @@ var Modul_widget = function () {
     }
 
     function updateLock(elem, dev, par) {
-        ['lock', 'lock-on', 'lock-off'].forEach( function (key) {
+        ['lock', 'lock-on', 'lock-off'].forEach(function (key) {
             if (elem.matchDeviceReading(key, dev, par)) {
                 var value = elem.getReading('lock').val;
                 if (elem.matchingState('lock', value) === 'on') {
@@ -126,7 +126,7 @@ var Modul_widget = function () {
     }
 
     function updateReachable(elem, dev, par) {
-        ['reachable', 'reachable-on', 'reachable-off'].forEach( function (key) {
+        ['reachable', 'reachable-on', 'reachable-off'].forEach(function (key) {
             if (elem.matchDeviceReading(key, dev, par)) {
                 var value = elem.getReading('reachable').val;
                 if (elem.matchingState('reachable', value) === 'on') {
@@ -140,7 +140,7 @@ var Modul_widget = function () {
     }
 
     function update_reachable(dev, par) {
-        ['reachable', 'reachable-on', 'reachable-off'].forEach( function (key) {
+        ['reachable', 'reachable-on', 'reachable-off'].forEach(function (key) {
             me.elements.filterDeviceReading(key, dev, par)
                 .each(function (idx) {
                     var elem = $(this);
@@ -248,7 +248,7 @@ var Modul_widget = function () {
         elem.text(me.widgetname);
     }
 
-    function reinit() {}
+    function reinit() { }
 
     function init() {
         ftui.log(1, "init widget: name=" + me.widgetname + " area=" + me.area);
@@ -451,7 +451,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.7.11',
+    version: '2.7.12',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -917,8 +917,8 @@ var ftui = {
     initHeaderLinks: function () {
 
         if (($('[class*=fa-]').length ||
-                $('[data-type="select"]').length ||
-                $('[data-type="homestatus"]').length) &&
+            $('[data-type="select"]').length ||
+            $('[data-type="homestatus"]').length) &&
             !$('link[href$="lib/font-awesome.min.css"]').length
         )
             $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/font-awesome.min.css" type="text/css" />');
@@ -954,8 +954,9 @@ var ftui = {
         if (ftui.poll.long.request)
             ftui.poll.long.request.abort();
         if (ftui.poll.long.websocket) {
-            ftui.poll.long.websocket.send('bye');
-            ftui.poll.long.websocket.close();
+            if (ftui.poll.long.websocket.readyState === WebSocket.OPEN) {
+                ftui.poll.long.websocket.close();
+            }
             ftui.poll.long.websocket = undefined;
             ftui.log(2, 'stopped websocket');
         }
@@ -1018,123 +1019,123 @@ var ftui = {
 
         ftui.poll.short.request =
             ftui.sendFhemCommand('jsonlist2 ' + ftui.poll.short.filter)
-            .done(function (fhemJSON) {
-                console.timeEnd('get jsonlist2');
-                console.time('read jsonlist2');
+                .done(function (fhemJSON) {
+                    console.timeEnd('get jsonlist2');
+                    console.time('read jsonlist2');
 
-                ftui.log(3, 'fhemJSON: 0=' + Object.keys(fhemJSON)[0] + ' 1=' + Object.keys(fhemJSON)[1]);
+                    ftui.log(3, 'fhemJSON: 0=' + Object.keys(fhemJSON)[0] + ' 1=' + Object.keys(fhemJSON)[1]);
 
-                // function to import data
-                function checkReading(device, section) {
-                    for (var reading in section) {
-                        var isUpdated = false;
-                        var paramid = (reading === 'STATE') ? device : [device, reading].join('-');
-                        var newParam = section[reading];
-                        if (typeof newParam !== 'object') {
-                            //ftui.log(5,'paramid='+paramid+' newParam='+newParam);
+                    // function to import data
+                    function checkReading(device, section) {
+                        for (var reading in section) {
+                            var isUpdated = false;
+                            var paramid = (reading === 'STATE') ? device : [device, reading].join('-');
+                            var newParam = section[reading];
+                            if (typeof newParam !== 'object') {
+                                //ftui.log(5,'paramid='+paramid+' newParam='+newParam);
 
-                            newParam = {
-                                "Value": newParam,
-                                "Time": ""
-                            };
-                        }
+                                newParam = {
+                                    "Value": newParam,
+                                    "Time": ""
+                                };
+                            }
 
-                        // is there a subscription, then check and update widgets
-                        if (ftui.subscriptions[paramid]) {
-                            var oldParam = ftui.getDeviceParameter(device, reading);
-                            isUpdated = (!oldParam || oldParam.val !== newParam.Value || oldParam.date !== newParam.Time);
-                            ftui.log(5, 'isUpdated=' + isUpdated);
+                            // is there a subscription, then check and update widgets
+                            if (ftui.subscriptions[paramid]) {
+                                var oldParam = ftui.getDeviceParameter(device, reading);
+                                isUpdated = (!oldParam || oldParam.val !== newParam.Value || oldParam.date !== newParam.Time);
+                                ftui.log(5, 'isUpdated=' + isUpdated);
 
-                            // write into internal cache object
-                            var params = ftui.deviceStates[device] || {};
-                            var param = params[reading] || {};
-                            param.date = newParam.Time;
-                            param.val = newParam.Value;
-                            // console.log('*****',device);
-                            param.valid = true;
-                            params[reading] = param;
-                            ftui.deviceStates[device] = params;
+                                // write into internal cache object
+                                var params = ftui.deviceStates[device] || {};
+                                var param = params[reading] || {};
+                                param.date = newParam.Time;
+                                param.val = newParam.Value;
+                                // console.log('*****',device);
+                                param.valid = true;
+                                params[reading] = param;
+                                ftui.deviceStates[device] = params;
 
-                            ftui.paramIdMap[paramid] = {};
-                            ftui.paramIdMap[paramid].device = device;
-                            ftui.paramIdMap[paramid].reading = reading;
-                            ftui.timestampMap[paramid + '-ts'] = {};
-                            ftui.timestampMap[paramid + '-ts'].device = device;
-                            ftui.timestampMap[paramid + '-ts'].reading = reading;
+                                ftui.paramIdMap[paramid] = {};
+                                ftui.paramIdMap[paramid].device = device;
+                                ftui.paramIdMap[paramid].reading = reading;
+                                ftui.timestampMap[paramid + '-ts'] = {};
+                                ftui.timestampMap[paramid + '-ts'].device = device;
+                                ftui.timestampMap[paramid + '-ts'].reading = reading;
 
-                            // update widgets only if necessary
-                            if (isUpdated) {
-                                ftui.log(5, '[shortPoll] do update for ' + device + ',' + reading);
-                                plugins.update(device, reading);
+                                // update widgets only if necessary
+                                if (isUpdated) {
+                                    ftui.log(5, '[shortPoll] do update for ' + device + ',' + reading);
+                                    plugins.update(device, reading);
+                                }
                             }
                         }
                     }
-                }
 
-                // import the whole fhemJSON
-                if (fhemJSON && fhemJSON.Results) {
-                   var i = fhemJSON.Results.length;
-                    ftui.log(2, 'shortpoll: fhemJSON.Results.length=' + i);
-                    var results = fhemJSON.Results;
-                    while (i--) {
-                        var res = results[i];
-                        var devName = res.Name;
-                        if (devName.indexOf('FHEMWEB') < 0 && !devName.match(/WEB_\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}_\d{5}/)) {
-                            checkReading(devName, res.Internals);
-                            checkReading(devName, res.Attributes);
-                            checkReading(devName, res.Readings);
+                    // import the whole fhemJSON
+                    if (fhemJSON && fhemJSON.Results) {
+                        var i = fhemJSON.Results.length;
+                        ftui.log(2, 'shortpoll: fhemJSON.Results.length=' + i);
+                        var results = fhemJSON.Results;
+                        while (i--) {
+                            var res = results[i];
+                            var devName = res.Name;
+                            if (devName.indexOf('FHEMWEB') < 0 && !devName.match(/WEB_\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}_\d{5}/)) {
+                                checkReading(devName, res.Internals);
+                                checkReading(devName, res.Attributes);
+                                checkReading(devName, res.Readings);
+                            }
                         }
-                    }
 
-                    // finished
-                    var duration = ftui.diffSeconds(startTime, new Date());
-                    if (ftui.config.debuglevel > 1) {
-                        var paramCount = Object.keys(ftui.paramIdMap).length;
-                        ftui.toast("Full refresh done in " +
-                            duration + "s for " +
-                            paramCount + " parameter(s)");
+                        // finished
+                        var duration = ftui.diffSeconds(startTime, new Date());
+                        if (ftui.config.debuglevel > 1) {
+                            var paramCount = Object.keys(ftui.paramIdMap).length;
+                            ftui.toast("Full refresh done in " +
+                                duration + "s for " +
+                                paramCount + " parameter(s)");
+                        }
+                        ftui.log(1, 'shortPoll: Done');
+                        if (ftui.poll.short.lastErrorToast) {
+                            ftui.poll.short.lastErrorToast.reset();
+                        }
+                        ftui.states.lastShortpoll = ltime;
+                        ftui.poll.short.duration = duration * 1000;
+                        ftui.poll.short.lastTimestamp = new Date();
+                        ftui.poll.short.result = 'ok';
+                        ftui.saveStatesLocal("deviceStates");
+                        ftui.saveStatesLocal("shortPoll");
+                        ftui.updateBindElements('ftui.');
+                        if (!silent) {
+                            ftui.onUpdateDone();
+                        }
+                    } else {
+                        var err = "request failed: Result is null";
+                        ftui.log(1, "shortPoll: " + err);
+                        ftui.poll.short.result = err;
+                        ftui.toast("<u>ShortPoll " + err + " </u><br>", 'error');
+                        ftui.saveStatesLocal("shortPoll");
                     }
-                    ftui.log(1, 'shortPoll: Done');
-                    if (ftui.poll.short.lastErrorToast) {
-                        ftui.poll.short.lastErrorToast.reset();
-                    }
-                    ftui.states.lastShortpoll = ltime;
-                    ftui.poll.short.duration = duration * 1000;
-                    ftui.poll.short.lastTimestamp = new Date();
-                    ftui.poll.short.result = 'ok';
+                    console.timeEnd('read jsonlist2');
+                })
+                .fail(function (jqxhr, textStatus, error) {
+                    var err = textStatus + ", " + error;
+                    ftui.log(1, "shortPoll: request failed: " + err);
+                    ftui.poll.short.result = err;
+                    ftui.states.lastSetOnline = 0;
+                    ftui.states.lastShortpoll = 0;
                     ftui.saveStatesLocal("deviceStates");
                     ftui.saveStatesLocal("shortPoll");
-                    ftui.updateBindElements('ftui.');
-                    if (!silent) {
-                        ftui.onUpdateDone();
+                    if (textStatus.indexOf('parsererror') < 0) {
+                        ftui.poll.short.lastErrorToast = ftui.toast("<u>ShortPoll Request Failed, will retry in " + ftui.config.shortPollDelay / 1000 + "s</u><br>" +
+                            err, 'error');
+                        ftui.getCSrf();
+                        ftui.startShortPollInterval(ftui.config.shortPollDelay);
+                    } else {
+                        ftui.toast("<u>ShortPoll Request Failed</u><br>" + err, 'error');
                     }
-                } else {
-                    var err = "request failed: Result is null";
-                    ftui.log(1, "shortPoll: " + err);
-                    ftui.poll.short.result = err;
-                    ftui.toast("<u>ShortPoll " + err + " </u><br>", 'error');
-                    ftui.saveStatesLocal("shortPoll");
-                }
-                console.timeEnd('read jsonlist2');
-            })
-            .fail(function (jqxhr, textStatus, error) {
-                var err = textStatus + ", " + error;
-                ftui.log(1, "shortPoll: request failed: " + err);
-                ftui.poll.short.result = err;
-                ftui.states.lastSetOnline = 0;
-                ftui.states.lastShortpoll = 0;
-                ftui.saveStatesLocal("deviceStates");
-                ftui.saveStatesLocal("shortPoll");
-                if (textStatus.indexOf('parsererror') < 0) {
-                    ftui.poll.short.lastErrorToast = ftui.toast("<u>ShortPoll Request Failed, will retry in " + ftui.config.shortPollDelay / 1000 + "s</u><br>" +
-                        err, 'error');
-                    ftui.getCSrf();
-                    ftui.startShortPollInterval(ftui.config.shortPollDelay);
-                } else {
-                    ftui.toast("<u>ShortPoll Request Failed</u><br>" + err, 'error');
-                }
 
-            });
+                });
     },
 
     longPoll: function () {
@@ -1174,15 +1175,15 @@ var ftui = {
                 var reason;
                 if (event.code == 1000)
                     reason =
-                    "Normal closure, meaning that the purpose for which the connection was established has been fulfilled.";
+                        "Normal closure, meaning that the purpose for which the connection was established has been fulfilled.";
                 else if (event.code == 1001)
                     reason =
-                    "An endpoint is \"going away\", such as a server going down or a browser having navigated away from a page.";
+                        "An endpoint is \"going away\", such as a server going down or a browser having navigated away from a page.";
                 else if (event.code == 1002)
                     reason = "An endpoint is terminating the connection due to a protocol error";
                 else if (event.code == 1003)
                     reason =
-                    "An endpoint is terminating the connection because it has received a type of data it cannot accept (e.g., an endpoint that understands only text data MAY send this if it receives a binary message).";
+                        "An endpoint is terminating the connection because it has received a type of data it cannot accept (e.g., an endpoint that understands only text data MAY send this if it receives a binary message).";
                 else if (event.code == 1004)
                     reason = "Reserved. The specific meaning might be defined in the future.";
                 else if (event.code == 1005)
@@ -1191,23 +1192,23 @@ var ftui = {
                     reason = "The connection was closed abnormally, e.g., without sending or receiving a Close control frame";
                 else if (event.code == 1007)
                     reason =
-                    "An endpoint is terminating the connection because it has received data within a message that was not consistent with the type of the message (e.g., non-UTF-8 [http://tools.ietf.org/html/rfc3629] data within a text message).";
+                        "An endpoint is terminating the connection because it has received data within a message that was not consistent with the type of the message (e.g., non-UTF-8 [http://tools.ietf.org/html/rfc3629] data within a text message).";
                 else if (event.code == 1008)
                     reason =
-                    "An endpoint is terminating the connection because it has received a message that \"violates its policy\". This reason is given either if there is no other sutible reason, or if there is a need to hide specific details about the policy.";
+                        "An endpoint is terminating the connection because it has received a message that \"violates its policy\". This reason is given either if there is no other sutible reason, or if there is a need to hide specific details about the policy.";
                 else if (event.code == 1009)
                     reason =
-                    "An endpoint is terminating the connection because it has received a message that is too big for it to process.";
+                        "An endpoint is terminating the connection because it has received a message that is too big for it to process.";
                 else if (event.code == 1010) // Note that this status code is not used by the server, because it can fail the WebSocket handshake instead.
                     reason =
-                    "An endpoint (client) is terminating the connection because it has expected the server to negotiate one or more extension, but the server didn't return them in the response message of the WebSocket handshake. <br /> Specifically, the extensions that are needed are: " +
-                    event.reason;
+                        "An endpoint (client) is terminating the connection because it has expected the server to negotiate one or more extension, but the server didn't return them in the response message of the WebSocket handshake. <br /> Specifically, the extensions that are needed are: " +
+                        event.reason;
                 else if (event.code == 1011)
                     reason =
-                    "A server is terminating the connection because it encountered an unexpected condition that prevented it from fulfilling the request.";
+                        "A server is terminating the connection because it encountered an unexpected condition that prevented it from fulfilling the request.";
                 else if (event.code == 1015)
                     reason =
-                    "The connection was closed due to a failure to perform a TLS handshake (e.g., the server certificate can't be verified).";
+                        "The connection was closed due to a failure to perform a TLS handshake (e.g., the server certificate can't be verified).";
                 else
                     reason = "Unknown reason";
                 ftui.log(1, "websocket (url=" + event.target.url + ") closed!  reason=" + reason);
@@ -1252,35 +1253,35 @@ var ftui = {
             ftui.states.longPollRestart = false;
 
             ftui.poll.long.request = $.ajax({
-                    url: ftui.config.fhemDir,
-                    cache: false,
-                    async: true,
-                    method: 'GET',
-                    data: {
-                        XHR: 1,
-                        inform: "type=status;filter=" + ftui.poll.long.filter + ";since=" +
-                            ftui.poll.long.lastEventTimestamp.getTime() + ";fmt=JSON",
-                        fwcsrf: ftui.config.csrf
-                    },
-                    username: ftui.config.username,
-                    password: ftui.config.password,
-                    xhr: function () {
-                        ftui.poll.long.xhr = new window.XMLHttpRequest();
-                        ftui.poll.long.xhr.addEventListener("readystatechange", function (e) {
-                            var data = e.target.responseText;
-                            if (e.target.readyState === 4) {
-                                return;
-                            }
-                            if (e.target.readyState === 3) {
-                                ftui.handleUpdates(data);
-                            }
-                        }, false);
+                url: ftui.config.fhemDir,
+                cache: false,
+                async: true,
+                method: 'GET',
+                data: {
+                    XHR: 1,
+                    inform: "type=status;filter=" + ftui.poll.long.filter + ";since=" +
+                        ftui.poll.long.lastEventTimestamp.getTime() + ";fmt=JSON",
+                    fwcsrf: ftui.config.csrf
+                },
+                username: ftui.config.username,
+                password: ftui.config.password,
+                xhr: function () {
+                    ftui.poll.long.xhr = new window.XMLHttpRequest();
+                    ftui.poll.long.xhr.addEventListener("readystatechange", function (e) {
+                        var data = e.target.responseText;
+                        if (e.target.readyState === 4) {
+                            return;
+                        }
+                        if (e.target.readyState === 3) {
+                            ftui.handleUpdates(data);
+                        }
+                    }, false);
 
-                        ftui.log(1, 'longpoll: ajax responseURL=' + ftui.poll.long.xhr.responseURL);
-                        ftui.log(1, 'longpoll: ajax statusText=' + ftui.poll.long.xhr.statusText);
-                        return ftui.poll.long.xhr;
-                    }
-                })
+                    ftui.log(1, 'longpoll: ajax responseURL=' + ftui.poll.long.xhr.responseURL);
+                    ftui.log(1, 'longpoll: ajax statusText=' + ftui.poll.long.xhr.statusText);
+                    return ftui.poll.long.xhr;
+                }
+            })
                 .done(function (data) {
                     if (ftui.poll.long.xhr) {
                         ftui.poll.long.xhr.abort();
@@ -1520,10 +1521,10 @@ var ftui = {
             ftui.deviceStates = JSON.parse(localStorage.getItem('ftui.deviceStates')) || {};
         else {
             $.ajax({
-                    async: false,
-                    method: 'GET',
-                    url: "/fhem/tablet/data/" + ftui.config.filename.replace(".html", ".dat"),
-                })
+                async: false,
+                method: 'GET',
+                url: "/fhem/tablet/data/" + ftui.config.filename.replace(".html", ".dat"),
+            })
                 .done(function (data) {
                     ftui.deviceStates = JSON.parse(data) || {};
                 });
@@ -1566,7 +1567,7 @@ var ftui = {
                     localStorage.setItem("modules", JSON.stringify(checkModule));
                     break;
             }
-        } catch (e) {}
+        } catch (e) { }
     },
 
     getDeviceParameter: function (devname, paraname) {
@@ -1586,57 +1587,57 @@ var ftui = {
         // get the plugin
         ftui.dynamicload(ftui.config.basedir + "js/widget_" + name + ".js", true).done(function () {
 
-                // get all dependencies of this plugin
-                var depsPromises = [];
-                var getDependencies = window["depends_" + name];
+            // get all dependencies of this plugin
+            var depsPromises = [];
+            var getDependencies = window["depends_" + name];
 
-                // load all dependencies recursive before
-                if ($.isFunction(getDependencies)) {
+            // load all dependencies recursive before
+            if ($.isFunction(getDependencies)) {
 
-                    var deps = getDependencies();
-                    if (deps) {
-                        deps = ($.isArray(deps)) ? deps : [deps];
-                        $.map(deps, function (dep, i) {
-                            if (dep.match(new RegExp('^.*\.(js|css)$'))) {
-                                depsPromises.push(ftui.dynamicload(dep, false));
-                            } else {
-                                depsPromises.push(ftui.loadPlugin(dep));
-                            }
-                        });
+                var deps = getDependencies();
+                if (deps) {
+                    deps = ($.isArray(deps)) ? deps : [deps];
+                    $.map(deps, function (dep, i) {
+                        if (dep.match(new RegExp('^.*\.(js|css)$'))) {
+                            depsPromises.push(ftui.dynamicload(dep, false));
+                        } else {
+                            depsPromises.push(ftui.loadPlugin(dep));
+                        }
+                    });
+                }
+            } else {
+                ftui.log(2, "function depends_" + name + " not found (maybe ok)");
+            }
+
+            $.when.apply(this, depsPromises).always(function () {
+                var module = (window["Modul_" + name]) ? new window["Modul_" + name]() : null;
+                if (module) {
+                    if (area !== void 0) {
+
+                        // add only real widgets not dependencies
+                        plugins.addModule(module);
+                        if (ftui.isValid(area))
+                            module.area = area;
+
+                        ftui.log(1, 'Try to init plugin: ' + name);
+                        module.init();
+
+                        // update all what we have until now
+                        for (var key in module.subscriptions) {
+                            module.update(module.subscriptions[key].device, module.subscriptions[key].reading);
+                        }
                     }
+                    ftui.log(1, 'Finished load plugin "' + name + '" for area "' + area + '"');
+                    $('[data-type="' + name + '"]', area).removeClass('widget-hide');
+
                 } else {
-                    ftui.log(2, "function depends_" + name + " not found (maybe ok)");
+                    ftui.log(1, 'Failed to load plugin "' + name + '" for area "' + area + '"');
                 }
 
-                $.when.apply(this, depsPromises).always(function () {
-                    var module = (window["Modul_" + name]) ? new window["Modul_" + name]() : null;
-                    if (module) {
-                        if (area !== void 0) {
+                deferredLoad.resolve();
+            });
 
-                            // add only real widgets not dependencies
-                            plugins.addModule(module);
-                            if (ftui.isValid(area))
-                                module.area = area;
-
-                            ftui.log(1, 'Try to init plugin: ' + name);
-                            module.init();
-
-                            // update all what we have until now
-                            for (var key in module.subscriptions) {
-                                module.update(module.subscriptions[key].device, module.subscriptions[key].reading);
-                            }
-                        }
-                        ftui.log(1, 'Finished load plugin "' + name + '" for area "' + area + '"');
-                        $('[data-type="' + name + '"]', area).removeClass('widget-hide');
-
-                    } else {
-                        ftui.log(1, 'Failed to load plugin "' + name + '" for area "' + area + '"');
-                    }
-
-                    deferredLoad.resolve();
-                });
-
-            })
+        })
             .fail(function () {
                 ftui.toast('Failed to load plugin : ' + name);
                 ftui.log(1, 'Failed to load plugin : ' + name + '  - add <script src="js/widget_' + name +
@@ -1914,7 +1915,7 @@ var ftui = {
                 var match = find.match(new RegExp('^' + array[i] + '$'));
                 if (match)
                     return i;
-            } catch (e) {}
+            } catch (e) { }
         }
 
         // negation double
@@ -1942,7 +1943,7 @@ var ftui = {
         var offset = new Date().getTimezoneOffset();
         return (m) ? new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]) :
             (m2) ? new Date(70, 0, 1, 0, 0, m2[1], 0) :
-            (m3) ? new Date(+m3[3], +m3[2] - 1, +m3[1], 0, -offset, 0, 0) : new Date();
+                (m3) ? new Date(+m3[3], +m3[2] - 1, +m3[1], 0, -offset, 0, 0) : new Date();
     },
 
     diffMinutes: function (date1, date2) {
@@ -2074,20 +2075,20 @@ var ftui = {
                     });
                 }
             } else
-            if (f7) {
-                f7.ftui.addNotification({
-                    title: 'FTUI',
-                    message: text,
-                    hold: 1500
-                });
-            } else if ($.toast) {
-                return $.toast({
-                    text: text,
-                    loader: false,
-                    position: ftui.config.toastPosition,
-                    stack: tstack
-                });
-            }
+                if (f7) {
+                    f7.ftui.addNotification({
+                        title: 'FTUI',
+                        message: text,
+                        hold: 1500
+                    });
+                } else if ($.toast) {
+                    return $.toast({
+                        text: text,
+                        loader: false,
+                        position: ftui.config.toastPosition,
+                        stack: tstack
+                    });
+                }
 
         }
     },
@@ -2471,9 +2472,9 @@ function onjQueryLoaded() {
 
     $.fn.cleanWhitespace = function () {
         var textNodes = this.contents().filter(
-                function () {
-                    return (this.nodeType == 3 && !/\S/.test(this.nodeValue));
-                })
+            function () {
+                return (this.nodeType == 3 && !/\S/.test(this.nodeValue));
+            })
             .remove();
         return this;
     };
