@@ -1,9 +1,9 @@
 /* FTUI Plugin
- * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+ * Copyright (c) 2015-2019 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-/* global ftui:true, Modul_widget:true, Powerange: true */
+/* global ftui:true, Modul_widget:true */
 
 "use strict";
 
@@ -125,6 +125,11 @@ var Modul_link = function () {
         elem.initData('active-background-color', elem.data('background-color'));
 
         me.addReading(elem, 'title');
+
+        // init embedded widgets
+        if (elem.find('[data-type]').length > 0) {
+            ftui.initWidgets('[data-wgid="' + elem.wgid() + '"]');
+        }
     }
 
     function init_ui(elem) {
@@ -215,7 +220,7 @@ var Modul_link = function () {
             e.preventDefault();
         });
 
-        $(window).bind('hashchange', function (e) {
+        $(window).bind('hashchange', function () {
             colorize(elem);
         });
 
@@ -254,7 +259,7 @@ var Modul_link = function () {
 
         // load area content but wait until main page is loaded
         if (elem.hasClass('default')) {
-            $(document).one("initWidgetsDone", function (e, area) {
+            $(document).one("initWidgetsDone", function () {
                 var sel = elem.data('load');
                 if ($(sel + " > *").children().length === 0 || elem.hasClass('nocache')) {
                     loadPage(elem);

@@ -42,7 +42,7 @@ UPD 2018-04-02_22:16:32 9888 www/tablet/js/widget_volume.js
 UPD 2018-01-21_14:51:58 2931 www/tablet/js/widget_example.js
 UPD 2018-11-21_21:34:48 5290 www/tablet/js/widget_checkbox.js
 UPD 2018-10-01_18:04:53 13743 www/tablet/js/widget_simplechart.js
-UPD 2019-01-15_00:34:52 10775 www/tablet/js/widget_link.js
+UPD 2019-02-18_21:37:20 10912 www/tablet/js/widget_link.js
 UPD 2018-01-13_16:41:02 3312 www/tablet/js/widget_colorwheel.js
 UPD 2018-10-19_11:15:31 3096 www/tablet/js/widget_svgplot.js
 UPD 2018-10-01_18:13:16 4777 www/tablet/js/widget_klimatrend.js
@@ -52,7 +52,7 @@ UPD 2017-12-22_09:57:40 5722 www/tablet/js/widget_select.js
 UPD 2018-08-16_07:43:39 9665 www/tablet/js/widget_popup.js
 UPD 2018-12-03_21:14:03 2672 www/tablet/js/widget_tts.js
 UPD 2018-11-06_22:35:11 9772 www/tablet/js/widget_html.js
-UPD 2019-01-26_20:49:45 50066 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2019-02-18_22:34:46 50124 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2017-09-22_08:48:55 7740 www/tablet/js/widget_controller.js
 UPD 2017-02-28_22:04:09 8209 www/tablet/js/widget_highchart3d.js
 UPD 2017-11-19_14:35:00 21234 www/tablet/js/highcharts-meteogram.js
@@ -78,12 +78,12 @@ UPD 2018-10-04_19:13:06 2844 www/tablet/js/widget_datetimepicker.js
 UPD 2017-02-11_14:27:26 988 www/tablet/js/widget_wakeup.js
 UPD 2018-09-19_01:16:29 1311 www/tablet/js/widget_reload.js
 UPD 2018-01-09_20:25:53 2978 www/tablet/js/widget_joinedlabel.js
-UPD 2017-03-03_17:46:38 2323 www/tablet/js/widget_readingsgroup.js
+UPD 2017-05-24_18:36:20 2323 www/tablet/js/widget_readingsgroup.js
 UPD 2019-01-26_12:37:48 19744 www/tablet/js/widget_calview.js
 UPD 2017-02-11_14:27:26 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2017-02-11_14:27:26 1493 www/tablet/js/widget_loading.js
 UPD 2018-01-21_14:59:59 9875 www/tablet/js/widget_settimer.js
-UPD 2019-01-26_20:47:11 97770 www/tablet/js/fhem-tablet-ui.js
+UPD 2019-02-18_22:32:09 97255 www/tablet/js/fhem-tablet-ui.js
 UPD 2018-01-21_14:50:53 5053 www/tablet/js/widget_controlbutton.js
 UPD 2018-10-02_23:13:57 1776 www/tablet/js/widget_push.js
 UPD 2018-09-29_22:33:53 5838 www/tablet/js/widget_playstream.js
@@ -156,7 +156,7 @@ UPD 2017-12-27_22:02:52 448 www/tablet/lib/jquery.wakeup.min.js
 UPD 2017-02-11_14:27:26 44235 www/tablet/lib/jquery.gridster.min.js
 UPD 2017-08-23_05:42:46 17759 www/tablet/lib/swiper.min.css
 UPD 2017-12-27_22:02:52 21144 www/tablet/lib/fhemSVG.min.css
-UPD 2017-12-27_22:02:52 19833 www/tablet/lib/powerange.min.js
+UPD 2019-02-18_21:07:51 19904 www/tablet/lib/powerange.min.js
 UPD 2017-12-27_22:02:52 678 www/tablet/lib/jquery.unveil.min.js
 UPD 2018-10-04_19:07:56 60579 www/tablet/lib/jquery.datetimepicker.min.js
 UPD 2018-12-12_17:46:21 75304 www/tablet/lib/font-awesome.min.css
