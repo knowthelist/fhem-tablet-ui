@@ -192,7 +192,7 @@ var Modul_widget = function () {
     function map(mapObj, readval, defaultVal) {
         if ((typeof mapObj === 'object') && (mapObj !== null)) {
             for (var key in mapObj) {
-                if (readval === key || readval.match(new RegExp(key))) {
+                if (readval === key || readval.match(new RegExp('^' + key + '$'))){
                     return mapObj[key];
                 }
             }
@@ -451,7 +451,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.7.12',
+    version: '2.7.13',
     config: {
         DEBUG: false,
         DEMO: false,
