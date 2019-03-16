@@ -1045,29 +1045,29 @@ var ftui = {
                                 var oldParam = ftui.getDeviceParameter(device, reading);
                                 isUpdated = (!oldParam || oldParam.val !== newParam.Value || oldParam.date !== newParam.Time);
                                 ftui.log(5, 'isUpdated=' + isUpdated);
+                            }
+                            
+                            // write into internal cache object
+                            var params = ftui.deviceStates[device] || {};
+                            var param = params[reading] || {};
+                            param.date = newParam.Time;
+                            param.val = newParam.Value;
+                            // console.log('*****',device);
+                            param.valid = true;
+                            params[reading] = param;
+                            ftui.deviceStates[device] = params;
 
-                                // write into internal cache object
-                                var params = ftui.deviceStates[device] || {};
-                                var param = params[reading] || {};
-                                param.date = newParam.Time;
-                                param.val = newParam.Value;
-                                // console.log('*****',device);
-                                param.valid = true;
-                                params[reading] = param;
-                                ftui.deviceStates[device] = params;
+                            ftui.paramIdMap[paramid] = {};
+                            ftui.paramIdMap[paramid].device = device;
+                            ftui.paramIdMap[paramid].reading = reading;
+                            ftui.timestampMap[paramid + '-ts'] = {};
+                            ftui.timestampMap[paramid + '-ts'].device = device;
+                            ftui.timestampMap[paramid + '-ts'].reading = reading;
 
-                                ftui.paramIdMap[paramid] = {};
-                                ftui.paramIdMap[paramid].device = device;
-                                ftui.paramIdMap[paramid].reading = reading;
-                                ftui.timestampMap[paramid + '-ts'] = {};
-                                ftui.timestampMap[paramid + '-ts'].device = device;
-                                ftui.timestampMap[paramid + '-ts'].reading = reading;
-
-                                // update widgets only if necessary
-                                if (isUpdated) {
-                                    ftui.log(5, '[shortPoll] do update for ' + device + ',' + reading);
-                                    plugins.update(device, reading);
-                                }
+                            // update widgets only if necessary
+                            if (isUpdated) {
+                                ftui.log(5, '[shortPoll] do update for ' + device + ',' + reading);
+                                plugins.update(device, reading);
                             }
                         }
                     }
