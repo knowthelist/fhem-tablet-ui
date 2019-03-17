@@ -1251,12 +1251,6 @@ To change the folder where FHEM can be reached for polling
 <meta name='fhemweb_url' content='/fhem/'>
 ```
 
-The name of your FHEMWEB device
-```html
-<meta name='web_device' content='WEB'>
-```
-
-
 
 **General settings**
 

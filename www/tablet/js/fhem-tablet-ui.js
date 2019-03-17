@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.7.12
+ * Version: 2.7.13
  *
  * Copyright (c) 2015-2019 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -378,8 +378,8 @@ var plugins = {
     updateParameters: function () {
         ftui.subscriptions = {};
         ftui.subscriptionTs = {};
-        ftui.devs = [ftui.config.webDevice];
-        ftui.reads = ['STATE', 'longpoll'];
+        ftui.devs = [];
+        ftui.reads = [];
         var i = this.modules.length;
         while (i--) {
             var module = this.modules[i];
@@ -532,7 +532,6 @@ var ftui = {
             ftui.log(1, 'fadeTime=0 => disable jQuery animation');
             jQuery.fx.off = true;
         }
-        ftui.config.webDevice = $("meta[name='web_device']").attr("content") || $.trim($('body').data('webname')) || 'WEB';
         ftui.config.maxLongpollAge = $("meta[name='longpoll_maxage']").attr("content") || 240;
         ftui.config.DEBUG = (ftui.config.debuglevel > 0);
         ftui.config.TOAST = $("meta[name='toast']").attr("content") || 5; //1,2,3...= n Toast-Messages, 0: No Toast-Messages
@@ -557,8 +556,8 @@ var ftui = {
         ftui.config.username = $("meta[name='username']").attr("content");
         ftui.config.password = $("meta[name='password']").attr("content");
         // subscriptions
-        ftui.devs = [ftui.config.webDevice];
-        ftui.reads = ['STATE'];
+        ftui.devs = [];
+        ftui.reads = [];
 
         var cssReadyDeferred = $.Deferred();
         var initDeferreds = [cssReadyDeferred];
@@ -1045,7 +1044,7 @@ var ftui = {
                                 var oldParam = ftui.getDeviceParameter(device, reading);
                                 isUpdated = (!oldParam || oldParam.val !== newParam.Value || oldParam.date !== newParam.Time);
                                 ftui.log(5, 'isUpdated=' + isUpdated);
-
+                             
                                 // write into internal cache object
                                 var params = ftui.deviceStates[device] || {};
                                 var param = params[reading] || {};
@@ -1069,7 +1068,7 @@ var ftui = {
                                     plugins.update(device, reading);
                                 }
                             }
-                        }
+                          }
                     }
 
                     // import the whole fhemJSON
@@ -1134,7 +1133,6 @@ var ftui = {
                     } else {
                         ftui.toast("<u>ShortPoll Request Failed</u><br>" + err, 'error');
                     }
-
                 });
     },
 
@@ -1145,12 +1143,7 @@ var ftui = {
             return;
         }
 
-        if ('WebSocket' in window &&
-            ftui.config.longPollType === 'websocket' &&
-            ftui.deviceStates[ftui.config.webDevice] &&
-            ftui.deviceStates[ftui.config.webDevice].longpoll &&
-            ftui.deviceStates[ftui.config.webDevice].longpoll.val &&
-            ftui.deviceStates[ftui.config.webDevice].longpoll.val === 'websocket') {
+        if ('WebSocket' in window && ftui.config.longPollType === 'websocket' ) {
 
             if (ftui.poll.long.websocket) {
                 ftui.log(3, 'valid ftui.poll.long.websocket found');
