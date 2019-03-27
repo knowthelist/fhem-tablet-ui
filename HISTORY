@@ -1,5 +1,8 @@
 FHEM Tablet UI change history:
 
+ 2019-03-17
+ - removed WEB device query
+ 
  2019-02-18
  - slider: fixed a handle-position bug for bigger sizes
  - link: added support for embedded widgets
