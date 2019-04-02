@@ -1,3 +1,4 @@
 FHEM Tablet UI last changes:
- 2019-03-17
- - removed WEB device query
+ 2019-04-02
+ - weather: switched to version from somansch
+ - wdtimer: latest version from forum 
