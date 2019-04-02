@@ -1,4 +1,4 @@
-/* 
+/*
 
 TODO's :
 Dialog sollte noch responsive sein (Tablet/Smartphone Nutzung)
@@ -24,6 +24,20 @@ Datetimepicker:  https://github.com/xdan/datetimepicker   [in fhem-tablet-ui ent
 Switchery: https://github.com/abpetkov/switchery   [in fhem-tablet-ui enthalten]
 ----------------------------------------------------------------------------
 
+----------------------------------------------------------------------------
+Version 2.0
+
+Erweiterung zur Unterstützung von Sunset/Sunrise, $WE, Perl code, ...
+
+Kurt Eckert 2018
+Verwendet:
+JQuery: https://jquery.com/  [in fhem enthalten]
+JQuery-UI: https://jqueryui.com/  [in fhem enthalten]
+Datetimepicker:  https://github.com/xdan/datetimepicker   [in fhem-tablet-ui enthalten]
+Switchery: https://github.com/abpetkov/switchery   [in fhem-tablet-ui enthalten]
+----------------------------------------------------------------------------
+
+
 ATTRIBUTE:
 ~~~~~~~~~~
     Attribute (Pflicht):
@@ -46,7 +60,7 @@ ATTRIBUTE:
     data-style: Angabe 'round' oder 'square'.
 
 localStore:
-~~~~~~~~~    
+~~~~~~~~~
 
 Name: wdtimer_<FHEM_Device_Name>
  ~~~~~~~~~~~~~ PROFIL ~~~~~~~~~~~~~
@@ -63,13 +77,13 @@ Name: wdtimer_<FHEM_Device_Name>
             (1)[ Uhrzeit ]
             (2)[ FHEM Befehl]
             (3)[ Profil Status (true/false)]   -> False markiert dass das Profil gelöscht wird
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  ~~~~~~~~~~~~~ Befehlliste ~~~~~~~~~~
     (1)[Befehlliste]
         (0..n)[Befehl-Liste] -> Befehl-Dropdown Inhalt
             (0)[Anzeige-Text]
             (1)[FHEM Befehl]
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  ~~~~~~~~~~~ Konfiguration ~~~~~~~~~~
     (2)[Konfiguration]
         (0)[Name]
@@ -77,10 +91,10 @@ Name: wdtimer_<FHEM_Device_Name>
         (2)[Sprache]
         (3)[Disable-Status] (true=Enabled aktiv, false=Disabled deaktivert)
         (4)[Dialogs Titel]
-        (5)[Command]        
-        (6)[Condition]      
+        (5)[Command]
+        (6)[Condition]
         (7)[Disable Status-Change] (true = Funktion gesperrt, false = Funktion freigegeben)
-        (8)[Theme-Class] 
+        (8)[Theme-Class]
         (9)[Style]
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
@@ -89,10 +103,12 @@ Name: wdtimer_<FHEM_Device_Name>
 
 "use strict";
 
-function depends_wdtimer (){   
+function depends_wdtimer (){
     var deps = [];
 
 	var userCSS = $('head').find("[href$='fhem-tablet-ui-user.css']");
+	var topCSS = $('head').find("[href$='fhem-tablet-ui.css']");
+
 	if (userCSS.length)
 		userCSS.before('<link rel="stylesheet" href="'+ ftui.config.basedir + 'css/fhem-tablet-ui-wdtimer.css" type="text/css" />');
 	else
@@ -100,30 +116,115 @@ function depends_wdtimer (){
 	
     if (!$.fn.datetimepicker){
 		if (userCSS.length)
-			userCSS.before('<link rel="stylesheet" href="'+ ftui.config.basedir + 'lib/jquery.datetimepicker.css" type="text/css" />');   
+			userCSS.before('<link rel="stylesheet" href="'+ ftui.config.basedir + 'lib/jquery.datetimepicker.css" type="text/css" />');
 		else
-			$('head').append('<link rel="stylesheet" href="'+ ftui.config.basedir + 'lib/jquery.datetimepicker.css" type="text/css" />');   
+			$('head').append('<link rel="stylesheet" href="'+ ftui.config.basedir + 'lib/jquery.datetimepicker.css" type="text/css" />');
 
-        deps.push(ftui.config.basedir + "lib/jquery.datetimepicker.js");     
+        deps.push(ftui.config.basedir + "lib/jquery.datetimepicker.js");
+    }
+    if ($('head').find("[href$='codemirror.css']").length == 0){
+		if (topCSS.length)
+			topCSS.before('<link rel="stylesheet" href="'+ ftui.config.basedir + '../codemirror/codemirror.css" type="text/css" />');
+		else
+			$('head').append('<link rel="stylesheet" href="'+ ftui.config.basedir + '../codemirror/codemirror.css" type="text/css" />');
+
+		ftui.dynamicload(ftui.config.basedir + "js/fhem-tablet-ui-codemirror.js", true).done(function () {
+			InitCodeMirror();
+		});
     }
     if (!$.fn.Switchery){
 		if (userCSS.length)
-			userCSS.before('<link rel="stylesheet" href="'+ ftui.config.basedir + 'lib/switchery.min.css" type="text/css" />');      
+			userCSS.before('<link rel="stylesheet" href="'+ ftui.config.basedir + 'lib/switchery.min.css" type="text/css" />');
      	else
-			$('head').append('<link rel="stylesheet" href="'+ ftui.config.basedir + 'lib/switchery.min.css" type="text/css" />');      
+			$('head').append('<link rel="stylesheet" href="'+ ftui.config.basedir + 'lib/switchery.min.css" type="text/css" />');
 
-        deps.push(ftui.config.basedir + "lib/switchery.min.js");        
+        deps.push(ftui.config.basedir + "lib/switchery.min.js");
     }
     if (!$.fn.draggable){
-        deps.push(ftui.config.basedir + "lib/jquery-ui.min.js");            
+        deps.push(ftui.config.basedir + "lib/jquery-ui.min.js");
     }
-    
-    return deps;    
+
+    return deps;
 };
+
+var mydropdown = {
+	do_onclick: function(ev, obj, hmax) {
+		var dropdown = $(obj).parent().find('.wdtimer_dropdown');
+		if (dropdown.hasClass('popup_activated')) { // popup is active, hide it
+			dropdown.removeClass('popup_activated');
+			dropdown.children().removeClass('popup_activated');
+			$(obj).removeClass('active');
+		} else { // popup is inactive, show it
+			var container = $(obj).parent().parents('.wdtimer_profilelist')
+			container.find('.wdtimer_dropdown').removeClass('popup_activated'); // hide any open dropdowns we only want to have one open at a time
+			container.find('.active').removeClass('active'); // hide any open dropdowns we only want to have one open at a time
+			var width = obj.clientWidth+'px !important';
+			var height = obj.clientHeight+'px !important';
+			var hstr = '';
+			if (hmax) { // we have hmax, so we need to reserve space for scrollbars
+				var scwidth = mydropdown.get_scrollsize().width;
+				hstr = '; height: '+hmax+'px; padding-right: '+scwidth+'px !important;';
+			}
+			dropdown.attr('style','margin-top: '+height+'; margin-left: -'+width+'; overflow-y: auto;'+hstr);
+			dropdown.addClass('popup_activated');
+			dropdown.children().addClass('popup_activated');
+			dropdown.children().on('click.myelements',function(ev) {mydropdown.do_onselect(ev, this);});
+			$(obj).addClass('active');
+			$(document).on('click',function(ev) {mydropdown.check_outside(ev,dropdown,this);});
+			container.parent().on('scroll',function(ev) {mydropdown.check_outside(ev,dropdown,this);});
+		}
+	},
+	do_onselect: function(ev, obj) { // handle clicks on open dropdowns
+		$(obj).parent().removeClass('popup_activated');
+		$(obj).parent().children().removeClass('popup_activated');
+		$(obj).parent().children().removeClass('selected');
+		$(obj).parent().children().off();
+		$(obj).parent()[0].selectedIndex = parseInt(obj.attributes.index.value);
+		$(obj).addClass('selected');
+		$(obj).trigger('change');
+		var source = $(obj).parent().parent().find('.wdtimer_dropdowncmd');
+		source.children().remove();
+		$(obj).clone().appendTo(source);
+	},
+	check_outside: function(ev,dd,obj) { // check for clicks outside and hide dropdown
+		if (!$(ev.target).parent().hasClass('wdtimer_dropdowncmd')) {
+			dd.removeClass('popup_activated');
+			dd.children().removeClass('popup_activated');
+			$(obj).removeClass('active')
+		}
+	},
+	get_scrollsize: function() {
+		var css = {
+			"border":  "none",
+			"height":  "200px",
+			"margin":  "0",
+			"padding": "0",
+			"width":   "200px"
+		};
+
+		var inner = $("<div>").css($.extend({}, css));
+		var outer = $("<div>").css($.extend({
+			"left":	   "-1000px",
+			"overflow":   "scroll",
+			"position":   "absolute",
+			"top":		"-1000px"
+		}, css)).append(inner).appendTo("body")
+		.scrollLeft(1000)
+		.scrollTop(1000);
+
+		var scrollSize = {
+			"height": (outer.offset().top - inner.offset().top) || 0,
+			"width": (outer.offset().left - inner.offset().left) || 0
+		};
+
+		outer.remove();
+		return scrollSize;
+	}
+}
 
 var Modul_wdtimer = function () {
 	function wdtimer_multiArrayindexOf(arr, val) {
-		var result = -1;        
+		var result = -1;
 		for (var i = 0; i < arr.length; i++) {
 			for (var j = 0; j < arr[i].length; j++) {
 				if(arr[i][j] == val) {
@@ -131,7 +232,7 @@ var Modul_wdtimer = function () {
 					break;
 				}
 			}
-		} 
+		}
 		return result;
 	};
 	function wdtimer_fontNameToUnicode(name) {
@@ -164,95 +265,155 @@ var Modul_wdtimer = function () {
 		return rgb;
 	};
 	function wdtimer_showDialog(elem,device) { //Erstellen des Dialogs und öffnen des Dialogs
-		if (elem.dialog_visible) return; // dialog is already open, nothing to create (in case of multiple firing due to bind to click and touch)
+		if (elem.data('dialog_visible')) return; // dialog is already open, nothing to create (in case of multiple firing due to bind to click and touch)
 
 		var config = [];
-		elem.dialog_visible = true;
+		elem.data('dialog_visible', true);
 
-		config = wdtimer_loadLocal(device);          
+		config = wdtimer_loadLocal(device);
 		elem.append(wdtimer_buildwdtimer(config, device));
+		
+		elem.find('.wdtimer_dialog').append("<div class='wdtimer_code_header "+config[2][8]+" "+config[2][9]+"'>Code:</div>");
+		var height = config[2][5].split("<DefInternalCR>").length-1 + config[2][6].split("<DefInternalCR>").length-1+3;
+		elem.find('.wdtimer_dialog').append("<div class='wdtimer_code command' style='height:"+height+"rem'></div>");
+		$(elem.find('.wdtimer_code.command')).data('type',config[2][5] != ""?'command':'condition');
+		
 		elem.find('[name="wdtimer_timedd"]').on('change',function(evt) {wdtimer_showhideoptions(evt);});
-		elem.find('[name^="wdtimer_text"]').on('input',function(evt) {wdtimer_changewidth(evt,5,100);});
-		elem.find('[name^="wdtimer_time"]').on('input',function(evt) {wdtimer_changewidth(evt,5,100);});
+		elem.find('[name^="wdtimer_text"]').on('input',function(evt,blr) {wdtimer_changewidth(evt,5,100,blr);});
+		elem.find('[name^="wdtimer_time"]').on('input',function(evt,blr) {wdtimer_changewidth(evt,5,100,blr);});
 
-		var wdtimer_dialog = $( ".wdtimer_dialog" ).dialog({
+		if( elem.data('codemirror') && typeof AddCodeMirror == 'function' ) { // codemirror is available, use it for source highlighting
+			var cmObj;
+			AddCodeMirror(elem.find('.wdtimer_code.command')[0], function(pcm) {
+				pcm.setValue(config[2][5].replace(/\<DefInternalCR\>/g,'\n') + config[2][6].replace(/\<DefInternalCR\>/g,'\n'));
+				cmObj = $(elem.find('div.CodeMirror'));
+				cmObj.data('CM', pcm);
+				cmObj.addClass('wdtimer_text command inline ' + config[2][8]+" "+config[2][9]);
+				cmObj.attr({'style':cmObj.attr('style')+'; text-align:left; resize:none; visibility:visible; height: inherit;'});
+				cmObj.attr({'type':'text', 'name':'wdtimer_txt_code'});
+			});
+		} else { // no codemirror, show text without highlighting
+			$(elem.find('.wdtimer_code.command')).append("<textarea class='wdtimer_text command inline "+
+					config[2][8]+" "+config[2][9]+
+					"' type='text' style='white-space:pre; resize:none; visibility:visible; height:inherit;' name='wdtimer_txt_code'></textarea>");
+			$(elem.find('.wdtimer_text.command')).val((config[2][5].replace(/\<DefInternalCR\>/g,'\n') + config[2][6].replace(/\<DefInternalCR\>/g,'\n')));
+		}
+
+		var wdtimer_dialogConfig = {
 			height: elem.data('height'),
 			width: elem.data('width'),
 			autoOpen: false,
-			modal: true,
-			resizable: true, 
-			draggable: false, 
+			modal: elem.data('isPopup')?true:false,
+			resizable: true,
+			draggable: false,
 			closeOnEscape: false,
-			dialogClass: "wdtimer "+"wdtimer_"+device, 
+			dialogClass: "wdtimer "+"wdtimer_"+device,
 			title: config[2][4],
 			buttons: {
-				"Hinzufügen": function(){                        
-					wdtimer_addProfile( $('.wdtimer_'+device.replace(/\./,'\\.')), device );
+				"Hinzufügen": function(){
+					wdtimer_addProfile( $('.wdtimer_'+device.replace(/\./g,'\\.')), device );
 				},
 				"Speichern": function(){
-					var canClose = wdtimer_saveProfile( $('.wdtimer_'+device.replace(/\./,'\\.')), device );
+					var canClose = wdtimer_saveProfile( $('.wdtimer_'+device.replace(/\./g,'\\.')), device );
 					if (canClose === true) {
-						wdtimer_dialog.dialog( "close" );
-						$('.wdtimer_'+device.replace(/\./,'\\.')).remove();
-						$('.wdtimer_datetimepicker_'+device.replace(/\./,'\\.')).each(function(){ $(this).remove(); });
-						elem.children('.wdtimer_dialog').remove();
-						elem.dialog_visible = false;
+						wdtimer_closeDialog(elem,device)
+
 					}
 				},
 				"Abbrechen": function() {
-					wdtimer_dialog.dialog( "close" );
-					$('.wdtimer_'+device.replace(/\./,'\\.')).remove();                    
-					$('.wdtimer_datetimepicker_'+device.replace(/\./,'\\.')).each(function(){ $(this).remove(); });
-					elem.children('.wdtimer_dialog').remove();                  
-					elem.dialog_visible = false;
+					wdtimer_closeDialog(elem,device)
 				}
 			},
 			create: function (e, ui) {
-				var pane = $('.wdtimer_'+device.replace(/\./,'\\.')).find(".ui-dialog-buttonpane");
+				var device = $(this).data('device');
+				var pane = $('.wdtimer_'+device.replace(/\./g,'\\.')).find(".ui-dialog-buttonpane");
 				var wdtimer_status;
-				if (config[2][3] === true) { wdtimer_status = "checked"; } else { wdtimer_status = ""; } 
+				if (config[2][3] === true) { wdtimer_status = "checked"; } else { wdtimer_status = ""; }
 				$("<div class='wdtimer_active ' ><input style='visibility: visible;' type='checkbox' class='js-switch' "+wdtimer_status+"/></div>").prependTo(pane);
-				$('.wdtimer_'+device.replace(/\./,'\\.')).find('.ui-dialog-titlebar-close').remove();
-			}, 
-			open: function () {
-				$(this).parent().children(".ui-dialog-titlebar").prepend('<i class="wdtimer_header_icon fa oa '+elem.data('icon')+'"></i>');
-				wdtimer_setStatusChangeAction($('.wdtimer_'+device.replace(/\./,'\\.')),config[2][3]);
+				$('.wdtimer_'+device.replace(/\./g,'\\.')).find('.ui-dialog-titlebar-close').remove();
 			},
-		});        
+			open: function () {
+				var device = $(this).data('device');
+				var elem = $(this).data('elem');
+				$(this).parent().children(".ui-dialog-titlebar").prepend('<i class="wdtimer_header_icon fa oa '+elem.data('icon')+'"></i>');
+				wdtimer_setStatusChangeAction($('.wdtimer_'+device.replace(/\./g,'\\.')),config[2][3]);
+				if (!elem.data('isPopup')) { // car for right position and attach dialog a child of ftui widget
+					$(this).parent().css('top',"");
+					$(this).parent().css('left',"");
+					$(this).parent().detach().appendTo(elem);
+				}
+			}
+		}
+
+		if (!elem.data('isPopup')) { // no popup, we have to care that the dialog is positioned inside the widgets div and positioned accordingly
+			wdtimer_dialogConfig.position={my:"left top", at:"left top", of:elem};
+		}
+
+		var wdtimer_dialog = elem.find( '.wdtimer_dialog' ).data('elem',elem).data('device',device).dialog(wdtimer_dialogConfig);
 		// Benötige Klassen ergänzen
-		$( ".wdtimer" ).children('.ui-dialog-titlebar').addClass('wdtimer_header '+config[2][8]+" "+config[2][9]);            
-		$( ".wdtimer" ).children('.ui-dialog-buttonpane').addClass('wdtimer_footer '+config[2][8]+" "+config[2][9]); 
+		$( ".wdtimer" ).children('.ui-dialog-titlebar').addClass('wdtimer_header '+config[2][8]+" "+config[2][9]);
+		$( ".wdtimer" ).children('.ui-dialog-buttonpane').addClass('wdtimer_footer '+config[2][8]+" "+config[2][9]);
 		$( ".wdtimer" ).find('.ui-dialog-buttonset > .ui-button').addClass('wdtimer_button '+config[2][8]+" "+config[2][9]);
-		//-----------------------------------------------          
+		//-----------------------------------------------
 		//Verwendete Plugins aktivieren
-		wdtimer_setDateTimePicker($('.wdtimer_'+device.replace(/\./,'\\.')), device,config[2][9],config[2][11]); //DateTimePicker Plugin zuweisen
+		wdtimer_setDateTimePicker($('.wdtimer_'+device.replace(/\./g,'\\.')), device,config[2][8],config[2][9],config[2][11]); //DateTimePicker Plugin zuweisen
 		wdtimer_setTimerStatusSwitch($('.js-switch'),config[2][7]); //Status Switch
-		//-----------------------------------------------                     
+		//-----------------------------------------------
 		// Aktionen zuweisen
-		wdtimer_setDeleteAction($('.wdtimer_'+device.replace(/\./,'\\.')), device); //Löschen-Schalter Aktion        
-        wdtimer_setSortAction($('.wdtimer_'+device.replace(/\./,'\\.')), device); //Sortierungs-Schalter Aktion        
-		$('.wdtimer_'+device.replace(/\./,'\\.')).on("change", ".wdtimer_active", function () {
-			wdtimer_setStatusChangeAction($('.wdtimer_'+device.replace(/\./,'\\.')),  $(this).children('input').prop('checked')); //WeekdayTimer aktivieren/deaktivieren
+		wdtimer_setDeleteAction($('.wdtimer_'+device.replace(/\./g,'\\.')), device); //Löschen-Schalter Aktion
+        wdtimer_setSortAction($('.wdtimer_'+device.replace(/\./g,'\\.')), device); //Sortierungs-Schalter Aktion
+		$('.wdtimer_'+device.replace(/\./g,'\\.')).on("change", ".wdtimer_active", function () {
+			wdtimer_setStatusChangeAction($('.wdtimer_'+device.replace(/\./g,'\\.')),  $(this).children('input').prop('checked')); //WeekdayTimer aktivieren/deaktivieren
 		});
-		//-----------------------------------------------             
+		//-----------------------------------------------
 		wdtimer_dialog.dialog( "open" );
 
         // Dialog Shader
-        $( "body" ).find('.ui-widget-overlay').addClass('wdtimer_shader');     
+        $( "body" ).find('.ui-widget-overlay').addClass('wdtimer_shader');
         $(".wdtimer_shader").on('click',function() {
-            wdtimer_dialog.dialog( "close" );
-            $('.wdtimer_datetimepicker_'+device.replace(/\./,'\\.')).each(function(){ $(this).remove(); });
-            $('.wdtimer_'+device.replace(/\./,'\\.')).remove();                                
-            elem.children('.wdtimer_dialog').remove();  
-			elem.dialog_visible = false;
-        });       
+			if (elem.data('isPopup')) {
+				wdtimer_dialog.dialog( "close" );
+				$('.wdtimer_datetimepicker_'+device.replace(/\./g,'\\.')).each(function(){ $(this).remove(); });
+				$('.wdtimer_'+device.replace(/\./g,'\\.')).remove();
+				elem.children('.wdtimer_dialog').remove();
+				elem.data('dialog_visible', false);
+			}
+        });
 
-		$('.wdtimer_'+device.replace(/\./,'\\.')).find('[name^="wdtimer_text"]').trigger('input');
-		$('.wdtimer_'+device.replace(/\./,'\\.')).find('[name^="wdtimer_time"]').trigger('input');
+		$('.wdtimer_'+device.replace(/\./g,'\\.')).find('[name^="wdtimer_time"]').trigger('input',[true]);
+		$('.wdtimer_'+device.replace(/\./g,'\\.')).find('[name^="wdtimer_text"]').trigger('input',[true]);
 
-        //-----------------------------------------------     
+        //-----------------------------------------------
+		if (cmObj && cmObj.data('CM')) {
+			cmObj.data('CM').setCursor({line:0,ch:1});
+			cmObj.data('CM').refresh();
+		}
 	};
-	function wdtimer_changewidth(evt,min,max) {
+	function wdtimer_closeDialog(elem,device) {
+		var wdtimer_dialog = $( ".wdtimer_dialog.wdtimer_"+device.replace(/\./g,'\\.'));
+		wdtimer_dialog.dialog( "close" );
+		$('.wdtimer_'+device.replace(/\./g,'\\.')).remove();
+		$('.wdtimer_datetimepicker_'+device.replace(/\./g,'\\.')).each(function(){ $(this).remove(); });
+		elem.children('.wdtimer_dialog.wdtimer_'+device.replace(/\./g,'\\.')).remove();
+		elem.data('dialog_visible', false);
+		if (!elem.data('isPopup')) wdtimer_showDialog(elem,device); // show dialog again, if widget is not configured as popup
+	};
+	function wdtimer_codechange(elem,device) {
+		var config = [];
+		config = wdtimer_loadLocal(device);
+		var cmObj = $(elem.find('div.CodeMirror'));
+		var isCM = cmObj.length > 0;
+		
+		var value = isCM?cmObj.data('CM').getValue():$(elem.find('.wdtimer_text.command')).val();
+		value.replace(/\n/g,'<DefInternalCR>');
+		if ($(elem.find('.wdtimer_code.command')).data('type')=='command') { // timer provided a command
+			config[2][5] = value;
+		} else if ($(elem.find('.wdtimer_code.command')).data('type')=='condition') { // timer provided a condition
+			config[2][6] = value;
+		}
+		wdtimer_saveLocal(config);
+	};
+	function wdtimer_changewidth(evt,min,max,blr) {
 		var elem;
 		if ($(evt.delegateTarget).length > 0) {
 			elem = $(evt.delegateTarget);
@@ -269,11 +430,14 @@ var Modul_wdtimer = function () {
 			tDummy.remove();
 			elem[0].style.setProperty('width',width+'px','important');
 		}
+		if (blr) {
+			elem.blur();
+		}
 	};
 	function wdtimer_showhideoptions(evt) {
 		var style_hidden =  'visibility: hidden; width: 0px !important; padding: 0px !important; margin: 0px !important;';
 		var style_visible = 'visibility: visible;';
-		var theObj = $(evt.delegateTarget).parent();
+		var theObj = $(evt.delegateTarget).parents('.wdtimer_profilecmds');
 		if ($(evt.delegateTarget)[0].selectedIndex === 0) { // Time Value
 			theObj.find('[name="wdtimer_text1"]').attr('style',style_hidden);
 			theObj.find('[name="wdtimer_text2"]').attr('style',style_hidden);
@@ -281,13 +445,13 @@ var Modul_wdtimer = function () {
 			theObj.find('[name="wdtimer_time1"]').attr('style',style_hidden);
 			theObj.find('[name="wdtimer_time2"]').attr('style',style_visible);
 		} else if ($(evt.delegateTarget)[0].selectedIndex == 9) { // Command as string
-			theObj.find('[name="wdtimer_text1"]').attr('style',style_visible);
+			theObj.find('[name="wdtimer_text1"]').attr('style',style_visible).attr('title','perl command {}');
 			theObj.find('[name="wdtimer_text2"]').attr('style',style_hidden);
 			theObj.find('[name="wdtimer_text3"]').attr('style',style_hidden);
 			theObj.find('[name="wdtimer_time1"]').attr('style',style_hidden);
 			theObj.find('[name="wdtimer_time2"]').attr('style',style_hidden);
 		} else if ($(evt.delegateTarget)[0].selectedIndex == 8 || $(evt.delegateTarget)[0].selectedIndex == 4) { // _dat variant of the function, needs one more parameter
-			theObj.find('[name="wdtimer_text1"]').attr('style',style_visible);
+			theObj.find('[name="wdtimer_text1"]').attr('style',style_visible).attr('title','date for sun*_abs_dat');
 			theObj.find('[name="wdtimer_text2"]').attr('style',style_visible);
 			theObj.find('[name="wdtimer_text3"]').attr('style',style_visible);
 			theObj.find('[name="wdtimer_time1"]').attr('style',style_visible);
@@ -299,55 +463,80 @@ var Modul_wdtimer = function () {
 			theObj.find('[name="wdtimer_time1"]').attr('style',style_visible);
 			theObj.find('[name="wdtimer_time2"]').attr('style',style_visible);
 		}
-		theObj.find('[name^="wdtimer_text"]').trigger('input');
 		theObj.find('[name^="wdtimer_time"]').trigger('input');
-	};
+		theObj.find('[name^="wdtimer_text"]').trigger('input');
+};
 	function wdtimer_buildwdtimertimedropdown(cmds, selectedval, ocmd, theme,style) {
 		var result = "";
 
-		result += "<select class='wdtimer_cmd "+((style.search('noicons')<0)?'iconic oa-':'')+" inline "+theme+" "+style+"' id='wdtimer_timedd' name='wdtimer_timedd' ocmd='"+ocmd+"'>";
+		result += "<div class='wdtimer_dropdown "+((style.search('noicons')<0)?'iconic oa-':'')+" inline "+theme+" "+style+"' id='wdtimer_timedd' name='wdtimer_timedd' ocmd='"+ocmd+"'>";
 		for (var i = 0; i < cmds.length; i++) {
 			var text = (cmds[i][3]&&style.search('noicons')<0)?wdtimer_fontNameToUnicode(cmds[i][3]):cmds[i][1];
-			if (cmds[i][1] === selectedval) { result += "<option value='"+cmds[i][1]+(cmds[i][2]?("' title='"+cmds[i][2]):'')+"' selected>"+text+"</option>"; }
-			else { result += "<option value='"+cmds[i][1]+(cmds[i][2]?("' title='"+cmds[i][2]):'')+"'>"+text+"</option>"; }
+			if (cmds[i][1] === selectedval) {
+				result += "<div value='"+cmds[i][1]+(cmds[i][2]?("' title='"+cmds[i][2]):'')+"' index='"+i+"' class='selected'>"+text+"</div>";
+				var result_btn = "<div onclick='mydropdown.do_onclick(event,this);' class='wdtimer_dropdowncmd "+((style.search('noicons')<0)?'iconic oa-':'')+" inline "+theme+" "+style+"'>";
+				result_btn += "<div value='"+cmds[i][1]+(cmds[i][2]?("' title='"+cmds[i][2]):'')+"' class='selected'>"+text+"</div>";
+				result_btn += "</div>";
+			} else {
+				result += "<div value='"+cmds[i][1]+(cmds[i][2]?("' title='"+cmds[i][2]):'')+"' index='"+i+"'>"+text+"</div>";
+			}
 		}
-		result += "</select>";  
-		return result;        
+		result += "</div>";
+		result = result_btn + result;
+		return result;
 	};
 	function wdtimer_buildwdtimercmddropdown(cmds, selectedval, theme,style) {
 		var result = "";
 
-		result += "<select class='wdtimer_cmd "+theme+" "+style+"' name='wdtimer_cmd'>";
+		result += "<div class='wdtimer_dropdown "+" inline "+theme+" "+style+"' name='wdtimer_cmd'>";
+		for (var i = 0; i < cmds.length; i++) {
+			var text = (cmds[i][3]&&style.search('noicons')<0)?wdtimer_fontNameToUnicode(cmds[i][3]):cmds[i][1];
+			if (cmds[i][1] === selectedval) {
+				result += "<div value='"+cmds[i][1]+(cmds[i][2]?("' title='"+cmds[i][2]):'')+"' index='"+i+"' class='selected'>"+text+"</div>";
+				var result_btn = "<div onclick='mydropdown.do_onclick(event,this);' class='wdtimer_dropdowncmd "+" inline "+theme+" "+style+"'>";
+				result_btn += "<div value='"+cmds[i][1]+(cmds[i][2]?("' title='"+cmds[i][2]):'')+"' class='selected'>"+text+"</div>";
+				result_btn += "</div>";
+			} else {
+				result += "<div value='"+cmds[i][1]+(cmds[i][2]?("' title='"+cmds[i][2]):'')+"' index='"+i+"'>"+text+"</div>";
+			}
+		}
+		result += "</div>";
+		result = result_btn + result;
+		return result;
+
+/*		result += "<select class='wdtimer_cmd "+theme+" "+style+"' name='wdtimer_cmd'>";
 		for (var i = 0; i < cmds.length; i++) {
 			if (cmds[i][1] === selectedval) { result += "<option value='"+i+"' selected>"+cmds[i][0]+"</option>"; }
 			else { result += "<option value='"+i+"'>"+cmds[i][0]+"</option>"; }
 		}
-		result += "</select>";        
-		return result;        
+		result += "</select>";
+		return result;
+*/
 	};
 	function wdtimer_buildprofile(profile, cmds, id, theme, style) {
-		console.log("Style: "+style);
 		var result = "";
 		var style_hidden =  " style='visibility: hidden; width: 0px !important; padding: 0px !important; margin: 0px !important'";
 		var style_visible = " style='visibility: visible'";
-		var t_type = (style.indexOf('nokeyboard')>-1)?"'image'":"'text'";
+		var t_type = (style.indexOf('nokeyboard')>-1)?"'submit'":"'text'";
 
-        result += "<div data-profile='"+id+"' id='profile"+id+"' class='wdtimer_profile row "+style+"'>" +
-                  "  <div class='wdtimer_profilerow' >"+
-                  "    <div class='wdtimer_profileweekdays inline'>" +
-                  "       <div class='wdtimer_checkbox begin "+theme+" "+style+"'><input type='checkbox' id='checkbox_mo-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][1])+"/><label class='begin' for='checkbox_mo-reihe"+id+"'>Mo</label></div>"+
-                  "       <div class='wdtimer_checkbox "+theme+" "+style+"'><input type='checkbox' id='checkbox_di-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][2])+"/><label for='checkbox_di-reihe"+id+"'>Di</label></div>"+
-                  "       <div class='wdtimer_checkbox "+theme+" "+style+"'><input type='checkbox' id='checkbox_mi-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][3])+"/><label for='checkbox_mi-reihe"+id+"'>Mi</label></div>"+
-                  "       <div class='wdtimer_checkbox "+theme+" "+style+"'><input type='checkbox' id='checkbox_do-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][4])+"/><label for='checkbox_do-reihe"+id+"'>Do</label></div>"+
-                  "       <div class='wdtimer_checkbox "+theme+" "+style+"'><input type='checkbox' id='checkbox_fr-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][5])+"/><label for='checkbox_fr-reihe"+id+"'>Fr</label></div>"+
-                  "       <div class='wdtimer_checkbox "+theme+" "+style+"'><input type='checkbox' id='checkbox_sa-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][6])+"/><label for='checkbox_sa-reihe"+id+"'>Sa</label></div>"+
-                  "       <div class='wdtimer_checkbox end "+theme+" "+style+"'><input type='checkbox' id='checkbox_so-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][0])+"/><label class='end' for='checkbox_so-reihe"+id+"'>So</label></div>"+
-                  "    </div>"+
-                  "    <div class='wdtimer_profilecmds inline'>"+
-                  "       <div class='wdtimer_profilecmd inline input-control text'>";
-		result += wdtimer_buildwdtimercmddropdown(cmds, profile[2], theme, style); 
-		result += "       </div>";
-		result += "       <div class='wdtimer_profilecmd inline' name='wdtimer_frame'>";
+        result += "<div data-profile='"+id+"' id='profile"+id+"' class='sheet wdtimer_profile "+style+"'>" +
+                  "<div class='col-80 wdtimer_profilerow' >"+
+                  "<div class='wdtimer_profileweekdays inline'>" +
+                  "<div class='wdtimer_checkbox begin "+theme+" "+style+"'><input type='checkbox' id='checkbox_mo-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][1])+"/><label class='begin' for='checkbox_mo-reihe"+id+"'>Mo</label></div>"+
+                  "<div class='wdtimer_checkbox "+theme+" "+style+"'><input type='checkbox' id='checkbox_di-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][2])+"/><label for='checkbox_di-reihe"+id+"'>Di</label></div>"+
+                  "<div class='wdtimer_checkbox "+theme+" "+style+"'><input type='checkbox' id='checkbox_mi-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][3])+"/><label for='checkbox_mi-reihe"+id+"'>Mi</label></div>"+
+                  "<div class='wdtimer_checkbox "+theme+" "+style+"'><input type='checkbox' id='checkbox_do-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][4])+"/><label for='checkbox_do-reihe"+id+"'>Do</label></div>"+
+                  "<div class='wdtimer_checkbox "+theme+" "+style+"'><input type='checkbox' id='checkbox_fr-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][5])+"/><label for='checkbox_fr-reihe"+id+"'>Fr</label></div>"+
+                  "<div class='wdtimer_checkbox "+theme+" "+style+"'><input type='checkbox' id='checkbox_sa-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][6])+"/><label for='checkbox_sa-reihe"+id+"'>Sa</label></div>"+
+                  "<div class='wdtimer_checkbox "+theme+" "+style+"'><input type='checkbox' id='checkbox_so-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][0])+"/><label for='checkbox_so-reihe"+id+"'>So</label></div>"+
+                  "<div class='wdtimer_checkbox end "+theme+" "+style+"'><input type='checkbox' id='checkbox_we-reihe"+id+"' "+wdtimer_getCheckedString(profile[0][7])+"/><label class='end' for='checkbox_we-reihe"+id+"'>We</label></div>"+
+                  "</div>"+
+                  "<div class='wdtimer_profilecmds inline'>";
+		result += "<div class='wdtimer_profilecmd inline' name='wdtimer_frame'>";
+        result += "<div class='wdtimer_profilecmd inline input-control text'>";
+		result += wdtimer_buildwdtimercmddropdown(cmds, profile[2], theme, style);
+		result += "</div>";
+        result += "<div class='wdtimer_profilecmd inline input-control text'>";
 		result += wdtimer_buildwdtimertimedropdown([[0,"Time","Time Value","oa-time_clock"],
 													[1,"Sunrise-N","sunrise","oa-weather_sunrise"],
 													[2,"Sunrise-A","sunrise_abs","oa-weather_sunrise A"],
@@ -359,82 +548,87 @@ var Modul_wdtimer = function () {
 													[8,"Sunset-D","sunset_abs_dat","oa-weather_sunset D"],
 													[9,"Command","Arbitrary Command {}",">_"]],
 													profile[1][0], profile[1][profile[1].length-1], theme, style);
-		if (profile[1][0]=='Time' || profile[1][0]=='Command') { // the value is either a time or a undknown perl command enclosed in {}
+		result += "</div>";
+		if (profile[1][0]=='Time' || profile[1][0]=='Command') { // the value is either a time or a perl command enclosed in {}
 			if (profile[1][0] == 'Time') {
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text1' value=''>"; //offset for sunrise/sunset
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text2' value=''>"; //offset for sunrise/sunset
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text3' value=''>"; //offset for sunrise/sunset
-				result += "      <input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_hidden+" name = 'wdtimer_time1' value=''>"; // min value for sunrise/sunset
-				result += "      <input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" name = 'wdtimer_time2' value='"+profile[1][1].replace(/\"/g,"")+"'>"; // given time value
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text1' value=''>"; //date for sun*_abs_dat
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text2' value=''>"; //Horizon
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text3' value=''>"; //offset for sunrise/sunset
+				result += "<input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_hidden+" tabindex='-1' name = 'wdtimer_time1' value=''>"; // min value for sunrise/sunset
+				result += "<input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" tabindex='-1' name = 'wdtimer_time2' value='"+profile[1][1].replace(/\"/g,"")+"'>"; // given time value
 			} else if (profile[1][0] == 'Command') {
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text1' value='"+profile[1][1]+"'>"; //command as string
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text2' value=''>"; //offset for sunrise/sunset
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text3' value=''>"; //offset for sunrise/sunset
-				result += "      <input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_hidden+" name = 'wdtimer_time1' value='"+profile[1]+"'>"; // min time values for sunrise/sunset
-				result += "      <input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_hidden+" name = 'wdtimer_time2' value='"+profile[1]+"'>"; // min time values for sunrise/sunset
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text1' title='perl command {}' value='"+profile[1][1]+"'>"; //command as string
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text2' value=''>"; //Horizon
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text3' value=''>"; //offset for sunrise/sunset
+				result += "<input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_hidden+" tabindex='-1' name = 'wdtimer_time1' value='"+profile[1]+"'>"; // min time values for sunrise/sunset
+				result += "<input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_hidden+" tabindex='-1' name = 'wdtimer_time2' value='"+profile[1]+"'>"; // min time values for sunrise/sunset
 			}
 		} else if (profile[1][0]=='Sunrise-D' || profile[1][0]=='Sunset-D'){ // known function sunrise*_dat or sunset*_dat
-			if (profile[1].length > 6) { // all parameters are set
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text1' value='"+profile[1][1].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text2' value='"+profile[1][2].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text3' value='"+profile[1][3].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset
-				result += "      <input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" name = 'wdtimer_time1' value='"+profile[1][4].replace(/\"/g,"")+"'>"; // min time values for sunrise/sunset
-				result += "      <input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" name = 'wdtimer_time2' value='"+profile[1][5].replace(/\"/g,"")+"'>"; // max time values for sunrise/sunset
+			if (profile[1].length > 6) { // all parameters are used
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text1' value='"+profile[1][1].replace(/\"/g,"")+"'>"; //date for sun*_abs_dat
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text2' value='"+profile[1][2].replace(/\"/g,"")+"'>"; //Horizon
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text3' value='"+profile[1][3].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset
+				result += "<input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" tabindex='-1' name = 'wdtimer_time1' value='"+profile[1][4].replace(/\"/g,"")+"'>"; // min time values for sunrise/sunset
+				result += "<input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" tabindex='-1' name = 'wdtimer_time2' value='"+profile[1][5].replace(/\"/g,"")+"'>"; // max time values for sunrise/sunset
 			} else {
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text1' value='"+profile[1][1].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text1' value='"+profile[1][1].replace(/\"/g,"")+"'>"; //date for sun*_abs_dat
 				if ($.isNumeric(profile[1][2])) {
-					result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text2' value=''>"; //offset for sunrise/sunset
-					result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text3' value='"+profile[1][2].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset
+					result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text2' value=''>"; //Horizon
+					result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text3' value='"+profile[1][2].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset
 				} else {
-					result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text2' value='"+profile[1][2].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset
-					result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text3' value=''>"; //offset for sunrise/sunset
+					result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text2' value='"+profile[1][2].replace(/\"/g,"")+"'>"; //Horizon
+					result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text3' value=''>"; //offset for sunrise/sunset
 				}
-				result += "      <input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" name = 'wdtimer_time1' value='"+profile[1][3].replace(/\"/g,"")+"'>"; // min time values for sunrise/sunset
-				result += "      <input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" name = 'wdtimer_time2' value='"+profile[1][4].replace(/\"/g,"")+"'>"; // max time values for sunrise/sunset
+				result += "<input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" tabindex='-1' name = 'wdtimer_time1' value='"+profile[1][3].replace(/\"/g,"")+"'>"; // min time values for sunrise/sunset
+				result += "<input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" tabindex='-1' name = 'wdtimer_time2' value='"+profile[1][4].replace(/\"/g,"")+"'>"; // max time values for sunrise/sunset
 			}
 		} else { // known function (sunrise* or sunset*)
-			if (profile[1].length > 5) { // all parameters are set
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text1' value=''>"; //offset for sunrise/sunset
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text2' value='"+profile[1][1].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text3' value='"+profile[1][2].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset
-				result += "      <input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" name = 'wdtimer_time1' value='"+profile[1][3].replace(/\"/g,"")+"'>"; // min time values for sunrise/sunset
-				result += "      <input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" name = 'wdtimer_time2' value='"+profile[1][4].replace(/\"/g,"")+"'>"; // max time values for sunrise/sunset
+			if (profile[1].length > 5) { // all parameters are used
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text1' value=''>"; //date for sun*_abs_dat
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text2' value='"+profile[1][1].replace(/\"/g,"")+"'>"; //Horizon
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text3' value='"+profile[1][2].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset
+				result += "<input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" tabindex='-1' name = 'wdtimer_time1' value='"+profile[1][3].replace(/\"/g,"")+"'>"; // min time values for sunrise/sunset
+				result += "<input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" tabindex='-1' name = 'wdtimer_time2' value='"+profile[1][4].replace(/\"/g,"")+"'>"; // max time values for sunrise/sunset
 			} else {
-				result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text1' value=''>"; //offset for sunrise/sunset
+				result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text1' value=''>"; //date for sun*_abs_dat
 				if ($.isNumeric(profile[1][1])) {
-					result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text2' value=''>"; //offset for sunrise/sunset
-					result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text3' value='"+profile[1][1].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset
+					result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text2' value=''>"; //Horizon
+					result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text3' value='"+profile[1][1].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset
 				} else {
-					result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text2' value='"+profile[1][1].replace(/\"/g,"")+"'>"; //offset for sunrise/sunset					
-					result += "      <input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text3' value=''>"; //offset for sunrise/sunset
+					result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_visible+" name = 'wdtimer_text2' value='"+profile[1][1].replace(/\"/g,"")+"'>"; //Horizon
+					result += "<input class='wdtimer_text inline "+theme+" "+style+"' type='text'"+style_hidden+" name = 'wdtimer_text3' value=''>"; //offset for sunrise/sunset
 				}
-				result += "      <input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" name = 'wdtimer_time1' value='"+profile[1][2].replace(/\"/g,"")+"'>"; // min time values for sunrise/sunset
-				result += "      <input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" name = 'wdtimer_time2' value='"+profile[1][3].replace(/\"/g,"")+"'>"; // max time values for sunrise/sunset
+				result += "<input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" tabindex='-1' name = 'wdtimer_time1' value='"+profile[1][2].replace(/\"/g,"")+"'>"; // min time values for sunrise/sunset
+				result += "<input class='wdtimer_time inline "+theme+" "+style+"' type="+t_type+style_visible+" tabindex='-1' name = 'wdtimer_time2' value='"+profile[1][3].replace(/\"/g,"")+"'>"; // max time values for sunrise/sunset
 			}
 		}
-		result += "       </div>" +
-                  "    </div>"+                       
-                  "  </div>"+  
-                  "  <div class='wdtimer_buttonblock'>"+
-                  "       <div class='wdtimer_delprofile inline'><button data-profile='"+id+"' id='delprofile"+id+"' class='fa fa-trash-o wdtimer_deleteprofile wdtimer_button "+theme+" "+style+"' type='button'></button></div>" +
-                  "       <div class='wdtimer_profilemove'>"+            
-                  "           <button class='fa fa-arrow-up wdtimer_profileup wdtimer_button "+theme+" "+style+"' type='button'></button>"+
-                  "           <button class='fa fa-arrow-down wdtimer_profiledown wdtimer_button "+theme+" "+style+"' type='button'></button>"+
-                  "       </div>"+
-                  "  </div>"+                        
-                  "</div>";                 
+		// add descriptions for all fields to make clear what should be entered (SUNRISE_EL is a bit complex)
+		result = result.replace("'wdtimer_text1' value","'wdtimer_text1' title='date for sun*_abs_dat' value");
+		result = result.replace("'wdtimer_text2'","'wdtimer_text2' title='Horizon (e.g. CIVIL)'");
+		result = result.replace("'wdtimer_text3'","'wdtimer_text3' title='offset in seconds'");
+		result += "</div>" +
+                  "</div>"+
+                  "</div>"+
+                  "<div class='col-20 wdtimer_buttonblock'>"+
+                  "<div class='col-50 wdtimer_delprofile'><button data-profile='"+id+"' id='delprofile"+id+"' class='fa fa-trash-o wdtimer_deleteprofile wdtimer_button "+theme+" "+style+"' type='button'></button></div>" +
+                  "<div class='col-50 wdtimer_profilemove'>"+
+                  "<button class='fa fa-arrow-up wdtimer_profileup wdtimer_button "+theme+" "+style+"' type='button'></button>"+
+                  "<button class='fa fa-arrow-down wdtimer_profiledown wdtimer_button "+theme+" "+style+"' type='button'></button>"+
+                  "</div>"+
+                  "</div>"+
+                  "</div>";
 		
-		return result;          
+		return result;
 	};
 	function wdtimer_buildwdtimer(config,device) {
-		var result = "";        
-		result += 	"<div class='wdtimer_dialog "+config[2][8]+"'>"+
-		"   <div class='wdtimer_profilelist'>";       
+		var result = "";
+		result += 	"<div class='wdtimer_dialog "+"wdtimer_"+device.replace(/\./g,'\\.')+" "+config[2][8]+"'>"+
+		"<div class='wdtimer_profilelist'>";
 		for (var i = 0; i < config[0].length; i++) {
 			result += wdtimer_buildprofile(config[0][i],config[1],i,config[2][8],config[2][9]);
-		}       
-		result += 	"   </div>"+
-		"</div>";
+		}
+		result += 	"</div>";
+		result += 	"</div>";
 		return result;
 	};
 	function wdtimer_deleteProfile(elem, device) {
@@ -442,8 +636,8 @@ var Modul_wdtimer = function () {
 		var currProfile = elem.data('profile');
 
 		config = wdtimer_loadLocal(device);
-		config[0][currProfile][config[0][currProfile].length-1] = false;             
-		elem.parent().parent().parent().remove();        
+		config[0][currProfile][config[0][currProfile].length-1] = false;
+		elem.parent().parent().parent().remove();
 		wdtimer_saveLocal(config);
 	};
     function wdtimer_moveProfileUp(elem, device) {
@@ -455,79 +649,82 @@ var Modul_wdtimer = function () {
     function wdtimer_moveProfileDown(elem, device) {
         var profile = elem.parent().parent().parent();
         var profilenext = profile.next();
-        profilenext.insertBefore(profile);         
+        profilenext.insertBefore(profile);
         wdtimer_updateProfiles(device);
-    };        
+    };
 	function wdtimer_addProfile(elem, device) {
 		var config = [];
 		var newprofile = [];
 		var profile_weekdays  = new Array(true,true,true,true,true,true,true);
-		config = wdtimer_loadLocal(device);       
+		config = wdtimer_loadLocal(device);
 		newprofile.push(profile_weekdays, ["Time","20:00"], config[1][0][1], true);
 		config[0].push(newprofile);
 		var profile_row = wdtimer_buildprofile(config[0][config[0].length-1],config[1],config[0].length-1,config[2][8],config[2][9]);
+		
+		elem.find('.wdtimer_profilelist').append(profile_row);
+		elem.find('[name="wdtimer_timedd"]').on('change',function(evt) {wdtimer_showhideoptions(evt);});
+		elem.find('[name^="wdtimer_text"]').on('input',function(evt,blr) {wdtimer_changewidth(evt,5,100,blr);});
+		elem.find('[name^="wdtimer_time"]').on('input',function(evt,blr) {wdtimer_changewidth(evt,5,100,blr);});
 
-		$('.wdtimer_'+device.replace(/\./,'\\.')).find('.wdtimer_profilelist').append(profile_row);
-		$('.wdtimer_'+device.replace(/\./,'\\.')).find('[name="wdtimer_timedd"]').on('change',function(evt) {wdtimer_showhideoptions(evt);});
-		$('.wdtimer_'+device.replace(/\./,'\\.')).find('[name^="wdtimer_text"]').on('input',function(evt) {wdtimer_changewidth(evt,5,100);});
-		$('.wdtimer_'+device.replace(/\./,'\\.')).find('[name^="wdtimer_time"]').on('input',function(evt) {wdtimer_changewidth(evt,5,100);});
-
-		wdtimer_setDeleteAction($('.wdtimer_'+device.replace(/\./,'\\.')), config[2][0]); //Löschen-Schalter Aktion zuweisen      
-		wdtimer_setDateTimePicker($('.wdtimer_'+device.replace(/\./,'\\.')), config[2][0],config[2][9],config[2][11]); //DateTimePicker Plugin zuweisen zuweisen              
+		wdtimer_setDeleteAction(elem, config[2][0]); //Löschen-Schalter Aktion zuweisen
+		wdtimer_setDateTimePicker(elem, config[2][0],config[2][8],config[2][9],config[2][11]); //DateTimePicker Plugin zuweisen zuweisen
 		wdtimer_saveLocal(config); //Aktuelle Profile lokal speichern
 
-		$('.wdtimer_'+device.replace(/\./,'\\.')).find('[name^="wdtimer_text"]').trigger('input');
-		$('.wdtimer_'+device.replace(/\./,'\\.')).find('[name^="wdtimer_time"]').trigger('input');
+		elem.find('[name^="wdtimer_time"]').trigger('input',[true]);
+		elem.find('[name^="wdtimer_text"]').trigger('input',[true]);
+		
+		elem.find('.wdtimer_dialog').scrollTop(100000);
 	};
    function wdtimer_updateProfiles(device) {
         var config = [];
         var currentProfilesResult = [];
         var newconfig = [];
-        config = wdtimer_loadLocal(device);  
-        currentProfilesResult = wdtimer_getCurrentProfiles($('.wdtimer_'+device.replace(/\./,'\\.')),config[1]);       
+        config = wdtimer_loadLocal(device);
+        currentProfilesResult = wdtimer_getCurrentProfiles($('.wdtimer_'+device.replace(/\./g,'\\.')),config[1]);
         newconfig.push(currentProfilesResult[1], config[1], config[2], config[3]);
-        wdtimer_saveLocal(newconfig);                   
+        wdtimer_saveLocal(newconfig);
     };
 	function wdtimer_saveProfile(elem, device) { /*Ändert das DEF des WeekdayTimers und/oder ändert den Disable-Status des WeekdayTimers */
 		var arr_config = [];
 		var cmd = "";
 		var wdtimer_state = true;
 		var saveconfig = false; //Flag ob die Konfiguration gespeichert werden müsste (abhängig vom Parameter)
-		arr_config = wdtimer_loadLocal(device);   
-		wdtimer_state = elem.find('.js-switch').prop('checked');   
+		wdtimer_codechange(elem,device);
+		arr_config = wdtimer_loadLocal(device);
+		wdtimer_state = elem.find('.js-switch').prop('checked');
 		if (wdtimer_state != arr_config[2][3]) {
 			//Geänderten Status setzen
-			if (wdtimer_state === true) {cmd = "set "+device+" enable";} 
+			if (wdtimer_state === true) {cmd = "set "+device+" enable";}
 			else { cmd = "set "+device+" disable";}
 			ftui.log(1,"Status wird geändert '"+cmd+"'  ["+device+"]");
 
 			ftui.setFhemStatus(cmd);
 			if( device && typeof device != "undefined" && device !== " ") {
 				ftui.toast(cmd);
-			}            
+			}
             saveconfig = true;
 			//--------------------------------------------------
-			//Aktuelle Einstellungen/Profile in localStore schreiben    
+			//Aktuelle Einstellungen/Profile in localStore schreiben
 			arr_config[2][3] = wdtimer_state;
-			wdtimer_saveLocal(arr_config); 
+			wdtimer_saveLocal(arr_config);
 			//--------------------------------------------------
-		}  
+		}
 
 		if (wdtimer_state === true) {
 			//Aktuelle Profile ermitteln und setzen
-			var arr_currentProfilesResult = wdtimer_getCurrentProfiles($('.wdtimer_'+device.replace(/\./,'\\.')),arr_config[1]);
+			var arr_currentProfilesResult = wdtimer_getCurrentProfiles($('.wdtimer_'+device.replace(/\./g,'\\.')),arr_config[1]);
 
 			var arr_newconfig = [];
 
 			if (arr_currentProfilesResult[0] === false) { //Profile enthalten keine Fehler
 				arr_newconfig.push(arr_currentProfilesResult[1], arr_config[1], arr_config[2], arr_config[3]);
 				
-				//Aktualisiertes define setzen     
+				//Aktualisiertes define setzen
 				cmd = "defmod "+device+" WeekdayTimer "+arr_newconfig[2][1]+" "+arr_newconfig[2][2]+" ";
 				for (var i = 0; i < arr_newconfig[0].length; i++) {
 					if (arr_newconfig[0][i][3] === true) {
 						var ocmd = arr_config[0][i][1][arr_config[0][i][1].length-1];
-						var selection = $(elem.find("select[name='wdtimer_timedd']")[i]).children("option:selected").attr('value');
+						var selection = $(elem.find("div[name='wdtimer_timedd']")[i]).children(".selected").attr('value');
 						if ((selection.split('-')[0]=='Sunrise' || selection.split('-')[0]=='Sunset')) {ocmd='{sunset()}';}
 						var funcext = (selection.indexOf('-A')>-1)?'_abs':((selection.indexOf('-R')>-1)?'_rel':((selection.indexOf('-D')>-1)?'_abs_dat':''));
 						var funcbase = (selection.indexOf('Sunrise')>-1)?'sunrise':((selection.indexOf('Sunset')>-1)?'sunset':'');
@@ -552,21 +749,21 @@ var Modul_wdtimer = function () {
 						}
 					}
 				}
-				cmd += arr_newconfig[2][5]+' '+arr_newconfig[2][6];
+				cmd += arr_newconfig[2][5].replace(/\<DefInternalCR\>/g,'\n')+' '+arr_newconfig[2][6].replace(/\<DefInternalCR\>/g,'\n');
 				ftui.log(1,"Define wird geändert '"+cmd+"'  ["+device+"]");
 				ftui.setFhemStatus(cmd.trim());
 				if( device && typeof device != "undefined" && device !== " ") {
 					ftui.toast(cmd);
-				}               
+				}
                 saveconfig = true;
 			} else { //Mind. ein Profile enthält einen Fehler
 				alert('Einstellungen konnten nicht übernommen werden');
 				return false;
-			}            
+			}
 			//--------------------------------------------------
-			//Aktuelle Einstellungen/Profile in localStore schreiben    
-			wdtimer_saveLocal(arr_newconfig); 
-			//--------------------------------------------------  
+			//Aktuelle Einstellungen/Profile in localStore schreiben
+			wdtimer_saveLocal(arr_newconfig);
+			//--------------------------------------------------
 		}
 		if(saveconfig && arr_config[2][10] === true) {
 			ftui.setFhemStatus("save");
@@ -579,66 +776,70 @@ var Modul_wdtimer = function () {
 	};
 	function wdtimer_loadLocal(device) {
 		var dataFromStore = [];
-		dataFromStore = JSON.parse(localStorage.getItem(me.widgetname+"_"+device));        
+		dataFromStore = JSON.parse(localStorage.getItem(me.widgetname+"_"+device));
 		return dataFromStore;
 	};
 	function wdtimer_setStatusChangeAction(elem,wdtimer_enabled){
-		if (wdtimer_enabled === false) { 
-			elem.children('.wdtimer_dialog').append('<div class="ui-widget-overlay ui-front wdtimer_shader wdtimer_profilelist" style="z-index: 5999; top: '+elem.children('.wdtimer_dialog').position().top+'px; height: '+elem.children('.wdtimer_dialog').height()+'px;      "></div>'); 
+		if (wdtimer_enabled === false) {
+			elem.children('.wdtimer_dialog').append('<div class="ui-widget-overlay ui-front wdtimer_shader wdtimer_profilelist" style="z-index: 5999; top: '+elem.children('.wdtimer_dialog').position().top+'px; height: '+elem.children('.wdtimer_dialog').height()+'px;      "></div>');
 			elem.find('.ui-dialog-buttonset').children().eq(0).hide();
 		}
-		else { 
-			elem.children('.wdtimer_dialog').children('.wdtimer_shader').remove(); 
-			elem.find('.ui-dialog-buttonset').children().eq(0).show();           
+		else {
+			elem.children('.wdtimer_dialog').children('.wdtimer_shader').remove();
+			elem.find('.ui-dialog-buttonset').children().eq(0).show();
 		}
 	};
 	function wdtimer_setDeleteAction(elem,device) {
-		elem.find('.wdtimer_deleteprofile').each(function(){       
+		elem.find('.wdtimer_deleteprofile').each(function(){
 			$(this).on('click', function(event) {
 				wdtimer_deleteProfile( $(this), device );
 			});
-		});        
+		});
 	};
     function wdtimer_setSortAction(elem,device) {
-        elem.find('.wdtimer_profileup').each(function(){       
+        elem.find('.wdtimer_profileup').each(function(){
             $(this).on('click', function(event) {
-                wdtimer_moveProfileUp( $(this), device );            
+                wdtimer_moveProfileUp( $(this), device );
             });
-        });        
-        elem.find('.wdtimer_profiledown').each(function(){       
+        });
+        elem.find('.wdtimer_profiledown').each(function(){
             $(this).on('click', function(event) {
-                wdtimer_moveProfileDown( $(this), device );        
+                wdtimer_moveProfileDown( $(this), device );
             });
-        });                
-    };       
-	function wdtimer_setDateTimePicker(elem,device,style,timesteps) {      
+        });
+    };
+	function wdtimer_setDateTimePicker(elem,device,theme,style,timesteps) {
 		elem.find('.wdtimer_time').each(function(){
 			var dtp_style;
-			if (style.indexOf('dark')==-1) { dtp_style = 'default';} else { dtp_style ='dark'; }
+			if (theme.indexOf('dark')==-1) { dtp_style = 'default';} else { dtp_style ='dark'; }
             var picker = $(this).datetimepicker({
-				step:timesteps, 
+				step:timesteps,
 				lang: 'de',
 				theme: dtp_style,
 				format: 'H:i',
-				timepicker: true,
-				datepicker: false,     
-				className:  "wdtimer_datetimepicker "+"wdtimer_datetimepicker_"+device,
-				onChangeDateTime:function(dp,$input){wdtimer_changewidth($($input),5,100);},
-			});           
-		});        
-	};        
-	function wdtimer_setTimerStatusSwitch(elem,disablestate) { 
-		var switchery = new Switchery(elem[0], {
-			size: 'small',
-			color : '#00b33c',
-			secondaryColor: '#ff4d4d',
-			className : 'switchery wdtimer_active_checkbox',
-			disabled: disablestate,
-		});   
+				//timepicker: true,
+				datepicker: false,
+				className:  "wdtimer_datetimepicker "+"wdtimer_datetimepicker_"+device+" "+theme+" "+style,
+				onChangeDateTime:function(dp,$input){wdtimer_changewidth($($input),5,100);}
+			});
+		});
+	};
+	function wdtimer_setTimerStatusSwitch(elem,disablestate) {
+		elem.each(function() {
+			if ($(this).parent().find('.switchery').length == 0) {
+				var switchery = new Switchery(this, {
+					size: 'small',
+					color : '#00b33c',
+					secondaryColor: '#ff4d4d',
+					className : 'switchery wdtimer_active_checkbox',
+					disabled: disablestate,
+				});
+			}
+		});
 	};
 	function wdtimer_getCheckedString(val) {
 		var result = "";
-		if (val === true) {result = "checked";}        
+		if (val === true) {result = "checked";}
 		return result;
 	};
 	function wdtimer_getTimeparams(value) { // check for usage of function instead of time value and setup array for further modifications in dialog
@@ -659,20 +860,20 @@ var Modul_wdtimer = function () {
 		var result = [];
 		var weekdays_unified;
 		var i;
-		if (language=='de') weekdays_unified = weekdays.replace(/[sS]o/,'0').replace(/[mM]o/,'1').replace(/[dD]i/,'2').replace(/[mM]i/,'3').replace(/[dD]o/,'4').replace(/[fF]r/,'5').replace(/[sS]a/,'6');
-		if (language=='en') weekdays_unified = weekdays.replace(/[sS]u/,'0').replace(/[mM]o/,'1').replace(/[tT]u/,'2').replace(/[wW]e/,'3').replace(/[tT]h/,'4').replace(/[fF]r/,'5').replace(/[sS]a/,'6');
-		if (language=='fr') weekdays_unified = weekdays.replace(/[dD]i/,'0').replace(/[lL]u/,'1').replace(/[mM]a/,'2').replace(/[mM]e/,'3').replace(/[jJ]e/,'4').replace(/[vV]e/,'5').replace(/[sS]a/,'6');
+		if (language=='de') weekdays_unified = weekdays.replace(/\$[wW]e/,'7').replace(/[sS]o/,'0').replace(/[mM]o/,'1').replace(/[dD]i/,'2').replace(/[mM]i/,'3').replace(/[dD]o/,'4').replace(/[fF]r/,'5').replace(/[sS]a/,'6');
+		if (language=='en') weekdays_unified = weekdays.replace(/\$[wW]e/,'7').replace(/[sS]u/,'0').replace(/[mM]o/,'1').replace(/[tT]u/,'2').replace(/[wW]e/,'3').replace(/[tT]h/,'4').replace(/[fF]r/,'5').replace(/[sS]a/,'6');
+		if (language=='fr') weekdays_unified = weekdays.replace(/\$[wW]e/,'7').replace(/[dD]i/,'0').replace(/[lL]u/,'1').replace(/[mM]a/,'2').replace(/[mM]e/,'3').replace(/[jJ]e/,'4').replace(/[vV]e/,'5').replace(/[sS]a/,'6');
 
 		while (weekdays_unified.indexOf('-') > -1) {
 			var from = parseInt((weekdays_unified.charAt(weekdays_unified.indexOf('-')-1)));
 			var to = parseInt((weekdays_unified.charAt(weekdays_unified.indexOf('-')+1)));
 			if (from > to) {to+=7;} // care for "overflow"
 			var dstr = "";
-			for (i=from; i<=to; i++) dstr += (i<7)?i:(i-7); // limit to values from 0-6;
+			for (i=from; i<=to; i++) dstr += (i<7)?i:(i-7); // limit to values from 0-7;
 			weekdays_unified = weekdays_unified.replace(/.\-./,dstr);
 		}
-		for (i=0; i<=6; i++) if (weekdays_unified.indexOf(i) > -1) result.push(true); else result.push(false);
-		return result; 
+		for (i=0; i<=7; i++) if (weekdays_unified.indexOf(i) > -1) result.push(true); else result.push(false);
+		return result;
 	};
 	function wdtimer_getWeekdaysNum(weekdays) {
 		var result = "";
@@ -682,40 +883,59 @@ var Modul_wdtimer = function () {
 		if (weekdays[4] === true) { result += "4";}
 		if (weekdays[5] === true) { result += "5";}
 		if (weekdays[6] === true) { result += "6";}
-		if (weekdays[0] === true) { result += "0";}   
+		if (weekdays[0] === true) { result += "0";}
+		if (weekdays[7] === true) { result += "7";}
 		return result;
 	};
 	function wdtimer_getProfiles(elem) { /*Erstellt den localStore, verankert den Aufruf des PopUps*/
-		var attr_device = elem.data('device');  
+		var attr_device = elem.data('device');
 		var attr_language = elem.data('language');
-		var attr_cmdlist = elem.data('cmdlist'); 
+		var attr_cmdlist = elem.data('cmdlist');
         var attr_sortcmdlist = elem.data('sortcmdlist');
-		var attr_backgroundcolor = elem.data('background-color');        
-		var attr_color = elem.data('color');     
+		var attr_backgroundcolor = elem.data('background-color');
+		var attr_color = elem.data('color');
 		var attr_title = elem.data('title');
 		var attr_disablestate = elem.data('disablestate');
 		var attr_theme = elem.data('theme');
 		var attr_style = elem.data('style');
 		var attr_savecfg = elem.data('savecfg');
         var attr_timesteps = elem.data('timesteps');
-        
-        var cmd= ["list",attr_device].join(' ');
-
-		ftui.sendFhemCommand(cmd)
-            .done(function(data ) {
+		$.ajax({
+			async: true,
+			timeout: 15000,
+			cache: false,
+			context:{'DEF': 'DEF','elem':elem,'attr_device':attr_device},
+			url: $("meta[name='fhemweb_url']").attr("content") || "/fhem/",
+			fwcsrf: ftui.config.csrf?ftui.config.csrf:'',
+			data: {
+				cmd: ["list",attr_device].join(' '),
+				XHR: "1",
+				fwcsrf: ftui.config.csrf?ftui.config.csrf:''
+			}
+		})
+		.done(function(data ) {
+			var elem = this.elem;
+			var attr_device = this.attr_device;
 			var wdtimer_enabled = true;
 			var wdtimer_def = "";
 			var wdtimer_title;
-			if (attr_title == 'NAME') { wdtimer_title = attr_device; } else { wdtimer_title = attr_title; }            
+			if (attr_title == 'NAME') { wdtimer_title = attr_device; } else { wdtimer_title = attr_title; }
 			var listresult = data.split(/\n/);
 			var i;
 			var wdtimer_lang;
-			for (i = 0; i < listresult.length; i++) {               
-				if (listresult[i].indexOf('DEF') > -1) { wdtimer_def = listresult[i]; }
+			for (i = 0; i < listresult.length; i++) {
+				if (listresult[i].indexOf('DEF') > -1)
+				{
+					wdtimer_def = listresult[i];
+					while (listresult[i+1][0] != " ") { // check if there are CRs in the DEF
+						wdtimer_def += '<DefInternalCR>' + listresult[i+1];
+						i++;
+					}
+				}
 				if (listresult[i].indexOf('LANGUAGE') > -1) { wdtimer_lang = listresult[i].replace('LANGUAGE','').trim(); }
 				if (listresult[i].indexOf('disable') > -1) { wdtimer_enabled = (listresult[i].indexOf('0') > -1); }
-				if (listresult[i].indexOf('alias') > -1 && attr_title == 'ALIAS') { wdtimer_title = listresult[i].replace("alias", "").trim(); }                
-			}    
+				if (listresult[i].indexOf('alias') > -1 && attr_title == 'ALIAS') { wdtimer_title = listresult[i].replace("alias", "").trim(); }
+			}
 			wdtimer_def = wdtimer_def.replace('DEF','').trim();
 			var values = wdtimer_def.split(" ");
 			if (!wdtimer_lang) wdtimer_lang = attr_language;
@@ -724,15 +944,15 @@ var Modul_wdtimer = function () {
 			var arr_config = []; //Sonstige Angaben des Device
 			var arr_weekdaytimer = []; // Array mit gesamter Konfiguration
 
-			//--------------- localStore erstellen ---------------   
+			//--------------- localStore erstellen ---------------
 
-			//Befehlliste aus Attribut aufbauen [optional]             
-			if (attr_cmdlist !== '') {                  
+			//Befehlliste aus Attribut aufbauen [optional]
+			if (attr_cmdlist !== '') {
 				$.each( attr_cmdlist, function( text, cmd ) {
-					var arr_cmd = [];      
-					arr_cmd.push(text,cmd);                    
+					var arr_cmd = [];
+					arr_cmd.push(text,cmd);
 					arr_cmdlist.push(arr_cmd);
-				});               
+				});
 			}
 			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -741,70 +961,77 @@ var Modul_wdtimer = function () {
 			var wdtimer_command = "";
 			var wdtimer_condition = "";
 			var iCmd=0, iCnd=0;
+			var lastline = false;
 
 			for (i = 0; i < values.length; i++) {
 				var foundKnown = ((i===0) || (values[i]==attr_language))?true:false;
-				var isProfile = false;                               
+				var isProfile = false;
 				// Profiltrenner |  Command in {} eingeschlossen    Condition in () eingeschlossen      Command/Consition-trenner |
-				// Profil kann {} und () enthalten, Command kann ( enthalten, 
+				// Profil kann {} und () enthalten, Command kann ( enthalten,
 
-				// Auslesen der Profile 
-				if (values[i].indexOf('|') > -1 && values[i].indexOf('}|(') == -1 ) {  // Nur "Command|Condition" kann "}|(" sein
-					var profileparts = values[i].split('|');      //[<weekdays>|]<time>|<parameter>                           
+				// Auslesen der Profile
+				if (values[i].indexOf('|') > -1 && values[i].indexOf('}|(') == -1 && iCmd == 0 && iCnd == 0) {  // Nur "Command|Condition" kann "}|(" sein
+					var profileparts = values[i].split('|');      //[<weekdays>|]<time>|<parameter>
 					var profile = [];
 					var arr_cmd = [];
 
-					if (profileparts.length == 3) {profile.push(wdtimer_getWeekdays(profileparts[0],wdtimer_lang)); } else {profile.push(wdtimer_getWeekdays('0123456',wdtimer_lang)); } //Wochentage
-					if (profileparts.length == 3) {profile.push(wdtimer_getTimeparams(profileparts[1])); } else {profile.push(wdtimer_getTimeparams(profileparts[0])); } //Uhrzeit 
+					if (profileparts.length == 3) {profile.push(wdtimer_getWeekdays(profileparts[0],wdtimer_lang)); } else {profile.push(wdtimer_getWeekdays('01234567',wdtimer_lang)); } //Wochentage
+					if (profileparts.length == 3) {profile.push(wdtimer_getTimeparams(profileparts[1])); } else {profile.push(wdtimer_getTimeparams(profileparts[0])); } //Uhrzeit
 					if (profileparts.length == 3) { //Befehl
-						profile.push(profileparts[2]); 
+						profile.push(profileparts[2]);
 						if (wdtimer_multiArrayindexOf(arr_cmdlist,profileparts[2]) == -1) { //Fehlende Befehle in Befehlliste aufnehmen
-							arr_cmd = [];      
-							arr_cmd.push(profileparts[2].toUpperCase()+'*',profileparts[2]);                    
+							arr_cmd = [];
+							arr_cmd.push(profileparts[2].toUpperCase()+'*',profileparts[2]);
 							arr_cmdlist.push(arr_cmd);
 						}
 					} else {
 						profile.push(profileparts[1]);
 						if (wdtimer_multiArrayindexOf(arr_cmdlist,profileparts[1]) == -1) { //Fehlende Befehle in Befehlliste aufnehmen
-							arr_cmd = [];      
-							arr_cmd.push(profileparts[1].toUpperCase()+'*',profileparts[1]);                    
+							arr_cmd = [];
+							arr_cmd.push(profileparts[1].toUpperCase()+'*',profileparts[1]);
 							arr_cmdlist.push(arr_cmd);
 						}
 					}
 					profile.push(true); //Profil ist gültig (ungültig = über GUI gelöscht)
-					arr_profiles.push(profile);      
+					arr_profiles.push(profile);
 
-					isProfile = true;                    
+					isProfile = true;
 					foundKnown = true;
 				}
-				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                
+				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				// Auslesen von Commands
 				if (  (isProfile === false && isCondition === false ) && (values[i].indexOf('{') > -1 || values[i].indexOf('}') > -1 || isCommand === true) ) {
-					if (values[i].indexOf('{') > -1) iCmd++;
-					if (values[i].indexOf('}') > -1) iCmd--;
-					if (values[i].indexOf(';') > -1) { wdtimer_command += values[i].replace(';',';;')+" "; }
-					else {wdtimer_command += values[i]+" "; }
+					iCmd+=values[i].split("{").length - 1;
+					if (iCmd > 0) lastline = true;
+					iCmd-=values[i].split("}").length - 1;
+					if (iCmd >= 0 || lastline) {
+						if (values[i].indexOf(';') > -1) { wdtimer_command += values[i].replace(';',';;')+" "; }
+						else {wdtimer_command += values[i]+" "; }
+					}
 
-					isCommand = iCmd>0; // close gathering perl {} conmmand together due to previous split at spaces -> close if all open '{' are closed
+					isCommand = iCmd>0 || lastline&&iCmd==0; // close gathering perl {} conmmand together due to previous split at spaces -> close if all open '{' are closed
 					foundKnown = true;
 				}
 				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				// Auslesen von Condition
 				if (  (isProfile === false && isCommand === false ) && (values[i].indexOf('(') > -1 || values[i].indexOf(')') > -1 || isCondition === true) ) {
-					if (values[i].indexOf('(') > -1) iCnd++;
-					if (values[i].indexOf(')') > -1) iCnd--;
-					if (values[i].indexOf(';') > -1) { wdtimer_condition += values[i].replace(';',';;')+" "; }
-					else {wdtimer_condition += values[i]+" "; }
+					iCnd+=values[i].split("(").length - 1;
+					if (iCmd > 0) lastline = true;
+					iCnd-=values[i].split(")").length - 1;
+					if (iCnd >= 0 || lastline) {
+						if (values[i].indexOf(';') > -1) { wdtimer_condition += values[i].replace(';',';;')+" "; }
+						else {wdtimer_condition += values[i]+" "; }
+					}
 
-					isCondition = iCnd>0; // close gathering condition () together due to previous split at spaces -> close if all open '(' are closed
+					isCondition = iCnd>0 || lastline&&iCnd==0; // close gathering perl {} conmmand together due to previous split at spaces -> close if all open '{' are closed
 					foundKnown = true;
 				}
 				
 				if (!foundKnown) { // no special command in {} or condition in () or profile found -> treat as command
 					wdtimer_command += values[i]+" ";
 				}
-				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                
-			}   
+				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			}
 
 			arr_config.push(attr_device); // zu Device
 			arr_config.push(values[0]); // zu steuerndes Device
@@ -812,37 +1039,49 @@ var Modul_wdtimer = function () {
 			arr_config.push(wdtimer_enabled); // Device Status (aktiv/disabled)
 			arr_config.push(wdtimer_title); //Dialog Titel
 			arr_config.push(wdtimer_command.trim()); //Command
-			arr_config.push(wdtimer_condition.trim()); //Condition    
-			arr_config.push(attr_disablestate); //Weekdaytimer aktivier-/deaktivierbar       
+			arr_config.push(wdtimer_condition.trim()); //Condition
+			arr_config.push(attr_disablestate); //Weekdaytimer aktivier-/deaktivierbar
 			arr_config.push(attr_theme); //verwendetes Theme
-			arr_config.push(attr_style); //verwendeter Style       
+			arr_config.push(attr_style); //verwendeter Style
 			arr_config.push(attr_savecfg);  // autom. speichern der konfiguration
             arr_config.push(attr_timesteps); //Schritte im Uhrzeit-DropDown
             if (attr_sortcmdlist != "MANUELL" ) {
-                if (attr_sortcmdlist == "WERT" ) { 
+                if (attr_sortcmdlist == "WERT" ) {
 					arr_cmdlist.sort(function(a, b){return a[1] - b[1];});  //Gesamte Befehlliste sortieren nach Werten
 				}else{
 					// alles andere, d.h. "TEXT" ist default
 					arr_cmdlist.sort(function(a, b){return a[0].localeCompare(b[0]);});  //Gesamte Befehlliste sortieren nach Anzeigetext
 				}	
             };
-			arr_cmdlist.sort(function(a, b){return a[0] - b[0];}); //Gesamte Befehlliste 
-			arr_weekdaytimer.push(arr_profiles,arr_cmdlist,arr_config); // Array mit gesamter Konfiguration         
+			arr_cmdlist.sort(function(a, b){return a[0] - b[0];}); //Gesamte Befehlliste
+			arr_weekdaytimer.push(arr_profiles,arr_cmdlist,arr_config); // Array mit gesamter Konfiguration
 			wdtimer_saveLocal(arr_weekdaytimer); //Konfiguration speichern
 			//-----------------------------------------------
 
 			// Aufruf des Popups
 			var showDialogObject = (elem.data('starter')) ? $(document).find( elem.data('starter') ) : elem.children(":first");
-            showDialogObject.css({'cursor': 'pointer'});
-			showDialogObject.on( "clicked click touchend mouseup", function(e) {
-				e.preventDefault();
-				e.stopImmediatePropagation();
+			if (showDialogObject.length && showDialogObject.length > 0 && !showDialogObject.hasClass('ui-dialog')) { // if there is a child object other than the dialog itself, assume popup
+				showDialogObject.css({'cursor': 'pointer'});
+				showDialogObject.on( "clicked click touchend mouseup", function(e) {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					if (elem[0].style.getPropertyValue('visibility') != 'visible') wdtimer_showDialog(elem, attr_device);
+				});
+				elem.data('isPopup',true);
+			} else {
+				elem.data('isPopup',false);
 				if (elem[0].style.getPropertyValue('visibility') != 'visible') wdtimer_showDialog(elem, attr_device);
-			});
-			//-----------------------------------------------       
-			ftui.log(1,"Widget vorbereitungen sind abgeschlossen. ["+attr_device+"]");            
-		});    
-	};  
+			}
+			//-----------------------------------------------
+			ftui.log(3,"Widget vorbereitungen sind abgeschlossen. ["+attr_device+"]");
+			
+			if (elem.data('dialog_visible')) {
+				ftui.log(3, 'wdtimer triggered Dialog ist sichtbar und wird aktualisiert');
+				wdtimer_closeDialog(elem,attr_device)	//Dialogfenster bei Update schliessen	
+				wdtimer_showDialog(elem,attr_device)	//...und aktualisiert oeffnen
+			}			
+		});
+	};
 	function wdtimer_chkstr(instr) {
 		if (instr.search(/REAL|CIVIL|NAUTIC|ASTRONOMIC|HORIZON/)>-1) instr = '"'+instr+'"';
 		return instr;
@@ -853,12 +1092,12 @@ var Modul_wdtimer = function () {
 		var arr_currentProfilesResult = []; //Enthält das Ergebnis
 		var error = false;
 		//arr_currentProfilesResult  (0) -> fehler ja/nein
-		//                                      (1) -> profilliste          
+		//                                      (1) -> profilliste
 		elem.find('.wdtimer_profile').each(function(){
 			var profileid = $( this ).data('profile');
 			var arr_profil = [];
 			var weekdays = '';
-			var profileError = false;                       
+			var profileError = false;
 			// Wochentage
 			//-----------------------------------------------
 			if ($( this ).find(".wdtimer_profileweekdays").children().children("#checkbox_mo-reihe"+profileid).prop('checked') === true) { weekdays += '1'; }
@@ -868,12 +1107,13 @@ var Modul_wdtimer = function () {
 			if ($( this ).find(".wdtimer_profileweekdays").children().children("#checkbox_fr-reihe"+profileid).prop('checked') === true) { weekdays += '5'; }
 			if ($( this ).find(".wdtimer_profileweekdays").children().children("#checkbox_sa-reihe"+profileid).prop('checked') === true) { weekdays += '6'; }
 			if ($( this ).find(".wdtimer_profileweekdays").children().children("#checkbox_so-reihe"+profileid).prop('checked') === true) { weekdays += '0'; }
+			if ($( this ).find(".wdtimer_profileweekdays").children().children("#checkbox_we-reihe"+profileid).prop('checked') === true) { weekdays += '7'; }
 			arr_profil.push( wdtimer_getWeekdays(weekdays,'de') );
-			//-----------------------------------------------            
+			//-----------------------------------------------
 			//Uhrzeit
 			var arr_profilDetail = [];
-			var selection = $( this ).find("select[name='wdtimer_timedd']").children("option:selected").attr('value');
-			var ocmd = $( this ).find("select[name='wdtimer_timedd']").attr('ocmd');
+			var selection = $( this ).find("div[name='wdtimer_timedd']").children(".selected").attr('value');
+			var ocmd = $( this ).find("div[name='wdtimer_timedd']").attr('ocmd');
 			arr_profilDetail.push([($( this ).find("div[name='wdtimer_frame']").children("input[name='wdtimer_text1']").width()!==0),wdtimer_chkstr(($( this ).find("div[name='wdtimer_frame']").children("input[name='wdtimer_text1']").val()))]);
 			arr_profilDetail.push([($( this ).find("div[name='wdtimer_frame']").children("input[name='wdtimer_text2']").width()!==0),wdtimer_chkstr(($( this ).find("div[name='wdtimer_frame']").children("input[name='wdtimer_text2']").val()))]);
 			arr_profilDetail.push([($( this ).find("div[name='wdtimer_frame']").children("input[name='wdtimer_text3']").width()!==0),wdtimer_chkstr(($( this ).find("div[name='wdtimer_frame']").children("input[name='wdtimer_text3']").val()))]);
@@ -884,17 +1124,17 @@ var Modul_wdtimer = function () {
 			for (var i=0, il=arr_profilDetail.length; i<il; i++) if (arr_profilDetail[i][0]) tmparr.push(arr_profilDetail[i][1]);
 			tmparr.push(ocmd);
 			arr_profil.push(tmparr);
-			//-----------------------------------------------             
+			//-----------------------------------------------
 			//Befehl
-            //var cmdid = $( this ).children( ".wdtimer_profilecmd" ).children("select[name='wdtimer_cmd']").val();    
-            var cmdid = $( this ).find(".wdtimer_profilecmd").children("select[name='wdtimer_cmd']").val();	
+            //var cmdid = $( this ).children( ".wdtimer_profilecmd" ).children("select[name='wdtimer_cmd']").val();
+            var cmdid = $( this ).find(".wdtimer_profilecmd").children("div[name='wdtimer_cmd']").children('.selected')[0].attributes.index.value;
  			arr_profil.push( cmdlist[cmdid][1] );
-			//-----------------------------------------------         
+			//-----------------------------------------------
 			//Profil ist nicht gelöscht (muss mit true gesetzt werden)
 			arr_profil.push( true );
-			//-----------------------------------------------            
-			//Prüfen der Profilangaben auf Gültigkeit            
-			if (arr_profil[0].indexOf(true) == -1 ) { profileError = true;} //Kein Wochentag markiert 
+			//-----------------------------------------------
+			//Prüfen der Profilangaben auf Gültigkeit
+			if (arr_profil[0].indexOf(true) == -1 ) { profileError = true;} //Kein Wochentag markiert
 			if  (cmdlist[cmdid] === undefined) { profileError = true;} //Kein gültiger Befehl
 			var patt_time = /^"(?:2[0-3]|[01][0-9]):[0-5][0-9]"$/g; //-> regex stimmt nicht 26 Uhr ist gültig .....
 			if ( (arr_profilDetail[arr_profilDetail.length-2][0] && (patt_time.test(arr_profilDetail[arr_profilDetail.length-2][1]) === false)) ) { profileError = true;} //Keine gültige Uhrzeit
@@ -904,19 +1144,19 @@ var Modul_wdtimer = function () {
 				error = profileError;
 				$(this).addClass( "error" );
 			} else { $(this).removeClass( "error" ); }
-			//-----------------------------------------------                
-			arr_profiles.push(arr_profil);            
-			arr_profilesDetail.push(arr_profilDetail);            
-		});           
+			//-----------------------------------------------
+			arr_profiles.push(arr_profil);
+			arr_profilesDetail.push(arr_profilDetail);
+		});
 
 		if (arr_profiles.length === 0) { error = true; } //Es muss mind. 1 Profil vorhanden sein.
 		arr_currentProfilesResult.push(error, arr_profiles, arr_profilesDetail);
-		return arr_currentProfilesResult;        
+		return arr_currentProfilesResult;
 	};
-    function init() {
+	function init() {
         if (!$.fn.datetimepicker){
             ftui.dynamicload(ftui.config.basedir + 'lib/jquery.datetimepicker.js', null, null, false);
-            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + '/lib/jquery.datetimepicker.css" type="text/css" />');    
+            $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + '/lib/jquery.datetimepicker.css" type="text/css" />');
         }
         if (!$.fn.Switchery){
             ftui.dynamicload(ftui.config.basedir + 'lib/switchery.min.js', null, null, false);
@@ -930,25 +1170,33 @@ var Modul_wdtimer = function () {
 		this.elements.each(function(index) {
 			var elem = $(this);
 			elem.data('dialog_visible', false);
-            //Setzten der Standartattribute falls diese nicht angegeben wurden  
+            //Setzten der Standartattribute falls diese nicht angegeben wurden
             elem.initData('language',    $(this).data('language') || 'de');
-            elem.initData('cmdlist',    $(this).data('cmdlist') || '');     
-            elem.initData('sortcmdlist',    $(this).data('sortcmdlist') || "TEXT");            
-            elem.initData('width',    $(this).data('width') || '480');
+            elem.initData('cmdlist',    $(this).data('cmdlist') || '');
+            elem.initData('sortcmdlist',    $(this).data('sortcmdlist') || "TEXT");
+            elem.initData('width',    $(this).data('width') || 'auto');
             elem.initData('height',    $(this).data('height') || '300');
             elem.initData('title',  $(this).data('title') || 'NAME');
             elem.initData('icon',  $(this).data('icon') || 'fa-clock-o');
             elem.initData('disablestate',  $(this).data('disablestate') || false);
-            elem.initData('style',  $(this).data('style') || 'square'); //round or square           
+            elem.initData('style',  $(this).data('style') || 'square'); //round or square
             elem.initData('theme',  $(this).data('theme') || 'light');  //light,dark,custom
-			elem.initData('savecfg',$(this).data('savecfg') || false);  // Save FHEM Configuration  
+			elem.initData('savecfg',$(this).data('savecfg') || false);  // Save FHEM Configuration
             elem.initData('timesteps',    $(this).data('timesteps') || 30);
+			elem.initData('trigger', 'state');
+			elem.initData('codemirror', $(this).data('codemirror') || false)
 			//-----------------------------------------------
-			wdtimer_getProfiles(elem);
+			me.addReading(elem, 'trigger');
+			//wdtimer_getProfiles(elem);
 		});
 	};
     function update(dev,par) {
-
+		me.elements.filterDeviceReading('trigger', dev, par)
+		.each(function (index) {
+			ftui.log(3, 'wdtimer '+dev+' triggered: ' + par);
+			// ftui.toast('wdtimer '+dev+' triggered: ' + par);
+			wdtimer_getProfiles($(this));			//Profildaten aktualisieren
+		});	
 
     };
 
@@ -956,8 +1204,8 @@ var Modul_wdtimer = function () {
 
         widgetname: 'wdtimer',
         init:init,
-
-    }); 
+		update: update,
+    });
 
 	return me;
 
