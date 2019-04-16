@@ -1,4 +1,4 @@
 FHEM Tablet UI last changes:
- 2019-04-02
- - weather: switched to version from somansch
- - wdtimer: latest version from forum 
+ 2019-04-16
+ - spinner: fixed a style bug
+ - wdtimer: latest css version from eki 

@@ -19,6 +19,7 @@
     cursor: pointer;
     line-height: 0.5em;
     padding-bottom: 0.1em;
+    width: 25%;
 }
 
 [data-type="spinner"].plain .lefticon,
@@ -35,8 +36,6 @@
 
 .spinner > .levelArea {
     position: relative;
-    margin-left: 12px;
-    margin-right: 12px;
     display: inline-block;
     border-radius: 5px;
     background-color: #313131;
