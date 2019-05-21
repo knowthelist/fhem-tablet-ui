@@ -1,5 +1,8 @@
 FHEM Tablet UI change history:
 
+ 2019-05-21
+ - widget_calview: code optimization ; new attributes ; swiper fix
+ 
  2019-04-16
  - spinner: fixed a style bug
  - wdtimer: latest css version from eki 

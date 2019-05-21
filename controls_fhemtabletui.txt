@@ -79,7 +79,7 @@ UPD 2019-04-02_21:15:45 988 www/tablet/js/widget_wakeup.js
 UPD 2019-04-02_21:15:45 1311 www/tablet/js/widget_reload.js
 UPD 2019-04-02_21:15:45 2978 www/tablet/js/widget_joinedlabel.js
 UPD 2019-04-02_21:15:45 2323 www/tablet/js/widget_readingsgroup.js
-UPD 2019-04-02_21:15:45 19744 www/tablet/js/widget_calview.js
+UPD 2019-05-21_22:24:16 19808 www/tablet/js/widget_calview.js
 UPD 2019-04-02_21:15:45 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2019-04-02_21:15:45 1493 www/tablet/js/widget_loading.js
 UPD 2019-04-02_21:15:45 9875 www/tablet/js/widget_settimer.js
