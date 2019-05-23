@@ -496,7 +496,7 @@ header.fixed#header-nav + main#panel {
 section {
     border-bottom: 1px solid #888;
     min-height: 4.5em;
-    line-height: 4.3em
+    line-height: 4.5em
 }
 
 
@@ -1900,7 +1900,6 @@ div[data-type="link"] > div.fa {
 
 .inline {
     display: inline-block;
-    margin: 0px 5px 0px 0px !important;
 }
 
 .inline.narrow.link {
@@ -1960,11 +1959,6 @@ div[data-type="link"] > div.fa {
     text-align: left;
     margin-left: 20px;
     overflow: auto;
-}
-
-[data-type]:not([data-type="label"]):not(.readonly):not([data-type="symbol"]):not([data-type="spinner"]):not([data-type="switch"]):not([data-type="button"]):not([data-type="pagebutton"]):not([data-type="pagetab"]):not([data-type="dimmer"]):not([data-type="multistatebutton"]):not([data-type="push"]):not([data-type="playstream"]),
-[onclick] {
-    cursor: pointer;
 }
 
 [data-type="switch"] > .famultibutton,
@@ -2761,7 +2755,9 @@ img.mini,
 }
 
 .badge {
-    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 90%;
     height: 1.5em;
     line-height: 1.5em;
     vertical-align: middle;
@@ -2880,10 +2876,12 @@ canvas#progress {
     z-index: 100;
     position: relative;
 }
+/*
 
 [data-type] input {
     visibility: hidden;
 }
+*/
 
 .contentSpacing {
     padding: 1em;
