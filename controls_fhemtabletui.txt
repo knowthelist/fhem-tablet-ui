@@ -52,7 +52,7 @@ UPD 2019-04-02_21:15:45 5722 www/tablet/js/widget_select.js
 UPD 2019-04-02_21:15:45 9665 www/tablet/js/widget_popup.js
 UPD 2019-04-02_21:15:45 2672 www/tablet/js/widget_tts.js
 UPD 2019-04-02_21:15:45 9772 www/tablet/js/widget_html.js
-UPD 2019-04-02_21:15:45 49756 www/tablet/js/fhem-tablet-ui.min.js
+UPD 2019-05-28_19:31:50 49722 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2019-04-02_21:15:45 7740 www/tablet/js/widget_controller.js
 UPD 2019-04-02_21:15:45 8209 www/tablet/js/widget_highchart3d.js
 UPD 2019-04-02_21:15:45 21234 www/tablet/js/highcharts-meteogram.js
@@ -83,7 +83,7 @@ UPD 2019-05-21_22:24:16 19808 www/tablet/js/widget_calview.js
 UPD 2019-04-02_21:15:45 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2019-04-02_21:15:45 1493 www/tablet/js/widget_loading.js
 UPD 2019-04-02_21:15:45 9875 www/tablet/js/widget_settimer.js
-UPD 2019-04-02_21:15:45 97070 www/tablet/js/fhem-tablet-ui.js
+UPD 2019-05-28_19:31:45 97071 www/tablet/js/fhem-tablet-ui.js
 UPD 2019-04-02_21:15:45 5053 www/tablet/js/widget_controlbutton.js
 UPD 2019-04-02_21:15:45 1776 www/tablet/js/widget_push.js
 UPD 2019-04-02_21:15:45 5838 www/tablet/js/widget_playstream.js

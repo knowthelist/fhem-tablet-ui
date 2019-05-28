@@ -2,7 +2,7 @@
 /**
  * UI builder framework for FHEM
  *
- * Version: 2.7.13
+ * Version: 2.7.14
  *
  * Copyright (c) 2015-2019 Mario Stephan <mstephan@shared-files.de>
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -451,7 +451,7 @@ var plugins = {
 
 var ftui = {
 
-    version: '2.7.13',
+    version: '2.7.14',
     config: {
         DEBUG: false,
         DEMO: false,
@@ -1929,7 +1929,7 @@ var ftui = {
 
     // global date format functions
     dateFromString: function (str) {
-        var m = str.match(/(\d+)-(\d+)-(\d+)[_\s](\d+):(\d+):(\d+).*/);
+        var m = str.match(/(\d+)-(\d+)-(\d+)[_\sT](\d+):(\d+):(\d+).*/);
         var m2 = str.match(/^(\d+)$/);
         var m3 = str.match(/(\d\d).(\d\d).(\d\d\d\d)/);
 

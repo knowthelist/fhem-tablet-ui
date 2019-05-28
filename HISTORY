@@ -1,5 +1,8 @@
 FHEM Tablet UI change history:
 
+ 2019-05-28
+ - enhanced dateFromString function
+ 
  2019-05-21
  - widget_calview: code optimization ; new attributes ; swiper fix
  
