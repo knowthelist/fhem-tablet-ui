@@ -1,5 +1,8 @@
 FHEM Tablet UI change history:
 
+ 2019-06-05
+ - update of widget weather
+
  2019-05-28
  - enhanced dateFromString function
  

@@ -91,7 +91,7 @@ UPD 2019-04-02_21:15:45 5776 www/tablet/js/widget_image.js
 UPD 2019-04-02_21:15:45 1684 www/tablet/js/widget_classchanger.js
 UPD 2019-04-02_21:15:45 7249 www/tablet/js/widget_scale.js
 UPD 2019-04-02_21:15:45 24542 www/tablet/js/widget_famultibutton.js
-UPD 2019-04-02_21:08:41 50358 www/tablet/js/widget_weather.js
+UPD 2019-06-05_00:05:02 72352 www/tablet/js/widget_weather.js
 UPD 2019-04-02_21:15:45 31168 www/tablet/js/widget_weekprofile.js
 UPD 2019-04-02_21:15:45 1612 www/tablet/js/widget_rotor.js
 UPD 2019-04-02_21:15:45 8748 www/tablet/js/widget_pagetab.js
