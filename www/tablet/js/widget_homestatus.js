@@ -211,9 +211,9 @@ var Modul_homestatus = function () {
     function init() {
 
         me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
-        me.elements.each(function (index) {
+        me.elements.each(function () {
             var elem = $(this);
-            elem.attr("data-ready", "");
+            elem.attr('data-ready', '');
 
             var defaultAlias = ['Home', 'Night', 'Away', 'Holiday', 'Retire'];
             var defaultIcons = ['fa-home', 'fa-bed', 'fa-car', 'fa-suitcase', 'fa-tint'];
@@ -260,7 +260,7 @@ var Modul_homestatus = function () {
 
             elem.data('angleoffset', 0);
             elem.data('anglearc', 360);
-            elem.data('displayinput', false);
+            elem.data('displaynominal', false);
             elem.data('thickness', 1);
 
             me.init_attr(elem);
@@ -269,8 +269,7 @@ var Modul_homestatus = function () {
             var knob_elem = elem.find('input');
 
             // refresh once to draw all
-            var count = 0;
-            var refreshTimer = setTimeout(function () {
+            setTimeout(function () {
                 isUpdating = true;
                 knob_elem.val(elem.data('curval')).trigger('change');
                 isUpdating = false;
@@ -281,10 +280,9 @@ var Modul_homestatus = function () {
     function update(dev, par) {
         isUpdating = true;
 
-        me.elements.each(function (index) {
+        me.elements.each(function () {
             var elem = $(this);
             var knob_elem = elem.find('input');
-            var knob_obj = knob_elem.data('knob');
 
             // update from desired temp reading
             if (elem.matchDeviceReading('get', dev, par)) {
@@ -294,7 +292,7 @@ var Modul_homestatus = function () {
                         var states = elem.data('get-on');
                         var val = 0;
                         var idx = ftui.indexOfGeneric(states, value);
-                        ftui.log(3, "Homstatus: update state=" + value + " idx=" + idx);
+                        ftui.log(3, 'Homstatus: update state=' + value + ' idx=' + idx);
                         if (idx > -1) {
                             switch (idx + 1) {
                                 case 3:
@@ -313,7 +311,7 @@ var Modul_homestatus = function () {
                                     val = 0;
                             }
                         }
-                        ftui.log(3, "Homstatus: update curval=" + elem.data('curval') + " val=" + val);
+                        ftui.log(3, 'Homstatus: update curval=' + elem.data('curval') + ' val=' + val);
                         if (knob_elem && elem.data('curval') != val) {
                             knob_elem.val(val).trigger('change');
                             elem.data('curval', val);

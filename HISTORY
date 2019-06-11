@@ -1,6 +1,9 @@
 FHEM Tablet UI change history:
 
  2019-06-05
+ - fixed widget homestatus bug, that caused a number to appear in the middle
+
+ 2019-06-05
  - update of widget weather
 
  2019-05-28

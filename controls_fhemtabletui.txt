@@ -65,7 +65,7 @@ UPD 2019-04-02_21:15:45 806 www/tablet/js/widget_level.js
 UPD 2019-04-02_21:15:45 6503 www/tablet/js/widget_agenda.js
 UPD 2019-04-02_21:15:45 4299 www/tablet/js/widget_swiper.js
 UPD 2019-04-02_21:15:45 3118 www/tablet/js/widget_slideout.js
-UPD 2019-04-02_21:15:45 12717 www/tablet/js/widget_homestatus.js
+UPD 2019-06-09_22:08:25 12612 www/tablet/js/widget_homestatus.js
 UPD 2019-04-02_21:15:45 8689 www/tablet/js/widget_highchart.js
 UPD 2019-04-02_21:15:45 3060 www/tablet/js/widget_input.js
 UPD 2019-04-02_21:15:45 6478 www/tablet/js/widget_label.js
