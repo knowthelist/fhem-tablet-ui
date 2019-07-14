@@ -1,5 +1,8 @@
 FHEM Tablet UI change history:
 
+ 2019-07-14
+ - widget_tts: removed dependency of an external lib
+ 
  2019-06-05
  - fixed widget homestatus bug, that caused a number to appear in the middle
 

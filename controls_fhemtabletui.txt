@@ -50,7 +50,7 @@ UPD 2019-04-02_21:15:45 11493 www/tablet/js/widget_thermostat.js
 UPD 2019-04-02_21:15:45 272177 www/tablet/js/widget_chart.js
 UPD 2019-04-02_21:15:45 5722 www/tablet/js/widget_select.js
 UPD 2019-04-02_21:15:45 9665 www/tablet/js/widget_popup.js
-UPD 2019-04-02_21:15:45 2672 www/tablet/js/widget_tts.js
+UPD 2019-07-14_23:40:21 2488 www/tablet/js/widget_tts.js
 UPD 2019-04-02_21:15:45 9772 www/tablet/js/widget_html.js
 UPD 2019-05-28_19:31:50 49722 www/tablet/js/fhem-tablet-ui.min.js
 UPD 2019-04-02_21:15:45 7740 www/tablet/js/widget_controller.js
@@ -147,7 +147,6 @@ UPD 2019-04-02_21:15:45 1177 www/tablet/lib/powerange.min.css
 UPD 2019-04-02_21:15:45 86923 www/tablet/lib/swiper.jquery.min.js
 UPD 2019-04-02_21:15:45 21397 www/tablet/lib/fa-multi-button.js
 UPD 2019-04-02_21:15:45 2396 www/tablet/lib/jquery.wakeup.js
-UPD 2019-04-02_21:15:45 64814 www/tablet/lib/responsivevoice.js
 UPD 2019-04-02_21:15:45 71950 www/tablet/lib/material-icons.min.css
 UPD 2019-04-02_21:15:45 86926 www/tablet/lib/jquery.min.js
 UPD 2019-04-02_21:15:45 24968 www/tablet/lib/genericons.min.css
