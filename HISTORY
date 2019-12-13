@@ -1,5 +1,9 @@
 FHEM Tablet UI change history:
 
+ 2019-12-12
+ - widget_slider: changed style classes
+ - better websocket reconnecting
+
  2019-07-14
  - widget_tts: removed dependency of an external lib
  

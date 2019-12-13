@@ -916,17 +916,17 @@ main > .box.horizontal {
 
 .grow-7,
 .grow-7x {
-    flex-grow: 7;
+    flex-grow: 7 !important;
 }
 
 .grow-8,
 .grow-8x {
-    flex-grow: 8;
+    flex-grow: 8 !important;
 }
 
 .grow-9,
 .grow-9x {
-    flex-grow: 9;
+    flex-grow: 9 !important;
 }
 
 .box.horizontal.items-top,
@@ -1431,6 +1431,7 @@ span.tab-label {
 div[data-type="link"] > div.fa {
     font-size: 2em;
     line-height: 1em;
+    padding-left: 0.5em;
 }
 
 
@@ -1874,16 +1875,19 @@ div[data-type="link"] > div.fa {
     width: 100%;
 }
 
-.left-align {
+.left-align,
+.text-left {
     text-align: left;
 }
 
-.right-align {
+.right-align,
+.text-right {
     text-align: right;
 }
 
 .center-align,
-.middle {
+.middle,
+.text-center {
     text-align: center;
 }
 
@@ -2188,7 +2192,8 @@ div[data-type="link"] > div.fa {
 
 .ml,
 .ml-1,
-.left-space {
+.left-space,
+.space-left {
     margin-left: 1em !important;
 }
 
@@ -2212,7 +2217,8 @@ div[data-type="link"] > div.fa {
 
 .mr,
 .mr-1,
-.right-space {
+.right-space,
+.space-right {
     margin-right: 1em !important;
 }
 
@@ -3042,7 +3048,7 @@ div[data-type="circlemenu"] div.circleborder {
 }
 
 #shade {
-    position: absolute;
+    position: fixed;
     z-index: 1001;
     background-color: #000000;
     opacity: 0.5;
@@ -3144,39 +3150,38 @@ select::-ms-expand {
     width: 70px;
 }
 
+.w-10 {
+  width: 10%;
+}
+.w-20 {
+  width: 20%;
+}
+.w-30 {
+  width: 30%;
+}
+.w-40 {
+  width: 40%;
+}
+.w-50 {
+  width: 50%;
+}
 .w-60 {
-    padding-left: 20%;
-    padding-right: 20%
+  width: 60%;
 }
-
-.w-75 {
-    padding-left: 17%;
-    padding-right: 17%
-}
-
 .w-70 {
-    padding-left: 15%;
-    padding-right: 15%
+  width: 70%;
 }
-
 .w-80 {
-    padding-left: 10%;
-    padding-right: 10%
+  width: 80%;
 }
-
-.w-85 {
-    padding-left: 7%;
-    padding-right: 7%
-}
-
 .w-90 {
-    padding-left: 5%;
-    padding-right: 5%
+  width: 90%;
 }
-
 .w-95 {
-    padding-left: 2%;
-    padding-right: 2%
+  width: 95%;
+}
+.w-100 {
+  width: 100%;
 }
 
 [data-type="select"] > select {
