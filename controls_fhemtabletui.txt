@@ -12,7 +12,7 @@ UPD 2019-04-02_21:15:45 1079 www/tablet/css/ftui_medialist.css
 UPD 2019-04-02_21:15:45 6600 www/tablet/css/ftui_chart.css
 UPD 2019-04-02_21:15:45 647 www/tablet/css/ftui_controller.css
 UPD 2019-04-02_21:15:45 3344 www/tablet/css/ftui_departure.css
-UPD 2019-12-13_22:04:59 1431 www/tablet/css/ftui_slider.css
+UPD 2019-12-15_22:27:24 1348 www/tablet/css/ftui_slider.css
 UPD 2019-04-02_21:15:45 650 www/tablet/css/ftui_controlbutton.css
 UPD 2019-04-02_21:15:45 1023 www/tablet/css/ftui_colorwheel.css
 UPD 2019-04-02_21:15:45 7326 www/tablet/css/fhem-darkgreen-ui.css

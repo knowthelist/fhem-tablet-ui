@@ -1,7 +1,5 @@
-[data-type="level"].horizontal,
-[data-type="level"].vertical,
-[data-type="slider"].horizontal,
-[data-type="slider"].vertical  {
+[data-type="level"],
+[data-type="slider"]  {
   flex: 1;
   display: flex;
   flex-direction: column;
