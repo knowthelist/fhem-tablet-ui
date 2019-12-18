@@ -567,6 +567,10 @@ section {
     width: 100%;
 }
 
+.dialog > header {
+  position: fixed;
+}
+
 .gridster li header.transparent,
 .dialog > header.transparent,
 .card > header.transparent {
