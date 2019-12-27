@@ -22,13 +22,13 @@ UPD 2019-04-02_21:15:45 2826 www/tablet/css/fhem-blue-ui.css
 UPD 2019-04-02_21:15:45 2658 www/tablet/css/fhem-green-ui.css
 UPD 2019-04-02_21:15:45 442 www/tablet/css/ftui_range.css
 UPD 2019-04-02_21:15:45 6652 www/tablet/css/fhem-darkblue-ui.css
-UPD 2019-12-18_22:07:59 66248 www/tablet/css/fhem-tablet-ui.css
+UPD 2019-12-27_21:19:10 66207 www/tablet/css/fhem-tablet-ui.css
 UPD 2019-04-02_21:15:45 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2019-04-02_21:15:45 6936 www/tablet/css/ftui_weekprofile.css
 UPD 2019-04-02_21:15:45 1132 www/tablet/css/ftui_checklist.css
 UPD 2019-04-16_19:41:24 1606 www/tablet/css/ftui_spinner.css
 UPD 2019-04-16_19:57:03 8226 www/tablet/css/fhem-tablet-ui-wdtimer.css
-UPD 2019-12-18_23:34:50 49777 www/tablet/css/fhem-tablet-ui.min.css
+UPD 2019-12-27_21:44:50 49747 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2019-04-02_21:15:45 1113 www/tablet/js/widget_include.js
 UPD 2019-04-02_21:15:45 1769 www/tablet/js/widget_button.js
 UPD 2019-04-02_21:15:45 3530 www/tablet/js/widget_multistatebutton.js

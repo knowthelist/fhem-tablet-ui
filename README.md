@@ -543,6 +543,7 @@ data-lock: the widget gets locked if the corresponding FHEM reading has the valu
 - **data-state-get**: name of the parameter that contains the status value
 - **data-states**   : array of states
 - **data-classes**  : a array of class names. The additional added class is defined by the matching element of the states array compared to state-get value
+- **data-refresh-get**: name of the parameter that contains the refresh interval in seconds
 - **data-hide**   : name of the reading to hide/show the widget (default 'STATE')
 - **data-hide-on**   : value for HIDE (default 'true|1|on')
 - **data-hide-off**   : value for SHOW (default '!on')
