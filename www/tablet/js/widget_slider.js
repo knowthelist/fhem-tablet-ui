@@ -139,9 +139,8 @@ var Modul_slider = function () {
 
     elem.initData('on', 'on');
     elem.initData('off', 'off');
-    elem.initData('width', elem.hasClass('horizontal') ? '90%' : null);
-    elem.initData('height', elem.hasClass('horizontal') ? null: '90%');
-    elem.initData('margin', '3px');
+    elem.initData('width', elem.hasClass('horizontal') ? elem.hasClass('mini') ? '60px' : '90%' : null);
+    elem.initData('height', elem.hasClass('horizontal') ? null : elem.hasClass('mini') ? '60px' : '90%');
     elem.initData('value', 0);
     elem.initData('min', 0);
     elem.initData('max', 100);
@@ -166,7 +165,6 @@ var Modul_slider = function () {
     if (!$.isNumeric(elem.data('min'))) {
       me.addReading(elem, 'min');
     }
-
     if (elem.isDeviceReading('timer-state')) {
       me.addReading(elem, 'timer-state');
     }
@@ -235,7 +233,6 @@ var Modul_slider = function () {
     var widthUnit = ($.isNumeric(width)) ? 'px' : '';
     var height = elem.data('height');
     var heightUnit = ($.isNumeric(height)) ? 'px' : '';
-    var margin = elem.data('margin');
     var widthHandle = elem.data('handle-diameter');
     var widthHandleUnit = ($.isNumeric(widthHandle)) ? 'px' : '';
 
@@ -252,12 +249,8 @@ var Modul_slider = function () {
         contElem.css({
           'width': width + widthUnit
         });
-      } else {
-        if (elem.hasClass('mini'))
-          contElem.css({
-            'width': '60px'
-          });
       }
+
       if (height) {
         rangeBar.css({
           'height': height + heightUnit,
@@ -271,20 +264,10 @@ var Modul_slider = function () {
         });
       }
     } else {
-      
       if (height) {
         contElem.css({
           'height': height + heightUnit
         });
-      } else {
-        if (elem.hasClass('mini'))
-          contElem.css({
-            'height': '60px'
-          });
-        else
-          rangeContainer.css({
-            'height': '120px'
-          });
       }
       if (width) {
         rangeBar.css({

@@ -9,16 +9,6 @@
   width: 100%; 
 }
 
-.level_horizontal .slider-wrapper,
-.slider_horizontal .slider-wrapper {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-}
-
 .vertical .slider-wrapper {
   display: flex;
   justify-content: center;

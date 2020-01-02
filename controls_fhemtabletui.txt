@@ -12,7 +12,7 @@ UPD 2019-04-02_21:15:45 1079 www/tablet/css/ftui_medialist.css
 UPD 2019-04-02_21:15:45 6600 www/tablet/css/ftui_chart.css
 UPD 2019-04-02_21:15:45 647 www/tablet/css/ftui_controller.css
 UPD 2019-04-02_21:15:45 3344 www/tablet/css/ftui_departure.css
-UPD 2019-12-15_22:27:24 1348 www/tablet/css/ftui_slider.css
+UPD 2020-01-02_20:56:14 1152 www/tablet/css/ftui_slider.css
 UPD 2019-04-02_21:15:45 650 www/tablet/css/ftui_controlbutton.css
 UPD 2019-04-02_21:15:45 1023 www/tablet/css/ftui_colorwheel.css
 UPD 2019-04-02_21:15:45 7326 www/tablet/css/fhem-darkgreen-ui.css
@@ -37,7 +37,7 @@ UPD 2019-04-02_21:15:45 5415 www/tablet/js/widget_gds.js
 UPD 2019-04-02_21:15:45 3390 www/tablet/js/widget_checklist.js
 UPD 2019-04-02_21:15:45 3564 www/tablet/js/widget_progress.js
 UPD 2019-04-02_21:15:45 1458 www/tablet/js/widget_theme.js
-UPD 2019-12-13_22:22:32 13393 www/tablet/js/widget_slider.js
+UPD 2020-01-02_21:07:33 13056 www/tablet/js/widget_slider.js
 UPD 2019-04-02_21:15:45 9888 www/tablet/js/widget_volume.js
 UPD 2019-04-02_21:15:45 2931 www/tablet/js/widget_example.js
 UPD 2019-04-02_21:15:45 5290 www/tablet/js/widget_checkbox.js
