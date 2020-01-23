@@ -920,7 +920,7 @@ var ftui = {
     if (($('[class*=fa-]').length ||
       $('[data-type="select"]').length ||
       $('[data-type="homestatus"]').length) &&
-      !$('link[href$="lib/font-awesome.min.css"]').length
+      !$('link[href$="font-awesome.min.css"]').length
     )
       $('head').append('<link rel="stylesheet" href="' + ftui.config.basedir + 'lib/font-awesome.min.css" type="text/css" />');
     if ($('[class*=oa-]').length && !$('link[href$="lib/openautomation.css"]').length)

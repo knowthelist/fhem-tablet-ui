@@ -25,7 +25,9 @@ function depends_slider() {
 var Modul_slider = function () {
 
   $(document).on('changedSelection', function () {
-    onResize();
+    window.requestAnimationFrame(function () {
+      onResize();
+    });
   });
 
   $(window).resize(function () {

@@ -37,12 +37,12 @@ UPD 2019-04-02_21:15:45 5415 www/tablet/js/widget_gds.js
 UPD 2019-04-02_21:15:45 3390 www/tablet/js/widget_checklist.js
 UPD 2019-04-02_21:15:45 3564 www/tablet/js/widget_progress.js
 UPD 2019-04-02_21:15:45 1458 www/tablet/js/widget_theme.js
-UPD 2020-01-02_21:07:33 13056 www/tablet/js/widget_slider.js
+UPD 2020-01-23_21:33:14 13113 www/tablet/js/widget_slider.js
 UPD 2019-04-02_21:15:45 9888 www/tablet/js/widget_volume.js
 UPD 2019-04-02_21:15:45 2931 www/tablet/js/widget_example.js
 UPD 2019-04-02_21:15:45 5290 www/tablet/js/widget_checkbox.js
 UPD 2019-04-02_21:15:45 13743 www/tablet/js/widget_simplechart.js
-UPD 2019-04-02_21:15:45 10912 www/tablet/js/widget_link.js
+UPD 2020-01-23_21:31:41 9309 www/tablet/js/widget_link.js
 UPD 2019-04-02_21:15:45 3312 www/tablet/js/widget_colorwheel.js
 UPD 2019-04-02_21:15:45 3096 www/tablet/js/widget_svgplot.js
 UPD 2019-04-02_21:15:45 4777 www/tablet/js/widget_klimatrend.js
@@ -71,7 +71,7 @@ UPD 2019-04-02_21:15:45 3060 www/tablet/js/widget_input.js
 UPD 2019-04-02_21:15:45 6478 www/tablet/js/widget_label.js
 UPD 2019-04-02_21:15:45 8382 www/tablet/js/widget_knob.js
 UPD 2019-04-02_21:15:45 8691 www/tablet/js/widget_fullcalview.js
-UPD 2019-04-02_21:15:45 10682 www/tablet/js/widget_pagebutton.js
+UPD 2020-01-23_20:07:15 9128 www/tablet/js/widget_pagebutton.js
 UPD 2019-04-02_21:15:45 8151 www/tablet/js/widget_wind_direction.js
 UPD 2019-04-02_21:15:45 2975 www/tablet/js/widget_meteogram.js
 UPD 2019-04-02_21:15:45 2844 www/tablet/js/widget_datetimepicker.js
@@ -83,7 +83,7 @@ UPD 2019-05-21_22:24:16 19808 www/tablet/js/widget_calview.js
 UPD 2019-04-02_21:15:45 8419 www/tablet/js/widget_itunes_artwork.js
 UPD 2019-04-02_21:15:45 1493 www/tablet/js/widget_loading.js
 UPD 2019-04-02_21:15:45 9875 www/tablet/js/widget_settimer.js
-UPD 2019-12-12_18:26:47 84809 www/tablet/js/fhem-tablet-ui.js
+UPD 2020-01-23_21:11:42 84805 www/tablet/js/fhem-tablet-ui.js
 UPD 2019-04-02_21:15:45 5053 www/tablet/js/widget_controlbutton.js
 UPD 2019-04-02_21:15:45 1776 www/tablet/js/widget_push.js
 UPD 2019-04-02_21:15:45 5838 www/tablet/js/widget_playstream.js
