@@ -28,7 +28,10 @@ var Modul_reload = function () {
                 if (elem.matchingState('get', state) === 'on') {
                     elem.data('value', elem.data('set-off'));
                     elem.transmitCommand();
-                    location.reload();
+                    // quick and dirty fix to ensure set is done before reload
+                     setTimeout(function () {
+                            location.reload();
+                    }, 1000);
                 }
             });
     }
