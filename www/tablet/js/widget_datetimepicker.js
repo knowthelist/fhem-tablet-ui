@@ -42,6 +42,7 @@ var Modul_datetimepicker = function () {
             elem.initData('minDate', false);
             elem.initData('maxDate', false);
             elem.initData('step', '60');
+            elem.initData('timeheightintimepicker', '30');
             me.init_attr(elem);
             console.log('minTime:',elem.data('minTime'));
             var picker = elem.datetimepicker({
@@ -51,6 +52,7 @@ var Modul_datetimepicker = function () {
                 timepicker: elem.data('timepicker'),
                 datepicker: elem.data('datepicker'),
                 step: elem.data('step'),
+                timeHeightInTimePicker: elem.data('timeheightintimepicker'),
                 minTime: elem.data('minTime'),
                 maxTime: elem.data('maxTime'),
                 minDate: elem.data('minDate'),
