@@ -32,6 +32,17 @@ var Modul_symbol = function () {
             elem.initData('icon', (($.isArray(elem.data('icons'))) ? elem.data('icons')[0] : 'ftui-window'));
             elem.initData('get-warn', -1);
             elem.data('mode', 'signal');
+            elem.initData('reachable-on', '!off');
+            elem.initData('reachable-off', '(false|0)');
+            me.addReading(elem, 'reachable');
+            if (elem.isDeviceReading('reachable-on')) {
+                me.addReading(elem, 'reachable-on');
+            }
+            if (elem.isDeviceReading('reachable-off')) {
+                me.addReading(elem, 'reachable-off');
+            }
+            me.init_attr(elem);
+            me.init_ui(elem);
             me.init_attr(elem);
             me.init_ui(elem);
         });

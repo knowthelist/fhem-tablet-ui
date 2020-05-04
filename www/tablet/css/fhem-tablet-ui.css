@@ -3245,7 +3245,8 @@ select::-ms-expand {
 .unreachable[data-type="knob"] > .overlay:before,
 .unreachable[data-type="volume"] > .overlay:before,
 .unreachable[data-type="thermostat"] > .overlay:before,
-.unreachable[data-type="spinner"] > .overlay:before {
+.unreachable[data-type="spinner"] > .overlay:before,
+.unreachable[data-type="symbol"] > .overlay:before {
     content: "\f128";
     font-family: "Font Awesome 5 Free";
     font-size: 4em;
@@ -3255,7 +3256,8 @@ select::-ms-expand {
 .unreachable[data-type="knob"] > .overlay,
 .unreachable[data-type="volume"] > .overlay,
 .unreachable[data-type="thermostat"] > .overlay,
-.unreachable[data-type="spinner"] > .overlay {
+.unreachable[data-type="spinner"] > .overlay,
+.unreachable[data-type="symbol"] > .overlay {
     position: absolute;
     top: 1%;
     left: 35%;
