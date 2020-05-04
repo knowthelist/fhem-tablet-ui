@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+
+
+    <meta name="debug" content="4">
+    <!-- verbose level 1-6 = output to console;0 = not output -->
+
+
+    <script src="lib/jquery.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+
+    <style>
+        .result-container {
+            position: relative;
+        }
+
+        .result-container>header {
+            position: absolute;
+            top: 0px;
+        }
+
+        .button {
+            border-radius: 17px;
+            text-align: center;
+            background-color: #000;
+            margin-top: 20px;
+            border: none;
+
+            background: #ddd;
+            color: #000;
+            cursor: pointer;
+            padding: 25px 30px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            outline: none;
+            bottom: 7px;
+            position: absolute;
+            right: 10px;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+
+        .button:before {
+            position: absolute;
+            height: 100%;
+            left: 0;
+            top: 0;
+            line-height: 3;
+            font-size: 140%;
+            width: 60px;
+        }
+
+    </style>
+    <script>
+        $(document).ready(function() {
+
+            $("#snippet").val(localStorage.getItem('ftui_snippet_tester'));
+
+            var old = console.log;
+            var logger = document.getElementById('log');
+            console.log = function(message) {
+                if (typeof message == 'object') {
+                    logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+                } else {
+                    logger.innerHTML += message + '<br />';
+                }
+                $(logger).scrollTop($(logger).last()[0].scrollHeight);
+            }
+
+            $(".button").click(function() {
+                var value = $("#snippet").val();
+                $("#result").html(value);
+                localStorage.setItem('ftui_snippet_tester', value);
+                ftui.initWidgets("#result");
+            });
+        });
+
+    </script>
+
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+
+            <li data-row="1" data-col="1" data-sizex="6" data-sizey="4">
+                <header>SNIPPET</header>
+                <div class="hbox">
+                    <textarea id="snippet" name="Text1" cols="65" rows="25" class="top-space-2x"></textarea>
+                    <div class="button fa fa-sync"></div>
+                </div>
+            </li>
+
+            <li data-row="1" data-col="7" data-sizex="6" data-sizey="4" class="result-container">
+                <header>RESULT</header>
+                <div id="result" class="center"></div>
+            </li>
+
+            <li data-row="5" data-col="1" data-sizex="12" data-sizey="3">
+                <header>LOG</header>
+                <div id="log" class="events"></div>
+            </li>
+
+        </ul>
+    </div>
+</body>
+
+</html>

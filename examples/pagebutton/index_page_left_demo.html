@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.6.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+    <meta name='gridster_disable' content='1'>
+    <meta name='gridster_resize' content='0'>
+    <meta name='debug' content='2'>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <!-- link rel="stylesheet" href="css/fhem-darkblue-ui.css" / -->
+    <!--link rel="stylesheet" href="css/ftui-bright-mint-ui.css" / -->
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+
+    <!-- Remove this line to enable for usage with WebViewControl 
+    <script defer>
+        var wvcDevices = {
+            '12345': 'Tablet'
+        };
+        var wvcUserCssFile = "webviewcontrol.css"
+    </script>
+    <script src="../pgm2/cordova-2.3.0.js" defer></script>
+    <script src="../pgm2/webviewcontrol.js" defer></script>
+    <!-- End for WebViewControl -->
+
+    <title>FHEM-Tablet-UI-Dev</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizex="1" data-sizey="9">
+                <div class="sheet">
+                    <div class="row-100">
+                        <div class="cell">
+                            <div class="bigger line-normal">FTUI</div>
+                            <div class="" data-bind="ftui.version"></div>
+                        </div>
+                    </div>
+                    <div data-type="pagebutton" data-url="#content_main.html" data-load="#content1" data-active-pattern="(.*/||.*#content_main.html)" data-icon="fa-home" class="default cell"></div>
+                    <div data-type="pagebutton" data-url="#content_music.html" data-load="#content2" data-active-pattern=".*#content_music.html" data-icon="fa-music" class="prefetch cell"></div>
+                    <div data-type="pagebutton" data-url="#content_settings.html" data-load="#content3" data-active-pattern=".*#content_settings.html" data-icon="fa-sliders" class="prefetch cell"></div>
+                    <div data-type="pagebutton" data-url="#content_set.html" data-load="#content4" data-active-pattern=".*#content_set.html" data-icon="fa-lightbulb-o" class="cell"></div>
+                    <div data-type="pagebutton" data-url="#content_charts.html" data-load="#content5" data-active-pattern=".*#content_charts.html" data-icon="fa-line-chart" class="cell"></div>
+                    <div data-type="pagebutton" data-url="#content_vusolo.html" data-load="#content6" data-active-pattern=".*#content_vusolo.html" data-icon="fa-tv" class="cell"></div>
+                    <div data-type="pagebutton" data-url="#content_tram.html" data-load="#content7" data-active-pattern=".*#content_tram.html" data-icon="fa-train" class="cell"></div>
+                    <div data-type="pagebutton" data-url="#content_trafic.html" data-load="#content8" data-active-pattern=".*#content_traffic.html" data-icon="fa-car" class="cell"></div>
+                    <div class="row">
+                        <div data-type="clock" data-format="H:i" class="big"></div>
+                        <div data-type="clock" data-format="d.n.Y" class="small"></div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="2" data-sizey="9" data-sizex="11">
+                <div class="page" id="content1"></div>
+                <div class="page" id="content2"></div>
+                <div class="page" id="content3"></div>
+                <div class="page" id="content4"></div>
+                <div class="page" id="content5"></div>
+                <div class="page" id="content6"></div>
+                <div class="page" id="content7"></div>
+                <div class="page" id="content8"></div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

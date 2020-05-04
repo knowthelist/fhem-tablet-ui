@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.0
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * !!!! Evaluation version - run only in a staging enviroment !!!!
+     *
+     * - create a new folder named 'tablet_eval' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet_eval
+     * - add 'define TABLETUIEVAL HTTPSRV ftui_eval ./www/tablet_eval Tablet-EVAL' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet_eval/
+     */
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="widget_base_width" content="74">
+    <meta name="widget_base_height" content="71">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="gridster_disable" content="1">
+    <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="debug" content="2"> <!-- verbose level 1-6 = output to console;0 = not output -->
+
+    <link rel="stylesheet" href="lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="css/fhem-mobil-ui.css" />
+    <link rel="stylesheet" href="lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+
+    <script src="../pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="lib/jquery.gridster.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI-mobil</title>
+</head>
+<body>
+
+    <!-- Demo FTUI 2.1 mobil page with slideout navigation and fixed header -->
+
+    <!-- the fixed header -->
+    <header id="header-nav" class="bg-lightgray fixed row">
+     <div id="linkname" class="col-3-6 large bold center-align middle"></div>
+     <div data-type="symbol" data-icon="fa-bell" data-device="dummy2" data-get-on="on.*" data-get-off="off" class="col-1-6 right-align big black"></div>
+     <div data-type="symbol" data-device="dummy1" data-icon="ftui-window" class="col-1-6 big warn"></div>
+     <div data-type="slideout" data-position="right" class="col-1-8 big center-align notouch"></div>
+    </header>
+
+    <main id="panel" class="">
+        <div class="page" id="content1"></div>
+        <div class="page" id="content2"></div>
+        <div class="page" id="content3"></div>
+        <div class="page" id="content4"></div>
+    </main>
+
+    <!-- the menu right -->
+    <nav id="menu">
+        <div data-type="link" class="default large top-space-2x left-space-3x"
+           data-width="150"
+           data-icon-left="fa-dashboard"
+           data-color="white"
+           data-text-align="right"
+           data-load="div#content1"
+           data-url="#content_temps.html"
+           data-active-color="green"
+           data-active-pattern="(.*index_nav_fixed_mobil.html|.*#content_temps.html)">Temps</div>
+        <div data-type="link" class="large top-space-2x left-space-3x"
+            data-width="150"
+            data-icon-left="fa-lightbulb-o"
+            data-color="white"
+            data-text-align="right"
+            data-load="div#content2"
+            data-url="#content_lights.html"
+            data-active-color="green"
+            data-active-pattern=".*#content_lights.html">Lights</div>
+        <div data-type="link" class="large top-space-2x left-space-3x"
+            data-width="150"
+            data-icon-left="ftui-window"
+            data-color="white"
+            data-text-align="right"
+            data-load="div#content3"
+            data-url="#content_windows.html"
+            data-active-color="green"
+            data-active-pattern=".*#content_windows.html">Windows</div>
+        <div data-type="link" class="nocache large top-space-2x left-space-3x"
+            data-width="150"
+            data-icon-left="fa-music"
+            data-color="white"
+            data-text-align="right"
+            data-load="div#content4"
+            data-url="#content_sounds.html"
+            data-active-color="green"
+            data-active-pattern=".*#content_sounds.html">Sounds</div>
+    </nav>
+
+</body>
+</html>

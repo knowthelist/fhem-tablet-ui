@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.5.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FTUI Spinner</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizex="3" data-sizey="4">
+                <header>Control</header>
+                <!-- place your widget here -->
+                <div class="hbox">
+                    <div class="vbox">
+                        <div data-type="switch" data-device="ftuitest" data-get="hide" data-set="hide" data-cmd="setreading" data-get-on="true" data-get-off="false" data-set-on="true" data-set-off="false"></div>
+                        <div data-type="label" data-device="ftuitest" data-get="hide" class="big"></div>
+                        <div>Hide</div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="switch" data-device="ftuitest" data-get="readonly" data-set="readonly" data-cmd="setreading" data-get-on="true" data-get-off="false" data-set-on="true" data-set-off="false"></div>
+                        <div data-type="label" data-device="ftuitest" data-get="readonly" class="big"></div>
+                        <div>Lock</div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="label" data-device="ftuitest" class="big"></div>
+                        <div>Value</div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="switch" data-device="ftuitest" data-get="reachable" data-set="reachable" data-cmd="setreading" data-get-on="1" data-get-off="0"></div>
+                        <div data-type="label" data-device="ftuitest" data-get="reachable" class="big"></div>
+                        <div>Reachable</div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="4" data-sizey="4" data-sizex="6">
+                <header>HIDE</header>
+                <div class="hbox">
+                    <div data-type="spinner" data-device="ftuitest" data-lock="readonly" data-hide="ftuitest:hide" data-reachable="reachable" data-min="10" data-max="30" data-gradient-color='["blue","red"]'>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="10" data-sizey="4" data-sizex="3">
+                <header>NUMBER</header>
+                <!-- place your widget here -->
+                <div class="hbox">
+                    <div data-type="spinner" data-device="ftuitest" data-min="10" data-max="30" class="valueonly">
+                    </div>
+                </div>
+            </li>
+            <li data-row="5" data-col="1" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE4</header>
+                <!-- place your widget here -->
+                <div class="vbox item-space-around">
+                    <div data-type="spinner" data-device="ftuitest" data-min="10" data-max="30" class="value">
+                    </div>
+                    <div data-type="spinner" data-device="ftuitest" data-min="10" data-max="30" data-icon-left="fa-volume-down bigger"
+                                        data-icon-right="fa-volume-up bigger" class="value">
+                    </div>
+                </div>
+            </li>
+            <li data-row="5" data-col="4" data-sizey="3" data-sizex="6">
+                <header>EXAMPLE5</header>
+                <!-- place your widget here -->
+                <div class="hbox">
+                    <div data-type="spinner" data-device="ftuitest" data-min="10" data-max="30" class="small">
+                    </div>
+                </div>
+            </li>
+            <li data-row="5" data-col="10" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE6</header>
+                <!-- place your widget here -->
+                <div class="hbox">
+                    <div data-type="spinner" data-device="ftuitest" data-min="10" data-max="30" class="large">
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

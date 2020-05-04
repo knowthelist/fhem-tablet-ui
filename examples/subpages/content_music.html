@@ -1,0 +1,116 @@
+<html>
+<title>FHEM</title>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * second page
+     *
+     load this page via widget pagebutton
+
+     <div data-type="pagebutton"   data-url="#content_music.html"
+          data-load="#content2"    data-off-background-color="transparent"
+          data-off-color="#606060" data-on-background-color="#606060"
+          data-on-color="#222222"  data-active-pattern=".*#content_music.html"
+          data-icon="fa-music"     class="prefetch top-space"></div>
+    -->
+</head>
+<body>
+  <div class="page" id="content2">
+    <div class="gridster">
+      <ul>
+        <li data-row="1" data-col="1" data-sizex="5" data-sizey="6">
+             <header>PLAYER</header>
+                 <div data-type="image"
+                          data-device="MPD1"
+                          data-get="cover"
+                          data-size='250'
+                          class="row top-space">
+                 </div>
+                 <div class="row">
+                     <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class="inline middle"></div>
+                     <div data-type="level" data-device="MPD1" data-get="elapsed" data-max="Time" data-width="280"   class="horizontal inline middle"></div>
+                     <div data-type="label" data-device="MPD1" data-get="Time" data-substitution="toMinFromSec()" class="inline middle"></div>
+                 </div>
+                 <div class="row large thin top-space">
+                     <div data-type="label" data-device="MPD1" data-get="Title" data-substitution="s/Or//g" class="bold"></div>
+                     <div data-type="label" data-device="MPD1" data-get="Artist" class=""></div>
+                 </div>
+                 <div class="row top-space">
+                     <div data-type="switch" data-device="MPD1" data-get="repeat" data-set="repeat"
+                          data-icon="fa-repeat" data-background-icon="-"
+                          data-on-color="white" data-off-color="gray"
+                          data-get-on="1" data-get-off="0"
+                          data-set-on="1" data-set-off="0" class="col-1-5">
+                     </div>
+                     <div data-type="push" data-device="MPD1"
+                           data-icon="fa-step-backward" data-background-icon="-"
+                           data-off-color="#fff" data-on-color="#aa6900"
+                           data-set-on="previous" class="col-1-5 big">
+                     </div>
+                     <div data-type="switch"
+                             data-device="MPD1"
+                             data-states='["play","pause","stop"]'
+                             data-set-states='["pause","play","play"]'
+                             data-background-icon="fa-circle-thin"
+                             data-background-colors='["white","white","white"]'
+                             data-colors='["white","white","white"]'
+                             data-icons='["fa-pause","fa-play","fa-play"]'
+                             class="col-1-5 big">
+                     </div>
+                     <div data-type="push" data-device="MPD1"
+                           data-icon="fa-step-forward" data-background-icon="-"
+                           data-off-color="#fff" data-on-color="#aa6900"
+                           data-set-on="next" class="col-1-5 big">
+                     </div>
+                     <div data-type="switch" data-device="MPD1" data-get="random" data-set="random"
+                           data-icon="fa-random" data-background-icon="-"
+                           data-on-color="white" data-off-color="gray"
+                           data-get-on="1" data-get-off="0"
+                           data-set-on="1" data-set-off="0" class="col-1-5">
+                     </div>
+               </div>
+        </li>
+        <li data-row="1" data-col="1" data-sizex="6" data-sizey="6">
+             <header>PLAYLIST</header>
+             <div data-type="select" data-device="MPD1" data-list="playlistcollection" data-get="playlistname" data-set="playlist" class="col-1-2" ></div>
+             <div data-type="medialist" data-device="MPD1" data-get="playlistinfo" data-pos="Pos" data-set="play" class="top-space left-space autoscroll"></div>
+        </li>
+        <li data-row="7" data-col="1" data-sizex="11" data-sizey="3">
+             <header>VOLUME</header>
+             <div class="row">
+                <div class="col-1-4">
+                   <div data-type="label" class="inline w2x large">Bad</div>
+                   <div data-type="switch" data-device="BadRadio" data-icon="fa-music" class="inline"></div>
+                   <div data-type="select" data-device="AvReceiverZ2" data-items='["Airplay","Webradio","BD/DVD","PHONO"]' data-get="input" data-set="input" class="newline wider" ></div>
+                </div>
+                <div class="col-1-4">
+                   <div data-type="label" class="inline w2x large">WZ</div>
+                   <div data-type="switch" data-device="RadioAtTablet" data-icon="fa-music" class="inline"></div>
+                   <div data-type="select" data-device="AvReceiver" data-list="inputs" data-get="input" data-set="input" class="newline wider" ></div>
+                </div>
+                <div class="col-1-4">
+                    <div data-type="circlemenu" class="circlemenu">
+                        <ul>
+                          <li><div data-type="push" data-icon="fa-wrench"></div></li>
+                          <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level -6" data-icon="">-6</div></li>
+                          <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level -2" data-icon="">-2</div></li>
+                          <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level 0" data-icon="">0</div></li>
+                          <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level +3" data-icon="">2</div></li>
+                          <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level +9" data-icon="">9</div></li>
+                          <li><div data-type="push" data-device="AvReceiver" data-set="remoteControl" data-set-on="subwoofer-temporary-level +C" data-icon="">12</div></li>
+                        </ul>
+                    </div>
+                    <div data-type="label" class="top-space-2x">Subwoofer</div>
+                </div>
+                <div class="col-1-4">
+                  <div data-type="volume" data-device='AvReceiver' data-get='volume' data-set='volume' class="large cell" ></div>
+                  <div data-type="label" class="newline top-narrow wider cell">Volume</div>
+                </div>
+            </div>
+        </li>
+      </ul>
+    </div>
+   </div>
+</body>
+</html>

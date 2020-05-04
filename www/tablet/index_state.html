@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.6.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+    -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+    <meta name="widget_base_width" content="175">
+
+    <meta name="debug" content="2">
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizey="6" data-sizex="2">
+                <header>STATE</header>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-40 tall thin line-normal right-align bottom-align right-space">FTUI</div>
+                        <div class="col-60 left-align bottom-align" data-bind="ftui.version"></div>
+                    </div>
+                    <div class="row-200">
+                        <div class="col-40 right-align right-space mint">Language:</div>
+                        <div class="col-60 left-align" data-bind="ftui.config.lang"></div>
+                    </div>
+                    <div class="row-200">
+                        <div class="col-40 right-align right-space mint">Debug Level:</div>
+                        <div class="col-60 left-align" data-bind="ftui.config.debuglevel"></div>
+                    </div>
+                    <div class="row-200">
+                        <div class="col-40 right-align right-space mint">Last full Update:</div>
+                        <div class="col-60 left-align" data-bind="ftui.poll.short.lastTimestamp.hhmmss()"></div>
+                    </div>
+                    <div class="row-200">
+                        <div class="col-40 right-align right-space mint">Last Event:</div>
+                        <div class="col-60 left-align" data-bind="ftui.poll.long.lastEventTimestamp.hhmmss()"></div>
+                    </div>
+                    <div class="row-200">
+                        <div class="col-40 right-align right-space mint">Longpoll Type:</div>
+                        <div class="col-60 left-align" data-bind="ftui.config.longPollType"></div>
+                    </div>
+
+                    <div class="row-200">
+                        <div class="col-40 right-align right-space mint">Base Dir:</div>
+                        <div class="col-60 left-align" data-bind="ftui.config.basedir"></div>
+                    </div>
+
+                    <div class="row-200">
+                        <div class="col-40 right-align right-space mint">FHEM Dir:</div>
+                        <div class="col-60 left-align" data-bind="ftui.config.fhemDir"></div>
+                    </div>
+                    <div class="row-200">
+                        <div class="col-40 right-align right-space mint">Last Device:</div>
+                        <div class="col-60 left-align" data-bind="ftui.poll.long.lastDevice"></div>
+                    </div>
+                    <div class="row-200">
+                        <div class="col-40 right-align right-space mint">Last Reading:</div>
+                        <div class="col-60 left-align" data-bind="ftui.poll.long.lastReading"></div>
+                    </div>
+                    <div class="row-200">
+                        <div class="col-40 right-align right-space mint">Last Value:</div>
+                        <div class="col-60 left-align" data-bind="ftui.poll.long.lastValue"></div>
+                    </div>
+                    <div class="row-200">
+                        <div class="col-40 right-align right-space mint">Web Device:</div>
+                        <div class="col-60 left-align" data-bind="ftui.config.webDevice"></div>
+                    </div>
+                    <div class="row-200">
+                        <div class="col-40 right-align right-space mint">Web longpoll:</div>
+                        <div class="col-60 left-align" data-bind="ftui.deviceStates[ftui.config.webDevice].longpoll.val"></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

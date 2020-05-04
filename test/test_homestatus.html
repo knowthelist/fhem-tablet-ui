@@ -1,0 +1,76 @@
+<html>
+<title>FHEM</title>
+
+<head>
+    <!--
+    /* FHEM tablet ui */
+    /*
+    *
+    * Version: 2.6.*
+    * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
+    * URL: https://github.com/knowthelist/fhem-tablet-ui
+    *
+    * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+    * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+    *
+    * - create a new folder named 'tablet' in /<fhem-path>/www
+    * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+    * - add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
+    * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+    */
+   -->
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+
+    <title>FTUI Homestatus</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizex="3" data-sizey="3">
+                <header>ftuitest</header>
+                <div class="top-space-2x">
+                    <div class="inline">
+                        <div data-type="push" data-device="ftuitest" data-set-on="1"></div>
+                        <div>1</div>
+                    </div>
+                    <div class="inline">
+                        <div data-type="push" data-device="ftuitest" data-set-on="2"></div>
+                        <div>2</div>
+                    </div>
+                    <div class="inline">
+                        <div data-type="push" data-device="ftuitest" data-set-on="3"></div>
+                        <div>3</div>
+                    </div>
+                    <div class="inline">
+                        <div data-type="push" data-device="ftuitest" data-set-on="4"></div>
+                        <div>4</div>
+                    </div>
+                    <div class="">
+                        <div data-type="label" data-device="ftuitest" class="bigger"></div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="4" data-sizex="3" data-sizey="3">
+                <header>HOMESTATUS</header>
+                <div data-type="homestatus" data-device='ftuitest' class=""></div>
+            </li>
+            <li data-row="1" data-col="7" data-sizex="3" data-sizey="3">
+                <header>HOMESTATUS</header>
+                <div data-type="homestatus" data-device='hs_extra' data-get-on='["home","asleep","absent","gone","gotosleep"]' data-alias='["Home","Night","Away","Holiday","Retire"]' data-icons='["fa-fire","fa-film","fa-plus","fa-car","fa-tint"]' data-version='residents'></div>
+            </li>
+            <li data-row="4" data-col="7" data-sizex="3" data-sizey="3">
+                <header>HOMESTATUS</header>
+                <div data-type="homestatus" data-device='hs_extra' class="large" data-get-on='["home","asleep","absent","gone","gotosleep"]' data-alias='["Home","Night","Away","Holiday","Retire"]' data-icons='["fa-fire","fa-film","fa-plus","fa-car","fa-tint"]' data-version='residents'></div>
+            </li>
+            <li data-row="4" data-col="10" data-sizex="3" data-sizey="3">
+                <header>HOMESTATUS</header>
+                <div data-type="homestatus" data-device='ftuitest' class="large"></div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

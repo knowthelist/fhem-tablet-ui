@@ -1,32 +1,55 @@
-if(typeof widget_famultibutton == 'undefined') {
-    loadplugin('widget_famultibutton');
+/* FTUI Plugin
+ * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+ * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+
+/* global ftui:true, Modul_famultibutton:true */
+
+"use strict";
+
+function depends_button() {
+    if (typeof Module_famultibutton == 'undefined')
+        return ["famultibutton"];
 }
 
-var widget_button = $.extend({}, widget_famultibutton, {
-   widgetname : 'button',
-    init: function () {
-     var base = this;
-     this.elements = $('div[data-type="'+this.widgetname+'"]');
-     this.elements.each(function(index) {
-         var elem = $(this);
-         elem.initData('off-color'               ,getStyle('.button.off','color') || '#2A2A2A');
-         elem.initData('off-background-color'    ,getStyle('.button.off','background-color')   || '#505050');
-         elem.initData('on-color'                ,getClassColor($(this)) || getStyle('.button.on','color')               || '#2A2A2A');
-         elem.initData('on-background-color'     ,getStyle('.button.on','background-color')    || '#aa6900');
-         elem.initData('get-warn'                ,-1);
+var Modul_button = function () {
 
-         base.init_attr(elem);
-         elem = base.init_ui($(this));
+    function init() {
 
-         if(! elem.data('device')) {
-             elem.setOn();
-         }
-     });
-     },
-    update_cb : function(elem,state) {
-     if (elem.hasClass('warn') || elem.children().filter('#fg').hasClass('warn'))
-         this.showOverlay(elem,getPart(state,elem.data('get-warn')));
-     else
-         this.showOverlay(elem,"");
-    },
-});
+        me.elements = $('div[data-type="' + me.widgetname + '"]:not([data-ready])', me.area);
+        me.elements.each(function (index) {
+            var elem = $(this);
+            elem.attr("data-ready", "");
+            elem.initData('off-color', ftui.getStyle('.button.off', 'color') || '#2A2A2A');
+            elem.initData('off-background-color', ftui.getStyle('.button.off', 'background-color') || '#505050');
+            elem.initData('on-color', ftui.getClassColor($(this)) || ftui.getStyle('.button.on', 'color') || '#2A2A2A');
+            elem.initData('on-background-color', ftui.getStyle('.button.on', 'background-color') || '#aa6900');
+            elem.initData('get-warn', -1);
+
+            me.init_attr(elem);
+            elem = me.init_ui($(this));
+
+            if (!elem.data('device')) {
+                elem.setOn();
+            }
+        });
+    }
+
+    function update_cb(elem, state) {
+        if (elem.hasClass('warn') || elem.children().children('#fg').hasClass('warn'))
+            me.showOverlay(elem, ftui.getPart(state, elem.data('get-warn')));
+        else
+            me.showOverlay(elem, "");
+    }
+
+    // public
+    // inherit members from base class
+    var me = $.extend(new Modul_famultibutton(), {
+        //override members
+        widgetname: 'button',
+        init: init,
+        update_cb: update_cb,
+    });
+
+    return me;
+};

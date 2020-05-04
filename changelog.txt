@@ -1,0 +1,36 @@
+2.3.0
+- including of Framework7
+
+2.3.1 (22.11.2016)
+- more usage of "isValid"
+
+2.4.0 (02.12.2016)
+- usage of "use strict" mode to make code saver and faster
+- code cleanup according jshint 
+
+2.5.0 (23.01.2017)
+- dynamical load of main css and libs
+- dynamical calculation of gridster tiles according window width / height
+- stabilised load of templates 
+- text/html content for push,symbol,switch,pagetab
+- Departure: auto refresh after popup or page change
+- added fade-duration parameter to Link + Pagebutton 
+- Push widgets can send both states: off an on 
+- user language setting
+- Slider Widget: timer to interpolatem progress steps
+- adjusted sizes for Symbol and Label
+- new layout schema: Sheet > Row > Cell
+
+2.6.0 (11.02.2017)
+- Added WebSockets as default for longpoll
+- Update for Dimmer to get data-lock working again
+- Enabled flexible base directory again (was removed with 2.5.1)
+- Added data-bind to show internal variables 
+- Dity up CSS classes
+
+2.6.4 (20.02.2017)
+- Added CSRF Token handling
+
+2.6.7 (27.02.2017)
+- Added Basic Authorization
+- Added readinglist to shortpoll request to filter requested readings

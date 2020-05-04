@@ -1,4 +1,4 @@
-.spinner{
+.spinner {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -10,50 +10,72 @@
     margin: 3px;
     cursor: default !important;
 }
-.spinner > .lefticon {
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 40px;
-    cursor: pointer;
-}
+
+.spinner > .lefticon,
 .spinner > .righticon {
     display: inline-block;
     vertical-align: middle;
     font-size: 40px;
     cursor: pointer;
+    line-height: 0.5em;
+    padding-bottom: 0.1em;
+    width: 25%;
 }
-.spinner > .lefticon.fa,.spinner > .righticon.fa {
-    padding-bottom: 0px;
+
+[data-type="spinner"].plain .lefticon,
+[data-type="spinner"].plain .righticon {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.spinner > .lefticon.fa,
+.spinner > .righticon.fa {
+    padding-top: 0.225em;
     font-size: 20px;
 }
 
 .spinner > .levelArea {
     position: relative;
-    margin-left:12px;
-    margin-right:12px;
     display: inline-block;
     border-radius: 5px;
     background-color: #313131;
     height: 7px;
+    margin-bottom: -2px;
 }
-.spinner .levelRange {
+
+[data-type="spinner"].plain > .levelArea {
+    margin-left: 2px;
+    margin-right: 2px;
+    visibility: hidden;
+}
+
+[data-type="spinner"] .levelRange {
     position: absolute;
     border-radius: 5px;
     height: 7px;
 }
-.spinner.valueonly > .levelArea {
+
+[data-type="spinner"].valueonly .levelArea {
     visibility: hidden;
 }
-.spinner.value > .spinnerText {
+
+[data-type="spinner"].value .spinnerText {
     position: absolute;
-    top: -24%;
+    top: -20%;
     left: 25%;
 }
-.spinner.valueonly > .spinnerText {
+
+[data-type="spinner"].valueonly .spinnerText,
+[data-type="spinner"].plain .spinnerText {
     position: absolute;
-    top: 2px;
+    top: 0.1em;
     left: 23%;
     font-size: 30px;
     font-weight: bold;
-    font-family: robotothin,sans-serif;
+    font-family: robotothin, sans-serif;
+}
+
+[data-type="spinner"].plain .spinnerText {
+    font-size: 18px;
+    top: 0.5em;
 }

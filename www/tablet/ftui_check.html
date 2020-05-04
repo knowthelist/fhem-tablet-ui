@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.6.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2018 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+    -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+
+    <script src="lib/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: #efefef;
+            color: #222222;
+            font: normal 16px/18px "Helvetica Neue", Helvetica, sans-serif;
+        }
+
+        h2 {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .check>div {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 30px
+        }
+
+        td {
+            border-bottom: 1px solid #bbb;
+        }
+
+    </style>
+    <script>
+        function parseISOLocal(s) {
+            var b = new Date(s);
+            return b.toLocaleString();
+        }
+
+        function update() {
+
+            var ftui = {
+                poll: {},
+                version: JSON.parse(localStorage.getItem('ftui.version')),
+                subscriptions: JSON.parse(localStorage.getItem('ftui.subscriptions')),
+                config: JSON.parse(localStorage.getItem('ftui.config')),
+                deviceStates: JSON.parse(localStorage.getItem('ftui.deviceStates')),
+                poll: {
+                    short: JSON.parse(localStorage.getItem('ftui.poll.short')),
+                    long: JSON.parse(localStorage.getItem('ftui.poll.long'))
+                }
+            };
+
+            modules = JSON.parse(localStorage.getItem('modules'));
+
+            var strSubs = '<table>',
+                strMods = '<table>',
+                strGeneral = '<table>',
+                strShort = '<table>',
+                strLong = '<table>',
+                strVersion = '<table>',
+                i = 0;
+
+            // Subscriptions
+            for (var key in ftui.subscriptions) {
+                i++;
+                var mDev = ftui.subscriptions[key].device;
+                var mRead = ftui.subscriptions[key].reading;
+                var mValid = "--unknown--";
+                if (ftui.deviceStates[mDev]) {
+                    var params = ftui.deviceStates[mDev];
+                    if (params[mRead]) {
+                        mValid = (params[mRead].valid) ? "'" + params[mRead].val + "'" : '--known-but-invalid--';
+                    }
+                }
+                var subClass = (mValid === "--unknown--" || mValid === "--known-but-invalid--") ? 'red' : '';
+                strSubs = strSubs + "<tr class='" + subClass + "'><td>" + i + "</td><td>" + mDev + "</td><td>" + mRead + "</td><td>" + mValid + "</td></tr>";
+            }
+
+            strSubs = strSubs + "</table>";
+
+            // Modules
+            i = 0;
+            for (var key in modules) {
+                strMods = strMods + "<tr class=''><td>" + i + "</td><td>" + modules[i].name + "</td><td>" + modules[i].area + "</td></tr>";
+                i++;
+            }
+
+            strMods = strMods + "</table>";
+
+            // Short
+            strShort = strShort + "<tr><td>lastTimestamp</td><td class=''>" + parseISOLocal(ftui.poll.short.lastTimestamp); + "</td></tr>";
+            strShort = strShort + "<tr><td>StatusText</td><td class=''>" + ftui.poll.short.request.statusText + "</td></tr>";
+            strShort = strShort + "<tr><td>Duration</td><td class=''>" + ftui.poll.short.duration + "</td></tr>";
+
+            strShort = strShort + "</table>";
+            strShort = strShort + "<h3>Filter</h3>" + ftui.poll.short.filter;
+
+            // Long
+            strLong = strLong + "<tr><td>longPollType</td><td class=''>" + ftui.config.longPollType + "</td></tr>";
+            if (ftui.poll.long) {
+                if (ftui.poll.long.xhr) {
+                    strLong = strLong + "<tr><td>currLine</td><td class=''>" + ftui.poll.long.currLine + "</td></tr>";
+                    strLong = strLong + "<tr><td>readyState</td><td class=''>" + ftui.poll.long.request.readyState + "</td></tr>";
+                } else if (ftui.poll.long.websocket) {
+                    strLong = strLong + "<tr><td>ready</td><td class=''>true</td></tr>";
+                } else {
+                    strLong = strLong + "<tr><td>readyState</td><td class=''>no longpoll object created</td></tr>";
+                }
+
+                strLong = strLong + "<tr><td>lastEventTimestamp</td><td class=''>" + parseISOLocal(ftui.poll.long.lastEventTimestamp) + "</td></tr>";
+                strLong = strLong + "<tr><td>lastUpdateTimestamp</td><td class=''>" + parseISOLocal(ftui.poll.long.lastUpdateTimestamp) + "</td></tr>";
+                strLong = strLong + "<tr><td>LastDevice</td><td class=''>" + ftui.poll.long.lastDevice + "</td></tr>";
+                strLong = strLong + "<tr><td>LastReading</td><td class=''>" + ftui.poll.long.lastReading + "</td></tr>";
+                strLong = strLong + "<tr><td>LastValue</td><td class=''>" + ftui.poll.long.lastValue + "</td></tr>";
+
+                strLong = strLong + "</table>";
+                strLong = strLong + "<h3>Filter</h3>" + ftui.poll.long.filter;
+            } else {
+                strLong = strLong + "</table>";
+            }
+            
+
+            // Config
+            $.each(ftui.config, function(index, key) {
+                strGeneral = strGeneral + "<tr><td>" + index + "</td><td class=''>" + key + "</td></tr>"
+            });
+            strGeneral = strGeneral + "</table>";
+
+            // Version
+            strVersion = strVersion + "<tr><td>Version</td><td class=''>" + ftui.version + "</td></tr></table>"
+
+            // render 
+            $('.version').html(strVersion);
+            $('.general').html(strGeneral);
+            $('.subs').html(strSubs);
+            $('.mods').html(strMods);
+            $('.short').html(strShort);
+            $('.long').html(strLong);
+
+        };
+
+        $(document).ready(function() {
+
+            $(window).on('storage', function(e) {
+                update();
+            });
+
+            update();
+        });
+
+    </script>
+
+    <title>FTUI-Check</title>
+</head>
+
+<body>
+    <div class="check">
+        <h1>FTUI Health Check</h1>
+        <div class="version left-align events"></div>
+        <h2>Settings</h2>
+        <div class="general left-align events"></div>
+        <h2>Subscriptions</h2>
+        <div class="subs left-align events"></div>
+        <h2>Modules</h2>
+        <div class="mods left-align events"></div>
+        <h2>ShortPoll</h2>
+        <div class="short left-align events wordwrap"></div>
+        <h2>LongPoll</h2>
+        <div class="long left-align events wordwrap"></div>
+    </div>
+</body>
+
+</html>

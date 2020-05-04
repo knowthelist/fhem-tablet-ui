@@ -10,7 +10,7 @@
 }
 /* Definition of the axes generally*/
 .text.axes {
-	fill: #bbb;
+	fill: #888;
 	font-size: 10px;
 }
 /* Definition of specialities for x-axis */
@@ -23,7 +23,7 @@
 }
 /* Definition of the gridlines generally */
 .gridlines {
-	stroke: #bbb;
+	stroke: #888;
 }
 /* Definition of specialities for x-axis */
 .xticks {
@@ -46,6 +46,8 @@
 .buttons {
 	font-size: 24px;
 	fill: #555;
+	font-weight: 900;
+	font-family: 'Font Awesome 5 Free';
 }
 /* Definition for activated texts ('legend' and 'cursor') */
 .caption.active {
@@ -57,6 +59,22 @@
 	font-weight: bold;
 	fill-opacity: 1;
 }
+/* Definition for pulldown menus */
+.pulldownmenu {
+	background: #555;
+}
+.pdentry {
+	margin: 4px;
+}
+.pdentry.line {
+	margin: 0px;
+	border-bottom-style: solid;
+	border-bottom-color: #888;
+	border-bottom-width: 2px;
+}
+.pdentry.mouseover {
+	background: #AA6900
+}
 /* Definition for legend window */
 .legend {
 	stroke: #baabba;
@@ -67,6 +85,10 @@
 }
 .text.legend {
 	fill-opacity: 1;
+}
+ 
+.fullsize {
+    height: calc(100% - 2em) !important;
 }
 
 /* Definition for styles to be used for graphs (as alternative to the standard FHEM plot styles */
@@ -122,5 +144,13 @@ text.ftui.l3, text.ftui.l3sym, text.ftui.l3dot, text.ftui.l3dash, text.ftui.l3fi
 text.ftui.l4, text.ftui.l4sym, text.ftui.l4dot, text.ftui.l4dash, text.ftui.l4fill { stroke:none; fill:#33CC33; }
 text.ftui.l5, text.ftui.l5sym, text.ftui.l5dot, text.ftui.l5dash, text.ftui.l5fill { stroke:none; fill:#33CCCC; }
 text.ftui.l6, text.ftui.l6sym, text.ftui.l6dot, text.ftui.l6dash, text.ftui.l6fill { stroke:none; fill:#3333CC; }
+/* additional settings for the tspan (mainly for legend window) */
+tspan.ftui.l0, tspan.ftui.l0sym, tspan.ftui.l0dot, tspan.ftui.l0dash, tspan.ftui.l0fill { stroke:none; fill:#DDA400; } 
+tspan.ftui.l1, tspan.ftui.l1sym, tspan.ftui.l1dot, tspan.ftui.l1dash, tspan.ftui.l1fill { stroke:none; fill:#BBBBBB; } 
+tspan.ftui.l2, tspan.ftui.l2sym, tspan.ftui.l2dot, tspan.ftui.l2dash, tspan.ftui.l2fill { stroke:none; fill:#CC0000; }
+tspan.ftui.l3, tspan.ftui.l3sym, tspan.ftui.l3dot, tspan.ftui.l3dash, tspan.ftui.l3fill { stroke:none; fill:#CCCC00; }
+tspan.ftui.l4, tspan.ftui.l4sym, tspan.ftui.l4dot, tspan.ftui.l4dash, tspan.ftui.l4fill { stroke:none; fill:#33CC33; }
+tspan.ftui.l5, tspan.ftui.l5sym, tspan.ftui.l5dot, tspan.ftui.l5dash, tspan.ftui.l5fill { stroke:none; fill:#33CCCC; }
+tspan.ftui.l6, tspan.ftui.l6sym, tspan.ftui.l6dot, tspan.ftui.l6dash, tspan.ftui.l6fill { stroke:none; fill:#3333CC; }
 
 /* end of styles for chart widget */

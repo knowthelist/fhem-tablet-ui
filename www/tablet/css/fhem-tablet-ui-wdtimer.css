@@ -1,0 +1,191 @@
+/* wdtimer_widget default CSS */
+.wdtimer { z-index: 1000; }
+.wdtimer_dialog { height: 150px; overflow: auto; width: 200px; text-align: center; scroll-behavior: smooth;}
+.wdtimer_profile{ padding-top: 0; padding-bottom: 5px; text-align: left; overflow: auto;}
+.wdtimer_profile.error { background-color: #cd3700 !important; }
+.wdtimer_profilelist {margin-left: 5px; margin-right: 5px;}
+.wdtimer_profilerow {
+	height: 100%;
+	text-align: left;
+	max-width: calc(100% - 6em - 10px);
+}
+.wdtimer_profileup, .wdtimer_profiledown {
+    font-size: 15px;
+    margin-top: 5px;
+}
+.wdtimer_button {
+    padding: 0.5em;
+    margin-left: 0.3em;
+    text-decoration: none;
+    border: none;
+    font-weight: 900;
+    color: inherit;
+}
+.wdtimer_checkbox>input {
+	display: none
+}
+.wdtimer_buttonblock {
+	float: right;
+	height: 100%;
+	min-width: 6em;
+	max-width: 11em;
+}
+.wdtimer_deleteprofile {
+    font-size: 15px;
+    position: relative; 
+    top: 5px;
+}
+.wdtimer_delprofile { text-align: right;}
+.wdtimer_profilemove {text-align: left;}
+.wdtimer_profileweekdays { padding-left: 4px; padding-top: 10px; margin-right: 0px !important;}
+.wdtimer_profilecmds { vertical-align: top; padding-top: 8px; margin-right: 0px !important;}
+.wdtimer_profiletime { width: auto !important; }
+.wdtimer_profilecmd{ width: auto !important; }
+.wdtimer_text.command{
+	width: calc(100% - 5px) !important;
+}
+.wdtimer_text{ 
+    border: none;
+    font-size: small;
+    padding: 6px 6px 6px 6px !important;
+    width: 35px !important;    
+    height: auto;
+}
+.wdtimer_time{ 
+    border: none;
+    font-size: small;
+    padding: 6px 6px 6px 6px !important;
+    width: 3em !important;    
+    height: auto;
+}
+.wdtimer_dropdowncmd {
+    width: auto;    
+    border: none;
+    padding: 8px 6px 5px 6px !important;
+}
+.wdtimer_dropdowncmd.iconic {
+	font-size: 18px !important;
+	padding: 2px 0px 4px 4px !important;
+	word-spacing: -1.675em;
+	letter-spacing: 0.3em;
+}
+.wdtimer_checkbox {
+	position: relative;
+    display: inherit;       
+    border: none;
+    margin-left: -6px;        
+    height:35px;
+    line-height: 1.6em;
+    width:33px;
+    top: -0.35em;
+}
+.wdtimer_checkbox label {
+	cursor: pointer;
+	position: absolute;
+	left: 7px;
+	top: 7px;
+}
+.wdtimer_checkbox label:after {
+	opacity: 0;
+	content: '';
+	position: absolute;
+	top: -7px;
+	left: -7px;
+	width: 35px;
+	height: 35px;    
+}
+.wdtimer_checkbox input[type=checkbox]:checked + label:after { opacity: 0.5; }
+.wdtimer_header { text-align: center; padding-bottom: 5px; padding-top: 5px; font-size: 1.4em; }
+.wdtimer_header_icon { position: absolute; left: 8px; font-size: 1.25em !important; }
+.wdtimer_footer { padding-bottom: 5px; padding-top: 5px; height: 40px; }
+.wdtimer_footer .ui-dialog-buttonset{ float: right;}
+.wdtimer_active { float:left; display: inline-block; margin: 6px; }
+.wdtimer_shader {
+    position:absolute;
+    background-color:#000000;
+    opacity:0.5;
+    height:100%;
+    width:100%;
+    top:0px;
+    left:0px;    
+}
+.wdtimer_shader.wdtimer_profilelist { background-color:#ff1a1a;}
+
+/* ---------------------------------------------------- */
+/* wdtimer_widget Style "round" */
+.wdtimer_button.round { border-radius: 10px; }        
+.wdtimer_header.round { border-top-left-radius: 10px; border-top-right-radius: 10px; }
+.wdtimer_footer.round { border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; }
+.wdtimer_checkbox.begin.round { border-bottom-left-radius: 10px; border-top-left-radius: 10px; }  
+.wdtimer_checkbox.end.round { border-bottom-right-radius: 10px; border-top-right-radius: 10px; }   
+.wdtimer_checkbox.round input[type=checkbox]:checked + label.begin::after { border-bottom-left-radius: 10px; border-top-left-radius: 10px; }    
+.wdtimer_checkbox.round input[type=checkbox]:checked + label.end::after { border-bottom-right-radius: 10px; border-top-right-radius: 10px; } 
+.wdtimer_time.round { border-radius: 10px; }
+.wdtimer_dropdowncmd.round { border-radius: 10px; }
+.wdtimer_text.round { border-radius: 10px; }
+/* ---------------------------------------------------- */
+/* wdtimer_widget Style "square" */
+.wdtimer_dropdowncmd.square { border-radius: unset; }
+/* ---------------------------------------------------- */
+/* wdtimer_widget Theam "dark" */
+.wdtimer_button.dark:hover, .wdtimer_time.dark:hover, .wdtimer_dropdowncmd.dark:hover, .wdtimer_checkbox.dark:hover { background-color: #007fff; }
+.wdtimer_button.dark { color: #d1eeee; background-color: #393939; }
+.wdtimer_deleteprofile {color: #ff0000!important;}
+.wdtimer_time.dark { background-color: #393939; color: #d1eeee; }
+.wdtimer_text.dark { background-color: #393939; color: #d1eeee; }
+.wdtimer_datetimepicker.dark { background-color: #393939 !important; color: #d1eeee !important; }
+.wdtimer_dropdowncmd.dark { background-color: #393939; color: #d1eeee; }
+.wdtimer_checkbox.dark { background-color: #393939; color: #d1eeee; }
+.wdtimer_checkbox.dark label:after { background-color: #cc5500; }
+.wdtimer_dialog.dark{ background-color: #2a2a2a; }
+.wdtimer_header.dark { background-color: #262626; color: #d1eeee; }
+.wdtimer_footer.dark { background-color: #262626; }
+.dark .wdtimer_profile:last-child > .wdtimer_buttonblock > .wdtimer_profilemove > .wdtimer_profiledown { color: #262626;}
+.dark .wdtimer_profile:first-child > .wdtimer_buttonblock > .wdtimer_profilemove > .wdtimer_profileup { color: #262626; }
+.dark .wdtimer_profile:nth-child(odd) {background: #404040;}
+/* ---------------------------------------------------- */
+/* wdtimer_widget Theam "light" */
+.wdtimer_button.light:hover, .wdtimer_time.light:hover, .wdtimer_dropdowncmd.light:hover, .wdtimer_checkbox.light:hover { background-color: #007fff; }
+.wdtimer_button.light { color: #000000; background-color: #e3c7c7; border: 1px solid #e0e0e0; }
+.wdtimer_deleteprofile {color: #ff0000!important;}
+.wdtimer_time.light { background-color: #e3c7c7; color: #000000;  border: 1px solid #e0e0e0; }
+.wdtimer_text.light { background-color: #e3c7c7; color: #000000;  border: 1px solid #e0e0e0; }
+.wdtimer_datetimepicker.light { background-color: #e3c7c7 !important; color: #000000 !important; border: 1px solid #e0e0e0; }
+.wdtimer_dropdowncmd.light { background-color: #e3c7c7; color: #000000; border: 1px solid #e0e0e0; }
+.wdtimer_checkbox.light { background-color: #e3c7c7; color: #000000;  border: 1px solid #e0e0e0; }
+.wdtimer_checkbox.light label:after { background-color: #cc5500; }
+
+.wdtimer_dialog.light{ background-color: #ffffff; }
+.wdtimer_header.light { background-color: #ffffff; color: #000000; border: 1px solid #e0e0e0; }
+.wdtimer_footer.light { background-color: #ffffff; border: 1px solid #e0e0e0; }
+.light .wdtimer_profile:last-child > .wdtimer_buttonblock > .wdtimer_profilemove > .wdtimer_profiledown { color: #b3b3b3;}
+.light .wdtimer_profile:first-child > .wdtimer_buttonblock > .wdtimer_profilemove > .wdtimer_profileup { color: #b3b3b3; }
+.light .wdtimer_profile:nth-child(odd) {background: #e6e6e6;}
+/* ---------------------------------------------------- */
+/* wdtimer_widget Theam "custom" */
+/* ---------------------------------------------------- */
+
+.wdtimer_dropdown.iconic {
+	font-size: 18px !important;
+	padding: 2px 0px 5px 2px !important;
+	word-spacing: -1.675em;
+	letter-spacing: 0.3em;
+}
+.wdtimer_dropdown.popup_activated {
+	z-index: 9999;
+	position: relative;
+	display: inline-grid;
+	border-style: solid;
+	border-width: 1px;
+	scroll-behavior: auto;
+	overflow-y: auto;
+	overflow-x: hidden
+}
+.wdtimer_dropdown.dark.popup_activated {background-color: #393939; border-color: #808080;}
+.wdtimer_dropdown.light.popup_activated {color: #000; background-color: #e3c7c7; border-color: #a0a0a0;}
+.wdtimer_dropdown.popup_activated>div {margin: 0px 0px 0px 0px;}
+.wdtimer_dropdown:not(.selected) {display: none;}
+.wdtimer_dropdown.selected {opacity: 1 !important;}
+.wdtimer_dropdown.popup_activated {opacity: 1 !important;display: inline-grid; position: absolute;}
+.wdtimer_dropdown.dark.popup_activated>div:hover {background-color: #007fff;}
+.wdtimer_dropdown.light.popup_activated>div:hover {background-color: #007fff;}

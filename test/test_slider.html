@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui test page */
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2019 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     */
+    -->
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    <script src="js/fhem-tablet-ui.min.js" defer></script>
+
+    <title>FTUI Slider Test</title>
+</head>
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizey="4" data-sizex="3">
+                <header>Slider Widget</header>
+                <!-- place your widget here -->
+                <div class="vbox">
+                    <div class="top-space-2x">
+                        <div data-type="switch" data-device="ftuitest" data-get="readonly" data-set="readonly" data-cmd="setreading" data-get-on="true" data-get-off="false" data-set-on="true" data-set-off="false"></div>
+                        <div>Lock</div>
+                    </div>
+                    <div class="top-space">
+                        <div data-type="label" data-device="ftuitest" class="big"></div>
+                        <div data-type="label" data-device="dummy1" data-pre-text="Value: " class="big"></div>
+                    </div>
+                </div>
+
+            </li>
+            <li data-row="5" data-col="1" data-sizey="4" data-sizex="3" class="vbox">
+                <header class="big">VERTICAL</header>
+                <!-- place your widget here -->
+                <div class="hbox items-space-around">
+                    <div data-type="slider" data-device="ftuitest" data-max="dummy1:state" data-max="100" data-height="50%" class="vertical top-align"></div>
+                    <div data-type="slider" data-device="dummy1" data-max="100" data-height="100%"  class="vertical"></div>
+                    <div data-type="slider" data-device="dummy1" data-max="100" data-height="50%" class="vertical bottom-align"></div>
+                </div>
+
+            </li>
+            <li data-row="1" data-col="4" data-sizey="4" data-sizex="6">
+                <header>LEVEL</header>
+                <div class="hbox">
+
+                <div class="vbox items-left">
+                    <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="75%" class="horizontal "></div>
+                    <div data-type="slider" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="75%" class="horizontal value-right"></div>
+                    <div data-type="label" data-device='dummy1' data-unit="%" class="top-space"></div>
+                </div>
+                <div class="vbox">
+                    <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="90%" data-height="20" class="horizontal"></div>
+                    <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="90%" data-height="40" class="horizontal value"></div>
+                    <div data-type="label" data-device='dummy1' data-unit="%" class="top-space"></div>
+                </div>
+                <div class="vbox items-right">
+                    <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="75%" class="horizontal"></div>
+                    <div data-type="level" data-device='dummy1' data-limits='["20","70","95"]' data-colors='["#dd3366","#ffcc00","#55aa44"]' data-width="75%" class="horizontal value "></div>
+                    <div data-type="label" data-device='dummy1' data-unit="%" class="top-space center-align"></div>
+                </div>
+              </div>
+            </li>
+            <li data-row="1" data-col="10" data-sizey="4" data-sizex="3">
+                <header>VERTICAL lock</header>
+                <!-- place your widget here -->
+                <div class="vbox items-space-around">
+                    <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class=""></div>
+                    <div data-type="slider" data-device="dummy1" data-max="100" data-height="45%" data-lock="ftuitest:readonly" class="vertical"></div>
+                    <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class=""></div>
+                </div>
+            </li>
+            <li data-row="5" data-col="10" data-sizey="4" data-sizex="3">
+                <header>VERTICAL Alone</header>
+                <!-- place your widget here -->
+                <div class="vbox">
+                    <div data-type="slider" data-device="dummy1" data-max="100" data-height="45%" class="vertical value"></div>
+                </div>
+            </li>
+            <li data-row="5" data-col="4" data-sizey="4" data-sizex="6">
+                <header>HORIZONTAL</header>
+                <!-- place your widget here -->
+                <div class="vbox">
+                    <div class="hbox bg-green">
+                        <div data-type="slider" data-device="dummy2" data-min="0" data-max="2000" data-width="45%" data-step="0.5" class="horizontal right-align"></div>
+                    </div>
+                    <div class="hbox bg-blue items-right">
+                        <div data-type="slider" data-device="dummy3" data-min="0" data-max="2000" data-width="45%" class="horizontal"></div>
+                    </div>
+                    <div class="hbox bg-red">
+                        <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class="hbox"></div>
+                        <div data-type="level" data-device="MPD1" data-get="elapsed" data-max="Time" class="horizontal grow-8"></div>
+                        <div data-type="label" data-device="MPD1" data-get="Time" data-substitution="toMinFromSec()" class="hbox"></div>
+                    </div>
+                    <div class="hbox">
+                        <div data-type="label" data-device="MPD1" data-get="elapsed" data-substitution="toMinFromSec()" class="hbox"></div>
+                        <div data-type="slider" data-device="MPD1" data-get="elapsed" data-max="Time" class="horizontal grow-8"></div>
+                        <div data-type="label" data-device="MPD1" data-get="Time" data-substitution="toMinFromSec()" class="hbox"></div>
+                    </div>
+                    <div class="hbox">
+                        <div data-type="label" data-device="dummy2" data-substitution="toMinFromSec()" class="hbox"></div>
+                        <div data-type="level" data-device="dummy2" data-min="0" data-max="dummy3:STATE" class="horizontal grow-8 value"></div>
+                        <div data-type="label" data-device="dummy3" data-substitution="toMinFromSec()" class="hbox"></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

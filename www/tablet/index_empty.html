@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.7.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/index_empty.html
+     */
+    -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+
+    <script src="js/fhem-tablet-ui.min.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizey="4" data-sizex="3">
+                <header>EXAMPLE1</header>
+                <!-- place your widget here -->
+                <div class="hbox">
+                    <div class="vbox">
+                        <div data-type="push" data-device="dummy1" data-set-on="0" data-background-icon="fa-square"></div>
+                        <div>0</div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="push" data-device="dummy1" data-set-on="1"></div>
+                        <div>1</div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="push" data-device="dummy1" data-set-on="2"></div>
+                        <div>2</div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="push" data-device="dummy1" data-set-on="3"></div>
+                        <div>3</div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="push" data-device="dummy1" data-set-on="100"></div>
+                        <div>100</div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="4" data-sizey="4" data-sizex="6">
+                <header>EXAMPLE2</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="1" data-col="10" data-sizey="4" data-sizex="3">
+                <header>EXAMPLE3</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="5" data-col="1" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE4</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="5" data-col="4" data-sizey="3" data-sizex="6">
+                <header>EXAMPLE5</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="5" data-col="10" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE6</header>
+                <!-- place your widget here -->
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

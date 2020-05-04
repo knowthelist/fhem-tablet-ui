@@ -1,0 +1,36 @@
+[data-type="controlbutton"] {
+    width: 4em;
+    height: 4em;
+}
+
+.controlbutton-wrapper {
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.controlbutton-wrapper input {
+    display: none;
+}
+
+.controlbutton-wrapper .controlbutton-area {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 12px;
+    background-color: #404040;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.controlbutton-wrapper .controlbutton-icon {
+    width: 100%;
+    height: 50%;
+    line-height: 0.1em !important;
+    position: absolute;
+    font-size: 2.1em;
+    bottom: 0;
+    left: 0;
+}

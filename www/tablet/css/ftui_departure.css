@@ -1,9 +1,17 @@
+[data-type="departure"] {
+
+}
+
+.departure-wrapper{
+
+}
+
 .departure{
     position: relative;
     border-radius: 10px;
-    margin: 3px;
     cursor: default !important;
 }
+
 .departure .icon {
     position: absolute;
     top: 6px;
@@ -106,7 +114,7 @@
     top: 54px;
     left: 8px;
     width: 92%;
-    height: 69%;
+    height: calc(100% - 77px);
     background-color: #484848;
     padding-bottom: 3px;
     padding-top: 3px;
@@ -117,25 +125,62 @@
     left: 4%;
     height: 74%
 }
-.DVB.departure{
+
+.departure.large .listText {
+    top: 19% !important;
+    left: 4% !important;
+    height: 72% !important;
+}
+
+.departure.large .header{
+    font-size: 23px !important;
+    margin-top: 24px !important;
+}
+
+.departure.large .station{
+    font-size: 31px !important;
+ }
+
+.departure.large .icon {
+    top: 16px !important;
+    left: 16px !important;
+    width: 45px !important;
+    height: 45px !important;
+    font-size: 32px !important;
+}
+
+.DVB .departure{
     color: #EFC822 !important;
     background-color: #CCAE20 !important;
 }
-.DVB.departure .icon {
+.DVB .departure .icon {
     color: #3F862A !important;
 }
-.DVB.departure .listText {
+.DVB .departure .listText {
     background-color: #222;
     color: #EFC822;
 }
 
-.VVO.departure {
+.VVO .departure {
     background-color: #1765BF !important;
 }
-.VVO.departure .icon {
+.VVO .departure .icon {
     color: #3F862A !important;
     background-color: #CCAE20 !important;
 }
-.VVO.departure .listText {
+.VVO .departure .listText {
     background-color: #2A2A5C;
 }
+
+.DB .departure {
+    background-color: #FF0100 !important;
+}
+.DB .departure .icon {
+    color: #000000 !important;
+    background-color: transparent !important;
+}
+.DB .departure .listText {
+    background-color: #FFFFFF !important;
+        color: #000000 !important;
+}
+

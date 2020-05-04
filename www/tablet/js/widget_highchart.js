@@ -1,45 +1,52 @@
 // load highcharts libs
-dynamicload('lib/highcharts/highcharts.js', null, null, false);
-dynamicload('lib/highcharts/highcharts-more.js', null, null, false);
-dynamicload('lib/highcharts/themes/dark-unica.js', null, null, false);
+function depends_highchart() {
+    if (!$.fn.highchart) {
+        return [ftui.config.basedir + 'lib/highcharts/highcharts.js'
+                , ftui.config.basedir + 'lib/highcharts/highcharts-more.js'
+                , ftui.config.basedir + 'lib/highcharts/themes/dark-unica.js'
+        ];
+    }
+}
 
-var widget_highchart = {
-    widgetname: 'highchart',
-    precision: function(a) {var s = a + "", d = s.indexOf('.') + 1; return !d ? 0 : s.length - d;},
-    init_attr: function(elem) {
-        elem.data('minvalue', typeof elem.data('minvalue') != 'undefined' ? elem.data('minvalue')  : 10);
-        elem.data('maxvalue', typeof elem.data('maxvalue') != 'undefined' ? elem.data('maxvalue')  : 30);
-        elem.data('xticks',   elem.data('xticks')                                                 || 360);
-        elem.data('yticks',   elem.data('yticks')                                                 || 5);
-        elem.data('yunit',    unescape(elem.data('yunit')                                         || '' ));
-        elem.data('get',      elem.data('get')                                                    || 'STATE');
-    },
-    init: function () {
-        var base = this;
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            widget_highchart.init_attr($(this));
-        });
-    },
-    refresh: function () {
+var Modul_highchart = function () {
 
-        var minarray = $(this).data('minvalue');
-        var maxarray = $(this).data('maxvalue');
-        var min = parseFloat( $.isArray(minarray) ? minarray[0] : minarray );
-        var max = parseFloat( $.isArray(maxarray) ? maxarray[0] : maxarray );
-        var tickInterval = parseFloat( $(this).data('tickinterval')) || null;
-        var tickAmount = parseFloat( $(this).data('tickamount')) || null;
-        var fix = widget_highchart.precision( $(this).data('yticks') );
-        var xunit = $(this).data('xunit');
-        var yunit = $(this).data('yunit');
-        var title = $(this).data('title');
-        var subtitle = $(this).data('subtitle');
-        var tooltip = $(this).data('tooltip');
-        var legendEnabled = !($(this).data('legend') == 0);
-        var noticks = ( $(this).data('width') <=100 ) ? true : $(this).hasClass('noticks');
-        var days = parseFloat($(this).attr('data-daysago') || 0);
-        var height = parseInt($(this).attr('data-height')) || 250;
-        var width = parseInt($(this).attr('data-width')) || 350;
+    function init_attr(elem) {
+        elem.initData('minvalue', 10);
+        elem.initData('maxvalue', 30);
+        elem.initData('xticks', 360);
+        elem.initData('yticks', 5);
+        elem.initData('yunit', '');
+        elem.initData('get', 'STATE');
+
+        this.addReading(elem, 'get');
+    }
+
+    function init_ui(elem) {}
+
+    function precision(a) {
+        var s = a + '';
+        var d = s.indexOf('.') + 1;
+        return !d ? 0 : s.length - d;
+    }
+
+    function refresh(elem) {
+        var minarray = elem.data('minvalue');
+        var maxarray = elem.data('maxvalue');
+        var min = parseFloat($.isArray(minarray) ? minarray[0] : minarray);
+        var max = parseFloat($.isArray(maxarray) ? maxarray[0] : maxarray);
+        var tickInterval = parseFloat($(this).data('tickinterval')) || null;
+        var tickAmount = parseFloat($(this).data('tickamount')) || null;
+        var fix = precision($(this).data('yticks'));
+        var xunit = elem.data('xunit');
+        var yunit = elem.data('yunit');
+        var title = elem.data('title');
+        var subtitle = elem.data('subtitle');
+        var tooltip = elem.data('tooltip');
+        var legendEnabled = !(elem.data('legend') === 0);
+        var noticks = (elem.data('width') <= 100) ? true : elem.hasClass('noticks');
+        var days = parseFloat(elem.data('daysago') || 0);
+        var height = parseInt(elem.data('height')) || 250;
+        var width = parseInt(elem.data('width')) || 350;
         var now = new Date();
         var ago = new Date();
         var mindate = now;
@@ -47,105 +54,95 @@ var widget_highchart = {
         var lineNames = [];
         var lineTypes = [];
 
-        if ( days > 0 && days < 1 ){
-            ago.setTime(now.getTime() - (days*24*60*60*1000));
-            mindate= ago.yyyymmdd() + '_'+ago.hhmmss() ;
-        }
-        else {
+        if (days > 0 && days < 1) {
+            ago.setTime(now.getTime() - (days * 24 * 60 * 60 * 1000));
+            mindate = ago.yyyymmdd() + '_' + ago.hhmmss();
+        } else {
             ago.setDate(now.getDate() - days);
-            mindate= ago.yyyymmdd() + '_00:00:00';
+            mindate = ago.yyyymmdd() + '_00:00:00';
         }
 
         maxdate.setDate(now.getDate() + 1);
         maxdate = maxdate.yyyymmdd() + '_00:00:00';
 
-        if( $(this).attr("data-linetypes") ) {
-            lineTypes = $(this).attr("data-linetypes").split(',');
+        if (elem.data('linetypes')) {
+            lineTypes = elem.data('linetypes').split(',');
         }
 
-        if( $(this).attr("data-linenames") ) {
-            lineNames = $(this).attr("data-linenames").split(',');
+        if (elem.data('linenames')) {
+            lineNames = elem.data('linenames').split(',');
         }
 
         var pointFormat = {};
-        if( tooltip ){
-            pointFormat = {pointFormat:tooltip};
+        if (tooltip) {
+            pointFormat = {
+                pointFormat: tooltip
+            };
         }
 
         var column_spec;
-        if( $(this).attr("data-columnspec") ) {
-            column_spec = $(this).attr("data-columnspec");
+        if (elem.data('columnspec')) {
+            column_spec = elem.data('columnspec');
         } else {
-            var device  = $(this).attr('data-device') || '';
-            var reading = $(this).attr('data-get') || '';
+            var device = elem.data('device') || '';
+            var reading = elem.data('get') || '';
             column_spec = device + ':' + reading;
         }
 
-        if( ! column_spec.match(/.+:.+/) ) {
-            console.log('columnspec ' + column_spec + ' is not ok in highchart'
-                      + ($(this).attr('data-device') ? ' for device '+$(this).attr('data-device') : ''));
+        if (!column_spec.match(/.+:.+/)) {
+            console.log('columnspec ' + column_spec + ' is not ok in highchart' + (elem.data('device') ? ' for device ' + elem.data('device') : ''));
         }
 
-        var logdevice = $(this).attr("data-logdevice");
-        var logfile = $(this).attr("data-logfile") || "-";
+        var logdevice = elem.data('logdevice');
+        var logfile = elem.data('logfile') || '-';
 
-        var cmd =[
-            'get',
-            logdevice,
-            logfile,
-            '-',
-            mindate,
-            maxdate,
-            column_spec
-        ];
+        var cmd = ['get', logdevice, logfile, '-',  mindate,  maxdate, column_spec ].join(' ');
 
-        $.ajax({
-            url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
-            async: true,
-            cache: false,
-            context: {
-                elem: $(this)
-            },
-            data: {
-                cmd: cmd.join(' '),
-                XHR: "1"
-            },
-        }).done(function(data ) {
+        ftui.sendFhemCommand(cmd)
+            .done(function (data) {
 
-            var seriesCount=0;
-            var seriesData=[];
-            var lineData=[];
+            var seriesCount = 0;
+            var seriesData = [];
+            var lineData = [];
             var lines = data.split('\n');
-            var point=[];
-            var firstTime = dateFromString(mindate);
+            var point = [];
+            var firstTime = ftui.dateFromString(mindate);
             var dataCount = 0;
 
-            $.each( lines, function( index, value ) {
-                if ( value ) {
-                    var val = getPart(value.replace('\r\n',''),2);
+            $.each(lines, function (index, value) {
+                if (value) {
+                    var val = parseFloat(ftui.getPart(value.replace('\r\n', ''), 2));
 
-                    var eventTime = dateFromString(value).getTime();
+                    var eventTime = ftui.dateFromString(value).getTime();
 
-                    if ( val && eventTime && $.isNumeric(val) ) {
+                    if (eventTime && $.isNumeric(val)) {
 
-                        point = [eventTime*1,val*1];
+                        point = [eventTime * 1, val * 1];
                         lineData[dataCount++] = point;
 
-                        if ( val > max && $.isArray(maxarray) ) {
-                            for(var j=0; j<maxarray.length; j++) {
-                                if ( maxarray[j] > val ) {
-                                    max = maxarray[j];
-                                    break;
+                        if (val > max) {
+                            if ($.isArray(maxarray)) {
+                                for (var j = 0; j < maxarray.length; j++) {
+                                    if (maxarray[j] > val) {
+                                        max = maxarray[j];
+                                        break;
+                                    }
                                 }
+                            } else {
+                                max = val;
                             }
                         }
 
-                        if ( val < min && $.isArray(minarray) ) {
-                            for(var j=0; j<minarray.length; j++) {
-                                if ( minarray[j] < val ) {
-                                    min = minarray[j];
-                                    break;
+                        if (val < min) {
+                            if ($.isArray(minarray)) {
+                                for (var j = 0; j < minarray.length; j++) {
+                                    if (minarray[j] < val) {
+                                        min = minarray[j];
+                                        break;
+                                    }
                                 }
+                            } else {
+                                min = val;
                             }
                         }
 
@@ -154,30 +151,41 @@ var widget_highchart = {
                         /* dataline merken */
 
                         var dataName = val;
-                        if ( lineNames[seriesCount] ) {
+                        if (lineNames[seriesCount]) {
                             dataName = lineNames[seriesCount];
                         }
                         var lineType = 'area';
-                        if ( lineTypes[seriesCount] ) {
+                        if (lineTypes[seriesCount]) {
                             lineType = lineTypes[seriesCount];
                         }
 
-                        seriesData[seriesCount++] = {type: lineType, name: dataName, data: lineData };
+                        seriesData[seriesCount++] = {
+                            type: lineType,
+                            name: dataName,
+                            data: lineData
+                        };
 
                         dataCount = 0;
-                        lineData=[];
+                        lineData = [];
                     }
                 }
             });
 
-            var xrange  = parseInt(diffMinutes(firstTime,dateFromString(maxdate)));
+            var xrange = parseInt(ftui.diffMinutes(firstTime, ftui.dateFromString(maxdate)));
 
-            this.elem.highcharts({
+            // highchart expects UTC per default (issue #136)
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                }
+            });
+
+            elem.highcharts({
                 chart: {
                     zoomType: 'x',
-                    backgroundColor:'transparent',
-                   // width: width,
-                   // height: height
+                    backgroundColor: 'transparent',
+                    // width: width,
+                    // height: height
                 },
                 title: {
                     text: title
@@ -223,20 +231,32 @@ var widget_highchart = {
                 legend: {
                     enabled: legendEnabled
                 },
-                credits: { text: '', href: '#' },
+                credits: {
+                    text: '',
+                    href: '#'
+                },
                 series: seriesData
             });
         });
-    },
-    update: function (dev, par) {
-        var base = this;
-        var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-        deviceElements.each(
-            function(index) {
-                if ( $(this).data('get') == par ) {
-                    base.refresh.apply(this);
-                }
-            }
-        );
-    },
+    }
+
+    function update(dev, par) {
+        me = this;
+        me.elements.filterDeviceReading('get', dev, par)
+            .each(function (index) {
+                refresh($(this));
+            });
+    }
+
+    // public
+    // inherit all public members from base clas
+    var me = this;
+    return $.extend(new Modul_widget(), {
+        widgetname: 'highchart',
+        init_attr: init_attr,
+        init_ui: init_ui,
+        update: update,
+        precision: precision,
+        refresh: refresh
+    });
 };

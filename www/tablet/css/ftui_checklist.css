@@ -1,0 +1,67 @@
+.check-list{
+    position: relative;
+    border-radius: 10px;
+    overflow: auto;
+    margin: 3px;
+    cursor: default !important;
+}
+.check-list .check{
+    position: relative;
+    display: block !important;
+    border-bottom: 1px solid #454545;
+    margin-right: 2%;
+    margin-left: 2%;
+    cursor: pointer;
+}
+.check-list .check:hover{
+    background-color: #333;
+}
+.check-list .check-image{
+    width: 15%;
+    position: relative;
+    display: inline-block;
+    text-align: left;
+}
+.check-list .check-text{
+    width: 85%;
+    position: relative;
+    display: inline-block;
+
+}
+.check-list .cover {
+    width: 46px;
+    height: 46px;
+}
+
+.check-list .test {
+    font-weight: normal;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    text-align: left;
+}
+
+.check-list .duration {
+    position: relative;
+    right: 20px;
+    top: -10px;
+    text-align: right;
+}
+.check-list {
+    line-height: 2em;
+}
+.check-list .check-item {
+    margin: 2px;
+}
+.check-list .check-item.active {
+    background-color: #3a3a3a;
+}
+.check-list .check-item.active .icon:before {
+    content: "\f00c";
+}
+
+.check-list .check-item .icon:before {
+
+}
+
+

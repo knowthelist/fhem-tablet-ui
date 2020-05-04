@@ -1,155 +1,191 @@
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
+/* FTUI Plugin
+ * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+ * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
 
-var widget_label = $.extend({}, widget_widget, {
-    widgetname:"label",
-    init_attr: function(elem) {
-        elem.initData('get'         , 'STATE');
-        elem.initData('part'        , -1);
-        elem.initData('unit'        , '' );
-        elem.initData('color'       , '');
-        elem.initData('limits'      , []);
-        elem.initData('colors'      , ['#505050']);
-        elem.initData('limits-get'  , elem.data('device') + ':' + elem.data('get'));
-        elem.initData('limits-part' , elem.data('part'));
-        elem.initData('substitution'    , '');
+/* global ftui:true, Modul_widget:true */
 
-        // fill up colors to limits.length
-        // if an index s isn't set, use the value of s-1
-        for(var s=0, len=elem.data('limits').length; s<len; s++) {
-            if(typeof elem.data('colors')[s] == 'undefined') {
-                elem.data('colors')[s]=elem.data('colors')[s>0?s-1:0];
+"use strict";
+
+var Modul_label = function () {
+
+/*    function formatValue(elem, val) {
+        if (elem.isValidData('format')) {
+            var pipe = elem.data('format'),
+                functs = pipe.split('|');
+            console.log(functs);
+            for (var i=0,len=functs.length;i<len;i++){
+                var func = functs[i].replace(')','').trim().split('('),
+                    params = func[1].split(',');
+                console.log(func[0],params); 
+                val = window[func[0]](params)
             }
         }
+        return val;
+    }*/
 
-        elem.data('fix',            ( $.isNumeric(elem.data('fix')) ) ?  Number(elem.data('fix'))           : -1);
+    function update_value(elem) {
 
-        elem.addReading('get');
-        elem.addReading('limits-get');
-        if ( elem.isDeviceReading('color') ) {elem.addReading('color');}
+        var value = (elem.hasClass('timestamp')) ? elem.getReading('get').date : elem.getReading('get').val;
 
-    },
-    init: function () {
-        this.elements = $('div[data-type="'+this.widgetname+'"]');
-        this.elements.each(function(index) {
-            widget_label.init_attr($(this));
-        });
-    },
-    update_fix : function(value, fix) {
-        return ( $.isNumeric(value) && fix>=0 ) ? Number(value).toFixed(fix) : value;
-    },
-    update_substitution : function(value, substitution) {
-        ftui.log(3,this.widgetname+' - value:'+value+', substitution:'+substitution);
-        if(substitution){
-            if ($.isArray(substitution)){
-                for(var i=0, len=substitution.length; i<len; i+=2) {
-                    if(value == substitution[i] && i+1<len)
-                        return substitution[i+1];
+        if (ftui.isValid(value)) {
+            var val = ftui.getPart(value, elem.data('part'));
+            var unit = elem.data('unit');
+            val = me.substitution(val, elem.data('substitution'));
+            val = me.map(elem.data('map-get'), val, val);
+            //val = me.round(val, elem.data('round'));
+            //val = formatValue(elem, val);
+            val = me.factor(val, elem.data('factor'));
+            val = me.fix(val, elem.data('fix'));
+            val = elem.data('pre-text') + val + elem.data('post-text');
+            ftui.log(4, 'label.update_value: value=' + val);
+            if (!isNaN(parseFloat(val)) && isFinite(val) && val.indexOf('.') > -1) {
+                var vals = val.split('.');
+                val = "<span class='label-precomma'>" + vals[0] + "</span>" +
+                    "<span class='label-comma'>.</span>" +
+                    "<span class='label-aftercomma'>" + vals[1] + "</span>";
+            }
+
+            if (!elem.hasClass('fixedlabel') && !elem.hasClass('fixcontent')) {
+                if (unit) {
+                    elem.html(val + "<span class='label-unit'>" + window.unescape(unit) + "</span>");
+                } else {
+                    elem.html(val);
+                }
+                // init embedded widgets
+                if (elem.find('[data-type]').length > 0) {
+                    ftui.initWidgets('[data-wgid="' + elem.wgid() + '"]');
                 }
             }
-            else if (substitution.match(/^s/)) {
-                var f = substitution.substr(1,1);
-                var subst = substitution.split(f);
-                return value.replace(new RegExp(subst[1],subst[3]), subst[2]);
-            }
-            else if (substitution.match(/weekdayshort/))
-                  return dateFromString(value).ee();
-            else if (substitution.match(/.*\(\)/))
-                  return eval('value.'+substitution);
+            me.update_cb(elem, val);
         }
-        return value;
-    },
-    update_colorize : function(value, elem) {
+        var color = elem.data('color');
+        if (color && !elem.isDeviceReading('color')) {
+            elem.css("color", ftui.getStyle('.' + color, 'color') || color);
+        }
+
+    }
+
+    function init_attr(elem) {
+
+        elem.initData('get', 'STATE');
+        elem.initData('unit', '');
+        elem.initData('color', '');
+        elem.initData('limits', elem.data('states') || '');
+        elem.initData('limits-get', (elem.data('device')) ? elem.data('device') + ':' + elem.data('get') : elem.data('get'));
+        elem.initData('limits-part', elem.data('part'));
+        elem.initData('substitution', '');
+        elem.initData('pre-text', '');
+        elem.initData('post-text', '');
+        elem.initData('refresh', 0);
+
+        // if hide reading is defined, set defaults for comparison
+        if (elem.isValidData('hide')) {
+            elem.initData('hide-on', '(true|1|on)');
+        }
+        elem.initData('hide', elem.data('get'));
+        if (elem.isValidData('hide-on')) {
+            elem.initData('hide-off', '!on');
+        }
+        me.addReading(elem, 'hide');
+
+        elem.data('fix', ($.isNumeric(elem.data('fix'))) ? Number(elem.data('fix')) : -1);
+
+        me.addReading(elem, 'get');
+        me.addReading(elem, 'limits-get');
+        if (elem.isDeviceReading('color')) {
+            me.addReading(elem, 'color');
+        }
+    }
+
+    function init_ui(elem) {
+        var interval = elem.data('refresh');
+        if ($.isNumeric(interval) && interval > 0) {
+            var tid = setInterval(function () {
+                if (elem && elem.data('get')) {
+
+                    update_value(elem);
+
+                } else {
+                    clearInterval(tid);
+                }
+            }, Number(interval) * 1000);
+        }
+
+    }
+
+    function update_colorize(value, elem) {
         //set colors according matches for values
         var limits = elem.data('limits');
         var colors = elem.data('colors');
-        if(limits && colors) {
-            var idx=indexOfGeneric(limits,value);
-            if (idx>-1) {
-                var layer = (elem.hasClass('bg-limit')?'background':'color');
-                elem.css( layer, getStyle('.'+colors[idx],'color') || colors[idx] );
+        var classes = elem.data('classes');
+        if (limits && $.isArray(limits)) {
+            var idx = ftui.indexOfGeneric(limits, value);
+            if (idx > -1) {
+                if (colors) {
+                    var layer = (elem.hasClass('bg-limit') ? 'background' : 'color');
+                    elem.css(layer, ftui.getStyle('.' + colors[idx], 'color') || colors[idx]);
+                }
+                if (classes) {
+                    for (var i = 0, len = classes.length; i < len; i++) {
+                        elem.removeClass(classes[i]);
+                    }
+                    elem.addClass(classes[idx]);
+                }
             }
         }
-    },
-    update_cb : function(elem) {},
-    update: function (dev,par) {
-        var base = this;
-        // update from normal state reading
-        this.elements.filterDeviceReading('get',dev,par)
-        .each(function(index) {
-            var elem = $(this);
-            var value = (elem.hasClass('timestamp'))
-                        ?elem.getReading('get').date
-                        :elem.getReading('get').val;
-
-            // hide element when it's value equals data-hide
-            // if data-hideparents is set, it is interpreted als jquery selector to hide elements parents filtered by this selector
-            if(elem.data('hide')) {
-                if(value == elem.data('hide')) {
-                    if(elem.data('hideparents')) {
-                        elem.parents(elem.data('hideparents')).hide();
-                    } else {
-                        elem.hide();
-                    }
-                } else {
-                    if(elem.data('hideparents')) {
-                        elem.parents(elem.data('hideparents')).show();
-                    } else {
-                        elem.show();
-                    }
-                }
-            }
-
-            if (value){
-                var part = elem.data('part');
-                var val = getPart(value,part);
-                var unit = elem.data('unit');
-
-                val = base.update_substitution(val, elem.data('substitution'));
-                val = base.update_fix(val, elem.data('fix'));
-                if (!isNaN(parseFloat(val)) && isFinite(val) && val.indexOf('.')>-1){
-                    var vals = val.split('.');
-                    val = "<span class='label-precomma'>"+vals[0]+"</span>" +
-                          "<span class='label-comma'>.</span>" +
-                          "<span class='label-aftercomma'>"+vals[1]+"</span>";
-                }
-
-                if ( !elem.hasClass('fixedlabel') ) {
-                  if ( unit )
-                    elem.html( val + "<span class='label-unit'>"+unescape(unit)+"</span>" );
-                  else
-                    elem.html(val);
-                }
-                base.update_cb(elem,val);
-            }
-            var color = elem.data('color');
-            if (color && !elem.isDeviceReading('color'))
-                elem.css( "color", getStyle('.'+color,'color') || color );
-
-        });
-
-        //extra reading for dynamic color
-        base.elements.filterDeviceReading('color',dev,par)
-        .each(function(idx) {
-            var elem = $(this);
-            var val = elem.getReading('color').val;
-            if(val) {
-                val = '#'+val.replace('#','');
-                elem.css( "color", val );
-            }
-        });
-
-        //extra reading for colorize
-        base.elements.filterDeviceReading('limits-get',dev,par)
-        .each(function(idx) {
-            var elem = $(this);
-            var val = elem.getReading('limits-get').val;
-            if(val) {
-                var part = elem.data('limits-part');
-                var v = getPart(val,part);
-                widget_label.update_colorize(v, elem);
-            }
-        });
     }
-});
+
+    function update_cb(elem) {}
+
+    function update(dev, par) {
+
+        me.elements.each(function (index) {
+            var elem = $(this);
+
+
+            // update from normal state reading
+            if (elem.matchDeviceReading('get', dev, par)) {
+                update_value(elem);
+            }
+
+            //extra reading for dynamic color
+            if (elem.matchDeviceReading('color', dev, par)) {
+                var val = elem.getReading('color').val;
+                if (ftui.isValid(val)) {
+                    val = '#' + val.replace('#', '');
+                    elem.css("color", val);
+                }
+            }
+
+            //extra reading for colorize
+            if (elem.matchDeviceReading('limits-get', dev, par)) {
+                var lval = elem.getReading('limits-get').val;
+                if (ftui.isValid(lval)) {
+                    var v = ftui.getPart(lval, elem.data('limits-part'));
+                    update_colorize(v, elem);
+                }
+            }
+
+            me.updateHide(elem, dev, par);
+
+        });
+
+
+
+    }
+
+    // public
+    // inherit all public members from base class
+    var me = $.extend(new Modul_widget(), {
+        //override or own public members
+        widgetname: 'label',
+        init_attr: init_attr,
+        init_ui: init_ui,
+        update: update,
+        update_cb: update_cb,
+        update_colorize: update_colorize
+    });
+
+    return me;
+};

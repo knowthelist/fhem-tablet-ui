@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.7.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+
+    <script src="js/fhem-tablet-ui.min.js" defer></script>
+
+    <title>TEST-playstream</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizey="4" data-sizex="3">
+                <header>Control</header>
+                <div class="hbox items-space-around">
+                    <div class="vbox">
+                        <div class="hbox">
+                            <div data-type="push" data-device="playstream" data-set-on="0" data-icon="none">0</div>
+                            <div data-type="push" data-device="playstream" data-set-on="1" data-icon="none">1</div>
+                            <div data-type="push" data-device="playstream" data-set-on="2" data-icon="none">2</div>
+                            <div data-type="push" data-device="playstream" data-set-on="3" data-icon="none">3</div>
+                            <div data-type="push" data-device="playstream" data-set-on="4" data-icon="none">4</div>
+                        </div>
+                        <div class="hbox">
+                            <div data-type="label" data-get="playstream:state" class="bigger hbox"></div>
+                            <div data-type="slider" data-device="playstream" data-get="volume" data-set="volume" class="grow-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="4" data-sizey="4" data-sizex="6">
+                <header>Start/Stop from Dummy</header>
+                <div class="hbox">
+                    <div class="vbox">
+                        <div data-type="playstream" data-device="playstream" data-get="state" data-get-on="1" data-set-on="1" data-url="http://radioeins.de/stream" data-volume="playstream:volume" class="">
+                        </div>
+                        <div data-type="label" class="darker">radioeins</div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="playstream" data-device="playstream" data-get="state" data-get-on="2" data-set-on="2" data-url="http://br-puls-live.cast.addradio.de/br/puls/live/mp3/128/stream.mp3" data-volume="playstream:volume" class="">
+                        </div>
+                        <div data-type="label" class="darker">Puls</div>
+                    </div>
+                    <div class="vbox">
+                        <div data-type="playstream" data-device="playstream" data-get="state" data-get-on="3" data-set-on="3" data-url="http://mp3stream1.apasf.apa.at/;stream.mp3" data-volume="playstream:volume" class="">
+                        </div>
+                        <div data-type="label" class="darker">FM4</div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="10" data-sizey="4" data-sizex="3">
+                <header>Fix</header>
+                <div class="vbox">
+                    <div data-type="playstream" data-url="http://br-puls-live.cast.addradio.de/br/puls/live/mp3/128/stream.mp3" data-volume="20"></div>
+                    <div data-type="label" class="darker">Puls</div>
+                </div>
+            </li>
+            <li data-row="5" data-col="1" data-sizey="3" data-sizex="3">
+                <header>URL</header>
+                <div class="vbox">
+                    <div data-type="select" data-device="playstream" data-cmd="setreading" data-list="" data-alias='["ndr2","njoy","sputnik"]' data-items='["https://ndr-ndr2-niedersachsen.sslcast.addradio.de/ndr/ndr2/niedersachsen/mp3/128/stream.mp3",
+                                     "https://ndr-njoy-live.sslcast.addradio.de/ndr/njoy/live/mp3/128/stream.mp3",
+                                     "http://mdr-284331-1.cast.mdr.de/mdr/284331/1/mp3/high/stream.mp3"]' data-get="url" data-set="url" class="w2x"></div>
+                </div>
+            </li>
+            <li data-row="5" data-col="4" data-sizey="3" data-sizex="6">
+                <header>URL from Reading</header>
+                <div class="vbox">
+                    <div class="hbox items-space-around">
+                        <div data-type="playstream" data-url="playstream:url" data-volume="50"></div>
+                        <div data-type="playstream" data-device="playstream" data-get="state" data-get-on="4" data-set-on="4" data-url="url" data-volume="50"></div>
+                        </div>
+                    <div class="hbox">
+                    <div data-type="label" data-get="playstream:url"></div>
+                        </div>
+                </div>
+            </li>
+            <li data-row="5" data-col="10" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE6</header>
+                <!-- place your widget here -->
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

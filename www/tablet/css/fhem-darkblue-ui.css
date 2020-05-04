@@ -1,0 +1,185 @@
+.red {
+    color: #e34343 !important;
+}
+
+.gray {
+    color: #6a6a6a;
+}
+.green {
+    color: #6DE08E;
+}
+.cold {
+    color: #6DE08E;
+}
+.warm {
+    color: #e34343;
+}
+
+.gridster > ul > li, .card, section {
+    background-color:#223343;
+}
+
+.gridster li header, .card > header {
+    background: #3a4f5c;
+    color: #aaa;
+    border-bottom: 1px solid #222;
+}
+
+/* label widget */
+[data-type="label"].active {
+  color: #0088CC !important;
+}
+
+polyline {
+    stroke: #337ab7 !important;
+}
+
+/* circlemenu widget */
+div[data-type="circlemenu"] > .circlemenu-wrapper > .circlemenu > li {
+    background-color: #333;
+}
+div[data-type="circlemenu"] > .circlemenu-wrapper > .circlemenu li div[data-type="push"] {
+    color: #697C90;
+}
+
+option {background-color: #ffffff;}
+
+/* spinner colors */
+[data-type="spinner"]:not([data-color]) .spinner {
+  color: #337ab7;
+}
+[data-type="spinner"]:not([data-background-color]) .spinner {
+  background-color: #495C70  !important;
+}
+[data-type="spinner"]:not([data-background-color]) .spinner .levelRange {
+  background-color: #0088CC !important;
+}
+[data-type="spinner"]:not([data-background-color]) .spinner .levelArea {
+  background-color: #1B344A !important;
+}
+
+/* Slider colors */
+.range-handle {
+  background-color: #bcbcbc !important;
+}
+[data-type="slider"]:not([data-background-color]) .range-bar {
+  background-color: #404040;
+}
+[data-type="slider"]:not([data-color]) .range-quantity {
+    background-color: #0088CC !important;
+}
+
+/* symbol  widget */
+/* foreground on */
+[data-type="symbol"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
+    color: #0088CC !important;
+}
+/* foreground off */
+[data-type="symbol"]:not([data-colors]):not([data-off-color]):not([data-color]) :not(.active) i#fg {
+    color: #3a4f5c !important;
+}
+
+/* switch  widget */
+/* background on */
+[data-type="switch"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg,
+[data-type="dimmer"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg,
+[data-type="button"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg {
+    color: #0088CC !important;
+}
+/* background off */
+[data-type="switch"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg,
+[data-type="dimmer"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg,
+[data-type="button"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg {
+    color: #495C70 !important;
+}
+
+/* switch  widget invert */
+/* foreground on */
+[data-type="switch"]:not([data-colors]):not([data-on-color]):not([data-color]).invert .active i#fg,
+[data-type="dimmer"]:not([data-colors]):not([data-on-color]):not([data-color]).invert .active i#fg,
+[data-type="button"]:not([data-colors]):not([data-on-color]):not([data-color]).invert .active i#fg {
+    color: #0088CC !important;
+}
+/* foreground off */
+[data-type="switch"]:not([data-colors]):not([data-on-color]):not([data-color]).invert :not(.active) i#fg,
+[data-type="dimmer"]:not([data-colors]):not([data-on-color]):not([data-color]).invert :not(.active) i#fg,
+[data-type="button"]:not([data-colors]):not([data-on-color]):not([data-color]).invert :not(.active) i#fg {
+    color: #495C70 !important;
+}
+/* background on */
+[data-type="switch"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]).invert .active i#bg,
+[data-type="dimmer"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]).invert .active i#bg,
+[data-type="button"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]).invert .active i#bg {
+    color: #2B445A !important;
+}
+/* background off */
+[data-type="switch"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]).invert :not(.active) i#bg,
+[data-type="dimmer"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]).invert :not(.active) i#bg,
+[data-type="button"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]).invert :not(.active) i#bg {
+    color: #2B445A !important;
+}
+
+
+/* push  widget */
+/* foreground on */
+[data-type="push"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
+    color: #0088CC !important;
+}
+/* foreground off */
+[data-type="push"]:not([data-colors]):not([data-on-color]):not([data-color]) :not(.active) i#fg {
+    color: #495C70 !important;
+}
+/* background on */
+[data-type="push"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg {
+    color: #0088CC !important;
+}
+/* background off */
+[data-type="push"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg {
+    color: #495C70 !important;
+}
+
+/* pagebutton  widget */
+/* foreground on */
+[data-type="pagebutton"]:not([data-colors]):not([data-on-color]):not([data-color]) .active i#fg {
+    color: rgba(206, 206, 206, 0.6) !important;
+}
+/* foreground off */
+[data-type="pagebutton"]:not([data-colors]):not([data-off-color]):not([data-color]) :not(.active) i#fg {
+    color: #4d6879 !important;
+}
+/* background on */
+[data-type="pagebutton"]:not([data-background-colors]):not([data-on-background-color]):not([data-background-color]) .active i#bg {
+    color: #495C70 !important;
+}
+/* background off */
+[data-type="pagebutton"]:not([data-background-colors]):not([data-off-background-color]):not([data-background-color]) :not(.active) i#bg {
+    color: rgba(21, 21, 21, 0.2) !important;
+}
+
+
+/* pseudo classes for canvas painted widgets
+   read by ftui.getStyle() in init and reinit function  */
+
+.thermostat{background-color:#1B344A;color:#667d94;}
+.thermostat.actual{color:#aaa;}
+.thermostat.nominal{color:#aaa;}
+.thermostat.min{color:#0088CC;}
+.thermostat.max{color:#f71525;}
+
+.homestatus{background-color:#667d94;color:#0088CC;}
+.homestatus.min{color:#eee;}
+.homestatus.max{color:#495C70;}
+
+.volume.handle{color:#0088CC;}
+.volume{background-color:#1B344A;color:#667d94;}
+.volume.nominal{color:#444;}
+
+.wind_direction.handle{color:#0088CC;}
+.wind_direction{background-color:#1B344A;color:#555;}
+.wind_direction.nominal{color:#444;}
+
+.checkbox.on {color:#fff;background-color:#0088CC;}
+.checkbox.off {color:#fff;background-color:#999;}
+
+.playstream.on {color:#fff;background-color:#0088CC;}
+.playstream.off {color:#fff;background-color:#999;}

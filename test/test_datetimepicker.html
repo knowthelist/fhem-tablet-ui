@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.7.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/index_empty.html
+     */
+    -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+
+    <script src="js/fhem-tablet-ui.min.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizey="4" data-sizex="3">
+                <header>normal</header>
+                <div class="hbox">
+                    <div class="large orange" data-type="datetimepicker" data-device="ftuitest" data-get="startTime" data-cmd="setreading" 
+                         data-step="15" data-datepicker="false" data-format="H:i:s"></div>
+                </div>
+            </li>
+            <li data-row="1" data-col="4" data-sizey="4" data-sizex="6">
+                <header>minTime/maxTime</header>
+                <div class="hbox">
+                    <div class="large orange" data-type="datetimepicker" data-device="ftuitest" data-get="startTime" data-cmd="setreading" 
+                         data-step="15" data-datepicker="false" data-min-time="09:00:00" data-max-time="18:00:00" 
+                         data-format="H:i:s"></div>
+                </div>
+            </li>
+            <li data-row="1" data-col="10" data-sizey="4" data-sizex="3">
+                <header>EXAMPLE3</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="5" data-col="1" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE4</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="5" data-col="4" data-sizey="3" data-sizex="6">
+                <header>EXAMPLE5</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="5" data-col="10" data-sizey="3" data-sizex="3">
+                <header>EXAMPLE6</header>
+                <!-- place your widget here -->
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -1,3 +1,4 @@
-FHEM tablet UI last change:
-2016-03-06
- - version 2.0_beta widgets upgrade
+FHEM Tablet UI last changes:
+ 2019-12-12
+ - widget_slider: changed style classes
+ - better websocket reconnecting

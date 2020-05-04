@@ -1,0 +1,63 @@
+[data-type="level"],
+[data-type="slider"]  {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%; 
+}
+
+.vertical .slider-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.horizontal.value-right .slider-wrapper {
+  margin-left: -1.5em;
+}
+
+.range-container.slider_vertical.narrow, .range-container.level_vertical.narrow {
+  margin: 10px 0px 0px -5px !important;
+}
+
+.range-container.slider_horizontal.narrow, .range-container.level_horizontal.narrow {
+  padding-bottom: 5px;
+}
+
+.range-min, .range-max {
+  visibility: hidden;
+  width: 0px !important;
+  margin-right: 40px;
+}
+
+.slider_vertical .slidertext, .level_vertical .slidertext {
+  margin-top: 10px;
+  width: 40px;
+  text-align: center;
+}
+
+.range-container {
+  position: relative;
+}
+
+.slider_horizontal .slidertext-right, .level_horizontal .slidertext-right {
+  position: absolute;
+  right: -1.5em;
+  line-height: 2em;
+}
+
+.big>.vertical .range-bar {
+  width: 1em;
+}
+
+.bigger>.vertical .range-bar {
+  width: 25px;
+}
+
+.large>.vertical .range-bar {
+  width: 50px;
+}

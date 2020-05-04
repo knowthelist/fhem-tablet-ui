@@ -1,0 +1,173 @@
+<html>
+<title>FHEM</title>
+
+<head>
+    <!--
+    /* FHEM tablet ui */
+    /*
+    *
+    * Version: 2.2.0
+    * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
+    * URL: https://github.com/knowthelist/fhem-tablet-ui
+    *
+    * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+    * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+    *
+    * - create a new folder named 'tablet' in /<fhem-path>/www
+    * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+    * - add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
+    * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+    */
+   -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="widget_base_width" content="74">
+    <meta name="widget_base_height" content="71">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="longpoll" content="1">
+    <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="debug" content="3">
+    <!-- 1=output to console;0=not output -->
+
+    <link rel="stylesheet" href="lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
+
+    <script src="/fhem/pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="lib/jquery.gridster.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizex="3" data-sizey="3">
+                <header>ftuitest</header>
+                <div class="top-space-2x">
+                    <div class="inline">
+                        <div data-type="push" data-device="ftuitest" data-set-on="on"></div>
+                        <div>on</div>
+                    </div>
+                    <div class="inline">
+                        <div data-type="push" data-device="ftuitest" data-set-on="off"></div>
+                        <div>off</div>
+                    </div>
+                    <div class="">
+                        <div data-type="label" data-device="ftuitest" class="bigger"></div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="4" data-sizex="3" data-sizey="3">
+                <header>div Popup</header>
+                <div class="center">
+                    <div data-type="popup" data-device="ftuitest" data-get-on="on" data-get-off="(off|aus)" data-height="240px" data-width="540px" class="noshade">
+                        <div class="big">Open Popup</div>
+                        <div class="dialog phone-width">
+                            <div class="hbox">
+                                <div class="box vertical phone-width">
+                                    <div class="card bg-green">
+                                        <header>Card 21</header>
+                                        <!-- place your widget here -->
+                                        1
+                                    </div>
+                                    <div class="card bg-green">
+                                        <header>Card 22</header>
+                                        <!-- place your widget here -->
+                                        <div data-type="popup" data-draggable="false" data-height="40%" data-width="90%" class="center">
+                                            <div class="big">Open Popup in Popup</div>
+                                            <div class="dialog phone-width bg-white">
+                                                <div class="center">
+                                                    <div data-type="push" class=""></div>
+                                                    <div data-type="slider" data-device="dummy1" data-max="100" class="horizontal"></div>
+                                                    <div data-type="input" data-device="dummy1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box vertical phone-width">
+                                    <div class="card bg-red">
+                                        <header>Card 31</header>
+                                        <!-- place your widget here -->
+                                        3
+                                    </div>
+                                    <div class="card bg-red">
+                                        <header>Card 32</header>
+                                        <!-- place your widget here -->
+                                        4
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="7" data-sizex="3" data-sizey="3">
+                <header>Button Popup</header>
+                <div class="center">
+                    <div data-type="popup" data-draggable="false" data-height="40%" data-width="90%" class="">
+                        <div data-type="push" class=""></div>
+                        <div class="dialog phone-width bg-white">
+                            <div class="center">
+                                <div data-type="push" class=""></div>
+                                <div data-type="slider" data-device="dummy1" data-max="100" class="horizontal"></div>
+                                <div data-type="input" data-device="dummy1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="10" data-sizex="3" data-sizey="3">
+                <header>Link Popup</header>
+                <!-- place your widget here -->
+                <div class="center">
+                    <div data-type="popup" data-height="400" data-width="200">
+                        <div data-type="link" class="large thin">Show Temperatur</div>
+                        <div class="dialog vbox">
+                            <header>DIALOG</header>
+                            <div class="vbox  grow-2">
+                                <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin"></div>
+                                <div data-type="label" class="cell">Temperatur</div>
+                            </div>
+                            <div class="vbox  grow-2">
+                                <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="bigger thin"></div>
+                                <div data-type="label" class="cell">Luftfeuchte</div>
+                            </div>
+                            <div class="vbox  grow-1">
+                                <div data-type="link" class="round bottom-space  bg-green" data-width="130" data-height="50" data-color="white" data-background-color="green" data-icon="fa-check" onclick="$('.dialog-close').trigger('click');">OK</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="5" data-col="1" data-sizex="3" data-sizey="3">
+                <header>EXAMPLE2</header>
+                <!-- place your widget here -->
+                <div class="center" data-type="popup" data-height="400px" data-width="200px">
+                    <div data-type="link" class="large thin">Show Temperatur</div>
+                    <div class="dialog">
+                        <header>DIALOG</header>
+                        <div class="top-space">
+                            <div class="newline">
+                                <div data-type="label" data-device="THSensorWZ" data-get="temperature" data-limits='[-73,19,23]' data-colors='["#6699FF","#aa6900","#bb6242"]' data-unit="%B0C%0A" class="bigger thin"></div>
+                                <div data-type="label" class="cell">Temperatur</div>
+                            </div>
+                            <div class="newline">
+                                <div data-type="label" data-device="THSensorWZ" data-fix="0" data-part="4" data-limits='[0,40,60]' data-colors='["#bb6242","#aa6900","#bb6242"]' data-unit="%" class="bigger thin"></div>
+                                <div data-type="label" class="cell">Luftfeuchte</div>
+                            </div>
+                            <div data-type="link" class="round top-space-3x left-space-2x" data-width="130" data-height="50" data-color="white" data-background-color="green" data-icon="fa-check" onclick="$('.dialog-close').trigger('click');">OK</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

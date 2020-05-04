@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.6.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * Example for a FTUI dashboard 
+     */
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="gridster_resize" content="0">
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <style>
+        .grande .label-comma {
+            font-size: 40%;
+        }
+        
+        .grande .label-unit,
+        .grande .label-aftercomma {
+            font-size: 40%;
+            left: -4px;
+            top: 8px;
+            position: relative;
+            vertical-align: text-top;
+        }
+        
+        #hum {
+            top: 15px;
+            position: relative;
+            vertical-align: text-top;
+        }
+        
+        a {
+            color: #eeeeee !important;
+        }
+    </style>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizey="1" data-sizex="2">
+                <!-- CLOCK -->
+                <div class="sheet bg-blue">
+                    <div class="row-30">
+                        <div class="cell big bottom-align" data-type="clock" data-format="d.n.Y"></div>
+                    </div>
+                    <div class="row-70">
+                        <div class="cell great bold" data-type="clock" data-format="H:i"></div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="3" data-sizey="1" data-sizex="1">
+                <!-- SCHEMA1 -->
+                <div class="sheet big" data-type="html" data-clicked="dummy1:STATE" data-map-clicked='{".*":"reading"}'>
+                    <div class="row-30">
+                        <div class="cell bottom-align">Reading</div>
+                    </div>
+                    <div class="row-70">
+                        <i class="cell fa fa-2x fa-book"></i>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="4" data-sizey="1" data-sizex="1">
+                <!-- SCHEMA1 -->
+                <div class="sheet big" data-type="html" data-clicked="dummy1:STATE" data-map-clicked='{".*":"tv"}'>
+                    <div class="row-30">
+                        <div class="cell bottom-align">Entertain</div>
+                    </div>
+                    <div class="row-70">
+                        <i class="cell fa fa-2x fa-film"></i>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="5" data-sizey="1" data-sizex="1">
+                <!-- SCHEMA1 -->
+                <div class="sheet big" data-type="html" data-clicked="dummy1:STATE" data-map-clicked='{".*":"relax"}'>
+                    <div class="row-30">
+                        <div class="cell bottom-align">Relax</div>
+                    </div>
+                    <div class="row-70">
+                        <i class="cell fa fa-2x fa-glass"></i>
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="6" data-sizey="1" data-sizex="2">
+                <!-- HOMESTATUS -->
+                <div class="sheet bg-blue">
+                    <div class="row-30">
+                        <div class="cell big bottom-align">Current Mode</div>
+                    </div>
+                    <div class="row-70">
+                        <div class="cell great bold" data-type="html" data-content="HomeStatus:STATE" data-map-content='{"1":"HOME", "2":"SLEEP","3":"AWAY","4":"HOLIDAY"}'></div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="2" data-col="1" data-sizey="2" data-sizex="2">
+                <!-- WEATHER -->
+                <div class="sheet bg-blue">
+                    <div class="row">
+                        <div class="cell big">Today</div>
+                    </div>
+                    <div class="row">
+                        <div class="cell w-80">
+                            <div class="hbox items-space-around">
+                                <div class="bigger" data-type="weather" data-device="AgroWeather" data-get="fc0_weatherDay"></div>
+                                <div class="great bold" data-type="label" data-device="AgroWeather" data-get="temperature" data-unit="°C"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="cell w-80 big">
+                            <div class="hbox items-space-around">
+                                <div class="hbox col-50">
+                                    <div data-type="label" data-device="AgroWeather" data-get="fc0_tempMin" data-post-text="°"></div>
+                                    <div>&nbsp;/&nbsp;</div>
+                                    <div data-type="label" data-device="AgroWeather" data-get="fc0_tempMax" data-post-text="°"></div>
+                                </div>
+                                <div class="hbox col-50">
+                                    <i class="fa fa-fw fa-umbrella"></i>
+                                    <div class="" data-type="label" data-device="AgroWeather" data-get="fc0_chOfRainDay" data-unit="%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="cell w-80">
+                            <div class="cell horizontalLine ">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="cell big">Tomorrow</div>
+                    </div>
+                    <div class="row">
+                        <div class="cell w-80 big">
+                            <div class="hbox w-80 items-space-around">
+                                <div class="tiny right-space" data-type="weather" data-device="AgroWeather" data-get="fc0_weatherDay"></div>
+                                <div class="hbox col-50">
+                                    <div data-type="label" data-device="AgroWeather" data-get="fc1_tempMin" data-unit="°"></div>
+                                    <div>&nbsp;/&nbsp;</div>
+                                    <div data-type="label" data-device="AgroWeather" data-get="fc1_tempMax" data-unit="°"></div>
+                                </div>
+                                <div class="hbox col-50">
+                                    <i class="fa fa-fw fa-umbrella"></i>
+                                    <div data-type="label" data-device="AgroWeather" data-get="fc1_chOfRainDay" data-unit="%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="2" data-col="3" data-sizey="1" data-sizex="1">
+                <!-- LAMP -->
+                <div class="sheet big" data-type="html" data-clicked="dummy1:STATE" data-map-clicked='{"bg-gray":"off", "bg-green":"on"}' data-class="dummy1:STATE" data-map-class='{"on":"bg-green", "off":"bg-gray"}'>
+                    <div class="row">
+                        <div class="cell">Lamp</div>
+                    </div>
+                    <div class="row"><i class="cell fa fa-2x fa-lightbulb-o"></i></div>
+                    <div class="row">
+                        <div class="cell plain" data-type="spinner" data-device="ftuitest" data-background-color="transparent" data-width="inherit" data-height="auto"></div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="2" data-col="4" data-sizey="1" data-sizex="1">
+                <!-- LAMP -->
+                <div class="sheet big" data-type="html" data-clicked="PowerAV_Sw:STATE" data-map-clicked='{"bg-gray":"off", "bg-green":"on"}' data-class="PowerAV_Sw:STATE" data-map-class='{"on":"bg-green", "off":"bg-gray"}'>
+                    <div class="row">
+                        <div class="cell">Schrank</div>
+                    </div>
+                    <div class="row"><i class="cell fa fa-2x fa-lightbulb-o"></i></div>
+                    <div class="row">
+                        <div class="cell plain" data-type="spinner" data-device="ftuitest" data-background-color="transparent" data-width="inherit" data-height="auto"></div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="2" data-col="5" data-sizey="1" data-sizex="1">
+                <!-- LAMP -->
+                <div class="sheet big" data-type="html" data-clicked="PowerAV_Sw:STATE" data-map-clicked='{"bg-gray":"off", "bg-green":"on"}' data-class="PowerAV_Sw:STATE" data-map-class='{"on":"bg-green", "off":"bg-gray"}'>
+                    <div class="row">
+                        <div class="cell">Table</div>
+                    </div>
+                    <div class="row"><i class="cell fa fa-2x fa-lightbulb-o"></i></div>
+                    <div class="row">
+                        <div>&nbsp;&nbsp;</div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="2" data-col="6" data-sizey="1" data-sizex="2">
+                <!-- TEMPS -->
+                <div class="sheet bg-blue">
+                    <div class="row-30">
+                        <div class="cell big">Apartment</div>
+                    </div>
+                    <div class="row-70">
+                        <div class="cell w-80">
+                            <div class="hbox items-space-around">
+                                <div class="grande" data-type="label" data-device="THSensorWZ" data-get="temperature" data-unit="°C"></div>
+                                <div class="">
+                                    <div class="tall" id="hum" data-type="label" data-device="THSensorWZ" data-get="humidity" data-unit="%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="3" data-col="3" data-sizey="1" data-sizex="1">
+                <!-- KITCHEN -->
+                <div class="sheet big" data-type="html" data-clicked="HerdLicht_Sw:STATE" data-map-clicked='{"bg-gray":"off", "bg-green":"on"}' data-class="HerdLicht_Sw:STATE" data-map-class='{"on":"bg-green", "off":"bg-gray"}'>
+                    <div class="row">
+                        <div class="cell">Kitchen</div>
+                    </div>
+                    <div class="row"><i class="cell fa fa-2x fa-lightbulb-o"></i></div>
+                    <div class="row">
+                        <div>&nbsp;&nbsp;</div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="3" data-col="4" data-sizey="1" data-sizex="1">
+                <!-- GALLERY -->
+                <div class="sheet big" data-type="html" data-clicked="GalerieLicht:STATE" data-map-clicked='{"bg-gray":"off", "bg-green":"on"}' data-class="GalerieLicht:STATE" data-map-class='{"on":"bg-green", "off":"bg-gray"}'>
+                    <div class="row">
+                        <div class="cell">Gallery</div>
+                    </div>
+                    <div class="row"><i class="cell fa fa-2x fa-lightbulb-o"></i></div>
+                    <div class="row">
+                        <div>&nbsp;&nbsp;</div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="3" data-col="5" data-sizey="1" data-sizex="1">
+                <!-- GARDEN -->
+                <div class="sheet big" data-type="html" data-clicked="GartenLicht:STATE" data-map-clicked='{"bg-gray":"off", "bg-green":"on"}' data-class="GartenLicht:STATE" data-map-class='{"on":"bg-green", "off":"bg-gray"}'>
+                    <div class="row">
+                        <div class="cell">Garden</div>
+                    </div>
+                    <div class="row"><i class="cell fa fa-2x fa-lightbulb-o"></i></div>
+                    <div class="row">
+                        <div>&nbsp;&nbsp;</div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="3" data-col="6" data-sizey="1" data-sizex="1">
+                <!-- DOOR -->
+                <div class="sheet bg-blue">
+                    <div class="row-30">
+                        <div class="cell big bottom-align">FrontDoor</div>
+                    </div>
+                    <div class="row-70">
+                        <i class="fa great cell" data-type="html" data-class="Eingangstuer:STATE" data-map-class='{"open":"fa-expand", "closed":"fa-compress"}'></i>
+                    </div>
+                </div>
+            </li>
+            <li data-row="3" data-col="7" data-sizey="1" data-sizex="1">
+                <!-- DOOR -->
+                <div class="sheet bg-blue">
+                    <div class="row-30">
+                        <div class="cell big bottom-align">BackDoor</div>
+                    </div>
+                    <div class="row-70">
+                        <i class="fa great cell" data-type="html" data-class="TerrassenTuer:STATE" data-map-class='{"open":"fa-expand", "closed":"fa-compress"}'></i>
+                    </div>
+                </div>
+            </li>
+            <li data-row="4" data-col="1" data-sizey="1" data-sizex="1">
+                <!-- ME -->
+                <div class="sheet big bg-lightgray">
+                    <div class="row-30">
+                        <div class="cell bottom-align">Living Room</div>
+                    </div>
+                    <div class="row-70">
+                        <i class="cell fa fa-2x fa-music"></i>
+                    </div>
+                </div>
+            </li>
+            <li data-row="4" data-col="2" data-sizey="1" data-sizex="1">
+                <!-- LINK -->
+                <a class="sheet big bg-gray" href="index.html">
+                    <div class="row-30">
+                        <div class="cell bottom-align">Bedroom</div>
+                    </div>
+                    <div class="row-70">
+                        <i class="cell fa fa-2x fa-bed"></i>
+                    </div>
+                </a>
+            </li>
+            <li data-row="4" data-col="3" data-sizey="1" data-sizex="1">
+                <!-- LINK -->
+                <a class="sheet big bg-gray" href="cams.html">
+                    <div class="row-30">
+                        <div class="cell bottom-align">Cameras</div>
+                    </div>
+                    <div class="row-70">
+                        <i class="cell fa fa-2x fa-video-camera"></i>
+                    </div>
+                </a>
+            </li>
+            <li data-row="4" data-col="4" data-sizey="1" data-sizex="1">
+                <!-- SOUND -->
+            </li>
+            <li data-row="4" data-col="5" data-sizey="1" data-sizex="1">
+                <!-- SAT -->
+                <div class="sheet big" data-type="html" data-clicked="SatReceiver:power" data-map-clicked='{"bg-gray":"off", "bg-green":"on"}' data-class="SatReceiver:power" data-map-class='{"on":"bg-green", "off":"bg-gray"}'>
+                    <div class="row-30">
+                        <div class="cell">SAT</div>
+                    </div>
+                    <div class="row-40"><i class="cell fa fa-2x fa-power-off"></i></div>
+                    <div class="row-30 normal">
+                        <div class="sheet">
+                            <div class="row">
+                                <i class="cell-25 fa fa-step-backward" data-type="html" data-clicked="SatReceiver:STATE" data-map-clicked='{".*":"channelDown"}'></i>
+                                <div class="cell-50 truncate" data-type="html" data-content="SatReceiver:channel"></div>
+                                <i class="cell-25 fa fa-step-forward inline" data-type="html" data-clicked="SatReceiver:STATE" data-map-clicked='{".*":"channelUp"}'></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="4" data-col="6" data-sizey="1" data-sizex="1">
+                <!-- BadRadio -->
+                <div class="sheet big" data-type="html" data-clicked="BadRadio:STATE" data-map-clicked='{"bg-gray":"off", "bg-green":"on"}' data-class="BadRadio:STATE" data-map-class='{"on":"bg-green", "off":"bg-gray"}'>
+                    <div class="row-30">
+                        <div class="cell">BAD</div>
+                    </div>
+                    <div class="row-40"><i class="cell fa fa-2x fa-power-off"></i></div>
+                    <div class="row-30 normal">
+                        <div class="sheet">
+                            <div class="row">
+                                <i class="cell-25 fa fa-step-backward" data-type="html" data-clicked="WebRadio:STATE" data-map-clicked='{".*":"Prev"}'></i>
+                                <div class="cell-50 truncate" data-type="html" data-content="WebRadio:STATE">radio</div>
+                                <i class="cell-25 fa fa-step-forward inline" data-type="html" data-clicked="WebRadio:STATE" data-map-clicked='{".*":"Next"}'></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-row="4" data-col="7" data-sizey="1" data-sizex="1">
+                <!-- SOUND -->
+                <div class="sheet big" data-type="html" data-clicked="AvReceiver:power" data-map-clicked='{"bg-gray":"off", "bg-green":"on"}' data-class="AvReceiver:power" data-map-class='{"on":"bg-green", "off":"bg-gray"}'>
+                    <div class="row">
+                        <div class="cell">RADIO</div>
+                    </div>
+                    <div class="row"><i class="cell fa fa-2x fa-power-off"></i></div>
+                    <div class="row">
+                        <div class="cell plain" data-type="spinner" data-device="AvReceiver" data-get="volume" data-set="volume" data-background-color="transparent" data-width="inherit" data-height="auto"></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

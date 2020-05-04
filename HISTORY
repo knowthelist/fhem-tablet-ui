@@ -1,0 +1,106 @@
+FHEM Tablet UI change history:
+
+ 2019-12-12
+ - widget_slider: changed style classes
+ - better websocket reconnecting
+
+ 2019-07-14
+ - widget_tts: removed dependency of an external lib
+ 
+ 2019-06-05
+ - fixed widget homestatus bug, that caused a number to appear in the middle
+
+ 2019-06-05
+ - update of widget weather
+
+ 2019-05-28
+ - enhanced dateFromString function
+ 
+ 2019-05-21
+ - widget_calview: code optimization ; new attributes ; swiper fix
+ 
+ 2019-04-16
+ - spinner: fixed a style bug
+ - wdtimer: latest css version from eki 
+ 
+ 2019-04-02
+ - weather: switched to version from somansch
+ - wdtimer: latest version from forum 
+ 
+ 2019-03-17
+ - removed WEB device query
+ 
+ 2019-02-18
+ - slider: fixed a handle-position bug for bigger sizes
+ - link: added support for embedded widgets
+
+ 2019-01-25
+ - Fixed a bug that started initPage before getCSrf was finished
+ 
+ 2019-01-23
+ - Fixed KW bug in clock widget
+ 
+ 2019-01-15
+ - widget_link: added link parameter
+
+ 2018-12-12
+ - fa-napster fixed
+ 
+ 2018-12-03
+ - tts: update voice lib
+ 
+ 2018-12-01
+ - image: refresh only if visible
+ - pagebutton: fixed a bug which prevented forced reload
+ 
+ 2018-11-29
+ - clock: corrected the serverDiff
+ 
+ 2018-11-21
+ - checkbox: fixed the jack position issue
+ 
+ 2018-11-10
+ - famultibutton: added warn-fixed
+ 
+ 2018-10-19
+ - svgplot: fixed the src path
+ 
+ 2018-10-08
+ - clock: added class check 'localonly'
+ 
+ 2018-10-07
+ - clock: get time from FHEM, added data-offset
+ 
+ 2018-10-04
+ - added minTime, maxTime to datetimepicker
+ 
+ 2018-10-02
+ - ftui-circle-o
+ - ftui-square-thin
+ 
+ 2018-09-28  (v2.7.6)
+ - widget_playstream: improved
+ - added addFactor() function
+ 
+ 2018-09-27 (v2.7.5)
+ - added toHoursFromMin() function
+ 
+ 2018-09-21
+ - widget_pagebutton: bugfix for just url buttons
+ - widget_clock: corrects intervals < 100ms to 1000ms
+ - widget_chart: corrections for fa-5 icons and more
+ 
+ 2018-09-19
+ - jQuery 3.3.1
+ - Font Awesome 5.3
+ - JQuery-ui minimal
+ 
+ 2018-09-19
+ - widget_weather: extented Proplanta-WeatherIcons map
+ - widget_homestatus: optimized position for text and icons
+ - widget_pagebutton: optimized return-timer and multistate support
+ - widget_reload: new widget
+ 
+ 2018-09-05
+ - widget_weather: added Proplanta-WeatherIcons map
+ - widget_homestatus: fix for Fontawesome 5 icons

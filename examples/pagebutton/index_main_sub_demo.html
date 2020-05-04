@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+    /* FHEM tablet ui */
+    /*
+    * UI builder framework for FHEM
+    *
+    * Version: 2.6.*
+    * URL: https://github.com/knowthelist/fhem-tablet-ui
+    *
+    * Copyright (c) 2015-2018 Mario Stephan <mstephan@shared-files.de>
+    * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+    *
+    * - create a new folder named 'tablet' in /<fhem-path>/www
+    * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+    * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+    * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+    */
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="widget_base_width" content="74">
+    <meta name="widget_base_height" content="71">
+    <meta name="widget_min_cols" content="13">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="gridster_disable" content="1">
+    <meta name="widget_margin" content="4">
+    <meta name="longpoll" content="1">
+    <meta name="debug" content="0">
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+<body>
+    <div class="gridster">
+        <ul>
+        <li data-row="1" data-col="1" data-sizex="1" data-sizey="9">
+            <div class="cell">
+                <div data-type="pagebutton" data-url="#page_main1.html" data-load="#main1" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#11d597" data-on-color="#222222" data-active-pattern="(.*/||.*index_main_sub_demo.html||.*#page_main1.*.html)" data-icon="" class="top-space">A</div>
+                <div data-type="pagebutton" data-url="#page_main2.html" data-load="#main2" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#6699FF" data-on-color="#222222" data-active-pattern=".*#page_main2.*.html" data-icon="" class=" top-space">B</div>
+                <div data-type="pagebutton" data-url="#page_main3.html" data-load="#main3" data-off-background-color="transparent" data-off-color="#606060" data-on-background-color="#ad3333" data-on-color="#222222" data-active-pattern=".*#page_main3.*.html" data-icon="" class="top-space">C</div>
+            </div>
+        </li>
+        <li data-row="1" data-col="2" data-sizex="11" data-sizey="9">
+            <div class="page" id="main1"></div>
+            <div class="page" id="main2"></div>
+            <div class="page" id="main3"></div>
+         </li>
+        </ul>
+    </div>
+</body>
+</html>

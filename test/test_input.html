@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.5.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2017 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define TABLETUI HTTPSRV ftui ./www/tablet Tablet' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+
+<body>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizex="3" data-sizey="4">
+                <header>EXAMPLE1</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="5" data-col="1" data-sizex="3" data-sizey="3">
+                <header>EXAMPLE2</header>
+                <!-- place your widget here -->
+            </li>
+            <li data-row="1" data-col="4" data-sizex="6" data-sizey="4">
+                <header>SELECT</header>
+                <div class="vbox">
+                    <div data-type="select" data-items='["dummy1","dummy2","dummy3","dummy4"]' id="sendDev" class="notransmit w3x"></div>
+                    <div data-type="select" data-items='["STATE","warn1","warn2","webCmd","room"]' id="sendParam" class="notransmit w3x"></div>
+                    <div data-type="input" data-device="#sendDev" data-get="#sendParam" id="sendValue" data-value="127" class="notransmit w3x centered"></div>
+                    <div data-type="link" class="round centered" data-width="80" data-height="40" data-color="white" data-background-color="green" data-icon="fa-feed" data-device="#sendDev" data-set="#sendParam" data-value="#sendValue">
+                        OK
+                    </div>
+                </div>
+            </li>
+            <li data-row="1" data-col="10" data-sizex="3" data-sizey="4">
+                <header>COPY</header>
+                <div class="vbox">
+                    <div data-type="select" data-items='["dummy1","dummy2","dummy3","dummy4"]' id="sendDev2" class="notransmit w3x"></div>
+                    <div data-type="select" data-items='["STATE","warn1","warn2","webCmd","room"]' id="sendParam2" class="notransmit w3x"></div>
+                    <div data-type="input" data-device="#sendDev2" data-get="#sendParam2" id="sendValue" data-value="127" class="notransmit w3x centered"></div>
+                    <div data-type="link" class="round centered" data-height="40" data-color="white" data-background-color="green" data-icon="fa-feed" data-device="#sendDev" data-set="#sendParam" data-value="#sendValue">
+                    OK
+                    </div>
+                </div>
+            </li>
+            <li data-row="5" data-col="10" data-sizey="3" data-sizex="3">
+                <header>Inputbox</header>
+                <div class="hbox">
+                    <div data-type="input" data-device="Einkaufsliste" data-set="addTask"></div>
+                </div>
+            </li>
+            <li data-row="5" data-col="4" data-sizey="3" data-sizex="6">
+                <header>Inputbox with button</header>
+                <div class="hbox">
+                    <div class="notransmit" data-type="input" id="sendTask"></div>
+                    <div class="round" data-type="link" data-width="80" data-height="40" data-color="white" data-background-color="green" data-icon="fa-feed" data-device="Einkaufsliste" data-set="addTask" data-value="#sendTask">OK</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

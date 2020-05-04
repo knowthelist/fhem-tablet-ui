@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.*
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * !!!! Evaluation version - run only in a staging enviroment !!!!
+     *
+     * - create a new folder named 'tablet_eval' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet_eval
+     * - add 'define TABLETUIEVAL HTTPSRV ftui_eval ./www/tablet_eval Tablet-EVAL' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet_eval/
+     *
+     * Create a Demo Device in FHEM
+     * define ftuitest dummy
+     */
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="widget_base_width" content="74">
+    <meta name="widget_base_height" content="71">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="gridster_disable" content="1">
+    <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="debug" content="2"> <!-- verbose level 1-6 = output to console;0 = not output -->
+    <meta http-equiv="Cache-Control" content="no-store" />
+
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>FTUI Demo</title>
+</head>
+<body>
+<div class="gridster">
+<ul>
+  <li data-row="1" data-col="1" data-sizex="3" data-sizey="4">
+    <header>EXAMPLE1</header>
+
+    <div class="top-space gray">STATE of the device</div>
+    <div data-type="label" data-device="ftuitest" class="big bold thin"></div>
+
+    <div class="top-space gray">STATE of the device colorized</div>
+    <div data-type="label" data-device="ftuitest" data-colors='["red","green"]' data-limits='["on","off"]' class="big bold thin"></div>
+
+    <div class="top-space gray">Timestamp of the reading</div>
+    <div data-type="label" data-device="ftuitest" data-get="state" class="large thin timestamp"></div>
+
+</li>
+<li data-row="5" data-col="1" data-sizex="3" data-sizey="3">
+  <header>EXAMPLE2</header>
+  <!-- place your widget here -->
+</li>
+<li data-row="1" data-col="4" data-sizex="6" data-sizey="4">
+   <header>EXAMPLE3</header>
+   <!-- place your widget here -->
+
+    <div class="row-10 bottomcenter gray">Switch on/off</div>
+    <div data-type="switch" data-device="ftuitest" class="row-20"></div>
+
+    <div class="row-10 bottomcenter gray">Switch on/off blue square</div>
+    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square" class="row-20 blue"></div>
+
+    <div class="row-10 bottomcenter gray">Botton Group</div>
+    <div class="row-20">
+    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="0|off" data-get-off="!on" data-set-on="0" class="inline small green"><span class="small gray top">0</span></div>
+    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="[123][0-9]" data-get-off="!on" data-set-on="25" class="inline small left-narrow-10 green"><span class="small gray top">25</span></div>
+    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="[456][0-9]" data-get-off="!on" data-set-on="50" class="inline small left-narrow-10 green"><span class="small gray top">50</span></div>
+    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="[789][0-9]" data-get-off="!on" data-set-on="75" class="inline small left-narrow-10 green"><span class="small gray top">75</span></div>
+    <div data-type="switch" data-device="ftuitest" data-background-icon="fa-square-o" data-icon="" data-get-on="100|on" data-get-off="!on" data-set-on="100" class="inline small left-narrow-10 green"><span class="small gray top">100</span></div>
+</div>
+</li>
+<li data-row="1" data-col="10" data-sizex="3" data-sizey="4">
+    <header>EXAMPLE4</header>
+    <!-- place your widget here -->
+    <div data-type="range" data-device="ftuitest" data-min="0" data-max="100" data-limit-low="25" data-limit-high="75" class="top-space"></div>
+</li>
+<li data-row="5" data-col="10" data-sizex="3" data-sizey="3">
+  <header>EXAMPLE5</header>
+  <!-- place your widget here -->
+</li>
+<li data-row="5" data-col="4" data-sizex="6" data-sizey="3">
+  <header>EXAMPLE6</header>
+  <!-- place your widget here -->
+</li>
+</ul>
+</div>
+</body>
+</html>

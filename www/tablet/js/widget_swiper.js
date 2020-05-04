@@ -1,37 +1,50 @@
 /* FTUI Plugin
-* Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
-* Under MIT License (http://www.opensource.org/licenses/mit-license.php)
-*/
+ * Copyright (c) 2016 Mario Stephan <mstephan@shared-files.de>
+ * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
 
-if(typeof widget_widget == 'undefined') {
-    loadplugin('widget_widget');
-}
-if (!$.fn.Swiper){
-    dynamicload('lib/swiper.jquery.min.js', null, null, false);
-    $('head').append('<link rel="stylesheet" href="'+ dir + '/../lib/swiper.min.css" type="text/css" />');
+/* global ftui:true, Modul_widget:true, Swiper:true */
+
+"use strict";
+
+function depends_swiper() {
+
+    var deps = [];
+    if (!$('link[href$="lib/swiper.min.css"]').length) {
+        deps.push(ftui.config.basedir + 'lib/swiper.min.css');
+    }
+
+    if (!$.fn.Swiper) {
+        deps.push(ftui.config.basedir + "lib/swiper.jquery.min.js");
+    }
+
+    return deps;
 }
 
-var widget_swiper= $.extend({}, widget_widget, {
-    widgetname : 'swiper',
-    activateSlide : function(elem,states,state) {
-        var idx=indexOfGeneric(states,state);
-        if (idx>-1){
+var Modul_swiper = function () {
+
+    function activateSlide(elem, states, state) {
+        var idx = ftui.indexOfGeneric(states, state);
+        if (idx > -1) {
             var swiper = elem[0].swiper;
-            if (swiper)
+            if (swiper) {
                 swiper.slideTo(idx);
+            }
         }
-    },
-    init_attr : function(elem) {
-        elem.initData('get'                     ,'STATE');
-        elem.initData('width'                   ,'100%');
-        elem.initData('height'                  ,'100%');
-        elem.initData('autoplay'                ,null);
-        elem.initData('tabclass'                ,'swipertab');
+    }
 
-        elem.addReading('get');
-    },
-    init_ui : function(elem) {
-        var base = this;
+    function init_attr(elem) {
+
+        elem.initData('get', 'STATE');
+        elem.initData('width', '100%');
+        elem.initData('height', '100%');
+        elem.initData('autoplay', null);
+        elem.initData('tabclass', 'swipertab');
+
+        me.addReading(elem, 'get');
+    }
+
+    function init_ui(elem) {
         var elemPagination = null;
         var elemPrev = null;
         var elemNext = null;
@@ -41,20 +54,20 @@ var widget_swiper= $.extend({}, widget_widget, {
         elem.find('ul').addClass('swiper-wrapper');
         elem.find('ul>li').addClass('swiper-slide');
         elem.css({
-                  width:elem.data('width'),
-                  height:elem.data('height'),
-                 });
+            width: elem.data('width'),
+            height: elem.data('height'),
+        });
 
-        if (!elem.hasClass('nopagination')){
-            elemPagination=jQuery('<div/>')
+        if (!elem.hasClass('nopagination')) {
+            elemPagination = $('<div/>')
                 .addClass('swiper-pagination')
                 .appendTo(elem);
         }
-        if (elem.hasClass('navbuttons')){
-            elemPrev=jQuery('<div/>')
+        if (elem.hasClass('navbuttons')) {
+            elemPrev = $('<div/>')
                 .addClass('swiper-button-prev')
                 .appendTo(elem);
-            elemNext=jQuery('<div/>')
+            elemNext = $('<div/>')
                 .addClass('swiper-button-next')
                 .appendTo(elem);
         }
@@ -64,57 +77,71 @@ var widget_swiper= $.extend({}, widget_widget, {
             paginationClickable: true,
             nextButton: elemNext,
             prevButton: elemPrev,
-            moveStartThreshold:70,
-            autoplay:elem.data('autoplay'),
-            autoplayDisableOnInteraction:false,
+            autoHeight: true,
+            observer: true,
+            observeParents: true,
+            moveStartThreshold: 70,
+            autoplay: elem.data('autoplay'),
+            autoplayDisableOnInteraction: false,
             hashnav: elem.hasClass('hashnav'),
             noSwipingClass: 'noswipe',
         });
 
+
         // navigation via hash value
-        if (elem.hasClass('hashnav')){
-            $(window).bind('hashchange', function() {
-                var hash = window.location.hash.replace('#','');
-                var idx = elem.find('li').index(elem.find('[data-hash="'+hash+'"]'));
+        if (elem.hasClass('hashnav')) {
+            $(window).bind('hashchange', function () {
+                var hash = window.location.hash.replace('#', '');
+                var idx = elem.find('li').index(elem.find('[data-hash="' + hash + '"]'));
                 if (idx > -1)
                     swiper.slideTo(idx);
-             });
+            });
         }
         // navigation via tab elements
         var tabclass = elem.data('tabclass');
-        if (tabclass){
-            $('.'+tabclass).bind('setOn', function() {
-                var idx = $( ".swipertab" ).index( this );
+        if (tabclass) {
+            $('.' + tabclass).bind('setOn', function () {
+                var idx = $(".swipertab").index(this);
                 if (idx > -1)
                     swiper.slideTo(idx);
-             });
+            });
         }
 
-        elem.find('ul>li').click(function(event) {
-            event.preventDefault();
-            //more functionality here
-        });
+        var startpage = elem.data('startpage');
+        if ($.isNumeric(startpage)) {
+            swiper.slideTo(startpage - 1);
+        }
 
         // Refresh swiper after it became visible
-        elem.closest('[data-type="popup"]').on("fadein", function(event) {
-            swiper.update();
-        });
+        // now via observer:true parameter
 
         return elem;
-    },
-    update: function (dev,par) {
-        var base = this;
+    }
+
+    function update(dev, par) {
         // update from normal state reading
-        this.elements.filterDeviceReading('get',dev,par)
-        .each(function(index) {
-            var elem = $(this);
-            var state = elem.getReading('get').val;
-            if (state) {
-                var states=elem.data('states') || elem.data('get-on');
-                if ( $.isArray(states)) {
-                    base.activateSlide(elem,states,state);
+        me.elements.filterDeviceReading('get', dev, par)
+            .each(function (index) {
+                var elem = $(this);
+                var state = elem.getReading('get').val;
+                if (state) {
+                    var states = elem.data('states') || elem.data('get-on');
+                    if ($.isArray(states)) {
+                        activateSlide(elem, states, state);
+                    }
                 }
-            }
-        })
-    },
-});
+            });
+    }
+
+
+    // public
+    // inherit all public members from base class
+    var me = $.extend(new Modul_widget(), {
+        //override or own public members
+        widgetname: 'swiper',
+        init_attr: init_attr,
+        init_ui: init_ui,
+        update: update,
+    });
+    return me;
+};

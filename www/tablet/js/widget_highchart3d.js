@@ -87,42 +87,24 @@ var widget_highchart3d = {
         var logdevice = $(this).attr("data-logdevice");
         var logfile = $(this).attr("data-logfile") || "-";
 
-        var cmd =[
-            'get',
-            logdevice,
-            logfile,
-            '-',
-            mindate,
-            maxdate,
-            column_spec
-        ];
+        var cmd =['get', logdevice, logfile, '-', mindate, maxdate, column_spec].join(' ');
 
-        $.ajax({
-            url: $("meta[name='fhemweb_url']").attr("content") || "../fhem/",
-            async: true,
-            cache: false,
-            context: {
-                elem: $(this)
-            },
-            data: {
-                cmd: cmd.join(' '),
-                XHR: "1"
-            },
-        }).done(function(data ) {
+        ftui.sendFhemCommand(cmd)
+            .done(function(data ) {
 
             var seriesCount=0;
             var seriesData=[];
             var lineData=[];
             var lines = data.split('\n');
             var point=[];
-            var firstTime = dateFromString(mindate);
+            var firstTime = ftui.dateFromString(mindate);
             var dataCount = 0;
 
             $.each( lines, function( index, value ) {
                 if ( value ) {
-                    var val = getPart(value.replace('\r\n',''),2);
+                    var val = ftui.getPart(value.replace('\r\n',''),2);
 
-                    var eventTime = dateFromString(value).getTime();
+                    var eventTime = ftui.dateFromString(value).getTime();
 
                     if ( val && eventTime && $.isNumeric(val) ) {
 
@@ -167,7 +149,7 @@ var widget_highchart3d = {
                 }
             });
 
-            var xrange  = parseInt(diffMinutes(firstTime,dateFromString(maxdate)));
+            var xrange  = parseInt(ftui.diffMinutes(firstTime,ftui.dateFromString(maxdate)));
 
             this.elem.highcharts({
                 chart: {
