@@ -9,7 +9,7 @@ DIR www/tablet/fonts
 UPD 2019-04-02_21:15:45 705403 www/tablet/icons_table.html
 UPD 2019-04-02_21:15:45 3742 www/tablet/ftui_snippet_tester.html
 UPD 2019-04-02_21:15:45 1079 www/tablet/css/ftui_medialist.css
-UPD 2019-04-02_21:15:45 6600 www/tablet/css/ftui_chart.css
+UPD 2020-05-04_19:53:36 6600 www/tablet/css/ftui_chart.css
 UPD 2019-04-02_21:15:45 647 www/tablet/css/ftui_controller.css
 UPD 2019-04-02_21:15:45 3344 www/tablet/css/ftui_departure.css
 UPD 2020-01-02_20:56:14 1152 www/tablet/css/ftui_slider.css
@@ -22,7 +22,7 @@ UPD 2019-04-02_21:15:45 2826 www/tablet/css/fhem-blue-ui.css
 UPD 2019-04-02_21:15:45 2658 www/tablet/css/fhem-green-ui.css
 UPD 2019-04-02_21:15:45 442 www/tablet/css/ftui_range.css
 UPD 2019-04-02_21:15:45 6652 www/tablet/css/fhem-darkblue-ui.css
-UPD 2019-12-27_21:19:10 66207 www/tablet/css/fhem-tablet-ui.css
+UPD 2020-05-04_19:53:45 66304 www/tablet/css/fhem-tablet-ui.css
 UPD 2019-04-02_21:15:45 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2019-04-02_21:15:45 6936 www/tablet/css/ftui_weekprofile.css
 UPD 2019-04-02_21:15:45 1132 www/tablet/css/ftui_checklist.css
@@ -47,7 +47,7 @@ UPD 2019-04-02_21:15:45 3312 www/tablet/js/widget_colorwheel.js
 UPD 2019-04-02_21:15:45 3096 www/tablet/js/widget_svgplot.js
 UPD 2019-04-02_21:15:45 4777 www/tablet/js/widget_klimatrend.js
 UPD 2019-04-02_21:15:45 11493 www/tablet/js/widget_thermostat.js
-UPD 2019-04-02_21:15:45 272177 www/tablet/js/widget_chart.js
+UPD 2020-05-04_19:53:36 272177 www/tablet/js/widget_chart.js
 UPD 2019-04-02_21:15:45 5722 www/tablet/js/widget_select.js
 UPD 2019-04-02_21:15:45 9665 www/tablet/js/widget_popup.js
 UPD 2019-07-14_23:40:21 2488 www/tablet/js/widget_tts.js
@@ -57,7 +57,7 @@ UPD 2019-04-02_21:15:45 7740 www/tablet/js/widget_controller.js
 UPD 2019-04-02_21:15:45 8209 www/tablet/js/widget_highchart3d.js
 UPD 2019-04-02_21:15:45 21234 www/tablet/js/highcharts-meteogram.js
 UPD 2019-04-02_21:15:45 12476 www/tablet/js/widget_spinner.js
-UPD 2019-04-02_21:15:45 5018 www/tablet/js/widget_filelog.js
+UPD 2020-05-04_19:53:45 7204 www/tablet/js/widget_filelog.js
 UPD 2019-04-02_21:15:45 3143 www/tablet/js/widget_circlemenu.js
 UPD 2019-04-02_21:15:45 6051 www/tablet/js/widget_range.js
 UPD 2019-04-02_21:15:45 6979 www/tablet/js/widget_clock.js
@@ -74,9 +74,9 @@ UPD 2019-04-02_21:15:45 8691 www/tablet/js/widget_fullcalview.js
 UPD 2020-01-23_20:07:15 9128 www/tablet/js/widget_pagebutton.js
 UPD 2019-04-02_21:15:45 8151 www/tablet/js/widget_wind_direction.js
 UPD 2019-04-02_21:15:45 2975 www/tablet/js/widget_meteogram.js
-UPD 2019-04-02_21:15:45 2844 www/tablet/js/widget_datetimepicker.js
+UPD 2020-05-04_19:53:45 2980 www/tablet/js/widget_datetimepicker.js
 UPD 2019-04-02_21:15:45 988 www/tablet/js/widget_wakeup.js
-UPD 2019-04-02_21:15:45 1311 www/tablet/js/widget_reload.js
+UPD 2020-05-04_19:40:26 1474 www/tablet/js/widget_reload.js
 UPD 2019-04-02_21:15:45 2978 www/tablet/js/widget_joinedlabel.js
 UPD 2019-04-02_21:15:45 2323 www/tablet/js/widget_readingsgroup.js
 UPD 2019-05-21_22:24:16 19808 www/tablet/js/widget_calview.js
@@ -100,7 +100,7 @@ UPD 2019-04-02_21:15:45 1557 www/tablet/js/widget_switch.js
 UPD 2019-04-02_21:15:45 3298 www/tablet/js/widget_eventmonitor.js
 UPD 2019-04-02_21:15:45 9506 www/tablet/js/widget_uwz.js
 UPD 2019-04-02_21:15:45 5013 www/tablet/js/widget_iframe.js
-UPD 2019-04-02_21:15:45 1931 www/tablet/js/widget_symbol.js
+UPD 2020-05-04_19:53:45 2396 www/tablet/js/widget_symbol.js
 UPD 2019-04-02_21:15:45 6777 www/tablet/js/widget_departure.js
 UPD 2019-04-02_21:31:24 105868 www/tablet/js/widget_wdtimer.js
 UPD 2019-04-02_21:15:45 3841 www/tablet/js/widget_notify.js
