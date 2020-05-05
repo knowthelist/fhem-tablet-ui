@@ -1,4 +1,3 @@
 FHEM Tablet UI last changes:
- 2019-12-12
- - widget_slider: changed style classes
- - better websocket reconnecting
+ 2020-05-05
+ - Update widget_chart.js and ftui_chart.css
