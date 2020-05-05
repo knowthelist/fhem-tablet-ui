@@ -13,6 +13,12 @@
 	fill: #888;
 	font-size: 10px;
 }
+/* Definition of the axes generally*/
+.text.axes.major {
+	font-size: 10px;
+	font-weight: bold;
+	fill: #aaa;
+}
 /* Definition of specialities for x-axis */
 .xaxis {
 	stroke-width: 1px;
