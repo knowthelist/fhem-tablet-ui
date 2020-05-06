@@ -100,7 +100,7 @@ UPD 2019-04-02_21:15:45 1557 www/tablet/js/widget_switch.js
 UPD 2019-04-02_21:15:45 3298 www/tablet/js/widget_eventmonitor.js
 UPD 2019-04-02_21:15:45 9506 www/tablet/js/widget_uwz.js
 UPD 2019-04-02_21:15:45 5013 www/tablet/js/widget_iframe.js
-UPD 2020-05-04_19:53:45 2396 www/tablet/js/widget_symbol.js
+UPD 2020-05-06_04:26:49 2334 www/tablet/js/widget_symbol.js
 UPD 2019-04-02_21:15:45 6777 www/tablet/js/widget_departure.js
 UPD 2019-04-02_21:31:24 105868 www/tablet/js/widget_wdtimer.js
 UPD 2019-04-02_21:15:45 3841 www/tablet/js/widget_notify.js

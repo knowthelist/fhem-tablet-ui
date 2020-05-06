@@ -43,8 +43,6 @@ var Modul_symbol = function () {
             }
             me.init_attr(elem);
             me.init_ui(elem);
-            me.init_attr(elem);
-            me.init_ui(elem);
         });
     }
 
