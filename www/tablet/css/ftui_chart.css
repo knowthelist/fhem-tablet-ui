@@ -48,6 +48,11 @@
 	fill: #bababa;
 	font-size: 9px;
 }
+
+g.crosshair {
+	filter: url(#drop-shadow-strong);
+}
+
 /* Definition of size etc. for the buttons */
 .buttons {
 	font-size: 24px;
@@ -95,6 +100,33 @@
  
 .fullsize {
     height: calc(100% - 2em) !important;
+}
+
+.graph_shadow {
+	filter: url(#drop-shadow);
+}
+
+.graph_neon {
+	filter: url(#neon);
+}
+
+.graph_glow {
+	filter: url(#glow);
+}
+
+.nobackground .chart-background
+{
+  fill-opacity: 0;
+}
+
+.noaxes .xaxis
+{
+  stroke-width: 0px;
+}
+
+.noaxes .yaxis
+{
+  stroke-width: 0px;
 }
 
 /* Definition for styles to be used for graphs (as alternative to the standard FHEM plot styles */
