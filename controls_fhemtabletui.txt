@@ -9,7 +9,7 @@ DIR www/tablet/fonts
 UPD 2019-04-02_21:15:45 705403 www/tablet/icons_table.html
 UPD 2019-04-02_21:15:45 3742 www/tablet/ftui_snippet_tester.html
 UPD 2019-04-02_21:15:45 1079 www/tablet/css/ftui_medialist.css
-UPD 2020-05-05_21:11:41 6716 www/tablet/css/ftui_chart.css
+UPD 2021-04-18_19:16:09 7062 www/tablet/css/ftui_chart.css
 UPD 2019-04-02_21:15:45 647 www/tablet/css/ftui_controller.css
 UPD 2019-04-02_21:15:45 3344 www/tablet/css/ftui_departure.css
 UPD 2020-01-02_20:56:14 1152 www/tablet/css/ftui_slider.css
@@ -47,7 +47,7 @@ UPD 2019-04-02_21:15:45 3312 www/tablet/js/widget_colorwheel.js
 UPD 2019-04-02_21:15:45 3096 www/tablet/js/widget_svgplot.js
 UPD 2019-04-02_21:15:45 4777 www/tablet/js/widget_klimatrend.js
 UPD 2019-04-02_21:15:45 11493 www/tablet/js/widget_thermostat.js
-UPD 2020-05-05_21:11:41 311186 www/tablet/js/widget_chart.js
+UPD 2021-04-18_19:16:09 334018 www/tablet/js/widget_chart.js
 UPD 2019-04-02_21:15:45 5722 www/tablet/js/widget_select.js
 UPD 2019-04-02_21:15:45 9665 www/tablet/js/widget_popup.js
 UPD 2019-07-14_23:40:21 2488 www/tablet/js/widget_tts.js
