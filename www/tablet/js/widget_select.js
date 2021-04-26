@@ -97,6 +97,7 @@ var Modul_select = function () {
                     items = items.split(delimiter);
                     elem.data('alias', items);
                     fillList(elem);
+                    setCurrentItem(elem);
                 }
             });
 
