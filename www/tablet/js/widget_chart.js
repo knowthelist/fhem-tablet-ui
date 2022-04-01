@@ -2,7 +2,7 @@
  * Copyright (c) 2015-2017 Kurt Eckert
  * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-/* Version 2.11.0
+/* Version 2.11.1
 /* Compatible FTUI Version >= 2.7.2
 
 /* global ftui:true, Modul_widget:true, Powerange:true */
@@ -717,12 +717,22 @@ var widget_chart = {
 		}
 		return {cx:cx, cy:cy};
 	},
-	getYTicksBase: function(min,max) { // helper function for automatic calculation of yticks
+	getYTicksBase: function(min,max,max_yt_in) { // helper function for automatic calculation of yticks
 		var ydiff=(max!=min)?max-min:(max>0)?max:1;
+		var max_yt = max_yt_in?max_yt_in:Infinity;
+
+		var fact = 1;
+		ydiff *= fact;
 		var p=parseInt(Math.log10(ydiff));
 		var yr = parseInt((ydiff)/Math.pow(10,p)+0.5);
 		var yrt=[0.2, 0.4, 0.6, 1, 1, 1.5, 2, 2, 2, 2];
 		var yt = yrt[Math.max(0,yr-1)]*Math.pow(10,p);
+		while(ydiff/yt > max_yt) {
+			fact += 0.1;
+			p=parseInt(Math.log10(ydiff*fact));
+			yr = parseInt((ydiff*fact)/Math.pow(10,p)+0.5);
+			yt = yrt[Math.max(0,yr-1)]*Math.pow(10,p);
+		}
 		return yt;
 	},
 	processLogproxyCorrection: function(bds,ptsin,style,scalex,scaley,elem) { // helper function for logproxy mode to take care of space for text
@@ -1251,7 +1261,7 @@ var widget_chart = {
 	},
 	getDynamicStyle: function(style) {
 		var ret = '';
-		if ($.isArray(style) && style[0].search(/graphbase/)>=0) {
+		if ($.isArray(style) && style[0].search && style[0].search(/graphbase/)>=0) {
 			$.each(style, function(index, value) {
 				if (value.search(/style/)>=0) ret = value.search(':')>=0?value.split(':')[1]:'';
 			});
@@ -1274,11 +1284,11 @@ var widget_chart = {
 		if (i>i_last) { // actual index is greater than previous one, append array
 			if (actGr[slot] && actGr[slot].length > 0) mergepoints = [actGr[slot][actGr[slot].length-1],newGr[newGr.length-1]];
 			actGr[slot] = (i_last == -1)?newGr.clone():actGr[slot].concat(mergepoints).concat(newGr.clone(true));
-			actGrStr[slot] = (!actGrStr[slot])?newGrStr.clone():actGrStr[slot].concat(newGrStr.clone(true));
+			actGrStr[slot] = (i_last == -1)?newGrStr.clone():actGrStr[slot].concat(newGrStr.clone(true));
 		} else { // actual index is smaller than previous one, prepend array
 			if (actGr[slot] && actGr[slot].length > 0) mergepoints = [newGr[newGr.length-1],actGr[slot][actGr[slot].length-1]];
 			actGr[slot] = (i_last == -1)?newGr.clone():newGr.concat(mergepoints).concat(actGr[slot].clone(true));
-			actGrStr[slot] = (!actGrStr[slot])?newGrStr.clone():newGrStr.concat(actGrStr[slot].clone(true));
+			actGrStr[slot] = (i_last == -1)?newGrStr.clone():newGrStr.concat(actGrStr[slot].clone(true));
 		}
 		
 		return i;
@@ -2945,7 +2955,7 @@ var widget_chart = {
 				'x':data.legend_horiz?x+sumwidth+'px':((x+maxwidth))+'px',
 				'y':data.legend_horiz?((y+(fszC+5))+2.5)+'px':((y+(fszC+5)*(existingLegends.length-i))+2.5)+'px',
 				'igraph':$(existingLegends[i]).attr('igraph'),
-				'opacity':(!data.graphsshown[existingLegends.length-i-1])?0.5:1
+				'opacity':(!data.graphsshown[i])?0.5:1
 			});
 
 			$(existingLegends[i]).off('click');
@@ -3597,7 +3607,7 @@ var widget_chart = {
 			}
 		};
 		
-		data.getAxisSetting = function(par,uaxis) {
+		data.getAxisSetting = function(par,uaxis,keeparray) {
 			var extension = this.isPrimary(uaxis)?'':'_sec';
 			if ($.isArray(uaxis)) {
 				var index = uaxis.length>1?uaxis[1]:0;
@@ -3605,7 +3615,7 @@ var widget_chart = {
 			} else {
 				value = this[par+extension];
 			}
-			return $.isArray(value)?value[0]:value;
+			return ($.isArray(value) && !keeparray)?value[0]:value;
 		};
 		
 		data.getYAxisDisplayPrio = function(uxs,aindex) {
@@ -3659,7 +3669,10 @@ var widget_chart = {
 				if (!data.yLimits[AI]) data.yLimits[AI] = {primary:{},secondary:{}};
 				var minarray = data.getAxisSetting('minvalue',uaxis);
 				var maxarray = data.getAxisSetting('maxvalue',uaxis);
+				var maxyticks = data.getAxisSetting('maxyticks',uaxis);
+				
 				if (data.isPrimary(uaxis)) {
+					data.yLimits[AI].primary.maxyticks = maxyticks;
 					data.yLimits[AI].primary.min = parseFloat( $.isArray(minarray) ? minarray[minarray.length-1] : (minarray!="auto") ? minarray : Number.POSITIVE_INFINITY );
 					data.yLimits[AI].primary.max = parseFloat( $.isArray(maxarray) ? maxarray[maxarray.length-1] : (maxarray!="auto") ? maxarray : Number.NEGATIVE_INFINITY );
 					if (data.isLogAxis(uaxis)) {
@@ -3667,6 +3680,7 @@ var widget_chart = {
 						data.yLimits[AI].primary.max = Math.log10_t(data.yLimits[AI].primary.max);
 					}
 				} else {
+					data.yLimits[AI].secondary.maxyticks = maxyticks;
 					data.yLimits[AI].secondary.min = parseFloat( $.isArray(minarray) ? minarray[minarray.length-1] : (minarray!="auto") ? minarray : Number.POSITIVE_INFINITY );
 					data.yLimits[AI].secondary.max = parseFloat( $.isArray(maxarray) ? maxarray[maxarray.length-1] : (maxarray!="auto") ? maxarray : Number.NEGATIVE_INFINITY );
 					if (data.isLogAxis(uaxis)) {
@@ -3761,8 +3775,8 @@ var widget_chart = {
 		for (var k=data.nGraphs-1; k>=0; k--) { // main loop for generation of page content (chart with graphs)
 			ptype = widget_chart.getArrayValue(ptype_array,k,'lines');
 			style = widget_chart.getArrayValue(style_array_prep,k,'');
-			if ((ptype.search('icons:')>=0) || ($.isArray(style) && style[0].search(/graphbase/)>=0)) { // copy data values to graphs which use ptype "icons:.."
-				if ($.isArray(style) && style[0].search(/graphbase/)>=0) { // there is a dynamic style definition
+			if ((ptype.search('icons:')>=0) || ($.isArray(style) && [0].search && style[0].search(/graphbase/)>=0)) { // copy data values to graphs which use ptype "icons:.."
+				if ($.isArray(style) && style[0].search && style[0].search(/graphbase/)>=0) { // there is a dynamic style definition
 					$.each(["rotation","size"], function(index, value) {
 						iv = -1;
 						$.each(style, function(i,v){
@@ -3853,7 +3867,7 @@ var widget_chart = {
 						points[i1][1] += pointsarray[iv][pointsarray[iv].length-1][1]; // add value of underlying graph to acutal value
 					}
 				}
-				if ((style.search(/fill/)>=0)) {
+				if ((style[0].search && style.search(/fill/)>=0)) {
 					var lastPointUpper = points[points.length-2]?points[points.length-1].clone():[0,0];
 					
 					points[points.length] = points[0]?points[0].clone():[0,0];
@@ -4015,24 +4029,24 @@ var widget_chart = {
 			if (aiDone[AI]) continue;
 			if (data.isPrimary(uaxis) && !aiDone.primary[AI]) {
 				aiDone.primary[AI] = true;
-				data.yLimits[AI].primary.yticks = data.getAxisSetting('yticks',uaxis);
+				data.yLimits[AI].primary.yticks = data.getAxisSetting('yticks',uaxis,true);
 				data.yLimits[AI].primary.yticks_format = data.getAxisSetting('yticks_format',uaxis);
 				data.yLimits[AI].primary.yticks_prio = data.getYAxisDisplayPrio(data.flatUaxis(uaxis),AI);
 				var yticks = parseFloat( (data.yLimits[AI].primary.yticks!="auto") ? data.yLimits[AI].primary.yticks : -1);
 				var autoscaley = data.yLimits[AI].primary.yticks?data.yLimits[AI].primary.yticks=="auto":true;
-				if (autoscaley) fix = (widget_chart.getYTicksBase(data.yLimits[AI].primary.min,data.yLimits[AI].primary.max) < 10) ? 1 : 0;
+				if (autoscaley) fix = (widget_chart.getYTicksBase(data.yLimits[AI].primary.min,data.yLimits[AI].primary.max,data.yLimits[AI].primary.maxyticks) < 10) ? 1 : 0;
 				var fix = $.isArray(data.yLimits[AI].primary.yticks)?(data.yLimits[AI].primary.yticks[1]?(($.isArray(data.yLimits[AI].primary.yticks[1])?data.yLimits[AI].primary.yticks[1][0]:data.yLimits[AI].primary.yticks[1]) - ymin_t):ymin_t):widget_chart.precision( data.yLimits[AI].primary.yticks );
 				var lytText = data.yLimits[AI].primary.yticks_format?data.yLimits[AI].primary.yticks_format.stripFormat().length:(data.yLimits[AI].primary.max==-Infinity)?3:data.yLimits[AI].primary.max.toFixed(fix).length;
 				data.textWidth_prim[AI] = (foundPrimary&&!noticks)?widget_chart.getTextSizePixels(svg_old,str.repeat(lytText)+data.getAxisSetting('yunit',uaxis).stripFormat(),'text axes').width:0;
 				data.textWidth_prim[AI] += ((noticks)?0:data.textHeight+2); // additional offset for axes descrption (text 90 deg)
 			} else if (!data.isPrimary(uaxis) && !aiDone.secondary[AI]){
 				aiDone.secondary[AI] = true;
-				data.yLimits[AI].secondary.yticks = data.getAxisSetting('yticks',uaxis);
+				data.yLimits[AI].secondary.yticks = data.getAxisSetting('yticks',uaxis,true);
 				data.yLimits[AI].secondary.yticks_format = data.getAxisSetting('yticks_format',uaxis);
 				data.yLimits[AI].secondary.yticks_prio = data.getYAxisDisplayPrio(data.flatUaxis(uaxis),AI);
 				var yticks = parseFloat( (data.yLimits[AI].secondary.yticks!="auto") ? data.yLimits[AI].secondary.yticks : -1);
 				var autoscaley = data.yLimits[AI].secondary.yticks?data.yLimits[AI].secondary.yticks=="auto":true;
-				if (autoscaley) fix = (widget_chart.getYTicksBase(data.yLimits[AI].secondary.min,data.yLimits[AI].secondary.max) < 10) ? 1 : 0;
+				if (autoscaley) fix = (widget_chart.getYTicksBase(data.yLimits[AI].secondary.min,data.yLimits[AI].secondary.max,data.yLimits[AI].secondary.maxyticks) < 10) ? 1 : 0;
 				var fix = $.isArray(data.yLimits[AI].secondary.yticks)?(data.yLimits[AI].secondary.yticks[1]?(($.isArray(data.yLimits[AI].secondary.yticks[1])?data.yLimits[AI].secondary.yticks[1][0]:data.yLimits[AI].secondary.yticks[1]) - ymin_t):ymin_t):widget_chart.precision( data.yLimits[AI].secondary.yticks );
 				var lytText = data.yLimits[AI].secondary.yticks_format?data.yLimits[AI].secondary.yticks_format.stripFormat().length:(data.yLimits[AI].secondary.max==-Infinity)?3:data.yLimits[AI].secondary.max.toFixed(fix).length;
 				data.textWidth_sec[AI] = (foundSecondary&&!noticks)?widget_chart.getTextSizePixels(svg_old,str.repeat(lytText)+data.getAxisSetting('yunit',uaxis).stripFormat(),'text axes').width:0;
@@ -4496,7 +4510,7 @@ var widget_chart = {
 			if (data.isPrimary(uaxis)) {
 				ytary = data.yLimits[AI].primary.yticks;
 				if (data.yLimits[AI].primary.yticks?data.yLimits[AI].primary.yticks=="auto":true) { // check if autoscaling is set
-					yt = widget_chart.getYTicksBase(data.isLogAxis(uaxis)?Math.pow_t(10,data.yLimits[AI].primary.min):data.yLimits[AI].primary.min,data.isLogAxis(uaxis)?Math.pow_t(10,data.yLimits[AI].primary.max):data.yLimits[AI].primary.max);
+					yt = widget_chart.getYTicksBase(data.isLogAxis(uaxis)?Math.pow_t(10,data.yLimits[AI].primary.min):data.yLimits[AI].primary.min,data.isLogAxis(uaxis)?Math.pow_t(10,data.yLimits[AI].primary.max):data.yLimits[AI].primary.max,data.yLimits[AI].primary.maxyticks);
 					ymin_t = (parseInt(data.isLogAxis(uaxis)?Math.pow_t(10,data.yLimits[AI].primary.min)/yt:data.yLimits[AI].primary.min/yt))*yt;
 					if (ymin_t < (data.isLogAxis(uaxis)?Math.pow_t(10,data.yLimits[AI].primary.min):data.yLimits[AI].primary.min)) ymin_t+=yt;
 					yticks = yt;
@@ -4541,7 +4555,7 @@ var widget_chart = {
 			} else {
 				ytary = data.yLimits[AI].secondary.yticks;
 				if (data.yLimits[AI].secondary.yticks?data.yLimits[AI].secondary.yticks=="auto":true) { // check if autoscaling is set
-					yt = widget_chart.getYTicksBase(data.isLogAxis(uaxis)?Math.pow_t(10,data.yLimits[AI].secondary.min):data.yLimits[AI].secondary.min,data.isLogAxis(uaxis)?Math.pow_t(10,data.yLimits[AI].secondary.max):data.yLimits[AI].secondary.max);
+					yt = widget_chart.getYTicksBase(data.isLogAxis(uaxis)?Math.pow_t(10,data.yLimits[AI].secondary.min):data.yLimits[AI].secondary.min,data.isLogAxis(uaxis)?Math.pow_t(10,data.yLimits[AI].secondary.max):data.yLimits[AI].secondary.max,data.yLimits[AI].secondary.maxyticks);
 					ymin_t = (parseInt(data.isLogAxis(uaxis)?Math.pow_t(10,data.yLimits[AI].secondary.min)/yt:data.yLimits[AI].secondary.min/yt))*yt;
 					if (ymin_t < (data.isLogAxis(uaxis)?Math.pow_t(10,data.yLimits[AI].secondary.min):data.yLimits[AI].secondary.min)) ymin_t+=yt;
 					yticks = yt;
@@ -4660,6 +4674,14 @@ var widget_chart = {
 					styleV = widget_chart.getStyleRuleValue(classesContainer, 'stroke', '.'+style);
 					if (!styleV) {styleV = widget_chart.getStyleRuleValue(classesContainer, 'fill', '.'+style);}
 					attrval.style = 'stroke-width: ' + 0 + 'px' + ';fill: ' + styleV;
+					attrval.min = min;
+					break;
+				case 'values':
+					attrval={};
+					styleV = widget_chart.getStyleRuleValue(classesContainer, 'stroke', '.'+style);
+					if (!styleV) {styleV = widget_chart.getStyleRuleValue(classesContainer, 'fill', '.'+style);}
+					var fs = widget_chart.getStyleRuleValue(classesContainer, 'font-size', '.'+style);
+					attrval.style = 'stroke-width: ' + 0 + 'px' + ';fill: ' + styleV + ';font-size:' + fs;
 					attrval.min = min;
 					break;
 			}
@@ -5303,6 +5325,7 @@ var widget_chart = {
 							break;
 						case 'symbol':
 						case 'icons':
+						case 'values':
 							g = widget_chart.createElem('g');
 							g.attr('class',style);
 							g.attr('id',data.flatUaxis(uaxis) + "-graph-" + instance + "-" + k + "-" + ptype);
@@ -5319,8 +5342,8 @@ var widget_chart = {
 							g.attr('y0polar',data.transD2W([-data.minx,-data.yLimits[AI].primary.shiftY],'primary')[1]);
 
 							//var strk = (g.css("stroke-width")) ? parseFloat(g.css("stroke-width").split('px')) : 1;
-							attrval.style = attrval.style + ';font-size:' + strkG.stroke + 'px;' + 'text-anchor:middle' + ';font-family:' + fontFamily + ';font-weight:' + fontWeight;
 							if (ptype == 'symbol') {
+								attrval.style = attrval.style + ';font-size:' + strkG.stroke + 'px;' + 'text-anchor:middle' + ';font-family:' + fontFamily + ';font-weight:' + fontWeight;
 								for (j=0;j<points.length;j++) {
 									point_new = widget_chart.createElem('text');
 									//attrval['stroke-width'] = strk;
@@ -5334,7 +5357,8 @@ var widget_chart = {
 									point_new.text(symbol);
 									g.append(point_new);
 								}
-							} else {
+							} else if (ptype == 'icons') {
+								attrval.style = attrval.style + ';font-size:' + strkG.stroke + 'px;' + 'text-anchor:middle' + ';font-family:' + fontFamily + ';font-weight:' + fontWeight;
 								for (j=0;j<points.length;j++) {
 									point_new = widget_chart.createElem('image');
 									//attrval['stroke-width'] = strk;
@@ -5347,6 +5371,24 @@ var widget_chart = {
 									point_new[0].setAttributeNS('http://www.w3.org/1999/xlink','href',points[j][2]); // setting xlink:href seems to be not working properly
 									if (points[j][2].indexOf('proplanta')>-1) attrval.filter = 'url(#nowhite)'; else attrval.filter = '';
 									point_new.attr(attrval);
+									g.append(point_new);
+								}
+							} else {
+								attrval.style = attrval.style + ';text-anchor:middle' + ';font-weight:' + fontWeight;
+								for (j=0;j<points.length;j++) {
+									point_new = widget_chart.createElem('text');
+									//attrval['stroke-width'] = strk;
+									p = data.transD2W(points[j],uaxis);
+									attrval.x = p[0];
+									attrval.y = p[1];
+									var angl = points[j].length > 3?points[j][3]:0;
+									var scl = points[j].length > 4?points[j][4]:1;
+									attrval.transform = "translate(" + attrval.x + " " + attrval.y + ") "+"rotate("+angl+")"+" scale("+scl+","+scl+") translate(" + (-attrval.x) + " " + (-attrval.y) + ")";
+									point_new.attr(attrval);
+									var yscale = (data.isPrimary(uaxis))?data.yLimits[AI].primary.scaleY:data.yLimits[AI].secondary.scaleY;
+									var yshift = (data.isPrimary(uaxis))?data.yLimits[AI].primary.shiftY:data.yLimits[AI].secondary.shiftY;
+									var txt = points[j][2]?points[j][2]:parseFloat(((points[j][1]+yshift)/yscale).toFixed(data.cursor_digits)) + " " + (data.getAxisSetting('yunit',uaxis));
+									point_new.text(txt);
 									g.append(point_new);
 								}
 							}
@@ -5582,7 +5624,10 @@ var widget_chart = {
 		data.done = true;
 		data.baseDone = true;
 		data.openDrawings -= 1;
-		if (data.openDrawings <= 0) data.drawing = false; // all outstanding drawings are done event handling for scale and shift can be reactivated
+		if (data.openDrawings <= 0) {
+			data.drawing = false; // all outstanding drawings are done event handling for scale and shift can be reactivated
+			if (!data.prefetch) data.runningRefresh = false;
+		}
 		$(theObj).data(data);
 		data_old = null;
 
